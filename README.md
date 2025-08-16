@@ -1,131 +1,183 @@
-# TestMaster
+# TestMaster - Intelligent Test Generation & Maintenance System
 
-Advanced automated test generation and management framework with self-healing capabilities.
+An autonomous, self-healing test generation and maintenance system that uses AI to create, fix, and maintain comprehensive test coverage as code evolves.
 
-## Features
+## 🚀 Features
 
-### 🚀 Automated Test Generation
-- **AI-Powered Generation**: Uses Gemini and GPT models to generate comprehensive tests
-- **100% Coverage Achievement**: Systematically generates tests to reach full coverage
-- **Multiple Strategies**: Edge cases, boundary testing, property-based testing
+### Intelligent Test Generation
+- **Automatic test creation** for any Python module
+- **Real functionality testing** - no mocks, tests actual code
+- **Self-healing capabilities** - automatically fixes syntax and import errors
+- **Quality verification** - scores tests and suggests improvements
+- **Continuous monitoring** - watches for code changes and updates tests
 
-### 🔧 Self-Healing Tests
-- **Automatic Syntax Fixing**: Iteratively fixes broken tests (up to 5 iterations)
-- **Intelligent Error Correction**: Passes errors back to LLM for resolution
-- **Parallel Processing**: Generate and fix multiple tests simultaneously
+### Advanced Capabilities
+- **Parallel processing** for batch test generation
+- **Import path resolution** with 85% success rate
+- **Refactoring detection** (renames, splits, merges, moves)
+- **Coverage gap analysis** and automatic filling
+- **Integration with Gemini AI** for intelligent test creation
 
-### 📊 Coverage Analysis
-- **Branch Coverage**: Identifies uncovered branches and conditions
-- **Missing Test Detection**: Finds modules without test coverage
-- **Coverage Improvement**: Targeted test generation for coverage gaps
-
-## Quick Start
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Generate tests for a module
-python scripts/ai_test_generator.py --module path/to/module.py
-
-# Self-healing test conversion
-python scripts/self_healing_converter.py
-
-# Achieve 100% coverage
-python scripts/achieve_100_percent.py
-```
-
-## Core Components
+## 📁 Core Components
 
 ### Test Generators
-- `ai_test_generator.py` - Main AI-powered test generator
-- `gemini_test_generator.py` - Gemini-specific generation
-- `smart_test_generator.py` - Pattern-based intelligent generation
-- `simple_test_generator.py` - Basic test generation
+- `intelligent_test_builder.py` - Main intelligent test generator
+- `intelligent_test_builder_v2.py` - Enhanced version with better error handling
+- `intelligent_test_builder_offline.py` - Offline mode for cached responses
+- `enhanced_context_aware_test_generator.py` - Context-aware test generation
+- `integration_test_generator.py` - Integration test creator
+- `specialized_test_generators.py` - Domain-specific test generators
 
-### Self-Healing System
-- `self_healing_converter.py` - Fixes syntax errors automatically
-- `intelligent_converter.py` - Smart test conversion
-- `parallel_coverage_converter.py` - Parallel processing
+### Self-Healing & Verification
+- `enhanced_self_healing_verifier.py` - Automatic test repair system
+- `independent_test_verifier.py` - Quality verification and scoring
+- `fix_import_paths.py` - Automatic import path resolution
 
-### Coverage Tools
-- `achieve_100_percent.py` - Reaches 100% test coverage
-- `coverage_improver.py` - Improves existing coverage
-- `branch_coverage_analyzer.py` - Analyzes branch coverage
-- `measure_final_coverage.py` - Measures actual coverage
+### Converters & Batch Processing
+- `parallel_converter.py` - Parallel test conversion
+- `accelerated_converter.py` - High-speed batch processing
+- `turbo_converter.py` - Optimized converter with caching
+- `convert_with_genai_sdk.py` - Gemini AI SDK integration
+- `convert_batch_small.py` - Small batch converter
 
-### Framework Components
-- `automated_test_generation.py` - Core test generation system
-- `comprehensive_test_framework.py` - Complete testing framework
-- `integration_test_matrix.py` - Integration testing matrix
-- `coverage_analysis.py` - Coverage analysis tools
+### Monitoring & Analysis
+- `agentic_test_monitor.py` - Continuous test monitoring
+- `monitor_progress.py` - Progress tracking
+- `monitor_to_100.py` - Coverage completion monitor
+- `run_intelligent_tests.py` - Test execution framework
+- `simple_test_runner.py` - Lightweight test runner
+- `quick_test_summary.py` - Test summary generator
 
-## Configuration
+## 🎯 Quick Start
 
-Set up your API keys in `.env`:
+### Basic Test Generation
+```python
+# Generate tests for a single module
+python intelligent_test_builder.py --module path/to/module.py
+
+# Generate tests for all modules in a directory
+python intelligent_test_builder.py --directory path/to/modules/
+```
+
+### Self-Healing Mode
+```python
+# Fix broken tests automatically
+python enhanced_self_healing_verifier.py --fix path/to/broken_test.py
+
+# Batch fix all tests
+python enhanced_self_healing_verifier.py --batch-all
+```
+
+### Continuous Monitoring
+```python
+# Monitor for changes every 2 hours
+python agentic_test_monitor.py --mode continuous --interval 120
+
+# Run after idle (perfect for breaks)
+python agentic_test_monitor.py --mode after-idle --idle 10
+```
+
+### Parallel Batch Processing
+```python
+# Convert multiple tests in parallel
+python parallel_converter.py --input modules.txt --workers 4
+
+# Accelerated conversion with caching
+python accelerated_converter.py --batch --cache
+```
+
+## 🔧 Configuration
+
+### Environment Variables
 ```env
-GOOGLE_API_KEY=your_gemini_api_key
-OPENROUTER_API_KEY=your_openrouter_key
+GEMINI_API_KEY=your_gemini_api_key_here
+GOOGLE_API_KEY=your_gemini_api_key_here  # Same as GEMINI_API_KEY
 ```
 
-## Examples
-
-### Generate tests with self-healing
+### Test Generation Settings
 ```python
-from scripts.self_healing_converter import SelfHealingConverter
-
-converter = SelfHealingConverter()
-converter.generate_and_fix_tests("src/my_module.py")
+# In intelligent_test_builder.py
+CONFIG = {
+    "max_iterations": 5,      # Self-healing iterations
+    "quality_threshold": 80,  # Minimum quality score
+    "parallel_workers": 4,     # Parallel processing threads
+    "cache_responses": True,   # Cache AI responses
+}
 ```
 
-### Achieve 100% coverage
+## 📊 Architecture
+
+See `AGENTIC_TEST_ARCHITECTURE.md` for detailed architecture documentation.
+
+### Generation Pipeline
+```
+Code Module → Initial Generator → Self-Healer → Verifier → Enhanced Test
+                     ↓                ↓            ↓
+                 Basic Test    Syntax Fixed   Quality Score
+```
+
+### Quality Layers
+1. **Basic Generation** - Syntactically correct tests with real imports
+2. **Self-Healing** - Automatic error fixing (5 iterations max)
+3. **Verification** - Quality scoring and improvement suggestions
+
+## 🎪 Use Cases
+
+### New Feature Development
+```
+Developer writes new module → 
+  Monitor detects (within 2 hours) → 
+    Generates comprehensive tests → 
+      Verifies quality → 
+        Notifies if gaps exist
+```
+
+### Major Refactoring
+```
+Developer refactors codebase →
+  Tracker detects splits/merges →
+    Updates affected tests →
+      Maintains coverage →
+        Reports success/issues
+```
+
+### Continuous Integration
 ```python
-from scripts.achieve_100_percent import achieve_full_coverage
-
-achieve_full_coverage(
-    source_dir="src",
-    test_dir="tests",
-    use_ai=True
-)
+# Add to CI/CD pipeline
+python independent_test_verifier.py --fail-under 80
+python run_intelligent_tests.py --coverage-report
 ```
 
-## Architecture
+## 📈 Success Metrics
 
-```
-TestMaster/
-├── src/                    # Core framework modules
-│   ├── automated_test_generation.py
-│   ├── comprehensive_test_framework.py
-│   ├── coverage_analysis.py
-│   └── integration_test_matrix.py
-├── scripts/               # Test generation scripts
-│   ├── self_healing_converter.py
-│   ├── ai_test_generator.py
-│   ├── achieve_100_percent.py
-│   └── ...
-├── docs/                  # Documentation
-├── examples/              # Usage examples
-└── tests/                 # Tests for TestMaster itself
-```
+- **55% test coverage** achieved (144/262 files)
+- **800+ test methods** generated automatically
+- **85% import fix** success rate
+- **~10s per test** execution time
+- **2.6 files/minute** conversion rate
 
-## Success Story
+## 🤝 Contributing
 
-This framework successfully achieved **100% test coverage** for a complex codebase:
-- Generated **466 test files** 
-- Covered **115 source modules**
-- Used multiple AI models and strategies
-- Self-healed thousands of syntax errors
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Contributing
+## 📄 License
 
-Contributions welcome! Please read our contributing guidelines.
+This project is licensed under the MIT License.
 
-## License
+## 🙏 Acknowledgments
 
-MIT License - See LICENSE file for details
+- Built with Gemini 2.5 Pro AI
+- Inspired by self-healing systems architecture
+- Part of the tot_branch_minimal project ecosystem
 
-## Credits
+## 📞 Contact
 
-Originally developed as part of the regex_gen project's comprehensive reorganization.
+Project Link: [https://github.com/kevinnbass/TestMaster](https://github.com/kevinnbass/TestMaster)
 
-🤖 Powered by AI test generation technology
+---
+
+**Note**: This is an active project with continuous improvements. Check back regularly for updates and new features!
