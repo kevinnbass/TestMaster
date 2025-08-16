@@ -24,9 +24,25 @@ from .core.orchestrator import PipelineOrchestrator
 from .core.config import TestMasterConfig
 
 # Main functionality
-from .generators.intelligent import IntelligentTestGenerator
-from .verification.self_healing import SelfHealingVerifier
-from .execution.runner import TestRunner
+from .generators import (
+    IntelligentTestGenerator,
+    IntelligentTestBuilder,  # Legacy alias
+    IntelligentTestBuilderV2,  # Legacy alias
+    OfflineIntelligentTestBuilder,  # Legacy alias
+    BaseGenerator,
+    ModuleAnalysis,
+    GenerationConfig
+)
+
+try:
+    from .verification.self_healing import SelfHealingVerifier
+except ImportError:
+    SelfHealingVerifier = None
+
+try:
+    from .execution.runner import TestRunner
+except ImportError:
+    TestRunner = None
 
 # Configuration instance
 config = TestMasterConfig()
@@ -35,6 +51,12 @@ __all__ = [
     "PipelineOrchestrator",
     "TestMasterConfig", 
     "IntelligentTestGenerator",
+    "IntelligentTestBuilder",
+    "IntelligentTestBuilderV2", 
+    "OfflineIntelligentTestBuilder",
+    "BaseGenerator",
+    "ModuleAnalysis",
+    "GenerationConfig",
     "SelfHealingVerifier",
     "TestRunner",
     "config"
