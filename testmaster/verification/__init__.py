@@ -1,17 +1,43 @@
 """
-TestMaster Verification System
+TestMaster Test Verification
 
-Test quality verification and self-healing capabilities.
+Comprehensive test verification and quality analysis systems.
 """
 
-from .base import BaseVerifier
-from .self_healing import SelfHealingVerifier
-from .independent import IndependentVerifier
-from .quality import QualityVerifier
+# Base classes
+from .base import (
+    BaseVerifier,
+    SelfHealingVerifier,
+    QualityAnalyzer,
+    VerificationConfig,
+    VerificationResult,
+    RateLimiter
+)
+
+# Verification implementations
+from .self_healing import SelfHealingTestVerifier
+from .quality import TestQualityAnalyzer
+
+# Legacy compatibility aliases for existing scripts
+EnhancedSelfHealingVerifier = SelfHealingTestVerifier
+IndependentTestVerifier = TestQualityAnalyzer
+SelfHealingConverter = SelfHealingTestVerifier  # Verification parts only
 
 __all__ = [
+    # Base classes
     "BaseVerifier",
     "SelfHealingVerifier",
-    "IndependentVerifier",
-    "QualityVerifier"
+    "QualityAnalyzer",
+    "VerificationConfig",
+    "VerificationResult",
+    "RateLimiter",
+    
+    # Main implementations
+    "SelfHealingTestVerifier",
+    "TestQualityAnalyzer",
+    
+    # Legacy aliases
+    "EnhancedSelfHealingVerifier",
+    "IndependentTestVerifier",
+    "SelfHealingConverter"
 ]
