@@ -17,76 +17,96 @@ This should happen WITHOUT asking for permission, as part of the natural workflo
 ### Running Tests
 ```bash
 # Run all tests with coverage
-python3 -m pytest --cov=. --cov-report=html
+python -m pytest --cov=. --cov-report=html    # Windows
+python3 -m pytest --cov=. --cov-report=html   # Unix
 
 # Run a specific test file
-python3 -m pytest path/to/test_file.py
+python -m pytest path/to/test_file.py         # Windows
+python3 -m pytest path/to/test_file.py        # Unix
 
 # Run tests with verbose output
-python3 -m pytest -v
+python -m pytest -v                           # Windows
+python3 -m pytest -v                          # Unix
 
 # Run intelligent test suite
-python3 run_intelligent_tests.py
+py run_intelligent_tests.py                   # Windows
+python3 run_intelligent_tests.py              # Unix
 
 # Quick test summary
-python3 quick_test_summary.py
+py quick_test_summary.py                      # Windows
+python3 quick_test_summary.py                 # Unix
 ```
 
 ### Test Generation
 ```bash
 # Generate tests for a single module
-python3 intelligent_test_builder.py --module path/to/module.py
+py intelligent_test_builder.py --module path/to/module.py         # Windows
+python3 intelligent_test_builder.py --module path/to/module.py    # Unix
 
 # Generate tests for all modules in a directory
-python3 intelligent_test_builder.py --directory path/to/modules/
+py intelligent_test_builder.py --directory path/to/modules/       # Windows
+python3 intelligent_test_builder.py --directory path/to/modules/  # Unix
 
 # Fix broken tests automatically
-python3 enhanced_self_healing_verifier.py --fix path/to/broken_test.py
+py enhanced_self_healing_verifier.py --fix path/to/broken_test.py         # Windows
+python3 enhanced_self_healing_verifier.py --fix path/to/broken_test.py    # Unix
 
 # Batch fix all tests
-python3 enhanced_self_healing_verifier.py --batch-all
+py enhanced_self_healing_verifier.py --batch-all                  # Windows
+python3 enhanced_self_healing_verifier.py --batch-all             # Unix
 
 # Generate integration tests
-python3 integration_test_generator.py
+py integration_test_generator.py                                  # Windows
+python3 integration_test_generator.py                             # Unix
 ```
 
 ### Monitoring & Coverage
 ```bash
 # Monitor for changes continuously (2-hour intervals)
-python3 agentic_test_monitor.py --mode continuous --interval 120
+py agentic_test_monitor.py --mode continuous --interval 120       # Windows
+python3 agentic_test_monitor.py --mode continuous --interval 120  # Unix
 
 # Run after idle (perfect for breaks)
-python3 agentic_test_monitor.py --mode after-idle --idle 10
+py agentic_test_monitor.py --mode after-idle --idle 10           # Windows
+python3 agentic_test_monitor.py --mode after-idle --idle 10      # Unix
 
 # Monitor progress to 100% coverage
-python3 monitor_to_100.py
+py monitor_to_100.py                                             # Windows
+python3 monitor_to_100.py                                        # Unix
 
 # Quick coverage analysis
-python3 scripts/measure_final_coverage.py
+py scripts/measure_final_coverage.py                             # Windows
+python3 scripts/measure_final_coverage.py                        # Unix
 ```
 
 ### Parallel Processing
 ```bash
 # Convert multiple tests in parallel
-python3 parallel_converter.py --input modules.txt --workers 4
+py parallel_converter.py --input modules.txt --workers 4         # Windows
+python3 parallel_converter.py --input modules.txt --workers 4    # Unix
 
 # Accelerated conversion with caching
-python3 accelerated_converter.py --batch --cache
+py accelerated_converter.py --batch --cache                      # Windows
+python3 accelerated_converter.py --batch --cache                 # Unix
 
 # Turbo converter with optimizations
-python3 turbo_converter.py
+py turbo_converter.py                                            # Windows
+python3 turbo_converter.py                                       # Unix
 ```
 
 ### Import & Error Fixing
 ```bash
 # Fix import paths in tests
-python3 fix_import_paths.py
+py fix_import_paths.py                  # Windows
+python3 fix_import_paths.py             # Unix
 
 # Fix failing tests
-python3 fix_failing_tests.py
+py fix_failing_tests.py                 # Windows
+python3 fix_failing_tests.py            # Unix
 
 # Fix all imports batch mode
-python3 scripts/fix_all_imports.py
+py scripts/fix_all_imports.py           # Windows
+python3 scripts/fix_all_imports.py      # Unix
 ```
 
 ## Architecture
