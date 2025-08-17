@@ -176,13 +176,35 @@ The system automatically detects and handles:
 - Execution time: ~10s per test, 2.6 files/minute conversion rate
 - Parallel processing significantly improves batch performance
 
-## Enhanced Implementation Roadmap
-The comprehensive enhancement roadmap with toggleable features is located at:
-`C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\ENHANCED_ROADMAP.md`
+## Unified Intelligence System
 
-This roadmap contains:
-- 16 advanced enhancements from multi-agent frameworks
-- Complete toggle control system for all features
-- Deep integration patterns with existing code
-- Implementation phases and priorities
+TestMaster includes a comprehensive unified intelligence system with the following capabilities:
+
+**Core Components:**
+- Tree-of-Thought reasoning for enhanced test generation
+- Multi-objective optimization for test quality and coverage
+- Universal LLM provider management for flexible AI integration
+- Security intelligence with vulnerability scanning and compliance checking
+- Universal framework adaptation supporting any programming language
+
+**Essential Commands:**
+```bash
+# Run unified orchestration (comprehensive mode)
+python -m testmaster orchestrate --target path/to/code --mode comprehensive
+
+# Security-focused test generation
+python -m testmaster orchestrate --target path/to/code --mode security_focused
+
+# Compliance checking
+python -m testmaster compliance --target path/to/code --standard OWASP_ASVS
+
+# Intelligence-enhanced test generation
+python -m testmaster intelligence-test --target path/to/code --reasoning-depth 5
+
+# Security vulnerability scanning
+python -m testmaster security-scan --target path/to/code --detailed
+
+# Codebase analysis
+python -m testmaster analyze --target path/to/code
+```
 

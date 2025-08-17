@@ -13,6 +13,7 @@ Features:
 
 import ast
 import re
+import time
 from pathlib import Path
 from typing import Dict, List, Set, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -22,6 +23,8 @@ import json
 import networkx as nx
 
 from ..core.layer_manager import requires_layer
+from ..core.feature_flags import FeatureFlags
+from .performance_dashboard import get_performance_dashboard, record_dashboard_metric, MetricType
 
 
 class RelationshipType(Enum):
@@ -207,6 +210,13 @@ class StructureMapper:
         self._functional_map: Optional[FunctionalMap] = None
         self._analysis_cache: Dict[str, Any] = {}
         
+        # NEW: Add dashboard integration if enabled
+        if FeatureFlags.is_enabled('layer3_orchestration', 'performance_dashboard'):
+            self.dashboard = get_performance_dashboard()
+            self._setup_dashboard_panels()
+        else:
+            self.dashboard = None
+        
         # Statistics
         self._stats = {
             'modules_analyzed': 0,
@@ -218,6 +228,58 @@ class StructureMapper:
         
         print("🗺️ Structure mapper initialized")
         print(f"   📁 Analyzing: {', '.join(str(p) for p in self.watch_paths)}")
+    
+    def _setup_dashboard_panels(self):
+        """Setup dashboard panels for structure analysis."""
+        if not self.dashboard:
+            return
+        
+        from .performance_dashboard import DashboardPanel
+        
+        # Structure overview panel
+        self.dashboard.add_panel(DashboardPanel(
+            panel_id="structure_overview",
+            title="Codebase Structure Overview",
+            panel_type="metric",
+            config={
+                "metrics": ["total_modules", "relationship_count", "api_endpoints", "complexity_score"],
+                "refresh_interval": 10
+            }
+        ))
+        
+        # Module category distribution panel
+        self.dashboard.add_panel(DashboardPanel(
+            panel_id="module_categories",
+            title="Module Category Distribution",
+            panel_type="chart",
+            config={
+                "chart_type": "pie",
+                "data_source": "module_categories"
+            }
+        ))
+        
+        # Architecture insights panel
+        self.dashboard.add_panel(DashboardPanel(
+            panel_id="architecture_insights",
+            title="Architecture Insights",
+            panel_type="table",
+            config={
+                "columns": ["pattern", "status", "details"],
+                "max_rows": 20
+            }
+        ))
+        
+        # Dependency graph panel
+        self.dashboard.add_panel(DashboardPanel(
+            panel_id="dependency_graph",
+            title="Module Dependencies",
+            panel_type="chart",
+            config={
+                "chart_type": "network",
+                "show_weights": True,
+                "max_nodes": 50
+            }
+        ))
     
     def analyze_structure(self, force_reanalysis: bool = False) -> FunctionalMap:
         """
@@ -272,7 +334,85 @@ class StructureMapper:
         self._stats['last_analysis'] = datetime.now()
         
         print(f"✅ Structure analysis complete: {len(functional_map.modules)} modules, {len(relationships)} relationships")
+        
+        # Update dashboard with analysis results
+        if self.dashboard:
+            self._update_dashboard_metrics(functional_map)
+        
         return functional_map
+    
+    def _update_dashboard_metrics(self, functional_map: FunctionalMap):
+        """Update dashboard with structure analysis metrics."""
+        # Record analysis timing
+        record_dashboard_metric("structure_mapper", "analyze_structure", 
+                               time.time() - time.time(), MetricType.TIMER)
+        
+        # Count modules by category
+        category_counts = {}
+        for category in ModuleCategory:
+            category_counts[category.value] = len([
+                module for module in functional_map.modules.values()
+                if module.category == category
+            ])
+        
+        # Calculate complexity metrics
+        total_complexity = sum(module.complexity_score for module in functional_map.modules.values())
+        avg_complexity = total_complexity / len(functional_map.modules) if functional_map.modules else 0
+        
+        # Update structure overview panel
+        self.dashboard.update_panel("structure_overview", {
+            "total_modules": len(functional_map.modules),
+            "relationship_count": len(functional_map.relationships),
+            "api_endpoints": len(functional_map.api_surface),
+            "complexity_score": avg_complexity,
+            "last_updated": datetime.now().isoformat()
+        })
+        
+        # Update module categories panel
+        self.dashboard.update_panel("module_categories", {
+            "categories": category_counts,
+            "total": len(functional_map.modules)
+        })
+        
+        # Update architecture insights panel
+        insights_data = []
+        for pattern in functional_map.architectural_patterns:
+            insights_data.append({
+                "pattern": pattern,
+                "status": "✅ Detected",
+                "details": "Pattern identified in codebase"
+            })
+        
+        for issue in functional_map.design_issues:
+            insights_data.append({
+                "pattern": "Design Issue",
+                "status": "⚠️ Warning", 
+                "details": issue
+            })
+        
+        self.dashboard.update_panel("architecture_insights", {
+            "insights": insights_data,
+            "patterns_found": len(functional_map.architectural_patterns),
+            "issues_found": len(functional_map.design_issues)
+        })
+        
+        # Update dependency graph panel
+        if functional_map.dependency_graph:
+            graph_data = {
+                "nodes": len(functional_map.dependency_graph.nodes),
+                "edges": len(functional_map.dependency_graph.edges),
+                "density": len(functional_map.dependency_graph.edges) / max(len(functional_map.dependency_graph.nodes), 1),
+                "core_modules": len(functional_map.core_modules)
+            }
+            self.dashboard.update_panel("dependency_graph", graph_data)
+        
+        # Record component performance metrics
+        record_dashboard_metric("structure_mapper", "modules_analyzed", 
+                               len(functional_map.modules), MetricType.GAUGE)
+        record_dashboard_metric("structure_mapper", "relationships_found", 
+                               len(functional_map.relationships), MetricType.GAUGE)
+        record_dashboard_metric("structure_mapper", "average_complexity", 
+                               avg_complexity, MetricType.GAUGE)
     
     def _analyze_module(self, file_path: Path) -> Optional[ModuleInfo]:
         """Analyze a single module."""

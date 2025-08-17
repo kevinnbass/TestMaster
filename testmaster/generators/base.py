@@ -24,6 +24,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from ..core.feature_flags import FeatureFlags, is_shared_state_enabled
 from ..core.shared_state import SharedState, get_shared_state
 from ..core.context_manager import ContextManager, get_context_manager
+from ..core.tracking_manager import get_tracking_manager, track_operation
 
 @dataclass
 class ModuleAnalysis:
@@ -89,6 +90,13 @@ class BaseGenerator(ABC):
             print("Context preservation enabled for test generation")
         else:
             self.context_manager = None
+        
+        # NEW: Add tracking manager if enabled
+        if FeatureFlags.is_enabled('layer2_monitoring', 'tracking_manager'):
+            self.tracking_manager = get_tracking_manager()
+            print("Comprehensive tracking enabled for test generation")
+        else:
+            self.tracking_manager = None
     
     @abstractmethod
     def analyze_module(self, module_path: Path, context: Dict[str, Any] = None) -> ModuleAnalysis:
@@ -115,6 +123,18 @@ class BaseGenerator(ABC):
         print(f"Building test for: {module_path.name}")
         print('='*60)
         
+        # NEW: Start tracking chain if enabled
+        chain_id = None
+        if self.tracking_manager:
+            chain_id = self.tracking_manager.start_chain(
+                chain_name="test_generation",
+                inputs={
+                    'module_path': str(module_path),
+                    'module_name': module_path.name,
+                    'output_dir': str(output_dir) if output_dir else None
+                }
+            )
+        
         # NEW: Initialize context for this generation session
         generation_context = {
             'module_path': str(module_path),
@@ -123,27 +143,28 @@ class BaseGenerator(ABC):
             'session_id': f"gen_{int(time.time() * 1000)}",
             'attempts': 0,
             'errors': [],
-            'metadata': {}
+            'metadata': {},
+            'tracking_chain_id': chain_id
         }
         
         # NEW: Preserve initial context if enabled
         if self.context_manager:
             context_id = self.context_manager.preserve(generation_context)
             generation_context['context_id'] = context_id
-            print(f"📋 Context preserved with ID: {context_id}")
+            print(f"Context preserved with ID: {context_id}")
         
         # NEW: Check shared state for previous attempts
         if self.shared_state:
             module_key = str(module_path).replace('\\', '/')
             attempts = self.shared_state.get(f"attempts_{module_key}", 0)
             if attempts > 0:
-                print(f"📊 Previous attempts: {attempts}")
+                print(f"Previous attempts: {attempts}")
                 generation_context['previous_attempts'] = attempts
             
             # Get previous test if exists
             previous_test = self.shared_state.get(f"last_test_{module_key}")
             if previous_test:
-                print(f"💾 Found previous test in shared state")
+                print(f"Found previous test in shared state")
                 generation_context['previous_test'] = previous_test
         
         try:
@@ -158,11 +179,56 @@ class BaseGenerator(ABC):
                     'analysis_start': time.time()
                 })
             
+            # NEW: Track analysis operation
+            if self.tracking_manager:
+                analysis_run_id = f"analysis_{int(time.time() * 1000)}"
+                self.tracking_manager.track_operation(
+                    run_id=analysis_run_id,
+                    component="test_generator",
+                    operation="analyze_module_start",
+                    inputs={'module_path': str(module_path)},
+                    parent_run_id=chain_id
+                )
+            
             analysis = self.analyze_module(module_path, generation_context)
+            
+            # NEW: Track analysis completion
+            if self.tracking_manager:
+                if hasattr(analysis, 'error'):
+                    self.tracking_manager.track_operation(
+                        run_id=analysis_run_id,
+                        component="test_generator",
+                        operation="analyze_module_error",
+                        error=str(analysis.error),
+                        parent_run_id=chain_id,
+                        success=False
+                    )
+                else:
+                    self.tracking_manager.track_operation(
+                        run_id=analysis_run_id,
+                        component="test_generator",
+                        operation="analyze_module_end",
+                        outputs={
+                            'classes_found': len(analysis.classes),
+                            'functions_found': len(analysis.functions),
+                            'purpose_length': len(analysis.purpose)
+                        },
+                        parent_run_id=chain_id,
+                        success=True
+                    )
             
             if hasattr(analysis, 'error'):
                 print(f"ERROR: Analysis failed: {analysis.error}")
                 self.stats["failures"] += 1
+                
+                # NEW: End tracking chain with failure
+                if self.tracking_manager:
+                    self.tracking_manager.end_chain(
+                        chain_id=chain_id,
+                        success=False,
+                        error=f"Analysis failed: {analysis.error}"
+                    )
+                
                 return False
             
             print(f"  Purpose: {analysis.purpose[:100]}...")
@@ -186,7 +252,46 @@ class BaseGenerator(ABC):
                     'analysis_result': generation_context['analysis_result']
                 })
             
+            # NEW: Track test generation operation
+            if self.tracking_manager:
+                generation_run_id = f"generation_{int(time.time() * 1000)}"
+                self.tracking_manager.track_operation(
+                    run_id=generation_run_id,
+                    component="test_generator",
+                    operation="generate_test_code_start",
+                    inputs={
+                        'module_path': str(module_path),
+                        'classes_count': len(analysis.classes),
+                        'functions_count': len(analysis.functions)
+                    },
+                    parent_run_id=chain_id
+                )
+            
             test_code = self.generate_test_code(module_path, analysis, generation_context)
+            
+            # NEW: Track test generation completion
+            if self.tracking_manager:
+                if not test_code or "Error generating test" in test_code:
+                    self.tracking_manager.track_operation(
+                        run_id=generation_run_id,
+                        component="test_generator",
+                        operation="generate_test_code_error",
+                        error="Failed to generate test code",
+                        parent_run_id=chain_id,
+                        success=False
+                    )
+                else:
+                    self.tracking_manager.track_operation(
+                        run_id=generation_run_id,
+                        component="test_generator",
+                        operation="generate_test_code_end",
+                        outputs={
+                            'test_code_length': len(test_code),
+                            'lines_generated': test_code.count('\n')
+                        },
+                        parent_run_id=chain_id,
+                        success=True
+                    )
             
             # NEW: Inject context into test code if enabled
             if self.context_manager:
@@ -209,6 +314,15 @@ class BaseGenerator(ABC):
             if not test_code or "Error generating test" in test_code:
                 print("ERROR: Failed to generate test code")
                 self.stats["failures"] += 1
+                
+                # NEW: End tracking chain with failure
+                if self.tracking_manager:
+                    self.tracking_manager.end_chain(
+                        chain_id=chain_id,
+                        success=False,
+                        error="Failed to generate test code"
+                    )
+                
                 return False
             
             # Step 3: Validate test code
@@ -281,6 +395,19 @@ class BaseGenerator(ABC):
                 if self.context_manager:
                     self.shared_state.set(f"context_{module_key}", generation_context['context_id'])
             
+            # NEW: End tracking chain with success
+            if self.tracking_manager:
+                self.tracking_manager.end_chain(
+                    chain_id=chain_id,
+                    outputs={
+                        'test_path': str(test_path),
+                        'module_name': module_path.name,
+                        'success': True,
+                        'total_time_seconds': generation_context['total_time']
+                    },
+                    success=True
+                )
+            
             return True
             
         except Exception as e:
@@ -307,6 +434,14 @@ class BaseGenerator(ABC):
                     "error": str(e),
                     "timestamp": time.time()
                 })
+            
+            # NEW: End tracking chain with error
+            if self.tracking_manager:
+                self.tracking_manager.end_chain(
+                    chain_id=chain_id,
+                    success=False,
+                    error=f"Unexpected error: {str(e)}"
+                )
             
             return False
     
@@ -343,6 +478,13 @@ class BaseGenerator(ABC):
             }
         else:
             local_stats["context_preservation"] = {"enabled": False}
+        
+        # NEW: Include tracking statistics if enabled
+        if self.tracking_manager:
+            tracking_stats = self.tracking_manager.get_tracking_statistics()
+            local_stats["tracking"] = tracking_stats
+        else:
+            local_stats["tracking"] = {"enabled": False}
         
         return local_stats
     

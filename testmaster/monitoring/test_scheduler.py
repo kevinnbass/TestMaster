@@ -138,31 +138,31 @@ class TestScheduler:
         self.on_test_failed: Optional[Callable[[ScheduledTest], None]] = None
         self.on_queue_full: Optional[Callable[[int], None]] = None
         
-        print(f"📅 Test scheduler initialized")
-        print(f"   👥 Max workers: {max_workers}")
-        print(f"   📦 Max queue size: {max_queue_size}")
-        print(f"   ⏱️ Default timeout: {default_timeout}s")
+        print(f" Test scheduler initialized")
+        print(f"    Max workers: {max_workers}")
+        print(f"    Max queue size: {max_queue_size}")
+        print(f"    Default timeout: {default_timeout}s")
     
     def start(self):
         """Start the test scheduler."""
         if self._is_running:
-            print("⚠️ Test scheduler is already running")
+            print("️ Test scheduler is already running")
             return
         
-        print("🚀 Starting test scheduler...")
+        print(" Starting test scheduler...")
         
         self._is_running = True
         self._scheduler_thread = threading.Thread(target=self._scheduler_loop, daemon=True)
         self._scheduler_thread.start()
         
-        print("✅ Test scheduler started")
+        print(" Test scheduler started")
     
     def stop(self):
         """Stop the test scheduler."""
         if not self._is_running:
             return
         
-        print("🛑 Stopping test scheduler...")
+        print(" Stopping test scheduler...")
         
         self._is_running = False
         
@@ -180,7 +180,7 @@ class TestScheduler:
         if self._scheduler_thread:
             self._scheduler_thread.join(timeout=10)
         
-        print("✅ Test scheduler stopped")
+        print(" Test scheduler stopped")
     
     def schedule_test(self, test_path: str, 
                      command: Optional[List[str]] = None,
@@ -226,7 +226,7 @@ class TestScheduler:
             self._test_queue.put((-priority.value, time.time(), scheduled_test), block=False)
             self._stats['total_scheduled'] += 1
             
-            print(f"📝 Scheduled test: {Path(test_path).name} (priority: {priority.name})")
+            print(f" Scheduled test: {Path(test_path).name} (priority: {priority.name})")
             return test_id
             
         except queue.Full:
@@ -234,7 +234,7 @@ class TestScheduler:
                 try:
                     self.on_queue_full(self.max_queue_size)
                 except Exception as e:
-                    print(f"⚠️ Error in queue full callback: {e}")
+                    print(f"️ Error in queue full callback: {e}")
             
             raise RuntimeError(f"Test queue is full (max: {self.max_queue_size})")
     
@@ -257,7 +257,7 @@ class TestScheduler:
                 test_id = self.schedule_test(test_path, priority=priority)
                 test_ids.append(test_id)
             except Exception as e:
-                print(f"⚠️ Failed to schedule {test_path}: {e}")
+                print(f"️ Failed to schedule {test_path}: {e}")
         
         return test_ids
     
@@ -278,12 +278,12 @@ class TestScheduler:
                 if future.cancel():
                     self._running_tests[test_id].status = TestStatus.CANCELLED
                     self._move_to_completed(test_id)
-                    print(f"❌ Cancelled running test: {test_id}")
+                    print(f" Cancelled running test: {test_id}")
                     return True
         
         # For queued tests, we can't easily remove from PriorityQueue
         # Mark as cancelled when it's dequeued
-        print(f"⚠️ Cannot cancel test {test_id} (not found or already completed)")
+        print(f"️ Cannot cancel test {test_id} (not found or already completed)")
         return False
     
     def get_test_status(self, test_id: str) -> Optional[ScheduledTest]:
@@ -334,7 +334,7 @@ class TestScheduler:
                 self._test_queue.task_done()
                 
             except Exception as e:
-                print(f"⚠️ Error in scheduler loop: {e}")
+                print(f"️ Error in scheduler loop: {e}")
                 time.sleep(1)
     
     def _submit_test(self, scheduled_test: ScheduledTest):
@@ -364,9 +364,9 @@ class TestScheduler:
             try:
                 self.on_test_started(scheduled_test)
             except Exception as e:
-                print(f"⚠️ Error in test started callback: {e}")
+                print(f"️ Error in test started callback: {e}")
         
-        print(f"🏃 Started test: {Path(scheduled_test.test_path).name}")
+        print(f" Started test: {Path(scheduled_test.test_path).name}")
     
     def _execute_test(self, scheduled_test: ScheduledTest) -> ScheduledTest:
         """Execute a single test."""
@@ -435,10 +435,10 @@ class TestScheduler:
                             (-scheduled_test.priority.value, time.time(), scheduled_test),
                             block=False
                         )
-                        print(f"🔄 Retrying test: {Path(scheduled_test.test_path).name} (attempt {scheduled_test.retry_count + 1})")
+                        print(f" Retrying test: {Path(scheduled_test.test_path).name} (attempt {scheduled_test.retry_count + 1})")
                         return
                     except queue.Full:
-                        print(f"⚠️ Cannot retry test - queue is full")
+                        print(f"️ Cannot retry test - queue is full")
             
             # Move to completed
             self._move_to_completed(test_id)
@@ -449,20 +449,20 @@ class TestScheduler:
                     try:
                         self.on_test_completed(scheduled_test)
                     except Exception as e:
-                        print(f"⚠️ Error in test completed callback: {e}")
+                        print(f"️ Error in test completed callback: {e}")
                         
-                print(f"✅ Test completed: {Path(scheduled_test.test_path).name} ({scheduled_test.actual_duration:.1f}s)")
+                print(f" Test completed: {Path(scheduled_test.test_path).name} ({scheduled_test.actual_duration:.1f}s)")
             else:
                 if self.on_test_failed:
                     try:
                         self.on_test_failed(scheduled_test)
                     except Exception as e:
-                        print(f"⚠️ Error in test failed callback: {e}")
+                        print(f"️ Error in test failed callback: {e}")
                         
-                print(f"❌ Test failed: {Path(scheduled_test.test_path).name} ({scheduled_test.status.value})")
+                print(f" Test failed: {Path(scheduled_test.test_path).name} ({scheduled_test.status.value})")
                 
         except Exception as e:
-            print(f"⚠️ Error handling test completion: {e}")
+            print(f"️ Error handling test completion: {e}")
     
     def _move_to_completed(self, test_id: str):
         """Move test from running to completed."""
@@ -541,9 +541,9 @@ class TestScheduler:
         try:
             with open(output_path, 'w') as f:
                 json.dump(results, f, indent=2, default=str)
-            print(f"📄 Test results exported to {output_path}")
+            print(f" Test results exported to {output_path}")
         except Exception as e:
-            print(f"⚠️ Error exporting results: {e}")
+            print(f"️ Error exporting results: {e}")
     
     def clear_completed_tests(self, older_than_hours: int = 24):
         """Clear old completed test results."""
@@ -557,7 +557,7 @@ class TestScheduler:
         for test_id in to_remove:
             del self._completed_tests[test_id]
         
-        print(f"🧹 Cleared {len(to_remove)} old test results")
+        print(f" Cleared {len(to_remove)} old test results")
 
 
 # Convenience function for quick test execution

@@ -11,12 +11,22 @@ and optimization agents by providing a centralized state store.
 import json
 import pickle
 import threading
+import sys
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, List, Set
 from datetime import datetime, timedelta
 from collections import defaultdict
+from dataclasses import dataclass, field, asdict
+
+# Add parent directory to path for imports
+sys.path.append(str(Path(__file__).parent.parent.parent))
 
 from .feature_flags import FeatureFlags
+try:
+    from cache.intelligent_cache import IntelligentCache, CacheStrategy
+    INTELLIGENT_CACHE_AVAILABLE = True
+except ImportError:
+    INTELLIGENT_CACHE_AVAILABLE = False
 
 
 class SharedState:
@@ -50,11 +60,28 @@ class SharedState:
             
             # Get configuration
             config = FeatureFlags.get_config('layer1_test_foundation', 'shared_state')
-            self.backend = config.get('backend', 'memory')
+            self.backend = config.get('backend', 'intelligent_cache' if INTELLIGENT_CACHE_AVAILABLE else 'memory')
             self.ttl_seconds = config.get('ttl', 3600)  # Default 1 hour TTL
             
+            # Initialize intelligent cache if available
+            self.intelligent_cache = None
+            if INTELLIGENT_CACHE_AVAILABLE and self.backend == 'intelligent_cache':
+                try:
+                    self.intelligent_cache = IntelligentCache(
+                        cache_dir="cache/shared",
+                        max_size_mb=1000,
+                        default_ttl=self.ttl_seconds,
+                        strategy=CacheStrategy.LRU,
+                        enable_compression=True,
+                        enable_persistence=True
+                    )
+                    print("SharedState: Connected to IntelligentCache")
+                except Exception as e:
+                    print(f"Failed to initialize IntelligentCache: {e}")
+                    self.backend = 'memory'
+            
             # Initialize backend
-            if self.backend == 'memory':
+            if self.backend == 'memory' or (self.backend == 'intelligent_cache' and not self.intelligent_cache):
                 self._store = {}
                 self._metadata = {}
             elif self.backend == 'file':
@@ -67,12 +94,18 @@ class SharedState:
                 self._store = {}
                 self._metadata = {}
             
+            # Workflow contexts
+            self.contexts = {}
+            self.active_workflows = set()
+            
             # Statistics
             self._stats = {
                 'reads': 0,
                 'writes': 0,
                 'hits': 0,
-                'misses': 0
+                'misses': 0,
+                'llm_cache_hits': 0,
+                'test_cache_hits': 0
             }
             
             self._initialized = True
@@ -92,6 +125,10 @@ class SharedState:
         with self._lock:
             try:
                 self._stats['writes'] += 1
+                
+                # Use intelligent cache if available
+                if self.intelligent_cache:
+                    return self.intelligent_cache.set(key, value, ttl=ttl or self.ttl_seconds)
                 
                 # Calculate expiry
                 expiry = None
@@ -135,6 +172,15 @@ class SharedState:
         with self._lock:
             try:
                 self._stats['reads'] += 1
+                
+                # Use intelligent cache if available
+                if self.intelligent_cache:
+                    value = self.intelligent_cache.get(key, default)
+                    if value != default:
+                        self._stats['hits'] += 1
+                    else:
+                        self._stats['misses'] += 1
+                    return value
                 
                 if self.backend == 'memory':
                     if key in self._store:
@@ -475,3 +521,90 @@ def state_append(key: str, value: Any) -> list:
 def state_exists(key: str) -> bool:
     """Check if key exists in shared state."""
     return get_shared_state().exists(key)
+
+
+@dataclass
+class SharedContext:
+    """Shared context across test generation pipeline."""
+    workflow_id: str
+    created_at: datetime = field(default_factory=datetime.now)
+    modules_processed: List[str] = field(default_factory=list)
+    test_results: Dict[str, Any] = field(default_factory=dict)
+    llm_responses: Dict[str, Any] = field(default_factory=dict)
+    security_findings: List[Dict[str, Any]] = field(default_factory=list)
+    performance_metrics: Dict[str, float] = field(default_factory=dict)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+
+def cache_llm_response(prompt: str, response: str, model: str = "default") -> None:
+    """Cache LLM response for reuse."""
+    state = get_shared_state()
+    if state.intelligent_cache:
+        cache_key = state.intelligent_cache.generate_key("llm", model, prompt)
+        state.intelligent_cache.set(cache_key, {
+            "prompt": prompt,
+            "response": response,
+            "model": model,
+            "timestamp": datetime.now().isoformat()
+        }, ttl=3600)
+    else:
+        # Fallback to regular state
+        state.set(f"llm_{model}_{hash(prompt)}", response, ttl=3600)
+
+
+def get_cached_llm_response(prompt: str, model: str = "default") -> Optional[str]:
+    """Get cached LLM response if available."""
+    state = get_shared_state()
+    if state.intelligent_cache:
+        cache_key = state.intelligent_cache.generate_key("llm", model, prompt)
+        cached = state.intelligent_cache.get(cache_key)
+        if cached:
+            state._stats['llm_cache_hits'] += 1
+            return cached.get("response")
+    else:
+        # Fallback to regular state
+        response = state.get(f"llm_{model}_{hash(prompt)}")
+        if response:
+            state._stats['llm_cache_hits'] += 1
+            return response
+    return None
+
+
+def cache_test_result(module_path: str, test_code: str, score: float) -> None:
+    """Cache test generation result."""
+    state = get_shared_state()
+    if state.intelligent_cache:
+        cache_key = state.intelligent_cache.generate_key("test", module_path)
+        state.intelligent_cache.set(cache_key, {
+            "module_path": module_path,
+            "test_code": test_code,
+            "score": score,
+            "timestamp": datetime.now().isoformat()
+        }, ttl=86400)
+    else:
+        state.set(f"test_{module_path}", {
+            "test_code": test_code,
+            "score": score
+        }, ttl=86400)
+
+
+def get_cached_test_result(module_path: str) -> Optional[Dict[str, Any]]:
+    """Get cached test result if available."""
+    state = get_shared_state()
+    if state.intelligent_cache:
+        cache_key = state.intelligent_cache.generate_key("test", module_path)
+        cached = state.intelligent_cache.get(cache_key)
+        if cached:
+            state._stats['test_cache_hits'] += 1
+            return cached
+    else:
+        result = state.get(f"test_{module_path}")
+        if result:
+            state._stats['test_cache_hits'] += 1
+            return result
+    return None
+
+
+def get_context_manager() -> SharedState:
+    """Alias for get_shared_state() for compatibility with base.py."""
+    return get_shared_state()

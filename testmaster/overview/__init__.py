@@ -13,7 +13,7 @@ Provides:
 
 from .structure_mapper import StructureMapper, ModuleRelationship, FunctionalMap
 from .coverage_intelligence import CoverageIntelligence, CriticalPath, CoverageGap
-from .regression_tracker import RegressionTracker, RegressionPattern, FailurePredictor
+from .regression_tracker import RegressionTracker, RegressionPattern, FailurePrediction
 
 __all__ = [
     "StructureMapper",
@@ -24,5 +24,5 @@ __all__ = [
     "CoverageGap",
     "RegressionTracker",
     "RegressionPattern",
-    "FailurePredictor"
+    "FailurePrediction"
 ]

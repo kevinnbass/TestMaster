@@ -110,37 +110,37 @@ class IdleDetector:
         self.on_module_active: Optional[Callable[[str], None]] = None
         self.on_statistics_update: Optional[Callable[[IdleStatistics], None]] = None
         
-        print(f"🕒 Idle detector initialized")
-        print(f"   📁 Watching: {', '.join(str(p) for p in self.watch_paths)}")
-        print(f"   ⏱️ Idle threshold: {idle_threshold_hours} hours")
-        print(f"   🔍 Scan interval: {scan_interval_minutes} minutes")
+        print("Idle detector initialized")
+        print(f"   Watching: {', '.join(str(p) for p in self.watch_paths)}")
+        print(f"   Idle threshold: {idle_threshold_hours} hours")
+        print(f"   Scan interval: {scan_interval_minutes} minutes")
     
     def start_monitoring(self):
         """Start continuous idle monitoring."""
         if self._is_scanning:
-            print("⚠️ Idle detector is already running")
+            print("WARNING: Idle detector is already running")
             return
         
-        print("🔍 Starting idle detection monitoring...")
+        print(" Starting idle detection monitoring...")
         
         self._is_scanning = True
         self._scan_thread = threading.Thread(target=self._monitoring_loop, daemon=True)
         self._scan_thread.start()
         
-        print("✅ Idle detection started")
+        print(" Idle detection started")
     
     def stop_monitoring(self):
         """Stop idle monitoring."""
         if not self._is_scanning:
             return
         
-        print("🛑 Stopping idle detection...")
+        print(" Stopping idle detection...")
         
         self._is_scanning = False
         if self._scan_thread:
             self._scan_thread.join(timeout=10)
         
-        print("✅ Idle detection stopped")
+        print(" Idle detection stopped")
     
     def _monitoring_loop(self):
         """Main monitoring loop."""
@@ -157,7 +157,7 @@ class IdleDetector:
                     try:
                         self.on_statistics_update(stats)
                     except Exception as e:
-                        print(f"⚠️ Error in statistics callback: {e}")
+                        print(f" Error in statistics callback: {e}")
                 
                 # Log periodic summary
                 if self._scan_count % 10 == 0:  # Every 10 scans
@@ -168,7 +168,7 @@ class IdleDetector:
                     time.sleep(self.scan_interval.total_seconds())
                     
             except Exception as e:
-                print(f"⚠️ Error in idle monitoring loop: {e}")
+                print(f" Error in idle monitoring loop: {e}")
                 time.sleep(60)  # Wait 1 minute before retrying
     
     def scan_for_idle_modules(self) -> IdleStatistics:
@@ -179,7 +179,7 @@ class IdleDetector:
             Statistics about idle modules found
         """
         self._scan_count += 1
-        print(f"🔍 Scanning for idle modules (scan #{self._scan_count})...")
+        print(f" Scanning for idle modules (scan #{self._scan_count})...")
         
         idle_modules = []
         active_modules = []
@@ -204,12 +204,12 @@ class IdleDetector:
                             try:
                                 self.on_module_idle(module_info)
                             except Exception as e:
-                                print(f"⚠️ Error in idle module callback: {e}")
+                                print(f" Error in idle module callback: {e}")
         
         # Calculate statistics
         stats = self._calculate_statistics(idle_modules, active_modules, current_time)
         
-        print(f"📊 Scan complete: {stats.idle_modules} idle, {stats.active_modules} active")
+        print(f" Scan complete: {stats.idle_modules} idle, {stats.active_modules} active")
         
         return stats
     
@@ -287,7 +287,7 @@ class IdleDetector:
             )
             
         except Exception as e:
-            print(f"⚠️ Error analyzing {file_path}: {e}")
+            print(f" Error analyzing {file_path}: {e}")
             return IdleModule(
                 module_path=str(file_path),
                 last_modified=current_time,
@@ -367,21 +367,21 @@ class IdleDetector:
     
     def _log_summary(self, stats: IdleStatistics):
         """Log periodic summary of idle detection."""
-        print("📊 Idle Detection Summary")
-        print(f"   📁 Total modules: {stats.total_modules}")
-        print(f"   ✅ Active: {stats.active_modules}")
-        print(f"   ⚠️ Idle warning: {stats.idle_warning_modules}")
-        print(f"   🕒 Idle (2h+): {stats.idle_modules}")
-        print(f"   📉 Stagnant (24h+): {stats.stagnant_modules}")
-        print(f"   🚫 Abandoned (7d+): {stats.abandoned_modules}")
+        print(" Idle Detection Summary")
+        print(f"    Total modules: {stats.total_modules}")
+        print(f"    Active: {stats.active_modules}")
+        print(f"    Idle warning: {stats.idle_warning_modules}")
+        print(f"    Idle (2h+): {stats.idle_modules}")
+        print(f"    Stagnant (24h+): {stats.stagnant_modules}")
+        print(f"    Abandoned (7d+): {stats.abandoned_modules}")
         
         if stats.avg_idle_duration_hours > 0:
-            print(f"   ⏱️ Avg idle duration: {stats.avg_idle_duration_hours:.1f} hours")
+            print(f"    Avg idle duration: {stats.avg_idle_duration_hours:.1f} hours")
         
         if stats.longest_idle_module:
             hours = stats.longest_idle_duration.total_seconds() / 3600
             module_name = Path(stats.longest_idle_module).name
-            print(f"   🥱 Longest idle: {module_name} ({hours:.1f}h)")
+            print(f"    Longest idle: {module_name} ({hours:.1f}h)")
     
     def get_idle_modules(self, min_idle_hours: float = 2.0, 
                         limit: int = None) -> List[IdleModule]:
@@ -473,14 +473,14 @@ class IdleDetector:
         try:
             with open(output_path, 'w') as f:
                 json.dump(report, f, indent=2, default=str)
-            print(f"📄 Idle report exported to {output_path}")
+            print(f" Idle report exported to {output_path}")
         except Exception as e:
-            print(f"⚠️ Error exporting report: {e}")
+            print(f" Error exporting report: {e}")
     
     def clear_statistics(self):
         """Clear statistics history."""
         self._statistics_history.clear()
-        print("🧹 Cleared idle detection statistics")
+        print(" Cleared idle detection statistics")
 
 
 # Convenience function for quick idle checking

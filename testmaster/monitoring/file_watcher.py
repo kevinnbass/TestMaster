@@ -30,6 +30,9 @@ except ImportError:
     print("⚠️ Watchdog not available. Install with: pip install watchdog")
 
 from ..core.layer_manager import requires_layer
+from ..core.feature_flags import FeatureFlags
+from ..core.shared_state import get_shared_state
+from ..core.tracking_manager import get_tracking_manager, track_operation
 
 
 class ChangeType(Enum):
@@ -192,6 +195,9 @@ class FileWatcher:
         self.git_enabled = self._check_git_available()
         self.last_commit_hash = self._get_current_commit_hash()
         
+        # Enhanced features integration
+        self._setup_enhanced_features()
+        
         # Statistics
         self.stats = {
             'events_processed': 0,
@@ -201,6 +207,22 @@ class FileWatcher:
             'files_moved': 0,
             'start_time': None
         }
+    
+    def _setup_enhanced_features(self):
+        """Setup enhanced monitoring features."""
+        # Shared state integration
+        if FeatureFlags.is_enabled('layer1_test_foundation', 'shared_state'):
+            self.shared_state = get_shared_state()
+            print("   SharedState integration enabled")
+        else:
+            self.shared_state = None
+        
+        # Tracking manager integration
+        if FeatureFlags.is_enabled('layer2_monitoring', 'tracking_manager'):
+            self.tracking_manager = get_tracking_manager()
+            print("   Tracking manager integration enabled")
+        else:
+            self.tracking_manager = None
     
     def start(self):
         """Start file monitoring."""
@@ -251,8 +273,19 @@ class FileWatcher:
         
         print("✅ File watcher stopped")
     
+    @track_operation("file_watcher", "handle_event")
     def _handle_event(self, event: FileChangeEvent):
-        """Handle a file change event."""
+        """Handle a file change event with enhanced tracking."""
+        # Track event in shared state if enabled
+        if self.shared_state:
+            self.shared_state.increment("file_events_handled")
+            self.shared_state.append("recent_file_events", {
+                "file": event.file_path,
+                "type": event.change_type.value,
+                "timestamp": event.timestamp.isoformat(),
+                "size": getattr(event, 'file_size', None)
+            })
+        
         self.event_queue.put(event)
     
     def _process_events(self):
@@ -269,9 +302,26 @@ class FileWatcher:
             except Exception as e:
                 print(f"⚠️ Error processing event: {e}")
     
+    @track_operation("file_watcher", "dispatch_event")
     def _dispatch_event(self, event: FileChangeEvent):
-        """Dispatch event to appropriate callbacks."""
+        """Dispatch event to appropriate callbacks with enhanced tracking."""
         self.stats['events_processed'] += 1
+        
+        # Track operation start
+        if self.tracking_manager:
+            operation_data = {
+                'file_path': event.file_path,
+                'change_type': event.change_type.value,
+                'is_directory': event.is_directory,
+                'file_size': getattr(event, 'file_size', None)
+            }
+            
+            self.tracking_manager.track_operation(
+                run_id=f"dispatch_{int(time.time() * 1000)}",
+                component="file_watcher",
+                operation="event_dispatch",
+                inputs=operation_data
+            )
         
         # Update specific stats
         if event.change_type == ChangeType.CREATED:

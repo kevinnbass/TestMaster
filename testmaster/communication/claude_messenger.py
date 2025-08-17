@@ -22,6 +22,11 @@ import threading
 import time
 
 from ..core.layer_manager import requires_layer
+from ..core.feature_flags import FeatureFlags
+from ..core.shared_state import get_shared_state
+from ..core.context_manager import get_context_manager
+from ..core.monitoring_decorators import monitor_performance
+from .dynamic_handoff import get_dynamic_handoff_system, AgentType
 
 
 class MessageType(Enum):
@@ -34,6 +39,8 @@ class MessageType(Enum):
     SYSTEM_ALERT = "system_alert"
     DIRECTIVE_REQUEST = "directive_request"
     ACKNOWLEDGMENT = "acknowledgment"
+    HANDOFF_REQUEST = "handoff_request"
+    AGENT_ROUTING = "agent_routing"
 
 
 class MessagePriority(IntEnum):
@@ -149,9 +156,27 @@ class ClaudeMessenger:
         self.on_directive_received: Optional[callable] = None
         self.on_acknowledgment_received: Optional[callable] = None
         
-        print(f"📡 Claude messenger initialized")
-        print(f"   📁 Message directory: {self.message_dir}")
-        print(f"   ⏱️ Message expiry: {max_message_age_hours} hours")
+        # NEW: Initialize enhanced features if enabled
+        if FeatureFlags.is_enabled('layer1_test_foundation', 'shared_state'):
+            self.shared_state = get_shared_state()
+        else:
+            self.shared_state = None
+            
+        if FeatureFlags.is_enabled('layer1_test_foundation', 'context_preservation'):
+            self.context_manager = get_context_manager()
+        else:
+            self.context_manager = None
+            
+        # NEW: Dynamic handoff system integration
+        if FeatureFlags.is_enabled('layer2_monitoring', 'dynamic_handoff'):
+            self.dynamic_handoff = get_dynamic_handoff_system()
+            print("   Dynamic agent handoff enabled")
+        else:
+            self.dynamic_handoff = None
+        
+        print(f"Claude messenger initialized")
+        print(f"   Message directory: {self.message_dir}")
+        print(f"   Message expiry: {max_message_age_hours} hours")
     
     def start_monitoring(self):
         """Start monitoring for Claude Code directives."""
@@ -273,11 +298,29 @@ class ClaudeMessenger:
         
         return self._send_message(message)
     
+    @monitor_performance(name="message_send")
     def _send_message(self, message: ClaudeMessage) -> str:
-        """Send message to Claude Code via file system."""
+        """Send message to Claude Code via file system with intelligent routing."""
         try:
+            # NEW: Intelligent agent routing if dynamic handoff enabled
+            if self.dynamic_handoff and message.message_type in [
+                MessageType.BREAKING_TESTS,
+                MessageType.COVERAGE_GAPS,
+                MessageType.SYSTEM_ALERT
+            ]:
+                handoff_result = self._attempt_dynamic_handoff(message)
+                if handoff_result.get('success'):
+                    print(f"Message routed via dynamic handoff: {handoff_result.get('target_agent')}")
+                    # Continue with normal file-based messaging as fallback
+            
             # Convert to dictionary for YAML serialization
             message_dict = self._message_to_dict(message)
+            
+            # NEW: Preserve context if enabled
+            if self.context_manager and message.message_type != MessageType.ACKNOWLEDGMENT:
+                context = self._create_message_context(message)
+                preserved_context = self.context_manager.preserve(context)
+                message_dict['_context_id'] = preserved_context['_preservation']['context_id']
             
             # Write to YAML file
             filename = f"TESTMASTER_STATUS_{message.message_id}.yaml"
@@ -289,11 +332,21 @@ class ClaudeMessenger:
             # Track sent message
             self._sent_messages[message.message_id] = message
             
-            print(f"📤 Sent message: {message.message_type.value} (ID: {message.message_id})")
+            # NEW: Update shared state if enabled
+            if self.shared_state:
+                self.shared_state.increment('messages_sent')
+                self.shared_state.append('recent_messages', {
+                    'id': message.message_id,
+                    'type': message.message_type.value,
+                    'timestamp': message.timestamp.isoformat(),
+                    'priority': message.priority.name
+                })
+            
+            print(f"Sent message: {message.message_type.value} (ID: {message.message_id})")
             return message.message_id
             
         except Exception as e:
-            print(f"⚠️ Error sending message: {e}")
+            print(f"Error sending message: {e}")
             raise
     
     def _message_to_dict(self, message: ClaudeMessage) -> Dict[str, Any]:
@@ -462,16 +515,115 @@ class ClaudeMessenger:
         if message_id in self._sent_messages:
             self._sent_messages[message_id].acknowledged_at = datetime.now()
             self._sent_messages[message_id].response_received = True
-            print(f"✅ Manually marked message acknowledged: {message_id}")
+            print(f"Manually marked message acknowledged: {message_id}")
+    
+    def _attempt_dynamic_handoff(self, message: ClaudeMessage) -> Dict[str, Any]:
+        """Attempt dynamic handoff for intelligent agent routing."""
+        if not self.dynamic_handoff:
+            return {'success': False, 'reason': 'Dynamic handoff not enabled'}
+        
+        try:
+            # Analyze message for routing decision
+            message_analysis = self._analyze_message_for_routing(message)
+            
+            # Get handoff decision
+            decision = self.dynamic_handoff.determine_handoff(message_analysis)
+            
+            # Execute handoff
+            message_data = {
+                'message_id': message.message_id,
+                'message_type': message.message_type.value,
+                'priority': message.priority.name,
+                'content': {
+                    'breaking_tests': [asdict(test) for test in message.breaking_tests],
+                    'coverage_gaps': [asdict(gap) for gap in message.coverage_gaps],
+                    'modules_need_attention': [asdict(mod) for mod in message.modules_need_attention],
+                    'message_text': message.message_text,
+                    'metadata': message.metadata
+                }
+            }
+            
+            result = self.dynamic_handoff.execute_handoff(decision, message_data)
+            return result
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'error': f'Handoff failed: {str(e)}',
+                'fallback_to_file': True
+            }
+    
+    def _analyze_message_for_routing(self, message: ClaudeMessage) -> Dict[str, Any]:
+        """Analyze message characteristics for intelligent routing."""
+        analysis = {
+            'message_type': message.message_type.value,
+            'priority': message.priority.value,
+            'urgency': message.priority.value >= 4,
+            'complexity': 5,  # Default complexity
+            'domain': 'general',
+            'file_types': [],
+            'task_type': 'general'
+        }
+        
+        # Analyze based on message type
+        if message.message_type == MessageType.BREAKING_TESTS:
+            analysis.update({
+                'task_type': 'test_debugging',
+                'domain': 'testing',
+                'complexity': 7,
+                'file_types': ['.py']
+            })
+        elif message.message_type == MessageType.COVERAGE_GAPS:
+            analysis.update({
+                'task_type': 'test_generation',
+                'domain': 'testing',
+                'complexity': 6,
+                'file_types': ['.py']
+            })
+        elif message.message_type == MessageType.SYSTEM_ALERT:
+            analysis.update({
+                'task_type': 'system_analysis',
+                'domain': 'monitoring',
+                'complexity': 8,
+                'file_types': ['.py', '.yaml', '.json']
+            })
+        
+        # Adjust complexity based on data volume
+        if len(message.breaking_tests) > 5:
+            analysis['complexity'] += 2
+        if len(message.coverage_gaps) > 10:
+            analysis['complexity'] += 1
+        if len(message.modules_need_attention) > 3:
+            analysis['complexity'] += 1
+        
+        # Cap complexity at 10
+        analysis['complexity'] = min(10, analysis['complexity'])
+        
+        return analysis
+    
+    def _create_message_context(self, message: ClaudeMessage) -> Dict[str, Any]:
+        """Create context information for message preservation."""
+        return {
+            'message_type': message.message_type.value,
+            'priority': message.priority.name,
+            'timestamp': message.timestamp.isoformat(),
+            'sender': message.sender,
+            'communication_context': 'claude_messenger',
+            'breaking_tests_count': len(message.breaking_tests),
+            'coverage_gaps_count': len(message.coverage_gaps),
+            'modules_attention_count': len(message.modules_need_attention),
+            'requires_acknowledgment': message.requires_acknowledgment,
+            'expires_at': message.expires_at.isoformat() if message.expires_at else None
+        }
     
     def get_communication_statistics(self) -> Dict[str, Any]:
-        """Get communication statistics."""
+        """Get comprehensive communication statistics."""
         sent_count = len(self._sent_messages)
         acknowledged_count = sum(1 for msg in self._sent_messages.values() if msg.acknowledged_at)
         directive_count = len(self._received_directives)
         pending_acks = len(self.get_pending_acknowledgments())
         
-        return {
+        stats = {
             "messages_sent": sent_count,
             "messages_acknowledged": acknowledged_count,
             "acknowledgment_rate": (acknowledged_count / max(sent_count, 1)) * 100,
@@ -480,6 +632,25 @@ class ClaudeMessenger:
             "message_directory": str(self.message_dir),
             "monitoring_active": self._monitoring
         }
+        
+        # NEW: Add enhanced statistics if features enabled
+        if self.shared_state:
+            shared_stats = self.shared_state.get_stats()
+            stats['shared_state'] = {
+                'reads': shared_stats.get('reads', 0),
+                'writes': shared_stats.get('writes', 0),
+                'keys_stored': shared_stats.get('keys', 0)
+            }
+        
+        if self.context_manager:
+            context_stats = self.context_manager.get_context_statistics()
+            stats['context_preservation'] = context_stats
+        
+        if self.dynamic_handoff:
+            handoff_stats = self.dynamic_handoff.get_handoff_statistics()
+            stats['dynamic_handoff'] = handoff_stats
+        
+        return stats
 
 
 # Convenience functions for common message creation
