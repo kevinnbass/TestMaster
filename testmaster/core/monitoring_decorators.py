@@ -219,7 +219,7 @@ def monitor_performance(name: Optional[str] = None, track_memory: bool = False):
                 if elapsed > 0.1:  # Log if > 100ms
                     memory_str = f", Δmem: {memory_delta/1024:.1f}KB" if memory_delta else ""
                     error_str = " [ERROR]" if error_occurred else ""
-                    print(f"⚡ {func_name}: {elapsed:.3f}s{memory_str}{error_str}")
+                    print(f"PERF {func_name}: {elapsed:.3f}s{memory_str}{error_str}")
         
         # Add monitoring metadata to function
         wrapper._monitored = True
@@ -294,7 +294,7 @@ def reset_performance_metrics():
         shared_state = get_shared_state()
         shared_state.clear("perf_*")
     
-    print("🔄 Performance metrics reset")
+    print("Performance metrics reset")
 
 
 # Convenience decorators with preset configurations

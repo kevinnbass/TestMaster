@@ -15,6 +15,7 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Optional, Dict, Any, List, Union
 from dataclasses import dataclass
+from datetime import datetime
 
 # Add parent directories for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -22,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 # Import enhancement features
 from ..core.feature_flags import FeatureFlags, is_shared_state_enabled
 from ..core.shared_state import SharedState, get_shared_state
+from ..core.context_manager import ContextManager, get_context_manager
 
 @dataclass
 class ModuleAnalysis:
@@ -77,17 +79,24 @@ class BaseGenerator(ABC):
         # NEW: Conditionally add shared state
         if is_shared_state_enabled():
             self.shared_state = get_shared_state()
-            print("✅ SharedState enabled for test generation")
+            print("SharedState enabled for test generation")
         else:
             self.shared_state = None
+        
+        # NEW: Conditionally add context manager
+        if FeatureFlags.is_enabled('layer1_test_foundation', 'context_preservation'):
+            self.context_manager = get_context_manager()
+            print("Context preservation enabled for test generation")
+        else:
+            self.context_manager = None
     
     @abstractmethod
-    def analyze_module(self, module_path: Path) -> ModuleAnalysis:
+    def analyze_module(self, module_path: Path, context: Dict[str, Any] = None) -> ModuleAnalysis:
         """Analyze a module to understand its structure and functionality."""
         pass
     
     @abstractmethod
-    def generate_test_code(self, module_path: Path, analysis: ModuleAnalysis) -> str:
+    def generate_test_code(self, module_path: Path, analysis: ModuleAnalysis, context: Dict[str, Any] = None) -> str:
         """Generate test code based on module analysis."""
         pass
     
@@ -106,22 +115,50 @@ class BaseGenerator(ABC):
         print(f"Building test for: {module_path.name}")
         print('='*60)
         
+        # NEW: Initialize context for this generation session
+        generation_context = {
+            'module_path': str(module_path),
+            'generation_phase': 'initialization',
+            'start_time': time.time(),
+            'session_id': f"gen_{int(time.time() * 1000)}",
+            'attempts': 0,
+            'errors': [],
+            'metadata': {}
+        }
+        
+        # NEW: Preserve initial context if enabled
+        if self.context_manager:
+            context_id = self.context_manager.preserve(generation_context)
+            generation_context['context_id'] = context_id
+            print(f"📋 Context preserved with ID: {context_id}")
+        
         # NEW: Check shared state for previous attempts
         if self.shared_state:
             module_key = str(module_path).replace('\\', '/')
             attempts = self.shared_state.get(f"attempts_{module_key}", 0)
             if attempts > 0:
                 print(f"📊 Previous attempts: {attempts}")
+                generation_context['previous_attempts'] = attempts
             
             # Get previous test if exists
             previous_test = self.shared_state.get(f"last_test_{module_key}")
             if previous_test:
                 print(f"💾 Found previous test in shared state")
+                generation_context['previous_test'] = previous_test
         
         try:
             # Step 1: Analyze the module
             print("Step 1: Analyzing module...")
-            analysis = self.analyze_module(module_path)
+            generation_context['generation_phase'] = 'analysis'
+            
+            # Update context if enabled
+            if self.context_manager:
+                self.context_manager.update(generation_context['context_id'], {
+                    'generation_phase': 'analysis',
+                    'analysis_start': time.time()
+                })
+            
+            analysis = self.analyze_module(module_path, generation_context)
             
             if hasattr(analysis, 'error'):
                 print(f"ERROR: Analysis failed: {analysis.error}")
@@ -134,7 +171,34 @@ class BaseGenerator(ABC):
             
             # Step 2: Generate test code
             print("\nStep 2: Generating test code...")
-            test_code = self.generate_test_code(module_path, analysis)
+            generation_context['generation_phase'] = 'generation'
+            generation_context['analysis_result'] = {
+                'purpose': analysis.purpose,
+                'classes_count': len(analysis.classes),
+                'functions_count': len(analysis.functions)
+            }
+            
+            # Update context if enabled
+            if self.context_manager:
+                self.context_manager.update(generation_context['context_id'], {
+                    'generation_phase': 'generation',
+                    'generation_start': time.time(),
+                    'analysis_result': generation_context['analysis_result']
+                })
+            
+            test_code = self.generate_test_code(module_path, analysis, generation_context)
+            
+            # NEW: Inject context into test code if enabled
+            if self.context_manager:
+                # Create enriched context for injection
+                injection_context = {
+                    'module_path': str(module_path),
+                    'generation_phase': 'completed',
+                    'classes_analyzed': len(analysis.classes),
+                    'functions_analyzed': len(analysis.functions),
+                    'generated_at': datetime.now().isoformat()
+                }
+                test_code = self.context_manager.inject_context(test_code, injection_context)
             
             # NEW: Update shared state with generated test
             if self.shared_state:
@@ -149,8 +213,26 @@ class BaseGenerator(ABC):
             
             # Step 3: Validate test code
             print("\nStep 3: Validating test code...")
+            generation_context['generation_phase'] = 'validation'
+            
+            # Update context if enabled
+            if self.context_manager:
+                self.context_manager.update(generation_context['context_id'], {
+                    'generation_phase': 'validation',
+                    'validation_start': time.time()
+                })
+            
             if not self.validate_test_code(test_code):
                 print("ERROR: Generated test has syntax errors")
+                generation_context['validation_error'] = "Syntax errors detected"
+                
+                # Update context with error
+                if self.context_manager:
+                    self.context_manager.update(generation_context['context_id'], {
+                        'validation_error': generation_context['validation_error'],
+                        'success': False
+                    })
+                
                 self.stats["failures"] += 1
                 return False
             
@@ -169,6 +251,22 @@ class BaseGenerator(ABC):
             self.stats["modules_processed"] += 1
             self.stats["tests_generated"] += 1
             
+            # NEW: Final context update
+            generation_context['generation_phase'] = 'completed'
+            generation_context['success'] = True
+            generation_context['test_path'] = str(test_path)
+            generation_context['total_time'] = time.time() - generation_context['start_time']
+            
+            # Update context with final results
+            if self.context_manager:
+                self.context_manager.update(generation_context['context_id'], {
+                    'generation_phase': 'completed',
+                    'success': True,
+                    'test_path': str(test_path),
+                    'total_time': generation_context['total_time'],
+                    'completion_time': time.time()
+                })
+            
             # NEW: Update shared state with success
             if self.shared_state:
                 module_key = str(module_path).replace('\\', '/')
@@ -178,12 +276,25 @@ class BaseGenerator(ABC):
                 # Track global stats in shared state
                 self.shared_state.increment("global_tests_generated")
                 self.shared_state.append("successful_modules", module_key)
+                
+                # Store generation context if context manager enabled
+                if self.context_manager:
+                    self.shared_state.set(f"context_{module_key}", generation_context['context_id'])
             
             return True
             
         except Exception as e:
             print(f"ERROR: Unexpected error in test generation: {e}")
             self.stats["failures"] += 1
+            
+            # NEW: Update context with error
+            if self.context_manager and 'context_id' in generation_context:
+                self.context_manager.update(generation_context['context_id'], {
+                    'generation_phase': 'error',
+                    'error': str(e),
+                    'success': False,
+                    'error_time': time.time()
+                })
             
             # NEW: Track failure in shared state
             if self.shared_state:
@@ -223,6 +334,16 @@ class BaseGenerator(ABC):
         else:
             local_stats["shared_state"] = {"enabled": False}
         
+        # NEW: Include context preservation statistics if enabled
+        if self.context_manager:
+            context_stats = self.context_manager.get_context_statistics()
+            local_stats["context_preservation"] = {
+                "enabled": True,
+                **context_stats
+            }
+        else:
+            local_stats["context_preservation"] = {"enabled": False}
+        
         return local_stats
     
     def print_stats(self):
@@ -241,7 +362,7 @@ class BaseGenerator(ABC):
 class AnalysisBasedGenerator(BaseGenerator):
     """Base class for generators that perform detailed module analysis."""
     
-    def analyze_module_ast(self, module_path: Path) -> ModuleAnalysis:
+    def analyze_module_ast(self, module_path: Path, context: Dict[str, Any] = None) -> ModuleAnalysis:
         """Perform AST-based analysis of module structure."""
         if not module_path.exists():
             raise FileNotFoundError(f"Module not found: {module_path}")

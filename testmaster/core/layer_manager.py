@@ -74,7 +74,7 @@ class LayerManager:
         # NEW: Setup advanced configuration if enabled
         if FeatureFlags.is_enabled('layer1_test_foundation', 'advanced_config'):
             self._setup_advanced_config()
-            print("✅ Advanced configuration management enabled")
+            print("Advanced configuration management enabled")
         else:
             self._hot_reload_enabled = False
             self._observer = None
@@ -329,7 +329,7 @@ class LayerManager:
                 
                 def on_modified(self, event):
                     if event.src_path.endswith(('.yaml', '.yml', '.json')):
-                        print(f"🔄 Config file changed: {event.src_path}")
+                        print(f"Config file changed: {event.src_path}")
                         self.layer_manager.reload_config()
             
             self._observer = Observer()
@@ -337,10 +337,10 @@ class LayerManager:
             self._observer.schedule(handler, str(Path(self.config_path).parent), recursive=False)
             self._observer.start()
             self._hot_reload_enabled = True
-            print("🔥 Hot-reload enabled for configuration")
+            print("Hot-reload enabled for configuration")
             
         except ImportError:
-            print("⚠️ watchdog not installed, hot-reload disabled")
+            print("watchdog not installed, hot-reload disabled")
             self._hot_reload_enabled = False
             self._observer = None
     
@@ -389,11 +389,11 @@ class LayerManager:
                     if layer_name in config:
                         if parts[2] == 'enabled':
                             config[layer_name].enabled = value.lower() == 'true'
-                            print(f"🌍 ENV override: {layer_name}.enabled = {value}")
+                            print(f"ENV override: {layer_name}.enabled = {value}")
                         elif parts[2] == 'feature' and len(parts) >= 4:
                             feature_name = '_'.join(parts[3:])
                             config[layer_name].features[feature_name] = value.lower() == 'true'
-                            print(f"🌍 ENV override: {layer_name}.features.{feature_name} = {value}")
+                            print(f"ENV override: {layer_name}.features.{feature_name} = {value}")
         
         return config
     
@@ -416,16 +416,16 @@ class LayerManager:
                     for layer_name, layer_data in parent_data.get('layers', {}).items():
                         if layer_name not in self.config:
                             self.config[layer_name] = LayerConfig.from_dict(layer_data)
-                            print(f"📥 Inherited layer {layer_name} from {parent_path}")
+                            print(f"Inherited layer {layer_name} from {parent_path}")
                         else:
                             # Merge features
                             parent_features = layer_data.get('features', {})
                             for feature, enabled in parent_features.items():
                                 if feature not in self.config[layer_name].features:
                                     self.config[layer_name].features[feature] = enabled
-                                    print(f"📥 Inherited feature {layer_name}.{feature} from {parent_path}")
+                                    print(f"Inherited feature {layer_name}.{feature} from {parent_path}")
                 except Exception as e:
-                    print(f"⚠️ Error loading parent config {parent_path}: {e}")
+                    print(f"Error loading parent config {parent_path}: {e}")
     
     def _sync_with_shared_state(self):
         """Sync configuration with shared state."""
@@ -445,7 +445,7 @@ class LayerManager:
         # Check for remote config updates
         remote_config = shared_state.get('layer_config_override')
         if remote_config:
-            print("🌐 Applying remote configuration overrides")
+            print("Applying remote configuration overrides")
             for layer_name, overrides in remote_config.items():
                 if layer_name in self.config:
                     if 'enabled' in overrides:
@@ -464,7 +464,7 @@ class LayerManager:
                 # Detect changes
                 changes = self._detect_config_changes(old_config, self.config)
                 if changes:
-                    print(f"🔄 Configuration reloaded with {len(changes)} changes")
+                    print(f"Configuration reloaded with {len(changes)} changes")
                     for change in changes:
                         print(f"   - {change}")
                     
@@ -475,7 +475,7 @@ class LayerManager:
                     self._notify_callbacks('reload', changes)
                     
             except Exception as e:
-                print(f"⚠️ Error reloading config: {e}")
+                print(f"Error reloading config: {e}")
                 self.config = old_config  # Restore old config
     
     def _detect_config_changes(self, old_config: Dict[str, LayerConfig], 
@@ -520,7 +520,7 @@ class LayerManager:
             try:
                 callback(event, data)
             except Exception as e:
-                print(f"⚠️ Error in config callback: {e}")
+                print(f"Error in config callback: {e}")
     
     def _add_audit_entry(self, action: str, details: Dict[str, Any]):
         """Add entry to audit trail."""
@@ -642,7 +642,7 @@ def export_config(output_path: str = "config_export.json"):
     with open(output_path, 'w') as f:
         json.dump(config_data, f, indent=2, default=str)
     
-    print(f"💾 Configuration exported to {output_path}")
+    print(f"Configuration exported to {output_path}")
 
 
 def import_config(input_path: str):
@@ -660,4 +660,4 @@ def import_config(input_path: str):
                 manager.config[layer_name].features.update(layer_data.get('features', {}))
     
     manager.save_config()
-    print(f"📥 Configuration imported from {input_path}")
+    print(f"Configuration imported from {input_path}")

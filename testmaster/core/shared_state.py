@@ -118,7 +118,7 @@ class SharedState:
                 
                 return True
             except Exception as e:
-                print(f"⚠️ SharedState.set error: {e}")
+                print(f"SharedState.set error: {e}")
                 return False
     
     def get(self, key: str, default: Any = None) -> Any:
@@ -177,7 +177,7 @@ class SharedState:
                 return default
                 
             except Exception as e:
-                print(f"⚠️ SharedState.get error: {e}")
+                print(f"SharedState.get error: {e}")
                 return default
     
     def increment(self, key: str, amount: int = 1) -> int:
@@ -270,7 +270,7 @@ class SharedState:
                 return False
                 
             except Exception as e:
-                print(f"⚠️ SharedState.delete error: {e}")
+                print(f"SharedState.delete error: {e}")
                 return False
     
     def exists(self, key: str) -> bool:
@@ -358,7 +358,7 @@ class SharedState:
                 self._store = {}
                 self._metadata = {}
         except Exception as e:
-            print(f"⚠️ Error loading shared state from file: {e}")
+            print(f"Error loading shared state from file: {e}")
             self._store = {}
             self._metadata = {}
     
@@ -373,7 +373,7 @@ class SharedState:
             with open(self._file_path, 'w') as f:
                 json.dump(data, f, indent=2, default=str)
         except Exception as e:
-            print(f"⚠️ Error saving shared state to file: {e}")
+            print(f"Error saving shared state to file: {e}")
     
     def _init_redis(self):
         """Initialize Redis backend."""
@@ -388,7 +388,7 @@ class SharedState:
             )
             self._redis.ping()
         except Exception as e:
-            print(f"⚠️ Redis initialization failed: {e}")
+            print(f"Redis initialization failed: {e}")
             print("   Falling back to memory backend")
             self.backend = 'memory'
             self._store = {}
@@ -403,7 +403,7 @@ class SharedState:
             else:
                 self._redis.set(f"testmaster:{key}", serialized)
         except Exception as e:
-            print(f"⚠️ Redis set error: {e}")
+            print(f"Redis set error: {e}")
     
     def _redis_get(self, key: str) -> Any:
         """Get value from Redis."""
@@ -412,7 +412,7 @@ class SharedState:
             if value:
                 return pickle.loads(value)
         except Exception as e:
-            print(f"⚠️ Redis get error: {e}")
+            print(f"Redis get error: {e}")
         return None
     
     def _redis_delete(self, key: str) -> bool:
@@ -420,7 +420,7 @@ class SharedState:
         try:
             return self._redis.delete(f"testmaster:{key}") > 0
         except Exception as e:
-            print(f"⚠️ Redis delete error: {e}")
+            print(f"Redis delete error: {e}")
             return False
     
     def _redis_keys(self, pattern: str) -> list:
@@ -430,7 +430,7 @@ class SharedState:
             keys = self._redis.keys(redis_pattern)
             return [k.decode().replace('testmaster:', '') for k in keys]
         except Exception as e:
-            print(f"⚠️ Redis keys error: {e}")
+            print(f"Redis keys error: {e}")
             return []
 
 

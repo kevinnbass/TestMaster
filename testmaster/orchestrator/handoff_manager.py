@@ -181,7 +181,6 @@ class HandoffManager:
     - Handoff batching for related items
     """
     
-    @requires_layer("layer3_orchestration", "smart_handoffs")
     def __init__(self, handoff_dir: str = ".testmaster_handoffs"):
         """
         Initialize handoff manager.
@@ -218,7 +217,7 @@ class HandoffManager:
         # NEW: Advanced handoff tools (toggleable)
         if FeatureFlags.is_enabled('layer2_monitoring', 'handoff_tools'):
             self._setup_advanced_tools()
-            print("   ✅ Advanced handoff tools enabled")
+            print("   Advanced handoff tools enabled")
         else:
             self._validation_enabled = False
             self._compression_enabled = False
@@ -229,8 +228,8 @@ class HandoffManager:
         # Setup context enrichers
         self._setup_context_enrichers()
         
-        print("🤝 Handoff manager initialized")
-        print(f"   📁 Handoff directory: {self.handoff_dir}")
+        print("Handoff manager initialized")
+        print(f"   Handoff directory: {self.handoff_dir}")
         
         # Initialize shared state if enabled
         if FeatureFlags.is_enabled('layer1_test_foundation', 'shared_state'):
@@ -295,7 +294,7 @@ class HandoffManager:
         if self._validation_enabled:
             validation_result = self._validate_handoff(handoff_context)
             if not validation_result['is_valid']:
-                print(f"⚠️ Handoff validation warnings: {validation_result['warnings']}")
+                print(f"Handoff validation warnings: {validation_result['warnings']}")
                 # Add validation warnings to context
                 if validation_result['warnings']:
                     warning_context = ContextItem(
@@ -334,7 +333,7 @@ class HandoffManager:
         # Persist handoff
         self._persist_handoff(handoff_context)
         
-        print(f"🤝 Created handoff: {title} (ID: {handoff_id})")
+        print(f"Created handoff: {title} (ID: {handoff_id})")
         return handoff_id
     
     def create_investigation_handoff(self, target: str, investigation_results: Dict[str, Any],
@@ -532,7 +531,7 @@ Manual intervention is required to resolve this issue.
         # Update handoff file
         self._persist_handoff(handoff)
         
-        print(f"📨 Received response for handoff {handoff_id}: {response_type}")
+        print(f"Received response for handoff {handoff_id}: {response_type}")
         return response_id
     
     def get_active_handoffs(self) -> List[HandoffContext]:
@@ -586,7 +585,7 @@ Manual intervention is required to resolve this issue.
             handoff.context_items.append(cancellation_context)
         
         self._persist_handoff(handoff)
-        print(f"❌ Cancelled handoff: {handoff_id}")
+        print(f"Cancelled handoff: {handoff_id}")
         return True
     
     def _enrich_handoff_context(self, handoff: HandoffContext, context_data: Dict[str, Any]):
@@ -665,7 +664,7 @@ Manual intervention is required to resolve this issue.
             if enricher:
                 return enricher(file_path)
         except Exception as e:
-            print(f"⚠️ Error enriching file analysis: {e}")
+            print(f"Error enriching file analysis: {e}")
         return None
     
     def _setup_context_enrichers(self):
@@ -826,7 +825,7 @@ Manual intervention is required to resolve this issue.
                 yaml.dump(handoff_dict, f, default_flow_style=False, sort_keys=False)
                 
         except Exception as e:
-            print(f"⚠️ Error persisting handoff: {e}")
+            print(f"Error persisting handoff: {e}")
     
     def _persist_response(self, response: HandoffResponse):
         """Persist response to file system."""
@@ -841,7 +840,7 @@ Manual intervention is required to resolve this issue.
                 yaml.dump(response_dict, f, default_flow_style=False, sort_keys=False)
                 
         except Exception as e:
-            print(f"⚠️ Error persisting response: {e}")
+            print(f"Error persisting response: {e}")
     
     def _setup_advanced_tools(self):
         """Setup advanced handoff tools when enabled."""
@@ -935,7 +934,7 @@ Manual intervention is required to resolve this issue.
                 }
                 item.metadata['compression'] = 'gzip+base64'
                 
-                print(f"   📦 Compressed context item: {len(content_str)} → {len(encoded)} bytes")
+                print(f"   Compressed context item: {len(content_str)} -> {len(encoded)} bytes")
         
         return handoff
     
@@ -1081,9 +1080,9 @@ Manual intervention is required to resolve this issue.
         try:
             with open(output_path, 'w') as f:
                 json.dump(report, f, indent=2, default=str)
-            print(f"📄 Handoff report exported to {output_path}")
+            print(f"Handoff report exported to {output_path}")
         except Exception as e:
-            print(f"⚠️ Error exporting handoff report: {e}")
+            print(f"Error exporting handoff report: {e}")
 
 
 class PriorityQueue:
@@ -1204,7 +1203,7 @@ class BatchProcessor:
         batch = self._batches.pop(batch_key, [])
         self._batch_timers.pop(batch_key, None)
         
-        print(f"📦 Created batch {batch_id} with {len(batch)} handoffs")
+        print(f"Created batch {batch_id} with {len(batch)} handoffs")
         return batch_id
 
 
@@ -1243,5 +1242,5 @@ def batch_handoffs(handoffs: List[Dict[str, Any]], manager: HandoffManager) -> L
         handoff_id = manager.create_handoff(**handoff_data)
         handoff_ids.append(handoff_id)
     
-    print(f"📦 Created batch of {len(handoff_ids)} handoffs")
+    print(f"Created batch of {len(handoff_ids)} handoffs")
     return handoff_ids

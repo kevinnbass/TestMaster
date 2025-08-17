@@ -55,7 +55,7 @@ class FeatureFlags:
                 with open(cls._config_path, 'r') as f:
                     cls._config = yaml.safe_load(f)
             except Exception as e:
-                print(f"⚠️ Error loading feature flags config: {e}")
+                print(f"Error loading feature flags config: {e}")
                 cls._config = cls._get_default_config()
         else:
             cls._config = cls._get_default_config()
@@ -214,7 +214,7 @@ class FeatureFlags:
         override_key = f"{layer}.{enhancement}"
         cls._runtime_overrides[override_key] = True
         cls._clear_cache()
-        print(f"✅ Enabled: {layer}.{enhancement}")
+        print(f"Enabled: {layer}.{enhancement}")
     
     @classmethod
     def disable(cls, layer: str, enhancement: str):
@@ -228,7 +228,7 @@ class FeatureFlags:
         override_key = f"{layer}.{enhancement}"
         cls._runtime_overrides[override_key] = False
         cls._clear_cache()
-        print(f"❌ Disabled: {layer}.{enhancement}")
+        print(f"Disabled: {layer}.{enhancement}")
     
     @classmethod
     def set_feature(cls, layer: str, enhancement: str, enabled: bool):
@@ -302,9 +302,9 @@ class FeatureFlags:
         try:
             with open(path, 'w') as f:
                 yaml.dump(cls._config, f, default_flow_style=False, sort_keys=False)
-            print(f"💾 Configuration saved to {path}")
+            print(f"Configuration saved to {path}")
         except Exception as e:
-            print(f"⚠️ Error saving configuration: {e}")
+            print(f"Error saving configuration: {e}")
     
     @classmethod
     def reload_config(cls):
@@ -312,7 +312,7 @@ class FeatureFlags:
         cls._load_config()
         cls._runtime_overrides.clear()
         cls._clear_cache()
-        print("🔄 Configuration reloaded")
+        print("Configuration reloaded")
     
     @classmethod
     def _clear_cache(cls):
@@ -333,7 +333,7 @@ class FeatureFlags:
         if layer in cls._config.get('layers', {}):
             for enhancement in cls._config['layers'][layer].get('enhancements', {}):
                 cls.enable(layer, enhancement)
-            print(f"✅ Enabled all enhancements for {layer}")
+            print(f"Enabled all enhancements for {layer}")
     
     @classmethod
     def disable_layer_enhancements(cls, layer: str):
@@ -349,7 +349,7 @@ class FeatureFlags:
         if layer in cls._config.get('layers', {}):
             for enhancement in cls._config['layers'][layer].get('enhancements', {}):
                 cls.disable(layer, enhancement)
-            print(f"❌ Disabled all enhancements for {layer}")
+            print(f"Disabled all enhancements for {layer}")
 
 
 def feature_enabled(layer: str, enhancement: str):
