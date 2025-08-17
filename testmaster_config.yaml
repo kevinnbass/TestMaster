@@ -1,0 +1,30 @@
+layers:
+  layer1_test_foundation:
+    enabled: true  # Always on - this is the core
+    features:
+      test_generation: true
+      test_verification: true
+      test_mapping: true
+      failure_detection: true
+    requires: []
+  
+  layer2_monitoring:
+    enabled: false  # Toggle on when ready
+    features:
+      file_monitoring: true
+      idle_detection: true
+      claude_communication: true
+      dashboard_ui: false  # Can disable UI separately
+    requires:
+      - layer1_test_foundation
+  
+  layer3_orchestration:
+    enabled: false  # Toggle on when ready
+    features:
+      auto_tagging: true
+      work_distribution: true
+      smart_handoffs: true
+      codebase_intelligence: true
+    requires:
+      - layer1_test_foundation
+      - layer2_monitoring
