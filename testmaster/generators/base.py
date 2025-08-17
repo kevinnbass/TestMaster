@@ -3,6 +3,7 @@
 Base Generator Classes for TestMaster
 
 Provides foundation classes for all test generators in the system.
+Enhanced with shared state management and feature flags.
 """
 
 import os
@@ -17,6 +18,10 @@ from dataclasses import dataclass
 
 # Add parent directories for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+# Import enhancement features
+from ..core.feature_flags import FeatureFlags, is_shared_state_enabled
+from ..core.shared_state import SharedState, get_shared_state
 
 @dataclass
 class ModuleAnalysis:
@@ -68,6 +73,13 @@ class BaseGenerator(ABC):
             "failures": 0,
             "start_time": time.time()
         }
+        
+        # NEW: Conditionally add shared state
+        if is_shared_state_enabled():
+            self.shared_state = get_shared_state()
+            print("✅ SharedState enabled for test generation")
+        else:
+            self.shared_state = None
     
     @abstractmethod
     def analyze_module(self, module_path: Path) -> ModuleAnalysis:
@@ -94,6 +106,18 @@ class BaseGenerator(ABC):
         print(f"Building test for: {module_path.name}")
         print('='*60)
         
+        # NEW: Check shared state for previous attempts
+        if self.shared_state:
+            module_key = str(module_path).replace('\\', '/')
+            attempts = self.shared_state.get(f"attempts_{module_key}", 0)
+            if attempts > 0:
+                print(f"📊 Previous attempts: {attempts}")
+            
+            # Get previous test if exists
+            previous_test = self.shared_state.get(f"last_test_{module_key}")
+            if previous_test:
+                print(f"💾 Found previous test in shared state")
+        
         try:
             # Step 1: Analyze the module
             print("Step 1: Analyzing module...")
@@ -111,6 +135,12 @@ class BaseGenerator(ABC):
             # Step 2: Generate test code
             print("\nStep 2: Generating test code...")
             test_code = self.generate_test_code(module_path, analysis)
+            
+            # NEW: Update shared state with generated test
+            if self.shared_state:
+                module_key = str(module_path).replace('\\', '/')
+                self.shared_state.set(f"last_test_{module_key}", test_code, ttl=3600)
+                self.shared_state.increment(f"attempts_{module_key}")
             
             if not test_code or "Error generating test" in test_code:
                 print("ERROR: Failed to generate test code")
@@ -139,22 +169,61 @@ class BaseGenerator(ABC):
             self.stats["modules_processed"] += 1
             self.stats["tests_generated"] += 1
             
+            # NEW: Update shared state with success
+            if self.shared_state:
+                module_key = str(module_path).replace('\\', '/')
+                self.shared_state.set(f"success_{module_key}", True)
+                self.shared_state.set(f"test_path_{module_key}", str(test_path))
+                
+                # Track global stats in shared state
+                self.shared_state.increment("global_tests_generated")
+                self.shared_state.append("successful_modules", module_key)
+            
             return True
             
         except Exception as e:
             print(f"ERROR: Unexpected error in test generation: {e}")
             self.stats["failures"] += 1
+            
+            # NEW: Track failure in shared state
+            if self.shared_state:
+                module_key = str(module_path).replace('\\', '/')
+                self.shared_state.set(f"last_error_{module_key}", str(e))
+                self.shared_state.set(f"success_{module_key}", False)
+                self.shared_state.increment("global_failures")
+                self.shared_state.append("failed_modules", {
+                    "module": module_key,
+                    "error": str(e),
+                    "timestamp": time.time()
+                })
+            
             return False
     
     def get_stats(self) -> Dict[str, Any]:
         """Get generation statistics."""
         elapsed = time.time() - self.stats["start_time"]
-        return {
+        local_stats = {
             **self.stats,
             "elapsed_time": elapsed,
             "success_rate": (self.stats["modules_processed"] / 
                            max(1, self.stats["modules_processed"] + self.stats["failures"]) * 100)
         }
+        
+        # NEW: Include shared state statistics if enabled
+        if self.shared_state:
+            shared_stats = self.shared_state.get_stats()
+            local_stats["shared_state"] = {
+                "enabled": True,
+                "backend": shared_stats.get("backend"),
+                "total_keys": shared_stats.get("total_keys"),
+                "hit_rate": shared_stats.get("hit_rate"),
+                "global_tests": self.shared_state.get("global_tests_generated", 0),
+                "global_failures": self.shared_state.get("global_failures", 0)
+            }
+        else:
+            local_stats["shared_state"] = {"enabled": False}
+        
+        return local_stats
     
     def print_stats(self):
         """Print generation statistics."""
