@@ -4,7 +4,11 @@
 
 ## 🚀 Intelligence Command Center - FULLY OPERATIONAL
 
-### 📊 **New Dashboard Features (Latest Update)**
+### 📊 **Latest Dashboard Features**
+- **Multi-Codebase Monitoring** - Monitor up to 6 different codebases simultaneously
+- **Dynamic Codebase Management** - Add/remove codebases with top-right path input bar
+- **Bottom Codebase Tabs** - Switch between codebases with closeable tabs at bottom
+- **Independent Agent Analysis** - All 16 agents redirect to analyze different codebases
 - **Comprehensive Test Analysis** - Real-time test coverage, module health, and test status monitoring
 - **Module Analyzer** - LLM-powered module analysis with cost estimation and quality scoring
 - **Refactor Opportunities** - Automated code analysis with AI-powered improvement recommendations

@@ -314,6 +314,78 @@
             max-height: 200px;
         }
         
+        /* Bottom Codebase Tabs */
+        .codebase-tabs-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            z-index: 1000;
+            padding: 8px 20px;
+        }
+        
+        .codebase-tabs {
+            display: flex;
+            gap: 2px;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        
+        .codebase-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #334155;
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+            white-space: nowrap;
+            min-width: 120px;
+            max-width: 200px;
+        }
+        
+        .codebase-tab:hover {
+            background: #475569;
+        }
+        
+        .codebase-tab.active {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .codebase-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .codebase-close {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .codebase-close:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        
+        /* Add bottom padding to main content to account for fixed tabs */
+        body {
+            padding-bottom: 50px;
+        }
+        
         @media (max-width: 768px) {
             .tab-groups {
                 grid-template-columns: 1fr;
@@ -328,8 +400,26 @@
 </head>
 <body>
     <div class="header">
-        <h1>🧠 TestMaster Intelligence Command Center</h1>
-        <div class="header-subtitle">Complete Control & Monitoring of 16 Intelligent Agents, 5 Bridge Systems, and Orchestration Framework</div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1>🧠 TestMaster Intelligence Command Center</h1>
+                <div class="header-subtitle">Complete Control & Monitoring of 16 Intelligent Agents, 5 Bridge Systems, and Orchestration Framework</div>
+            </div>
+            <div class="codebase-controls">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label style="font-size: 12px; color: #94a3b8;">Add Codebase:</label>
+                    <input type="text" id="codebase-path-input" placeholder="/path/to/codebase" 
+                           style="padding: 6px 10px; background: rgba(255,255,255,0.1); border: 1px solid #334155; border-radius: 4px; color: #e2e8f0; font-size: 12px; width: 200px;">
+                    <button onclick="addCodebase()" 
+                            style="padding: 6px 12px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                        + Add
+                    </button>
+                </div>
+                <div id="current-codebase" style="font-size: 11px; color: #94a3b8; margin-top: 4px;">
+                    Current: /testmaster
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="tab-container">
@@ -1063,6 +1153,16 @@
         </div>
     </div>
 
+    <!-- Bottom Codebase Tabs -->
+    <div class="codebase-tabs-container">
+        <div class="codebase-tabs" id="codebase-tabs">
+            <div class="codebase-tab active" data-codebase="/testmaster">
+                <span class="codebase-name">TestMaster</span>
+                <span class="codebase-close" onclick="removeCodebase('/testmaster')" title="Close">&times;</span>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Tab switching function
         function switchTab(tabName) {
@@ -1558,6 +1658,234 @@
                 `;
             }, 2000);
         }
+        
+        // Multi-codebase management
+        let activeCodebases = new Map();
+        let currentCodebase = '/testmaster';
+        
+        // Initialize with default codebase
+        activeCodebases.set('/testmaster', {
+            name: 'TestMaster',
+            path: '/testmaster',
+            data: {}
+        });
+        
+        function addCodebase() {
+            const input = document.getElementById('codebase-path-input');
+            const path = input.value.trim();
+            
+            if (!path) {
+                alert('Please enter a codebase path');
+                return;
+            }
+            
+            if (activeCodebases.has(path)) {
+                alert('Codebase already being monitored');
+                return;
+            }
+            
+            if (activeCodebases.size >= 6) {
+                alert('Maximum 6 codebases can be monitored simultaneously');
+                return;
+            }
+            
+            // Add new codebase
+            const name = path.split('/').pop() || path;
+            activeCodebases.set(path, {
+                name: name,
+                path: path,
+                data: {}
+            });
+            
+            // Create tab
+            createCodebaseTab(path, name);
+            
+            // Switch to new codebase
+            switchCodebase(path);
+            
+            // Clear input
+            input.value = '';
+            
+            console.log(`Added codebase: ${name} at ${path}`);
+        }
+        
+        function createCodebaseTab(path, name) {
+            const tabsContainer = document.getElementById('codebase-tabs');
+            
+            const tab = document.createElement('div');
+            tab.className = 'codebase-tab';
+            tab.setAttribute('data-codebase', path);
+            tab.onclick = () => switchCodebase(path);
+            
+            tab.innerHTML = `
+                <span class="codebase-name" title="${path}">${name}</span>
+                <span class="codebase-close" onclick="removeCodebase('${path}')" title="Close">&times;</span>
+            `;
+            
+            tabsContainer.appendChild(tab);
+        }
+        
+        function removeCodebase(path) {
+            event.stopPropagation(); // Prevent tab switching
+            
+            if (activeCodebases.size <= 1) {
+                alert('Cannot remove the last codebase');
+                return;
+            }
+            
+            // Remove from active codebases
+            activeCodebases.delete(path);
+            
+            // Remove tab
+            const tab = document.querySelector(`[data-codebase="${path}"]`);
+            if (tab) {
+                tab.remove();
+            }
+            
+            // If removing current codebase, switch to first available
+            if (currentCodebase === path) {
+                const firstCodebase = Array.from(activeCodebases.keys())[0];
+                switchCodebase(firstCodebase);
+            }
+            
+            console.log(`Removed codebase: ${path}`);
+        }
+        
+        function switchCodebase(path) {
+            if (!activeCodebases.has(path)) {
+                console.error(`Codebase ${path} not found`);
+                return;
+            }
+            
+            // Update active tab
+            document.querySelectorAll('.codebase-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-codebase="${path}"]`).classList.add('active');
+            
+            // Update current codebase
+            currentCodebase = path;
+            const codebase = activeCodebases.get(path);
+            
+            // Update current codebase display
+            document.getElementById('current-codebase').textContent = `Current: ${path}`;
+            
+            // Refresh all data for new codebase
+            refreshCodebaseData(path);
+            
+            console.log(`Switched to codebase: ${codebase.name} at ${path}`);
+        }
+        
+        async function refreshCodebaseData(path) {
+            // Update all tabs with codebase-specific data
+            
+            // Update tests data
+            if (document.querySelector('.tab-button[onclick*="tests"]')?.classList.contains('active') ||
+                document.getElementById('tests-tab')?.classList.contains('active')) {
+                await loadTestsStatus(path);
+            }
+            
+            // Update module analyzer data
+            if (document.querySelector('.tab-button[onclick*="analyzer"]')?.classList.contains('active') ||
+                document.getElementById('analyzer-tab')?.classList.contains('active')) {
+                await loadModuleList(path);
+            }
+            
+            // Update refactor analysis
+            if (document.querySelector('.tab-button[onclick*="refactor"]')?.classList.contains('active') ||
+                document.getElementById('refactor-tab')?.classList.contains('active')) {
+                await loadRefactorAnalysis(path);
+            }
+            
+            // Update metrics (could be codebase-specific in future)
+            // updateCodebaseMetrics(path);
+        }
+        
+        // Override existing functions to include codebase parameter
+        const originalLoadTestsStatus = loadTestsStatus;
+        loadTestsStatus = async function(codebasePath = currentCodebase) {
+            // Call API with codebase parameter
+            const data = await fetchData(`tests/status?codebase=${encodeURIComponent(codebasePath)}`);
+            
+            if (!data) {
+                // Fallback to original function for current codebase
+                if (codebasePath === currentCodebase) {
+                    return await originalLoadTestsStatus();
+                }
+                return;
+            }
+            
+            // Rest of the function remains the same but uses codebase-specific data
+            const grid = document.getElementById('test-status-grid');
+            let greenCount = 0, yellowCount = 0, redCount = 0;
+            
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px;">';
+            data.forEach(module => {
+                const statusColor = module.status === 'green' ? '#10b981' : 
+                                   module.status === 'yellow' ? '#f59e0b' : '#ef4444';
+                html += `
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: rgba(255,255,255,0.05); border-radius: 4px;" title="${module.module}">
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: ${statusColor};"></div>
+                        <span style="font-size: 12px; text-overflow: ellipsis; overflow: hidden;">${module.module.split('/').pop()}</span>
+                        <span style="margin-left: auto; font-size: 11px; opacity: 0.7;">${module.test_count}</span>
+                    </div>
+                `;
+                
+                if (module.status === 'green') greenCount++;
+                else if (module.status === 'yellow') yellowCount++;
+                else redCount++;
+            });
+            html += '</div>';
+            
+            grid.innerHTML = html;
+            
+            // Update metrics
+            document.getElementById('modules-with-tests').textContent = 
+                `${greenCount + yellowCount}/${data.length}`;
+            document.getElementById('passing-tests').textContent = greenCount;
+            document.getElementById('failing-tests').textContent = yellowCount;
+            
+            const coverage = ((greenCount + yellowCount) / data.length * 100).toFixed(1);
+            document.getElementById('overall-coverage').textContent = `${coverage}%`;
+            
+            // Update insights
+            const insights = document.getElementById('test-insights');
+            let insightsHtml = '<div style="font-size: 12px; line-height: 1.4;">';
+            insightsHtml += `<p>📊 <strong>${data.length}</strong> total modules analyzed</p>`;
+            insightsHtml += `<p>✅ <strong>${greenCount}</strong> modules have passing tests</p>`;
+            insightsHtml += `<p>⚠️ <strong>${yellowCount}</strong> modules have failing tests</p>`;
+            insightsHtml += `<p>❌ <strong>${redCount}</strong> modules need tests</p>`;
+            insightsHtml += `<p>📈 Overall test coverage: <strong>${coverage}%</strong></p>`;
+            insightsHtml += '</div>';
+            insights.innerHTML = insightsHtml;
+            
+            // Generate todo list
+            const todoList = document.getElementById('test-todo-list');
+            let todoHtml = '<div style="font-size: 12px;">';
+            if (redCount > 0) {
+                todoHtml += `<p style="margin: 4px 0;">🔴 Create tests for ${redCount} untested modules</p>`;
+            }
+            if (yellowCount > 0) {
+                todoHtml += `<p style="margin: 4px 0;">🟡 Fix ${yellowCount} failing tests</p>`;
+            }
+            if (redCount === 0 && yellowCount === 0) {
+                todoHtml += '<p style="opacity: 0.7;">🎉 All tests are passing!</p>';
+            }
+            todoHtml += '</div>';
+            todoList.innerHTML = todoHtml;
+        };
+        
+        // Add Enter key support for codebase input
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('codebase-path-input');
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        addCodebase();
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>

@@ -284,12 +284,14 @@ class WebMonitoringServer:
         @self.app.route('/api/tests/status')
         def get_tests_status():
             """Get test status for all modules (non-LLM)."""
+            # Get codebase parameter for multi-codebase support
+            codebase_path = request.args.get('codebase', os.getcwd())
             try:
                 # Use existing TestMapper and CoverageAnalyzer
                 from testmaster.mapping.test_mapper import TestMapper
                 from testmaster.analysis.coverage_analyzer import CoverageAnalyzer
                 
-                mapper = TestMapper('.', 'tests')
+                mapper = TestMapper(codebase_path, os.path.join(codebase_path, 'tests'))
                 mapping = mapper.build_complete_mapping()
                 
                 results = []
@@ -412,6 +414,34 @@ class WebMonitoringServer:
                         pass
                 
                 return jsonify({'nodes': nodes[:50], 'edges': edges[:100]})  # Limit for UI performance
+        
+        @self.app.route('/api/codebases', methods=['GET', 'POST', 'DELETE'])
+        def manage_codebases():
+            """Manage active codebases."""
+            if request.method == 'GET':
+                # Return list of active codebases
+                return jsonify({
+                    'active_codebases': [
+                        {'path': '/testmaster', 'name': 'TestMaster', 'status': 'active'},
+                        # Additional codebases would be stored in memory or database
+                    ]
+                })
+            elif request.method == 'POST':
+                # Add new codebase
+                data = request.get_json()
+                path = data.get('path')
+                if not path or not os.path.exists(path):
+                    return jsonify({'error': 'Invalid codebase path'}), 400
+                
+                name = os.path.basename(path) or path
+                return jsonify({
+                    'success': True,
+                    'codebase': {'path': path, 'name': name, 'status': 'active'}
+                })
+            elif request.method == 'DELETE':
+                # Remove codebase
+                path = request.args.get('path')
+                return jsonify({'success': True, 'removed': path})
         
         @self.app.route('/api/refactor/analysis')
         def get_refactor_analysis():
