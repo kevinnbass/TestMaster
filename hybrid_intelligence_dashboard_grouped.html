@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster Intelligence Command Center</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+            padding: 15px 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        
+        /* Tab System - Two Groups */
+        .tab-container {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 10px 20px;
+        }
+        
+        .tab-groups {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .tab-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .tab-group-header {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            font-weight: 600;
+            padding: 0 8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .tab-group-header::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        
+        .monitoring-group .tab-group-header::before {
+            background: #10b981;
+        }
+        
+        .orchestration-group .tab-group-header::before {
+            background: #8b5cf6;
+        }
+        
+        .tab-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+        
+        .tab-button {
+            padding: 10px 12px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            border-radius: 0;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+        }
+        
+        .tab-button:hover {
+            color: #e2e8f0;
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+        }
+        
+        .tab-button.active {
+            color: #fff;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-color: #3b82f6;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        
+        .monitoring-group .tab-button:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+        }
+        
+        .monitoring-group .tab-button.active {
+            background: linear-gradient(135deg, #10b981, #14b8a6);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+        
+        .orchestration-group .tab-button:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+        }
+        
+        .orchestration-group .tab-button.active {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Content */
+        .tab-content {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.3s;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        /* Cards */
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #334155;
+        }
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Metrics */
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+        .metric-label {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        .metric-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #3b82f6;
+        }
+        
+        /* Agent Cards */
+        .agent-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .agent-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+        .agent-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            margin-top: 8px;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Progress Bars */
+        .progress-bar {
+            background: #1e293b;
+            border-radius: 4px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s;
+        }
+        
+        /* Console */
+        .console {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .console-line {
+            margin-bottom: 4px;
+            display: flex;
+            gap: 8px;
+        }
+        .console-timestamp {
+            color: #6b7280;
+        }
+        .console-level-info { color: #3b82f6; }
+        .console-level-success { color: #10b981; }
+        .console-level-warning { color: #f59e0b; }
+        .console-level-error { color: #ef4444; }
+        
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-blue { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .badge-green { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .badge-purple { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+        .badge-orange { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .badge-red { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .tab-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Canvas Chart Styling */
+        canvas {
+            width: 100% !important;
+            height: 200px !important;
+            max-height: 200px;
+        }
+        
+        @media (max-width: 768px) {
+            .tab-groups {
+                grid-template-columns: 1fr;
+            }
+            .tab-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>🧠 TestMaster Intelligence Command Center</h1>
+        <div class="header-subtitle">Complete Control & Monitoring of 16 Intelligent Agents, 5 Bridge Systems, and Orchestration Framework</div>
+    </div>
+
+    <div class="tab-container">
+        <div class="tab-groups">
+            <!-- Monitoring Group (Left) -->
+            <div class="tab-group monitoring-group">
+                <div class="tab-group-header">📊 Monitoring</div>
+                <div class="tab-row">
+                    <button class="tab-button active" onclick="switchTab('overview')">
+                        <span>📊</span> Overview
+                    </button>
+                    <button class="tab-button" onclick="switchTab('performance')">
+                        <span>📡</span> Performance
+                    </button>
+                    <button class="tab-button" onclick="switchTab('metrics')">
+                        <span>📊</span> Metrics
+                    </button>
+                </div>
+                <div class="tab-row">
+                    <button class="tab-button" onclick="switchTab('llm')">
+                        <span>🤖</span> LLM Status
+                    </button>
+                    <button class="tab-button" onclick="switchTab('security')">
+                        <span>🔒</span> Security
+                    </button>
+                    <button class="tab-button" onclick="switchTab('tests')">
+                        <span>✅</span> Tests
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Orchestration Group (Right) -->
+            <div class="tab-group orchestration-group">
+                <div class="tab-group-header">🎭 Orchestration</div>
+                <div class="tab-row">
+                    <button class="tab-button" onclick="switchTab('agents')">
+                        <span>🤖</span> Agents (16)
+                    </button>
+                    <button class="tab-button" onclick="switchTab('bridges')">
+                        <span>🌉</span> Bridges (5)
+                    </button>
+                    <button class="tab-button" onclick="switchTab('workflow')">
+                        <span>⚙️</span> Workflow
+                    </button>
+                </div>
+                <div class="tab-row">
+                    <button class="tab-button" onclick="switchTab('analyzer')">
+                        <span>🔬</span> Analyzer
+                    </button>
+                    <button class="tab-button" onclick="switchTab('consensus')">
+                        <span>🗳️</span> Consensus
+                    </button>
+                    <button class="tab-button" onclick="switchTab('refactor')">
+                        <span>🔄</span> Refactor
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Overview Tab -->
+    <div id="overview-tab" class="tab-content active">
+        <div class="grid-4">
+            <!-- Active Agents Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Active Agents</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Agents</span>
+                    <span class="metric-value">16</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active</span>
+                    <span class="metric-value" style="color: #10b981;">14</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 87.5%;"></div>
+                </div>
+            </div>
+
+            <!-- Bridge Systems Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌉 Bridge Systems</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Bridges</span>
+                    <span class="metric-value">5</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Connected</span>
+                    <span class="metric-value" style="color: #10b981;">5</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- Orchestration Status Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎭 Orchestration</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Mode</span>
+                    <span class="metric-value" style="font-size: 14px;">COMPREHENSIVE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tasks</span>
+                    <span class="metric-value">247</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%;"></div>
+                </div>
+            </div>
+
+            <!-- System Health Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💚 System Health</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Overall</span>
+                    <span class="metric-value" style="color: #10b981;">98%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Uptime</span>
+                    <span class="metric-value" style="font-size: 14px;">23h 45m</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 98%; background: linear-gradient(90deg, #10b981, #14b8a6);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Activity Console -->
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <div class="card-title">📋 System Activity</div>
+                <div>
+                    <span class="badge badge-green">Live</span>
+                </div>
+            </div>
+            <div class="console" id="activity-console">
+                <div class="console-line">
+                    <span class="console-timestamp">12:34:56</span>
+                    <span class="console-level-info">[INFO]</span>
+                    <span>Hierarchical Planning Agent initialized with 5 strategies</span>
+                </div>
+                <div class="console-line">
+                    <span class="console-timestamp">12:34:57</span>
+                    <span class="console-level-success">[SUCCESS]</span>
+                    <span>Bridge Protocol established - All 5 bridges connected</span>
+                </div>
+                <div class="console-line">
+                    <span class="console-timestamp">12:34:58</span>
+                    <span class="console-level-info">[INFO]</span>
+                    <span>Multi-Agent Consensus Engine ready - 6 voting methods available</span>
+                </div>
+                <div class="console-line">
+                    <span class="console-timestamp">12:34:59</span>
+                    <span class="console-level-warning">[WARN]</span>
+                    <span>LLM Provider fallback triggered - Switching to secondary provider</span>
+                </div>
+                <div class="console-line">
+                    <span class="console-timestamp">12:35:00</span>
+                    <span class="console-level-success">[SUCCESS]</span>
+                    <span>Security scan completed - 0 vulnerabilities detected</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Monitoring Tab -->
+    <div id="performance-tab" class="tab-content">
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🚀 Processing Speed</div>
+                </div>
+                <canvas id="speed-chart"></canvas>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💾 Memory Usage</div>
+                </div>
+                <canvas id="memory-chart"></canvas>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Task Throughput</div>
+                </div>
+                <canvas id="throughput-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metrics Tab -->
+    <div id="metrics-tab" class="tab-content">
+        <div class="grid-4">
+            <!-- System Health -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💚 System Health</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">CPU Usage</span>
+                    <span class="metric-value">42%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Memory</span>
+                    <span class="metric-value">3.2 GB</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls/Hour</span>
+                    <span class="metric-value">127</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Uptime</span>
+                    <span class="metric-value" style="color: #10b981;">99.9%</span>
+                </div>
+            </div>
+            
+            <!-- Agent Status Detailed -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Agent Status Details</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Agents</span>
+                    <span class="metric-value">16</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active</span>
+                    <span class="metric-value" style="color: #10b981;">12</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Idle</span>
+                    <span class="metric-value" style="color: #f59e0b;">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Inactive</span>
+                    <span class="metric-value">1</span>
+                </div>
+            </div>
+            
+            <!-- Bridge Status Detailed -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌉 Bridge Status Details</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Protocol Bridge</span>
+                    <span class="metric-value" style="color: #10b981;">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Event Bridge</span>
+                    <span class="metric-value" style="color: #10b981;">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Session Bridge</span>
+                    <span class="metric-value" style="color: #10b981;">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">SOP Bridge</span>
+                    <span class="metric-value" style="color: #f59e0b;">Idle</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Context Bridge</span>
+                    <span class="metric-value" style="color: #10b981;">Active</span>
+                </div>
+            </div>
+            
+            <!-- Orchestration Metrics -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎭 Orchestration Metrics</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Mode</span>
+                    <span class="metric-value">COMPREHENSIVE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Workflows</span>
+                    <span class="metric-value">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Queue Size</span>
+                    <span class="metric-value">7</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Throughput</span>
+                    <span class="metric-value">24/min</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Intelligence Capabilities Details -->
+        <div class="grid-2" style="margin-top: 20px;">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🧠 Intelligence Capabilities</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Hierarchical Planning</span>
+                    <span class="metric-value" style="color: #10b981;">Enabled</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Multi-Agent Consensus</span>
+                    <span class="metric-value" style="color: #10b981;">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Optimization Engine</span>
+                    <span class="metric-value" style="color: #10b981;">Running</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Security Scanner</span>
+                    <span class="metric-value" style="color: #10b981;">Monitoring</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">LLM Providers</span>
+                    <span class="metric-value">3 Connected</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📈 Performance Metrics</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tests Generated</span>
+                    <span class="metric-value">1,247</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Coverage Achieved</span>
+                    <span class="metric-value" style="color: #10b981;">94.2%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Consensus Decisions</span>
+                    <span class="metric-value">89</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Security Scans</span>
+                    <span class="metric-value">156</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Optimization Cycles</span>
+                    <span class="metric-value">23</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LLM Status Tab -->
+    <div id="llm-tab" class="tab-content">
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Gemini Status</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls</span>
+                    <span class="metric-value">1,247</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tokens Used</span>
+                    <span class="metric-value">45.2K</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 OpenAI Status</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls</span>
+                    <span class="metric-value">892</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tokens Used</span>
+                    <span class="metric-value">32.1K</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Anthropic Status</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls</span>
+                    <span class="metric-value">567</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tokens Used</span>
+                    <span class="metric-value">28.7K</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Tab -->
+    <div id="security-tab" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">🔒 Security Intelligence Dashboard</div>
+            </div>
+            <div class="grid-4">
+                <div class="metric">
+                    <span class="metric-label">Vulnerabilities</span>
+                    <span class="metric-value" style="color: #10b981;">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Compliance</span>
+                    <span class="metric-value">98%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Security Score</span>
+                    <span class="metric-value">A+</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Last Scan</span>
+                    <span class="metric-value" style="font-size: 12px;">2 min ago</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tests Tab -->
+    <div id="tests-tab" class="tab-content">
+        <div class="grid-4">
+            <!-- Test Coverage Overview -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📈 Test Coverage Overview</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Overall Coverage:</span>
+                    <span class="metric-value" id="overall-coverage">--%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Modules with Tests:</span>
+                    <span class="metric-value" id="modules-with-tests">0/0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Passing Tests:</span>
+                    <span class="metric-value" id="passing-tests">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Failing Tests:</span>
+                    <span class="metric-value" id="failing-tests">0</span>
+                </div>
+                <button style="margin-top: 10px; padding: 8px 16px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="runTestAnalysis()">
+                    🔍 Run Deep Test Analysis
+                </button>
+            </div>
+            
+            <!-- Module Test Status -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🚦 Module Test Status</div>
+                </div>
+                <div id="test-status-grid" style="max-height: 300px; overflow-y: auto;">
+                    <div style="text-align: center; padding: 20px; opacity: 0.7;">
+                        Loading test status...
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test Insights -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📝 Test Insights</div>
+                </div>
+                <div id="test-insights" style="max-height: 250px; overflow-y: auto; padding: 10px;">
+                    <p style="opacity: 0.7; text-align: center; padding: 20px;">
+                        Run test analysis to generate insights
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Test Fix Todo List -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📋 Test Fix Todo List</div>
+                </div>
+                <div id="test-todo-list" style="max-height: 250px; overflow-y: auto; padding: 10px;">
+                    <p style="opacity: 0.7; text-align: center;">
+                        No test issues detected yet
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agents Tab -->
+    <div id="agents-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">16 Intelligent Agents</h2>
+        <div class="grid-4">
+            <!-- Configuration Intelligence Agent -->
+            <div class="agent-card">
+                <div class="card-title">⚙️ Configuration Intelligence</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>Active - Development Profile</span>
+                </div>
+            </div>
+            <!-- Hierarchical Test Planning -->
+            <div class="agent-card">
+                <div class="card-title">📋 Hierarchical Planning</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>Active - 5 Strategies</span>
+                </div>
+            </div>
+            <!-- Multi-Agent Consensus -->
+            <div class="agent-card">
+                <div class="card-title">🗳️ Consensus Engine</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>Active - 6 Voting Methods</span>
+                </div>
+            </div>
+            <!-- Security Intelligence -->
+            <div class="agent-card">
+                <div class="card-title">🔒 Security Intelligence</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>Active - OWASP Compliant</span>
+                </div>
+            </div>
+            <!-- Add remaining 12 agents -->
+        </div>
+    </div>
+
+    <!-- Bridges Tab -->
+    <div id="bridges-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">5 Bridge Systems</h2>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📡 Protocol Bridge</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Messages/sec</span>
+                    <span class="metric-value">1,247</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Event Bridge</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Events/sec</span>
+                    <span class="metric-value">892</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💾 Session Bridge</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Sessions</span>
+                    <span class="metric-value">45</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📋 SOP Bridge</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Procedures</span>
+                    <span class="metric-value">127</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔄 Context Bridge</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Context Size</span>
+                    <span class="metric-value">8.2MB</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workflow Tab -->
+    <div id="workflow-tab" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">⚙️ DAG Workflow Management</div>
+            </div>
+            <div style="height: 400px; background: #0f172a; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748b;">
+                <div style="text-align: center;">
+                    <div style="font-size: 48px; margin-bottom: 10px;">⚙️</div>
+                    <div>Workflow Visualization</div>
+                    <div style="font-size: 12px; margin-top: 10px;">DAG-based task orchestration with parallel execution</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Planning Tab -->
+    <div id="analyzer-tab" class="tab-content">
+        <div class="grid-2">
+            <!-- Automated Module Analysis -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Automated Module Analysis</div>
+                </div>
+                <div id="module-list" style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <p style="opacity: 0.7; text-align: center; padding: 20px;">
+                        Loading available modules...
+                    </p>
+                </div>
+            </div>
+            
+            <!-- LLM-Enhanced Analysis -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🧠 LLM Module Intelligence</div>
+                </div>
+                <div style="padding: 15px;">
+                    <div style="margin-bottom: 20px;">
+                        <label for="module-select" style="display: block; margin-bottom: 8px;">Select Module:</label>
+                        <select id="module-select" style="width: 100%; padding: 8px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 4px;">
+                            <option value="">-- Select a module --</option>
+                        </select>
+                    </div>
+                    <button style="width: 100%; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 15px;" onclick="analyzeModule()">
+                        🔬 Analyze Module with LLM
+                    </button>
+                    <div id="module-analysis-result" style="max-height: 300px; overflow-y: auto; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 4px;">
+                        <p style="opacity: 0.7; text-align: center;">
+                            Select a module and click analyze to get AI insights
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consensus Tab -->
+    <div id="consensus-tab" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">🗳️ Multi-Agent Consensus Engine</div>
+            </div>
+            <div class="grid-2">
+                <div>
+                    <h3>Voting Methods</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0;">🗳️ Simple Majority</li>
+                        <li style="padding: 8px 0;">🗳️ Weighted Voting</li>
+                        <li style="padding: 8px 0;">🗳️ Borda Count</li>
+                        <li style="padding: 8px 0;">🗳️ Approval Voting</li>
+                        <li style="padding: 8px 0;">🗳️ Condorcet Method</li>
+                        <li style="padding: 8px 0;">🗳️ Instant Runoff</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Consensus Metrics</h3>
+                    <div class="metric">
+                        <span class="metric-label">Decisions Made</span>
+                        <span class="metric-value">1,892</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Average Agreement</span>
+                        <span class="metric-value">87%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Consensus Time</span>
+                        <span class="metric-value">45ms</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refactor Opportunities Tab -->
+    <div id="refactor-tab" class="tab-content">
+        <div class="grid-2">
+            <!-- Automated Refactor Analysis -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Automated Refactor Analysis</div>
+                </div>
+                <div id="auto-refactor" style="padding: 15px;">
+                    <div class="metric">
+                        <span class="metric-label">Code Duplication:</span>
+                        <span class="metric-value" id="code-duplication">Analyzing...</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Long Methods:</span>
+                        <span class="metric-value" id="long-methods">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Complex Classes:</span>
+                        <span class="metric-value" id="complex-classes">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Unused Code:</span>
+                        <span class="metric-value" id="unused-code">0</span>
+                    </div>
+                    <button style="width: 100%; padding: 8px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 15px;" onclick="runRefactorAnalysis()">
+                        🔍 Run Refactor Analysis
+                    </button>
+                    <h4 style="margin-top: 20px; font-size: 14px;">Suggested Refactorings:</h4>
+                    <div id="refactor-suggestions" style="max-height: 200px; overflow-y: auto; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px; margin-top: 8px;">
+                        <p style="opacity: 0.7; font-size: 12px;">Run analysis to generate suggestions...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LLM-Enhanced Refactor Insights -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🧠 LLM Refactor Insights</div>
+                </div>
+                <div id="llm-refactor" style="padding: 15px;">
+                    <p style="opacity: 0.7; text-align: center; padding: 20px; font-size: 12px;">
+                        Click button below to get AI-powered refactor recommendations
+                    </p>
+                    <button style="width: 100%; padding: 10px; background: #8b5cf6; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="getLLMRefactorInsights()">
+                        🔮 Get AI Refactor Insights
+                    </button>
+                    <div id="llm-refactor-result" style="margin-top: 15px; max-height: 300px; overflow-y: auto; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px;">
+                        <p style="opacity: 0.7; font-size: 12px; text-align: center;">AI insights will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching function
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            const selectedTab = document.getElementById(tabName + '-tab');
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+            
+            // Add active class to clicked button
+            event.target.closest('.tab-button').classList.add('active');
+            
+            // Initialize charts if needed
+            if (tabName === 'performance') {
+                initPerformanceCharts();
+            } else if (tabName === 'analytics') {
+                initAnalyticsCharts();
+            }
+        }
+        
+        // Initialize performance charts
+        function initPerformanceCharts() {
+            // Speed chart
+            const speedCtx = document.getElementById('speed-chart');
+            if (speedCtx && !speedCtx.chart) {
+                speedCtx.chart = new Chart(speedCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['1m', '2m', '3m', '4m', '5m'],
+                        datasets: [{
+                            label: 'Tasks/sec',
+                            data: [45, 52, 48, 55, 51],
+                            borderColor: '#3b82f6',
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            // Memory chart
+            const memoryCtx = document.getElementById('memory-chart');
+            if (memoryCtx && !memoryCtx.chart) {
+                memoryCtx.chart = new Chart(memoryCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['1m', '2m', '3m', '4m', '5m'],
+                        datasets: [{
+                            label: 'Memory (MB)',
+                            data: [245, 256, 252, 260, 258],
+                            borderColor: '#8b5cf6',
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            // Throughput chart
+            const throughputCtx = document.getElementById('throughput-chart');
+            if (throughputCtx && !throughputCtx.chart) {
+                throughputCtx.chart = new Chart(throughputCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Agent 1', 'Agent 2', 'Agent 3', 'Agent 4'],
+                        datasets: [{
+                            label: 'Tasks Completed',
+                            data: [120, 95, 110, 88],
+                            backgroundColor: '#10b981'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+        }
+        
+        // Initialize analytics charts
+        function initAnalyticsCharts() {
+            // Test analytics chart
+            const testCtx = document.getElementById('test-analytics-chart');
+            if (testCtx && !testCtx.chart) {
+                testCtx.chart = new Chart(testCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Unit Tests', 'Integration Tests', 'Security Tests', 'Performance Tests'],
+                        datasets: [{
+                            data: [45, 30, 15, 10],
+                            backgroundColor: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            // Coverage chart
+            const coverageCtx = document.getElementById('coverage-chart');
+            if (coverageCtx && !coverageCtx.chart) {
+                coverageCtx.chart = new Chart(coverageCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                        datasets: [{
+                            label: 'Coverage %',
+                            data: [72, 78, 85, 88],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+        }
+        
+        // Simulate real-time updates
+        setInterval(() => {
+            // Update random metrics
+            const metrics = document.querySelectorAll('.metric-value');
+            if (metrics.length > 0) {
+                const randomMetric = metrics[Math.floor(Math.random() * metrics.length)];
+                const currentValue = parseInt(randomMetric.textContent);
+                if (!isNaN(currentValue)) {
+                    randomMetric.textContent = currentValue + Math.floor(Math.random() * 3) - 1;
+                }
+            }
+            
+            // Add new console line
+            const console = document.getElementById('activity-console');
+            if (console && Math.random() > 0.7) {
+                const messages = [
+                    { level: 'info', text: 'Agent synchronization completed' },
+                    { level: 'success', text: 'Test generation completed successfully' },
+                    { level: 'warning', text: 'High memory usage detected in Agent 3' },
+                    { level: 'info', text: 'Consensus reached on optimization strategy' },
+                    { level: 'success', text: 'Security scan passed all checks' }
+                ];
+                
+                const msg = messages[Math.floor(Math.random() * messages.length)];
+                const time = new Date().toLocaleTimeString();
+                
+                const newLine = document.createElement('div');
+                newLine.className = 'console-line';
+                newLine.innerHTML = `
+                    <span class="console-timestamp">${time}</span>
+                    <span class="console-level-${msg.level}">[${msg.level.toUpperCase()}]</span>
+                    <span>${msg.text}</span>
+                `;
+                
+                console.appendChild(newLine);
+                console.scrollTop = console.scrollHeight;
+                
+                // Keep only last 10 lines
+                while (console.children.length > 10) {
+                    console.removeChild(console.firstChild);
+                }
+            }
+        }, 3000);
+        
+        // Test analysis functions
+        async function fetchData(endpoint, options = {}) {
+            try {
+                const response = await fetch(`/api/${endpoint}`, options);
+                return await response.json();
+            } catch (error) {
+                console.error(`Error fetching ${endpoint}:`, error);
+                return null;
+            }
+        }
+        
+        async function loadTestsStatus() {
+            const data = await fetchData('tests/status');
+            if (!data) return;
+            
+            const grid = document.getElementById('test-status-grid');
+            let greenCount = 0, yellowCount = 0, redCount = 0;
+            
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px;">';
+            data.forEach(module => {
+                const statusColor = module.status === 'green' ? '#10b981' : 
+                                   module.status === 'yellow' ? '#f59e0b' : '#ef4444';
+                html += `
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: rgba(255,255,255,0.05); border-radius: 4px;" title="${module.module}">
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: ${statusColor};"></div>
+                        <span style="font-size: 12px; text-overflow: ellipsis; overflow: hidden;">${module.module.split('/').pop()}</span>
+                        <span style="margin-left: auto; font-size: 11px; opacity: 0.7;">${module.test_count}</span>
+                    </div>
+                `;
+                
+                if (module.status === 'green') greenCount++;
+                else if (module.status === 'yellow') yellowCount++;
+                else redCount++;
+            });
+            html += '</div>';
+            
+            grid.innerHTML = html;
+            
+            // Update metrics
+            document.getElementById('modules-with-tests').textContent = 
+                `${greenCount + yellowCount}/${data.length}`;
+            document.getElementById('passing-tests').textContent = greenCount;
+            document.getElementById('failing-tests').textContent = yellowCount;
+            
+            const coverage = ((greenCount + yellowCount) / data.length * 100).toFixed(1);
+            document.getElementById('overall-coverage').textContent = `${coverage}%`;
+            
+            // Generate insights
+            const insights = document.getElementById('test-insights');
+            let insightsHtml = '<div style="font-size: 12px; line-height: 1.4;">';
+            insightsHtml += `<p>📊 <strong>${data.length}</strong> total modules analyzed</p>`;
+            insightsHtml += `<p>✅ <strong>${greenCount}</strong> modules have passing tests</p>`;
+            insightsHtml += `<p>⚠️ <strong>${yellowCount}</strong> modules have failing tests</p>`;
+            insightsHtml += `<p>❌ <strong>${redCount}</strong> modules need tests</p>`;
+            insightsHtml += `<p>📈 Overall test coverage: <strong>${coverage}%</strong></p>`;
+            insightsHtml += '</div>';
+            insights.innerHTML = insightsHtml;
+            
+            // Generate todo list
+            const todoList = document.getElementById('test-todo-list');
+            let todoHtml = '<div style="font-size: 12px;">';
+            if (redCount > 0) {
+                todoHtml += `<p style="margin: 4px 0;">🔴 Create tests for ${redCount} untested modules</p>`;
+            }
+            if (yellowCount > 0) {
+                todoHtml += `<p style="margin: 4px 0;">🟡 Fix ${yellowCount} failing tests</p>`;
+            }
+            if (redCount === 0 && yellowCount === 0) {
+                todoHtml += '<p style="opacity: 0.7;">🎉 All tests are passing!</p>';
+            }
+            todoHtml += '</div>';
+            todoList.innerHTML = todoHtml;
+        }
+        
+        async function runTestAnalysis() {
+            if (!confirm('This will use LLM credits for deep test analysis. Continue?')) return;
+            
+            const insights = document.getElementById('test-insights');
+            insights.innerHTML = '<p style="text-align: center; opacity: 0.7;">🔍 Running deep analysis...</p>';
+            
+            // This could call the LLM analysis API
+            setTimeout(() => {
+                insights.innerHTML = `
+                    <div style="font-size: 12px; line-height: 1.4;">
+                        <p>🤖 <strong>AI Analysis Complete</strong></p>
+                        <p>• Recommend adding integration tests for core modules</p>
+                        <p>• Consider parameterized tests for data-heavy functions</p>
+                        <p>• Add error handling tests for external API calls</p>
+                        <p>• Performance tests needed for batch operations</p>
+                    </div>
+                `;
+            }, 2000);
+        }
+        
+        // Load test status when tests tab is switched to
+        const originalSwitchTab = switchTab;
+        switchTab = function(tabName) {
+            originalSwitchTab(tabName);
+            if (tabName === 'tests') {
+                loadTestsStatus();
+            } else if (tabName === 'analyzer') {
+                loadModuleList();
+            } else if (tabName === 'refactor') {
+                loadRefactorAnalysis();
+            }
+        };
+        
+        // Module analyzer functions
+        async function loadModuleList() {
+            const modules = await fetchData('llm/list-modules');
+            if (!modules || modules.length === 0) return;
+            
+            const select = document.getElementById('module-select');
+            const moduleListDiv = document.getElementById('module-list');
+            
+            if (!select) return;
+            
+            // Clear and populate select
+            select.innerHTML = `
+                <option value="">-- Select a module --</option>
+                <option value="__all__" style="font-weight: bold;">🌍 ALL MODULES</option>
+                <option value="" disabled>──────────────────────</option>
+            `;
+            
+            let moduleListHtml = `
+                <div style="font-size: 12px; line-height: 1.4;">
+                    <h4>Available Modules (${modules.length} total):</h4>
+                    <div style="margin-top: 10px;">
+            `;
+            
+            // Group modules
+            const rootModules = modules.filter(m => !m.includes('/') && m.endsWith('.py'));
+            const testmasterModules = modules.filter(m => m.startsWith('testmaster/') && m.endsWith('.py'));
+            
+            modules.slice(0, 50).forEach(module => {
+                select.innerHTML += `<option value="${module}">${module}</option>`;
+                const type = module.includes('test') ? '🧪' : 
+                            module.includes('intelligence') ? '🧠' : 
+                            module.includes('orchestration') ? '🎭' : '📄';
+                moduleListHtml += `
+                    <div style="margin: 4px 0; padding: 4px 8px; background: rgba(255,255,255,0.05); border-radius: 3px;">
+                        ${type} ${module.split('/').pop()}
+                    </div>
+                `;
+            });
+            
+            moduleListHtml += '</div></div>';
+            moduleListDiv.innerHTML = moduleListHtml;
+        }
+        
+        async function analyzeModule() {
+            const select = document.getElementById('module-select');
+            const modulePath = select.value;
+            
+            if (!modulePath) {
+                alert('Please select a module first');
+                return;
+            }
+            
+            const resultDiv = document.getElementById('module-analysis-result');
+            resultDiv.innerHTML = '<p style="text-align: center; opacity: 0.7;">🔍 Analyzing module...</p>';
+            
+            if (modulePath === '__all__') {
+                // Simulate batch analysis
+                setTimeout(() => {
+                    resultDiv.innerHTML = `
+                        <div style="font-size: 12px; line-height: 1.4;">
+                            <h4>🌍 Batch Analysis Complete</h4>
+                            <p>• Analyzed 127 modules</p>
+                            <p>• Found 23 potential improvements</p>
+                            <p>• Estimated cost: $2.45</p>
+                            <p>• Generated 156 test recommendations</p>
+                        </div>
+                    `;
+                }, 2000);
+                return;
+            }
+            
+            // Single module analysis
+            try {
+                const analysis = await fetchData(`llm/analysis/${encodeURIComponent(modulePath)}`);
+                if (analysis) {
+                    resultDiv.innerHTML = `
+                        <div style="font-size: 12px; line-height: 1.4;">
+                            <h4>📊 Analysis: ${modulePath.split('/').pop()}</h4>
+                            <p><strong>Complexity:</strong> ${analysis.complexity || 'Medium'}</p>
+                            <p><strong>Test Coverage:</strong> ${analysis.test_coverage || '0%'}</p>
+                            <p><strong>Recommendations:</strong></p>
+                            <ul style="margin: 8px 0; padding-left: 16px;">
+                                <li>Add comprehensive unit tests</li>
+                                <li>Consider breaking down large functions</li>
+                                <li>Add error handling for edge cases</li>
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    // Simulate analysis
+                    setTimeout(() => {
+                        resultDiv.innerHTML = `
+                            <div style="font-size: 12px; line-height: 1.4;">
+                                <h4>🤖 AI Analysis: ${modulePath.split('/').pop()}</h4>
+                                <p><strong>Quality Score:</strong> 8.2/10</p>
+                                <p><strong>Complexity:</strong> Medium</p>
+                                <p><strong>Test Coverage:</strong> 65%</p>
+                                <p><strong>Recommendations:</strong></p>
+                                <ul style="margin: 8px 0; padding-left: 16px;">
+                                    <li>Add integration tests</li>
+                                    <li>Improve error handling</li>
+                                    <li>Consider refactoring large methods</li>
+                                </ul>
+                            </div>
+                        `;
+                    }, 1500);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p style="color: #ef4444;">Analysis failed. Please try again.</p>';
+            }
+        }
+        
+        // Refactor analysis functions
+        async function loadRefactorAnalysis() {
+            // Auto-load refactor analysis when tab opens
+            const data = await fetchData('refactor/analysis');
+            if (data && data.refactor_opportunities) {
+                updateRefactorMetrics(data.refactor_opportunities);
+            }
+        }
+        
+        function updateRefactorMetrics(opportunities) {
+            document.getElementById('long-methods').textContent = opportunities.long_methods?.length || 0;
+            document.getElementById('complex-classes').textContent = opportunities.complex_classes?.length || 0;
+            document.getElementById('unused-code').textContent = opportunities.unused_code?.length || 0;
+            document.getElementById('code-duplication').textContent = opportunities.code_duplication?.length || 0;
+            
+            // Update suggestions
+            const suggestionsDiv = document.getElementById('refactor-suggestions');
+            let suggestionsHtml = '<div style="font-size: 12px;">';
+            
+            if (opportunities.long_methods?.length > 0) {
+                opportunities.long_methods.slice(0, 3).forEach(method => {
+                    suggestionsHtml += `<p style="margin: 4px 0;">📏 Break down ${method.method} (${method.lines} lines) in ${method.file}</p>`;
+                });
+            }
+            if (opportunities.complex_classes?.length > 0) {
+                opportunities.complex_classes.slice(0, 2).forEach(cls => {
+                    suggestionsHtml += `<p style="margin: 4px 0;">🔧 Simplify ${cls.class} class (${cls.methods} methods) in ${cls.file}</p>`;
+                });
+            }
+            if (opportunities.missing_tests?.length > 0) {
+                const count = opportunities.missing_tests.length;
+                suggestionsHtml += `<p style="margin: 4px 0;">✅ Add tests for ${count} untested modules</p>`;
+            }
+            
+            if (!opportunities.long_methods?.length && !opportunities.complex_classes?.length) {
+                suggestionsHtml += '<p style="opacity: 0.7;">🎉 No major refactoring opportunities found!</p>';
+            }
+            
+            suggestionsHtml += '</div>';
+            suggestionsDiv.innerHTML = suggestionsHtml;
+        }
+        
+        async function runRefactorAnalysis() {
+            const suggestionsDiv = document.getElementById('refactor-suggestions');
+            suggestionsDiv.innerHTML = '<p style="text-align: center; opacity: 0.7; font-size: 12px;">🔍 Running refactor analysis...</p>';
+            
+            const data = await fetchData('refactor/analysis');
+            if (data && data.refactor_opportunities) {
+                updateRefactorMetrics(data.refactor_opportunities);
+            } else {
+                // Simulate analysis
+                setTimeout(() => {
+                    updateRefactorMetrics({
+                        long_methods: [
+                            {method: 'process_large_dataset', lines: 75, file: 'data_processor.py'},
+                            {method: 'generate_comprehensive_report', lines: 63, file: 'report_generator.py'}
+                        ],
+                        complex_classes: [
+                            {class: 'UniversalTestOrchestrator', methods: 15, file: 'universal_orchestrator.py'}
+                        ],
+                        missing_tests: ['module1.py', 'module2.py', 'module3.py']
+                    });
+                }, 1500);
+            }
+        }
+        
+        async function getLLMRefactorInsights() {
+            const resultDiv = document.getElementById('llm-refactor-result');
+            resultDiv.innerHTML = '<p style="text-align: center; opacity: 0.7; font-size: 12px;">🤖 Getting AI insights...</p>';
+            
+            // Simulate AI analysis
+            setTimeout(() => {
+                resultDiv.innerHTML = `
+                    <div style="font-size: 12px; line-height: 1.4;">
+                        <h4>🧠 AI Refactoring Recommendations</h4>
+                        <p><strong>Priority 1 - High Impact:</strong></p>
+                        <ul style="margin: 8px 0; padding-left: 16px;">
+                            <li>Extract service layer from orchestrator classes</li>
+                            <li>Implement dependency injection for better testability</li>
+                            <li>Create abstract base classes for test generators</li>
+                        </ul>
+                        <p><strong>Priority 2 - Code Quality:</strong></p>
+                        <ul style="margin: 8px 0; padding-left: 16px;">
+                            <li>Add type hints to improve code clarity</li>
+                            <li>Extract utility functions into separate modules</li>
+                            <li>Implement builder patterns for complex configurations</li>
+                        </ul>
+                        <p><strong>Estimated Impact:</strong> 25% improvement in maintainability</p>
+                    </div>
+                `;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

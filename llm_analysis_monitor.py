@@ -116,9 +116,16 @@ class LLMAnalysisMonitor:
         if GENAI_AVAILABLE and self.api_key and not demo_mode:
             try:
                 genai.configure(api_key=self.api_key)
-                self.gemini_model = genai.GenerativeModel('gemini-1.5-pro')
+                # Try gemini-2.5-pro first, fallback to 1.5-pro if not available
+                try:
+                    self.gemini_model = genai.GenerativeModel('models/gemini-2.5-pro')
+                    self.model_name = 'gemini-2.5-pro'
+                    print("[PASS] Gemini SDK initialized with gemini-2.5-pro")
+                except Exception:
+                    self.gemini_model = genai.GenerativeModel('gemini-1.5-pro')
+                    self.model_name = 'gemini-1.5-pro'
+                    print("[PASS] Gemini SDK initialized with gemini-1.5-pro (fallback)")
                 self.gemini_available = True
-                print("[PASS] Gemini SDK initialized successfully")
             except Exception as e:
                 print(f"[FAIL] Gemini SDK initialization failed: {e}")
         
@@ -231,12 +238,12 @@ class LLMAnalysisMonitor:
                 # Update metrics
                 self._update_metrics()
                 
-                # Run periodic module analysis
-                if current_time - last_analysis_time >= self.analysis_interval:
-                    self._run_periodic_analysis()
-                    last_analysis_time = current_time
+                # DISABLED: Automatic periodic analysis (too costly)
+                # if current_time - last_analysis_time >= self.analysis_interval:
+                #     self._run_periodic_analysis()
+                #     last_analysis_time = current_time
                 
-                # Process analysis queue
+                # Process analysis queue (only manual requests)
                 self._process_analysis_queue()
                 
                 time.sleep(1)  # Update every second
@@ -334,7 +341,7 @@ class LLMAnalysisMonitor:
             # Track the API call
             self.track_api_call(
                 provider=LLMProvider.GEMINI,
-                model="gemini-1.5-pro",
+                model=self.model_name if hasattr(self, 'model_name') else 'gemini-1.5-pro',
                 analysis_type=AnalysisType.MODULE_ANALYSIS,
                 input_tokens=input_tokens,
                 output_tokens=output_tokens,
@@ -365,7 +372,7 @@ class LLMAnalysisMonitor:
                     optimization_suggestions=analysis_data.get('optimization_suggestions', []),
                     analysis_summary=analysis_data.get('analysis_summary', 'Analysis completed'),
                     quality_score=float(analysis_data.get('quality_score', 70.0)),
-                    llm_model_used="gemini-1.5-pro"
+                    llm_model_used=self.model_name if hasattr(self, 'model_name') else 'gemini-1.5-pro'
                 )
                 
                 self.analysis_results[module_path] = analysis
@@ -383,7 +390,7 @@ class LLMAnalysisMonitor:
                     optimization_suggestions=[],
                     analysis_summary=response.text[:200] + "...",
                     quality_score=70.0,
-                    llm_model_used="gemini-1.5-pro"
+                    llm_model_used=self.model_name if hasattr(self, 'model_name') else 'gemini-1.5-pro'
                 )
                 
                 self.analysis_results[module_path] = analysis
@@ -526,24 +533,24 @@ class LLMAnalysisMonitor:
         recent_calls = [call for call in self.api_calls 
                        if (datetime.now() - call.timestamp).total_seconds() < 3600]  # Last hour
         
+        # Always update metrics even if no recent calls
+        self.current_metrics.total_calls = len(self.api_calls)
+        self.current_metrics.successful_calls = len([c for c in self.api_calls if c.success])
+        self.current_metrics.failed_calls = len([c for c in self.api_calls if not c.success])
+        self.current_metrics.total_input_tokens = sum(c.input_tokens for c in self.api_calls)
+        self.current_metrics.total_output_tokens = sum(c.output_tokens for c in self.api_calls)
+        self.current_metrics.total_cost_estimate = sum(c.cost_estimate for c in self.api_calls)
+        
         if recent_calls:
-            self.current_metrics.total_calls = len(self.api_calls)
-            self.current_metrics.successful_calls = len([c for c in self.api_calls if c.success])
-            self.current_metrics.failed_calls = len([c for c in self.api_calls if not c.success])
-            self.current_metrics.total_input_tokens = sum(c.input_tokens for c in self.api_calls)
-            self.current_metrics.total_output_tokens = sum(c.output_tokens for c in self.api_calls)
-            self.current_metrics.total_cost_estimate = sum(c.cost_estimate for c in self.api_calls)
+            self.current_metrics.avg_response_time_ms = sum(c.duration_ms for c in recent_calls) / len(recent_calls)
             
-            if recent_calls:
-                self.current_metrics.avg_response_time_ms = sum(c.duration_ms for c in recent_calls) / len(recent_calls)
-                
-                # Calls per minute (last 5 minutes)
-                recent_5min = [c for c in recent_calls 
-                              if (datetime.now() - c.timestamp).total_seconds() < 300]
-                self.current_metrics.calls_per_minute = len(recent_5min) / 5.0
-            
-            self.current_metrics.active_analyses = len(self.active_analyses)
-            self.current_metrics.timestamp = datetime.now()
+            # Calls per minute (last 5 minutes)
+            recent_5min = [c for c in recent_calls 
+                          if (datetime.now() - c.timestamp).total_seconds() < 300]
+            self.current_metrics.calls_per_minute = len(recent_5min) / 5.0
+        
+        self.current_metrics.active_analyses = len(self.active_analyses)
+        self.current_metrics.timestamp = datetime.now()
     
     def get_llm_metrics_summary(self) -> Dict[str, Any]:
         """Get comprehensive LLM metrics summary."""

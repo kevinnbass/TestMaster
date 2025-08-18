@@ -52,6 +52,11 @@ class WebMonitoringServer:
         self.monitor = RealTimeMonitor(MonitoringMode.FULL, update_interval=2.0)
         self.monitor_thread = None
         
+        # Start LLM monitoring if available
+        if hasattr(self.monitor, 'llm_monitor') and self.monitor.llm_monitor:
+            self.monitor.llm_monitor.start_monitoring()
+            logger.info("LLM Analysis Monitor started")
+        
         # Configure routes
         self._setup_routes()
         
@@ -66,6 +71,28 @@ class WebMonitoringServer:
         @self.app.route('/')
         def dashboard():
             """Main dashboard page."""
+            # Serve new grouped hybrid intelligence dashboard
+            import os
+            grouped_path = 'hybrid_intelligence_dashboard_grouped.html'
+            if os.path.exists(grouped_path):
+                with open(grouped_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    return f.read()
+            # Fallback to hybrid intelligence dashboard for comprehensive view
+            hybrid_path = 'hybrid_intelligence_dashboard.html'
+            if os.path.exists(hybrid_path):
+                with open(hybrid_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    return f.read()
+            # Fallback to complete dashboard
+            dashboard_path = 'complete_dashboard.html'
+            if os.path.exists(dashboard_path):
+                with open(dashboard_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    return f.read()
+            # Fallback to enhanced dashboard
+            enhanced_path = 'enhanced_dashboard_full.html'
+            if os.path.exists(enhanced_path):
+                with open(enhanced_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    return f.read()
+            # Fallback to embedded dashboard
             return render_template_string(DASHBOARD_HTML)
         
         @self.app.route('/api/metrics')
@@ -204,6 +231,260 @@ class WebMonitoringServer:
                     return jsonify({'status': 'queued', 'module_path': module_path})
                 else:
                     return jsonify({'error': 'LLM monitor not available'}), 503
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
+        
+        @self.app.route('/api/llm/list-modules')
+        def list_llm_modules():
+            """List available Python modules for analysis."""
+            try:
+                import glob
+                modules = []
+                for pattern in ['*.py', 'testmaster/**/*.py']:
+                    for file in glob.glob(pattern, recursive=True):
+                        if '__pycache__' not in file and '.pyc' not in file:
+                            modules.append(file.replace('\\', '/'))
+                return jsonify(sorted(modules)[:100])  # Limit to 100 files
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
+        
+        @self.app.route('/api/llm/estimate-cost', methods=['POST'])
+        def estimate_llm_cost():
+            """Estimate cost for analyzing a module."""
+            try:
+                data = request.get_json()
+                module_path = data.get('module_path')
+                
+                if not module_path:
+                    return jsonify({'error': 'module_path required'}), 400
+                
+                # Read file to estimate size
+                import os
+                if os.path.exists(module_path):
+                    with open(module_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    
+                    # Estimate tokens (roughly 4 chars per token)
+                    estimated_tokens = len(content) // 4 + 500  # Add overhead for prompt
+                    # Gemini 2.5 Pro costs approximately $0.00025 per 1K input tokens
+                    estimated_cost = (estimated_tokens / 1000) * 0.00025 * 2  # x2 for output
+                    
+                    return jsonify({
+                        'module_path': module_path,
+                        'file_size_bytes': len(content),
+                        'estimated_tokens': estimated_tokens,
+                        'estimated_cost_usd': round(estimated_cost, 4),
+                        'model': 'gemini-2.5-pro'
+                    })
+                else:
+                    return jsonify({'error': 'Module file not found'}), 404
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
+        
+        @self.app.route('/api/tests/status')
+        def get_tests_status():
+            """Get test status for all modules (non-LLM)."""
+            try:
+                # Use existing TestMapper and CoverageAnalyzer
+                from testmaster.mapping.test_mapper import TestMapper
+                from testmaster.analysis.coverage_analyzer import CoverageAnalyzer
+                
+                mapper = TestMapper('.', 'tests')
+                mapping = mapper.build_complete_mapping()
+                
+                results = []
+                for module_path, tests in mapping.module_to_tests.items():
+                    status = 'green' if len(tests) > 0 else 'red'
+                    if len(tests) > 0:
+                        # Check if tests pass
+                        passed = all(test.last_passed for test in tests.values() if test.last_passed is not None)
+                        if not passed:
+                            status = 'yellow'
+                    
+                    results.append({
+                        'module': module_path,
+                        'status': status,
+                        'test_count': len(tests),
+                        'tests': list(tests.keys())
+                    })
+                
+                return jsonify(results)
+            except Exception as e:
+                # Fallback to simple analysis
+                import glob
+                modules = glob.glob('**/*.py', recursive=True)
+                results = []
+                for module in modules[:50]:  # Limit to 50 for performance
+                    test_file = module.replace('.py', '_test.py')
+                    if os.path.exists(test_file):
+                        status = 'green'
+                    elif 'test' in module.lower():
+                        continue
+                    else:
+                        status = 'red'
+                    results.append({
+                        'module': module,
+                        'status': status,
+                        'test_count': 1 if status == 'green' else 0
+                    })
+                return jsonify(results)
+        
+        @self.app.route('/api/dependencies/graph')
+        def get_dependency_graph():
+            """Get module dependency graph (non-LLM)."""
+            try:
+                from testmaster.mapping.dependency_tracker import DependencyTracker
+                import networkx as nx
+                
+                tracker = DependencyTracker('.')
+                graph = tracker.build_dependency_graph()
+                
+                # Convert NetworkX graph to JSON-serializable format
+                nodes = []
+                edges = []
+                
+                for node in graph.nodes():
+                    nodes.append({
+                        'id': node,
+                        'label': node.split('/')[-1] if '/' in node else node
+                    })
+                
+                for source, target in graph.edges():
+                    edges.append({
+                        'source': source,
+                        'target': target
+                    })
+                
+                # Calculate additional metrics
+                circular_deps = 0
+                isolated_modules = 0
+                
+                try:
+                    # Check for circular dependencies
+                    cycles = list(nx.simple_cycles(graph))
+                    circular_deps = len(cycles)
+                    
+                    # Find isolated modules (no edges)
+                    for node in graph.nodes():
+                        if graph.degree(node) == 0:
+                            isolated_modules += 1
+                except:
+                    pass
+                
+                return jsonify({
+                    'nodes': nodes,
+                    'edges': edges,
+                    'metrics': {
+                        'circular_dependencies': circular_deps,
+                        'isolated_modules': isolated_modules
+                    }
+                })
+            except Exception as e:
+                # Fallback to simple import analysis
+                import ast
+                nodes = []
+                edges = []
+                modules_seen = set()
+                
+                import glob
+                for file_path in glob.glob('**/*.py', recursive=True)[:30]:  # Limit for performance
+                    if 'test' in file_path.lower():
+                        continue
+                    
+                    module_name = file_path.replace('.py', '').replace('/', '.')
+                    if module_name not in modules_seen:
+                        nodes.append({'id': module_name, 'label': module_name.split('.')[-1]})
+                        modules_seen.add(module_name)
+                    
+                    try:
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            tree = ast.parse(f.read())
+                        
+                        for node in ast.walk(tree):
+                            if isinstance(node, ast.Import):
+                                for alias in node.names:
+                                    target = alias.name
+                                    if target not in modules_seen:
+                                        nodes.append({'id': target, 'label': target.split('.')[-1]})
+                                        modules_seen.add(target)
+                                    edges.append({'source': module_name, 'target': target})
+                    except:
+                        pass
+                
+                return jsonify({'nodes': nodes[:50], 'edges': edges[:100]})  # Limit for UI performance
+        
+        @self.app.route('/api/refactor/analysis')
+        def get_refactor_analysis():
+            """Get automated refactor opportunity analysis (non-LLM)."""
+            try:
+                import ast
+                import glob
+                
+                refactor_opportunities = {
+                    'code_duplication': [],
+                    'long_methods': [],
+                    'complex_classes': [],
+                    'unused_code': [],
+                    'missing_tests': []
+                }
+                
+                # Analyze Python files for refactor opportunities
+                for file_path in glob.glob('**/*.py', recursive=True)[:30]:  # Limit for performance
+                    if '__pycache__' in file_path or 'test' in file_path.lower():
+                        continue
+                    
+                    try:
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            content = f.read()
+                            tree = ast.parse(content)
+                        
+                        # Check for long methods (>50 lines)
+                        for node in ast.walk(tree):
+                            if isinstance(node, ast.FunctionDef):
+                                if hasattr(node, 'end_lineno') and hasattr(node, 'lineno'):
+                                    method_length = node.end_lineno - node.lineno
+                                    if method_length > 50:
+                                        refactor_opportunities['long_methods'].append({
+                                            'file': file_path,
+                                            'method': node.name,
+                                            'lines': method_length
+                                        })
+                            
+                            # Check for complex classes (>10 methods)
+                            elif isinstance(node, ast.ClassDef):
+                                method_count = sum(1 for n in node.body if isinstance(n, ast.FunctionDef))
+                                if method_count > 10:
+                                    refactor_opportunities['complex_classes'].append({
+                                        'file': file_path,
+                                        'class': node.name,
+                                        'methods': method_count
+                                    })
+                    except:
+                        pass
+                
+                # Check for missing tests
+                from testmaster.mapping.test_mapper import TestMapper
+                try:
+                    mapper = TestMapper('.', 'tests')
+                    mapping = mapper.build_complete_mapping()
+                    
+                    for module_path in mapping.module_to_tests:
+                        if len(mapping.module_to_tests[module_path]) == 0:
+                            refactor_opportunities['missing_tests'].append({
+                                'module': module_path,
+                                'status': 'no_tests'
+                            })
+                except:
+                    pass
+                
+                return jsonify({
+                    'refactor_opportunities': refactor_opportunities,
+                    'summary': {
+                        'long_methods': len(refactor_opportunities['long_methods']),
+                        'complex_classes': len(refactor_opportunities['complex_classes']),
+                        'missing_tests': len(refactor_opportunities['missing_tests'])
+                    }
+                })
             except Exception as e:
                 return jsonify({'error': str(e)}), 500
     

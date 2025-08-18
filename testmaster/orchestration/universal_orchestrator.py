@@ -23,7 +23,10 @@ from ..core.language_detection import UniversalLanguageDetector, CodebaseProfile
 from ..core.framework_abstraction import UniversalTestSuite, TestMetadata
 
 # Intelligence imports
-from ..intelligence.tree_of_thought import UniversalToTTestGenerator, ToTGenerationConfig
+from ..intelligence.hierarchical_planning import (
+    UniversalHierarchicalTestGenerator,
+    HierarchicalPlanningConfig
+)
 from ..intelligence.optimization import MultiObjectiveOptimizer, OptimizationObjective
 from ..intelligence.llm_providers import LLMProviderManager, LLMProviderConfig
 
@@ -59,7 +62,8 @@ class OrchestrationConfig:
     output_directory: str = "./generated_tests"
     
     # Intelligence settings
-    enable_tot_reasoning: bool = True
+    enable_hierarchical_planning: bool = True  # Was enable_tot_reasoning
+    enable_tot_reasoning: Optional[bool] = None  # Backward compatibility
     enable_optimization: bool = True
     enable_llm_providers: bool = True
     
@@ -88,6 +92,12 @@ class OrchestrationConfig:
     min_coverage_target: float = 0.85
     enable_self_healing: bool = True
     
+    def __post_init__(self):
+        """Handle backward compatibility."""
+        # If old parameter name was used, map to new name
+        if self.enable_tot_reasoning is not None:
+            self.enable_hierarchical_planning = self.enable_tot_reasoning
+    
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
         return {
@@ -95,7 +105,7 @@ class OrchestrationConfig:
             'target_directory': self.target_directory,
             'output_directory': self.output_directory,
             'intelligence': {
-                'enable_tot_reasoning': self.enable_tot_reasoning,
+                'enable_hierarchical_planning': self.enable_hierarchical_planning,
                 'enable_optimization': self.enable_optimization,
                 'enable_llm_providers': self.enable_llm_providers
             },
@@ -269,7 +279,7 @@ class UniversalTestOrchestrator:
         self.language_detector = UniversalLanguageDetector()
         
         # Initialize intelligence components (conditionally)
-        self.tot_generator = None
+        self.htp_generator = None  # Was tot_generator
         self.optimizer = None
         self.llm_manager = None
         
@@ -287,7 +297,7 @@ class UniversalTestOrchestrator:
         
         print(f"Universal Test Orchestrator initialized")
         print(f"   Mode: {self.config.mode.value}")
-        print(f"   Intelligence enabled: {self.config.enable_tot_reasoning}")
+        print(f"   Intelligence enabled: {self.config.enable_hierarchical_planning}")
         print(f"   Security enabled: {self.config.enable_security_scanning}")
         print(f"   Compliance enabled: {self.config.enable_compliance_checking}")
     
@@ -385,9 +395,9 @@ class UniversalTestOrchestrator:
         """Initialize components based on configuration."""
         
         # Intelligence components
-        if self.config.enable_tot_reasoning:
-            self.tot_generator = UniversalToTTestGenerator()
-            print("   ToT reasoning enabled")
+        if self.config.enable_hierarchical_planning:
+            self.htp_generator = UniversalHierarchicalTestGenerator()
+            print("   Hierarchical planning enabled")
         
         if self.config.enable_optimization:
             self.optimizer = MultiObjectiveOptimizer()
@@ -499,16 +509,16 @@ class UniversalTestOrchestrator:
             )
             
             # Generate tests using intelligence components
-            if self.config.enable_tot_reasoning and self.tot_generator:
-                tot_config = ToTGenerationConfig(
-                    reasoning_depth=3,
+            if self.config.enable_hierarchical_planning and self.htp_generator:
+                htp_config = HierarchicalPlanningConfig(
+                    planning_depth=3,
                     enable_optimization=True,
                     include_edge_cases=True
                 )
-                tot_result = self.tot_generator.generate_tests(module, tot_config)
-                if tot_result.success and tot_result.test_suite:
-                    test_suite.test_cases.extend(tot_result.test_suite.test_cases)
-                    print(f"     ToT generated: {len(tot_result.test_suite.test_cases)} test cases")
+                htp_result = self.htp_generator.generate_tests(module, htp_config)
+                if htp_result.success and htp_result.test_suite:
+                    test_suite.test_cases.extend(htp_result.test_suite.test_cases)
+                    print(f"     HTP generated: {len(htp_result.test_suite.test_cases)} test cases")
             
             # Generate security tests if enabled
             if self.config.enable_security_tests and self.security_test_generator:

@@ -2,15 +2,21 @@
 TestMaster Intelligence Layer
 
 Provides intelligent test generation using advanced reasoning techniques.
-Integrates Tree-of-Thought, Multi-Objective Optimization, and LLM management.
+Integrates Hierarchical Test Planning, Multi-Objective Optimization, and LLM management.
 """
 
-from .tree_of_thought import (
-    UniversalToTTestGenerator,
-    ToTGenerationConfig,
-    ToTGenerationResult,
-    TreeOfThoughtReasoner,
-    ReasoningStrategy
+# Import from hierarchical_planning which now provides the unified implementation
+# with full backward compatibility for Tree-of-Thought names
+from .hierarchical_planning import (
+    UniversalToTTestGenerator,  # Backward compatibility alias
+    ToTGenerationConfig,         # Backward compatibility alias
+    ToTGenerationResult,         # Backward compatibility alias
+    TreeOfThoughtReasoner,       # Preserved from original
+    ReasoningStrategy,           # Preserved from original
+    # New unified names (also available)
+    UniversalHierarchicalTestGenerator,
+    HierarchicalPlanningConfig,
+    HierarchicalPlanningResult
 )
 
 from .optimization import (
@@ -33,12 +39,15 @@ from .llm_providers import (
 )
 
 __all__ = [
-    # Tree-of-Thought
-    'UniversalToTTestGenerator',
-    'ToTGenerationConfig',
-    'ToTGenerationResult',
-    'TreeOfThoughtReasoner',
-    'ReasoningStrategy',
+    # Hierarchical Test Planning (with backward compatibility)
+    'UniversalToTTestGenerator',     # Backward compat
+    'ToTGenerationConfig',           # Backward compat  
+    'ToTGenerationResult',           # Backward compat
+    'TreeOfThoughtReasoner',         # Preserved
+    'ReasoningStrategy',             # Preserved
+    'UniversalHierarchicalTestGenerator',  # New name
+    'HierarchicalPlanningConfig',         # New name
+    'HierarchicalPlanningResult',         # New name
     
     # Multi-Objective Optimization
     'MultiObjectiveOptimizer',

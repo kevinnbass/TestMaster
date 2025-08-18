@@ -1,11 +1,20 @@
-# TestMaster - Hybrid Intelligence Platform
+# TestMaster - Intelligence Command Center
 
-**The world's most advanced unified hybrid intelligence system for test generation, security analysis, and workflow orchestration.** TestMaster combines cutting-edge multi-agent AI coordination, comprehensive security intelligence, and universal framework adaptation to deliver enterprise-grade testing solutions for any programming language or framework.
+**The world's most advanced unified intelligence system for test generation, security analysis, and workflow orchestration.** TestMaster combines cutting-edge multi-agent AI coordination, comprehensive security intelligence, and universal framework adaptation to deliver enterprise-grade testing solutions for any programming language or framework.
 
-## 🚀 Hybrid Intelligence System - FULLY OPERATIONAL
+## 🚀 Intelligence Command Center - FULLY OPERATIONAL
+
+### 📊 **New Dashboard Features (Latest Update)**
+- **Comprehensive Test Analysis** - Real-time test coverage, module health, and test status monitoring
+- **Module Analyzer** - LLM-powered module analysis with cost estimation and quality scoring
+- **Refactor Opportunities** - Automated code analysis with AI-powered improvement recommendations
+- **Grouped Tab Layout** - Monitoring and Orchestration groups with optimized two-row design
+- **Real-Time Data Integration** - All features connected to live backend APIs
+
+## 🚀 Core Intelligence System
 
 ### 🧠 Deep Integration Intelligence Layer
-- **Hierarchical Test Planning** - Advanced multi-strategy reasoning engine with 5 planning strategies
+- **Hierarchical Test Planning** - Advanced multi-strategy reasoning engine with 5 planning strategies (formerly Tree-of-Thought)
 - **Multi-Agent Consensus** - Coordinated decision-making with 6 voting methods and weighted consensus
 - **Universal LLM Provider** - Seamless integration with OpenAI, Anthropic, Google, Azure, and local models with fallback chains
 - **Security Intelligence Agent** - Comprehensive vulnerability scanning with OWASP compliance checking
@@ -420,14 +429,15 @@ python -m testmaster intelligence-test --target ./legacy_code \
 
 ## 🌟 Advanced Features
 
-### Tree-of-Thought Reasoning
+### Hierarchical Test Planning
 ```python
-# Multi-step reasoning for complex test scenarios
-config = ToTGenerationConfig(
-    reasoning_depth=5,
+# Multi-level planning for complex test scenarios
+# Using new unified naming (backward compatible with ToTGenerationConfig)
+config = HierarchicalPlanningConfig(
+    planning_depth=5,
     enable_optimization=True,
     include_edge_cases=True,
-    reasoning_strategy=ReasoningStrategy.COMPREHENSIVE
+    planning_strategy=PlanningStrategy.COMPREHENSIVE
 )
 ```
 
@@ -543,7 +553,7 @@ python -m testmaster orchestrate --target ./testmaster --mode comprehensive
 - `/testmaster/` - Complete API documentation in docstrings
 
 ### Component Documentation
-- Intelligence Layer: Tree-of-Thought reasoning, optimization algorithms
+- Intelligence Layer: Hierarchical Test Planning, optimization algorithms
 - Security Intelligence: Vulnerability detection, compliance frameworks
 - Orchestration System: Unified coordination, framework adaptation
 - Output System: Multi-format generation, documentation creation

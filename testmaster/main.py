@@ -28,8 +28,8 @@ from .security import (
     ComplianceStandard
 )
 from .intelligence import (
-    UniversalToTTestGenerator,
-    ToTGenerationConfig,
+    UniversalHierarchicalTestGenerator,
+    HierarchicalPlanningConfig,
     MultiObjectiveOptimizer,
     LLMProviderManager
 )
@@ -71,7 +71,7 @@ def create_orchestration_config(args) -> OrchestrationConfig:
         output_directory=args.output or f"{args.target}_testmaster_output",
         
         # Intelligence settings
-        enable_tot_reasoning=args.enable_intelligence,
+        enable_hierarchical_planning=args.enable_intelligence,
         enable_optimization=args.enable_optimization,
         enable_llm_providers=args.enable_llm,
         
@@ -231,13 +231,13 @@ def cmd_intelligence_test(args):
     print("🧠 TestMaster Intelligence Test Generation")
     print("=" * 50)
     
-    # Initialize ToT generator
-    config = ToTGenerationConfig(
-        reasoning_depth=args.reasoning_depth,
+    # Initialize HTP generator
+    config = HierarchicalPlanningConfig(
+        planning_depth=args.reasoning_depth,
         enable_optimization=args.enable_optimization,
         include_edge_cases=True
     )
-    generator = UniversalToTTestGenerator(config)
+    generator = UniversalHierarchicalTestGenerator(config)
     
     # Build AST
     print(f"Analyzing codebase...")
@@ -337,7 +337,7 @@ def main():
     # Intelligence test command
     intelligence_parser = subparsers.add_parser('intelligence-test', help='Run intelligence test generation')
     intelligence_parser.add_argument('--target', required=True, help='Target directory')
-    intelligence_parser.add_argument('--reasoning-depth', type=int, default=3, help='ToT reasoning depth')
+    intelligence_parser.add_argument('--reasoning-depth', type=int, default=3, help='Hierarchical planning depth')
     intelligence_parser.add_argument('--enable-optimization', action='store_true', default=True)
     
     # Analyze command
