@@ -1455,9 +1455,16 @@
         };
         
         // Module analyzer functions
-        async function loadModuleList() {
-            const modules = await fetchData('llm/list-modules');
-            if (!modules || modules.length === 0) return;
+        async function loadModuleList(codebasePath = currentCodebase) {
+            const modules = await fetchData(`llm/list-modules?codebase=${encodeURIComponent(codebasePath)}`);
+            if (!modules || modules.length === 0) {
+                // Simulate modules for different codebases for demo
+                const codebase = activeCodebases.get(codebasePath);
+                if (codebase) {
+                    simulateModulesForCodebase(codebase);
+                }
+                return;
+            }
             
             const select = document.getElementById('module-select');
             const moduleListDiv = document.getElementById('module-list');
@@ -1566,13 +1573,130 @@
             }
         }
         
+        // Simulation function for different codebases
+        function simulateModulesForCodebase(codebase) {
+            const select = document.getElementById('module-select');
+            const moduleListDiv = document.getElementById('module-list');
+            
+            if (!select) return;
+            
+            // Generate simulated modules based on codebase name
+            let simulatedModules = [];
+            const baseName = codebase.name.toLowerCase();
+            
+            if (baseName.includes('regex')) {
+                simulatedModules = ['regex_gen.py', 'pattern_builder.py', 'regex_validator.py', 'test_regex.py'];
+            } else if (baseName.includes('api')) {
+                simulatedModules = ['api_server.py', 'routes.py', 'models.py', 'auth.py', 'utils.py'];
+            } else if (baseName.includes('web')) {
+                simulatedModules = ['app.py', 'views.py', 'templates.py', 'static_files.py'];
+            } else {
+                simulatedModules = [`${baseName}_main.py`, `${baseName}_utils.py`, `${baseName}_config.py`, `test_${baseName}.py`];
+            }
+            
+            // Populate select
+            select.innerHTML = `
+                <option value="">-- Select a module --</option>
+                <option value="__all__" style="font-weight: bold;">🌍 ALL MODULES</option>
+                <option value="" disabled>──────────────────────</option>
+            `;
+            
+            let moduleListHtml = `
+                <div style="font-size: 12px; line-height: 1.4;">
+                    <h4>Available Modules (${simulatedModules.length} total) - ${codebase.name}:</h4>
+                    <div style="margin-top: 10px;">
+            `;
+            
+            simulatedModules.forEach(module => {
+                select.innerHTML += `<option value="${module}">${module}</option>`;
+                const type = module.includes('test') ? '🧪' : 
+                            module.includes('main') ? '🏠' : 
+                            module.includes('config') ? '⚙️' : '📄';
+                moduleListHtml += `
+                    <div style="margin: 4px 0; padding: 4px 8px; background: rgba(255,255,255,0.05); border-radius: 3px;">
+                        ${type} ${module}
+                    </div>
+                `;
+            });
+            
+            moduleListHtml += '</div></div>';
+            moduleListDiv.innerHTML = moduleListHtml;
+        }
+        
         // Refactor analysis functions
-        async function loadRefactorAnalysis() {
+        async function loadRefactorAnalysis(codebasePath = currentCodebase) {
             // Auto-load refactor analysis when tab opens
-            const data = await fetchData('refactor/analysis');
+            const data = await fetchData(`refactor/analysis?codebase=${encodeURIComponent(codebasePath)}`);
             if (data && data.refactor_opportunities) {
                 updateRefactorMetrics(data.refactor_opportunities);
+            } else {
+                // Simulate refactor data for different codebases
+                const codebase = activeCodebases.get(codebasePath);
+                if (codebase) {
+                    simulateRefactorDataForCodebase(codebase);
+                }
             }
+        }
+        
+        function simulateRefactorDataForCodebase(codebase) {
+            const baseName = codebase.name.toLowerCase();
+            let simulatedData = {};
+            
+            if (baseName.includes('regex')) {
+                simulatedData = {
+                    long_methods: [
+                        {method: 'compile_complex_pattern', lines: 68, file: 'regex_gen.py'},
+                        {method: 'validate_nested_groups', lines: 52, file: 'pattern_builder.py'}
+                    ],
+                    complex_classes: [
+                        {class: 'RegexPatternBuilder', methods: 12, file: 'pattern_builder.py'}
+                    ],
+                    missing_tests: ['regex_validator.py']
+                };
+            } else {
+                simulatedData = {
+                    long_methods: [
+                        {method: 'process_main_logic', lines: 45, file: `${baseName}_main.py`}
+                    ],
+                    complex_classes: [
+                        {class: 'MainProcessor', methods: 8, file: `${baseName}_main.py`}
+                    ],
+                    missing_tests: [`${baseName}_utils.py`]
+                };
+            }
+            
+            updateRefactorMetrics(simulatedData);
+        }
+        
+        function simulateTestDataForCodebase(codebase) {
+            const baseName = codebase.name.toLowerCase();
+            let testData = [];
+            
+            if (baseName.includes('regex')) {
+                testData = [
+                    {module: 'regex_gen.py', status: 'green', test_count: 15},
+                    {module: 'pattern_builder.py', status: 'yellow', test_count: 8},
+                    {module: 'regex_validator.py', status: 'red', test_count: 0},
+                    {module: 'test_regex.py', status: 'green', test_count: 23}
+                ];
+            } else if (baseName.includes('api')) {
+                testData = [
+                    {module: 'api_server.py', status: 'green', test_count: 12},
+                    {module: 'routes.py', status: 'green', test_count: 18},
+                    {module: 'models.py', status: 'yellow', test_count: 6},
+                    {module: 'auth.py', status: 'red', test_count: 0},
+                    {module: 'utils.py', status: 'green', test_count: 9}
+                ];
+            } else {
+                testData = [
+                    {module: `${baseName}_main.py`, status: 'yellow', test_count: 4},
+                    {module: `${baseName}_utils.py`, status: 'red', test_count: 0},
+                    {module: `${baseName}_config.py`, status: 'green', test_count: 7},
+                    {module: `test_${baseName}.py`, status: 'green', test_count: 11}
+                ];
+            }
+            
+            return testData;
         }
         
         function updateRefactorMetrics(opportunities) {
@@ -1777,28 +1901,81 @@
         }
         
         async function refreshCodebaseData(path) {
-            // Update all tabs with codebase-specific data
+            console.log(`Refreshing data for codebase: ${path}`);
             
-            // Update tests data
-            if (document.querySelector('.tab-button[onclick*="tests"]')?.classList.contains('active') ||
-                document.getElementById('tests-tab')?.classList.contains('active')) {
+            // Always refresh the currently active tab when switching codebases
+            const activeTab = document.querySelector('.tab-content.active');
+            if (!activeTab) return;
+            
+            const activeTabId = activeTab.id;
+            console.log(`Active tab: ${activeTabId}`);
+            
+            // Update data based on which tab is currently active
+            if (activeTabId === 'tests-tab') {
+                console.log('Refreshing tests data');
                 await loadTestsStatus(path);
-            }
-            
-            // Update module analyzer data
-            if (document.querySelector('.tab-button[onclick*="analyzer"]')?.classList.contains('active') ||
-                document.getElementById('analyzer-tab')?.classList.contains('active')) {
+            } else if (activeTabId === 'analyzer-tab') {
+                console.log('Refreshing analyzer data');
                 await loadModuleList(path);
-            }
-            
-            // Update refactor analysis
-            if (document.querySelector('.tab-button[onclick*="refactor"]')?.classList.contains('active') ||
-                document.getElementById('refactor-tab')?.classList.contains('active')) {
+            } else if (activeTabId === 'refactor-tab') {
+                console.log('Refreshing refactor data');
                 await loadRefactorAnalysis(path);
+            } else if (activeTabId === 'overview-tab') {
+                console.log('Refreshing overview data');
+                // Update overview metrics for new codebase
+                updateOverviewMetrics(path);
+            } else if (activeTabId === 'metrics-tab') {
+                console.log('Refreshing metrics data');
+                // Update detailed metrics for new codebase
+                updateDetailedMetrics(path);
             }
             
-            // Update metrics (could be codebase-specific in future)
-            // updateCodebaseMetrics(path);
+            // Always update the header to show current codebase info
+            updateCodebaseHeader(path);
+        }
+        
+        function updateOverviewMetrics(path) {
+            // Update overview tab with codebase-specific info
+            const codebase = activeCodebases.get(path);
+            if (!codebase) return;
+            
+            // Update title or add codebase indicator
+            const titleElements = document.querySelectorAll('.card-title');
+            titleElements.forEach(title => {
+                if (title.textContent.includes('Active Agents')) {
+                    title.innerHTML = `🤖 Active Agents <small>(${codebase.name})</small>`;
+                } else if (title.textContent.includes('Bridge Systems')) {
+                    title.innerHTML = `🌉 Bridge Systems <small>(${codebase.name})</small>`;
+                } else if (title.textContent.includes('Orchestration')) {
+                    title.innerHTML = `🎭 Orchestration <small>(${codebase.name})</small>`;
+                } else if (title.textContent.includes('System Health')) {
+                    title.innerHTML = `💚 System Health <small>(${codebase.name})</small>`;
+                }
+            });
+        }
+        
+        function updateDetailedMetrics(path) {
+            // Update metrics tab with codebase-specific info
+            const codebase = activeCodebases.get(path);
+            if (!codebase) return;
+            
+            // Add codebase indicators to metric cards
+            const metricTitles = document.querySelectorAll('#metrics-tab .card-title');
+            metricTitles.forEach(title => {
+                const originalText = title.textContent.replace(/ \(.*\)$/, ''); // Remove existing codebase indicator
+                title.innerHTML = `${originalText} <small style="opacity: 0.7;">(${codebase.name})</small>`;
+            });
+        }
+        
+        function updateCodebaseHeader(path) {
+            const codebase = activeCodebases.get(path);
+            if (!codebase) return;
+            
+            // Update the current codebase display
+            document.getElementById('current-codebase').innerHTML = `
+                Current: <strong>${codebase.name}</strong> 
+                <span style="opacity: 0.7;">${path}</span>
+            `;
         }
         
         // Override existing functions to include codebase parameter
@@ -1808,11 +1985,16 @@
             const data = await fetchData(`tests/status?codebase=${encodeURIComponent(codebasePath)}`);
             
             if (!data) {
-                // Fallback to original function for current codebase
-                if (codebasePath === currentCodebase) {
+                // Simulate test data for different codebases
+                const codebase = activeCodebases.get(codebasePath);
+                if (codebase) {
+                    const simulatedData = simulateTestDataForCodebase(codebase);
+                    data = simulatedData;
+                } else if (codebasePath === currentCodebase) {
                     return await originalLoadTestsStatus();
+                } else {
+                    return;
                 }
-                return;
             }
             
             // Rest of the function remains the same but uses codebase-specific data
