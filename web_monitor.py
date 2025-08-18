@@ -162,6 +162,50 @@ class WebMonitoringServer:
                     'status': 'error', 
                     'message': f'Integration test failed: {str(e)}'
                 }), 500
+        
+        @self.app.route('/api/llm/metrics')
+        def get_llm_metrics():
+            """Get LLM analysis metrics."""
+            try:
+                if hasattr(self.monitor, 'llm_monitor') and self.monitor.llm_monitor:
+                    return jsonify(self.monitor.llm_monitor.get_llm_metrics_summary())
+                else:
+                    return jsonify({'error': 'LLM monitor not available'}), 503
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
+        
+        @self.app.route('/api/llm/analysis/<path:module_path>')
+        def get_module_analysis(module_path):
+            """Get analysis for a specific module."""
+            try:
+                if hasattr(self.monitor, 'llm_monitor') and self.monitor.llm_monitor:
+                    analysis = self.monitor.llm_monitor.get_module_analysis(module_path)
+                    if analysis:
+                        return jsonify(analysis)
+                    else:
+                        return jsonify({'error': 'Module analysis not found'}), 404
+                else:
+                    return jsonify({'error': 'LLM monitor not available'}), 503
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
+        
+        @self.app.route('/api/llm/analyze', methods=['POST'])
+        def queue_analysis():
+            """Queue a module for analysis."""
+            try:
+                data = request.get_json()
+                module_path = data.get('module_path')
+                
+                if not module_path:
+                    return jsonify({'error': 'module_path required'}), 400
+                
+                if hasattr(self.monitor, 'llm_monitor') and self.monitor.llm_monitor:
+                    self.monitor.llm_monitor.queue_module_analysis(module_path)
+                    return jsonify({'status': 'queued', 'module_path': module_path})
+                else:
+                    return jsonify({'error': 'LLM monitor not available'}), 503
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
     
     def _start_background_monitoring(self):
         """Start background monitoring thread."""
@@ -394,6 +438,49 @@ DASHBOARD_HTML = """
             `;
         }
         
+        function createLLMMetricsCard(llmMetrics) {
+            if (!llmMetrics || llmMetrics.error) {
+                return `
+                    <div class="card">
+                        <h3>🤖 LLM Intelligence</h3>
+                        <p style="text-align: center; opacity: 0.7; padding: 20px;">
+                            ${llmMetrics ? llmMetrics.error : 'LLM monitoring not available'}
+                        </p>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="card">
+                    <h3>🤖 LLM Intelligence</h3>
+                    <div class="metric">
+                        <span>API Calls:</span>
+                        <span class="metric-value">${llmMetrics.api_calls.total_calls}</span>
+                    </div>
+                    <div class="metric">
+                        <span>Success Rate:</span>
+                        <span class="metric-value">${llmMetrics.api_calls.success_rate.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Tokens Used:</span>
+                        <span class="metric-value">${llmMetrics.token_usage.total_tokens.toLocaleString()}</span>
+                    </div>
+                    <div class="metric">
+                        <span>Cost Estimate:</span>
+                        <span class="metric-value">$${llmMetrics.cost_tracking.total_cost_estimate.toFixed(3)}</span>
+                    </div>
+                    <div class="metric">
+                        <span>Calls/Minute:</span>
+                        <span class="metric-value">${llmMetrics.api_calls.calls_per_minute.toFixed(1)}</span>
+                    </div>
+                    <div class="metric">
+                        <span>Active Analyses:</span>
+                        <span class="metric-value">${llmMetrics.analysis_status.active_analyses}</span>
+                    </div>
+                </div>
+            `;
+        }
+        
         function createComponentsCard(components) {
             const componentItems = Object.entries(components)
                 .map(([name, status]) => `
@@ -470,9 +557,10 @@ DASHBOARD_HTML = """
         }
         
         async function updateDashboard() {
-            const [metrics, components] = await Promise.all([
+            const [metrics, components, llmMetrics] = await Promise.all([
                 fetchData('metrics'),
-                fetchData('components')
+                fetchData('components'),
+                fetchData('llm/metrics')
             ]);
             
             if (!metrics) {
@@ -486,6 +574,7 @@ DASHBOARD_HTML = """
             // Create dashboard content
             const dashboardHTML = `
                 ${createMetricsCard(metrics)}
+                ${createLLMMetricsCard(llmMetrics)}
                 ${createComponentsCard(metrics.components.component_status)}
                 ${createHealthCard(metrics)}
                 ${createAlertsCard(metrics.alerts)}

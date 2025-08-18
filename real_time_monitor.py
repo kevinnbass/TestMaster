@@ -39,6 +39,13 @@ class SystemMetrics:
     events_per_second: float = 0.0
     consensus_decisions: int = 0
     security_alerts: int = 0
+    # LLM metrics
+    llm_api_calls: int = 0
+    llm_tokens_used: int = 0
+    llm_cost_estimate: float = 0.0
+    llm_calls_per_minute: float = 0.0
+    active_analyses: int = 0
+    module_analyses_completed: int = 0
     timestamp: datetime = field(default_factory=datetime.now)
 
 @dataclass
@@ -75,6 +82,15 @@ class RealTimeMonitor:
         self.current_metrics = SystemMetrics()
         self.metrics_history: List[SystemMetrics] = []
         self.max_history = 3600  # Keep 1 hour of metrics at 1-second intervals
+        
+        # Initialize LLM monitoring
+        self.llm_monitor = None
+        try:
+            from llm_analysis_monitor import get_llm_monitor
+            self.llm_monitor = get_llm_monitor()
+            print("[PASS] LLM Analysis Monitor integrated")
+        except ImportError:
+            print("[WARN] LLM Analysis Monitor not available")
         
         # Alert system
         self.alerts: List[AlertEvent] = []
@@ -118,6 +134,12 @@ class RealTimeMonitor:
             return
         
         self.running = True
+        
+        # Start LLM monitoring if available
+        if self.llm_monitor:
+            self.llm_monitor.start_monitoring()
+            print("[PASS] LLM Analysis Monitor started")
+        
         self.monitoring_thread = threading.Thread(target=self._monitoring_loop, daemon=True)
         self.monitoring_thread.start()
         
@@ -201,6 +223,9 @@ class RealTimeMonitor:
         
         # TestMaster component metrics
         self._collect_component_metrics()
+        
+        # LLM metrics
+        self._collect_llm_metrics()
     
     def _collect_component_metrics(self):
         """Collect TestMaster-specific component metrics."""
@@ -277,6 +302,25 @@ class RealTimeMonitor:
         self.current_metrics.consensus_decisions = random.randint(0, 10)
         self.current_metrics.security_alerts = random.randint(0, 3)
     
+    def _collect_llm_metrics(self):
+        """Collect LLM analysis metrics."""
+        if not self.llm_monitor:
+            return
+        
+        try:
+            llm_metrics = self.llm_monitor.get_llm_metrics_summary()
+            
+            self.current_metrics.llm_api_calls = llm_metrics['api_calls']['total_calls']
+            self.current_metrics.llm_tokens_used = llm_metrics['token_usage']['total_tokens']
+            self.current_metrics.llm_cost_estimate = llm_metrics['cost_tracking']['total_cost_estimate']
+            self.current_metrics.llm_calls_per_minute = llm_metrics['api_calls']['calls_per_minute']
+            self.current_metrics.active_analyses = llm_metrics['analysis_status']['active_analyses']
+            self.current_metrics.module_analyses_completed = llm_metrics['analysis_status']['completed_analyses']
+            
+        except Exception as e:
+            # LLM metrics collection failed - use defaults
+            pass
+    
     def _check_alerts(self):
         """Check for alert conditions."""
         current_time = datetime.now()
@@ -338,7 +382,7 @@ class RealTimeMonitor:
         print()
         
         # System Metrics
-        print("📊 SYSTEM METRICS")
+        print("SYSTEM METRICS")
         print("-" * 50)
         print(f"CPU Usage:       {self.current_metrics.cpu_usage:6.1f}% {self._get_status_indicator(self.current_metrics.cpu_usage, 70, 85)}")
         print(f"Memory Usage:    {self.current_metrics.memory_usage:6.1f}% {self._get_status_indicator(self.current_metrics.memory_usage, 80, 90)}")
@@ -350,29 +394,40 @@ class RealTimeMonitor:
         print(f"Security Alerts: {self.current_metrics.security_alerts:6d}")
         print()
         
+        # LLM Intelligence Metrics
+        print("LLM INTELLIGENCE METRICS")
+        print("-" * 50)
+        print(f"API Calls:       {self.current_metrics.llm_api_calls:6d}")
+        print(f"Tokens Used:     {self.current_metrics.llm_tokens_used:6d}")
+        print(f"Cost Estimate:   ${self.current_metrics.llm_cost_estimate:6.3f}")
+        print(f"Calls/min:       {self.current_metrics.llm_calls_per_minute:6.1f}")
+        print(f"Active Analyses: {self.current_metrics.active_analyses:6d}")
+        print(f"Modules Analyzed: {self.current_metrics.module_analyses_completed:6d}")
+        print()
+        
         # Component Status
-        print("🔧 COMPONENT STATUS")
+        print("COMPONENT STATUS")
         print("-" * 50)
         
         # Core components
         print("Core Components:")
         for component in ['orchestrator', 'shared_state', 'config_intelligence']:
             status = self.component_status[component]
-            indicator = "🟢" if status == 'active' else "🔴"
+            indicator = "[OK]" if status == 'active' else "[FAIL]"
             print(f"  {indicator} {component.replace('_', ' ').title()}: {status}")
         
         # Intelligence components
         print("\nIntelligence Components:")
         for component in ['hierarchical_planning', 'consensus_engine', 'security_intelligence']:
             status = self.component_status[component]
-            indicator = "🟢" if status == 'active' else "🔴"
+            indicator = "[OK]" if status == 'active' else "[FAIL]"
             print(f"  {indicator} {component.replace('_', ' ').title()}: {status}")
         
         # Bridge components
         print("\nBridge Components:")
         for component in ['protocol_bridge', 'event_bridge', 'session_bridge', 'sop_bridge', 'context_bridge']:
             status = self.component_status[component]
-            indicator = "🟢" if status == 'active' else "🔴"
+            indicator = "[OK]" if status == 'active' else "[FAIL]"
             print(f"  {indicator} {component.replace('_', ' ').title()}: {status}")
         
         print()
@@ -381,11 +436,11 @@ class RealTimeMonitor:
         recent_alerts = [a for a in self.alerts if not a.resolved and 
                         (datetime.now() - a.timestamp).total_seconds() < 300]  # Last 5 minutes
         
-        print(f"🚨 RECENT ALERTS ({len(recent_alerts)})")
+        print(f"RECENT ALERTS ({len(recent_alerts)})")
         print("-" * 50)
         if recent_alerts:
             for alert in recent_alerts[-5:]:  # Show last 5 alerts
-                severity_icon = {"info": "ℹ️", "warning": "⚠️", "critical": "🔥", "emergency": "🚨"}.get(alert.severity, "❓")
+                severity_icon = {"info": "[INFO]", "warning": "[WARN]", "critical": "[CRIT]", "emergency": "[EMRG]"}.get(alert.severity, "[UNKN]")
                 print(f"{severity_icon} {alert.timestamp.strftime('%H:%M:%S')} [{alert.severity.upper()}] {alert.component}: {alert.message}")
         else:
             print("No recent alerts")
@@ -400,19 +455,19 @@ class RealTimeMonitor:
                         (datetime.now() - a.timestamp).total_seconds() < 60]  # Last minute
         
         if recent_alerts:
-            print(f"\n🚨 NEW ALERTS ({datetime.now().strftime('%H:%M:%S')}):")
+            print(f"\nNEW ALERTS ({datetime.now().strftime('%H:%M:%S')}):")
             for alert in recent_alerts:
-                severity_icon = {"info": "ℹ️", "warning": "⚠️", "critical": "🔥", "emergency": "🚨"}.get(alert.severity, "❓")
+                severity_icon = {"info": "[INFO]", "warning": "[WARN]", "critical": "[CRIT]", "emergency": "[EMRG]"}.get(alert.severity, "[UNKN]")
                 print(f"{severity_icon} [{alert.severity.upper()}] {alert.component}: {alert.message}")
     
     def _get_status_indicator(self, value: float, warning_threshold: float, critical_threshold: float) -> str:
         """Get status indicator for a metric value."""
         if value >= critical_threshold:
-            return "🔴"
+            return "[CRIT]"
         elif value >= warning_threshold:
-            return "🟡"
+            return "[WARN]"
         else:
-            return "🟢"
+            return "[OK]"
     
     def _store_metrics(self):
         """Store metrics in history."""

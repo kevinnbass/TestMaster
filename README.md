@@ -209,6 +209,10 @@ python start_monitoring.py --status
 # Direct monitoring scripts
 python real_time_monitor.py --mode dashboard    # Console dashboard
 python web_monitor.py --port 5000               # Web dashboard
+
+# LLM analysis monitoring
+python llm_analysis_monitor.py                  # Test LLM analysis system
+GOOGLE_API_KEY=your_key python llm_analysis_monitor.py  # With real Gemini API
 ```
 
 ### Legacy Commands (Still Supported)
@@ -281,6 +285,8 @@ TestMaster includes production-ready real-time monitoring with both console and 
 **Monitoring Features:**
 - **Real-Time Dashboard** - Live system metrics and component status
 - **Web-Based Interface** - Professional monitoring dashboard with REST API
+- **LLM Intelligence Tracking** - API calls, token usage, cost estimation with Gemini SDK
+- **Module Analysis** - Live code analysis with quality scoring and optimization suggestions
 - **Alert System** - Configurable thresholds and notification system  
 - **Component Tracking** - Monitor all 16 agents and 5 bridge components
 - **Performance Metrics** - CPU, memory, queue size, events/second tracking
@@ -307,12 +313,16 @@ When web monitoring is running, access these REST endpoints:
 - `GET /api/alerts` - Active alerts and notifications
 - `GET /api/health` - System health check
 - `GET /api/config` - Configuration information
+- `GET /api/llm/metrics` - LLM intelligence metrics (API calls, tokens, costs)
+- `GET /api/llm/analysis/<module_path>` - Module analysis results
+- `POST /api/llm/analyze` - Queue module for analysis
 
 ### Environment Variables
 ```bash
-# LLM API Keys (optional)
-export GEMINI_API_KEY=your_gemini_key
-export OPENAI_API_KEY=your_openai_key
+# LLM API Keys (for real-time module analysis)
+export GOOGLE_API_KEY=your_gemini_key           # Primary Gemini API key
+export GEMINI_API_KEY=your_gemini_key           # Alternative Gemini API key
+export OPENAI_API_KEY=your_openai_key           # OpenAI API key (future support)
 export ANTHROPIC_API_KEY=your_anthropic_key
 
 # Azure Configuration (optional)
