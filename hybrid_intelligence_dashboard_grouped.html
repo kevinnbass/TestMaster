@@ -1795,8 +1795,10 @@
         });
         
         function addCodebase() {
+            console.log('addCodebase() called');
             const input = document.getElementById('codebase-path-input');
             const path = input.value.trim();
+            console.log(`Input path: "${path}"`);
             
             if (!path) {
                 alert('Please enter a codebase path');
@@ -1813,24 +1815,31 @@
                 return;
             }
             
+            // Handle Windows paths properly
+            const normalizedPath = path.replace(/\\/g, '/');
+            const name = normalizedPath.split('/').pop() || normalizedPath.split('\\').pop() || path;
+            console.log(`Normalized path: "${normalizedPath}", Name: "${name}"`);
+            
             // Add new codebase
-            const name = path.split('/').pop() || path;
             activeCodebases.set(path, {
                 name: name,
                 path: path,
                 data: {}
             });
             
+            console.log(`Active codebases now:`, Array.from(activeCodebases.keys()));
+            
             // Create tab
             createCodebaseTab(path, name);
             
             // Switch to new codebase
+            console.log(`Switching to codebase: ${path}`);
             switchCodebase(path);
             
             // Clear input
             input.value = '';
             
-            console.log(`Added codebase: ${name} at ${path}`);
+            console.log(`Successfully added codebase: ${name} at ${path}`);
         }
         
         function createCodebaseTab(path, name) {
@@ -1850,12 +1859,16 @@
         }
         
         function removeCodebase(path) {
+            console.log(`removeCodebase() called for path: "${path}"`);
             event.stopPropagation(); // Prevent tab switching
             
             if (activeCodebases.size <= 1) {
                 alert('Cannot remove the last codebase');
+                console.log(`Cannot remove last codebase`);
                 return;
             }
+            
+            console.log(`Removing codebase: ${path}`);
             
             // Remove from active codebases
             activeCodebases.delete(path);
@@ -1864,40 +1877,64 @@
             const tab = document.querySelector(`[data-codebase="${path}"]`);
             if (tab) {
                 tab.remove();
+                console.log(`Removed tab for: ${path}`);
             }
             
             // If removing current codebase, switch to first available
             if (currentCodebase === path) {
                 const firstCodebase = Array.from(activeCodebases.keys())[0];
+                console.log(`Switching to first available codebase: ${firstCodebase}`);
                 switchCodebase(firstCodebase);
             }
             
-            console.log(`Removed codebase: ${path}`);
+            console.log(`Successfully removed codebase: ${path}`);
         }
         
         function switchCodebase(path) {
+            console.log(`switchCodebase() called with path: "${path}"`);
+            console.log(`Available codebases:`, Array.from(activeCodebases.keys()));
+            
             if (!activeCodebases.has(path)) {
-                console.error(`Codebase ${path} not found`);
+                console.error(`Codebase ${path} not found in activeCodebases`);
+                console.error(`Available keys:`, Array.from(activeCodebases.keys()));
                 return;
             }
+            
+            console.log(`Switching from "${currentCodebase}" to "${path}"`);
             
             // Update active tab
             document.querySelectorAll('.codebase-tab').forEach(tab => {
                 tab.classList.remove('active');
+                console.log(`Removed active from tab:`, tab.getAttribute('data-codebase'));
             });
-            document.querySelector(`[data-codebase="${path}"]`).classList.add('active');
+            
+            const targetTab = document.querySelector(`[data-codebase="${path}"]`);
+            if (targetTab) {
+                targetTab.classList.add('active');
+                console.log(`Added active to tab:`, path);
+            } else {
+                console.error(`Could not find tab with data-codebase="${path}"`);
+            }
             
             // Update current codebase
             currentCodebase = path;
             const codebase = activeCodebases.get(path);
+            console.log(`Current codebase updated to:`, codebase);
             
             // Update current codebase display
-            document.getElementById('current-codebase').textContent = `Current: ${path}`;
+            const currentDisplay = document.getElementById('current-codebase');
+            if (currentDisplay) {
+                currentDisplay.textContent = `Current: ${path}`;
+                console.log(`Updated current codebase display`);
+            } else {
+                console.error(`Could not find current-codebase element`);
+            }
             
             // Refresh all data for new codebase
+            console.log(`About to refresh data for:`, path);
             refreshCodebaseData(path);
             
-            console.log(`Switched to codebase: ${codebase.name} at ${path}`);
+            console.log(`Successfully switched to codebase: ${codebase.name} at ${path}`);
         }
         
         async function refreshCodebaseData(path) {
