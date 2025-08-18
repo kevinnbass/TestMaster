@@ -27,7 +27,7 @@
 - **DAG-based Workflow Engine** - Advanced dependency-aware task orchestration with parallel execution
 - **Bridge Communication System** - 5 specialized bridges for protocol, event, session, SOP, and context management
 - **Adaptive Resource Management** - Intelligent scaling with predictive resource allocation
-- **Performance Monitoring** - Real-time bottleneck detection and resolution with adaptive thresholds
+- **Real-Time Monitoring** - Production-ready monitoring with web dashboard and REST API
 - **Configuration Intelligence** - Dynamic environment adaptation with 4 intelligent profiles
 
 ### 🤝 Multi-Agent Coordination
@@ -186,6 +186,31 @@ python -c "from testmaster.intelligence.bridges import get_protocol_bridge, get_
 python -c "from testmaster.intelligence.consensus import ConsensusEngine; engine = ConsensusEngine(); print('Consensus engine ready!')"
 ```
 
+### Real-Time Monitoring (Production Ready)
+```bash
+# Start web-based monitoring dashboard (recommended for production)
+python start_monitoring.py --web --port 8080
+
+# Start console-based real-time monitoring
+python start_monitoring.py --console --mode full
+
+# Monitor alerts only
+python start_monitoring.py --console --mode alerts_only
+
+# Export current metrics to JSON
+python start_monitoring.py --export system_metrics.json
+
+# Run integration check
+python start_monitoring.py --check
+
+# Show all monitoring options
+python start_monitoring.py --status
+
+# Direct monitoring scripts
+python real_time_monitor.py --mode dashboard    # Console dashboard
+python web_monitor.py --port 5000               # Web dashboard
+```
+
 ### Legacy Commands (Still Supported)
 ```bash
 # Classic intelligent test generation
@@ -248,6 +273,40 @@ python -c "from testmaster.core.config import get_config; print(get_config().exp
 # Validate all configuration
 python -c "from testmaster.core.config import get_config; errors = get_config().validate_all(); print('Valid!' if not errors else errors)"
 ```
+
+### Real-Time Monitoring & Production Deployment
+
+TestMaster includes production-ready real-time monitoring with both console and web interfaces:
+
+**Monitoring Features:**
+- **Real-Time Dashboard** - Live system metrics and component status
+- **Web-Based Interface** - Professional monitoring dashboard with REST API
+- **Alert System** - Configurable thresholds and notification system  
+- **Component Tracking** - Monitor all 16 agents and 5 bridge components
+- **Performance Metrics** - CPU, memory, queue size, events/second tracking
+- **Historical Data** - Metrics storage and trend analysis
+- **Health Checks** - Integration validation and component testing
+
+**Quick Start Monitoring:**
+```bash
+# Recommended: Web dashboard for production
+python start_monitoring.py --web --port 8080
+
+# Console monitoring for development
+python start_monitoring.py --console --mode full
+
+# Check system health
+python start_monitoring.py --check
+```
+
+**Monitoring API Endpoints:**
+When web monitoring is running, access these REST endpoints:
+- `GET /api/metrics` - Current system metrics
+- `GET /api/metrics/history` - Historical performance data
+- `GET /api/components` - Component status overview
+- `GET /api/alerts` - Active alerts and notifications
+- `GET /api/health` - System health check
+- `GET /api/config` - Configuration information
 
 ### Environment Variables
 ```bash

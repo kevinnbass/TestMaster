@@ -246,5 +246,15 @@ python -c "from testmaster.intelligence.bridges import get_protocol_bridge; prin
 
 # Multi-agent consensus testing
 python -c "from testmaster.intelligence.consensus import ConsensusEngine; print('Consensus ready!')"
+
+# Real-time monitoring (production ready)
+python start_monitoring.py --web --port 8080                    # Web dashboard
+python start_monitoring.py --console --mode full                # Console monitoring
+python start_monitoring.py --check                              # Integration check
+python start_monitoring.py --export metrics.json                # Export metrics
+
+# Direct monitoring access
+python real_time_monitor.py --mode dashboard                    # Console dashboard
+python web_monitor.py --port 5000                              # Web dashboard
 ```
 

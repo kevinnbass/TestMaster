@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-08-17T19:37:06.006013",
+  "system": {
+    "cpu_usage": 0.0,
+    "memory_usage": 48.1
+  },
+  "components": {
+    "active_agents": 6,
+    "active_bridges": 5,
+    "component_status": {
+      "orchestrator": "active",
+      "shared_state": "active",
+      "config_intelligence": "active",
+      "hierarchical_planning": "active",
+      "consensus_engine": "active",
+      "security_intelligence": "active",
+      "optimization_agent": "unknown",
+      "performance_monitor": "unknown",
+      "bottleneck_detector": "unknown",
+      "resource_manager": "unknown",
+      "protocol_bridge": "active",
+      "event_bridge": "active",
+      "session_bridge": "active",
+      "sop_bridge": "active",
+      "context_bridge": "active"
+    }
+  },
+  "workflow": {
+    "queue_size": 17,
+    "events_per_second": 65.8789515107484,
+    "consensus_decisions": 7
+  },
+  "security": {
+    "security_alerts": 0
+  },
+  "alerts": {
+    "total_alerts": 0,
+    "active_alerts": 0,
+    "recent_alerts": []
+  }
+}
