@@ -1,14 +1,15 @@
-# TestMaster - Unified Intelligence Test Generation System
+# TestMaster - Hybrid Intelligence Platform
 
-**The world's most advanced codebase-agnostic test generation and security analysis platform.** TestMaster combines cutting-edge AI reasoning, comprehensive security intelligence, and universal framework adaptation to deliver enterprise-grade testing solutions for any programming language or framework.
+**The world's most advanced unified hybrid intelligence system for test generation, security analysis, and workflow orchestration.** TestMaster combines cutting-edge multi-agent AI coordination, comprehensive security intelligence, and universal framework adaptation to deliver enterprise-grade testing solutions for any programming language or framework.
 
-## 🚀 Revolutionary Features
+## 🚀 Hybrid Intelligence System - FULLY OPERATIONAL
 
-### 🧠 Advanced Intelligence Layer
-- **Tree-of-Thought Reasoning** - Multi-step AI reasoning for superior test quality
-- **Multi-Objective Optimization** - NSGA-II algorithm optimizing coverage, quality, and performance
-- **Universal LLM Management** - Seamless integration with OpenAI, Anthropic, Google, Azure, and local models
-- **Intelligent Self-Healing** - Automatic test repair with 5-iteration limit
+### 🧠 Deep Integration Intelligence Layer
+- **Hierarchical Test Planning** - Advanced multi-strategy reasoning engine with 5 planning strategies
+- **Multi-Agent Consensus** - Coordinated decision-making with 6 voting methods and weighted consensus
+- **Universal LLM Provider** - Seamless integration with OpenAI, Anthropic, Google, Azure, and local models with fallback chains
+- **Security Intelligence Agent** - Comprehensive vulnerability scanning with OWASP compliance checking
+- **Multi-Objective Optimization** - NSGA-II algorithm optimizing coverage, quality, and performance simultaneously
 
 ### 🔒 Enterprise Security Intelligence
 - **Universal Vulnerability Scanning** - Language-agnostic OWASP Top 10 detection
@@ -22,11 +23,19 @@
 - **Codebase-Agnostic Architecture** - Works with any project structure or coding style
 - **Multi-Format Output** - Generate tests in multiple formats simultaneously
 
-### ⚡ Enterprise-Grade Orchestration
-- **Unified Command Interface** - Single entry point for all functionality
-- **Multiple Operation Modes** - Standard, Intelligent, Security-Focused, Compliance, Comprehensive, Rapid, Enterprise
-- **Real-Time Metrics** - Comprehensive performance and quality tracking
-- **Parallel Processing** - High-performance batch operations with configurable workers
+### ⚡ Hybrid Intelligence Orchestration
+- **DAG-based Workflow Engine** - Advanced dependency-aware task orchestration with parallel execution
+- **Bridge Communication System** - 5 specialized bridges for protocol, event, session, SOP, and context management
+- **Adaptive Resource Management** - Intelligent scaling with predictive resource allocation
+- **Performance Monitoring** - Real-time bottleneck detection and resolution with adaptive thresholds
+- **Configuration Intelligence** - Dynamic environment adaptation with 4 intelligent profiles
+
+### 🤝 Multi-Agent Coordination
+- **16 Intelligent Agents** - Specialized agents working in perfect coordination
+- **5 Bridge Components** - Unified cross-system communication and state management
+- **Consensus Mechanisms** - Democratic decision-making with weighted voting and confidence scoring
+- **Event-Driven Architecture** - Unified event bus with correlation and persistence
+- **Session Management** - Advanced state tracking with checkpoint and recovery capabilities
 
 ## 🎯 Quick Start
 
@@ -43,87 +52,138 @@ export OPENAI_API_KEY=your_key_here
 
 ### Basic Usage
 ```bash
-# Comprehensive analysis and test generation
+# Hybrid Intelligence orchestration (comprehensive mode)
 python -m testmaster orchestrate --target ./your_codebase --mode comprehensive
 
-# Quick security scan
+# Security-focused hybrid intelligence
+python -m testmaster orchestrate --target ./your_codebase --mode security_focused
+
+# Quick security scan with intelligence
 python -m testmaster security-scan --target ./your_codebase --detailed
 
-# Compliance assessment
+# Compliance assessment with multi-agent consensus
 python -m testmaster compliance --target ./your_codebase --standard OWASP_ASVS
 
-# Codebase analysis
-python -m testmaster analyze --target ./your_codebase
+# Intelligence-enhanced test generation
+python -m testmaster intelligence-test --target ./your_codebase --reasoning-depth 5
+
+# Run integration test suite
+python run_integration_test.py
+
+# Test configuration intelligence
+python test_config_intelligence.py
 ```
 
 ### Demo Mode
 ```bash
-# Run complete demonstration
+# Run complete hybrid intelligence demonstration
 python unified_orchestration_example.py --demo
+
+# Test individual components
+python -c "from testmaster.intelligence.bridges import get_protocol_bridge; print('Bridge system ready!')"
 ```
 
-## 🏗️ System Architecture
+## 🏗️ Hybrid Intelligence Architecture
 
-### Unified Intelligence Stack
+### Deep Integration System Stack
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                 UNIFIED ORCHESTRATION                        │
-├─────────────────────────────────────────────────────────────┤
-│  Intelligence Layer  │  Security Intelligence │  Framework  │
-│  • ToT Reasoning     │  • Vuln Scanning       │  Adaptation │
-│  • Optimization      │  • Compliance Check    │  • Universal │
-│  • LLM Providers     │  • Security Tests      │  • Multi-out │
-├─────────────────────────────────────────────────────────────┤
-│               CORE ABSTRACTION LAYER                        │
-│  • Universal AST  • Language Detection  • Framework Detect  │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    HYBRID INTELLIGENCE ORCHESTRATION                        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  Multi-Agent Layer  │  Bridge Communication  │  Intelligence Coordination  │
+│  • 16 Agents        │  • Protocol Bridge     │  • Consensus Engine        │
+│  • Consensus        │  • Event Bridge        │  • Hierarchical Planning   │
+│  • Coordination     │  • Session Bridge      │  • LLM Provider Chain      │
+│  • Voting Systems   │  • SOP Bridge          │  • Multi-Objective Opt     │
+│                     │  • Context Bridge      │  • Security Intelligence   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  Performance Layer  │  Configuration Layer   │  Core Orchestration Layer  │
+│  • Workflow Monitor │  • Intelligence Profiles│  • DAG Workflow Engine    │
+│  • Bottleneck Detect│  • Dynamic Adaptation  │  • Shared State Manager   │
+│  • Resource Mgmt    │  • Environment Detection│  • Feature Flag System    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                        CORE ABSTRACTION LAYER                              │
+│  • Universal AST  • Language Detection  • Framework Detection • Cache Sys  │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Component Overview
 
 **Core Components:**
-- `testmaster/core/` - Universal AST, language detection, framework abstraction
-- `testmaster/intelligence/` - ToT reasoning, optimization, LLM providers
-- `testmaster/security/` - Vulnerability scanning, compliance, security tests
-- `testmaster/orchestration/` - Unified orchestration, framework adaptation, output system
+- `testmaster/core/` - DAG orchestrator, shared state, configuration intelligence, feature flags
+- `testmaster/intelligence/` - Hierarchical planning, consensus, LLM providers, multi-agent coordination
+- `testmaster/intelligence/security/` - Security intelligence agent with OWASP compliance
+- `testmaster/intelligence/optimization/` - Multi-objective optimization with NSGA-II algorithm
+- `testmaster/intelligence/monitoring/` - Performance monitoring, bottleneck detection, resource management
+- `testmaster/intelligence/bridges/` - 5 bridge components for unified communication and coordination
+- `testmaster/integration/` - Comprehensive integration testing and validation framework
+
+**Deep Integration Features:**
+- **Phase 1A**: Configuration Intelligence with 4 smart profiles (dev, prod, security, performance)
+- **Phase 2**: Intelligence Layer with hierarchical planning and multi-agent consensus
+- **Phase 3**: Flow optimization with 3 specialized monitoring agents  
+- **Phase 4**: Bridge implementation with 5 communication and coordination bridges
+- **Phase 5**: Final integration testing with comprehensive validation
 
 **Legacy Components (Still Functional):**
 - Classic test generators with Gemini AI integration
-- Self-healing verification system
-- Parallel batch processing tools
-- Continuous monitoring capabilities
+- Self-healing verification system with 5-iteration repair limit
+- Parallel batch processing tools with configurable workers
+- Continuous monitoring capabilities with adaptive intervals
 
 ## 📋 Comprehensive Command Reference
 
-### Unified Orchestration
+### Hybrid Intelligence Orchestration
 ```bash
-# Comprehensive mode (all features)
+# Comprehensive hybrid intelligence mode (all 16 agents + 5 bridges)
 python -m testmaster orchestrate --target ./codebase --mode comprehensive
 
-# Security-focused analysis
+# Security-focused hybrid intelligence
 python -m testmaster orchestrate --target ./codebase --mode security_focused
 
-# Enterprise mode with custom settings
+# Enterprise mode with multi-agent coordination
 python -m testmaster orchestrate --target ./codebase --mode enterprise \
   --compliance-standards OWASP_ASVS SOX GDPR \
   --frameworks pytest junit jest \
   --output-formats python javascript markdown
 
-# Rapid mode for quick results
-python -m testmaster orchestrate --target ./codebase --mode rapid
+# High-performance mode with adaptive scaling
+TESTMASTER_PROFILE=high_performance python -m testmaster orchestrate --target ./codebase --mode rapid
+
+# Configuration profile selection
+TESTMASTER_PROFILE=production python -m testmaster orchestrate --target ./codebase --mode comprehensive
+TESTMASTER_PROFILE=security_focused python -m testmaster orchestrate --target ./codebase --mode security_focused
 ```
 
-### Security Analysis
+### Security Intelligence Analysis
 ```bash
-# Comprehensive security scan
+# Security Intelligence Agent with OWASP compliance
 python -m testmaster security-scan --target ./codebase --detailed
 
-# Compliance assessment (multiple standards)
+# Multi-agent consensus compliance assessment
 python -m testmaster compliance --target ./codebase --standard GDPR --detailed
 python -m testmaster compliance --target ./codebase --standard PCI_DSS --detailed
 
-# Intelligence-enhanced test generation
+# Hierarchical planning with security focus
 python -m testmaster intelligence-test --target ./codebase --reasoning-depth 5
+
+# Multi-objective optimization for security and performance
+python -c "from testmaster.intelligence.optimization import MultiObjectiveOptimizationAgent; agent = MultiObjectiveOptimizationAgent(); print('Optimization ready!')"
+```
+
+### Bridge System & Integration Testing
+```bash
+# Test all 5 bridge components
+python run_integration_test.py
+
+# Test configuration intelligence profiles
+python test_config_intelligence.py
+
+# Individual bridge testing
+python -c "from testmaster.intelligence.bridges import get_protocol_bridge, get_event_monitoring_bridge; print('All bridges operational!')"
+
+# Multi-agent consensus testing
+python -c "from testmaster.intelligence.consensus import ConsensusEngine; engine = ConsensusEngine(); print('Consensus engine ready!')"
 ```
 
 ### Legacy Commands (Still Supported)
@@ -144,7 +204,50 @@ python accelerated_converter.py --batch --cache
 python agentic_test_monitor.py --mode continuous --interval 120
 ```
 
-## 🔧 Configuration & Customization
+## 🔧 Configuration Intelligence & Customization
+
+### Configuration Intelligence Profiles
+
+TestMaster features an advanced Configuration Intelligence Agent that automatically adapts to your environment:
+
+**Available Profiles:**
+- **Development** - Debugging optimized (2 parallel tasks, low security, verbose logging)
+- **Production** - Performance optimized (8 parallel tasks, medium security, adaptive scaling)
+- **Security Focused** - Security first (enhanced scanning, all compliance standards, high consensus threshold)
+- **High Performance** - Maximum throughput (16 parallel tasks, 50K events, 90% resource usage)
+
+**Profile Auto-Detection:**
+```bash
+# Set profile explicitly
+export TESTMASTER_PROFILE=production
+
+# Auto-detection based on environment
+# CI/GitHub Actions → production
+# TESTMASTER_SECURITY_SCAN=true → security_focused  
+# TESTMASTER_HIGH_PERFORMANCE=true → high_performance
+# Default → development
+```
+
+### Advanced Configuration
+
+**Multi-Source Configuration Hierarchy:**
+1. **Default** - Built-in intelligent defaults
+2. **File** - YAML/JSON configuration files
+3. **Environment** - Environment variable overrides
+4. **Runtime** - Dynamic runtime updates
+5. **Override** - Profile-based overrides
+
+**Configuration Management:**
+```bash
+# Test configuration system
+python test_config_intelligence.py
+
+# Export current configuration
+python -c "from testmaster.core.config import get_config; print(get_config().export_config('yaml'))"
+
+# Validate all configuration
+python -c "from testmaster.core.config import get_config; errors = get_config().validate_all(); print('Valid!' if not errors else errors)"
+```
 
 ### Environment Variables
 ```bash

@@ -4,11 +4,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Auto-commit Policy
 
-**IMPORTANT**: After completing any coding task that modifies files:
-1. Automatically run `git add .`
-2. Create a descriptive commit message based on the changes made
-3. Commit using `git commit -m "message"`
-4. Push to GitHub origin with `git push origin main` (or current branch)
+**CRITICAL**: After completing any coding task that modifies files:
+1. **ALWAYS UPDATE README.md FIRST** - Document all new features, components, and capabilities in README.md
+2. Automatically run `git add .`
+3. Create a descriptive commit message based on the changes made
+4. Commit using `git commit -m "message"`
+5. Push to GitHub origin with `git push origin main` (or current branch)
+
+**README.md UPDATE REQUIREMENT**: Every commit MUST include updated README.md documentation that reflects:
+- New features and capabilities added
+- System architecture changes
+- New commands and usage examples
+- Configuration options and profiles
+- Integration test results and status
 
 This should happen WITHOUT asking for permission, as part of the natural workflow after completing each task. All changes must be pushed to the GitHub remote repository, not just committed locally.
 
@@ -176,35 +184,67 @@ The system automatically detects and handles:
 - Execution time: ~10s per test, 2.6 files/minute conversion rate
 - Parallel processing significantly improves batch performance
 
-## Unified Intelligence System
+## Hybrid Intelligence System - FULLY OPERATIONAL
 
-TestMaster includes a comprehensive unified intelligence system with the following capabilities:
+TestMaster is now a complete unified hybrid intelligence platform with 16 intelligent agents and 5 bridge components working in perfect coordination:
 
-**Core Components:**
-- Tree-of-Thought reasoning for enhanced test generation
-- Multi-objective optimization for test quality and coverage
-- Universal LLM provider management for flexible AI integration
+**Core Intelligence Components:**
+- **Configuration Intelligence Agent** - Dynamic environment adaptation with 4 smart profiles
+- **Hierarchical Test Planning Engine** - Advanced multi-strategy reasoning with 5 planning strategies  
+- **Multi-Agent Consensus System** - Democratic decision-making with 6 voting methods
+- **Security Intelligence Agent** - Comprehensive OWASP vulnerability scanning and compliance
+- **Multi-Objective Optimization Agent** - NSGA-II algorithm for coverage, quality, and performance
+- **Performance Monitoring Agents** - Real-time bottleneck detection and adaptive resource management
+- **Bridge Communication System** - 5 specialized bridges for protocol, event, session, SOP, and context management
+
+**Deep Integration Architecture:**
+- **Phase 1A**: Configuration Intelligence (3/3 agents) ✓
+- **Phase 2**: Intelligence Layer Integration (3/3 agents) ✓  
+- **Phase 3**: Flow Optimization & Monitoring (3/3 agents) ✓
+- **Phase 4**: Bridge Implementation (5/5 bridge agents) ✓
+- **Phase 5**: Final Integration & Testing ✓
+
+**Advanced Capabilities:**
+- DAG-based workflow orchestration with parallel task execution
+- Multi-source configuration hierarchy (default → file → env → runtime → override)
+- Event-driven architecture with unified event bus and correlation
+- Session management with checkpoint and recovery capabilities
+- Universal LLM provider management with fallback chains
 - Security intelligence with vulnerability scanning and compliance checking
 - Universal framework adaptation supporting any programming language
 
 **Essential Commands:**
 ```bash
-# Run unified orchestration (comprehensive mode)
+# Run hybrid intelligence orchestration (comprehensive mode - all 16 agents + 5 bridges)
 python -m testmaster orchestrate --target path/to/code --mode comprehensive
 
-# Security-focused test generation
+# Security-focused hybrid intelligence
 python -m testmaster orchestrate --target path/to/code --mode security_focused
 
-# Compliance checking
+# Compliance checking with multi-agent consensus
 python -m testmaster compliance --target path/to/code --standard OWASP_ASVS
 
-# Intelligence-enhanced test generation
+# Hierarchical planning test generation
 python -m testmaster intelligence-test --target path/to/code --reasoning-depth 5
 
-# Security vulnerability scanning
+# Security Intelligence Agent scanning
 python -m testmaster security-scan --target path/to/code --detailed
 
-# Codebase analysis
+# Codebase analysis with hybrid intelligence
 python -m testmaster analyze --target path/to/code
+
+# Configuration Intelligence testing
+python test_config_intelligence.py                              # Windows
+python3 test_config_intelligence.py                             # Unix
+
+# Integration testing (all components)
+python run_integration_test.py                                  # Windows  
+python3 run_integration_test.py                                 # Unix
+
+# Bridge system testing
+python -c "from testmaster.intelligence.bridges import get_protocol_bridge; print('Bridge ready!')"
+
+# Multi-agent consensus testing
+python -c "from testmaster.intelligence.consensus import ConsensusEngine; print('Consensus ready!')"
 ```
 
