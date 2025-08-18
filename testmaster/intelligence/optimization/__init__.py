@@ -33,6 +33,15 @@ from .optimization_algorithms import (
     GeneticAlgorithmOptimizer
 )
 
+from .multi_objective_optimization_agent import (
+    MultiObjectiveOptimizationAgent,
+    OptimizationStrategy,
+    ObjectiveWeights,
+    OptimizationCandidate,
+    OptimizationPlanGenerator,
+    OptimizationPlanEvaluator
+)
+
 __all__ = [
     # Core Optimization
     'MultiObjectiveOptimizer',
@@ -57,5 +66,13 @@ __all__ = [
     'MOEADOptimizer',
     'ParticleSwarmOptimizer',
     'SimulatedAnnealingOptimizer',
-    'GeneticAlgorithmOptimizer'
+    'GeneticAlgorithmOptimizer',
+    
+    # Intelligence Optimization Agent
+    'MultiObjectiveOptimizationAgent',
+    'OptimizationStrategy',
+    'ObjectiveWeights',
+    'OptimizationCandidate',
+    'OptimizationPlanGenerator',
+    'OptimizationPlanEvaluator'
 ]

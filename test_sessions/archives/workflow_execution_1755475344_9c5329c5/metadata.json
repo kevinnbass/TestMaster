@@ -1,0 +1,12 @@
+{
+  "session_id": "workflow_execution_1755475344_9c5329c5",
+  "session_type": "workflow_execution",
+  "user_id": "test_user",
+  "workflow_id": "test_workflow_456",
+  "parent_session_id": null,
+  "tags": [],
+  "priority": 5,
+  "created_at": "2025-08-17T19:02:24.287226",
+  "last_accessed": "2025-08-17T19:02:24.287226",
+  "expires_at": "2025-08-17T21:02:24.287226",
+  "max_duration": 
