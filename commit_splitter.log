@@ -1,0 +1,241 @@
+[15:53:46] COMMIT SPLITTER SYSTEM
+[15:53:46] ============================================================
+[15:53:46] Breaks large commits into smaller, pushable commits
+[15:53:46] Preserves original dates, authors, and chronological order
+[15:53:46] 
+[15:53:46] Found 21 commits to process
+[15:53:46] 
+=== PROCESSING COMMIT 1/21 ===
+[15:53:46] Commit 154482eb has 4767 files - splitting required
+[15:53:46] 
+SPLITTING COMMIT: 154482eb
+[15:53:46] Original message: 🚀 PHASE 1: Core Multi-Agent Framework Integration
+[15:53:46] Total files: 4767
+[15:53:46] Author: TestMaster AI <testmaster@ai.generated>
+[15:53:46] Date: 2025-08-21 22:35:30 -0500
+[15:53:46] Splitting large group root_files (109 files)
+[15:53:46] Splitting large group dir_PRODUCTION_PACKAGES (4278 files)
+[15:53:46] Created 87 logical commit groups:
+[15:53:46]   commit_001_root_files_.md_part1: 42 files
+[15:53:46]   commit_002_root_files_.json_part1: 36 files
+[15:53:46]   commit_003_root_files_.py_part1: 23 files
+[15:53:46]   commit_004_root_files_.md"_part1: 1 files
+[15:53:46]   commit_005_root_files_.security_backup_part1: 2 files
+[15:53:46]   commit_006_root_files_.txt_part1: 1 files
+[15:53:46]   commit_007_root_files_.db_part1: 1 files
+[15:53:46]   commit_008_root_files_.ini_part1: 1 files
+[15:53:46]   commit_009_root_files_.log_part1: 2 files
+[15:53:46]   commit_010_dir_GENERATED_TESTS: 46 files
+[15:53:46]   commit_011_dir_MONITORING_LOGS: 1 files
+[15:53:46]   commit_012_dir_PRODUCTION_PACKAGES_.json_part1: 100 files
+[15:53:46]   commit_013_dir_PRODUCTION_PACKAGES_.json_part2: 100 files
+[15:53:46]   commit_014_dir_PRODUCTION_PACKAGES_.json_part3: 2 files
+[15:53:46]   commit_015_dir_PRODUCTION_PACKAGES_.md_part1: 9 files
+[15:53:46]   commit_016_dir_PRODUCTION_PACKAGES_.py_part1: 100 files
+[15:53:46]   commit_017_dir_PRODUCTION_PACKAGES_.py_part2: 100 files
+[15:53:46]   commit_018_dir_PRODUCTION_PACKAGES_.py_part3: 100 files
+[15:53:46]   commit_019_dir_PRODUCTION_PACKAGES_.py_part4: 100 files
+[15:53:46]   commit_020_dir_PRODUCTION_PACKAGES_.py_part5: 100 files
+[15:53:46]   commit_021_dir_PRODUCTION_PACKAGES_.py_part6: 100 files
+[15:53:46]   commit_022_dir_PRODUCTION_PACKAGES_.py_part7: 100 files
+[15:53:46]   commit_023_dir_PRODUCTION_PACKAGES_.py_part8: 31 files
+[15:53:46]   commit_024_dir_PRODUCTION_PACKAGES_.db_part1: 3 files
+[15:53:46]   commit_025_dir_PRODUCTION_PACKAGES_.log_part1: 4 files
+[15:53:46]   commit_026_dir_PRODUCTION_PACKAGES_.gz_part1: 100 files
+[15:53:46]   commit_027_dir_PRODUCTION_PACKAGES_.gz_part2: 100 files
+[15:53:46]   commit_028_dir_PRODUCTION_PACKAGES_.gz_part3: 100 files
+[15:53:46]   commit_029_dir_PRODUCTION_PACKAGES_.gz_part4: 100 files
+[15:53:46]   commit_030_dir_PRODUCTION_PACKAGES_.gz_part5: 100 files
+[15:53:46]   commit_031_dir_PRODUCTION_PACKAGES_.gz_part6: 100 files
+[15:53:46]   commit_032_dir_PRODUCTION_PACKAGES_.gz_part7: 100 files
+[15:53:46]   commit_033_dir_PRODUCTION_PACKAGES_.gz_part8: 45 files
+[15:53:46]   commit_034_dir_PRODUCTION_PACKAGES_.security_backup_part1: 10 files
+[15:53:46]   commit_035_dir_PRODUCTION_PACKAGES_.prom_part1: 100 files
+[15:53:46]   commit_036_dir_PRODUCTION_PACKAGES_.prom_part2: 100 files
+[15:53:46]   commit_037_dir_PRODUCTION_PACKAGES_.prom_part3: 100 files
+[15:53:46]   commit_038_dir_PRODUCTION_PACKAGES_.prom_part4: 100 files
+[15:53:46]   commit_039_dir_PRODUCTION_PACKAGES_.prom_part5: 100 files
+[15:53:46]   commit_040_dir_PRODUCTION_PACKAGES_.prom_part6: 100 files
+[15:53:46]   commit_041_dir_PRODUCTION_PACKAGES_.prom_part7: 100 files
+[15:53:46]   commit_042_dir_PRODUCTION_PACKAGES_.prom_part8: 100 files
+[15:53:46]   commit_043_dir_PRODUCTION_PACKAGES_.prom_part9: 100 files
+[15:53:46]   commit_044_dir_PRODUCTION_PACKAGES_.prom_part10: 100 files
+[15:53:46]   commit_045_dir_PRODUCTION_PACKAGES_.prom_part11: 100 files
+[15:53:46]   commit_046_dir_PRODUCTION_PACKAGES_.prom_part12: 100 files
+[15:53:46]   commit_047_dir_PRODUCTION_PACKAGES_.prom_part13: 100 files
+[15:53:46]   commit_048_dir_PRODUCTION_PACKAGES_.prom_part14: 100 files
+[15:53:46]   commit_049_dir_PRODUCTION_PACKAGES_.prom_part15: 100 files
+[15:53:46]   commit_050_dir_PRODUCTION_PACKAGES_.prom_part16: 100 files
+[15:53:46]   commit_051_dir_PRODUCTION_PACKAGES_.prom_part17: 100 files
+[15:53:46]   commit_052_dir_PRODUCTION_PACKAGES_.prom_part18: 100 files
+[15:53:46]   commit_053_dir_PRODUCTION_PACKAGES_.prom_part19: 100 files
+[15:53:46]   commit_054_dir_PRODUCTION_PACKAGES_.prom_part20: 100 files
+[15:53:46]   commit_055_dir_PRODUCTION_PACKAGES_.prom_part21: 100 files
+[15:53:46]   commit_056_dir_PRODUCTION_PACKAGES_.prom_part22: 100 files
+[15:53:46]   commit_057_dir_PRODUCTION_PACKAGES_.prom_part23: 100 files
+[15:53:46]   commit_058_dir_PRODUCTION_PACKAGES_.prom_part24: 100 files
+[15:53:46]   commit_059_dir_PRODUCTION_PACKAGES_.prom_part25: 100 files
+[15:53:46]   commit_060_dir_PRODUCTION_PACKAGES_.prom_part26: 51 files
+[15:53:46]   commit_061_dir_PRODUCTION_PACKAGES_.zip_part1: 3 files
+[15:53:46]   commit_062_dir_PRODUCTION_PACKAGES_.db-journal_part1: 1 files
+[15:53:46]   commit_063_dir_PRODUCTION_PACKAGES_.txt_part1: 1 files
+[15:53:46]   commit_064_dir_PRODUCTION_PACKAGES_.jsx_part1: 2 files
+[15:53:46]   commit_065_dir_PRODUCTION_PACKAGES_.bat_part1: 1 files
+[15:53:46]   commit_066_dir_PRODUCTION_PACKAGES_.sh_part1: 1 files
+[15:53:46]   commit_067_dir_PRODUCTION_PACKAGES_.css_part1: 3 files
+[15:53:46]   commit_068_dir_PRODUCTION_PACKAGES_.html_part1: 3 files
+[15:53:46]   commit_069_dir_PRODUCTION_PACKAGES_.js_part1: 8 files
+[15:53:46]   commit_070_dir_QUARANTINE: 83 files
+[15:53:46]   commit_071_dir_SECURITY_BACKUPS: 97 files
+[15:53:46]   commit_072_dir_SECURITY_BACKUPS_PHASE2: 7 files
+[15:53:46]   commit_073_dir_SECURITY_PATCHES: 11 files
+[15:53:46]   commit_074_dir_TestMaster_BACKUP_20250816_175859: 5 files
+[15:53:46]   commit_075_dir_archive: 16 files
+[15:53:46]   commit_076_dir_archives: 74 files
+[15:53:46]   commit_077_dir_MODULARIZATION_SUMMARY.md	archives: 1 files
+[15:53:46]   commit_078_dir_MODULE_SUMMARY.md	archives: 1 files
+[15:53:46]   commit_079_dir_automated_modularization_summary.md	archives: 1 files
+[15:53:46]   commit_080_dir_"archives: 1 files
+[15:53:46]   commit_081_dir_cache: 1 files
+[15:53:46]   commit_082_dir_config: 1 files
+[15:53:46]   commit_083_dir_neo4j_export: 3 files
+[15:53:46]   commit_084_dir_state_data: 6 files
+[15:53:46]   commit_085_dir_tests: 3 files
+[15:53:46]   commit_086_dir_unified_agent_framework: 21 files
+[15:53:46]   commit_087_dir_visualizations: 1 files
+[15:53:46] Resetting to parent: 8a082529
+[15:53:53] 
+--- SPLIT COMMIT 1/87: commit_001_root_files_.md_part1 ---
+[15:53:57]     Applied 42/42 file changes
+[15:53:57]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - Root level files (42 .md) (42 files)
+[15:53:57]     CREATED: 4fe3c1f2
+[15:53:57]     PUSH ATTEMPT 1: 4fe3c1f2
+[15:54:00]       SUCCESS: Commit 4fe3c1f2 pushed
+[15:54:00]     PUSHED: Split commit 1 successfully pushed
+[15:54:00] 
+--- SPLIT COMMIT 2/87: commit_002_root_files_.json_part1 ---
+[15:54:06]     Applied 36/36 file changes
+[15:54:06]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - Root level files (36 .json) (36 files)
+[15:54:08]     CREATED: 396ec95b
+[15:54:08]     PUSH ATTEMPT 1: 396ec95b
+[15:54:22]       SUCCESS: Commit 396ec95b pushed
+[15:54:22]     PUSHED: Split commit 2 successfully pushed
+[15:54:22] 
+--- SPLIT COMMIT 3/87: commit_003_root_files_.py_part1 ---
+[15:54:24]     Applied 23/23 file changes
+[15:54:24]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - Root level files (23 .py) (23 files)
+[15:54:24]     CREATED: f524df72
+[15:54:24]     PUSH ATTEMPT 1: f524df72
+[15:54:27]       SUCCESS: Commit f524df72 pushed
+[15:54:27]     PUSHED: Split commit 3 successfully pushed
+[15:54:27] 
+--- SPLIT COMMIT 4/87: commit_004_root_files_.md"_part1 ---
+[15:54:27]       Warning: Could not apply "C\357\200\272UserskbassOneDriveDocumentstestmasterSUMMARY.md": Command '['git', 'checkout', '154482eb2ac24e8d2f92a37ba499efb7e9a28a9a', '--', '"C\\357\\200\\272UserskbassOneDriveDocumentstestmasterSUMMARY.md"']' returned non-zero exit status 1.
+[15:54:27]     Applied 0/1 file changes
+[15:54:27]     SKIP: No changes to commit
+[15:54:27] 
+--- SPLIT COMMIT 5/87: commit_005_root_files_.security_backup_part1 ---
+[15:54:27]     Applied 2/2 file changes
+[15:54:27]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - Root level files (2 .security_backup) (2 files)
+[15:54:27]     CREATED: 0bc7555b
+[15:54:27]     PUSH ATTEMPT 1: 0bc7555b
+[15:54:30]       SUCCESS: Commit 0bc7555b pushed
+[15:54:30]     PUSHED: Split commit 5 successfully pushed
+[15:54:30] 
+--- SPLIT COMMIT 6/87: commit_006_root_files_.txt_part1 ---
+[15:54:30]     Applied 1/1 file changes
+[15:54:30]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - Root level files (1 .txt) (1 files)
+[15:54:30]     CREATED: c06893fc
+[15:54:30]     PUSH ATTEMPT 1: c06893fc
+[15:54:32]       SUCCESS: Commit c06893fc pushed
+[15:54:32]     PUSHED: Split commit 6 successfully pushed
+[15:54:32] 
+--- SPLIT COMMIT 7/87: commit_007_root_files_.db_part1 ---
+[15:54:32]     Applied 1/1 file changes
+[15:54:32]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - Root level files (1 .db) (1 files)
+[15:54:33]     CREATED: 16f2c863
+[15:54:33]     PUSH ATTEMPT 1: 16f2c863
+[15:54:35]       SUCCESS: Commit 16f2c863 pushed
+[15:54:35]     PUSHED: Split commit 7 successfully pushed
+[15:54:35] 
+--- SPLIT COMMIT 8/87: commit_008_root_files_.ini_part1 ---
+[15:54:35]     Applied 1/1 file changes
+[15:54:35]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - Root level files (1 .ini) (1 files)
+[15:54:36]     CREATED: 65b83483
+[15:54:36]     PUSH ATTEMPT 1: 65b83483
+[15:54:38]       SUCCESS: Commit 65b83483 pushed
+[15:54:38]     PUSHED: Split commit 8 successfully pushed
+[15:54:38] 
+--- SPLIT COMMIT 9/87: commit_009_root_files_.log_part1 ---
+[15:54:38]     Applied 2/2 file changes
+[15:54:38]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - Root level files (2 .log) (2 files)
+[15:54:38]     CREATED: b9c858bd
+[15:54:38]     PUSH ATTEMPT 1: b9c858bd
+[15:54:41]       SUCCESS: Commit b9c858bd pushed
+[15:54:41]     PUSHED: Split commit 9 successfully pushed
+[15:54:41] 
+--- SPLIT COMMIT 10/87: commit_010_dir_GENERATED_TESTS ---
+[15:54:44]     Applied 46/46 file changes
+[15:54:44]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - GENERATED/ directory (46 .py) (46 files)
+[15:54:44]     CREATED: 53fed527
+[15:54:44]     PUSH ATTEMPT 1: 53fed527
+[15:54:47]       SUCCESS: Commit 53fed527 pushed
+[15:54:47]     PUSHED: Split commit 10 successfully pushed
+[15:54:47] 
+--- SPLIT COMMIT 11/87: commit_011_dir_MONITORING_LOGS ---
+[15:54:47]     Applied 1/1 file changes
+[15:54:47]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - MONITORING/ directory (1 .log) (1 files)
+[15:54:47]     CREATED: 7c214305
+[15:54:47]     PUSH ATTEMPT 1: 7c214305
+[15:54:50]       SUCCESS: Commit 7c214305 pushed
+[15:54:50]     PUSHED: Split commit 11 successfully pushed
+[15:54:50] 
+--- SPLIT COMMIT 12/87: commit_012_dir_PRODUCTION_PACKAGES_.json_part1 ---
+[15:54:58]     Applied 100/100 file changes
+[15:54:58]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - PRODUCTION/ directory (100 .json) (100 files)
+[15:54:58]     CREATED: dcf680ea
+[15:54:58]     PUSH ATTEMPT 1: dcf680ea
+[15:55:00]       SUCCESS: Commit dcf680ea pushed
+[15:55:00]     PUSHED: Split commit 12 successfully pushed
+[15:55:00] 
+--- SPLIT COMMIT 13/87: commit_013_dir_PRODUCTION_PACKAGES_.json_part2 ---
+[15:55:08]     Applied 100/100 file changes
+[15:55:08]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - PRODUCTION/ directory (100 .json) (100 files)
+[15:55:09]     CREATED: e9f7c74d
+[15:55:09]     PUSH ATTEMPT 1: e9f7c74d
+[15:55:11]       SUCCESS: Commit e9f7c74d pushed
+[15:55:11]     PUSHED: Split commit 13 successfully pushed
+[15:55:11] 
+--- SPLIT COMMIT 14/87: commit_014_dir_PRODUCTION_PACKAGES_.json_part3 ---
+[15:55:11]     Applied 2/2 file changes
+[15:55:11]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - PRODUCTION/ directory (2 .json) (2 files)
+[15:55:12]     CREATED: 270ad30a
+[15:55:12]     PUSH ATTEMPT 1: 270ad30a
+[15:55:14]       SUCCESS: Commit 270ad30a pushed
+[15:55:14]     PUSHED: Split commit 14 successfully pushed
+[15:55:14] 
+--- SPLIT COMMIT 15/87: commit_015_dir_PRODUCTION_PACKAGES_.md_part1 ---
+[15:55:15]     Applied 9/9 file changes
+[15:55:15]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - PRODUCTION/ directory (9 .md) (9 files)
+[15:55:15]     CREATED: 70e6e2f4
+[15:55:15]     PUSH ATTEMPT 1: 70e6e2f4
+[15:55:17]       SUCCESS: Commit 70e6e2f4 pushed
+[15:55:17]     PUSHED: Split commit 15 successfully pushed
+[15:55:17] 
+--- SPLIT COMMIT 16/87: commit_016_dir_PRODUCTION_PACKAGES_.py_part1 ---
+[15:55:25]     Applied 100/100 file changes
+[15:55:25]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - PRODUCTION/ directory (100 .py) (100 files)
+[15:55:26]     CREATED: 6e619bca
+[15:55:26]     PUSH ATTEMPT 1: 6e619bca
+[15:55:29]       SUCCESS: Commit 6e619bca pushed
+[15:55:29]     PUSHED: Split commit 16 successfully pushed
+[15:55:29] 
+--- SPLIT COMMIT 17/87: commit_017_dir_PRODUCTION_PACKAGES_.py_part2 ---
+[15:55:40]     Applied 100/100 file changes
+[15:55:40]     Message: 🚀 PHASE 1: Core Multi-Agent Framework Integration - PRODUCTION/ directory (100 .py) (100 files)
+[15:55:40]     CREATED: 8a67ca2b
+[15:55:40]     PUSH ATTEMPT 1: 8a67ca2b
+[15:55:43]       SUCCESS: Commit 8a67ca2b pushed
+[15:55:43]     PUSHED: Split commit 17 successfully pushed
+[15:55:43] 
+--- SPLIT COMMIT 18/87: commit_018_dir_PRODUCTION_PACKAGES_.py_part3 ---
