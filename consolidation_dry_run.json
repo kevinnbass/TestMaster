@@ -1,0 +1,92 @@
+{
+  "timestamp": "20250821_193432",
+  "dry_run": true,
+  "archive_path": "archive\\consolidation_20250821_193432",
+  "duplicate_results": {
+    "files_processed": 6,
+    "files_archived": 0,
+    "files_removed": 0,
+    "space_saved": 0,
+    "safety_violations": []
+  },
+  "consolidation_results": {
+    "consolidations_planned": 1,
+    "consolidations_executed": 0,
+    "features_preserved": [],
+    "safety_violations": []
+  },
+  "modularization_results": {
+    "files_modularized": 0,
+    "modules_created": 0,
+    "average_module_size": 0,
+    "safety_violations": []
+  },
+  "safety_report": {
+    "timestamp": "20250821_193432",
+    "safety_checks_performed": 0,
+    "rollback_points_created": 0,
+    "consolidation_log_entries": 8,
+    "archive_location": "archive\\consolidation_20250821_193432",
+    "verification_status": "PASSED",
+    "risk_assessment": "LOW - All safety protocols followed"
+  },
+  "consolidation_log": [
+    {
+      "action": "DUPLICATE_PROCESSED",
+      "file": "restored_asyncio_4.py",
+      "status": "would_remove",
+      "keeper": "restored_asyncio_6.py"
+    },
+    {
+      "action": "DUPLICATE_PROCESSED",
+      "file": "restored_asyncio_5.py",
+      "status": "would_remove",
+      "keeper": "restored_asyncio_6.py"
+    },
+    {
+      "action": "DUPLICATE_PROCESSED",
+      "file": "restored_json_4.py",
+      "status": "would_remove",
+      "keeper": "restored_json_6.py"
+    },
+    {
+      "action": "DUPLICATE_PROCESSED",
+      "file": "restored_json_5.py",
+      "status": "would_remove",
+      "keeper": "restored_json_6.py"
+    },
+    {
+      "action": "DUPLICATE_PROCESSED",
+      "file": "restored_logging_4.py",
+      "status": "would_remove",
+      "keeper": "restored_logging_6.py"
+    },
+    {
+      "action": "DUPLICATE_PROCESSED",
+      "file": "restored_logging_5.py",
+      "status": "would_remove",
+      "keeper": "restored_logging_6.py"
+    },
+    {
+      "action": "SMART_CONSOLIDATION",
+      "sources": [
+        "convert_batch_small.py",
+        "convert_with_genai_sdk.py",
+        "convert_with_generativeai.py"
+      ],
+      "target": "unified_converter.py",
+      "status": "planned"
+    },
+    {
+      "action": "MODULARIZATION",
+      "source": "web_monitor.py",
+      "targets": [
+        "web_monitor/core.py",
+        "web_monitor/handlers.py",
+        "web_monitor/validators.py",
+        "web_monitor/utils.py"
+      ],
+      "status": "planned"
+    }
+  ]
+}

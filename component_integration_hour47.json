@@ -1,0 +1,2090 @@
+{
+  "analysis_metadata": {
+    "tool": "component_integration_planner",
+    "version": "1.0",
+    "agent": "Agent_C",
+    "hours": "47-50",
+    "phase": "Utility_Component_Extraction_Complete"
+  },
+  "integration_opportunities": {
+    "high_priority_extractions": [
+      {
+        "type": "utility_function",
+        "utility": {
+          "function_id": "TestMaster\\duplicate_code_detector.py::ASTAnalyzer::get_signature::94",
+          "name": "get_signature",
+          "file": "TestMaster\\duplicate_code_detector.py",
+          "complexity": 1,
+          "reusability_score": 0.8999999999999999
+        },
+        "priority": 1.3499999999999999,
+        "estimated_impact": {
+          "effort": "low",
+          "risk": "low",
+          "benefit": "medium",
+          "timeline": "1-3 days"
+        }
+      },
+      {
+        "type": "utility_function",
+        "utility": {
+          "function_id": "TestMaster\\enhanced_incremental_ast_engine.py::IncrementalAnalysisCache::get_semantic_analysis::329",
+          "name": "get_semantic_analysis",
+          "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+          "complexity": 1,
+          "reusability_score": 0.8999999999999999
+        },
+        "priority": 1.3499999999999999,
+        "estimated_impact": {
+          "effort": "low",
+          "risk": "low",
+          "benefit": "medium",
+          "timeline": "1-3 days"
+        }
+      },
+      {
+        "type": "utility_function",
+        "utility": {
+          "function_id": "TestMaster\\enhanced_realtime_security_monitor.py::EnhancedRealtimeSecurityMonitor::get_risk_dashboard::713",
+          "name": "get_risk_dashboard",
+          "file": "TestMaster\\enhanced_realtime_security_monitor.py",
+          "complexity": 1,
+          "reusability_score": 0.8999999999999999
+        },
+        "priority": 1.3499999999999999,
+        "estimated_impact": {
+          "effort": "low",
+          "risk": "low",
+          "benefit": "medium",
+          "timeline": "1-3 days"
+        }
+      },
+      {
+        "type": "utility_function",
+        "utility": {
+          "function_id": "TestMaster\\accelerated_converter.py::module::convert_module_with_delay::149",
+          "name": "convert_module_with_delay",
+          "file": "TestMaster\\accelerated_converter.py",
+          "complexity": 2,
+          "reusability_score": 0.8999999999999999
+        },
+        "priority": 1.2999999999999998,
+        "estimated_impact": {
+          "effort": "low",
+          "risk": "low",
+          "benefit": "medium",
+          "timeline": "1-3 days"
+        }
+      },
+      {
+        "type": "utility_function",
+        "utility": {
+          "function_id": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py::module::get_archive_system::386",
+          "name": "get_archive_system",
+          "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+          "complexity": 2,
+          "reusability_score": 0.8999999999999999
+        },
+        "priority": 1.2999999999999998,
+        "estimated_impact": {
+          "effort": "low",
+          "risk": "low",
+          "benefit": "medium",
+          "timeline": "1-3 days"
+        }
+      },
+      {
+        "type": "utility_function",
+        "utility": {
+          "function_id": "TestMaster\\enhanced_incremental_ast_engine.py::EnhancedIncrementalASTEngine::get_incremental_statistics::702",
+          "name": "get_incremental_statistics",
+          "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+          "complexity": 2,
+          "reusability_score": 0.8999999999999999
+        },
+        "priority": 1.2999999999999998,
+        "estimated_impact": {
+          "effort": "low",
+          "risk": "low",
+          "benefit": "medium",
+          "timeline": "1-3 days"
+        }
+      },
+      {
+        "type": "utility_function",
+        "utility": {
+          "function_id": "TestMaster\\enhanced_security_dashboard_api.py::module::get_security_status::104",
+          "name": "get_security_status",
+          "file": "TestMaster\\enhanced_security_dashboard_api.py",
+          "complexity": 2,
+          "reusability_score": 0.8999999999999999
+        },
+        "priority": 1.2999999999999998,
+        "estimated_impact": {
+          "effort": "low",
+          "risk": "low",
+          "benefit": "medium",
+          "timeline": "1-3 days"
+        }
+      },
+      {
+        "type": "utility_function",
+        "utility": {
+          "function_id": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py::ArchiveSystem::get_archive_stats::291",
+          "name": "get_archive_stats",
+          "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+          "complexity": 3,
+          "reusability_score": 0.8999999999999999
+        },
+        "priority": 1.25,
+        "estimated_impact": {
+          "effort": "low",
+          "risk": "low",
+          "benefit": "medium",
+          "timeline": "1-3 days"
+        }
+      },
+      {
+        "type": "utility_function",
+        "utility": {
+          "function_id": "TestMaster\\batch_convert_broken_tests.py::module::get_broken_test_files::20",
+          "name": "get_broken_test_files",
+          "file": "TestMaster\\batch_convert_broken_tests.py",
+          "complexity": 3,
+          "reusability_score": 0.8999999999999999
+        },
+        "priority": 1.25,
+        "estimated_impact": {
+          "effort": "low",
+          "risk": "low",
+          "benefit": "medium",
+          "timeline": "1-3 days"
+        }
+      },
+      {
+        "type": "utility_function",
+        "utility": {
+          "function_id": "TestMaster\\enhanced_security_dashboard_api.py::module::get_security_alerts::200",
+          "name": "get_security_alerts",
+          "file": "TestMaster\\enhanced_security_dashboard_api.py",
+          "complexity": 3,
+          "reusability_score": 0.8999999999999999
+        },
+        "priority": 1.25,
+        "estimated_impact": {
+          "effort": "low",
+          "risk": "low",
+          "benefit": "medium",
+          "timeline": "1-3 days"
+        }
+      }
+    ],
+    "security_critical_fixes": [
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\comprehensive_classical_analysis_methods.py",
+        "line": 469,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\comprehensive_classical_analysis_methods.py",
+        "line": 471,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\configuration_settings_analyzer.py",
+        "line": 327,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\configuration_settings_analyzer.py",
+        "line": 335,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\unified_orchestration_example.py",
+        "line": 249,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\archive\\coverage_analyzer_original_2697_lines.py",
+        "line": 1015,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\archive\\coverage_analyzer_original_2697_lines.py",
+        "line": 1017,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\archive\\integration_hub_original_20250820_220939.py",
+        "line": 1041,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\archive\\centralization_process_20250821_intelligence_consolidation\\analytics_components\\analytics_aggregator.py",
+        "line": 234,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\archive\\centralization_process_20250821_intelligence_consolidation\\analytics_components\\analytics_integrity_verifier.py",
+        "line": 104,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\archive\\centralization_process_20250821_intelligence_consolidation\\testing_components\\coverage_analyzer.py",
+        "line": 1015,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\archive\\centralization_process_20250821_intelligence_consolidation\\testing_components\\coverage_analyzer.py",
+        "line": 1017,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\archive\\modularization_20250821\\debt_analyzer_original_1546_lines.py",
+        "line": 1283,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\archive\\modularization_20250821\\debt_analyzer_original_1546_lines.py",
+        "line": 1285,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\archive\\modularization_integration\\integration_hub_original_1876_lines.py",
+        "line": 1041,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\archive\\oversized_modules_20250821_042018\\analysis\\debt_analyzer.py",
+        "line": 1283,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\archive\\oversized_modules_20250821_042018\\analysis\\debt_analyzer.py",
+        "line": 1285,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\config\\modules\\security_config.py",
+        "line": 45,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\intelligence\\analysis\\technical_debt_analyzer.py",
+        "line": 361,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\analysis\\technical_debt_analyzer.py",
+        "line": 362,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\api\\unified_api_gateway.py",
+        "line": 474,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\config\\enterprise_config_manager.py",
+        "line": 63,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\config\\enterprise_config_manager.py",
+        "line": 64,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\intelligence\\config\\enterprise_config_manager.py",
+        "line": 152,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\intelligence\\config\\enterprise_config_manager.py",
+        "line": 171,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\intelligence\\documentation\\architecture_validation_framework.py",
+        "line": 375,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\documentation\\architecture_validation_framework.py",
+        "line": 377,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\ml\\enterprise\\ml_monitoring_dashboard.py",
+        "line": 144,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\security\\advanced_security_intelligence.py",
+        "line": 148,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\intelligence\\security\\code_vulnerability_scanner.py",
+        "line": 280,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\intelligence\\security\\code_vulnerability_scanner.py",
+        "line": 497,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\security\\code_vulnerability_scanner.py",
+        "line": 497,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\intelligence\\security\\vulnerability_scanner.py",
+        "line": 204,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\security\\vulnerability_scanner.py",
+        "line": 206,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\intelligence\\testing\\security\\advanced_owasp_tester.py",
+        "line": 137,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\intelligence\\testing\\security\\advanced_owasp_tester.py",
+        "line": 262,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\testing\\security\\advanced_owasp_tester.py",
+        "line": 354,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\intelligence\\testing\\security\\api_security_tester.py",
+        "line": 222,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\agent_communication_security.py",
+        "line": 105,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\authentication_system.py",
+        "line": 45,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\authentication_system.py",
+        "line": 46,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\code_generation_security.py",
+        "line": 54,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\configuration_security.py",
+        "line": 24,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\distributed_communication_security.py",
+        "line": 293,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\document_classification_security.py",
+        "line": 26,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\security\\document_classification_security.py",
+        "line": 227,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\document_classification_security.py",
+        "line": 270,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\security\\enterprise_authentication.py",
+        "line": 32,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\security\\enterprise_authentication.py",
+        "line": 146,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\security\\enterprise_authentication.py",
+        "line": 166,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\security\\enterprise_authentication.py",
+        "line": 232,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\security\\enterprise_authentication.py",
+        "line": 724,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\enterprise_auth_gateway.py",
+        "line": 161,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\secure_message_delivery.py",
+        "line": 48,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\secure_message_delivery.py",
+        "line": 49,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\secure_message_delivery.py",
+        "line": 179,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\validation_security.py",
+        "line": 538,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\security\\vulnerability_detection_framework.py",
+        "line": 339,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\security\\vulnerability_detection_framework.py",
+        "line": 372,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\security\\vulnerability_detection_framework.py",
+        "line": 373,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\testing\\testmaster_api_gateway.py",
+        "line": 147,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\domains\\testing\\testmaster_api_gateway.py",
+        "line": 172,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\domains\\testing\\testmaster_api_gateway.py",
+        "line": 693,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\intelligence\\semantic_code_analyzer.py",
+        "line": 1111,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\semantic_code_analyzer.py",
+        "line": 1111,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\intelligence\\analysis\\technical_debt_analyzer.py",
+        "line": 361,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\analysis\\technical_debt_analyzer.py",
+        "line": 362,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\api\\unified_api_gateway.py",
+        "line": 474,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\config\\enterprise_config_manager.py",
+        "line": 63,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\config\\enterprise_config_manager.py",
+        "line": 64,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\intelligence\\config\\enterprise_config_manager.py",
+        "line": 152,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\intelligence\\config\\enterprise_config_manager.py",
+        "line": 171,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\intelligence\\documentation\\architecture_validation_framework.py",
+        "line": 375,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\documentation\\architecture_validation_framework.py",
+        "line": 377,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\ml\\enterprise\\ml_monitoring_dashboard.py",
+        "line": 144,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\security\\advanced_security_intelligence.py",
+        "line": 148,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\intelligence\\security\\code_vulnerability_scanner.py",
+        "line": 280,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\intelligence\\security\\code_vulnerability_scanner.py",
+        "line": 497,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\security\\code_vulnerability_scanner.py",
+        "line": 497,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\intelligence\\security\\vulnerability_scanner.py",
+        "line": 204,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\security\\vulnerability_scanner.py",
+        "line": 206,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\intelligence\\testing\\security\\advanced_owasp_tester.py",
+        "line": 137,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\intelligence\\testing\\security\\advanced_owasp_tester.py",
+        "line": 262,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\testing\\security\\advanced_owasp_tester.py",
+        "line": 354,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\intelligence\\testing\\security\\api_security_tester.py",
+        "line": 222,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\agent_communication_security.py",
+        "line": 105,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\authentication_system.py",
+        "line": 45,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\authentication_system.py",
+        "line": 46,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\code_generation_security.py",
+        "line": 54,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\configuration_security.py",
+        "line": 24,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\deployment_pipeline_security.py",
+        "line": 39,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\deployment_pipeline_security.py",
+        "line": 147,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\deployment_pipeline_security.py",
+        "line": 163,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\deployment_pipeline_security.py",
+        "line": 185,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\security\\deployment_pipeline_security.py",
+        "line": 250,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\deployment_pipeline_security.py",
+        "line": 255,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\security\\deployment_pipeline_security.py",
+        "line": 465,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\deployment_pipeline_security.py",
+        "line": 465,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\distributed_communication_security.py",
+        "line": 293,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\document_classification_security.py",
+        "line": 26,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\security\\document_classification_security.py",
+        "line": 227,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\document_classification_security.py",
+        "line": 270,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\security\\enterprise_authentication.py",
+        "line": 32,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\security\\enterprise_authentication.py",
+        "line": 146,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\security\\enterprise_authentication.py",
+        "line": 166,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\security\\enterprise_authentication.py",
+        "line": 232,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\security\\enterprise_authentication.py",
+        "line": 724,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\enterprise_auth_gateway.py",
+        "line": 161,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\secure_message_delivery.py",
+        "line": 48,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\secure_message_delivery.py",
+        "line": 49,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\secure_message_delivery.py",
+        "line": 179,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\validation_security.py",
+        "line": 538,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\security\\vulnerability_detection_framework.py",
+        "line": 339,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\security\\vulnerability_detection_framework.py",
+        "line": 372,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\security\\vulnerability_detection_framework.py",
+        "line": 373,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\testing\\testmaster_api_gateway.py",
+        "line": 147,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\core\\testing\\testmaster_api_gateway.py",
+        "line": 172,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\core\\testing\\testmaster_api_gateway.py",
+        "line": 693,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\dashboard\\wsgi.py",
+        "line": 56,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\dashboard\\dashboard_core\\analytics_aggregator.py",
+        "line": 234,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\dashboard\\dashboard_core\\analytics_integrity_verifier.py",
+        "line": 104,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\dashboard\\dashboard_core\\real_data_extractor.py",
+        "line": 196,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\dashboard\\dashboard_core\\real_data_extractor.py",
+        "line": 196,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\testmaster\\analysis\\comprehensive_analysis\\crypto_analysis.py",
+        "line": 186,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\testmaster\\analysis\\comprehensive_analysis\\crypto_analysis.py",
+        "line": 187,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\testmaster\\analysis\\comprehensive_analysis\\security_analysis.py",
+        "line": 67,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\testmaster\\analysis\\comprehensive_analysis\\security_analysis.py",
+        "line": 135,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\testmaster\\analysis\\comprehensive_analysis\\security_analysis.py",
+        "line": 158,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\testmaster\\analysis\\comprehensive_analysis\\security_analysis.py",
+        "line": 201,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\testmaster\\analysis\\comprehensive_analysis\\security_analysis.py",
+        "line": 486,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\testmaster\\intelligence\\security\\security_intelligence_agent.py",
+        "line": 885,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_secret",
+        "file": "TestMaster\\testmaster\\overview\\performance_dashboard.py",
+        "line": 152,
+        "priority": "CRITICAL",
+        "action_required": "Move to secure vault or environment variable",
+        "estimated_effort": "medium"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\testmaster\\security\\security_test_generator.py",
+        "line": 368,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\testmaster\\security\\security_test_generator.py",
+        "line": 381,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      },
+      {
+        "type": "security_fix",
+        "concern_type": "hardcoded_password",
+        "file": "TestMaster\\testmaster\\security\\universal_scanner.py",
+        "line": 647,
+        "priority": "CRITICAL",
+        "action_required": "Migrate to environment variable with encryption",
+        "estimated_effort": "low"
+      }
+    ],
+    "testing_consolidation": {
+      "current_frameworks": {
+        "unittest": 221,
+        "pytest": 242,
+        "mock": 180,
+        "nose": 2,
+        "doctest": 1,
+        "hypothesis": 1,
+        "faker": 1,
+        "factory_boy": 1,
+        "responses": 1
+      },
+      "recommended_primary": "pytest",
+      "migration_strategy": [
+        "Standardize on pytest as primary framework",
+        "Create migration utilities for test conversion",
+        "Migrate tests in order of complexity (simple to complex)",
+        "Maintain backward compatibility during transition",
+        "Remove deprecated frameworks after migration"
+      ],
+      "estimated_effort": "high",
+      "implementation_phases": [
+        {
+          "phase": "Assessment",
+          "duration": "1 week",
+          "activities": [
+            "Audit all test files",
+            "Create migration plan"
+          ]
+        },
+        {
+          "phase": "Migration",
+          "duration": "2-4 weeks",
+          "activities": [
+            "Convert tests to primary framework",
+            "Update CI/CD"
+          ]
+        },
+        {
+          "phase": "Cleanup",
+          "duration": "1 week",
+          "activities": [
+            "Remove unused frameworks",
+            "Verify all tests pass"
+          ]
+        }
+      ]
+    },
+    "configuration_centralization": {
+      "current_config_files": 1382,
+      "security_concerns": 135,
+      "centralization_strategy": [
+        "Create centralized configuration module",
+        "Implement environment-based configuration layers",
+        "Add configuration validation and type checking",
+        "Create configuration documentation and examples",
+        "Implement configuration change monitoring"
+      ],
+      "security_migration_plan": [
+        {
+          "priority": "Priority 1",
+          "concern": "hardcoded_password",
+          "file": "TestMaster\\comprehensive_classical_analysis_methods.py",
+          "action": "Migrate to environment variable with encryption",
+          "timeline": "1-3 days"
+        },
+        {
+          "priority": "Priority 2",
+          "concern": "hardcoded_secret",
+          "file": "TestMaster\\comprehensive_classical_analysis_methods.py",
+          "action": "Move to secure vault or environment variable",
+          "timeline": "1-3 days"
+        },
+        {
+          "priority": "Priority 3",
+          "concern": "hardcoded_password",
+          "file": "TestMaster\\configuration_settings_analyzer.py",
+          "action": "Migrate to environment variable with encryption",
+          "timeline": "1-3 days"
+        },
+        {
+          "priority": "Priority 4",
+          "concern": "hardcoded_secret",
+          "file": "TestMaster\\configuration_settings_analyzer.py",
+          "action": "Move to secure vault or environment variable",
+          "timeline": "1-3 days"
+        },
+        {
+          "priority": "Priority 5",
+          "concern": "hardcoded_password",
+          "file": "TestMaster\\unified_orchestration_example.py",
+          "action": "Migrate to environment variable with encryption",
+          "timeline": "1-3 days"
+        },
+        {
+          "priority": "Priority 6",
+          "concern": "hardcoded_password",
+          "file": "TestMaster\\archive\\coverage_analyzer_original_2697_lines.py",
+          "action": "Migrate to environment variable with encryption",
+          "timeline": "1-3 days"
+        },
+        {
+          "priority": "Priority 7",
+          "concern": "hardcoded_secret",
+          "file": "TestMaster\\archive\\coverage_analyzer_original_2697_lines.py",
+          "action": "Move to secure vault or environment variable",
+          "timeline": "1-3 days"
+        },
+        {
+          "priority": "Priority 8",
+          "concern": "hardcoded_password",
+          "file": "TestMaster\\archive\\integration_hub_original_20250820_220939.py",
+          "action": "Migrate to environment variable with encryption",
+          "timeline": "1-3 days"
+        },
+        {
+          "priority": "Priority 9",
+          "concern": "hardcoded_secret",
+          "file": "TestMaster\\archive\\centralization_process_20250821_intelligence_consolidation\\analytics_components\\analytics_aggregator.py",
+          "action": "Move to secure vault or environment variable",
+          "timeline": "1-3 days"
+        },
+        {
+          "priority": "Priority 10",
+          "concern": "hardcoded_secret",
+          "file": "TestMaster\\archive\\centralization_process_20250821_intelligence_consolidation\\analytics_components\\analytics_integrity_verifier.py",
+          "action": "Move to secure vault or environment variable",
+          "timeline": "1-3 days"
+        }
+      ],
+      "implementation_timeline": [
+        {
+          "week": "1-2",
+          "milestone": "Security fixes complete",
+          "deliverables": [
+            "All hardcoded secrets migrated",
+            "Environment variable system"
+          ]
+        },
+        {
+          "week": "3-4",
+          "milestone": "Centralized configuration",
+          "deliverables": [
+            "Configuration module",
+            "Validation system"
+          ]
+        }
+      ]
+    },
+    "utility_component_extraction": {
+      "total_functions": 40828,
+      "extraction_candidates": 30,
+      "proposed_modules": [
+        {
+          "module": "utils.validators",
+          "functions": "validation utilities"
+        },
+        {
+          "module": "utils.converters",
+          "functions": "data conversion utilities"
+        },
+        {
+          "module": "utils.helpers",
+          "functions": "common helper functions"
+        }
+      ],
+      "extraction_strategy": [
+        "Identify high-value reusable functions",
+        "Create shared utility modules",
+        "Update imports across codebase",
+        "Add comprehensive tests for utilities",
+        "Document utility APIs"
+      ],
+      "implementation_order": [
+        "Start with validation utilities (highest reuse)",
+        "Extract data conversion functions",
+        "Consolidate helper functions",
+        "Optimize function interfaces",
+        "Create utility documentation"
+      ]
+    },
+    "duplicate_code_elimination": {
+      "status": "no_data",
+      "plan": []
+    },
+    "dependency_optimization": {
+      "total_libraries": 843,
+      "consolidation_opportunities": {
+        "overlapping_libraries": [
+          {
+            "category": "web_frameworks",
+            "libraries": [
+              "web_frameworks::flask",
+              "web_frameworks::aiohttp",
+              "web_frameworks::fastapi",
+              "web_frameworks::bottle",
+              "web_frameworks::tornado"
+            ],
+            "suggestion": "Consider standardizing on a single web framework"
+          },
+          {
+            "category": "testing_frameworks",
+            "libraries": [
+              "testing_frameworks::mock",
+              "testing_frameworks::pytest",
+              "testing_frameworks::responses",
+              "testing_frameworks::unittest"
+            ],
+            "suggestion": "Consider consolidating testing frameworks"
+          }
+        ],
+        "version_conflicts": [],
+        "potential_unused": [
+          {
+            "module": "testmaster.core.shared_state.cache_llm_response",
+            "location": {
+              "file": "TestMaster\\enable_deep_integration.py",
+              "line": 123,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.core.shared_state"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.core.shared_state.get_cached_llm_response",
+            "location": {
+              "file": "TestMaster\\enable_deep_integration.py",
+              "line": 123,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.core.shared_state"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.core.orchestrator.Orchestrator",
+            "location": {
+              "file": "TestMaster\\enable_deep_integration.py",
+              "line": 173,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.core.orchestrator"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.core.shared_state.WorkflowContext",
+            "location": {
+              "file": "TestMaster\\enable_deep_integration.py",
+              "line": 174,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.core.shared_state"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine.RealtimeASTEngine",
+            "location": {
+              "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+              "line": 29,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine.ChangeType",
+            "location": {
+              "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+              "line": 29,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine.Priority",
+            "location": {
+              "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+              "line": 29,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine.FileChange",
+            "location": {
+              "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+              "line": 29,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine.AnalysisResult",
+            "location": {
+              "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+              "line": 29,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine.AnalysisTask",
+            "location": {
+              "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+              "line": 29,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine.CacheManager",
+            "location": {
+              "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+              "line": 29,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine.DependencyTracker",
+            "location": {
+              "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+              "line": 29,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine.FileWatcher",
+            "location": {
+              "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+              "line": 29,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine.AnalysisWorker",
+            "location": {
+              "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+              "line": 29,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.analysis.comprehensive_analysis.realtime_analysis.realtime_ast_engine"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.intelligence.classical.complexity_analyzer.ComplexityAnalyzer",
+            "location": {
+              "file": "TestMaster\\enhanced_intelligent_test_builder.py",
+              "line": 33,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.intelligence.classical.complexity_analyzer"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.intelligence.classical.dependency_analyzer.DependencyAnalyzer",
+            "location": {
+              "file": "TestMaster\\enhanced_intelligent_test_builder.py",
+              "line": 34,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.intelligence.classical.dependency_analyzer"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "testmaster.intelligence.classical.architecture_analyzer.ArchitectureAnalyzer",
+            "location": {
+              "file": "TestMaster\\enhanced_intelligent_test_builder.py",
+              "line": 35,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "testmaster.intelligence.classical.architecture_analyzer"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "analysis.comprehensive_analysis.security_monitoring.continuous_security_monitor.ContinuousSecurityMonitor",
+            "location": {
+              "file": "TestMaster\\enhanced_realtime_security_monitor.py",
+              "line": 32,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "analysis.comprehensive_analysis.security_monitoring.continuous_security_monitor"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "analysis.comprehensive_analysis.security_monitoring.continuous_security_monitor.SecurityAlert",
+            "location": {
+              "file": "TestMaster\\enhanced_realtime_security_monitor.py",
+              "line": 32,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "analysis.comprehensive_analysis.security_monitoring.continuous_security_monitor"
+            },
+            "reason": "only_imported_once"
+          },
+          {
+            "module": "analysis.comprehensive_analysis.security_monitoring.continuous_security_monitor.ThreatLevel",
+            "location": {
+              "file": "TestMaster\\enhanced_realtime_security_monitor.py",
+              "line": 32,
+              "type": "from_import",
+              "alias": null,
+              "parent_module": "analysis.comprehensive_analysis.security_monitoring.continuous_security_monitor"
+            },
+            "reason": "only_imported_once"
+          }
+        ],
+        "framework_consolidation": [
+          {
+            "category": "async_frameworks",
+            "current": [
+              "async_frameworks::aiohttp",
+              "async_frameworks::rq",
+              "async_frameworks::aioredis",
+              "async_frameworks::asyncpg",
+              "async_frameworks::kafka"
+            ],
+            "suggestion": "Consider consolidating around asyncio + one async library"
+          }
+        ]
+      },
+      "optimization_strategy": [
+        "Audit all third-party dependencies",
+        "Identify overlapping functionality",
+        "Consolidate similar libraries",
+        "Update to latest secure versions",
+        "Remove unused dependencies"
+      ],
+      "framework_consolidation": {
+        "web_frameworks": "Standardize on primary framework",
+        "testing_frameworks": "Consolidate to 1-2 frameworks",
+        "data_frameworks": "Optimize for specific use cases",
+        "timeline": "6-8 weeks"
+      },
+      "implementation_roadmap": [
+        {
+          "phase": "Audit",
+          "duration": "1 week",
+          "activities": [
+            "Dependency analysis",
+            "Conflict identification"
+          ]
+        },
+        {
+          "phase": "Consolidation",
+          "duration": "3-4 weeks",
+          "activities": [
+            "Framework standardization",
+            "Library optimization"
+          ]
+        }
+      ]
+    }
+  },
+  "implementation_roadmap": {
+    "phase_1_immediate": {
+      "duration": "0-2 weeks",
+      "actions": [
+        {
+          "action": "Fix hardcoded_password in TestMaster\\comprehensive_classical_analysis_methods.py",
+          "type": "security_fix",
+          "effort": "low",
+          "impact": "critical"
+        },
+        {
+          "action": "Fix hardcoded_secret in TestMaster\\comprehensive_classical_analysis_methods.py",
+          "type": "security_fix",
+          "effort": "medium",
+          "impact": "critical"
+        },
+        {
+          "action": "Fix hardcoded_password in TestMaster\\configuration_settings_analyzer.py",
+          "type": "security_fix",
+          "effort": "low",
+          "impact": "critical"
+        },
+        {
+          "action": "Fix hardcoded_secret in TestMaster\\configuration_settings_analyzer.py",
+          "type": "security_fix",
+          "effort": "medium",
+          "impact": "critical"
+        },
+        {
+          "action": "Fix hardcoded_password in TestMaster\\unified_orchestration_example.py",
+          "type": "security_fix",
+          "effort": "low",
+          "impact": "critical"
+        },
+        {
+          "action": "Fix hardcoded_password in TestMaster\\archive\\coverage_analyzer_original_2697_lines.py",
+          "type": "security_fix",
+          "effort": "low",
+          "impact": "critical"
+        },
+        {
+          "action": "Fix hardcoded_secret in TestMaster\\archive\\coverage_analyzer_original_2697_lines.py",
+          "type": "security_fix",
+          "effort": "medium",
+          "impact": "critical"
+        },
+        {
+          "action": "Fix hardcoded_password in TestMaster\\archive\\integration_hub_original_20250820_220939.py",
+          "type": "security_fix",
+          "effort": "low",
+          "impact": "critical"
+        },
+        {
+          "action": "Fix hardcoded_secret in TestMaster\\archive\\centralization_process_20250821_intelligence_consolidation\\analytics_components\\analytics_aggregator.py",
+          "type": "security_fix",
+          "effort": "medium",
+          "impact": "critical"
+        },
+        {
+          "action": "Fix hardcoded_secret in TestMaster\\archive\\centralization_process_20250821_intelligence_consolidation\\analytics_components\\analytics_integrity_verifier.py",
+          "type": "security_fix",
+          "effort": "medium",
+          "impact": "critical"
+        },
+        {
+          "action": "Extract utility_function: unknown",
+          "type": "component_extraction",
+          "effort": "low",
+          "impact": "high"
+        },
+        {
+          "action": "Extract utility_function: unknown",
+          "type": "component_extraction",
+          "effort": "low",
+          "impact": "high"
+        },
+        {
+          "action": "Extract utility_function: unknown",
+          "type": "component_extraction",
+          "effort": "low",
+          "impact": "high"
+        },
+        {
+          "action": "Extract utility_function: unknown",
+          "type": "component_extraction",
+          "effort": "low",
+          "impact": "high"
+        },
+        {
+          "action": "Extract utility_function: unknown",
+          "type": "component_extraction",
+          "effort": "low",
+          "impact": "high"
+        }
+      ],
+      "success_criteria": [
+        "All critical security issues resolved",
+        "Top 5 components extracted"
+      ],
+      "resources_required": [
+        "2-3 developers",
+        "Security review team"
+      ]
+    },
+    "phase_2_security": {
+      "duration": "2-4 weeks",
+      "actions": [
+        "Implement centralized configuration management",
+        "Migrate all hardcoded secrets to environment variables",
+        "Set up secure configuration validation",
+        "Implement configuration encryption for sensitive data",
+        "Create configuration audit logging"
+      ],
+      "success_criteria": [
+        "Zero hardcoded secrets remaining",
+        "Centralized configuration system operational",
+        "Configuration security score > 80/100"
+      ],
+      "resources_required": [
+        "Security team",
+        "1-2 developers",
+        "DevOps support"
+      ]
+    },
+    "phase_3_consolidation": {
+      "duration": "4-8 weeks",
+      "actions": [
+        "Standardize on pytest as primary testing framework",
+        "Consolidate duplicate code using AST-based analysis",
+        "Extract utility functions to shared modules",
+        "Implement shared component architecture",
+        "Optimize dependency tree and remove redundant libraries"
+      ],
+      "success_criteria": [
+        "Single primary testing framework",
+        "50% reduction in duplicate code",
+        "Shared utility modules operational",
+        "20% reduction in dependencies"
+      ],
+      "resources_required": [
+        "3-4 developers",
+        "Architecture review team"
+      ]
+    },
+    "phase_4_optimization": {
+      "duration": "8-12 weeks",
+      "actions": [
+        "Implement performance monitoring for extracted components",
+        "Optimize shared component interfaces",
+        "Fine-tune dependency management",
+        "Implement automated code quality monitoring",
+        "Create comprehensive integration tests"
+      ],
+      "success_criteria": [
+        "All health scores > 80/100",
+        "Integration tests passing",
+        "Performance metrics improved",
+        "Code maintainability index > 85"
+      ],
+      "resources_required": [
+        "2-3 developers",
+        "QA team",
+        "Performance specialists"
+      ]
+    },
+    "risk_mitigation": {
+      "testing_strategy": [
+        "Comprehensive regression testing before changes",
+        "Automated testing for all extracted components",
+        "Integration testing for consolidated systems"
+      ],
+      "rollback_procedures": [
+        "Version control branching strategy",
+        "Automated rollback capabilities",
+        "Database backup and restore procedures"
+      ],
+      "monitoring": [
+        "Real-time performance monitoring",
+        "Error rate tracking",
+        "User experience metrics"
+      ]
+    },
+    "success_metrics": {
+      "security_metrics": [
+        "Zero hardcoded secrets",
+        "Configuration security score > 90/100",
+        "Security audit passing"
+      ],
+      "quality_metrics": [
+        "All health scores > 80/100",
+        "Code duplication < 5%",
+        "Test coverage > 85%"
+      ],
+      "performance_metrics": [
+        "Build time improvement > 20%",
+        "Dependency count reduction > 15%",
+        "Maintainability index > 85"
+      ]
+    }
+  },
+  "estimated_timeline": "12-16 weeks total implementation",
+  "resource_requirements": {
+    "development_team": "3-5 developers",
+    "security_specialists": "1-2 security experts",
+    "devops_support": "1 DevOps engineer",
+    "qa_resources": "2-3 QA engineers",
+    "estimated_effort": "40-60 person-weeks total"
+  },
+  "risk_assessment": "HIGH - Many security concerns require careful handling",
+  "success_probability": "85-90% with proper execution and adequate resources"
+}

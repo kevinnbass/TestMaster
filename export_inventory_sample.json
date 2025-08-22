@@ -1,0 +1,789 @@
+{
+  "statistics": {
+    "total_files": 100,
+    "scanned_files": 100,
+    "failed_files": 0,
+    "total_functions": 539,
+    "total_classes": 231,
+    "total_constants": 252,
+    "total_variables": 3995
+  },
+  "exports": {
+    "functions": [
+      {
+        "type": "function",
+        "name": "get_remaining_modules",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 36,
+        "args": [],
+        "decorators": [],
+        "docstring": "Get all modules without intelligent tests."
+      },
+      {
+        "type": "function",
+        "name": "generate_test",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 60,
+        "args": [
+          "module_path"
+        ],
+        "decorators": [],
+        "docstring": "Generate test for a module."
+      },
+      {
+        "type": "function",
+        "name": "convert_module_with_delay",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 149,
+        "args": [
+          "module_path",
+          "delay"
+        ],
+        "decorators": [],
+        "docstring": "Convert a single module with rate limiting."
+      },
+      {
+        "type": "function",
+        "name": "main",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 166,
+        "args": [],
+        "decorators": [],
+        "docstring": "Main accelerated conversion."
+      },
+      {
+        "type": "function",
+        "name": "test_unified_services_imports",
+        "file": "TestMaster\\agent_c_mission_validation.py",
+        "line": 14,
+        "args": [],
+        "decorators": [],
+        "docstring": "Test if all unified services can be imported properly."
+      },
+      {
+        "type": "function",
+        "name": "validate_file_structure",
+        "file": "TestMaster\\agent_c_mission_validation.py",
+        "line": 89,
+        "args": [],
+        "decorators": [],
+        "docstring": "Validate that all unified service files exist."
+      },
+      {
+        "type": "function",
+        "name": "test_basic_functionality",
+        "file": "TestMaster\\agent_c_mission_validation.py",
+        "line": 115,
+        "args": [],
+        "decorators": [],
+        "docstring": "Test basic functionality without complex imports."
+      },
+      {
+        "type": "function",
+        "name": "generate_comprehensive_report",
+        "file": "TestMaster\\agent_d_comprehensive_test_executor.py",
+        "line": 791,
+        "args": [
+          "self",
+          "test_results"
+        ],
+        "decorators": [],
+        "docstring": "Generate comprehensive test report."
+      },
+      {
+        "type": "function",
+        "name": "analyze_codebase_architecture",
+        "file": "TestMaster\\architecture_centralization_analysis.py",
+        "line": 44,
+        "args": [],
+        "decorators": [],
+        "docstring": "Analyze the current codebase architecture."
+      },
+      {
+        "type": "function",
+        "name": "main",
+        "file": "TestMaster\\architecture_centralization_analysis.py",
+        "line": 495,
+        "args": [],
+        "decorators": [],
+        "docstring": "Run the architecture centralization analysis."
+      },
+      {
+        "type": "function",
+        "name": "get_archive_system",
+        "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+        "line": 386,
+        "args": [],
+        "decorators": [],
+        "docstring": "Get global archive system instance"
+      },
+      {
+        "type": "function",
+        "name": "archive_before_replace",
+        "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+        "line": 393,
+        "args": [
+          "file_path",
+          "reason",
+          "phase"
+        ],
+        "decorators": [],
+        "docstring": "Archive a file before replacing it"
+      },
+      {
+        "type": "function",
+        "name": "verify_safe_replacement",
+        "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+        "line": 397,
+        "args": [
+          "original",
+          "replacement"
+        ],
+        "decorators": [],
+        "docstring": "Verify replacement is safe (no functionality loss)"
+      },
+      {
+        "type": "function",
+        "name": "archive_file",
+        "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+        "line": 95,
+        "args": [
+          "self",
+          "file_path",
+          "reason",
+          "phase"
+        ],
+        "decorators": [],
+        "docstring": "Archive a file with full preservation.\n\nArgs:\n    file_path: Path to file being archived\n    reason: Reason for archiving\n    phase: Phase/operation name\n    \nReturns:\n    Archive ID"
+      },
+      {
+        "type": "function",
+        "name": "verify_replacement",
+        "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+        "line": 161,
+        "args": [
+          "self",
+          "original_path",
+          "replacement_path"
+        ],
+        "decorators": [],
+        "docstring": "Verify that replacement preserves functionality.\n\nArgs:\n    original_path: Path to original file\n    replacement_path: Path to replacement file\n    \nReturns:\n    Verification report"
+      },
+      {
+        "type": "function",
+        "name": "restore_from_archive",
+        "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+        "line": 237,
+        "args": [
+          "self",
+          "archive_id",
+          "target_path"
+        ],
+        "decorators": [],
+        "docstring": "Restore a file from archive.\n\nArgs:\n    archive_id: Archive ID to restore\n    target_path: Where to restore the file\n    \nReturns:\n    True if successful"
+      },
+      {
+        "type": "function",
+        "name": "list_archives",
+        "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+        "line": 282,
+        "args": [
+          "self",
+          "phase"
+        ],
+        "decorators": [],
+        "docstring": "List all archives, optionally filtered by phase"
+      },
+      {
+        "type": "function",
+        "name": "get_archive_stats",
+        "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+        "line": 291,
+        "args": [
+          "self"
+        ],
+        "decorators": [],
+        "docstring": "Get archive system statistics"
+      },
+      {
+        "type": "function",
+        "name": "main",
+        "file": "TestMaster\\auto_readme_updater.py",
+        "line": 600,
+        "args": [],
+        "decorators": [],
+        "docstring": "Main entry point for README update system."
+      },
+      {
+        "type": "function",
+        "name": "scan_codebase",
+        "file": "TestMaster\\auto_readme_updater.py",
+        "line": 69,
+        "args": [
+          "self"
+        ],
+        "decorators": [],
+        "docstring": "Scan the entire codebase for components and capabilities."
+      }
+    ],
+    "classes": [
+      {
+        "type": "class",
+        "name": "TestResult",
+        "file": "TestMaster\\agent_d_comprehensive_test_executor.py",
+        "line": 22,
+        "bases": [],
+        "methods": [],
+        "docstring": "Individual test result."
+      },
+      {
+        "type": "class",
+        "name": "TestSuite",
+        "file": "TestMaster\\agent_d_comprehensive_test_executor.py",
+        "line": 36,
+        "bases": [],
+        "methods": [],
+        "docstring": "Test suite results."
+      },
+      {
+        "type": "class",
+        "name": "AgentDComprehensiveTestExecutor",
+        "file": "TestMaster\\agent_d_comprehensive_test_executor.py",
+        "line": 50,
+        "bases": [],
+        "methods": [
+          "__init__",
+          "_initialize_module_registry",
+          "generate_comprehensive_report"
+        ],
+        "docstring": "Comprehensive test executor for all Agent D systems following\nthe detailed testing roadmap for enterprise-grade validation."
+      },
+      {
+        "type": "class",
+        "name": "ComponentAnalysis",
+        "file": "TestMaster\\architecture_centralization_analysis.py",
+        "line": 20,
+        "bases": [],
+        "methods": [],
+        "docstring": "Analysis of a system component."
+      },
+      {
+        "type": "class",
+        "name": "CentralizationOpportunity",
+        "file": "TestMaster\\architecture_centralization_analysis.py",
+        "line": 33,
+        "bases": [],
+        "methods": [],
+        "docstring": "Represents a centralization opportunity."
+      },
+      {
+        "type": "class",
+        "name": "ArchiveSystem",
+        "file": "TestMaster\\ARCHIVE_PROTECTION_SYSTEM.py",
+        "line": 22,
+        "bases": [],
+        "methods": [
+          "__init__",
+          "_load_manifest",
+          "_create_preservation_rules",
+          "archive_file",
+          "verify_replacement",
+          "restore_from_archive",
+          "list_archives",
+          "get_archive_stats",
+          "_calculate_file_hash",
+          "_count_lines",
+          "_analyze_functionality",
+          "_get_recommendation",
+          "_save_manifest"
+        ],
+        "docstring": "Manages code archival with strict preservation rules.\nNEVER deletes archived files."
+      },
+      {
+        "type": "class",
+        "name": "ComponentInfo",
+        "file": "TestMaster\\auto_readme_updater.py",
+        "line": 21,
+        "bases": [],
+        "methods": [],
+        "docstring": "Information about a system component."
+      },
+      {
+        "type": "class",
+        "name": "SystemCapability",
+        "file": "TestMaster\\auto_readme_updater.py",
+        "line": 34,
+        "bases": [],
+        "methods": [],
+        "docstring": "High-level system capability."
+      },
+      {
+        "type": "class",
+        "name": "ReadmeUpdater",
+        "file": "TestMaster\\auto_readme_updater.py",
+        "line": 44,
+        "bases": [],
+        "methods": [
+          "__init__",
+          "scan_codebase",
+          "_scan_intelligence_agents",
+          "_scan_analysis_modules",
+          "_scan_integration_components",
+          "_scan_documentation_system",
+          "_scan_dashboard_components",
+          "_scan_api_endpoints",
+          "_scan_configuration_options",
+          "_scan_file_for_components",
+          "_extract_api_endpoints",
+          "_extract_config_options",
+          "_extract_description",
+          "_extract_features",
+          "_build_capability_summary",
+          "update_readme",
+          "_generate_header",
+          "_generate_overview_section",
+          "_generate_intelligence_section",
+          "_generate_components_section",
+          "_generate_architecture_section",
+          "_generate_quickstart_section",
+          "_generate_api_section",
+          "_generate_configuration_section",
+          "_generate_status_section",
+          "_generate_footer",
+          "run_full_update"
+        ],
+        "docstring": "Automated README.md update system.\n\nScans the codebase for new components, features, and capabilities,\nthen automatically updates README.md to reflect current system state."
+      },
+      {
+        "type": "class",
+        "name": "ComprehensiveAnalysisImplementations",
+        "file": "TestMaster\\comprehensive_classical_analysis_methods.py",
+        "line": 35,
+        "bases": [],
+        "methods": [
+          "__init__",
+          "_calculate_halstead_metrics",
+          "_calculate_mccabe_complexity",
+          "_calculate_sloc_metrics",
+          "_calculate_maintainability_index",
+          "_calculate_coupling_metrics",
+          "_calculate_cohesion_metrics",
+          "_build_call_graph",
+          "_analyze_call_graph",
+          "_detect_exact_clones",
+          "_detect_near_clones",
+          "_detect_vulnerability_patterns",
+          "_detect_code_smells",
+          "_analyze_identifiers",
+          "_calculate_vocabulary_metrics",
+          "_get_file_content",
+          "_get_ast",
+          "_should_analyze_file",
+          "_calculate_function_complexity",
+          "_calculate_nesting_depth",
+          "_safe_diameter",
+          "_get_vulnerability_severity",
+          "_get_smell_severity"
+        ],
+        "docstring": "All the detailed analysis method implementations."
+      },
+      {
+        "type": "class",
+        "name": "CodebaseAnalyzer",
+        "file": "TestMaster\\comprehensive_codebase_analysis.py",
+        "line": 18,
+        "bases": [],
+        "methods": [
+          "__init__",
+          "analyze_complete_codebase",
+          "_should_analyze_file",
+          "_analyze_file",
+          "_extract_ast_patterns",
+          "_analyze_file_purpose",
+          "_categorize_file_size",
+          "_detect_redundancies",
+          "_analyze_architecture_opportunities",
+          "_generate_analysis_report"
+        ],
+        "docstring": "Comprehensive analyzer for redundancy detection and architecture optimization."
+      },
+      {
+        "type": "class",
+        "name": "FeatureSignature",
+        "file": "TestMaster\\comprehensive_feature_audit.py",
+        "line": 21,
+        "bases": [],
+        "methods": [],
+        "docstring": "Detailed signature of a code feature"
+      },
+      {
+        "type": "class",
+        "name": "FeatureMapping",
+        "file": "TestMaster\\comprehensive_feature_audit.py",
+        "line": 34,
+        "bases": [],
+        "methods": [],
+        "docstring": "Maps archived features to consolidated equivalents"
+      },
+      {
+        "type": "class",
+        "name": "ComprehensiveFeatureAuditor",
+        "file": "TestMaster\\comprehensive_feature_audit.py",
+        "line": 43,
+        "bases": [],
+        "methods": [
+          "__init__",
+          "perform_comprehensive_audit",
+          "_analyze_phase",
+          "_extract_archived_features",
+          "_extract_consolidated_features",
+          "_extract_python_features",
+          "_extract_js_features",
+          "_perform_intelligent_mapping",
+          "_calculate_feature_similarity",
+          "_names_are_similar",
+          "_functionality_similar",
+          "_generate_class_signature",
+          "_generate_function_signature",
+          "_calculate_complexity",
+          "_estimate_js_complexity",
+          "_generate_functionality_hash",
+          "_levenshtein_ratio",
+          "_generate_final_assessment",
+          "_save_audit_results",
+          "_generate_human_readable_report"
+        ],
+        "docstring": "Systematic analysis to verify truly lost features"
+      },
+      {
+        "type": "class",
+        "name": "ComplexityAnalyzer",
+        "file": "TestMaster\\documentation_cli.py",
+        "line": 24,
+        "bases": [],
+        "methods": [
+          "analyze"
+        ],
+        "docstring": ""
+      },
+      {
+        "type": "class",
+        "name": "DependencyAnalyzer",
+        "file": "TestMaster\\documentation_cli.py",
+        "line": 46,
+        "bases": [],
+        "methods": [
+          "analyze"
+        ],
+        "docstring": ""
+      },
+      {
+        "type": "class",
+        "name": "ArchitectureAnalyzer",
+        "file": "TestMaster\\documentation_cli.py",
+        "line": 64,
+        "bases": [],
+        "methods": [
+          "analyze"
+        ],
+        "docstring": ""
+      },
+      {
+        "type": "class",
+        "name": "DocumentationTask",
+        "file": "TestMaster\\documentation_cli.py",
+        "line": 71,
+        "bases": [],
+        "methods": [],
+        "docstring": "Represents a documentation task."
+      },
+      {
+        "type": "class",
+        "name": "DocumentationConfig",
+        "file": "TestMaster\\documentation_cli.py",
+        "line": 84,
+        "bases": [],
+        "methods": [],
+        "docstring": "Configuration for documentation generation."
+      },
+      {
+        "type": "class",
+        "name": "DocumentationCLI",
+        "file": "TestMaster\\documentation_cli.py",
+        "line": 98,
+        "bases": [],
+        "methods": [
+          "__init__",
+          "generate_module_doc",
+          "_generate_markdown_doc",
+          "_generate_html_doc",
+          "_generate_rst_doc",
+          "_generate_json_doc",
+          "_extract_classes",
+          "_extract_functions",
+          "generate_project_docs",
+          "_process_task",
+          "_get_output_path",
+          "_generate_index",
+          "ci_generate",
+          "watch",
+          "batch_process"
+        ],
+        "docstring": "Command-line interface for documentation generation."
+      }
+    ],
+    "constants": [
+      {
+        "type": "constant",
+        "name": "API_KEY",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 29
+      },
+      {
+        "type": "constant",
+        "name": "HAS_NETWORKX",
+        "file": "TestMaster\\comprehensive_classical_analysis_methods.py",
+        "line": 29
+      },
+      {
+        "type": "constant",
+        "name": "HAS_NETWORKX",
+        "file": "TestMaster\\comprehensive_classical_analysis_methods.py",
+        "line": 31
+      },
+      {
+        "type": "constant",
+        "name": "DISTRIBUTED_TASK_QUEUE_IMPL",
+        "file": "TestMaster\\create_real_implementations.py",
+        "line": 14
+      },
+      {
+        "type": "constant",
+        "name": "LOAD_BALANCING_IMPL",
+        "file": "TestMaster\\create_real_implementations.py",
+        "line": 440
+      },
+      {
+        "type": "constant",
+        "name": "API_KEY",
+        "file": "TestMaster\\enhanced_context_aware_test_generator.py",
+        "line": 22
+      },
+      {
+        "type": "constant",
+        "name": "ADD",
+        "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+        "line": 40
+      },
+      {
+        "type": "constant",
+        "name": "MODIFY",
+        "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+        "line": 41
+      },
+      {
+        "type": "constant",
+        "name": "DELETE",
+        "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+        "line": 42
+      },
+      {
+        "type": "constant",
+        "name": "LOW",
+        "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+        "line": 45
+      },
+      {
+        "type": "constant",
+        "name": "MEDIUM",
+        "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+        "line": 46
+      },
+      {
+        "type": "constant",
+        "name": "HIGH",
+        "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+        "line": 47
+      },
+      {
+        "type": "constant",
+        "name": "CRITICAL",
+        "file": "TestMaster\\enhanced_incremental_ast_engine.py",
+        "line": 48
+      },
+      {
+        "type": "constant",
+        "name": "API_KEY",
+        "file": "TestMaster\\enhanced_self_healing_verifier.py",
+        "line": 41
+      },
+      {
+        "type": "constant",
+        "name": "API_KEY",
+        "file": "TestMaster\\independent_test_verifier.py",
+        "line": 29
+      },
+      {
+        "type": "constant",
+        "name": "GENAI_AVAILABLE",
+        "file": "TestMaster\\llm_analysis_monitor.py",
+        "line": 27
+      },
+      {
+        "type": "constant",
+        "name": "GEMINI",
+        "file": "TestMaster\\llm_analysis_monitor.py",
+        "line": 40
+      },
+      {
+        "type": "constant",
+        "name": "OPENAI",
+        "file": "TestMaster\\llm_analysis_monitor.py",
+        "line": 41
+      },
+      {
+        "type": "constant",
+        "name": "ANTHROPIC",
+        "file": "TestMaster\\llm_analysis_monitor.py",
+        "line": 42
+      },
+      {
+        "type": "constant",
+        "name": "MODULE_ANALYSIS",
+        "file": "TestMaster\\llm_analysis_monitor.py",
+        "line": 46
+      }
+    ],
+    "variables": [
+      {
+        "type": "variable",
+        "name": "env_file",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 18
+      },
+      {
+        "type": "variable",
+        "name": "test_dir",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 38
+      },
+      {
+        "type": "variable",
+        "name": "existing_tests",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 39
+      },
+      {
+        "type": "variable",
+        "name": "remaining",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 46
+      },
+      {
+        "type": "variable",
+        "name": "base_dir",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 49
+      },
+      {
+        "type": "variable",
+        "name": "module_name",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 62
+      },
+      {
+        "type": "variable",
+        "name": "test_file",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 65
+      },
+      {
+        "type": "variable",
+        "name": "prompt",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 94
+      },
+      {
+        "type": "variable",
+        "name": "module_name",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 151
+      },
+      {
+        "type": "variable",
+        "name": "result",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 154
+      },
+      {
+        "type": "variable",
+        "name": "current_count",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 174
+      },
+      {
+        "type": "variable",
+        "name": "target_count",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 175
+      },
+      {
+        "type": "variable",
+        "name": "needed",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 176
+      },
+      {
+        "type": "variable",
+        "name": "remaining",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 187
+      },
+      {
+        "type": "variable",
+        "name": "results",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 195
+      },
+      {
+        "type": "variable",
+        "name": "final_count",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 233
+      },
+      {
+        "type": "variable",
+        "name": "rel_path",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 84
+      },
+      {
+        "type": "variable",
+        "name": "import_parts",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 85
+      },
+      {
+        "type": "variable",
+        "name": "model",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 114
+      },
+      {
+        "type": "variable",
+        "name": "generation_config",
+        "file": "TestMaster\\accelerated_converter.py",
+        "line": 115
+      }
+    ]
+  },
+  "summary": {
+    "total_exports": 5017,
+    "export_distribution": {
+      "functions": 539,
+      "classes": 231,
+      "constants": 252,
+      "variables": 3995
+    }
+  }
+}
