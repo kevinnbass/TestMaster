@@ -1,0 +1,459 @@
+2025-08-21 20:15:45,099 - INFO - Monitoring database initialized
+2025-08-21 20:15:45,100 - INFO - Starting continuous monitoring system...
+2025-08-21 20:16:14,722 - ERROR - System metrics monitoring error: 'ContinuousMonitoringSystem' object has no attribute '_store_system_metrics'
+2025-08-21 20:16:14,729 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\agent_c_mission_validation.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\agent_c_mission_validation_20250821_201614.py
+2025-08-21 20:16:14,729 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,736 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\agent_d_comprehensive_test_executor.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\agent_d_comprehensive_test_executor_20250821_201614.py
+2025-08-21 20:16:14,736 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,742 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\enhanced_realtime_security_monitor.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\enhanced_realtime_security_monitor_20250821_201614.py
+2025-08-21 20:16:14,742 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,748 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,755 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\enhanced_security_intelligence_agent.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\enhanced_security_intelligence_agent_20250821_201614.py
+2025-08-21 20:16:14,755 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,762 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\fix_import_paths.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\fix_import_paths_20250821_201614.py
+2025-08-21 20:16:14,763 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,769 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\live_code_quality_monitor.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\live_code_quality_monitor_20250821_201614.py
+2025-08-21 20:16:14,769 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,778 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\real_time_monitor.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\real_time_monitor_20250821_201614.py
+2025-08-21 20:16:14,778 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,787 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\restore_archive_robust.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\restore_archive_robust_20250821_201614.py
+2025-08-21 20:16:14,787 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,794 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,802 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,809 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,818 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,825 - ERROR - Response execution failed for hardcoded_secrets: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:14,826 - INFO - Processed security event: hardcoded_secrets (HIGH)
+2025-08-21 20:16:14,837 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\simple_integration_test.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\simple_integration_test_20250821_201614.py
+2025-08-21 20:16:14,837 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,844 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,870 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\start_monitoring.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\start_monitoring_20250821_201614.py
+2025-08-21 20:16:14,871 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,881 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,893 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\test_consolidation_verification.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\test_consolidation_verification_20250821_201614.py
+2025-08-21 20:16:14,893 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,904 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\test_integration_restoration.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\test_integration_restoration_20250821_201614.py
+2025-08-21 20:16:14,904 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,913 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\test_phase2_final_validation.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\test_phase2_final_validation_20250821_201614.py
+2025-08-21 20:16:14,913 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,925 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\test_phase2_quick_validation.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\test_phase2_quick_validation_20250821_201614.py
+2025-08-21 20:16:14,925 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,935 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\test_security_full_integration.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\test_security_full_integration_20250821_201614.py
+2025-08-21 20:16:14,935 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,943 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,952 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\test_security_integration_validation.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\test_security_integration_validation_20250821_201614.py
+2025-08-21 20:16:14,952 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,961 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,970 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:14,971 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:14,980 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\unified_security_scanner.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\unified_security_scanner_20250821_201614.py
+2025-08-21 20:16:14,980 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:14,988 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:14,988 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:14,994 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:14,994 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,000 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,001 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,009 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\verify_classical_modules.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\verify_classical_modules_20250821_201615.py
+2025-08-21 20:16:15,009 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,017 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\anomaly_detection\anomaly_detection_analyzer.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\anomaly_detection_analyzer_20250821_201615.py
+2025-08-21 20:16:15,017 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,022 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,028 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,036 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,041 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,046 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,053 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,059 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,066 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,072 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,077 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,085 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,092 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,098 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,106 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,112 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,123 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,134 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\ml_analysis\ml_core_analyzer.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\ml_core_analyzer_20250821_201615.py
+2025-08-21 20:16:15,135 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,143 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\ml_analysis\ml_model_analyzer.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\ml_model_analyzer_20250821_201615.py
+2025-08-21 20:16:15,143 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,151 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,159 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,165 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,173 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,181 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,190 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\ml_analysis\_shared_utils.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\_shared_utils_20250821_201615.py
+2025-08-21 20:16:15,190 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,201 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\realtime_analysis\realtime_ast_engine.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\realtime_ast_engine_20250821_201615.py
+2025-08-21 20:16:15,201 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,212 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,225 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\security_monitoring\continuous_security_monitor.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\continuous_security_monitor_20250821_201615.py
+2025-08-21 20:16:15,226 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,236 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,244 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,258 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\from_subarchive_metaprogramming_analysis_original.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\from_subarchive_metaprogramming_analysis_original_20250821_201615.py
+2025-08-21 20:16:15,258 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,267 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,276 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,283 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,292 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,299 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,308 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,318 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,329 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,337 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,347 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,357 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,366 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,374 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,381 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,390 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,400 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\superseded_toplevel_metaprogramming_analysis.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\superseded_toplevel_metaprogramming_analysis_20250821_201615.py
+2025-08-21 20:16:15,400 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,409 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,418 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,427 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,436 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,444 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,452 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,460 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,469 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,477 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,486 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,493 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,500 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,506 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,514 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,522 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,530 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_optimizer.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\analytics_optimizer_20250821_201615.py
+2025-08-21 20:16:15,530 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,540 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_persistence.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\analytics_persistence_20250821_201615.py
+2025-08-21 20:16:15,540 - INFO - Processed security event: sql_injection (CRITICAL)
+2025-08-21 20:16:15,549 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\COMPLETE_REFACTOR_20250818_112844\fix_import_paths.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\fix_import_paths_20250821_201615.py
+2025-08-21 20:16:15,549 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,555 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,555 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,560 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\archive\\legacy_scripts\\fix_import_paths.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\fix_import_paths_20250821_201615.py'
+2025-08-21 20:16:15,561 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,568 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,568 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,577 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\legacy_scripts\parallel_coverage_converter_fixed.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\parallel_coverage_converter_fixed_20250821_201615.py
+2025-08-21 20:16:15,577 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,585 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,585 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,595 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\modularization_20250821\agent_qa_original_1749_lines.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\agent_qa_original_1749_lines_20250821_201615.py
+2025-08-21 20:16:15,595 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,604 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,610 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,617 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\archive\\original_backup\\fix_import_paths.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\fix_import_paths_20250821_201615.py'
+2025-08-21 20:16:15,617 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,625 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\original_backup\config\testmaster_config.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\testmaster_config_20250821_201615.py
+2025-08-21 20:16:15,625 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,637 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\original_backup\integration\cross_module_tester.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\cross_module_tester_20250821_201615.py
+2025-08-21 20:16:15,637 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,644 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,645 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,652 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,652 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,659 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\archive\\original_backup\\scripts\\parallel_coverage_converter_fixed.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\parallel_coverage_converter_fixed_20250821_201615.py'
+2025-08-21 20:16:15,659 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,666 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,666 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,675 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\oversized_modules_20250821_042018\monitoring\agent_qa.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\agent_qa_20250821_201615.py
+2025-08-21 20:16:15,675 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,682 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,689 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,697 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\archive\\phase1c_consolidation_20250820_150000\\integration\\cross_module_tester.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\cross_module_tester_20250821_201615.py'
+2025-08-21 20:16:15,698 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,706 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\config\\testmaster_config.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\testmaster_config_20250821_201615.py'
+2025-08-21 20:16:15,706 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,718 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\framework_abstraction.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\framework_abstraction_20250821_201615.py
+2025-08-21 20:16:15,718 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,725 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,733 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,740 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,747 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,759 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\analysis\ml_code_analyzer.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\ml_code_analyzer_20250821_201615.py
+2025-08-21 20:16:15,759 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,768 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\api\validators.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\validators_20250821_201615.py
+2025-08-21 20:16:15,768 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,777 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\documentation\api_spec_builder.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\api_spec_builder_20250821_201615.py
+2025-08-21 20:16:15,777 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,787 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\documentation\changelog_generator.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\changelog_generator_20250821_201615.py
+2025-08-21 20:16:15,787 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,794 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,794 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,802 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,803 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,809 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,809 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,820 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\monitoring\agent_qa_modules\agent_qa_part2a.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\agent_qa_part2a_20250821_201615.py
+2025-08-21 20:16:15,820 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,826 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,834 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,844 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\orchestration\workflow_orchestration_engine.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\workflow_orchestration_engine_20250821_201615.py
+2025-08-21 20:16:15,844 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,851 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,862 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\security\crypto_analyzer.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\crypto_analyzer_20250821_201615.py
+2025-08-21 20:16:15,862 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:15,872 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\security\enterprise\enterprise_security_monitor.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\enterprise_security_monitor_20250821_201615.py
+2025-08-21 20:16:15,872 - INFO - Processed security event: sql_injection (CRITICAL)
+2025-08-21 20:16:15,878 - INFO - Processed security event: sql_injection (CRITICAL)
+2025-08-21 20:16:15,886 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,886 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,891 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,891 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,898 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,898 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,905 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,905 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,912 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,912 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,918 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,919 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,925 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,926 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,932 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,932 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,939 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,939 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,946 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,947 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,953 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,954 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,960 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,961 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,967 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,967 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,972 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,972 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,978 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,978 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,985 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,985 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,991 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,992 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:15,997 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:15,998 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,003 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,004 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,010 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,010 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,021 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\security\deployment_pipeline_security.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\deployment_pipeline_security_20250821_201616.py
+2025-08-21 20:16:16,022 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,033 - ERROR - Response execution failed for hardcoded_secrets: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,033 - INFO - Processed security event: hardcoded_secrets (HIGH)
+2025-08-21 20:16:16,043 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,043 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,052 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,052 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,062 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\security\validation_framework.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\validation_framework_20250821_201616.py
+2025-08-21 20:16:16,063 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,071 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,081 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\testing\embedding_cache_testing.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\embedding_cache_testing_20250821_201616.py
+2025-08-21 20:16:16,081 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,088 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,096 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\foundation\abstractions\framework_abstraction.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\framework_abstraction_20250821_201616.py
+2025-08-21 20:16:16,097 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,103 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,109 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,115 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,121 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,131 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\foundation\observability\__init__.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\__init___20250821_201616.py
+2025-08-21 20:16:16,131 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,138 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,144 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,149 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,155 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,163 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\evolutionary_code_engine.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\evolutionary_code_engine_20250821_201616.py
+2025-08-21 20:16:16,163 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,168 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,173 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,182 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\intelligent_code_optimizer.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\intelligent_code_optimizer_20250821_201616.py
+2025-08-21 20:16:16,182 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,189 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,200 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\predictive_code_intelligence.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\predictive_code_intelligence_20250821_201616.py
+2025-08-21 20:16:16,200 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,206 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,213 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,221 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\analysis\ml_code_analyzer.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\ml_code_analyzer_20250821_201616.py
+2025-08-21 20:16:16,221 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,231 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\api\validators.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\validators_20250821_201616.py
+2025-08-21 20:16:16,231 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,240 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\documentation\api_spec_builder.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\api_spec_builder_20250821_201616.py
+2025-08-21 20:16:16,241 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,249 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\documentation\changelog_generator.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\changelog_generator_20250821_201616.py
+2025-08-21 20:16:16,249 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,259 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\documentation\configuration_documentation_framework.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\configuration_documentation_framework_20250821_201616.py
+2025-08-21 20:16:16,259 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,265 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,265 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,271 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,271 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,277 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,278 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,285 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,285 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,295 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\monitoring\agent_qa_modules\agent_qa_part2a.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\agent_qa_part2a_20250821_201616.py
+2025-08-21 20:16:16,295 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,302 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,310 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,320 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\orchestration\workflow_orchestration_engine.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\workflow_orchestration_engine_20250821_201616.py
+2025-08-21 20:16:16,320 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,327 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,338 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\security\crypto_analyzer.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\crypto_analyzer_20250821_201616.py
+2025-08-21 20:16:16,339 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,349 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\security\enterprise\enterprise_security_monitor.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\enterprise_security_monitor_20250821_201616.py
+2025-08-21 20:16:16,349 - INFO - Processed security event: sql_injection (CRITICAL)
+2025-08-21 20:16:16,356 - INFO - Processed security event: sql_injection (CRITICAL)
+2025-08-21 20:16:16,364 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,365 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,371 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,371 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,378 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,378 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,386 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,386 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,394 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,394 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,403 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,403 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,410 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,410 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,418 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,418 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,425 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,426 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,434 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,434 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,442 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,442 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,454 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\testing\patterns\autogen_patterns.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\autogen_patterns_20250821_201616.py
+2025-08-21 20:16:16,455 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,460 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,472 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\testing\patterns\langgraph_patterns.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\langgraph_patterns_20250821_201616.py
+2025-08-21 20:16:16,472 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,481 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,490 - INFO - Processed security event: sql_injection (CRITICAL)
+2025-08-21 20:16:16,499 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\testing\patterns\swarms_patterns.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\swarms_patterns_20250821_201616.py
+2025-08-21 20:16:16,500 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,507 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,514 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,516 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,524 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,524 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,532 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,532 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,540 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,540 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,548 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,548 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,556 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,556 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,562 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,564 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,571 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,571 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,577 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,578 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,588 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\observability\\__init__.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\__init___20250821_201616.py'
+2025-08-21 20:16:16,588 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,596 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\observability\\__init__.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\__init___20250821_201616.py'
+2025-08-21 20:16:16,596 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,604 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\observability\\__init__.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\__init___20250821_201616.py'
+2025-08-21 20:16:16,605 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,612 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\observability\\__init__.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\__init___20250821_201616.py'
+2025-08-21 20:16:16,612 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,623 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\observability\\__init__.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\__init___20250821_201616.py'
+2025-08-21 20:16:16,623 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,633 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\orchestration\\engines\\workflow\\workflow_orchestration_engine.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\workflow_orchestration_engine_20250821_201616.py'
+2025-08-21 20:16:16,633 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,642 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\orchestration\\engines\\workflow\\workflow_orchestration_engine.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\workflow_orchestration_engine_20250821_201616.py'
+2025-08-21 20:16:16,642 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,650 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\security\\deployment_pipeline_security.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\deployment_pipeline_security_20250821_201616.py'
+2025-08-21 20:16:16,651 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,658 - ERROR - Response execution failed for hardcoded_secrets: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,658 - INFO - Processed security event: hardcoded_secrets (HIGH)
+2025-08-21 20:16:16,666 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,666 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,672 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,672 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,680 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\security\\validation_framework.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\validation_framework_20250821_201616.py'
+2025-08-21 20:16:16,680 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,689 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\security\\validation_framework.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\validation_framework_20250821_201616.py'
+2025-08-21 20:16:16,690 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,697 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\testing\\embedding_cache_testing.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\embedding_cache_testing_20250821_201616.py'
+2025-08-21 20:16:16,698 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,707 - ERROR - Response execution failed for code_injection: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\testing\\embedding_cache_testing.py' -> 'C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\QUARANTINE\\embedding_cache_testing_20250821_201616.py'
+2025-08-21 20:16:16,707 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,718 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\tools\concrete_tools.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\concrete_tools_20250821_201616.py
+2025-08-21 20:16:16,718 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,723 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,730 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,737 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,743 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,751 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,758 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,758 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,764 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,765 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,785 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_optimizer.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\analytics_optimizer_20250821_201616.py
+2025-08-21 20:16:16,786 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,806 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_persistence.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\analytics_persistence_20250821_201616.py
+2025-08-21 20:16:16,806 - INFO - Processed security event: sql_injection (CRITICAL)
+2025-08-21 20:16:16,821 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\data_store.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\data_store_20250821_201616.py
+2025-08-21 20:16:16,821 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,836 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\integration\cross_module_tester.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\cross_module_tester_20250821_201616.py
+2025-08-21 20:16:16,836 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,848 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\operational\perfected_cache_manager.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\perfected_cache_manager_20250821_201616.py
+2025-08-21 20:16:16,848 - INFO - Processed security event: sql_injection (CRITICAL)
+2025-08-21 20:16:16,857 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,857 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,866 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,866 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,877 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\scripts\parallel_coverage_converter_fixed.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\parallel_coverage_converter_fixed_20250821_201616.py
+2025-08-21 20:16:16,877 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,886 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:16,886 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:16,897 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\agent_qa\validation_engine.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\validation_engine_20250821_201616.py
+2025-08-21 20:16:16,897 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,903 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,911 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,920 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\analysis\comprehensive_analysis\taint_analysis.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\taint_analysis_20250821_201616.py
+2025-08-21 20:16:16,920 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,927 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,934 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,943 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\communication\tag_reader.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\tag_reader_20250821_201616.py
+2025-08-21 20:16:16,943 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,949 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,957 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,963 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,971 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,977 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,984 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,989 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:16,996 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,002 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,009 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,015 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,023 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,031 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:17,031 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:17,043 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\bridges\context_variables_bridge.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\context_variables_bridge_20250821_201617.py
+2025-08-21 20:16:17,043 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,050 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,056 - ERROR - Response execution failed for path_traversal: 'ContinuousMonitoringSystem' object has no attribute '_get_recommended_actions'
+2025-08-21 20:16:17,057 - INFO - Processed security event: path_traversal (HIGH)
+2025-08-21 20:16:17,066 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\documentation\quality\doc_validator.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\doc_validator_20250821_201617.py
+2025-08-21 20:16:17,067 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,074 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,085 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\documentation\quality\style_checker.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\style_checker_20250821_201617.py
+2025-08-21 20:16:17,086 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,093 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,103 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\documentation\templates\readme_templates.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\readme_templates_20250821_201617.py
+2025-08-21 20:16:17,103 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,112 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\tools\migration\safety_checker.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\safety_checker_20250821_201617.py
+2025-08-21 20:16:17,113 - INFO - Processed security event: code_injection (CRITICAL)
+2025-08-21 20:16:17,123 - CRITICAL - File quarantined: C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\unified_tools\code_analysis_master.py -> C:\Users\kbass\OneDrive\Documents\testmaster\QUARANTINE\code_analysis_master_20250821_201617.py
+2025-08-21 20:16:17,123 - INFO - Processed security event: code_injection (CRITICAL)
