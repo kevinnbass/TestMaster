@@ -1,0 +1,41 @@
+{
+  "service_metadata": {
+    "service_name": "analytics_aggregator",
+    "service_version": "1.0.0",
+    "instance_id": "f019a5be-04a5-4111-9894-703657e0061e",
+    "hostname": "KevinPC",
+    "start_time": "2025-08-18T17:21:16.585683"
+  },
+  "spans": [
+    {
+      "span_id": "10a412da-ad1b-421c-b144-e6f0836c6101",
+      "trace_id": "e802219d-f1df-463e-aee2-fa728912a992",
+      "parent_span_id": null,
+      "operation_name": "get_comprehensive_analytics",
+      "component": "analytics_aggregator",
+      "start_time": "2025-08-18T17:22:16.817420",
+      "end_time": "2025-08-18T17:23:02.782880",
+      "duration_ms": 45965.46,
+      "status": "ok",
+      "attributes": {},
+      "events": [
+        {
+          "timestamp": "2025-08-18T17:22:16.817420",
+          "level": "info",
+          "message": "Starting comprehensive analytics collection",
+          "attributes": {}
+        },
+        {
+          "timestamp": "2025-08-18T17:23:02.542163",
+          "level": "info",
+          "message": "Comprehensive analytics collection completed",
+          "attributes": {
+            "components_collected": 31,
+            "enhancement_level": "full"
+          }
+        }
+      ],
+      "links": []
+    }
+  ]
+}

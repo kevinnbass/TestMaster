@@ -1,0 +1,165 @@
+[
+  {
+    "test": "dashboard_load",
+    "endpoint": "/api/health/live",
+    "status": "success",
+    "load_time": 2039.1347408294678,
+    "has_charts": false
+  },
+  {
+    "test": "dashboard_load",
+    "endpoint": "/api/analytics/summary",
+    "status": "success",
+    "load_time": 2497.730493545532,
+    "has_charts": true
+  },
+  {
+    "test": "dashboard_load",
+    "endpoint": "/api/performance/metrics",
+    "status": "success",
+    "load_time": 2032.0346355438232,
+    "has_charts": true
+  },
+  {
+    "test": "dashboard_load",
+    "endpoint": "/api/intelligence/agents/status",
+    "status": "success",
+    "load_time": 2023.5028266906738,
+    "has_charts": true
+  },
+  {
+    "test": "dashboard_load",
+    "endpoint": "/api/security/vulnerabilities/heatmap",
+    "status": "success",
+    "load_time": 2020.2183723449707,
+    "has_charts": true
+  },
+  {
+    "test": "dashboard_load",
+    "endpoint": "/api/flow/dag",
+    "status": "success",
+    "load_time": 2013.695478439331,
+    "has_charts": true
+  },
+  {
+    "test": "realtime_monitoring",
+    "endpoint": "/api/analytics/recent",
+    "is_realtime": true,
+    "unique_updates": 3
+  },
+  {
+    "test": "realtime_monitoring",
+    "endpoint": "/api/intelligence/agents/activities",
+    "is_realtime": true,
+    "unique_updates": 3
+  },
+  {
+    "test": "realtime_monitoring",
+    "endpoint": "/api/test-generation/generation/live",
+    "is_realtime": true,
+    "unique_updates": 3
+  },
+  {
+    "test": "realtime_monitoring",
+    "endpoint": "/api/security/threats/realtime",
+    "is_realtime": true,
+    "unique_updates": 3
+  },
+  {
+    "test": "navigation",
+    "view": "Dashboard",
+    "endpoint": "/api/analytics/summary",
+    "status": "success",
+    "navigation_time": 2045.0644493103027
+  },
+  {
+    "test": "navigation",
+    "view": "Intelligence View",
+    "endpoint": "/api/intelligence/agents/coordination",
+    "status": "success",
+    "navigation_time": 2017.9126262664795
+  },
+  {
+    "test": "navigation",
+    "view": "Test Generation",
+    "endpoint": "/api/test-generation/generators/status",
+    "status": "success",
+    "navigation_time": 2021.1830139160156
+  },
+  {
+    "test": "navigation",
+    "view": "Security Analysis",
+    "endpoint": "/api/security/owasp/compliance",
+    "status": "success",
+    "navigation_time": 2010.725975036621
+  },
+  {
+    "test": "navigation",
+    "view": "Coverage Report",
+    "endpoint": "/api/coverage/trends",
+    "status": "success",
+    "navigation_time": 2025.8941650390625
+  },
+  {
+    "test": "navigation",
+    "view": "Flow Optimization",
+    "endpoint": "/api/flow/optimizer",
+    "status": "success",
+    "navigation_time": 2024.1577625274658
+  },
+  {
+    "test": "navigation",
+    "view": "Back to Dashboard",
+    "endpoint": "/api/analytics/summary",
+    "status": "success",
+    "navigation_time": 2050.642728805542
+  },
+  {
+    "test": "visualization",
+    "name": "Coverage Heatmap",
+    "endpoint": "/api/coverage/heatmap",
+    "chart_count": 4,
+    "data_points": 484
+  },
+  {
+    "test": "visualization",
+    "name": "Workflow DAG",
+    "endpoint": "/api/flow/dag",
+    "chart_count": 4,
+    "data_points": 433
+  },
+  {
+    "test": "visualization",
+    "name": "Optimization Pareto",
+    "endpoint": "/api/intelligence/agents/optimization",
+    "chart_count": 4,
+    "data_points": 332
+  },
+  {
+    "test": "visualization",
+    "name": "Security Heatmap",
+    "endpoint": "/api/security/vulnerabilities/heatmap",
+    "chart_count": 4,
+    "data_points": 261
+  },
+  {
+    "test": "visualization",
+    "name": "Branch Coverage",
+    "endpoint": "/api/coverage/branch-analysis",
+    "chart_count": 4,
+    "data_points": 237
+  },
+  {
+    "test": "visualization",
+    "name": "Dependency Graph",
+    "endpoint": "/api/flow/dependency-graph",
+    "chart_count": 4,
+    "data_points": 240
+  },
+  {
+    "test": "heavy_load",
+    "total_requests": 100,
+    "successful": 81,
+    "avg_response_time": 2049.285176359577
+  }
+]

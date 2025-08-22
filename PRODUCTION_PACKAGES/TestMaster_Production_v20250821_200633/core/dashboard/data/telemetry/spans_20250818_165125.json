@@ -1,0 +1,71 @@
+{
+  "service_metadata": {
+    "service_name": "analytics_aggregator",
+    "service_version": "1.0.0",
+    "instance_id": "8d189ca8-f7e6-4b9a-b392-717c8251bad9",
+    "hostname": "KevinPC",
+    "start_time": "2025-08-18T16:49:25.886501"
+  },
+  "spans": [
+    {
+      "span_id": "f423adce-eb3d-4d4c-b08d-3bb909cbc8f1",
+      "trace_id": "0776e9d0-e12c-400a-97fb-ef76fe15ed08",
+      "parent_span_id": null,
+      "operation_name": "get_comprehensive_analytics",
+      "component": "analytics_aggregator",
+      "start_time": "2025-08-18T16:49:47.318384",
+      "end_time": "2025-08-18T16:50:39.310669",
+      "duration_ms": 51992.285,
+      "status": "ok",
+      "attributes": {},
+      "events": [
+        {
+          "timestamp": "2025-08-18T16:49:47.318384",
+          "level": "info",
+          "message": "Starting comprehensive analytics collection",
+          "attributes": {}
+        },
+        {
+          "timestamp": "2025-08-18T16:50:39.044891",
+          "level": "info",
+          "message": "Comprehensive analytics collection completed",
+          "attributes": {
+            "components_collected": 31,
+            "enhancement_level": "full"
+          }
+        }
+      ],
+      "links": []
+    },
+    {
+      "span_id": "7855538b-f4ed-4b1f-9b14-986160fd866f",
+      "trace_id": "6e3a63ee-a774-48a0-82c6-ed1aa0206395",
+      "parent_span_id": null,
+      "operation_name": "get_comprehensive_analytics",
+      "component": "analytics_aggregator",
+      "start_time": "2025-08-18T16:50:26.221941",
+      "end_time": "2025-08-18T16:51:17.901382",
+      "duration_ms": 51679.441,
+      "status": "ok",
+      "attributes": {},
+      "events": [
+        {
+          "timestamp": "2025-08-18T16:50:26.221941",
+          "level": "info",
+          "message": "Starting comprehensive analytics collection",
+          "attributes": {}
+        },
+        {
+          "timestamp": "2025-08-18T16:51:17.654590",
+          "level": "info",
+          "message": "Comprehensive analytics collection completed",
+          "attributes": {
+            "components_collected": 31,
+            "enhancement_level": "full"
+          }
+        }
+      ],
+      "links": []
+    }
+  ]
+}
