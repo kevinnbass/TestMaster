@@ -208,7 +208,7 @@ Create a `.env` file in the project root with the following variables:
 
 ```env
 # API Keys
-GEMINI_API_KEY=your_gemini_api_key
+GEMINI_API_KEY=<set_via_environment_variable>
 GOOGLE_API_KEY=your_google_api_key
 CLAUDE_API_KEY=your_claude_api_key
 OPENAI_API_KEY=your_openai_api_key
