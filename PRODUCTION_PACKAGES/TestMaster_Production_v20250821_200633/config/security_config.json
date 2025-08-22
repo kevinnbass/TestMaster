@@ -1,0 +1,25 @@
+{
+  "authentication": {
+    "bcrypt_rounds": 12,
+    "jwt_secret": "CHANGE_IN_PRODUCTION",
+    "session_timeout": 3600,
+    "max_login_attempts": 5
+  },
+  "monitoring": {
+    "alert_thresholds": {
+      "critical": 1,
+      "high": 5,
+      "medium": 20
+    },
+    "scan_intervals": {
+      "security": 300,
+      "performance": 60,
+      "health": 30
+    }
+  },
+  "compliance": {
+    "owasp_enabled": true,
+    "audit_logging": true,
+    "vulnerability_reporting": true
+  }
+}

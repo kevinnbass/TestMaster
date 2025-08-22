@@ -1,0 +1,13 @@
+{
+  "service_metadata": {
+    "service_name": "analytics_aggregator",
+    "service_version": "1.0.0",
+    "instance_id": "9b03ca51-3a85-45c6-9bb6-636c406382b9",
+    "hostname": "KevinPC",
+    "start_time": "2025-08-18T16:53:49.451576"
+  },
+  "events": [
+    {
+      "event_id": "97a58900-112d-46f9-8ee7-f33ac2ec0d8b",
+      "timestamp": "2025-08-18T16:53:52.999484",
+      "level": 

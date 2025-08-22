@@ -1,0 +1,62 @@
+{
+  "service_metadata": {
+    "service_name": "analytics_aggregator",
+    "service_version": "1.0.0",
+    "instance_id": "9ba2ebbb-7dde-4ea8-95b0-c01ba0c37340",
+    "hostname": "KevinPC",
+    "start_time": "2025-08-18T17:22:35.889734"
+  },
+  "events": [
+    {
+      "event_id": "268a1831-cf9e-4403-b0bb-d3a581831b47",
+      "timestamp": "2025-08-18T17:22:36.279614",
+      "level": "info",
+      "component": "analytics_aggregator",
+      "operation": "get_comprehensive_analytics",
+      "message": "Starting comprehensive analytics collection",
+      "duration_ms": null,
+      "trace_id": "d2af9a75-5f0e-437e-ba5f-8ad8e3ca23c3",
+      "span_id": "7dea7b94-6b09-4a8d-bac9-17226bab51a1",
+      "parent_span_id": null,
+      "attributes": {},
+      "metrics": {},
+      "error": null,
+      "stack_trace": null
+    },
+    {
+      "event_id": "0055ee5d-01d6-40fa-afea-a72b5899c536",
+      "timestamp": "2025-08-18T17:23:05.940289",
+      "level": "info",
+      "component": "analytics_aggregator",
+      "operation": "get_comprehensive_analytics",
+      "message": "Starting comprehensive analytics collection",
+      "duration_ms": null,
+      "trace_id": "effe5e00-5280-40fe-978c-f972350c3126",
+      "span_id": "2af754e8-5af0-4bc8-8026-2933397ec443",
+      "parent_span_id": null,
+      "attributes": {},
+      "metrics": {},
+      "error": null,
+      "stack_trace": null
+    },
+    {
+      "event_id": "1ae37439-2ddb-45bc-8760-bd4907fa4b9b",
+      "timestamp": "2025-08-18T17:23:27.144856",
+      "level": "info",
+      "component": "analytics_aggregator",
+      "operation": "get_comprehensive_analytics",
+      "message": "Comprehensive analytics collection completed",
+      "duration_ms": 50865.241289138794,
+      "trace_id": "d2af9a75-5f0e-437e-ba5f-8ad8e3ca23c3",
+      "span_id": "7dea7b94-6b09-4a8d-bac9-17226bab51a1",
+      "parent_span_id": null,
+      "attributes": {
+        "components_collected": 31,
+        "enhancement_level": "full"
+      },
+      "metrics": {},
+      "error": null,
+      "stack_trace": null
+    }
+  ]
+}

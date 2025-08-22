@@ -1,0 +1,65 @@
+{
+  "package_info": {
+    "name": "TestMaster_Production_v20250821_200633",
+    "version": "1.0.0",
+    "created": "2025-08-21T20:06:41.575946",
+    "description": "Production-ready TestMaster deployment with security enhancements"
+  },
+  "components": {
+    "core_modules": [
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\enhanced_security_intelligence_agent.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\enhanced_realtime_security_monitor.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\live_code_quality_monitor.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\unified_security_scanner.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\intelligence",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\security",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\testing",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\core\\foundation",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\dashboard",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\intelligence\\security"
+    ],
+    "security_patches": [
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\SECURITY_PATCHES\\api_security_framework.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\SECURITY_PATCHES\\authentication_framework.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\SECURITY_PATCHES\\automated_security_deployment.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\SECURITY_PATCHES\\enhanced_input_validation.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\SECURITY_PATCHES\\fix_command_injection.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\SECURITY_PATCHES\\fix_eval_exec_vulnerabilities.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\SECURITY_PATCHES\\secure_config.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\SECURITY_PATCHES\\security_dashboard.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\SECURITY_PATCHES\\security_monitor.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\SECURITY_PATCHES\\unified_security_integration.py"
+    ],
+    "test_suites": [
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\GENERATED_TESTS\\mass_test_generator.py"
+    ],
+    "monitoring_systems": [
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\web_monitor.py",
+      "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\analysis\\comprehensive_analysis\\security_monitoring\\continuous_security_monitor.py"
+    ],
+    "documentation": [
+      "README.md",
+      "DEPLOYMENT_GUIDE.md"
+    ],
+    "configuration": [
+      "security_config.json",
+      "system_config.json"
+    ]
+  },
+  "features": {
+    "security_patches_applied": 219,
+    "test_suites_generated": true,
+    "monitoring_enabled": true,
+    "owasp_compliance": true,
+    "enterprise_auth": true
+  },
+  "requirements": {
+    "python_version": ">=3.8",
+    "memory": "4GB",
+    "disk_space": "10GB",
+    "network_ports": [
+      5000,
+      8080
+    ]
+  }
+}
