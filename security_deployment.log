@@ -1,0 +1,169 @@
+2025-08-21 19:20:50,844 - INFO - Security patch deployment initialized
+2025-08-21 19:20:50,844 - INFO - Base path: C:\Users\kbass\OneDrive\Documents\testmaster
+2025-08-21 19:20:50,844 - INFO - Backup directory: C:\Users\kbass\OneDrive\Documents\testmaster\SECURITY_BACKUPS\backup_1755822050
+2025-08-21 19:20:50,844 - INFO - ============================================================
+2025-08-21 19:20:50,844 - INFO - AGENT D SECURITY FIX DEPLOYMENT STARTED
+2025-08-21 19:20:50,844 - INFO - Implementing fixes for 47 critical vulnerabilities
+2025-08-21 19:20:50,844 - INFO - ============================================================
+2025-08-21 19:20:50,846 - INFO - Creating security backups...
+2025-08-21 19:20:50,848 - INFO - Backed up: OpenAI_Agent_Swarm/agents/tool_maker/user_config.py
+2025-08-21 19:20:50,850 - INFO - Backed up: OpenAI_Agent_Swarm/agents/tool_maker/tool_user.py
+2025-08-21 19:20:50,852 - INFO - Backed up: agency-swarm/agency_swarm/tools/ToolFactory.py
+2025-08-21 19:20:50,853 - INFO - Backed up: TestMaster_BACKUP_20250816_175859/specialized_test_generators.py
+2025-08-21 19:20:50,855 - INFO - Backed up: TestMaster_BACKUP_20250816_175859/week_5_8_batch_converter.py
+2025-08-21 19:20:50,858 - INFO - Backed up: AgentVerse/pokemon_server.py
+2025-08-21 19:20:50,860 - INFO - Backed up: agent-squad/examples/fast-api-streaming/main.py
+2025-08-21 19:20:50,860 - INFO - Fixing code injection vulnerabilities...
+2025-08-21 19:20:50,862 - INFO - Applied patch to: OpenAI_Agent_Swarm/agents/tool_maker/user_config.py
+2025-08-21 19:20:50,863 - INFO - Applied patch to: OpenAI_Agent_Swarm/agents/tool_maker/tool_user.py
+2025-08-21 19:20:50,864 - INFO - Applied patch to: agency-swarm/agency_swarm/tools/ToolFactory.py
+2025-08-21 19:20:50,864 - INFO - Code injection fixes applied successfully
+2025-08-21 19:20:50,864 - INFO - Fixing command injection vulnerabilities...
+2025-08-21 19:20:50,865 - INFO - Applied patch to: TestMaster_BACKUP_20250816_175859/specialized_test_generators.py
+2025-08-21 19:20:50,865 - INFO - Applied patch to: TestMaster_BACKUP_20250816_175859/week_5_8_batch_converter.py
+2025-08-21 19:20:50,866 - INFO - Command injection fixes applied successfully
+2025-08-21 19:20:50,866 - INFO - Fixing hardcoded credentials...
+2025-08-21 19:20:50,867 - INFO - Applied patch to: AWorld/tests/mcp/streamable_http.py
+2025-08-21 19:20:50,868 - INFO - Applied patch to: test_configuration_documentation.py
+2025-08-21 19:20:50,868 - INFO - Hardcoded credentials fixes applied successfully
+2025-08-21 19:20:50,868 - INFO - Fixing CORS configurations...
+2025-08-21 19:20:50,869 - INFO - Applied patch to: AgentVerse/pokemon_server.py
+2025-08-21 19:20:50,870 - INFO - Applied patch to: agent-squad/examples/fast-api-streaming/main.py
+2025-08-21 19:20:50,870 - INFO - CORS configuration fixes applied successfully
+2025-08-21 19:20:50,870 - INFO - Deploying security tests...
+2025-08-21 19:20:50,872 - INFO - Deployed security test: test_security_comprehensive.py
+2025-08-21 19:20:50,873 - INFO - Deployed security test: test_intelligence_hub_comprehensive.py
+2025-08-21 19:20:50,874 - INFO - Security tests deployed successfully
+2025-08-21 19:20:50,874 - INFO - Updating security documentation...
+2025-08-21 19:20:50,875 - INFO - Security documentation updated successfully
+2025-08-21 19:20:50,875 - INFO - Validating security fixes...
+2025-08-21 19:21:10,507 - WARNING - Some security validations failed - manual review required
+2025-08-21 19:21:10,508 - INFO - Deployment report saved to: C:\Users\kbass\OneDrive\Documents\testmaster\security_deployment_report.json
+2025-08-21 19:21:10,508 - INFO - ============================================================
+2025-08-21 19:21:10,508 - INFO - SECURITY FIX DEPLOYMENT COMPLETED SUCCESSFULLY
+2025-08-21 19:21:10,508 - INFO - Applied 7 security patches
+2025-08-21 19:21:10,508 - INFO - ============================================================
+2025-08-21 20:02:23,391 - INFO - Starting automated security patch deployment in C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster
+2025-08-21 20:02:23,575 - INFO - Found 2316 Python files to process
+2025-08-21 20:02:23,654 - INFO - Applied 4 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\enhanced_security_intelligence_agent.py
+2025-08-21 20:02:23,656 - INFO - Applied 5 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\enhanced_realtime_security_monitor.py
+2025-08-21 20:02:23,670 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\live_code_quality_monitor.py
+2025-08-21 20:02:23,700 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\risk_based_test_targeter.py
+2025-08-21 20:02:23,704 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\specialized_test_generators.py
+2025-08-21 20:02:23,714 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\test_enhanced_core_integration.py
+2025-08-21 20:02:23,729 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\test_security_integration_validation.py
+2025-08-21 20:02:23,732 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\test_security_full_integration.py
+2025-08-21 20:02:23,741 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\unified_orchestration_example.py
+2025-08-21 20:02:23,759 - INFO - Applied 4 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\unified_security_scanner.py
+2025-08-21 20:02:23,774 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\anomaly_detection\anomaly_detection_analyzer.py
+2025-08-21 20:02:23,787 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\domain_modeling\domain_model_analyzer.py
+2025-08-21 20:02:23,804 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\ml_analysis\_shared_utils.py
+2025-08-21 20:02:23,804 - INFO - Applied 6 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\ml_analysis\ml_model_analyzer.py
+2025-08-21 20:02:23,820 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\realtime_analysis\realtime_ast_engine.py
+2025-08-21 20:02:23,821 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\web_monitor.py
+2025-08-21 20:02:23,830 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\analysis\comprehensive_analysis\security_monitoring\continuous_security_monitor.py
+2025-08-21 20:02:23,871 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\api_templates_original_2813_lines.py
+2025-08-21 20:02:23,886 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\placeholder_replacement_20250820_011704_predictive_analytics_engine.py
+2025-08-21 20:02:23,894 - INFO - Applied 11 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\from_subarchive_metaprogramming_analysis_original.py
+2025-08-21 20:02:23,931 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_aggregator.py
+2025-08-21 20:02:23,938 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_dead_letter_queue.py
+2025-08-21 20:02:23,939 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_compressor.py
+2025-08-21 20:02:23,943 - INFO - Applied 11 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\superseded_toplevel_metaprogramming_analysis.py
+2025-08-21 20:02:23,967 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\20250818\web_monitor.py
+2025-08-21 20:02:23,975 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_event_queue.py
+2025-08-21 20:02:23,981 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_optimizer.py
+2025-08-21 20:02:23,984 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_performance_booster.py
+2025-08-21 20:02:23,993 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_redundancy.py
+2025-08-21 20:02:24,000 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_smart_cache.py
+2025-08-21 20:02:24,005 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\analytics_watchdog.py
+2025-08-21 20:02:24,006 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\centralization_process_20250821_intelligence_consolidation\analytics_components\predictive_analytics_engine.py
+2025-08-21 20:02:24,033 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\integration_robust_duplicates_20250821_083109\predictive_analytics_engine_robust.py
+2025-08-21 20:02:24,064 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\COMPLETE_REFACTOR_20250818_112844\web_monitor.py
+2025-08-21 20:02:24,069 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\legacy_scripts\specialized_test_generators.py
+2025-08-21 20:02:24,098 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\original_backup\specialized_test_generators.py
+2025-08-21 20:02:24,104 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\original_backup\incremental\dependency_tracker.py
+2025-08-21 20:02:24,104 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\original_backup\cache\intelligent_cache.py
+2025-08-21 20:02:24,104 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\original_backup\config\testmaster_config.py
+2025-08-21 20:02:24,156 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\oversized_modules_20250821_042018\coordination\agent_coordination_protocols.py
+2025-08-21 20:02:24,159 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\phase1c_consolidation_20250820_150000\shared_state.py
+2025-08-21 20:02:24,168 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\phase1c_consolidation_20250820_150000\integration\predictive_analytics_engine.py
+2025-08-21 20:02:24,185 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\cache\intelligent_cache.py
+2025-08-21 20:02:24,187 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\placeholder_backups_20250820_011745\integration\predictive_analytics_engine.py
+2025-08-21 20:02:24,188 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\archive\placeholder_backups_20250820_011817\integration\predictive_analytics_engine.py
+2025-08-21 20:02:24,193 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\config\testmaster_config.py
+2025-08-21 20:02:24,202 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\shared_state.py
+2025-08-21 20:02:24,258 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\caching\distributed_smart_cache.py
+2025-08-21 20:02:24,264 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\coordination\agent_coordination_protocols_modules\agent_coordination_protocols_part1.py
+2025-08-21 20:02:24,274 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\documentation\api_spec_builder.py
+2025-08-21 20:02:24,292 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\documentation\enterprise_api_docs.py
+2025-08-21 20:02:24,297 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\documentation\interactive_docs.py
+2025-08-21 20:02:24,308 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\documentation\multimodal_recipe_engine.py
+2025-08-21 20:02:24,317 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\documentation\tracking_integration_docs.py
+2025-08-21 20:02:24,357 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\ml\model_registry.py
+2025-08-21 20:02:24,368 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\ml\advanced\smart_cache.py
+2025-08-21 20:02:24,408 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\orchestration\workflow_orchestration_engine.py
+2025-08-21 20:02:24,422 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\ml\enterprise\ml_monitoring_dashboard.py
+2025-08-21 20:02:24,444 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\testing\ai_generation\gemini_test_generator.py
+2025-08-21 20:02:24,457 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\intelligence\testing\security\api_security_tester.py
+2025-08-21 20:02:24,484 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\security\deployment_pipeline_security.py
+2025-08-21 20:02:24,487 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\security\enterprise_authentication.py
+2025-08-21 20:02:24,520 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\testing\embedding_cache_testing.py
+2025-08-21 20:02:24,529 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\testing\mcp_testing.py
+2025-08-21 20:02:24,530 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\testing\multimodal_validation_testing.py
+2025-08-21 20:02:24,532 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\domains\testing\multi_modal_test_engine.py
+2025-08-21 20:02:24,567 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\foundation\configuration\base\validation.py
+2025-08-21 20:02:24,580 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\foundation\shared\shared_state.py
+2025-08-21 20:02:24,621 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\evolutionary_code_engine.py
+2025-08-21 20:02:24,634 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\intelligent_code_optimizer.py
+2025-08-21 20:02:24,649 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\predictive_code_intelligence.py
+2025-08-21 20:02:24,705 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\caching\distributed_smart_cache.py
+2025-08-21 20:02:24,706 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\coordination\agent_coordination_protocols_modules\agent_coordination_protocols_part1.py
+2025-08-21 20:02:24,717 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\documentation\api_spec_builder.py
+2025-08-21 20:02:24,728 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\documentation\configuration_documentation_framework.py
+2025-08-21 20:02:24,732 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\documentation\enterprise_api_docs.py
+2025-08-21 20:02:24,746 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\documentation\interactive_docs.py
+2025-08-21 20:02:24,756 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\documentation\multimodal_recipe_engine.py
+2025-08-21 20:02:24,759 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\documentation\tracking_integration_docs.py
+2025-08-21 20:02:24,798 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\ml\model_registry.py
+2025-08-21 20:02:24,817 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\ml\advanced\smart_cache.py
+2025-08-21 20:02:24,856 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\orchestration\workflow_orchestration_engine.py
+2025-08-21 20:02:24,864 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\ml\enterprise\ml_monitoring_dashboard.py
+2025-08-21 20:02:24,884 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\testing\ai_generation\gemini_test_generator.py
+2025-08-21 20:02:24,904 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\intelligence\testing\security\api_security_tester.py
+2025-08-21 20:02:24,928 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\orchestration\engines\workflow\workflow_orchestration_engine.py
+2025-08-21 20:02:24,954 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\security\enterprise_authentication.py
+2025-08-21 20:02:24,960 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\security\deployment_pipeline_security.py
+2025-08-21 20:02:25,000 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\testing\embedding_cache_testing.py
+2025-08-21 20:02:25,010 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\testing\mcp_testing.py
+2025-08-21 20:02:25,014 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\testing\multi_modal_test_engine.py
+2025-08-21 20:02:25,015 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\core\testing\multimodal_validation_testing.py
+2025-08-21 20:02:25,073 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\api\health.py
+2025-08-21 20:02:25,091 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_compressor.py
+2025-08-21 20:02:25,092 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_aggregator.py
+2025-08-21 20:02:25,097 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_dead_letter_queue.py
+2025-08-21 20:02:25,106 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_event_queue.py
+2025-08-21 20:02:25,108 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_optimizer.py
+2025-08-21 20:02:25,108 - INFO - Applied 3 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_performance_booster.py
+2025-08-21 20:02:25,135 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_smart_cache.py
+2025-08-21 20:02:25,140 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_redundancy.py
+2025-08-21 20:02:25,146 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\data_store.py
+2025-08-21 20:02:25,149 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\dashboard\dashboard_core\analytics_watchdog.py
+2025-08-21 20:02:25,161 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\incremental\dependency_tracker.py
+2025-08-21 20:02:25,180 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\integration\predictive_analytics_engine.py
+2025-08-21 20:02:25,196 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\operational\perfected_cache_manager.py
+2025-08-21 20:02:25,196 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\operational\perfected_state_manager.py
+2025-08-21 20:02:25,276 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\analysis\comprehensive_analysis\taint_analysis.py
+2025-08-21 20:02:25,295 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\core\context_manager.py
+2025-08-21 20:02:25,325 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\bridges\session_tracking_bridge.py
+2025-08-21 20:02:25,335 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\bridges\context_variables_bridge.py
+2025-08-21 20:02:25,345 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\documentation\quality\doc_validator.py
+2025-08-21 20:02:25,356 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\documentation\templates\readme_templates.py
+2025-08-21 20:02:25,359 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\documentation\templates\api\rest_templates.py
+2025-08-21 20:02:25,374 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\integration\storage\unified_storage.py
+2025-08-21 20:02:25,398 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\intelligence\security\security_intelligence_agent.py
+2025-08-21 20:02:25,441 - INFO - Applied 14 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\testmaster\ui\dashboard.py
+2025-08-21 20:02:25,473 - INFO - Applied 1 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\unified_tools\code_analysis_master.py
+2025-08-21 20:02:25,501 - INFO - Applied 2 security patches to C:\Users\kbass\OneDrive\Documents\testmaster\TestMaster\web_monitor\utils.py
+2025-08-21 20:02:25,507 - INFO - Verifying deployment integrity...
+2025-08-21 20:02:25,507 - INFO - Deployment integrity verified successfully
+2025-08-21 20:02:25,509 - INFO - Deployment report generated: C:\Users\kbass\OneDrive\Documents\testmaster\SECURITY_DEPLOYMENT_REPORT.md

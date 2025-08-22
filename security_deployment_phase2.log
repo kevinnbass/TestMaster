@@ -1,0 +1,32 @@
+2025-08-21 19:28:32,222 - INFO - ============================================================
+2025-08-21 19:28:32,222 - INFO - AGENT D PHASE 2 SECURITY DEPLOYMENT STARTED
+2025-08-21 19:28:32,222 - INFO - Expanding security fixes for additional vulnerabilities
+2025-08-21 19:28:32,223 - INFO - ============================================================
+2025-08-21 19:28:32,223 - INFO - Creating Phase 2 security backups...
+2025-08-21 19:28:32,224 - INFO - Backed up: agency-swarm/agency_swarm/util/streaming/term_event_handler.py
+2025-08-21 19:28:32,227 - INFO - Backed up: agency-swarm/agency_swarm/util/streaming/gradio_event_handler.py
+2025-08-21 19:28:32,229 - INFO - Backed up: MetaGPT/tests/mock/mock_aiohttp.py
+2025-08-21 19:28:32,230 - INFO - Backed up: AWorld/examples/common/tools/browsers/browser.py
+2025-08-21 19:28:32,231 - INFO - Backed up: AWorld/examples/common/tools/browsers/async_browser.py
+2025-08-21 19:28:32,232 - INFO - Backed up: AWorld/examples/gaia/mcp_collections/tools/terminal.py
+2025-08-21 19:28:32,233 - INFO - Backed up: AWorld/examples/gaia/mcp_collections/documents/msxlsx.py
+2025-08-21 19:28:32,233 - INFO - Fixing additional eval() vulnerabilities...
+2025-08-21 19:28:32,234 - INFO - Applied patch to: agency-swarm/agency_swarm/util/streaming/term_event_handler.py
+2025-08-21 19:28:32,234 - INFO - Applied patch to: agency-swarm/agency_swarm/util/streaming/gradio_event_handler.py
+2025-08-21 19:28:32,236 - INFO - Applied patch to: MetaGPT/tests/mock/mock_aiohttp.py
+2025-08-21 19:28:32,236 - INFO - Additional eval() vulnerability fixes applied successfully
+2025-08-21 19:28:32,236 - INFO - Fixing additional command injection vulnerabilities...
+2025-08-21 19:28:32,237 - INFO - Applied patch to: AWorld/examples/common/tools/browsers/browser.py
+2025-08-21 19:28:32,238 - INFO - Applied patch to: AWorld/examples/common/tools/browsers/async_browser.py
+2025-08-21 19:28:32,239 - INFO - Applied patch to: AWorld/examples/gaia/mcp_collections/tools/terminal.py
+2025-08-21 19:28:32,240 - INFO - Applied patch to: AWorld/examples/gaia/mcp_collections/documents/msxlsx.py
+2025-08-21 19:28:32,240 - INFO - Additional command injection fixes applied successfully
+2025-08-21 19:28:32,240 - INFO - Deploying enhanced input validation...
+2025-08-21 19:28:32,240 - INFO - Enhanced input validation deployed to: C:\Users\kbass\OneDrive\Documents\testmaster\SECURITY_PATCHES\enhanced_input_validation.py
+2025-08-21 19:28:32,241 - INFO - Setting up automated security monitoring...
+2025-08-21 19:28:32,241 - INFO - Security monitoring system deployed to: C:\Users\kbass\OneDrive\Documents\testmaster\SECURITY_PATCHES\security_monitor.py
+2025-08-21 19:28:32,241 - INFO - Phase 2 deployment report saved to: C:\Users\kbass\OneDrive\Documents\testmaster\security_deployment_phase2_report.json
+2025-08-21 19:28:32,241 - INFO - ============================================================
+2025-08-21 19:28:32,241 - INFO - PHASE 2 SECURITY DEPLOYMENT COMPLETED SUCCESSFULLY
+2025-08-21 19:28:32,241 - INFO - Applied 9 additional security patches
+2025-08-21 19:28:32,241 - INFO - ============================================================
