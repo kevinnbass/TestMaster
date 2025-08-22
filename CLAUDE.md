@@ -253,6 +253,8 @@ For future agent operations, the system includes:
 - Configuration options and profiles
 - Integration test results and status
 
+**PUSH FAILURE FALLBACK**: If push fails with HTTP 408/500 errors, repository size issues, or timeout at 99%, consult ADVANCED_GIT_PROCEDURES.md for commit splitting and large repository management protocols.
+
 This should happen WITHOUT asking for permission, as part of the natural workflow after completing each task. All changes must be pushed to the GitHub remote repository, not just committed locally.
 
 ### End-to-End Analysis Process
