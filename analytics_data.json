@@ -1,0 +1,1385 @@
+{
+  "metrics_history": [
+    {
+      "timestamp": "2025-08-20T05:26:05.789650",
+      "system": {
+        "cpu_percent": 40.0,
+        "memory_percent": 60.0,
+        "disk_percent": 45.0
+      },
+      "totals": {
+        "database_size_mb": 50.0,
+        "query_count": 10
+      }
+    },
+    {
+      "timestamp": "2025-08-20T05:56:05.789650",
+      "system": {
+        "cpu_percent": 41.098334166468284,
+        "memory_percent": 60.797190662367996,
+        "disk_percent": 45.02
+      },
+      "totals": {
+        "database_size_mb": 50.5,
+        "query_count": 10
+      }
+    },
+    {
+      "timestamp": "2025-08-20T06:26:05.789650",
+      "system": {
+        "cpu_percent": 42.18669330795061,
+        "memory_percent": 61.5776010333067,
+        "disk_percent": 45.04
+      },
+      "totals": {
+        "database_size_mb": 51.0,
+        "query_count": 10
+      }
+    },
+    {
+      "timestamp": "2025-08-20T06:56:05.789650",
+      "system": {
+        "cpu_percent": 43.25520206661339,
+        "memory_percent": 62.32482767055615,
+        "disk_percent": 45.06
+      },
+      "totals": {
+        "database_size_mb": 51.5,
+        "query_count": 10
+      }
+    },
+    {
+      "timestamp": "2025-08-20T07:26:05.789650",
+      "system": {
+        "cpu_percent": 44.2941834230865,
+        "memory_percent": 63.02321236697518,
+        "disk_percent": 45.08
+      },
+      "totals": {
+        "database_size_mb": 52.0,
+        "query_count": 10
+      }
+    },
+    {
+      "timestamp": "2025-08-20T07:56:05.789650",
+      "system": {
+        "cpu_percent": 45.29425538604203,
+        "memory_percent": 63.65819380011667,
+        "disk_percent": 45.1
+      },
+      "totals": {
+        "database_size_mb": 52.5,
+        "query_count": 10
+      }
+    },
+    {
+      "timestamp": "2025-08-20T08:26:05.789650",
+      "system": {
+        "cpu_percent": 46.246424733950356,
+        "memory_percent": 64.21663454813742,
+        "disk_percent": 45.12
+      },
+      "totals": {
+        "database_size_mb": 53.0,
+        "query_count": 10
+      }
+    },
+    {
+      "timestamp": "2025-08-20T08:56:05.789650",
+      "system": {
+        "cpu_percent": 47.142176872376915,
+        "memory_percent": 64.68711612797009,
+        "disk_percent": 45.14
+      },
+      "totals": {
+        "database_size_mb": 53.5,
+        "query_count": 10
+      }
+    },
+    {
+      "timestamp": "2025-08-20T09:26:05.789650",
+      "system": {
+        "cpu_percent": 47.973560908995225,
+        "memory_percent": 65.06019542983613,
+        "disk_percent": 45.16
+      },
+      "totals": {
+        "database_size_mb": 54.0,
+        "query_count": 10
+      }
+    },
+    {
+      "timestamp": "2025-08-20T09:56:05.789650",
+      "system": {
+        "cpu_percent": 48.73326909627483,
+        "memory_percent": 65.32861678913329,
+        "disk_percent": 45.18
+      },
+      "totals": {
+        "database_size_mb": 54.5,
+        "query_count": 10
+      }
+    },
+    {
+      "timestamp": "2025-08-20T10:26:05.789650",
+      "system": {
+        "cpu_percent": 49.414709848078964,
+        "memory_percent": 65.48747493302027,
+        "disk_percent": 45.2
+      },
+      "totals": {
+        "database_size_mb": 55.0,
+        "query_count": 11
+      }
+    },
+    {
+      "timestamp": "2025-08-20T10:56:05.789650",
+      "system": {
+        "cpu_percent": 50.01207360061436,
+        "memory_percent": 65.5343251422696,
+        "disk_percent": 45.22
+      },
+      "totals": {
+        "database_size_mb": 55.5,
+        "query_count": 11
+      }
+    },
+    {
+      "timestamp": "2025-08-20T11:26:05.789650",
+      "system": {
+        "cpu_percent": 50.52039085967227,
+        "memory_percent": 65.46923815439098,
+        "disk_percent": 45.24
+      },
+      "totals": {
+        "database_size_mb": 56.0,
+        "query_count": 11
+      }
+    },
+    {
+      "timestamp": "2025-08-20T11:56:05.789650",
+      "system": {
+        "cpu_percent": 50.93558185417193,
+        "memory_percent": 65.29479857501934,
+        "disk_percent": 45.26
+      },
+      "totals": {
+        "database_size_mb": 56.5,
+        "query_count": 11
+      }
+    },
+    {
+      "timestamp": "2025-08-20T12:26:05.789650",
+      "system": {
+        "cpu_percent": 51.254497299884605,
+        "memory_percent": 65.01604683324437,
+        "disk_percent": 45.28
+      },
+      "totals": {
+        "database_size_mb": 57.0,
+        "query_count": 11
+      }
+    },
+    {
+      "timestamp": "2025-08-20T12:56:05.789650",
+      "system": {
+        "cpu_percent": 51.47494986604055,
+        "memory_percent": 64.64036598443961,
+        "disk_percent": 45.3
+      },
+      "totals": {
+        "database_size_mb": 57.5,
+        "query_count": 11
+      }
+    },
+    {
+      "timestamp": "2025-08-20T13:26:05.789650",
+      "system": {
+        "cpu_percent": 51.595736030415054,
+        "memory_percent": 64.17731590275575,
+        "disk_percent": 45.32
+      },
+      "totals": {
+        "database_size_mb": 58.0,
+        "query_count": 11
+      }
+    },
+    {
+      "timestamp": "2025-08-20T13:56:05.789650",
+      "system": {
+        "cpu_percent": 51.616648104524685,
+        "memory_percent": 63.63841858695709,
+        "disk_percent": 45.34
+      },
+      "totals": {
+        "database_size_mb": 58.5,
+        "query_count": 11
+      }
+    },
+    {
+      "timestamp": "2025-08-20T14:26:05.789650",
+      "system": {
+        "cpu_percent": 51.53847630878195,
+        "memory_percent": 63.03689940116915,
+        "disk_percent": 45.36
+      },
+      "totals": {
+        "database_size_mb": 59.0,
+        "query_count": 11
+      }
+    },
+    {
+      "timestamp": "2025-08-20T14:56:05.789650",
+      "system": {
+        "cpu_percent": 51.36300087687414,
+        "memory_percent": 62.38739006171272,
+        "disk_percent": 45.38
+      },
+      "totals": {
+        "database_size_mb": 59.5,
+        "query_count": 11
+      }
+    },
+    {
+      "timestamp": "2025-08-20T15:26:05.789650",
+      "system": {
+        "cpu_percent": 51.09297426825682,
+        "memory_percent": 61.70560004029934,
+        "disk_percent": 45.4
+      },
+      "totals": {
+        "database_size_mb": 60.0,
+        "query_count": 12
+      }
+    },
+    {
+      "timestamp": "2025-08-20T15:56:05.789650",
+      "system": {
+        "cpu_percent": 50.73209366648874,
+        "memory_percent": 61.007963763164256,
+        "disk_percent": 45.42
+      },
+      "totals": {
+        "database_size_mb": 60.5,
+        "query_count": 12
+      }
+    },
+    {
+      "timestamp": "2025-08-20T16:26:05.789650",
+      "system": {
+        "cpu_percent": 50.2849640381959,
+        "memory_percent": 60.31127152928376,
+        "disk_percent": 45.44
+      },
+      "totals": {
+        "database_size_mb": 61.0,
+        "query_count": 12
+      }
+    },
+    {
+      "timestamp": "2025-08-20T16:56:05.789650",
+      "system": {
+        "cpu_percent": 49.757052121767195,
+        "memory_percent": 59.63229243645785,
+        "disk_percent": 45.46
+      },
+      "totals": {
+        "database_size_mb": 61.5,
+        "query_count": 12
+      }
+    },
+    {
+      "timestamp": "2025-08-20T17:26:05.789650",
+      "system": {
+        "cpu_percent": 49.15463180551151,
+        "memory_percent": 58.98739778352574,
+        "disk_percent": 45.48
+      },
+      "totals": {
+        "database_size_mb": 62.0,
+        "query_count": 12
+      }
+    },
+    {
+      "timestamp": "2025-08-20T17:56:05.789650",
+      "system": {
+        "cpu_percent": 48.48472144103957,
+        "memory_percent": 58.39219340628828,
+        "disk_percent": 45.5
+      },
+      "totals": {
+        "database_size_mb": 62.5,
+        "query_count": 12
+      }
+    },
+    {
+      "timestamp": "2025-08-20T18:26:05.789650",
+      "system": {
+        "cpu_percent": 47.75501371821464,
+        "memory_percent": 57.86116920408013,
+        "disk_percent": 45.52
+      },
+      "totals": {
+        "database_size_mb": 63.0,
+        "query_count": 12
+      }
+    },
+    {
+      "timestamp": "2025-08-20T18:56:05.789650",
+      "system": {
+        "cpu_percent": 46.9737988023383,
+        "memory_percent": 57.40737372786903,
+        "disk_percent": 45.54
+      },
+      "totals": {
+        "database_size_mb": 63.5,
+        "query_count": 12
+      }
+    },
+    {
+      "timestamp": "2025-08-20T19:26:05.789650",
+      "system": {
+        "cpu_percent": 46.149881501559044,
+        "memory_percent": 57.04212113793206,
+        "disk_percent": 45.56
+      },
+      "totals": {
+        "database_size_mb": 64.0,
+        "query_count": 12
+      }
+    },
+    {
+      "timestamp": "2025-08-20T19:56:05.789650",
+      "system": {
+        "cpu_percent": 45.29249329213982,
+        "memory_percent": 56.77473711220776,
+        "disk_percent": 45.58
+      },
+      "totals": {
+        "database_size_mb": 64.5,
+        "query_count": 12
+      }
+    },
+    {
+      "timestamp": "2025-08-20T20:26:05.789650",
+      "system": {
+        "cpu_percent": 94.41120008059868,
+        "memory_percent": 56.612349411674515,
+        "disk_percent": 45.6
+      },
+      "totals": {
+        "database_size_mb": 65.0,
+        "query_count": 13
+      }
+    },
+    {
+      "timestamp": "2025-08-20T20:56:05.789650",
+      "system": {
+        "cpu_percent": 43.5158066243329,
+        "memory_percent": 56.5597278062056,
+        "disk_percent": 45.62
+      },
+      "totals": {
+        "database_size_mb": 65.5,
+        "query_count": 13
+      }
+    },
+    {
+      "timestamp": "2025-08-20T21:26:05.789650",
+      "system": {
+        "cpu_percent": 42.6162585657242,
+        "memory_percent": 56.6191769558208,
+        "disk_percent": 45.64
+      },
+      "totals": {
+        "database_size_mb": 66.0,
+        "query_count": 13
+      }
+    },
+    {
+      "timestamp": "2025-08-20T21:56:05.789650",
+      "system": {
+        "cpu_percent": 41.72254305856751,
+        "memory_percent": 56.7904846529909,
+        "disk_percent": 45.66
+      },
+      "totals": {
+        "database_size_mb": 66.5,
+        "query_count": 13
+      }
+    },
+    {
+      "timestamp": "2025-08-20T22:26:05.789650",
+      "system": {
+        "cpu_percent": 40.84458897973168,
+        "memory_percent": 57.07092658836134,
+        "disk_percent": 45.68
+      },
+      "totals": {
+        "database_size_mb": 67.0,
+        "query_count": 13
+      }
+    },
+    {
+      "timestamp": "2025-08-20T22:56:05.789650",
+      "system": {
+        "cpu_percent": 39.992167723103805,
+        "memory_percent": 57.45532753286704,
+        "disk_percent": 45.7
+      },
+      "totals": {
+        "database_size_mb": 67.5,
+        "query_count": 13
+      }
+    },
+    {
+      "timestamp": "2025-08-20T23:26:05.789650",
+      "system": {
+        "cpu_percent": 39.174795567051476,
+        "memory_percent": 57.93617756222006,
+        "disk_percent": 45.72
+      },
+      "totals": {
+        "database_size_mb": 68.0,
+        "query_count": 13
+      }
+    },
+    {
+      "timestamp": "2025-08-20T23:56:05.789650",
+      "system": {
+        "cpu_percent": 38.40163859091507,
+        "memory_percent": 58.50380071361869,
+        "disk_percent": 45.74
+      },
+      "totals": {
+        "database_size_mb": 68.5,
+        "query_count": 13
+      }
+    },
+    {
+      "timestamp": "2025-08-21T00:26:05.789650",
+      "system": {
+        "cpu_percent": 37.681421090572805,
+        "memory_percent": 59.14657228701181,
+        "disk_percent": 45.76
+      },
+      "totals": {
+        "database_size_mb": 69.0,
+        "query_count": 13
+      }
+    },
+    {
+      "timestamp": "2025-08-21T00:56:05.789650",
+      "system": {
+        "cpu_percent": 37.02233840816026,
+        "memory_percent": 59.8511799108007,
+        "disk_percent": 45.78
+      },
+      "totals": {
+        "database_size_mb": 69.5,
+        "query_count": 13
+      }
+    },
+    {
+      "timestamp": "2025-08-21T01:26:05.789650",
+      "system": {
+        "cpu_percent": 36.43197504692072,
+        "memory_percent": 60.60292250900537,
+        "disk_percent": 45.8
+      },
+      "totals": {
+        "database_size_mb": 70.0,
+        "query_count": 14
+      }
+    },
+    {
+      "timestamp": "2025-08-21T01:56:05.789650",
+      "system": {
+        "cpu_percent": 35.9172288893559,
+        "memory_percent": 61.38604045573741,
+        "disk_percent": 45.82
+      },
+      "totals": {
+        "database_size_mb": 70.5,
+        "query_count": 14
+      }
+    },
+    {
+      "timestamp": "2025-08-21T02:26:05.789650",
+      "system": {
+        "cpu_percent": 35.48424227586412,
+        "memory_percent": 62.18406950242175,
+        "disk_percent": 45.84
+      },
+      "totals": {
+        "database_size_mb": 71.0,
+        "query_count": 14
+      }
+    },
+    {
+      "timestamp": "2025-08-21T02:56:05.789650",
+      "system": {
+        "cpu_percent": 35.13834063250545,
+        "memory_percent": 62.980210529324786,
+        "disk_percent": 45.86
+      },
+      "totals": {
+        "database_size_mb": 71.5,
+        "query_count": 14
+      }
+    },
+    {
+      "timestamp": "2025-08-21T03:26:05.789650",
+      "system": {
+        "cpu_percent": 34.88397926110484,
+        "memory_percent": 63.75770681756689,
+        "disk_percent": 45.88
+      },
+      "totals": {
+        "database_size_mb": 72.0,
+        "query_count": 14
+      }
+    },
+    {
+      "timestamp": "2025-08-21T03:56:05.789650",
+      "system": {
+        "cpu_percent": 34.72469882334903,
+        "memory_percent": 64.50022036890309,
+        "disk_percent": 45.9
+      },
+      "totals": {
+        "database_size_mb": 72.5,
+        "query_count": 14
+      }
+    },
+    {
+      "timestamp": "2025-08-21T04:26:05.789650",
+      "system": {
+        "cpu_percent": 34.66308996366536,
+        "memory_percent": 65.19219882194099,
+        "disk_percent": 45.92
+      },
+      "totals": {
+        "database_size_mb": 73.0,
+        "query_count": 14
+      }
+    },
+    {
+      "timestamp": "2025-08-21T04:56:05.789650",
+      "system": {
+        "cpu_percent": 34.70076742435899,
+        "memory_percent": 65.81922472464882,
+        "disk_percent": 45.94
+      },
+      "totals": {
+        "database_size_mb": 73.5,
+        "query_count": 14
+      }
+    },
+    {
+      "timestamp": "2025-08-21T05:26:05.789650",
+      "system": {
+        "cpu_percent": 34.83835391164159,
+        "memory_percent": 66.36833931924576,
+        "disk_percent": 45.96
+      },
+      "totals": {
+        "database_size_mb": 74.0,
+        "query_count": 14
+      }
+    },
+    {
+      "timestamp": "2025-08-21T05:56:05.789650",
+      "system": {
+        "cpu_percent": 35.07547387375668,
+        "memory_percent": 66.82833356796442,
+        "disk_percent": 45.98
+      },
+      "totals": {
+        "database_size_mb": 74.5,
+        "query_count": 14
+      }
+    },
+    {
+      "timestamp": "2025-08-21T06:26:05.789650",
+      "system": {
+        "cpu_percent": 35.410757253368615,
+        "memory_percent": 67.1899998838737,
+        "disk_percent": 46.0
+      },
+      "totals": {
+        "database_size_mb": 75.0,
+        "query_count": 15
+      }
+    },
+    {
+      "timestamp": "2025-08-21T06:56:05.789650",
+      "system": {
+        "cpu_percent": 35.84185317672268,
+        "memory_percent": 67.44633891343099,
+        "disk_percent": 46.02
+      },
+      "totals": {
+        "database_size_mb": 75.5,
+        "query_count": 15
+      }
+    },
+    {
+      "timestamp": "2025-08-21T07:26:05.789650",
+      "system": {
+        "cpu_percent": 36.36545344279847,
+        "memory_percent": 67.59271672687302,
+        "disk_percent": 46.04
+      },
+      "totals": {
+        "database_size_mb": 76.0,
+        "query_count": 15
+      }
+    },
+    {
+      "timestamp": "2025-08-21T07:56:05.789650",
+      "system": {
+        "cpu_percent": 36.97732557776099,
+        "memory_percent": 67.6269688862881,
+        "disk_percent": 46.06
+      },
+      "totals": {
+        "database_size_mb": 76.5,
+        "query_count": 15
+      }
+    },
+    {
+      "timestamp": "2025-08-21T08:26:05.789650",
+      "system": {
+        "cpu_percent": 37.67235512444013,
+        "memory_percent": 67.54944905422543,
+        "disk_percent": 46.08
+      },
+      "totals": {
+        "database_size_mb": 77.0,
+        "query_count": 15
+      }
+    },
+    {
+      "timestamp": "2025-08-21T08:56:05.789650",
+      "system": {
+        "cpu_percent": 38.44459674429608,
+        "memory_percent": 67.3630210511967,
+        "disk_percent": 46.1
+      },
+      "totals": {
+        "database_size_mb": 77.5,
+        "query_count": 15
+      }
+    },
+    {
+      "timestamp": "2025-08-21T09:26:05.789650",
+      "system": {
+        "cpu_percent": 39.287333621276794,
+        "memory_percent": 67.0729945404414,
+        "disk_percent": 46.12
+      },
+      "totals": {
+        "database_size_mb": 78.0,
+        "query_count": 15
+      }
+    },
+    {
+      "timestamp": "2025-08-21T09:56:05.789650",
+      "system": {
+        "cpu_percent": 40.19314457402363,
+        "memory_percent": 66.68700578433744,
+        "disk_percent": 46.14
+      },
+      "totals": {
+        "database_size_mb": 78.5,
+        "query_count": 15
+      }
+    },
+    {
+      "timestamp": "2025-08-21T10:26:05.789650",
+      "system": {
+        "cpu_percent": 41.15397820586243,
+        "memory_percent": 66.21484615041092,
+        "disk_percent": 46.16
+      },
+      "totals": {
+        "database_size_mb": 79.0,
+        "query_count": 15
+      }
+    },
+    {
+      "timestamp": "2025-08-21T10:56:05.789650",
+      "system": {
+        "cpu_percent": 42.16123335169764,
+        "memory_percent": 65.66824221833045,
+        "disk_percent": 46.18
+      },
+      "totals": {
+        "database_size_mb": 79.5,
+        "query_count": 15
+      }
+    },
+    {
+      "timestamp": "2025-08-21T11:26:05.789650",
+      "system": {
+        "cpu_percent": 43.20584501801074,
+        "memory_percent": 95.06059242620879,
+        "disk_percent": 46.2
+      },
+      "totals": {
+        "database_size_mb": 80.0,
+        "query_count": 16
+      }
+    },
+    {
+      "timestamp": "2025-08-21T11:56:05.789650",
+      "system": {
+        "cpu_percent": 44.27837495727905,
+        "memory_percent": 64.40666617056816,
+        "disk_percent": 46.22
+      },
+      "totals": {
+        "database_size_mb": 80.5,
+        "query_count": 16
+      }
+    },
+    {
+      "timestamp": "2025-08-21T12:26:05.789650",
+      "system": {
+        "cpu_percent": 45.369105971825036,
+        "memory_percent": 63.72227211753532,
+        "disk_percent": 46.24
+      },
+      "totals": {
+        "database_size_mb": 81.0,
+        "query_count": 16
+      }
+    },
+    {
+      "timestamp": "2025-08-21T12:56:05.789650",
+      "system": {
+        "cpu_percent": 46.4681390048435,
+        "memory_percent": 63.023903174281706,
+        "disk_percent": 46.26
+      },
+      "totals": {
+        "database_size_mb": 81.5,
+        "query_count": 16
+      }
+    },
+    {
+      "timestamp": "2025-08-21T13:26:05.789650",
+      "system": {
+        "cpu_percent": 47.565492048504936,
+        "memory_percent": 62.3283660938851,
+        "disk_percent": 46.28
+      },
+      "totals": {
+        "database_size_mb": 82.0,
+        "query_count": 16
+      }
+    },
+    {
+      "timestamp": "2025-08-21T13:56:05.789650",
+      "system": {
+        "cpu_percent": 48.65119988087815,
+        "memory_percent": 61.65240403188863,
+        "disk_percent": 46.3
+      },
+      "totals": {
+        "database_size_mb": 82.5,
+        "query_count": 16
+      }
+    },
+    {
+      "timestamp": "2025-08-21T14:26:05.789650",
+      "system": {
+        "cpu_percent": 49.715413635133785,
+        "memory_percent": 61.01232053112339,
+        "disk_percent": 46.32
+      },
+      "totals": {
+        "database_size_mb": 83.0,
+        "query_count": 16
+      }
+    },
+    {
+      "timestamp": "2025-08-21T14:56:05.789650",
+      "system": {
+        "cpu_percent": 50.74849920616599,
+        "memory_percent": 60.42361337928483,
+        "disk_percent": 46.34
+      },
+      "totals": {
+        "database_size_mb": 83.5,
+        "query_count": 16
+      }
+    },
+    {
+      "timestamp": "2025-08-21T15:26:05.789650",
+      "system": {
+        "cpu_percent": 51.74113351138609,
+        "memory_percent": 59.900626562032286,
+        "disk_percent": 46.36
+      },
+      "totals": {
+        "database_size_mb": 84.0,
+        "query_count": 16
+      }
+    },
+    {
+      "timestamp": "2025-08-21T15:56:05.789650",
+      "system": {
+        "cpu_percent": 52.684397643882,
+        "memory_percent": 59.456228127995004,
+        "disk_percent": 46.38
+      },
+      "totals": {
+        "database_size_mb": 84.5,
+        "query_count": 16
+      }
+    },
+    {
+      "timestamp": "2025-08-21T16:26:05.789650",
+      "system": {
+        "cpu_percent": 53.56986598718789,
+        "memory_percent": 59.10152120014165,
+        "disk_percent": 46.4
+      },
+      "totals": {
+        "database_size_mb": 85.0,
+        "query_count": 17
+      }
+    },
+    {
+      "timestamp": "2025-08-21T16:56:05.789650",
+      "system": {
+        "cpu_percent": 54.38969040125877,
+        "memory_percent": 58.84559462357546,
+        "disk_percent": 46.42
+      },
+      "totals": {
+        "database_size_mb": 85.5,
+        "query_count": 17
+      }
+    },
+    {
+      "timestamp": "2025-08-21T17:26:05.789650",
+      "system": {
+        "cpu_percent": 55.13667863849153,
+        "memory_percent": 58.695318849667544,
+        "disk_percent": 46.44
+      },
+      "totals": {
+        "database_size_mb": 86.0,
+        "query_count": 17
+      }
+    },
+    {
+      "timestamp": "2025-08-21T17:56:05.789650",
+      "system": {
+        "cpu_percent": 55.80436620628565,
+        "memory_percent": 58.655191640530916,
+        "disk_percent": 46.46
+      },
+      "totals": {
+        "database_size_mb": 86.5,
+        "query_count": 17
+      }
+    },
+    {
+      "timestamp": "2025-08-21T18:26:05.789650",
+      "system": {
+        "cpu_percent": 56.38708095811627,
+        "memory_percent": 58.72723705898006,
+        "disk_percent": 46.48
+      },
+      "totals": {
+        "database_size_mb": 87.0,
+        "query_count": 17
+      }
+    },
+    {
+      "timestamp": "2025-08-21T18:56:05.789650",
+      "system": {
+        "cpu_percent": 100,
+        "memory_percent": 58.910960012443695,
+        "disk_percent": 46.5
+      },
+      "totals": {
+        "database_size_mb": 87.5,
+        "query_count": 17
+      }
+    },
+    {
+      "timestamp": "2025-08-21T19:26:05.789650",
+      "system": {
+        "cpu_percent": 57.279196720314864,
+        "memory_percent": 59.20335737167662,
+        "disk_percent": 46.52
+      },
+      "totals": {
+        "database_size_mb": 88.0,
+        "query_count": 17
+      }
+    },
+    {
+      "timestamp": "2025-08-21T19:56:05.789650",
+      "system": {
+        "cpu_percent": 57.58168233877001,
+        "memory_percent": 59.59898541456816,
+        "disk_percent": 46.54
+      },
+      "totals": {
+        "database_size_mb": 88.5,
+        "query_count": 17
+      }
+    },
+    {
+      "timestamp": "2025-08-21T20:26:05.789650",
+      "system": {
+        "cpu_percent": 57.785433453746045,
+        "memory_percent": 60.090082080404834,
+        "disk_percent": 46.56
+      },
+      "totals": {
+        "database_size_mb": 89.0,
+        "query_count": 17
+      }
+    },
+    {
+      "timestamp": "2025-08-21T20:56:05.789650",
+      "system": {
+        "cpu_percent": 57.88941341839772,
+        "memory_percent": 60.666741289019924,
+        "disk_percent": 46.58
+      },
+      "totals": {
+        "database_size_mb": 89.5,
+        "query_count": 17
+      }
+    },
+    {
+      "timestamp": "2025-08-21T21:26:05.789650",
+      "system": {
+        "cpu_percent": 57.893582466233816,
+        "memory_percent": 61.317135409997825,
+        "disk_percent": 46.6
+      },
+      "totals": {
+        "database_size_mb": 90.0,
+        "query_count": 18
+      }
+    },
+    {
+      "timestamp": "2025-08-21T21:56:05.789650",
+      "system": {
+        "cpu_percent": 57.798898108450864,
+        "memory_percent": 62.0277808857543,
+        "disk_percent": 46.62
+      },
+      "totals": {
+        "database_size_mb": 90.5,
+        "query_count": 18
+      }
+    },
+    {
+      "timestamp": "2025-08-21T22:26:05.789650",
+      "system": {
+        "cpu_percent": 57.60730556679773,
+        "memory_percent": 62.78384104317098,
+        "disk_percent": 46.64
+      },
+      "totals": {
+        "database_size_mb": 91.0,
+        "query_count": 18
+      }
+    },
+    {
+      "timestamp": "2025-08-21T22:56:05.789650",
+      "system": {
+        "cpu_percent": 57.32171833756293,
+        "memory_percent": 63.569459293287714,
+        "disk_percent": 46.66
+      },
+      "totals": {
+        "database_size_mb": 91.5,
+        "query_count": 18
+      }
+    },
+    {
+      "timestamp": "2025-08-21T23:26:05.789650",
+      "system": {
+        "cpu_percent": 56.9459890808828,
+        "memory_percent": 64.36811523610568,
+        "disk_percent": 46.68
+      },
+      "totals": {
+        "database_size_mb": 92.0,
+        "query_count": 18
+      }
+    },
+    {
+      "timestamp": "2025-08-21T23:56:05.789650",
+      "system": {
+        "cpu_percent": 56.4848711262349,
+        "memory_percent": 65.16299567315566,
+        "disk_percent": 46.7
+      },
+      "totals": {
+        "database_size_mb": 92.5,
+        "query_count": 18
+      }
+    },
+    {
+      "timestamp": "2025-08-22T00:26:05.789650",
+      "system": {
+        "cpu_percent": 55.943970978741135,
+        "memory_percent": 65.93737219568847,
+        "disk_percent": 46.72
+      },
+      "totals": {
+        "database_size_mb": 93.0,
+        "query_count": 18
+      }
+    },
+    {
+      "timestamp": "2025-08-22T00:56:05.789650",
+      "system": {
+        "cpu_percent": 55.329692300821826,
+        "memory_percent": 66.6749768686711,
+        "disk_percent": 46.74
+      },
+      "totals": {
+        "database_size_mb": 93.5,
+        "query_count": 18
+      }
+    },
+    {
+      "timestamp": "2025-08-22T01:26:05.789650",
+      "system": {
+        "cpu_percent": 54.64917192891761,
+        "memory_percent": 67.36036757353612,
+        "disk_percent": 46.76
+      },
+      "totals": {
+        "database_size_mb": 94.0,
+        "query_count": 18
+      }
+    },
+    {
+      "timestamp": "2025-08-22T01:56:05.789650",
+      "system": {
+        "cpu_percent": 53.910208564578845,
+        "memory_percent": 67.97927480487333,
+        "disk_percent": 46.78
+      },
+      "totals": {
+        "database_size_mb": 94.5,
+        "query_count": 18
+      }
+    },
+    {
+      "timestamp": "2025-08-22T02:26:05.789650",
+      "system": {
+        "cpu_percent": 53.121184852417564,
+        "memory_percent": 68.5189221327581,
+        "disk_percent": 46.8
+      },
+      "totals": {
+        "database_size_mb": 95.0,
+        "query_count": 19
+      }
+    },
+    {
+      "timestamp": "2025-08-22T02:56:05.789650",
+      "system": {
+        "cpu_percent": 52.290983623493524,
+        "memory_percent": 68.96831313382317,
+        "disk_percent": 46.82
+      },
+      "totals": {
+        "database_size_mb": 95.5,
+        "query_count": 19
+      }
+    },
+    {
+      "timestamp": "2025-08-22T03:26:05.789650",
+      "system": {
+        "cpu_percent": 51.42889914100246,
+        "memory_percent": 69.31847834722052,
+        "disk_percent": 46.84
+      },
+      "totals": {
+        "database_size_mb": 96.0,
+        "query_count": 19
+      }
+    },
+    {
+      "timestamp": "2025-08-22T03:56:05.789650",
+      "system": {
+        "cpu_percent": 50.54454423507062,
+        "memory_percent": 69.56267670937505,
+        "disk_percent": 46.86
+      },
+      "totals": {
+        "database_size_mb": 96.5,
+        "query_count": 19
+      }
+    },
+    {
+      "timestamp": "2025-08-22T04:26:05.789650",
+      "system": {
+        "cpu_percent": 49.647754254533574,
+        "memory_percent": 69.69654694373959,
+        "disk_percent": 46.88
+      },
+      "totals": {
+        "database_size_mb": 97.0,
+        "query_count": 19
+      }
+    },
+    {
+      "timestamp": "2025-08-22T04:56:05.789650",
+      "system": {
+        "cpu_percent": 48.74848879538191,
+        "memory_percent": 69.71820550566382,
+        "disk_percent": 46.9
+      },
+      "totals": {
+        "database_size_mb": 97.5,
+        "query_count": 19
+      }
+    },
+    {
+      "timestamp": "2025-08-22T05:26:05.789650",
+      "system": {
+        "cpu_percent": 47.856732187770184,
+        "memory_percent": 69.62828888274639,
+        "disk_percent": 46.92
+      },
+      "totals": {
+        "database_size_mb": 98.0,
+        "query_count": 19
+      }
+    },
+    {
+      "timestamp": "2025-08-22T05:56:05.789650",
+      "system": {
+        "cpu_percent": 46.98239373589056,
+        "memory_percent": 69.4299393006957,
+        "disk_percent": 46.94
+      },
+      "totals": {
+        "database_size_mb": 98.5,
+        "query_count": 19
+      }
+    },
+    {
+      "timestamp": "2025-08-22T06:26:05.789650",
+      "system": {
+        "cpu_percent": 46.135208707480714,
+        "memory_percent": 69.12873415571468,
+        "disk_percent": 46.96
+      },
+      "totals": {
+        "database_size_mb": 99.0,
+        "query_count": 19
+      }
+    },
+    {
+      "timestamp": "2025-08-22T06:56:05.789650",
+      "system": {
+        "cpu_percent": 45.32464106224678,
+        "memory_percent": 68.73256075820622,
+        "disk_percent": 46.98
+      },
+      "totals": {
+        "database_size_mb": 99.5,
+        "query_count": 19
+      }
+    }
+  ],
+  "baselines": {
+    "cpu_percent": {
+      "metric_name": "cpu_percent",
+      "baseline_value": 51.03685119295498,
+      "upper_threshold": 71.05674624821467,
+      "lower_threshold": 31.01695613769528,
+      "last_updated": "2025-08-22T05:26:06.050122",
+      "sample_count": 100,
+      "confidence_interval": [
+        36.0,
+        44.0
+      ]
+    },
+    "memory_percent": {
+      "metric_name": "memory_percent",
+      "baseline_value": 67.3835329615107,
+      "upper_threshold": 77.31804094846304,
+      "lower_threshold": 57.449024974558355,
+      "last_updated": "2025-08-22T05:26:06.050122",
+      "sample_count": 100,
+      "confidence_interval": [
+        54.0,
+        66.0
+      ]
+    },
+    "disk_percent": {
+      "metric_name": "disk_percent",
+      "baseline_value": 46.80000531227979,
+      "upper_threshold": 47.960464991315064,
+      "lower_threshold": 45.63954563324451,
+      "last_updated": "2025-08-22T05:26:06.050122",
+      "sample_count": 100,
+      "confidence_interval": [
+        40.5,
+        49.50000000000001
+      ]
+    },
+    "database_size_mb": {
+      "metric_name": "database_size_mb",
+      "baseline_value": 95.00013280699446,
+      "upper_threshold": 124.01162478287648,
+      "lower_threshold": 65.98864083111243,
+      "last_updated": "2025-08-22T05:26:06.050122",
+      "sample_count": 100,
+      "confidence_interval": [
+        45.0,
+        55.00000000000001
+      ]
+    },
+    "query_count": {
+      "metric_name": "query_count",
+      "baseline_value": 18.46470084798875,
+      "upper_threshold": 24.23820353988501,
+      "lower_threshold": 12.691198156092494,
+      "last_updated": "2025-08-22T05:26:06.050122",
+      "sample_count": 100,
+      "confidence_interval": [
+        9.0,
+        11.0
+      ]
+    }
+  },
+  "insights": [
+    {
+      "id": "anomaly_20250822_052605_0",
+      "type": "anomaly",
+      "category": "performance",
+      "title": "Anomaly Detected: cpu_percent",
+      "description": "Value 94.41 is 1.8x higher than baseline 52.80",
+      "impact": "medium",
+      "confidence": 0.5960459956670296,
+      "recommendation": "Investigate cpu_percent spike - value 1.8x higher than baseline",
+      "metrics": {
+        "cpu_percent": 94.41120008059868
+      },
+      "timestamp": "2025-08-22T05:26:05.810737"
+    },
+    {
+      "id": "anomaly_20250822_052605_0",
+      "type": "anomaly",
+      "category": "performance",
+      "title": "Anomaly Detected: memory_percent",
+      "description": "Value 95.06 is 1.4x higher than baseline 68.33",
+      "impact": "medium",
+      "confidence": 0.4637069884283873,
+      "recommendation": "Investigate memory_percent spike - value 1.4x higher than baseline",
+      "metrics": {
+        "memory_percent": 95.06059242620879
+      },
+      "timestamp": "2025-08-22T05:26:05.879772"
+    },
+    {
+      "id": "anomaly_20250822_052605_0",
+      "type": "anomaly",
+      "category": "performance",
+      "title": "Anomaly Detected: cpu_percent",
+      "description": "Value 100.00 is 1.8x higher than baseline 54.48",
+      "impact": "medium",
+      "confidence": 0.6118598601199327,
+      "recommendation": "Investigate cpu_percent spike - value 1.8x higher than baseline",
+      "metrics": {
+        "cpu_percent": 100
+      },
+      "timestamp": "2025-08-22T05:26:05.919390"
+    },
+    {
+      "id": "performance_20250822_052605_0",
+      "type": "performance_degradation",
+      "category": "performance",
+      "title": "Performance Degradation: CPU Performance",
+      "description": "CPU usage increased from 39.7% to 61.0%",
+      "impact": "medium",
+      "confidence": 0.8,
+      "recommendation": "Investigate processes causing CPU spike",
+      "metrics": {
+        "early_cpu": 39.74035336550804,
+        "current_cpu": 61.01471246016147
+      },
+      "timestamp": "2025-08-22T05:26:05.931419"
+    },
+    {
+      "id": "performance_20250822_052605_0",
+      "type": "performance_degradation",
+      "category": "performance",
+      "title": "Performance Degradation: CPU Performance",
+      "description": "CPU usage increased from 39.0% to 61.4%",
+      "impact": "medium",
+      "confidence": 0.8,
+      "recommendation": "Investigate processes causing CPU spike",
+      "metrics": {
+        "early_cpu": 38.98049559201034,
+        "current_cpu": 61.35563323088068
+      },
+      "timestamp": "2025-08-22T05:26:05.934417"
+    },
+    {
+      "id": "performance_20250822_052605_0",
+      "type": "performance_degradation",
+      "category": "performance",
+      "title": "Performance Degradation: CPU Performance",
+      "description": "CPU usage increased from 38.3% to 61.6%",
+      "impact": "medium",
+      "confidence": 0.8,
+      "recommendation": "Investigate processes causing CPU spike",
+      "metrics": {
+        "early_cpu": 38.267293963024336,
+        "current_cpu": 61.602695923711295
+      },
+      "timestamp": "2025-08-22T05:26:05.971447"
+    },
+    {
+      "id": "performance_20250822_052605_0",
+      "type": "performance_degradation",
+      "category": "performance",
+      "title": "Performance Degradation: CPU Performance",
+      "description": "CPU usage increased from 37.6% to 61.8%",
+      "impact": "medium",
+      "confidence": 0.8,
+      "recommendation": "Investigate processes causing CPU spike",
+      "metrics": {
+        "early_cpu": 37.60887372041813,
+        "current_cpu": 61.754431136839024
+      },
+      "timestamp": "2025-08-22T05:26:05.983456"
+    },
+    {
+      "id": "performance_20250822_052606_0",
+      "type": "performance_degradation",
+      "category": "performance",
+      "title": "Performance Degradation: CPU Performance",
+      "description": "CPU usage increased from 37.0% to 61.8%",
+      "impact": "medium",
+      "confidence": 0.8,
+      "recommendation": "Investigate processes causing CPU spike",
+      "metrics": {
+        "early_cpu": 37.01281274855545,
+        "current_cpu": 61.810321949115675
+      },
+      "timestamp": "2025-08-22T05:26:06.008057"
+    }
+  ]
+}

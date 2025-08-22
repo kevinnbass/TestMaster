@@ -1,0 +1,32 @@
+{
+  "system_health": {
+    "overall_status": "healthy",
+    "component_status": {
+      "performance_collector": "degraded",
+      "health_checker": "degraded",
+      "pattern_analyzer": "active",
+      "learning_engine": "active",
+      "alert_manager": "active"
+    },
+    "active_alerts": [
+      "HIGH throughput: 0.92 (threshold: 0.70)",
+      "HIGH error_rate: 0.10 (threshold: 0.05)",
+      "HIGH throughput: 0.89 (threshold: 0.70)",
+      "HIGH throughput: 0.86 (threshold: 0.70)",
+      "HIGH throughput: 0.87 (threshold: 0.70)",
+      "HIGH throughput: 0.88 (threshold: 0.70)",
+      "HIGH throughput: 0.90 (threshold: 0.70)"
+    ],
+    "performance_trend": "stable"
+  },
+  "learning_data": {
+    "patterns": {},
+    "optimizations": {},
+    "predictions": {}
+  },
+  "session_summary": {
+    "total_metrics": 50,
+    "session_duration": 1755857243.4349566,
+    "alerts_generated": 7
+  }
+}

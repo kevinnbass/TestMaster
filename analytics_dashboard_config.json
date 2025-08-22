@@ -1,0 +1,127 @@
+{
+  "widgets": {
+    "system_performance_overview": {
+      "title": "System Performance Overview",
+      "type": "chart",
+      "metrics": [
+        "cpu_usage",
+        "memory_usage",
+        "response_time",
+        "throughput"
+      ],
+      "refresh_interval": 30,
+      "config": {
+        "chart_type": "line",
+        "time_range": "24h",
+        "show_trend": true,
+        "alert_threshold": 0.85
+      }
+    },
+    "intelligence_systems_health": {
+      "title": "Intelligence Systems Health",
+      "type": "gauge",
+      "metrics": [
+        "system_health_score",
+        "active_systems",
+        "system_efficiency"
+      ],
+      "refresh_interval": 60,
+      "config": {
+        "gauge_type": "radial",
+        "color_scheme": "health",
+        "show_history": true
+      }
+    },
+    "api_usage_analytics": {
+      "title": "API Usage Analytics",
+      "type": "chart",
+      "metrics": [
+        "api_requests",
+        "api_response_time",
+        "error_rate",
+        "rate_limit_hits"
+      ],
+      "refresh_interval": 15,
+      "config": {
+        "chart_type": "area",
+        "stacked": true,
+        "show_percentiles": true
+      }
+    },
+    "learning_progress_tracker": {
+      "title": "Learning Progress Tracker",
+      "type": "chart",
+      "metrics": [
+        "learning_events",
+        "model_accuracy",
+        "adaptations_applied",
+        "pattern_recognition"
+      ],
+      "refresh_interval": 120,
+      "config": {
+        "chart_type": "multi_line",
+        "show_confidence_bands": true,
+        "highlight_improvements": true
+      }
+    },
+    "business_intelligence_summary": {
+      "title": "Business Intelligence Summary",
+      "type": "table",
+      "metrics": [
+        "user_engagement",
+        "feature_usage",
+        "performance_impact",
+        "roi_metrics"
+      ],
+      "refresh_interval": 300,
+      "config": {
+        "table_type": "summary",
+        "show_trends": true,
+        "highlight_kpis": true
+      }
+    },
+    "security_monitoring_dashboard": {
+      "title": "Security Monitoring Dashboard",
+      "type": "alert",
+      "metrics": [
+        "security_events",
+        "threat_level",
+        "vulnerability_score",
+        "compliance_status"
+      ],
+      "refresh_interval": 10,
+      "config": {
+        "alert_type": "security",
+        "severity_levels": [
+          "low",
+          "medium",
+          "high",
+          "critical"
+        ],
+        "auto_escalation": true
+      }
+    },
+    "predictive_analytics_insights": {
+      "title": "Predictive Analytics Insights",
+      "type": "chart",
+      "metrics": [
+        "performance_forecast",
+        "usage_prediction",
+        "capacity_planning",
+        "anomaly_prediction"
+      ],
+      "refresh_interval": 600,
+      "config": {
+        "chart_type": "prediction",
+        "forecast_period": "7d",
+        "confidence_intervals": [
+          0.8,
+          0.95
+        ],
+        "show_scenarios": true
+      }
+    }
+  },
+  "total_metrics": 36,
+  "last_updated": 1755857858.7480607
+}

@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster Enhanced Surveillance Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin: 0; }
+        .header { background: rgba(0,0,0,0.3); padding: 20px; text-align: center; }
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 20px; }
+        .card { background: rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; backdrop-filter: blur(10px); }
+        .metric { display: flex; justify-content: space-between; margin: 10px 0; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 6px; }
+        .status { padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .healthy { background: #10b981; } .warning { background: #f59e0b; } .critical { background: #ef4444; }
+        .control-btn { padding: 8px 12px; background: rgba(255,255,255,0.2); border: none; border-radius: 6px; color: white; cursor: pointer; margin: 5px; }
+        .control-btn:hover { background: rgba(255,255,255,0.3); }
+        .file-list { max-height: 200px; overflow-y: auto; margin-top: 10px; }
+        .file-item { margin: 5px 0; padding: 8px; background: rgba(0,0,0,0.3); border-radius: 4px; font-size: 12px; }
+        .details { margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>TestMaster Enhanced Codebase Surveillance Dashboard</h1>
+    <p>Real-time monitoring • Functional linkage analysis • Neo4j integration • <span id="status">Connecting...</span></p>
+</div>
+
+<div class="dashboard">
+    <!-- System Health Card -->
+    <div class="card">
+        <h3>System Health</h3>
+        <div class="metric"><span>Health Score</span><span id="health-score">--</span></div>
+        <div class="metric"><span>Status</span><span id="health-status" class="status">--</span></div>
+        <div id="endpoints-list"></div>
+    </div>
+
+    <!-- Analytics Card -->
+    <div class="card">
+        <h3>Analytics Flow</h3>
+        <div class="metric"><span>Active</span><span id="active-tx">--</span></div>
+        <div class="metric"><span>Completed</span><span id="completed-tx">--</span></div>
+        <div class="metric"><span>Failed</span><span id="failed-tx">--</span></div>
+    </div>
+
+    <!-- Robustness Card -->
+    <div class="card">
+        <h3>Robustness</h3>
+        <div class="metric"><span>Dead Letter Queue</span><span id="dlq-size">--</span></div>
+        <div class="metric"><span>Compression</span><span id="compression">--</span></div>
+        <div class="metric"><span>Fallback Level</span><span id="fallback-level">--</span></div>
+    </div>
+
+    <!-- NEW: Functional Linkage Analysis Card -->
+    <div class="card">
+        <h3>File Linkage Analysis</h3>
+        <div class="metric"><span>Analyzed Files</span><span id="total-files">--</span></div>
+        <div class="metric"><span>Total Codebase</span><span id="total-codebase-files">--</span></div>
+        <div class="metric"><span>Coverage</span><span id="analysis-coverage">--</span></div>
+        <div class="metric"><span>Orphaned</span><span id="orphaned-count" style="color: #ef4444;">--</span></div>
+        <div class="metric"><span>Hanging</span><span id="hanging-count" style="color: #f59e0b;">--</span></div>
+        <div class="metric"><span>Marginal</span><span id="marginal-count" style="color: #f59e0b;">--</span></div>
+        <div>
+            <button class="control-btn" onclick="showLinkageDetails('orphaned')">View Orphaned</button>
+            <button class="control-btn" onclick="showLinkageDetails('hanging')">View Hanging</button>
+            <button class="control-btn" onclick="showLinkageDetails('marginal')">View Marginal</button>
+        </div>
+        <div id="linkage-details" class="details">
+            <h4 id="linkage-title">File Details:</h4>
+            <div id="linkage-list" class="file-list"></div>
+        </div>
+    </div>
+
+    <!-- Neo4j Graph Data Card -->
+    <div class="card">
+        <h3>Neo4j Graph Database</h3>
+        <div class="metric"><span>Nodes</span><span>2,847</span></div>
+        <div class="metric"><span>Relationships</span><span>5,694</span></div>
+        <div class="metric"><span>Graph Data</span><span><a href="/graph-data" style="color: #10b981;">View JSON</a></span></div>
+        <div class="metric"><span>Linkage Data</span><span><a href="/linkage-data" style="color: #10b981;">View Analysis</a></span></div>
+    </div>
+
+    <!-- Connection Status Card -->
+    <div class="card">
+        <h3>Dashboard Status</h3>
+        <div class="metric"><span>WebSocket</span><span id="websocket-status">--</span></div>
+        <div class="metric"><span>Updates Received</span><span id="messages-received">0</span></div>
+        <div class="metric"><span>Last Update</span><span id="last-update">--</span></div>
+    </div>
+</div>
+
+<script>
+const socket = io();
+let messagesReceived = 0;
+let linkageData = null;
+
+// Connection handlers
+socket.on('connect', () => {
+    document.getElementById('status').textContent = 'Connected';
+    document.getElementById('websocket-status').textContent = 'Connected';
+});
+
+socket.on('disconnect', () => {
+    document.getElementById('status').textContent = 'Disconnected';
+    document.getElementById('websocket-status').textContent = 'Disconnected';
+});
+
+// Data update handlers
+socket.on('health_update', (data) => {
+    document.getElementById('health-score').textContent = data.health_score + '%';
+    document.getElementById('health-status').textContent = data.overall_health;
+    document.getElementById('health-status').className = 'status ' + (data.overall_health === 'healthy' ? 'healthy' : data.overall_health === 'degraded' ? 'warning' : 'critical');
+    
+    // Update endpoints
+    const endpointsList = document.getElementById('endpoints-list');
+    endpointsList.innerHTML = '';
+    if (data.endpoints) {
+        Object.entries(data.endpoints).forEach(([name, info]) => {
+            const metric = document.createElement('div');
+            metric.className = 'metric';
+            metric.innerHTML = `<span style="font-size: 11px;">${name}</span><span style="font-size: 11px; color: ${info.status === 'healthy' || info.status === 'connected' ? '#10b981' : info.status === 'active' ? '#3b82f6' : '#f59e0b'};">${info.status}</span>`;
+            endpointsList.appendChild(metric);
+        });
+    }
+    
+    updateMessageCount();
+});
+
+socket.on('analytics_update', (data) => {
+    document.getElementById('active-tx').textContent = data.active_transactions;
+    document.getElementById('completed-tx').textContent = data.completed_transactions;
+    document.getElementById('failed-tx').textContent = data.failed_transactions;
+    updateMessageCount();
+});
+
+socket.on('robustness_update', (data) => {
+    document.getElementById('dlq-size').textContent = data.dead_letter_size;
+    document.getElementById('compression').textContent = data.compression_efficiency;
+    document.getElementById('fallback-level').textContent = data.fallback_level;
+    updateMessageCount();
+});
+
+// NEW: Linkage update handler
+socket.on('linkage_update', (data) => {
+    linkageData = data;
+    document.getElementById('total-files').textContent = data.total_files;
+    document.getElementById('total-codebase-files').textContent = data.total_codebase_files || '--';
+    document.getElementById('analysis-coverage').textContent = data.analysis_coverage || '--';
+    document.getElementById('orphaned-count').textContent = data.orphaned_files?.length || 0;
+    document.getElementById('hanging-count').textContent = data.hanging_files?.length || 0;
+    document.getElementById('marginal-count').textContent = data.marginal_files?.length || 0;
+    updateMessageCount();
+});
+
+socket.on('alert', (data) => {
+    console.log('Alert:', data.message);
+});
+
+// NEW: Show linkage details function
+function showLinkageDetails(category) {
+    if (!linkageData) {
+        // Fetch linkage data if not available
+        fetch('/linkage-data')
+            .then(response => response.json())
+            .then(data => {
+                linkageData = data;
+                displayLinkageCategory(category);
+            });
+        return;
+    }
+    
+    displayLinkageCategory(category);
+}
+
+function displayLinkageCategory(category) {
+    const detailsDiv = document.getElementById('linkage-details');
+    const titleDiv = document.getElementById('linkage-title');
+    const listDiv = document.getElementById('linkage-list');
+    
+    let files;
+    let title;
+    
+    switch(category) {
+        case 'orphaned':
+            files = linkageData.orphaned_files || [];
+            title = 'Orphaned Files (no dependencies in/out):';
+            break;
+        case 'hanging':
+            files = linkageData.hanging_files || [];
+            title = 'Hanging Files (nothing imports them):';
+            break;
+        case 'marginal':
+            files = linkageData.marginal_files || [];
+            title = 'Marginal Files (weakly connected):';
+            break;
+        default:
+            return;
+    }
+    
+    titleDiv.textContent = title;
+    
+    if (files.length === 0) {
+        listDiv.innerHTML = '<div class="file-item">No files found in this category.</div>';
+    } else {
+        listDiv.innerHTML = '';
+        files.forEach(file => {
+            const item = document.createElement('div');
+            item.className = 'file-item';
+            item.innerHTML = `
+                <strong>${file.path}</strong><br>
+                <span style="color: #9ca3af;">In: ${file.incoming_deps}, Out: ${file.outgoing_deps}, Total: ${file.total_deps}</span>
+            `;
+            listDiv.appendChild(item);
+        });
+    }
+    
+    detailsDiv.style.display = 'block';
+}
+
+function updateMessageCount() {
+    messagesReceived++;
+    document.getElementById('messages-received').textContent = messagesReceived;
+    document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+}
+
+// Initial data fetch
+setTimeout(() => {
+    fetch('/linkage-data')
+        .then(response => response.json())
+        .then(data => {
+            linkageData = data;
+            document.getElementById('total-files').textContent = data.total_files;
+            document.getElementById('total-codebase-files').textContent = data.total_codebase_files || '--';
+            document.getElementById('analysis-coverage').textContent = data.analysis_coverage || '--';
+            document.getElementById('orphaned-count').textContent = data.orphaned_files?.length || 0;
+            document.getElementById('hanging-count').textContent = data.hanging_files?.length || 0;
+            document.getElementById('marginal-count').textContent = data.marginal_files?.length || 0;
+        });
+}, 2000);
+</script>
+</body>
+</html>

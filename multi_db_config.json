@@ -1,0 +1,18 @@
+{
+  "databases": [
+    {
+      "name": "cache_db",
+      "type": "sqlite",
+      "connection_string": "./cache/cache.db",
+      "host": null,
+      "port": null,
+      "database": null,
+      "username": null,
+      "password": null,
+      "enabled": true,
+      "last_connected": "2025-08-22T05:26:24.966875",
+      "connection_status": "connected",
+      "metadata": null
+    }
+  ]
+}
