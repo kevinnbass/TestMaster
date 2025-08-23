@@ -15,6 +15,11 @@
 
 🔄 EDIT HISTORY (Last 5 Changes):
 ==================================================================
+📝 [2025-08-23 21:50:00] | Agent E | 🔧 ENHANCEMENT
+   └─ Goal: Add predictive analytics capabilities to dashboard integration
+   └─ Changes: Integrated PredictiveAnalyticsEngine with dashboard adapter
+   └─ Impact: Enables ML-powered forecasting and pattern recognition
+
 📝 [2025-08-23 20:55:00] | Agent E | 🆕 FEATURE
    └─ Goal: Create adapter for Gamma dashboard integration
    └─ Changes: Initial implementation of dashboard adapter
@@ -24,7 +29,7 @@
 ==================================================================
 📅 Created: 2025-08-23 by Agent E
 🔧 Language: Python
-📦 Dependencies: personal_analytics_service, Flask, typing
+📦 Dependencies: personal_analytics_service, predictive_analytics_engine, Flask, typing
 🎯 Integration Points: unified_gamma_dashboard.py (port 5003)
 ⚡ Performance Notes: Optimized for sub-100ms response times
 🔒 Security Notes: Integrates with Agent D security frameworks
@@ -49,10 +54,14 @@ from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
 from collections import defaultdict
 
-# Import personal analytics service
+# Import personal analytics service and predictive engine
 from .personal_analytics_service import (
     PersonalAnalyticsService,
     create_personal_analytics_service
+)
+from .predictive_analytics_engine import (
+    PredictiveAnalyticsEngine,
+    create_predictive_engine
 )
 
 
@@ -72,10 +81,14 @@ class GammaDashboardAdapter:
             analytics_service: Optional custom analytics service instance
         """
         self.analytics_service = analytics_service or create_personal_analytics_service()
+        self.predictive_engine = create_predictive_engine()
         self.port = 5003  # Gamma's main dashboard port
         self.panel_config = self._initialize_panel_config()
         self.cache = {}
         self.cache_timeout = 5  # 5 second cache for dashboard updates
+        
+        # Initialize predictive analytics with current data
+        self._initialize_predictions()
         
     def _initialize_panel_config(self) -> Dict[str, Any]:
         """Initialize panel configuration for 2x2 grid layout."""

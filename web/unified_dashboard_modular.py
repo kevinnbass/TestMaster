@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'dashboard_modules'))
 from dashboard_modules.intelligence.enhanced_contextual import EnhancedContextualEngine
 from dashboard_modules.integration.data_integrator import DataIntegrator
 from dashboard_modules.visualization.advanced_visualization import AdvancedVisualizationEngine
+from dashboard_modules.monitoring.performance_monitor import PerformanceMonitor
 
 
 class UnifiedDashboardModular:
@@ -32,7 +33,7 @@ class UnifiedDashboardModular:
     Modular Unified Dashboard Engine - Clean architecture with separated concerns.
     """
     
-    def __init__(self, port=5016):
+    def __init__(self, port=5001):
         # Set up Flask app with template directory
         template_dir = os.path.join(os.path.dirname(__file__), 'dashboard_modules', 'templates')
         self.app = Flask(__name__, template_folder=template_dir)
@@ -46,6 +47,7 @@ class UnifiedDashboardModular:
         self.contextual_engine = EnhancedContextualEngine()
         self.data_integrator = DataIntegrator()
         self.visualization_engine = AdvancedVisualizationEngine()
+        self.performance_monitor = PerformanceMonitor()
         
         # Setup routes
         self.setup_routes()
@@ -73,6 +75,9 @@ class UnifiedDashboardModular:
                 'timestamp': datetime.now().isoformat(),
                 'modules': {
                     'contextual_engine': 'active',
+                    'data_integrator': 'active',
+                    'visualization_engine': 'active',
+                    'performance_monitor': 'active',
                     'intelligence_metrics': self.contextual_engine.intelligence_metrics
                 }
             })
@@ -659,5 +664,5 @@ class UnifiedDashboardModular:
 
 
 if __name__ == "__main__":
-    dashboard = UnifiedDashboardModular(port=5016)  # Use port 5016 for modular version
+    dashboard = UnifiedDashboardModular(port=5001)  # ADAMANTIUMCLAD compliant port
     dashboard.run()

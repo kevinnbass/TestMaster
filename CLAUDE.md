@@ -52,6 +52,8 @@ This is a personal development project focused on building a sophisticated codeb
 3. **LLM Data Pipeline**: Establish clear data flow from task execution to frontend visualization
 4. **LLM User Interface**: Create or enhance UI components to display the task's results
 5. **LLM Real-time Updates**: Ensure frontend reflects current task status and results
+6. **LLM Dashboard Port Restriction**: Agents must periodically kill and relaunch dashboards ONLY on http://localhost:5000/, http://localhost:5001/, or http://localhost:5002/ - NO OTHER PORTS ALLOWED
+7. **LLM Headless Validation**: Whenever possible, validate dashboard functionality through headless methods before relying on browser-based testing
 
 ### ADAMANTIUMCLAD Rule #2: FRONTEND INTEGRATION VERIFICATION (MANDATORY CHECK)
 **Before marking any task as complete:**

@@ -52,6 +52,16 @@ class ThreatConfidence(Enum):
     CERTAIN = 0.99
 
 
+class ThreatVectorType(Enum):
+    """Multi-dimensional threat vector types for advanced correlation"""
+    NETWORK_VECTOR = "network"          # Network-based attack vectors
+    ENDPOINT_VECTOR = "endpoint"        # Endpoint compromise vectors
+    APPLICATION_VECTOR = "application"  # Application-level attack vectors
+    DATA_VECTOR = "data"               # Data exfiltration/manipulation vectors
+    IDENTITY_VECTOR = "identity"       # Identity and access attack vectors
+    INFRASTRUCTURE_VECTOR = "infrastructure"  # Infrastructure attack vectors
+
+
 @dataclass
 class SecurityEvent:
     """Enhanced security event for correlation analysis"""
@@ -65,6 +75,11 @@ class SecurityEvent:
     indicators: List[str] = field(default_factory=list)
     affected_entities: List[str] = field(default_factory=list)
     raw_data: Dict[str, Any] = field(default_factory=dict)
+    # Enhanced multi-dimensional threat vector attributes
+    threat_vectors: List[ThreatVectorType] = field(default_factory=list)
+    vector_attributes: Dict[ThreatVectorType, Dict[str, Any]] = field(default_factory=dict)
+    behavioral_metrics: Dict[str, float] = field(default_factory=dict)
+    correlation_hints: List[str] = field(default_factory=list)
 
 
 @dataclass
@@ -81,6 +96,28 @@ class CorrelationResult:
     temporal_pattern: Optional[Dict[str, Any]] = None
     behavioral_indicators: List[str] = field(default_factory=list)
     recommended_actions: List[str] = field(default_factory=list)
+    analysis_timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
+    # Enhanced multi-dimensional correlation attributes
+    threat_vectors_involved: List[ThreatVectorType] = field(default_factory=list)
+    vector_correlation_matrix: Dict[str, Dict[str, float]] = field(default_factory=dict)
+    multi_dimensional_score: float = 0.0
+    behavioral_deviation_score: float = 0.0
+    cross_system_indicators: List[str] = field(default_factory=list)
+
+
+@dataclass
+class MultiDimensionalCorrelationResult:
+    """Result of multi-dimensional threat vector correlation analysis"""
+    correlation_id: str
+    primary_correlation: CorrelationResult
+    vector_analysis: Dict[ThreatVectorType, Dict[str, Any]]
+    dimensional_correlation_matrix: Dict[str, Dict[str, float]]
+    pattern_recognition_results: Dict[str, Any]
+    behavioral_analysis_results: Dict[str, Any]
+    confidence_score: float
+    threat_vector_complexity: float
+    recommended_response_actions: List[str] = field(default_factory=list)
+    cross_vector_indicators: List[str] = field(default_factory=list)
     analysis_timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 
