@@ -1,6 +1,51 @@
 # CLAUDE.md - Ultimate Codebase Analysis System
 # Autonomous Multi-Agent Intelligence Framework
 
+## 📚 DEFINITIONS & RUBRICS - Appendix A
+
+### Core Terminology
+- **FUNCTIONALITY**: Any code behavior including: functions, classes, constants, default parameters, logging statements, error handling, configuration settings, and any line that affects program execution
+- **SOPHISTICATED FILE**: File scoring higher on rubric: (1) More recent modification date +2pts, (2) Higher test coverage +3pts, (3) Better documentation +2pts, (4) Lower cyclomatic complexity +1pt, (5) More comprehensive error handling +2pts
+- **PARENT MODULE**: Original large file before modularization
+- **CHILD MODULE**: Derived file created from parent module sections
+- **ARCHIVE**: Timestamped preservation in `archive/YYYYMMDD_HHMMSS_UTC_description/` with complete restoration capability
+- **STOWAGE**: Same as ARCHIVE (unified terminology)
+
+### File Sophistication Scoring Rubric
+```
+Factor                     Points  How to Measure
+Recent modification        +2      Git log timestamp within 30 days
+Test coverage             +3      >80% coverage = +3, 50-80% = +2, <50% = +1
+Documentation quality     +2      Docstrings + comments >70% functions
+Low complexity            +1      Cyclomatic complexity <10 average
+Error handling            +2      Try/catch blocks + validation present
+Code quality              +1      No linting errors
+
+TOTAL: /11 points - Higher score = MORE SOPHISTICATED = RETENTION TARGET
+```
+
+### Tool Authorization Matrix
+| Tool Type | Analysis | Comparison | Modification | Archive | Notes |
+|-----------|----------|------------|--------------|----------|-------|
+| Read      | ✅ | ✅ | ❌ | ❌ | Mandatory before decisions |
+| Grep      | ✅ | ✅ | ❌ | ❌ | Search/pattern analysis only |
+| Diff      | ✅ | ✅ | ❌ | ❌ | Visual comparison only - no auto-patch |
+| Edit      | ❌ | ❌ | ✅ | ❌ | Manual code modifications only |
+| Write     | ❌ | ❌ | ✅ | ❌ | New file creation only |
+| Move      | ❌ | ❌ | ❌ | ✅ | Archive operations only |
+| Scripts   | ❌ | ❌ | ❌ | ❌ | FORBIDDEN for all operations |
+
+### 🚨 UNIVERSAL PROHIBITIONS
+1. **NO SCRIPTS FOR MODIFICATION**: Bash/Grep cannot make consolidation decisions or modifications
+2. **NO AUTOMATED EXTRACTION**: All functionality extraction must be done with Read/Edit tools
+3. **NO DELETIONS EVER**: All removals must go through COPPERCLAD archival
+4. **NO EXCEPTION TO PROTOCOLS**: These rules apply to ALL operations without exception
+5. **NO ASSUMPTIONS WITHOUT VERIFICATION**: Must verify what files actually do, not guess
+6. **NO MODIFICATIONS TO READ-ONLY DIRECTORIES**: The following directories are READ-ONLY and must NEVER be modified:
+   - All cloned repositories: `AWorld/`, `AgentVerse/`, `MetaGPT/`, `OpenAI_Agent_Swarm/`, `PraisonAI/`, `agency-swarm/`, `agent-squad/`, `agentops/`, `agentscope/`, `autogen/`, `crewAI/`, `lagent/`, `llama-agents/`, `phidata/`, `swarm/`, `swarms/`, `TestMaster/`, `TestMaster_BACKUP_*/`
+   - Archive directory: `archive/` and all subdirectories
+   - These are reference repositories and historical records - USE ONLY FOR READING
+
 ## 🔒 IRONCLAD ANTI-REGRESSION CONSOLIDATION PROTOCOL
 
 **LLM MANUAL ANALYSIS AND ITERATIVE CONSOLIDATION - NO SCRIPTS ALLOWED:**
@@ -9,50 +54,53 @@
 **Upon identifying ANY consolidation/redundancy reduction opportunity:**
 1. **LLM Read Candidate File A**: Use Read tool to examine every single line from beginning to end
 2. **LLM Read Candidate File B**: Use Read tool to examine every single line from beginning to end
-3. **LLM Understand Completely**: Know exactly what each file contains - every function, class, variable, import
-4. **LLM Identify Sophistication Level**: Determine which file is more sophisticated, complete, or well-implemented
-5. **LLM Choose Retention Target**: Select the MORE SOPHISTICATED file as the one to retain
+3. **LLM Understand Completely**: Know exactly what each file contains - every function, class, variable, import, constant, default parameter
+4. **LLM Score Sophistication**: Apply scoring rubric from Appendix A to both files
+5. **LLM Choose Retention Target**: Select the HIGHER SCORING file as RETENTION_TARGET; lower scoring becomes ARCHIVE_CANDIDATE
 
 ### IRONCLAD Rule #2: LLM FUNCTIONALITY EXTRACTION (MANUAL ENHANCEMENT ONLY)
-**Before archiving the less sophisticated file:**
-1. **LLM Identify Unique Functionality**: Compare files to find ANY functionality present in less sophisticated file but missing from retained file
-2. **LLM Extract Manually**: Use Edit tool to hand-copy and integrate unique functionality into the retained file
-3. **NO SCRIPTS ALLOWED**: Never use automated scripts, grep patterns, or regex for extraction or enhancement
-4. **LLM Manual Integration**: Use Edit tool to write/modify code adding missing functionality to retained file
-5. **LLM Enhance Retained File**: Ensure retained file now contains ALL functionality from both original files
+**Before archiving ARCHIVE_CANDIDATE:**
+1. **LLM Identify Unique Functionality**: Find ANY functionality in ARCHIVE_CANDIDATE missing from RETENTION_TARGET (including single lines: constants, parameters, logging, error handling)
+2. **LLM Extract Manually**: Use Edit tool ONLY to hand-copy unique functionality into RETENTION_TARGET
+3. **LLM Apply Universal Prohibitions**: Reference Appendix A - no automated tools for modification
+4. **LLM Manual Integration**: Write/modify code in RETENTION_TARGET adding missing functionality
+5. **LLM Create Enhancement Log**: Document what functionality was extracted and integrated
 
 ### IRONCLAD Rule #3: LLM ITERATIVE VERIFICATION (MANUAL COMPARISON LOOPS)
 **Second pass LLM analysis - MANDATORY:**
-1. **LLM Read Retained File Again**: Use Read tool to examine every line of the enhanced retained file
-2. **LLM Read Archive Candidate Again**: Use Read tool to examine every line of the file to be archived
-3. **LLM Compare Manually**: Line-by-line comparison to verify ALL functionality extracted
+1. **LLM Read RETENTION_TARGET Again**: Use Read tool to examine every line of enhanced file
+2. **LLM Read ARCHIVE_CANDIDATE Again**: Use Read tool to examine every line of file to be archived
+3. **LLM Compare Using Diff Tools**: Visual line-by-line comparison using diff tools for ANALYSIS ONLY (no auto-patching)
 4. **LLM Assessment Decision**: 
-   - IF retained file has ALL functionality → Proceed to archive
+   - IF RETENTION_TARGET has ALL functionality from ARCHIVE_CANDIDATE → Proceed to IRONCLAD Rule #5
    - IF missing functionality detected → Return to Rule #2 for another iteration
-5. **LLM Repeat Until Complete**: Continue iterative enhancement until 100% functionality consolidated
+5. **LLM Document Verification**: Record complete functionality parity in CONSOLIDATION_LOG.md
 
-### IRONCLAD Rule #4: LLM VERIFICATION ENFORCEMENT (NO AUTOMATION)
-**Absolute requirements for LLM analysis:**
-1. **Scripts for Analysis Only**: Bash/Grep tools can ONLY enhance analytical capabilities, never make decisions
-2. **LLM Reading Required**: Must use Read tool on files before ANY comparison or decision
-3. **LLM Changes Only**: All file modifications must be done with Edit tool, never by script
-4. **LLM Extraction Only**: Never use scripts to extract or add functionality between files
-5. **LLM Final Assessment**: Always use Read tool to verify final comparison before archiving
+### IRONCLAD Rule #4: LLM VERIFICATION ENFORCEMENT (TOOL AUTHORIZATION)
+**Reference Tool Authorization Matrix in Appendix A:**
+1. **Analysis Tools Permitted**: Read, Grep, Diff for examination and comparison only
+2. **Modification Tools Required**: Edit tool ONLY for all file modifications
+3. **LLM Reading Mandatory**: Must use Read tool on files before ANY decision
+4. **LLM Apply Universal Prohibitions**: Reference Appendix A prohibition list
+5. **LLM Document Tool Usage**: Log which tools were used for each verification step
 
-### IRONCLAD Rule #5: LLM ITERATIVE COMPLETENESS (UNTIL PERFECT CONSOLIDATION)
-**Continue until absolute functionality preservation:**
-1. **Full Feature Parity**: Archived file must have ZERO unique functionality remaining
-2. **LLM Iterative Process**: Perform as many manual enhancement iterations as necessary
-3. **Grounded in LLM Reading**: Every iteration must be based on complete Read tool file examination
-4. **LLM Complete Understanding**: Must fully understand comparative feature sets before each iteration
-5. **Perfect Consolidation**: Only archive when retained file contains 100% of all functionality
+### IRONCLAD Rule #5: LLM ARCHIVAL TRANSITION (INVOKE COPPERCLAD)
+**After achieving perfect consolidation:**
+1. **Verify Zero Unique Functionality**: ARCHIVE_CANDIDATE must have ZERO unique functionality remaining in RETENTION_TARGET
+2. **Create Consolidation Justification Block**:
+   ```
+   CONSOLIDATION COMPLETED: [timestamp UTC]
+   RETENTION_TARGET: [file path] (score: X/11)
+   ARCHIVE_CANDIDATE: [file path] (score: Y/11)
+   FUNCTIONALITY EXTRACTED: [list unique items moved]
+   VERIFICATION ITERATIONS: [number of cycles]
+   NEXT ACTION: Invoke COPPERCLAD Rule #1
+   ```
+3. **Invoke COPPERCLAD Protocol**: Follow COPPERCLAD Rule #1 to archive ARCHIVE_CANDIDATE
+4. **Document in Agent History**: Update agent's history file in `[agent]_history/` with consolidation metrics
+5. **Perfect Consolidation Complete**: RETENTION_TARGET now contains 100% functionality
 
-**🚨 ABSOLUTE PROHIBITIONS:**
-- **NO SCRIPTS FOR CONSOLIDATION**: Bash/Grep cannot make consolidation decisions or modifications
-- **NO AUTOMATED EXTRACTION**: All functionality extraction must be done with Read/Edit tools
-- **NO SCRIPT-BASED ENHANCEMENTS**: Never add functionality to modules via automated scripts
-- **LLM READING MANDATORY**: Must use Read tool on every line before any consolidation action
-- **ITERATIVE UNTIL PERFECT**: Continue LLM iterations until absolute feature completeness achieved
+**🚨 REFERENCE UNIVERSAL PROHIBITIONS IN APPENDIX A**
 
 ---
 
@@ -62,52 +110,55 @@
 
 ### STEELCLAD Rule #1: LLM MODULE ANALYSIS (COMPLETE UNDERSTANDING REQUIRED)
 **Upon identifying ANY modularization opportunity:**
-1. **LLM Read Entire Parent Module**: Use Read tool to examine every single line from beginning to end
+1. **LLM Read Entire PARENT_MODULE**: Use Read tool to examine every single line from beginning to end
 2. **LLM Understand Completely**: Know exactly what the module contains - every function, class, variable, import
-3. **LLM Identify Break Points**: Determine appropriate places to break down according to modularization principles
-4. **LLM Apply 300-Line Rule**: Target ~300 lines per module where possible, shorter if elegance demands
-5. **LLM Plan Derived Modules**: Design child modules that will be derived from the original large module
+3. **LLM Apply Size Threshold**: If >400 lines after first modularization pass, repeat process (no exceptions without documented justification)
+4. **LLM Identify Break Points**: Determine break points following Single Responsibility Principle
+5. **LLM Plan CHILD_MODULES**: Design derived modules with clear separation of concerns
 
 ### STEELCLAD Rule #2: LLM MODULE DERIVATION (MANUAL BREAKDOWN ONLY)
-**Creating derived modules from parent:**
-1. **LLM Create Child Modules**: Use Write tool to create derived modules from parent module sections
-2. **LLM Preserve Functionality**: Ensure each child module retains its portion of parent functionality
-3. **NO SCRIPTS ALLOWED**: Never use automated scripts for module creation or code extraction
-4. **LLM Manual Integration**: Use Edit tool to establish proper imports and connections between child modules
-5. **LLM Derive Completely**: Ensure all parent functionality is distributed across child modules
+**Creating CHILD_MODULES from PARENT_MODULE:**
+1. **LLM Create CHILD_MODULES**: Use Write tool to create derived modules from PARENT_MODULE sections
+2. **LLM Preserve All Functionality**: Ensure each CHILD_MODULE retains its portion of PARENT_MODULE functionality
+3. **LLM Apply Universal Prohibitions**: Reference Appendix A - no automated tools
+4. **LLM Manual Integration**: Use Edit tool to establish imports and connections between CHILD_MODULES
+5. **LLM Verify Integration**: Test that CHILD_MODULES work together and with surrounding codebase
 
-### STEELCLAD Rule #3: LLM ITERATIVE VERIFICATION (MANUAL COMPARISON LOOPS)
-**Mandatory verification of derived modules:**
-1. **LLM Read Each Child Module**: Use Read tool to examine every line of each derived module
-2. **LLM Read Parent Module Again**: Use Read tool to examine every line of the original parent module
-3. **LLM Compare Functionality**: Line-by-line comparison to verify child modules retain ALL parent functionality
-4. **LLM Verify Integration**: Ensure child modules integrate with each other and surrounding codebase correctly
+### STEELCLAD Rule #3: LLM ITERATIVE VERIFICATION (FUNCTIONALITY MIRRORING)
+**Mandatory verification of CHILD_MODULES:**
+1. **LLM Read Each CHILD_MODULE**: Use Read tool to examine every line of each derived module
+2. **LLM Read PARENT_MODULE Again**: Use Read tool to examine every line of original module
+3. **LLM Compare Using Diff Tools**: Visual comparison using diff tools for ANALYSIS ONLY
+4. **LLM Verify Integration**: Test CHILD_MODULES work together and with surrounding codebase
 5. **LLM Assessment Decision**: 
-   - IF child modules have ALL functionality and integrate properly → Proceed to archive
-   - IF missing functionality or integration issues detected → Return to Rule #2 for another iteration
+   - IF CHILD_MODULES mirror ALL PARENT_MODULE functionality AND integrate properly → Proceed to STEELCLAD Rule #5
+   - IF missing functionality or integration issues → Return to Rule #2 for another iteration
 
-### STEELCLAD Rule #4: LLM INTEGRATION ENFORCEMENT (NO AUTOMATION)
-**Absolute requirements for LLM modularization:**
-1. **Scripts for Analysis Only**: Bash/Grep tools can ONLY enhance analytical capabilities, never make decisions
-2. **LLM Reading Required**: Must use Read tool on all modules before ANY comparison or decision
-3. **LLM Changes Only**: All module modifications must be done with Edit/Write tools, never by script
-4. **LLM Integration Testing**: Must verify child modules work together and with surrounding codebase
-5. **LLM Final Assessment**: Always use Read tool to verify final comparison before archiving parent
+### STEELCLAD Rule #4: LLM INTEGRATION ENFORCEMENT (TOOL AUTHORIZATION)
+**Reference Tool Authorization Matrix in Appendix A:**
+1. **Analysis Tools Permitted**: Read, Grep, Diff for examination only
+2. **Modification Tools Required**: Edit/Write tools ONLY for module creation
+3. **LLM Reading Mandatory**: Must use Read tool on all modules before decisions
+4. **LLM Integration Testing**: Verify CHILD_MODULES work together and with codebase
+5. **LLM Apply Universal Prohibitions**: Reference Appendix A prohibition list
 
-### STEELCLAD Rule #5: LLM ITERATIVE COMPLETENESS (UNTIL PERFECT MODULARIZATION)
-**Continue until absolute functionality preservation:**
-1. **Perfect Functionality Mirror**: Child modules must mirror parent functionality exactly
-2. **LLM Iterative Process**: Perform as many manual enhancement iterations as necessary
-3. **Grounded in LLM Reading**: Every iteration must be based on complete Read tool examination of all modules
-4. **LLM Complete Understanding**: Must fully understand comparative functionality before each iteration
-5. **Perfect Modularization**: Only archive parent when child modules perfectly mirror all functionality
+### STEELCLAD Rule #5: LLM ARCHIVAL TRANSITION (INVOKE COPPERCLAD)
+**After achieving perfect modularization:**
+1. **Verify Perfect Functionality Mirror**: CHILD_MODULES must contain 100% of PARENT_MODULE functionality
+2. **Create Modularization Justification Block**:
+   ```
+   MODULARIZATION COMPLETED: [timestamp UTC]
+   PARENT_MODULE: [file path] ([original LOC] lines)
+   CHILD_MODULES: [list paths] ([total LOC] lines)
+   FUNCTIONALITY VERIFICATION: [test results]
+   INTEGRATION VERIFICATION: [integration test results]
+   NEXT ACTION: Invoke COPPERCLAD Rule #1
+   ```
+3. **Invoke COPPERCLAD Protocol**: Follow COPPERCLAD Rule #1 to archive PARENT_MODULE
+4. **Document in Agent History**: Update agent's history file in `[agent]_history/` with modularization metrics
+5. **Perfect Modularization Complete**: CHILD_MODULES now replace PARENT_MODULE
 
-**🚨 ABSOLUTE PROHIBITIONS:**
-- **NO SCRIPTS FOR MODULARIZATION**: Bash/Grep cannot make modularization decisions or modifications
-- **NO AUTOMATED MODULE CREATION**: All module creation must be done with Write/Edit tools
-- **NO SCRIPT-BASED BREAKDOWN**: Never break down modules via automated scripts
-- **LLM READING MANDATORY**: Must use Read tool on every line before any modularization action
-- **ITERATIVE UNTIL PERFECT**: Continue LLM iterations until absolute functionality mirroring achieved
+**🚨 REFERENCE UNIVERSAL PROHIBITIONS IN APPENDIX A**
 
 ---
 
@@ -116,18 +167,18 @@
 **LLM MANDATORY ARCHIVAL - NO DELETIONS EVER ALLOWED:**
 
 ### COPPERCLAD Rule #1: LLM ARCHIVAL REQUIREMENT (ABSOLUTE PRESERVATION)
-**Upon identifying ANY file for removal or deletion:**
+**Upon receiving instruction from IRONCLAD Rule #5 or STEELCLAD Rule #5:**
 1. **LLM NEVER DELETE**: No file shall ever be deleted or removed from the codebase
 2. **LLM ALWAYS ARCHIVE**: Every file marked for removal must be moved to archive folder
-3. **LLM Create Archive Path**: Use appropriate archive subdirectory with timestamp and description
+3. **LLM Create Archive Path**: Use format `archive/YYYYMMDD_HHMMSS_UTC_description/` (UTC timezone mandatory)
 4. **LLM Preserve Original**: Maintain exact file content and structure in archived location
-5. **LLM Document Archival**: Record reason for archival and original file location
+5. **LLM Document Archival**: Create ARCHIVE_LOG.md with reason and original location
 
 ### COPPERCLAD Rule #2: LLM ARCHIVE ORGANIZATION (SYSTEMATIC STORAGE)
 **Organizing archived files:**
-1. **LLM Create Timestamped Folders**: Use format `archive/YYYYMMDD_HHMMSS_description/`
+1. **LLM Create Timestamped Folders**: Use format `archive/YYYYMMDD_HHMMSS_UTC_description/` (UTC timezone mandatory)
 2. **LLM Maintain Directory Structure**: Preserve original directory hierarchy within archive
-3. **LLM Add Archive Log**: Create ARCHIVE_LOG.md documenting what was archived and why
+3. **LLM Create ARCHIVE_LOG.md**: Document what was archived, why, and restoration commands
 4. **LLM Reference Original Location**: Document exact original path for potential restoration
 5. **LLM Archive Dependencies**: Include any related files that might be needed for context
 
@@ -142,8 +193,8 @@
 ### COPPERCLAD Rule #4: LLM RESTORATION CAPABILITY (REVERSIBLE ACTIONS)
 **Ensuring reversibility of archival:**
 1. **LLM Enable Restoration**: Archive must allow complete restoration if needed
-2. **LLM Document Restoration Steps**: Provide exact commands to restore archived files
-3. **LLM Maintain Archive Manifest**: Keep comprehensive list of all archived files
+2. **LLM Document Restoration Commands**: Provide exact commands in adjacent ARCHIVE_LOG.md
+3. **LLM Maintain ARCHIVE_MANIFEST.md**: Keep comprehensive list of all archived files
 4. **LLM Preserve Relationships**: Archive related files together to maintain functionality
 5. **LLM Test Archive Accessibility**: Verify archived files can be accessed and read
 
@@ -155,108 +206,101 @@
 4. **LLM Archive Dependencies**: Preserve any import relationships or dependencies
 5. **LLM Complete Archive Record**: Maintain comprehensive record of what was archived when and why
 
-**🚨 ABSOLUTE PROHIBITIONS:**
-- **NO DELETIONS EVER**: Never delete any file - always archive instead
-- **NO ARCHIVE DELETIONS**: Never remove anything from archive folders
-- **NO PERMANENT REMOVAL**: All removals must be reversible through archival
-- **NO CLEANUP OF ARCHIVES**: Archive folders are permanent historical record
-- **NO EXCEPTION TO ARCHIVAL**: Every file removal must go through archival process
-
-**🚨 ALL THREE RULES ARE MANDATORY - IRONCLAD, STEELCLAD, AND COPPERCLAD - NO EXCEPTIONS**
+**🚨 REFERENCE UNIVERSAL PROHIBITIONS IN APPENDIX A**
 
 ---
 
-## 🌐 SWARM COORDINATION PROTOCOL
+## 🥇 GOLDCLAD ANTI-DUPLICATION FILE CREATION PROTOCOL
 
-**AGENT ROADMAP AND HISTORY MANAGEMENT SYSTEM:**
+**LLM MANDATORY FILE ANALYSIS - NO NEW FILES WITHOUT VERIFICATION:**
 
-### Swarm Organization Structure
-- **Greek Swarm**: Alpha, Beta, Gamma agents + Greek Coordinate
-- **Latin Swarm**: A, B, C, D, E agents + Latin Coordinate
-- **Inter-Swarm Coordination**: Swarm subdirectory for cross-swarm collaboration
-- **Directory Structure**: `swarm_coordinate/Greek/`, `swarm_coordinate/Latin/`, `swarm_coordinate/Swarm/`
-- **Main Roadmap Location**: Place in `swarm_coordinate/Greek/Coordinate/greek_coordinate_roadmap/`
-- **Cross-Swarm Coordination**: Use `swarm_coordinate/Swarm/` for targeted collaborations (e.g., Alpha with A,B,C)
+### GOLDCLAD Rule #1: LLM SYSTEMATIC SIMILARITY SEARCH (MANDATORY BEFORE CREATION)
+**Before creating ANY new file:**
+1. **LLM Comprehensive Search**: Use codebase_search, grep, and glob_file_search to find similar files
+2. **LLM Read Similar Files**: Use Read tool to examine every single line of similar files
+3. **LLM Assess Existing Functionality**: Determine if existing files already do what you need
+4. **LLM Identify Gaps**: Assess whether any additional functionality is truly necessary
+5. **LLM Decision Point**: Only if NO existing file meets needs → Proceed to GOLDCLAD Rule #4 (Enhancement)
 
-### MANDATORY ROADMAP DATING RULES
-**All new roadmaps must include:**
-1. **Filename Dating**: Begin with date format `20250131_roadmap_name.md`
-2. **Metadata Header**: Include creation date and time at top of file:
+### GOLDCLAD Rule #2: LLM LOCATION ANALYSIS (APPROPRIATE PLACEMENT)
+**When searching for similar files:**
+1. **LLM Check Logical Locations**: Look in directories where similar functionality would exist
+2. **LLM Pattern Recognition**: Search for files with similar naming patterns
+3. **LLM Import Analysis**: Check imports to find related functionality
+4. **LLM Cross-Reference**: Look for files that other modules import for similar purposes
+5. **LLM Comprehensive Search**: Use Grep/Glob to find all potentially similar files
+
+### GOLDCLAD Rule #3: LLM LINE-BY-LINE VERIFICATION (COMPLETE UNDERSTANDING)
+**For each similar file found:**
+1. **LLM Read Entire File**: Use Read tool from first line to last line
+2. **LLM Understand Purpose**: Know exactly what the file does and how
+3. **LLM Compare Requirements**: Match file capabilities against your needs
+4. **LLM Document Findings**: Note what exists and what's missing
+5. **LLM Make Informed Decision**: Only create new if truly necessary
+
+### GOLDCLAD Rule #4: LLM ENHANCEMENT BEFORE CREATION (EXTEND EXISTING)
+**If existing file is close but not complete:**
+1. **LLM Prefer Enhancement**: Add functionality to existing file rather than create new
+2. **LLM Maintain Cohesion**: Ensure additions fit the file's purpose
+3. **LLM Follow Patterns**: Match existing code style and structure
+4. **LLM Document Additions**: Clear comments on what was added and why
+5. **LLM Test Integration**: Verify enhanced file works with existing code
+
+### GOLDCLAD Rule #5: LLM CREATION JUSTIFICATION (ONLY WHEN NECESSARY)
+**Only create new file when:**
+1. **No Similar Files Exist**: Comprehensive search found nothing similar
+2. **Existing Files Inadequate**: Current files cannot be reasonably enhanced
+3. **Clear Separation Needed**: New functionality requires separate module
+4. **Architecture Demands**: System design requires new component
+5. **Create File Creation Justification Block**:
    ```
-   # [Roadmap Title]
-   **Created:** 2025-01-31 14:30:00
-   **Agent:** [Agent Name]
-   **Swarm:** [Greek/Latin]
+   FILE CREATION JUSTIFIED: [timestamp UTC]
+   PROPOSED FILE: [file path]
+   SIMILARITY SEARCH RESULTS: [files examined and why inadequate]
+   ENHANCEMENT ATTEMPTS: [files tried for enhancement and why failed]
+   ARCHITECTURAL JUSTIFICATION: [why separate file needed]
+   POST-CREATION AUDIT: Schedule similarity re-check in 30 minutes
    ```
+6. **Schedule Post-Creation Audit**: Set reminder to re-run similarity search after 30 minutes to catch any conflicts
 
-### ROADMAP CREATION PROTOCOL
-**Upon creation of ANY roadmap:**
-1. **Read System Documentation**: First read `swarm_coordinate/README.md` for complete system understanding
-2. **Use Templates**: 
-   - Main/Coordinate roadmaps → Use `swarm_coordinate/TEMPLATE_main_roadmap.md`
-   - Agent roadmaps → Use `swarm_coordinate/TEMPLATE_agent_roadmap.md`
-3. **Place in Appropriate Directory**: 
-   - Agent roadmaps → `swarm_coordinate/[Greek|Latin]/[Agent]/[agent]_roadmap/`
-   - Swarm roadmaps → `swarm_coordinate/[Greek|Latin]/Coordinate/[greek|latin]_coordinate_roadmap/`
-4. **Update CLAUDE.md Minimally**: Add max 3 lines pointing agent to their roadmap, remove previous listings
-5. **Keep Instructions Minimal**: Focus on roadmap location, not detailed instructions
+**🚨 REFERENCE UNIVERSAL PROHIBITIONS IN APPENDIX A**
 
-### TASK COMPLETION PROTOCOL  
-**Upon completion of ANY individual task:**
-1. **Update History**: Agent must update file in respective `[agent]_history/` subdirectory
-2. **Document Achievement**: Include task completion timestamp and brief description
-3. **Maintain Task Log**: Keep chronological record of all completed tasks
+### GOLDCLAD Rule #6: LLM POST-CREATION AUDIT (CONFLICT DETECTION)
+**30 minutes after any file creation:**
+1. **LLM Re-run Similarity Search**: Use same search tools to find potential conflicts
+2. **LLM Compare New File**: Read newly created file against any newly discovered similar files
+3. **LLM Assess Duplication Risk**: Determine if consolidation is needed
+4. **LLM Apply IRONCLAD if Needed**: If duplication found, invoke IRONCLAD Protocol
+5. **LLM Document Audit Results**: Record findings in FILE_CREATION_LOG.md
 
-### ROADMAP COMPLETION PROTOCOL
-**Upon completion of ENTIRE agent roadmap:**
-1. **Verify Completion**: Read every line of roadmap, compare to codebase state and agent session memory
-2. **Archive Roadmap**: Move completed roadmap to respective `[agent]_past_roadmap/` subdirectory  
-3. **Update Coordinate History**: Add roadmap achievements to appropriate `[greek|latin]_coordinate_history/`
-4. **Document Collective Achievement**: Coordinate history contains swarm-wide accomplishments derived from agent histories
+**🚨 ALL FOUR PROTOCOLS ARE MANDATORY - IRONCLAD, STEELCLAD, COPPERCLAD, AND GOLDCLAD - NO EXCEPTIONS**
 
-### CONFLICT RESOLUTION PROTOCOL
-**When coordination issues arise:**
-1. **Log Conflict**: Create timestamped markdown file in `swarm_coordinate/conflict/`
-2. **Include Details**: Agent names, issue description, attempted solutions, current status
-3. **Seek Resolution**: Work with involved agents toward practical solution
-4. **Document Outcome**: Update conflict file with resolution and lessons learned
-5. **Share Information**: Add relevant coordination info to appropriate `*_ongoing/` directories
+## 🔍 PROTOCOL AUDIT REQUIREMENTS
 
-### ONGOING COORDINATION PROTOCOL  
-**For sharing essential information with other agents:**
-1. **Cross-Swarm Information**: Use `swarm_coordinate/Swarm/swarm_ongoing/` for all-agent information
-2. **Greek Swarm Information**: Use `swarm_coordinate/Greek/Coordinate/greek_coordinate_ongoing/` for Greek agents
-3. **Latin Swarm Information**: Use `swarm_coordinate/Latin/Coordinate/latin_coordinate_ongoing/` for Latin agents
-4. **Format**: Create timestamped markdown files with clear, actionable information
-5. **Update Frequency**: Add information when discovered, review ongoing files regularly
+### Automated Audit Gates
+Every commit must pass these automated checks:
+1. **No Deletions Outside Archive**: `git diff` must show no `-` lines outside `archive/` folders
+2. **Justification Block Presence**: New files must contain justification blocks
+3. **Archive Path Compliance**: All archive paths must follow `YYYYMMDD_HHMMSS_UTC_description` format
+4. **Module Size Compliance**: No modules >400 LOC without documented exception
+5. **Universal Prohibition Compliance**: No script-based modifications in commit history
 
-### PERIODIC CHECK PROTOCOL
-**All agents must regularly check these directories:**
-#### Every 2 Hours (Minimum):
-- **Own Roadmap**: `[Greek|Latin]/[Agent]/[agent]_roadmap/` - Current tasks and priorities
-- **Own History**: `[Greek|Latin]/[Agent]/[agent]_history/` - Track progress in current roadmap
-- **Swarm Coordination**: `[Greek|Latin]/Coordinate/[coordinate]_roadmap/` - Swarm-wide objectives
-- **Ongoing Info**: `[Greek|Latin]/Coordinate/[coordinate]_ongoing/` - New coordination information
+### Manual Verification Requirements
+1. **Consolidation Log**: Every IRONCLAD operation must produce CONSOLIDATION_LOG.md entry
+2. **Modularization Log**: Every STEELCLAD operation must produce MODULARIZATION_LOG.md entry
+3. **Archive Manifest**: Every COPPERCLAD operation must update ARCHIVE_MANIFEST.md
+4. **Creation Log**: Every GOLDCLAD operation must produce FILE_CREATION_LOG.md entry
+5. **History Updates**: All operations must update agent's history file in `[agent]_history/`
 
-#### Every 4 Hours (Minimum):
-- **Cross-Swarm**: `Swarm/swarm_roadmap/` - Cross-swarm collaboration tasks
-- **Cross-Swarm Ongoing**: `Swarm/swarm_ongoing/` - Cross-swarm coordination updates
-- **Conflicts**: `conflict/` - Check for new conflicts or resolutions affecting your work
+---
 
-#### On Task Completion:
-- **Update Own History**: Immediately document in `[agent]_history/`
-- **Check Dependencies**: Review other agents' histories if your work affects them
-- **Share Critical Info**: Post to appropriate `*_ongoing/` if others need to know
+## 🌐 SWARM COORDINATION SYSTEM
 
-### CURRENT AGENT ASSIGNMENTS
-- **Greek Alpha**: [Assign roadmap here - max 3 lines]
-- **Greek Beta**: [Assign roadmap here - max 3 lines]  
-- **Greek Gamma**: [Assign roadmap here - max 3 lines]
-- **Latin A**: [Assign roadmap here - max 3 lines]
-- **Latin B**: [Assign roadmap here - max 3 lines]
-- **Latin C**: [Assign roadmap here - max 3 lines]
-- **Latin D**: [Assign roadmap here - max 3 lines]
-- **Latin E**: [Assign roadmap here - max 3 lines]
+**ALL agents MUST read `swarm_coordinate/README.md` line by line for:**
+- Complete coordination protocols and procedures
+- Current agent assignments and active roadmaps
+- Templates and directory structure
+- All swarm-related operations and requirements
 
 ---
 
@@ -273,20 +317,20 @@ The Ultimate Codebase Analysis System is designed to analyze tangled codebases, 
 3. **Autonomous Bootstrapping**: System must be able to analyze and improve itself
 4. **Intelligence Enhancement**: Every iteration should increase system intelligence
 5. **Competitive Superiority**: Maintain 5-100x performance advantage over competitors
-6. **RELENTLESS DOCUMENTATION**: Update SUMMARY.md CONSTANTLY, ITERATIVELY, RELENTLESSLY with EVERY discovery, decision, and insight
+6. **RELENTLESS DOCUMENTATION**: Update agent history files and coordination records CONSTANTLY with EVERY discovery, decision, and insight
 
 ### Shared Resources & Coordination
-All agents coordinate through these shared files:
-- **SUMMARY.md**: Iterative summary updated by all agents - **UPDATE THIS FILE RELENTLESSLY!**
-  - **EVERY DISCOVERY** → Update SUMMARY.md immediately
-  - **EVERY DECISION** → Document in SUMMARY.md instantly
-  - **EVERY INSIGHT** → Add to SUMMARY.md without delay
-  - **EVERY FINDING** → Record in SUMMARY.md continuously
-  - **EVERY PATTERN** → Capture in SUMMARY.md iteratively
-- **PROGRESS.md**: Real-time coordination status
-- **GRAPH.json**: Neo4j knowledge graph for shared analysis
-- **REARCHITECT.md**: Consolidated refactoring recommendations
-- **ARCHIVE_MANIFEST.md**: Comprehensive archive tracking
+All agents coordinate through the swarm system (see `swarm_coordinate/README.md`):
+- **Agent History Files**: `[agent]_history/` - Individual agent progress and discoveries
+  - **EVERY DISCOVERY** → Update agent history immediately
+  - **EVERY DECISION** → Document in agent history instantly
+  - **EVERY INSIGHT** → Add to ongoing coordination files without delay
+  - **EVERY FINDING** → Record in appropriate history continuously
+  - **EVERY PATTERN** → Capture in coordination records iteratively
+- **Coordinate History**: `[coordinate]_history/` - Swarm-wide achievements
+- **Ongoing Coordination**: `*_ongoing/` - Real-time information sharing
+- **Implementation Status**: `IMPLEMENTATION_STATUS.md` - Current system state
+- **Archive Manifest**: `ARCHIVE_MANIFEST.md` - Comprehensive archive tracking
 
 ### Critical Protocols
 
@@ -308,20 +352,20 @@ Before any file consolidation:
 - **Testability**: Structure modules to be easily unit-tested in isolation to ensure reliability.
 - **Descriptive Naming**: Use clear, meaningful names for modules (e.g., `data_processor.py` instead of `utils.py`) to reflect their purpose.
 
-#### SUMMARY.md UPDATE PROTOCOL (CRITICAL - RELENTLESS EXECUTION)
+#### HISTORY UPDATE PROTOCOL (CRITICAL - RELENTLESS EXECUTION)
 **🔴 MANDATORY CONTINUOUS DOCUMENTATION:**
 - **Update Frequency:** MINIMUM every 30 minutes, IDEALLY every 10 minutes
 - **Update Triggers:** EVERY discovery, decision, pattern, insight, or finding
 - **Update Format:** Timestamp + Agent ID + Finding Type + Details + Impact
-- **Update Priority:** SUMMARY.md updates take PRECEDENCE over other documentation
-- **Update Validation:** Each agent must verify their updates are in SUMMARY.md
+- **Update Priority:** History updates take PRECEDENCE over other documentation
+- **Update Validation:** Each agent must verify their updates are in appropriate history files
 
 **Required Update Categories:**
-1. **Discoveries:** Every new finding, pattern, or insight → **IMMEDIATE SUMMARY.md UPDATE**
-2. **Decisions:** Every architectural or consolidation decision → **INSTANT SUMMARY.md UPDATE**
-3. **Metrics:** Every measurement or benchmark → **IMMEDIATE SUMMARY.md UPDATE**
-4. **Issues:** Every problem or vulnerability found → **INSTANT SUMMARY.md UPDATE**
-5. **Progress:** Every milestone or checkpoint → **IMMEDIATE SUMMARY.md UPDATE**
+1. **Discoveries:** Every new finding, pattern, or insight → **IMMEDIATE agent history UPDATE**
+2. **Decisions:** Every architectural or consolidation decision → **INSTANT agent history UPDATE**
+3. **Metrics:** Every measurement or benchmark → **IMMEDIATE coordination history UPDATE**
+4. **Issues:** Every problem or vulnerability found → **INSTANT ongoing coordination UPDATE**
+5. **Progress:** Every milestone or checkpoint → **IMMEDIATE agent history UPDATE**
 
 #### AUTONOMOUS HOOKS
 For future agent operations, the system includes:

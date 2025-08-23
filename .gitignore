@@ -1,0 +1,76 @@
+# READ-ONLY CLONED REPOSITORIES - NEVER COMMIT
+# These are reference repositories for functionality analysis only
+AWorld/
+AgentVerse/
+MetaGPT/
+OpenAI_Agent_Swarm/
+PraisonAI/
+TestMaster/
+TestMaster_BACKUP_*/
+agency-swarm/
+agent-squad/
+agentops/
+agentscope/
+autogen/
+crewAI/
+lagent/
+llama-agents/
+phidata/
+swarm/
+swarms/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and databases
+*.log
+*.db
+*.sqlite
+
+# Windows artifacts
+NUL
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environment files
+.env
+.env.local

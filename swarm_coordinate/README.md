@@ -14,9 +14,11 @@ The Swarm Coordination System organizes autonomous agents into coordinated swarm
 ```
 swarm_coordinate/
 ├── README.md                    (This file - system documentation)
+├── IMPLEMENTATION_STATUS.md     (Current implementation state and active operations)
 ├── TEMPLATE_main_roadmap.md     (Template for coordinate/main roadmaps)
 ├── TEMPLATE_agent_roadmap.md    (Template for individual agent roadmaps)
 ├── conflict/                    (Conflict resolution logging - agents log issues here)
+├── handoff/                     (Dependency handoff notifications between agents)
 │
 ├── Greek/                       (Greek Swarm - Alpha, Beta, Gamma)
 │   ├── Alpha/
@@ -137,10 +139,21 @@ swarm_coordinate/
 - Cross-swarm roadmap and ongoing directories
 - Conflict directory for issues affecting your work
 
+**When Starting Dependent Work:**
+- Check handoff directory for completion notifications from dependencies
+
 **On Task Completion:**
 - Immediately update own history
 - Check dependent agents' histories
 - Share critical information in appropriate ongoing directory
+- Create handoff note if others depend on completed work
+
+#### **Dependency Handoff System**
+- **Location**: `handoff/` directory
+- **Purpose**: Notify dependent agents when prerequisites are complete
+- **Format**: `[timestamp]_[from]_to_[to]_[description].md`
+- **Process**: Create handoff → Dependent agent acknowledges → Archive to history
+- **Critical**: Prevents wasted time waiting for dependencies
 
 #### **Conflict Resolution Logging**
 - **Location**: `conflict/` directory
@@ -164,6 +177,133 @@ swarm_coordinate/
 - Location: `Swarm/swarm_history/`
 - Content: Inter-swarm collaboration outcomes
 - Purpose: Track cross-swarm coordination and integration
+
+---
+
+## 🚨 **MANDATORY FILE CREATION REQUIREMENTS**
+
+### **HARD REQUIREMENT: ALL FILES IN SWARM_COORDINATE**
+**Every file created in the swarm_coordinate directory and subdirectories MUST:**
+
+1. **Filename Format**: `YYYYMMDD_filename.md`
+   - Example: `20250822_alpha_roadmap.md`
+   - Example: `20250822_conflict_resolution.md`
+   - Example: `20250822_handoff_alpha_to_beta.md`
+
+2. **Metadata Header**: First lines of EVERY file MUST contain:
+   ```
+   # [File Title]
+   **Created:** YYYY-MM-DD HH:MM:SS
+   **Author:** [Agent Name]
+   **Type:** [roadmap/history/conflict/handoff/ongoing]
+   **Swarm:** [Greek/Latin/Cross-Swarm]
+   ```
+
+3. **NO EXCEPTIONS**: This applies to:
+   - All roadmaps (agent and coordinate)
+   - All history files
+   - All conflict logs
+   - All handoff notes
+   - All ongoing coordination files
+   - Any other file created in swarm_coordinate
+
+**VIOLATION = INVALID FILE** - Files without proper dating must be renamed and updated immediately.
+
+---
+
+## 📋 **COMPLETE COORDINATION PROTOCOLS**
+
+### **SWARM ORGANIZATION STRUCTURE**
+- **Greek Swarm**: Alpha, Beta, Gamma agents + Greek Coordinate
+- **Latin Swarm**: A, B, C, D, E agents + Latin Coordinate
+- **Inter-Swarm Coordination**: Swarm subdirectory for cross-swarm collaboration
+- **Directory Structure**: `swarm_coordinate/Greek/`, `swarm_coordinate/Latin/`, `swarm_coordinate/Swarm/`
+- **Main Roadmap Location**: Place in `swarm_coordinate/Greek/Coordinate/greek_coordinate_roadmap/`
+- **Cross-Swarm Coordination**: Use `swarm_coordinate/Swarm/` for targeted collaborations (e.g., Alpha with A,B,C)
+
+### **MANDATORY ROADMAP DATING RULES**
+**All new roadmaps must include (per MANDATORY FILE CREATION REQUIREMENTS above):**
+1. **Filename Dating**: Begin with date format `YYYYMMDD_roadmap_name.md` (e.g., `20250822_roadmap_name.md`)
+2. **Metadata Header**: Include creation date and time at top of file:
+   ```
+   # [Roadmap Title]
+   **Created:** YYYY-MM-DD HH:MM:SS
+   **Author:** [Agent Name]
+   **Type:** roadmap
+   **Swarm:** [Greek/Latin]
+   ```
+
+### **ROADMAP CREATION PROTOCOL**
+**Upon creation of ANY roadmap:**
+1. **Read System Documentation**: First read `swarm_coordinate/README.md` for complete system understanding
+2. **Use Templates**: 
+   - Main/Coordinate roadmaps → Use `swarm_coordinate/TEMPLATE_main_roadmap.md`
+   - Agent roadmaps → Use `swarm_coordinate/TEMPLATE_agent_roadmap.md`
+3. **Place in Appropriate Directory**: 
+   - Agent roadmaps → `swarm_coordinate/[Greek|Latin]/[Agent]/[agent]_roadmap/`
+   - Swarm roadmaps → `swarm_coordinate/[Greek|Latin]/Coordinate/[greek|latin]_coordinate_roadmap/`
+4. **Update CLAUDE.md Minimally**: Add max 3 lines pointing agent to their roadmap, remove previous listings
+5. **Keep Instructions Minimal**: Focus on roadmap location, not detailed instructions
+
+### **TASK COMPLETION PROTOCOL**
+**Upon completion of ANY individual task:**
+1. **Update History**: Agent must update file in respective `[agent]_history/` subdirectory
+2. **Document Achievement**: Include task completion timestamp and brief description
+3. **Maintain Task Log**: Keep chronological record of all completed tasks
+
+### **ROADMAP COMPLETION PROTOCOL**
+**Upon completion of ENTIRE agent roadmap:**
+1. **Verify Completion**: Read every line of roadmap, compare to codebase state and agent session memory
+2. **Archive Roadmap**: Move completed roadmap to respective `[agent]_past_roadmap/` subdirectory  
+3. **Update Coordinate History**: Add roadmap achievements to appropriate `[greek|latin]_coordinate_history/`
+4. **Document Collective Achievement**: Coordinate history contains swarm-wide accomplishments derived from agent histories
+
+### **CONFLICT RESOLUTION PROTOCOL**
+**When coordination issues arise:**
+1. **Log Conflict**: Create timestamped markdown file in `swarm_coordinate/conflict/`
+2. **Include Details**: Agent names, issue description, attempted solutions, current status
+3. **Seek Resolution**: Work with involved agents toward practical solution
+4. **Document Outcome**: Update conflict file with resolution and lessons learned
+5. **Share Information**: Add relevant coordination info to appropriate `*_ongoing/` directories
+
+### **ONGOING COORDINATION PROTOCOL**
+**For sharing essential information with other agents:**
+1. **Cross-Swarm Information**: Use `swarm_coordinate/Swarm/swarm_ongoing/` for all-agent information
+2. **Greek Swarm Information**: Use `swarm_coordinate/Greek/Coordinate/greek_coordinate_ongoing/` for Greek agents
+3. **Latin Swarm Information**: Use `swarm_coordinate/Latin/Coordinate/latin_coordinate_ongoing/` for Latin agents
+4. **Format**: Create timestamped markdown files with clear, actionable information
+5. **Update Frequency**: Add information when discovered, review ongoing files regularly
+
+### **PERIODIC CHECK PROTOCOL**
+**All agents must regularly check these directories:**
+
+#### **Every 2 Hours (Minimum):**
+- **Own Roadmap**: `[Greek|Latin]/[Agent]/[agent]_roadmap/` - Current tasks and priorities
+- **Own History**: `[Greek|Latin]/[Agent]/[agent]_history/` - Track progress in current roadmap
+- **Swarm Coordination**: `[Greek|Latin]/Coordinate/[coordinate]_roadmap/` - Swarm-wide objectives
+- **Ongoing Info**: `[Greek|Latin]/Coordinate/[coordinate]_ongoing/` - New coordination information
+
+#### **Every 4 Hours (Minimum):**
+- **Cross-Swarm**: `Swarm/swarm_roadmap/` - Cross-swarm collaboration tasks
+- **Cross-Swarm Ongoing**: `Swarm/swarm_ongoing/` - Cross-swarm coordination updates
+- **Conflicts**: `conflict/` - Check for new conflicts or resolutions affecting your work
+
+#### **When Starting Dependent Work:**
+- **Handoff Directory**: `handoff/` - Check for completion notifications from dependencies
+
+#### **On Task Completion:**
+- **Update Own History**: Immediately document in `[agent]_history/`
+- **Check Dependencies**: Review other agents' histories if your work affects them
+- **Share Critical Info**: Post to appropriate `*_ongoing/` if others need to know
+- **Create Handoff**: If others depend on your work, create handoff note
+
+### **DEPENDENCY HANDOFF PROTOCOL**
+**When completing work others depend on:**
+1. **Create Handoff Note**: `swarm_coordinate/handoff/[timestamp]_[from]_to_[to]_[description].md`
+2. **Include Details**: What's complete, where to find it, any special instructions
+3. **Receiving Agent**: Check handoff directory when starting dependent work
+4. **Acknowledge Receipt**: Receiving agent adds acknowledgment to same file
+5. **Archive After Acknowledgment**: Move to appropriate history directory
 
 ---
 
@@ -241,6 +381,13 @@ All file removals must follow COPPERCLAD anti-deletion archival rules:
 4. Resolution documented in same conflict file for future reference
 5. Coordination information shared in appropriate ongoing directory
 
+### **Scenario 6: Dependency Handoff**
+1. Agent Alpha completes module that Agent Beta depends on
+2. Alpha creates `handoff/20250122_alpha_to_beta_auth_module_complete.md`
+3. Beta checks handoff directory before starting dependent work
+4. Beta finds handoff note and acknowledges receipt in same file
+5. After acknowledgment, handoff archived to Alpha's history
+
 ---
 
 ## 🔧 **TROUBLESHOOTING**
@@ -284,6 +431,20 @@ The Swarm Coordination System is designed for continuous improvement:
 - **Template Evolution**: Templates updated based on coordination experience  
 - **Process Refinement**: Protocols refined based on operational feedback
 - **Scalability**: System scales to support additional coordination patterns
+
+---
+
+## 📋 **CURRENT AGENT ASSIGNMENTS**
+
+### **Active Roadmaps**
+- **Greek Alpha**: [Assign roadmap here - max 3 lines]
+- **Greek Beta**: [Assign roadmap here - max 3 lines]  
+- **Greek Gamma**: [Assign roadmap here - max 3 lines]
+- **Latin A**: [Assign roadmap here - max 3 lines]
+- **Latin B**: [Assign roadmap here - max 3 lines]
+- **Latin C**: [Assign roadmap here - max 3 lines]
+- **Latin D**: [Assign roadmap here - max 3 lines]
+- **Latin E**: [Assign roadmap here - max 3 lines]
 
 ---
 
