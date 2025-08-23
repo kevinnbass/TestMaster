@@ -166,6 +166,66 @@
 
 ---
 
+## 🌐 SWARM COORDINATION PROTOCOL
+
+**AGENT ROADMAP AND HISTORY MANAGEMENT SYSTEM:**
+
+### Swarm Organization Structure
+- **Greek Swarm**: Alpha, Beta, Gamma agents + Greek Coordinate
+- **Latin Swarm**: A, B, C, D, E agents + Latin Coordinate
+- **Inter-Swarm Coordination**: Swarm subdirectory for cross-swarm collaboration
+- **Directory Structure**: `swarm_coordinate/Greek/`, `swarm_coordinate/Latin/`, `swarm_coordinate/Swarm/`
+- **Main Roadmap Location**: Place in `swarm_coordinate/Greek/Coordinate/greek_coordinate_roadmap/`
+- **Cross-Swarm Coordination**: Use `swarm_coordinate/Swarm/` for targeted collaborations (e.g., Alpha with A,B,C)
+
+### MANDATORY ROADMAP DATING RULES
+**All new roadmaps must include:**
+1. **Filename Dating**: Begin with date format `20250131_roadmap_name.md`
+2. **Metadata Header**: Include creation date and time at top of file:
+   ```
+   # [Roadmap Title]
+   **Created:** 2025-01-31 14:30:00
+   **Agent:** [Agent Name]
+   **Swarm:** [Greek/Latin]
+   ```
+
+### ROADMAP CREATION PROTOCOL
+**Upon creation of ANY roadmap:**
+1. **Read System Documentation**: First read `swarm_coordinate/README.md` for complete system understanding
+2. **Use Templates**: 
+   - Main/Coordinate roadmaps → Use `swarm_coordinate/TEMPLATE_main_roadmap.md`
+   - Agent roadmaps → Use `swarm_coordinate/TEMPLATE_agent_roadmap.md`
+3. **Place in Appropriate Directory**: 
+   - Agent roadmaps → `swarm_coordinate/[Greek|Latin]/[Agent]/[agent]_roadmap/`
+   - Swarm roadmaps → `swarm_coordinate/[Greek|Latin]/Coordinate/[greek|latin]_coordinate_roadmap/`
+4. **Update CLAUDE.md Minimally**: Add max 3 lines pointing agent to their roadmap, remove previous listings
+5. **Keep Instructions Minimal**: Focus on roadmap location, not detailed instructions
+
+### TASK COMPLETION PROTOCOL  
+**Upon completion of ANY individual task:**
+1. **Update History**: Agent must update file in respective `[agent]_history/` subdirectory
+2. **Document Achievement**: Include task completion timestamp and brief description
+3. **Maintain Task Log**: Keep chronological record of all completed tasks
+
+### ROADMAP COMPLETION PROTOCOL
+**Upon completion of ENTIRE agent roadmap:**
+1. **Verify Completion**: Read every line of roadmap, compare to codebase state and agent session memory
+2. **Archive Roadmap**: Move completed roadmap to respective `[agent]_past_roadmap/` subdirectory  
+3. **Update Coordinate History**: Add roadmap achievements to appropriate `[greek|latin]_coordinate_history/`
+4. **Document Collective Achievement**: Coordinate history contains swarm-wide accomplishments derived from agent histories
+
+### CURRENT AGENT ASSIGNMENTS
+- **Greek Alpha**: [Assign roadmap here - max 3 lines]
+- **Greek Beta**: [Assign roadmap here - max 3 lines]  
+- **Greek Gamma**: [Assign roadmap here - max 3 lines]
+- **Latin A**: [Assign roadmap here - max 3 lines]
+- **Latin B**: [Assign roadmap here - max 3 lines]
+- **Latin C**: [Assign roadmap here - max 3 lines]
+- **Latin D**: [Assign roadmap here - max 3 lines]
+- **Latin E**: [Assign roadmap here - max 3 lines]
+
+---
+
 This file provides comprehensive guidance for future autonomous agents working with the TestMaster Ultimate Codebase Analysis System. This framework has been designed to bootstrap itself for future autonomous use, functioning as an LLM-enhanced cross between FalkorDB Code Graph, Neo4j Codebase Knowledge Graph, CodeGraph Analyzer, CodeSee, and Codebase Parser.
 
 ## 🚀 SHARED ROADMAP - Multi-Agent Coordination Framework
