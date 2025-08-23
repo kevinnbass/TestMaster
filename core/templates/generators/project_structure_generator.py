@@ -114,67 +114,67 @@ class ProjectStructureGenerator:
             "_generate_executive_insights": {
                 "content": "# Function template: _generate_executive_insights...",  # Truncated for brevity
                 "variables": ['raw_data', 'relationships', 'context'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             },
             "_generate_operational_insights": {
                 "content": "# Function template: _generate_operational_insights...",  # Truncated for brevity
                 "variables": ['raw_data', 'relationships'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             },
             "_generate_technical_insights": {
                 "content": "# Function template: _generate_technical_insights...",  # Truncated for brevity
                 "variables": ['raw_data', 'relationships'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             },
             "_generate_predictive_insights": {
                 "content": "# Function template: _generate_predictive_insights...",  # Truncated for brevity
                 "variables": ['raw_data'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             },
             "_generate_actionable_recommendations": {
                 "content": "# Function template: _generate_actionable_recommendations...",  # Truncated for brevity
                 "variables": ['synthesis', 'context'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             },
             "_generate_predictions": {
                 "content": "# Function template: _generate_predictions...",  # Truncated for brevity
                 "variables": ['user_context', 'current_data'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             },
             "generate_contextual_interactions": {
                 "content": "# Function template: generate_contextual_interactions...",  # Truncated for brevity
                 "variables": ['chart_data', 'relationships', 'user_context'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             },
             "_generate_drill_down_levels": {
                 "content": "# Function template: _generate_drill_down_levels...",  # Truncated for brevity
                 "variables": ['data'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             },
             "generate_proactive_insights": {
                 "content": "# Function template: generate_proactive_insights...",  # Truncated for brevity
                 "variables": ['current_system_state', 'user_context'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             },
             "_generate_information_hierarchy": {
                 "content": "# Function template: _generate_information_hierarchy...",  # Truncated for brevity
                 "variables": ['raw_data', 'synthesis'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             },
             "_generate_health_predictions": {
                 "content": "# Function template: _generate_health_predictions...",  # Truncated for brevity
                 "variables": ['health_data'],
-                "source_file": "web\unified_gamma_dashboard.py",
+                "source_file": "web/unified_gamma_dashboard.py",
                 "metadata": {'type': 'function', 'ast_type': 'FunctionDef'}
             }
         }

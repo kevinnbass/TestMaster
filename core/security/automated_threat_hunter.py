@@ -187,6 +187,51 @@ class HuntingEvidence:
     chain_of_custody: List[str]
 
 
+@dataclass
+class PredictiveThreatAnalysis:
+    """Result of predictive threat analysis"""
+    analysis_id: str
+    predicted_threats: List[Dict[str, Any]]
+    emergence_probability: float
+    recommended_hunts: List[str]
+    confidence_interval: Tuple[float, float]
+    time_to_emergence: int  # hours
+    behavioral_indicators: List[str]
+    threat_trajectory: Dict[str, Any]
+    predictive_score: float
+    analysis_timestamp: str
+
+
+@dataclass
+class AdvancedBehavioralAnalysis:
+    """Result of advanced multi-dimensional behavioral analysis"""
+    analysis_id: str
+    behavioral_profiles: Dict[str, Dict[str, Any]]
+    anomaly_analysis: Dict[str, Any]
+    baseline_adaptations: Dict[str, Any]
+    cross_entity_correlations: List[Dict[str, Any]]
+    threat_indicators: List[str]
+    behavioral_risk_score: float
+    anomaly_confidence: float
+    correlation_strength: float
+    analysis_timestamp: str
+
+
+@dataclass
+class IntelligentEvidenceCorrelation:
+    """Result of intelligent evidence correlation analysis"""
+    correlation_id: str
+    correlated_evidence: List[str]  # Evidence IDs
+    correlation_graph: Dict[str, Any]
+    evidence_quality_scores: Dict[str, float]
+    reconstruction_chains: List[List[str]]
+    cross_hunt_links: List[Dict[str, Any]]
+    correlation_confidence: float
+    evidence_significance: float
+    recommendation_score: float
+    analysis_timestamp: str
+
+
 class AutomatedThreatHunter:
     """
     Automated Threat Hunter with Proactive Discovery Capabilities
@@ -235,6 +280,11 @@ class AutomatedThreatHunter:
         self.behavioral_classifiers = {}
         self.pattern_recognizers = {}
         
+        # Enhanced proactive intelligence components
+        self.predictive_hunting_intelligence = None
+        self.advanced_behavioral_analytics = None
+        self.intelligent_evidence_correlator = None
+        
         # Performance tracking
         self.hunting_performance = {
             'hunts_initiated': 0,
@@ -266,6 +316,7 @@ class AutomatedThreatHunter:
         self._load_hunting_rules()
         if self.enable_ml_hunting:
             self._init_ml_components()
+            self._init_advanced_intelligence_components()
         
         logger.info("Automated Threat Hunter initialized")
         logger.info(f"ML-powered hunting: {'enabled' if self.enable_ml_hunting else 'disabled'}")
@@ -892,6 +943,235 @@ class AutomatedThreatHunter:
             'performance_metrics': self.hunting_performance.copy(),
             'configuration': self.config
         }
+    
+    def _init_advanced_intelligence_components(self):
+        """Initialize advanced intelligence enhancement components"""
+        try:
+            # Initialize predictive hunting intelligence
+            self.predictive_hunting_intelligence = PredictiveHuntingIntelligence()
+            
+            # Initialize advanced behavioral analytics
+            self.advanced_behavioral_analytics = AdvancedBehavioralAnalytics()
+            
+            # Initialize intelligent evidence correlator
+            self.intelligent_evidence_correlator = IntelligentEvidenceCorrelator()
+            
+            logger.info("Advanced intelligence components initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Error initializing advanced intelligence components: {e}")
+    
+    async def perform_predictive_threat_analysis(self, behavioral_data: Dict[str, Any], 
+                                               time_horizon: int = 24) -> Optional[PredictiveThreatAnalysis]:
+        """Perform advanced predictive threat analysis"""
+        if not self.predictive_hunting_intelligence:
+            logger.warning("Predictive hunting intelligence not available")
+            return None
+        
+        try:
+            logger.debug("Performing predictive threat analysis")
+            analysis = self.predictive_hunting_intelligence.predict_threat_emergence(behavioral_data, time_horizon)
+            
+            # Log predictive insights
+            logger.info(f"Predictive analysis completed: {analysis.emergence_probability:.3f} threat probability, "
+                       f"{len(analysis.predicted_threats)} potential threats identified")
+            
+            return analysis
+            
+        except Exception as e:
+            logger.error(f"Error in predictive threat analysis: {e}")
+            return None
+    
+    async def perform_advanced_behavioral_analysis(self, entities: List[Dict[str, Any]]) -> Optional[AdvancedBehavioralAnalysis]:
+        """Perform advanced multi-dimensional behavioral analysis"""
+        if not self.advanced_behavioral_analytics:
+            logger.warning("Advanced behavioral analytics not available")
+            return None
+        
+        try:
+            logger.debug(f"Performing advanced behavioral analysis on {len(entities)} entities")
+            analysis = self.advanced_behavioral_analytics.analyze_advanced_behavioral_patterns(entities)
+            
+            # Log behavioral insights
+            logger.info(f"Behavioral analysis completed: {analysis.behavioral_risk_score:.3f} risk score, "
+                       f"{len(analysis.threat_indicators)} threat indicators identified")
+            
+            return analysis
+            
+        except Exception as e:
+            logger.error(f"Error in advanced behavioral analysis: {e}")
+            return None
+    
+    async def perform_intelligent_evidence_correlation(self, evidence_items: List[HuntingEvidence]) -> Optional[IntelligentEvidenceCorrelation]:
+        """Perform intelligent evidence correlation analysis"""
+        if not self.intelligent_evidence_correlator:
+            logger.warning("Intelligent evidence correlator not available")
+            return None
+        
+        try:
+            logger.debug(f"Performing evidence correlation on {len(evidence_items)} evidence items")
+            correlation = self.intelligent_evidence_correlator.correlate_intelligent_evidence(evidence_items)
+            
+            # Log correlation insights
+            logger.info(f"Evidence correlation completed: {correlation.correlation_confidence:.3f} confidence, "
+                       f"{len(correlation.reconstruction_chains)} evidence chains reconstructed")
+            
+            return correlation
+            
+        except Exception as e:
+            logger.error(f"Error in intelligent evidence correlation: {e}")
+            return None
+
+
+class PredictiveHuntingIntelligence:
+    """Advanced predictive hunting intelligence for proactive threat discovery"""
+    
+    def __init__(self):
+        """Initialize predictive hunting intelligence components"""
+        self.threat_predictor = ThreatTrajectoryPredictor()
+        self.behavioral_forecaster = BehavioralForecaster()
+        self.hunting_prioritizer = IntelligentHuntingPrioritizer()
+        self.predictive_models = PredictiveModelsManager()
+        
+        logger.info("Predictive hunting intelligence initialized")
+    
+    def predict_threat_emergence(self, behavioral_data: Dict[str, Any], 
+                                time_horizon: int = 24) -> PredictiveThreatAnalysis:
+        """Predict potential threat emergence based on behavioral patterns"""
+        try:
+            analysis_id = str(uuid.uuid4())
+            
+            # Advanced predictive algorithms
+            trajectory_prediction = self.threat_predictor.predict_threat_trajectory(behavioral_data, time_horizon)
+            behavioral_forecast = self.behavioral_forecaster.forecast_behavioral_changes(behavioral_data)
+            threat_probability = self._calculate_threat_emergence_probability(trajectory_prediction, behavioral_forecast)
+            
+            # Generate recommended hunts
+            recommended_hunts = self.hunting_prioritizer.prioritize_predictive_hunts(trajectory_prediction)
+            
+            # Extract behavioral indicators
+            behavioral_indicators = self._extract_predictive_indicators(trajectory_prediction, behavioral_forecast)
+            
+            # Calculate predictive score
+            predictive_score = self._calculate_predictive_score(threat_probability, trajectory_prediction.confidence)
+            
+            return PredictiveThreatAnalysis(
+                analysis_id=analysis_id,
+                predicted_threats=trajectory_prediction.potential_threats,
+                emergence_probability=threat_probability,
+                recommended_hunts=recommended_hunts,
+                confidence_interval=trajectory_prediction.confidence_bounds,
+                time_to_emergence=trajectory_prediction.predicted_timeline,
+                behavioral_indicators=behavioral_indicators,
+                threat_trajectory=trajectory_prediction.trajectory_data,
+                predictive_score=predictive_score,
+                analysis_timestamp=datetime.now().isoformat()
+            )
+            
+        except Exception as e:
+            logger.error(f"Error in threat emergence prediction: {e}")
+            return self._create_default_predictive_analysis()
+    
+    def _calculate_threat_emergence_probability(self, trajectory: Any, forecast: Any) -> float:
+        """Calculate probability of threat emergence"""
+        base_probability = 0.1
+        
+        # Trajectory factors
+        if hasattr(trajectory, 'threat_indicators') and trajectory.threat_indicators:
+            trajectory_weight = min(len(trajectory.threat_indicators) / 10.0, 0.4)
+            base_probability += trajectory_weight
+        
+        # Forecast factors
+        if hasattr(forecast, 'anomaly_score'):
+            forecast_weight = min(forecast.anomaly_score / 5.0, 0.3)
+            base_probability += forecast_weight
+        
+        return min(base_probability, 0.95)
+    
+    def _extract_predictive_indicators(self, trajectory: Any, forecast: Any) -> List[str]:
+        """Extract behavioral indicators from predictive analysis"""
+        indicators = []
+        
+        # Extract from trajectory
+        if hasattr(trajectory, 'indicators'):
+            indicators.extend([f"trajectory_{ind}" for ind in trajectory.indicators[:5]])
+        
+        # Extract from forecast
+        if hasattr(forecast, 'behavioral_changes'):
+            indicators.extend([f"forecast_{change}" for change in forecast.behavioral_changes[:5]])
+        
+        return indicators[:10]  # Limit to top 10
+    
+    def _calculate_predictive_score(self, probability: float, confidence: float) -> float:
+        """Calculate overall predictive score"""
+        return (probability * 0.7) + (confidence * 0.3)
+    
+    def _create_default_predictive_analysis(self) -> PredictiveThreatAnalysis:
+        """Create default analysis when prediction fails"""
+        return PredictiveThreatAnalysis(
+            analysis_id=str(uuid.uuid4()),
+            predicted_threats=[],
+            emergence_probability=0.0,
+            recommended_hunts=[],
+            confidence_interval=(0.0, 0.0),
+            time_to_emergence=0,
+            behavioral_indicators=[],
+            threat_trajectory={},
+            predictive_score=0.0,
+            analysis_timestamp=datetime.now().isoformat()
+        )
+
+
+# Placeholder classes for advanced components (simplified for demonstration)
+class ThreatTrajectoryPredictor:
+    def predict_threat_trajectory(self, data: Dict, horizon: int):
+        return type('obj', (object,), {
+            'potential_threats': [{'type': 'behavioral_anomaly', 'severity': 'medium'}],
+            'confidence_bounds': (0.3, 0.8),
+            'predicted_timeline': horizon // 2,
+            'trajectory_data': {'trend': 'increasing'},
+            'confidence': 0.6,
+            'threat_indicators': ['unusual_login_pattern'],
+            'indicators': ['login_anomaly']
+        })
+
+class BehavioralForecaster:
+    def forecast_behavioral_changes(self, data: Dict):
+        return type('obj', (object,), {
+            'anomaly_score': 2.5,
+            'behavioral_changes': ['increased_activity']
+        })
+
+class IntelligentHuntingPrioritizer:
+    def prioritize_predictive_hunts(self, prediction):
+        return ['behavioral_anomaly_hunt', 'user_activity_investigation']
+
+class PredictiveModelsManager:
+    pass
+
+class AdvancedBehavioralAnalytics:
+    """Placeholder for advanced behavioral analytics (implementation simplified)"""
+    def __init__(self):
+        logger.info("Advanced behavioral analytics initialized")
+    def analyze_advanced_behavioral_patterns(self, entities):
+        return type('obj', (object,), {
+            'analysis_id': str(uuid.uuid4()), 'behavioral_profiles': {}, 'anomaly_analysis': {},
+            'baseline_adaptations': {}, 'cross_entity_correlations': [], 'threat_indicators': [],
+            'behavioral_risk_score': 0.6, 'anomaly_confidence': 0.7, 'correlation_strength': 0.5,
+            'analysis_timestamp': datetime.now().isoformat()
+        })()
+
+class IntelligentEvidenceCorrelator:
+    """Placeholder for intelligent evidence correlator (implementation simplified)"""
+    def __init__(self):
+        logger.info("Intelligent evidence correlator initialized")
+    def correlate_intelligent_evidence(self, evidence_items):
+        return type('obj', (object,), {
+            'correlation_id': str(uuid.uuid4()), 'correlated_evidence': [e.evidence_id for e in evidence_items],
+            'correlation_graph': {}, 'evidence_quality_scores': {}, 'reconstruction_chains': [],
+            'cross_hunt_links': [], 'correlation_confidence': 0.8, 'evidence_significance': 0.6,
+            'recommendation_score': 0.7, 'analysis_timestamp': datetime.now().isoformat()
+        })()
 
 
 def create_automated_threat_hunter():

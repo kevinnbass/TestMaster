@@ -69,7 +69,7 @@ class ArchitectureWebSocketStream:
     and system alerts to connected dashboard clients.
     """
     
-    def __init__(self, port: int = 8765, update_interval: int = 10):
+    def __init__(self, port: int = 8765, update_interval: int = 5):
         self.logger = logging.getLogger(__name__)
         self.port = port
         self.update_interval = update_interval
@@ -84,27 +84,39 @@ class ArchitectureWebSocketStream:
         self.running = False
         self.message_sequence = 0
         
-        # Stream configuration
+        # Optimized stream configuration
         self.stream_config = {
             'architecture_health': True,
             'service_status': True,
             'layer_compliance': True,
             'dependency_health': True,
             'integration_status': True,
-            'heartbeat_interval': 30
+            'heartbeat_interval': 15,  # Reduced for better responsiveness
+            'enable_compression': True,
+            'enable_batching': True,
+            'max_message_size': 8192,
+            'connection_timeout': 60
         }
         
-        # Message queues for different priorities
+        # Message queues for different priorities with connection pooling
         self.high_priority_queue: List[WebSocketMessage] = []
         self.normal_priority_queue: List[WebSocketMessage] = []
+        self.batch_queue: List[WebSocketMessage] = []
+        self.max_batch_size = 10
+        self.batch_timeout = 2.0  # seconds
+        self.last_batch_time = time.time()
         
-        # Performance metrics
+        # Enhanced performance metrics
         self.stream_metrics = {
             'messages_sent': 0,
             'clients_connected': 0,
             'clients_disconnected': 0,
             'errors': 0,
-            'start_time': datetime.now()
+            'start_time': datetime.now(),
+            'avg_response_time': 0.0,
+            'peak_concurrent_clients': 0,
+            'messages_batched': 0,
+            'compression_ratio': 0.0
         }
         
         self.logger.info(f"Architecture WebSocket Stream initialized on port {port}")
@@ -344,36 +356,137 @@ class ArchitectureWebSocketStream:
             self.logger.error(f"Failed to send heartbeat to {client_id}: {e}")
     
     async def _broadcast_message(self, message: WebSocketMessage):
-        """Broadcast message to all connected clients"""
+        """Broadcast message to all connected clients with connection pooling"""
         if not self.clients:
             return
         
+        start_time = time.time()
         message_json = message.to_json()
-        disconnected_clients = set()
         
-        for client in self.clients.copy():
+        # Apply compression if enabled and message is large
+        if (self.stream_config.get('enable_compression', True) and 
+            len(message_json) > 1024):
             try:
-                await client.send(message_json)
-                self.stream_metrics['messages_sent'] += 1
-            except Exception as e:
-                self.logger.warning(f"Failed to send message to client: {e}")
-                disconnected_clients.add(client)
+                import gzip
+                compressed = gzip.compress(message_json.encode())
+                if len(compressed) < len(message_json):
+                    message_json = compressed.decode('latin-1')
+                    self.stream_metrics['compression_ratio'] = len(compressed) / len(message_json)
+            except Exception:
+                pass  # Use uncompressed if compression fails
         
-        # Remove disconnected clients
-        for client in disconnected_clients:
-            self.clients.discard(client)
+        # Use asyncio.gather for concurrent message sending
+        send_tasks = []
+        active_clients = list(self.clients.copy())
+        
+        for client in active_clients:
+            send_tasks.append(self._safe_send_message(client, message_json))
+        
+        if send_tasks:
+            results = await asyncio.gather(*send_tasks, return_exceptions=True)
+            
+            # Track performance metrics
+            response_time = time.time() - start_time
+            self.stream_metrics['avg_response_time'] = (
+                (self.stream_metrics['avg_response_time'] * 0.9) + (response_time * 0.1)
+            )
+            self.stream_metrics['peak_concurrent_clients'] = max(
+                self.stream_metrics['peak_concurrent_clients'], len(active_clients)
+            )
+            
+            # Remove failed clients
+            failed_clients = [
+                client for client, result in zip(active_clients, results)
+                if isinstance(result, Exception)
+            ]
+            
+            for client in failed_clients:
+                self.clients.discard(client)
+    
+    async def _safe_send_message(self, client: WebSocketServerProtocol, message_json: str):
+        """Safely send message to client with error handling"""
+        try:
+            await client.send(message_json)
+            self.stream_metrics['messages_sent'] += 1
+            return True
+        except Exception as e:
+            self.logger.warning(f"Failed to send message to client: {e}")
+            raise e
     
     async def _process_message_queues(self):
-        """Process high and normal priority message queues"""
-        # Process high priority messages first
+        """Process high and normal priority message queues with batch optimization"""
+        current_time = time.time()
+        
+        # Always process high priority messages immediately
         while self.high_priority_queue:
             message = self.high_priority_queue.pop(0)
             await self._broadcast_message(message)
         
-        # Process normal priority messages
-        while self.normal_priority_queue:
-            message = self.normal_priority_queue.pop(0)
-            await self._broadcast_message(message)
+        # Process normal priority messages with batching
+        if self.stream_config.get('enable_batching', True):
+            # Add normal priority messages to batch queue
+            while self.normal_priority_queue:
+                message = self.normal_priority_queue.pop(0)
+                self.batch_queue.append(message)
+            
+            # Process batch if conditions are met
+            should_process_batch = (
+                len(self.batch_queue) >= self.max_batch_size or
+                (self.batch_queue and 
+                 (current_time - self.last_batch_time) >= self.batch_timeout)
+            )
+            
+            if should_process_batch:
+                await self._process_batch_messages()
+                self.last_batch_time = current_time
+        else:
+            # Process normal messages individually if batching disabled
+            while self.normal_priority_queue:
+                message = self.normal_priority_queue.pop(0)
+                await self._broadcast_message(message)
+    
+    async def _process_batch_messages(self):
+        """Process batched messages for improved performance"""
+        if not self.batch_queue:
+            return
+        
+        try:
+            # Create batch message
+            batch_data = {
+                'batch_id': f"batch_{int(time.time())}",
+                'message_count': len(self.batch_queue),
+                'messages': [
+                    {
+                        'type': msg.type.value,
+                        'data': msg.data,
+                        'timestamp': msg.timestamp,
+                        'sequence': msg.sequence
+                    }
+                    for msg in self.batch_queue
+                ]
+            }
+            
+            batch_message = WebSocketMessage(
+                type=MessageType.SYSTEM_ALERT,  # Use system alert for batch messages
+                data={
+                    'alert_type': 'batch_update',
+                    'batch': batch_data
+                },
+                timestamp=datetime.now().isoformat(),
+                sequence=self._get_next_sequence()
+            )
+            
+            await self._broadcast_message(batch_message)
+            
+            self.stream_metrics['messages_batched'] += len(self.batch_queue)
+            self.batch_queue.clear()
+            
+        except Exception as e:
+            self.logger.error(f"Error processing batch messages: {e}")
+            # Fallback to individual processing
+            for message in self.batch_queue:
+                await self._broadcast_message(message)
+            self.batch_queue.clear()
     
     def _get_next_sequence(self) -> int:
         """Get next message sequence number"""
@@ -399,8 +512,9 @@ class ArchitectureWebSocketStream:
             self.normal_priority_queue.append(alert_message)
     
     def get_stream_metrics(self) -> Dict[str, Any]:
-        """Get WebSocket stream performance metrics"""
+        """Get enhanced WebSocket stream performance metrics"""
         uptime = (datetime.now() - self.stream_metrics['start_time']).total_seconds()
+        messages_per_second = self.stream_metrics['messages_sent'] / max(uptime, 1)
         
         return {
             'running': self.running,
@@ -408,11 +522,26 @@ class ArchitectureWebSocketStream:
             'total_connected': self.stream_metrics['clients_connected'],
             'total_disconnected': self.stream_metrics['clients_disconnected'],
             'messages_sent': self.stream_metrics['messages_sent'],
+            'messages_batched': self.stream_metrics['messages_batched'],
+            'messages_per_second': round(messages_per_second, 2),
+            'avg_response_time_ms': round(self.stream_metrics['avg_response_time'] * 1000, 2),
+            'peak_concurrent_clients': self.stream_metrics['peak_concurrent_clients'],
+            'compression_ratio': round(self.stream_metrics['compression_ratio'], 3),
             'errors': self.stream_metrics['errors'],
             'uptime_seconds': uptime,
             'websockets_available': WEBSOCKETS_AVAILABLE,
             'port': self.port,
-            'update_interval': self.update_interval
+            'update_interval': self.update_interval,
+            'batch_queue_size': len(self.batch_queue),
+            'high_priority_queue_size': len(self.high_priority_queue),
+            'normal_priority_queue_size': len(self.normal_priority_queue),
+            'optimizations': {
+                'compression_enabled': self.stream_config.get('enable_compression', False),
+                'batching_enabled': self.stream_config.get('enable_batching', False),
+                'max_batch_size': self.max_batch_size,
+                'batch_timeout_seconds': self.batch_timeout,
+                'heartbeat_interval': self.stream_config.get('heartbeat_interval', 30)
+            }
         }
     
     def stop_streaming(self):

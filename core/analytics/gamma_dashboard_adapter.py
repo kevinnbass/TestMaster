@@ -63,6 +63,16 @@ from .predictive_analytics_engine import (
     PredictiveAnalyticsEngine,
     create_predictive_engine
 )
+from .performance_profiler import (
+    PerformanceProfiler,
+    create_performance_profiler
+)
+from .custom_visualization_builder import (
+    CustomVisualizationBuilder,
+    create_custom_visualization_builder,
+    ChartType,
+    DataSource
+)
 
 
 class GammaDashboardAdapter:
@@ -82,6 +92,8 @@ class GammaDashboardAdapter:
         """
         self.analytics_service = analytics_service or create_personal_analytics_service()
         self.predictive_engine = create_predictive_engine()
+        self.performance_profiler = create_performance_profiler()
+        self.visualization_builder = create_custom_visualization_builder()
         self.port = 5003  # Gamma's main dashboard port
         self.panel_config = self._initialize_panel_config()
         self.cache = {}
@@ -89,6 +101,9 @@ class GammaDashboardAdapter:
         
         # Initialize predictive analytics with current data
         self._initialize_predictions()
+        
+        # Initialize default custom charts
+        self._initialize_custom_charts()
         
     def _initialize_panel_config(self) -> Dict[str, Any]:
         """Initialize panel configuration for 2x2 grid layout."""
@@ -118,6 +133,34 @@ class GammaDashboardAdapter:
             logger = logging.getLogger(__name__)
             logger.warning(f"Could not initialize predictions: {e}")
     
+    def _initialize_custom_charts(self):
+        """Initialize default custom charts for the dashboard."""
+        try:
+            # Create default dashboard charts from templates
+            self.default_chart_ids = {
+                'productivity_trend': self.visualization_builder.create_chart_from_template(
+                    "productivity_trend",
+                    "Personal Productivity Trend"
+                ),
+                'code_quality_radar': self.visualization_builder.create_chart_from_template(
+                    "code_quality_radar", 
+                    "Code Quality Overview"
+                ),
+                'performance_gauge': self.visualization_builder.create_chart_from_template(
+                    "performance_gauge",
+                    "System Performance Status"
+                )
+            }
+            
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.info(f"Initialized {len(self.default_chart_ids)} default custom charts")
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(f"Could not initialize custom charts: {e}")
+            self.default_chart_ids = {}
+    
     def get_dashboard_panel_data(self) -> Dict[str, Any]:
         """
         Format personal analytics data for Gamma's 2x2 dashboard panel.
@@ -125,19 +168,33 @@ class GammaDashboardAdapter:
         Returns:
             Formatted panel data compatible with Gamma's dashboard grid
         """
-        # Check cache first
-        cache_key = 'panel_data'
-        if self._is_cache_valid(cache_key):
-            return self.cache[cache_key]['data']
-        
-        # Get fresh analytics data
-        analytics = self.analytics_service.get_personal_analytics_data()
-        
-        # Update predictive engine with new data
-        self.predictive_engine.add_historical_point(analytics)
-        
-        # Get predictions
-        predictions = self.predictive_engine.get_dashboard_predictions()
+        # Start performance timing
+        with self.performance_profiler.time_component('dashboard_panel_generation'):
+            # Check cache first
+            cache_key = 'panel_data'
+            if self._is_cache_valid(cache_key):
+                # Record cache hit
+                self.performance_profiler.record_cache_performance(
+                    'panel_data', 100.0, 1, 1
+                )
+                return self.cache[cache_key]['data']
+            
+            # Record cache miss
+            self.performance_profiler.record_cache_performance(
+                'panel_data', 0.0, 1, 0
+            )
+            
+            # Get fresh analytics data
+            with self.performance_profiler.time_component('analytics_data_generation'):
+                analytics = self.analytics_service.get_personal_analytics_data()
+            
+            # Update predictive engine with new data
+            with self.performance_profiler.time_component('predictive_engine_update'):
+                self.predictive_engine.add_historical_point(analytics)
+            
+            # Get predictions
+            with self.performance_profiler.time_component('predictive_engine_inference'):
+                predictions = self.predictive_engine.get_dashboard_predictions()
         
         # Format for dashboard panel
         panel_data = {
@@ -154,6 +211,61 @@ class GammaDashboardAdapter:
         }
         
         return panel_data
+    
+    def get_performance_monitoring_data(self) -> Dict[str, Any]:
+        """
+        Get performance monitoring data for dashboard display.
+        
+        Returns:
+            Formatted performance data compatible with Gamma's dashboard
+        """
+        # Get performance data from profiler
+        performance_data = self.performance_profiler.get_dashboard_performance_data()
+        
+        # Format for Gamma dashboard integration
+        return {
+            'id': 'agent-e-performance-monitor',
+            'title': 'Performance Monitor',
+            'type': 'performance_dashboard',
+            'position': {'x': 4, 'y': 1},  # Right side of dashboard
+            'size': {'width': 2, 'height': 2},
+            'data': performance_data,
+            'timestamp': datetime.now().isoformat(),
+            'status': 'monitoring'
+        }
+    
+    def get_combined_dashboard_data(self) -> Dict[str, Any]:
+        """
+        Get combined analytics and performance data for complete dashboard view.
+        
+        Returns:
+            Combined data including analytics and performance monitoring
+        """
+        start_time = time.time()
+        
+        # Get analytics panel data
+        analytics_panel = self.get_dashboard_panel_data()
+        
+        # Get performance monitoring data
+        performance_panel = self.get_performance_monitoring_data()
+        
+        # Record API response time
+        response_time_ms = (time.time() - start_time) * 1000
+        self.performance_profiler.record_api_response(
+            '/api/personal-analytics/combined',
+            response_time_ms,
+            200,
+            len(str(analytics_panel)) + len(str(performance_panel))
+        )
+        
+        return {
+            'panels': [analytics_panel, performance_panel],
+            'summary': {
+                'total_panels': 2,
+                'response_time_ms': round(response_time_ms, 2),
+                'timestamp': datetime.now().isoformat()
+            }
+        }
     
     def _format_for_panel(self, analytics: Dict[str, Any], predictions: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
@@ -382,6 +494,16 @@ class GammaDashboardAdapter:
                 'method': 'GET',
                 'handler': self.get_dashboard_panel_data,
                 'description': 'Formatted panel data for dashboard grid'
+            },
+            '/api/personal-analytics/performance': {
+                'method': 'GET',
+                'handler': self.get_performance_monitoring_data,
+                'description': 'Performance monitoring dashboard data'
+            },
+            '/api/personal-analytics/combined': {
+                'method': 'GET',
+                'handler': self.get_combined_dashboard_data,
+                'description': 'Combined analytics and performance monitoring data'
             }
         }
     

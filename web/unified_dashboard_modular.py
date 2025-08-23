@@ -212,7 +212,137 @@ class UnifiedDashboardModular:
                 'performance_status': status,
                 'timestamp': datetime.now().isoformat()
             })
+        
+        # Hour 7: Advanced Visualization Enhancement Endpoints
+        @self.app.route('/api/visualization/interactive-config', methods=['POST'])
+        def interactive_visualization_config():
+            """Generate advanced interactive visualization configuration."""
+            data = request.json
+            chart_type = data.get('chart_type', 'intelligent_dashboard')
+            data_sources = data.get('data_sources', [])
+            user_context = data.get('user_context', {})
+            interaction_requirements = data.get('interactions', [])
+            
+            # Generate contextual interactions based on data relationships
+            relationships = self._analyze_data_relationships(data_sources)
+            interactions = self.visualization_engine.generate_contextual_interactions(
+                data_sources, relationships, user_context
+            )
+            
+            config = {
+                'chart_config': self.visualization_engine.create_interactive_chart_config(
+                    chart_type, data_sources, user_context, interaction_requirements
+                ),
+                'interactions': interactions,
+                'relationships': relationships,
+                'adaptive_features': self._generate_adaptive_features(user_context)
+            }
+            
+            return jsonify({
+                'status': 'success',
+                'config': config,
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        @self.app.route('/api/visualization/drill-down', methods=['POST'])
+        def visualization_drill_down():
+            """Handle intelligent drill-down requests."""
+            data = request.json
+            current_level = data.get('current_level', 0)
+            selected_data_point = data.get('data_point', {})
+            user_context = data.get('user_context', {})
+            
+            # Use visualization engine to determine optimal drill-down path
+            drill_down_config = self.visualization_engine.create_drill_down_visualization(
+                current_level, selected_data_point, user_context
+            )
+            
+            return jsonify({
+                'status': 'success',
+                'drill_down_config': drill_down_config,
+                'breadcrumb_path': drill_down_config.get('breadcrumb_path', []),
+                'available_actions': drill_down_config.get('available_actions', []),
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        @self.app.route('/api/visualization/adaptive-layout', methods=['POST'])
+        def adaptive_visualization_layout():
+            """Generate adaptive layout based on device and user context."""
+            data = request.json
+            device_info = data.get('device_info', {})
+            user_preferences = data.get('preferences', {})
+            dashboard_data = data.get('dashboard_data', {})
+            
+            layout_config = self.visualization_engine.generate_adaptive_layout(
+                device_info, user_preferences, dashboard_data
+            )
+            
+            return jsonify({
+                'status': 'success',
+                'layout': layout_config,
+                'responsive_breakpoints': layout_config.get('breakpoints', {}),
+                'optimization_applied': layout_config.get('optimizations', []),
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        @self.app.route('/api/visualization/intelligence-insights')
+        def visualization_intelligence_insights():
+            """Get AI-powered visualization insights and recommendations."""
+            # Get current system data for analysis
+            system_metrics = self.performance_monitor.get_metrics()
+            contextual_data = self.contextual_engine.get_current_analysis_state()
+            unified_data = self.data_integrator.get_unified_data()
+            
+            # Generate visualization intelligence insights
+            insights = self.visualization_engine.generate_visualization_insights(
+                system_metrics, contextual_data, unified_data
+            )
+            
+            return jsonify({
+                'status': 'success',
+                'insights': insights,
+                'recommended_visualizations': insights.get('recommendations', []),
+                'optimization_opportunities': insights.get('optimizations', []),
+                'timestamp': datetime.now().isoformat()
+            })
     
+    def _analyze_data_relationships(self, data_sources):
+        """Analyze relationships between data sources for intelligent visualization."""
+        relationships = {
+            'correlations': [],
+            'hierarchies': [],
+            'temporal_connections': [],
+            'categorical_groupings': []
+        }
+        
+        # Mock relationship analysis for demonstration
+        if len(data_sources) > 1:
+            relationships['correlations'].append({
+                'source_a': 'performance_metrics',
+                'source_b': 'user_behavior',
+                'strength': 0.75,
+                'type': 'positive'
+            })
+        
+        return relationships
+    
+    def _generate_adaptive_features(self, user_context):
+        """Generate adaptive features based on user context."""
+        features = []
+        
+        user_role = user_context.get('role', 'general')
+        device = user_context.get('device', 'desktop')
+        
+        if user_role in ['analyst', 'technical']:
+            features.extend(['advanced_tooltips', 'statistical_overlays', 'data_export'])
+        
+        if device == 'mobile':
+            features.extend(['gesture_navigation', 'simplified_ui', 'touch_optimized'])
+        elif device == 'tablet':
+            features.extend(['touch_navigation', 'adaptive_sizing', 'orientation_aware'])
+        
+        return features
+
     def setup_socketio_events(self):
         """Setup WebSocket event handlers."""
         

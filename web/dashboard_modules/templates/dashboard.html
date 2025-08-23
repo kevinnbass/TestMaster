@@ -339,6 +339,40 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Hour 7: Advanced Visualization Intelligence Card -->
+            <div class="card">
+                <h2>📊 Advanced Visualization Intelligence</h2>
+                <div id="visualizationIntelligence" class="loading">
+                    <div class="metric">
+                        <span class="metric-label">AI Recommendations</span>
+                        <span class="metric-value" id="aiRecommendations">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Layout Optimization</span>
+                        <span class="metric-value" id="layoutOptimization">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Interactive Features</span>
+                        <span class="metric-value" id="interactiveFeatures">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Data Quality Score</span>
+                        <span class="metric-value">
+                            <span id="dataQualityScore">--</span>
+                            <span id="dataQualityStatus" class="status-indicator"></span>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="api-testing">
+                    <h3>Advanced Visualization Controls:</h3>
+                    <button class="api-button" onclick="testInteractiveConfig()">Test Interactive Config</button>
+                    <button class="api-button" onclick="testAdaptiveLayout()">Test Adaptive Layout</button>
+                    <button class="api-button" onclick="testVisualizationInsights()">Get AI Insights</button>
+                    <div id="visualizationResponse" class="api-response" style="display: none;"></div>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -376,6 +410,7 @@
                 await this.fetchBehaviorPredictions();
                 await this.fetchUnifiedData();
                 await this.fetchPerformanceMetrics();
+                await this.fetchVisualizationIntelligence();
                 
                 // Set up periodic updates
                 setInterval(() => this.fetchHealthData(), 5000);
@@ -383,6 +418,7 @@
                 setInterval(() => this.fetchBehaviorPredictions(), 15000);
                 setInterval(() => this.fetchUnifiedData(), 8000);
                 setInterval(() => this.fetchPerformanceMetrics(), 3000);
+                setInterval(() => this.fetchVisualizationIntelligence(), 12000);
             }
             
             requestInitialData() {
@@ -561,6 +597,50 @@
                 }
             }
             
+            async fetchVisualizationIntelligence() {
+                try {
+                    const response = await fetch('/api/visualization/intelligence-insights');
+                    const data = await response.json();
+                    
+                    if (data.insights) {
+                        const insights = data.insights;
+                        
+                        // Update AI recommendations count
+                        document.getElementById('aiRecommendations').textContent = 
+                            insights.recommendations ? insights.recommendations.length : '0';
+                        
+                        // Update layout optimization status
+                        const optimizations = insights.optimizations || [];
+                        document.getElementById('layoutOptimization').textContent = 
+                            optimizations.length > 0 ? `${optimizations.length} Available` : 'Optimal';
+                        
+                        // Update interactive features count
+                        const uxImprovements = insights.user_experience_improvements || [];
+                        document.getElementById('interactiveFeatures').textContent = 
+                            uxImprovements.length > 0 ? `${uxImprovements.length} Suggested` : 'Active';
+                        
+                        // Update data quality score
+                        const dataQualityIssues = insights.data_quality_issues || [];
+                        const qualityScore = Math.max(0, 100 - (dataQualityIssues.length * 20));
+                        document.getElementById('dataQualityScore').textContent = `${qualityScore}%`;
+                        
+                        const qualityStatusEl = document.getElementById('dataQualityStatus');
+                        if (qualityScore >= 80) {
+                            qualityStatusEl.className = 'status-indicator status-excellent';
+                        } else if (qualityScore >= 60) {
+                            qualityStatusEl.className = 'status-indicator status-good';
+                        } else {
+                            qualityStatusEl.className = 'status-indicator status-needs_attention';
+                        }
+                    }
+                    
+                    document.getElementById('visualizationIntelligence').classList.remove('loading');
+                } catch (error) {
+                    console.error('Error fetching visualization intelligence:', error);
+                    document.getElementById('visualizationIntelligence').classList.remove('loading');
+                }
+            }
+            
             updateContextualAnalysis(analysis) {
                 if (!analysis) return;
                 
@@ -642,6 +722,75 @@
             const responseEl = document.getElementById('apiResponse');
             responseEl.style.display = 'block';
             responseEl.textContent = `${title}:\n${JSON.stringify(data, null, 2)}`;
+        }
+        
+        function showVisualizationResponse(title, data) {
+            const responseEl = document.getElementById('visualizationResponse');
+            responseEl.style.display = 'block';
+            responseEl.textContent = `${title}:\n${JSON.stringify(data, null, 2)}`;
+        }
+        
+        // Hour 7: Advanced Visualization Testing Functions
+        async function testInteractiveConfig() {
+            try {
+                const response = await fetch('/api/visualization/interactive-config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chart_type: 'intelligent_dashboard',
+                        data_sources: [
+                            { type: 'performance_metrics', volume: 100 },
+                            { type: 'user_behavior', volume: 250 }
+                        ],
+                        user_context: { role: 'analyst', device: 'desktop' },
+                        interactions: ['drill_down', 'smart_tooltips', 'correlation_highlights']
+                    })
+                });
+                const data = await response.json();
+                showVisualizationResponse('Interactive Configuration Test', data);
+            } catch (error) {
+                showVisualizationResponse('Interactive Configuration Test', { error: error.message });
+            }
+        }
+        
+        async function testAdaptiveLayout() {
+            try {
+                const response = await fetch('/api/visualization/adaptive-layout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        device_info: { 
+                            type: 'desktop', 
+                            screen_size: 'large',
+                            viewport: { width: 1920, height: 1080 }
+                        },
+                        preferences: { 
+                            compact_mode: false, 
+                            high_contrast: false,
+                            animation_enabled: true
+                        },
+                        dashboard_data: {
+                            component_count: 8,
+                            data_complexity: 'medium',
+                            update_frequency: 'high'
+                        }
+                    })
+                });
+                const data = await response.json();
+                showVisualizationResponse('Adaptive Layout Test', data);
+            } catch (error) {
+                showVisualizationResponse('Adaptive Layout Test', { error: error.message });
+            }
+        }
+        
+        async function testVisualizationInsights() {
+            try {
+                const response = await fetch('/api/visualization/intelligence-insights');
+                const data = await response.json();
+                showVisualizationResponse('Visualization AI Insights', data);
+            } catch (error) {
+                showVisualizationResponse('Visualization AI Insights', { error: error.message });
+            }
         }
         
         // Initialize dashboard when page loads

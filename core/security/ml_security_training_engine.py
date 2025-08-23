@@ -845,8 +845,41 @@ class MLSecurityTrainingEngine:
             
             algorithm_config = self.algorithm_configs[model.algorithm]
             
-            if hyperparameter_tuning:
-                # Perform hyperparameter tuning
+            # Enhanced model creation with ensemble and deep learning support
+            if 'ensemble_type' in algorithm_config:
+                # Advanced ensemble model creation
+                training_job.current_step = 'ensemble_creation'
+                training_job.progress_percentage = 50.0
+                
+                best_model, best_params = self._create_advanced_ensemble_model(
+                    algorithm_config,
+                    X_train_processed,
+                    y_train,
+                    hyperparameter_tuning
+                )
+                
+                model.hyperparameters = best_params
+                training_job.training_logs.append(f"Advanced ensemble model created: {algorithm_config['ensemble_type']}")
+                training_job.training_logs.append(f"Best ensemble parameters: {best_params}")
+                
+            elif 'model_type' in algorithm_config and algorithm_config['model_type'] in ['deep_learning', 'sequence_learning', 'transformer_attention']:
+                # Advanced deep learning model creation
+                training_job.current_step = 'deep_learning_creation'
+                training_job.progress_percentage = 50.0
+                
+                best_model, best_params = self._create_advanced_deep_learning_model(
+                    algorithm_config,
+                    X_train_processed,
+                    y_train,
+                    hyperparameter_tuning
+                )
+                
+                model.hyperparameters = best_params
+                training_job.training_logs.append(f"Advanced deep learning model created: {algorithm_config['architecture']}")
+                training_job.training_logs.append(f"Best deep learning parameters: {best_params}")
+                
+            elif hyperparameter_tuning:
+                # Traditional hyperparameter tuning
                 training_job.current_step = 'hyperparameter_tuning'
                 training_job.progress_percentage = 50.0
                 
@@ -1047,6 +1080,377 @@ class MLSecurityTrainingEngine:
             # Fall back to default parameters
             model = algorithm_config['class'](**algorithm_config['default_params'])
             return model, algorithm_config['default_params']
+    
+    def _create_advanced_ensemble_model(self,
+                                       algorithm_config: Dict[str, Any],
+                                       X_train: Any,
+                                       y_train: Any,
+                                       hyperparameter_tuning: bool = True) -> Tuple[Any, Dict[str, Any]]:
+        """Create advanced ensemble model with sophisticated algorithms"""
+        try:
+            ensemble_type = algorithm_config['ensemble_type']
+            
+            if ensemble_type == 'voting':
+                return self._create_voting_ensemble(algorithm_config, X_train, y_train, hyperparameter_tuning)
+            elif ensemble_type == 'stacking':
+                return self._create_stacking_ensemble(algorithm_config, X_train, y_train, hyperparameter_tuning)
+            else:
+                # Fall back to regular ensemble algorithm
+                model_class = algorithm_config['class']
+                if hyperparameter_tuning and 'hyperparameter_grid' in algorithm_config:
+                    return self._perform_hyperparameter_tuning(algorithm_config, X_train, y_train)
+                else:
+                    model = model_class(**algorithm_config['default_params'])
+                    return model, algorithm_config['default_params']
+                    
+        except Exception as e:
+            logger.error(f"Error creating advanced ensemble model: {e}")
+            # Fall back to random forest
+            model = RandomForestClassifier(n_estimators=100, random_state=42)
+            return model, {'n_estimators': 100, 'random_state': 42}
+    
+    def _create_voting_ensemble(self,
+                               algorithm_config: Dict[str, Any],
+                               X_train: Any,
+                               y_train: Any,
+                               hyperparameter_tuning: bool) -> Tuple[Any, Dict[str, Any]]:
+        """Create voting ensemble from multiple base estimators"""
+        try:
+            base_estimator_names = algorithm_config.get('base_estimators', ['random_forest', 'gradient_boosting'])
+            estimators = []
+            
+            # Create base estimators
+            for estimator_name in base_estimator_names:
+                if estimator_name in self.algorithm_configs:
+                    estimator_config = self.algorithm_configs[estimator_name]
+                    if 'class' in estimator_config:
+                        estimator = estimator_config['class'](**estimator_config['default_params'])
+                        estimators.append((estimator_name, estimator))
+            
+            # Create voting classifier
+            voting_params = algorithm_config['default_params'].copy()
+            voting_classifier = VotingClassifier(
+                estimators=estimators,
+                **voting_params
+            )
+            
+            if hyperparameter_tuning and 'hyperparameter_grid' in algorithm_config:
+                # Perform hyperparameter tuning for voting classifier
+                param_grid = algorithm_config['hyperparameter_grid']
+                grid_search = GridSearchCV(
+                    voting_classifier,
+                    param_grid,
+                    cv=3,
+                    scoring='f1_weighted',
+                    n_jobs=-1
+                )
+                grid_search.fit(X_train, y_train)
+                return grid_search.best_estimator_, grid_search.best_params_
+            else:
+                return voting_classifier, voting_params
+                
+        except Exception as e:
+            logger.error(f"Error creating voting ensemble: {e}")
+            # Fall back to single estimator
+            model = RandomForestClassifier(n_estimators=100, random_state=42)
+            return model, {'fallback': 'random_forest'}
+    
+    def _create_stacking_ensemble(self,
+                                 algorithm_config: Dict[str, Any],
+                                 X_train: Any,
+                                 y_train: Any,
+                                 hyperparameter_tuning: bool) -> Tuple[Any, Dict[str, Any]]:
+        """Create stacking ensemble with meta-learner"""
+        try:
+            base_estimator_names = algorithm_config.get('base_estimators', ['random_forest', 'gradient_boosting'])
+            meta_learner_name = algorithm_config.get('meta_learner', 'logistic_regression')
+            
+            # Create base estimators
+            estimators = []
+            for estimator_name in base_estimator_names:
+                if estimator_name in self.algorithm_configs:
+                    estimator_config = self.algorithm_configs[estimator_name]
+                    if 'class' in estimator_config:
+                        estimator = estimator_config['class'](**estimator_config['default_params'])
+                        estimators.append((estimator_name, estimator))
+            
+            # Create meta-learner
+            final_estimator = None
+            if meta_learner_name in self.algorithm_configs:
+                meta_config = self.algorithm_configs[meta_learner_name]
+                if 'class' in meta_config:
+                    final_estimator = meta_config['class'](**meta_config['default_params'])
+            
+            # Create stacking classifier
+            stacking_params = algorithm_config['default_params'].copy()
+            stacking_classifier = StackingClassifier(
+                estimators=estimators,
+                final_estimator=final_estimator,
+                **stacking_params
+            )
+            
+            if hyperparameter_tuning and 'hyperparameter_grid' in algorithm_config:
+                # Perform hyperparameter tuning for stacking classifier
+                param_grid = algorithm_config['hyperparameter_grid']
+                grid_search = GridSearchCV(
+                    stacking_classifier,
+                    param_grid,
+                    cv=3,
+                    scoring='f1_weighted',
+                    n_jobs=-1
+                )
+                grid_search.fit(X_train, y_train)
+                return grid_search.best_estimator_, grid_search.best_params_
+            else:
+                return stacking_classifier, stacking_params
+                
+        except Exception as e:
+            logger.error(f"Error creating stacking ensemble: {e}")
+            # Fall back to single estimator
+            model = GradientBoostingClassifier(n_estimators=100, random_state=42)
+            return model, {'fallback': 'gradient_boosting'}
+    
+    def _create_advanced_deep_learning_model(self,
+                                            algorithm_config: Dict[str, Any],
+                                            X_train: Any,
+                                            y_train: Any,
+                                            hyperparameter_tuning: bool = True) -> Tuple[Any, Dict[str, Any]]:
+        """Create advanced deep learning model with TensorFlow"""
+        try:
+            if not TENSORFLOW_AVAILABLE:
+                logger.warning("TensorFlow not available - falling back to neural network")
+                # Fall back to sklearn neural network
+                model = MLPClassifier(
+                    hidden_layer_sizes=(256, 128, 64),
+                    max_iter=1000,
+                    early_stopping=True,
+                    random_state=42
+                )
+                return model, {'fallback': 'sklearn_mlp'}
+            
+            model_type = algorithm_config.get('model_type', 'deep_learning')
+            architecture = algorithm_config.get('architecture', 'dense_layers')
+            
+            if architecture == 'dense_layers':
+                return self._create_dense_neural_network(algorithm_config, X_train, y_train, hyperparameter_tuning)
+            elif architecture == 'lstm_with_attention':
+                return self._create_lstm_attention_network(algorithm_config, X_train, y_train, hyperparameter_tuning)
+            elif architecture == 'multi_head_attention':
+                return self._create_transformer_network(algorithm_config, X_train, y_train, hyperparameter_tuning)
+            else:
+                # Fall back to dense network
+                return self._create_dense_neural_network(algorithm_config, X_train, y_train, hyperparameter_tuning)
+                
+        except Exception as e:
+            logger.error(f"Error creating deep learning model: {e}")
+            # Fall back to sklearn neural network
+            model = MLPClassifier(hidden_layer_sizes=(100, 50), max_iter=1000, random_state=42)
+            return model, {'fallback': 'sklearn_mlp'}
+    
+    def _create_dense_neural_network(self,
+                                    algorithm_config: Dict[str, Any],
+                                    X_train: Any,
+                                    y_train: Any,
+                                    hyperparameter_tuning: bool) -> Tuple[Any, Dict[str, Any]]:
+        """Create dense neural network with TensorFlow"""
+        try:
+            import tensorflow as tf
+            from tensorflow.keras.models import Sequential
+            from tensorflow.keras.layers import Dense, Dropout
+            from tensorflow.keras.optimizers import Adam
+            from tensorflow.keras.callbacks import EarlyStopping
+            
+            params = algorithm_config['default_params'].copy()
+            
+            # Build model
+            model = Sequential()
+            hidden_layers = params.get('hidden_layers', [256, 128, 64])
+            dropout_rate = params.get('dropout_rate', 0.3)
+            
+            # Input layer
+            model.add(Dense(hidden_layers[0], activation='relu', input_shape=(X_train.shape[1],)))
+            model.add(Dropout(dropout_rate))
+            
+            # Hidden layers
+            for units in hidden_layers[1:]:
+                model.add(Dense(units, activation='relu'))
+                model.add(Dropout(dropout_rate))
+            
+            # Output layer
+            num_classes = len(np.unique(y_train))
+            if num_classes == 2:
+                model.add(Dense(1, activation='sigmoid'))
+                loss = 'binary_crossentropy'
+            else:
+                model.add(Dense(num_classes, activation='softmax'))
+                loss = 'sparse_categorical_crossentropy'
+            
+            # Compile model
+            optimizer = Adam(learning_rate=params.get('learning_rate', 0.001))
+            model.compile(optimizer=optimizer, loss=loss, metrics=['accuracy'])
+            
+            # Training parameters
+            batch_size = params.get('batch_size', 32)
+            epochs = params.get('epochs', 100)
+            early_stopping = EarlyStopping(
+                patience=params.get('early_stopping_patience', 10),
+                restore_best_weights=True
+            )
+            
+            # Train model
+            model.fit(
+                X_train, y_train,
+                batch_size=batch_size,
+                epochs=epochs,
+                validation_split=0.2,
+                callbacks=[early_stopping],
+                verbose=0
+            )
+            
+            return model, params
+            
+        except Exception as e:
+            logger.error(f"Error creating dense neural network: {e}")
+            # Fall back to sklearn
+            model = MLPClassifier(hidden_layer_sizes=(256, 128), max_iter=1000, random_state=42)
+            return model, {'fallback': 'sklearn_mlp'}
+    
+    def _create_lstm_attention_network(self,
+                                      algorithm_config: Dict[str, Any],
+                                      X_train: Any,
+                                      y_train: Any,
+                                      hyperparameter_tuning: bool) -> Tuple[Any, Dict[str, Any]]:
+        """Create LSTM network with attention mechanism"""
+        try:
+            import tensorflow as tf
+            from tensorflow.keras.models import Model
+            from tensorflow.keras.layers import Input, LSTM, Dense, Attention, Dropout
+            
+            params = algorithm_config['default_params'].copy()
+            
+            # Reshape data for sequence learning if needed
+            if len(X_train.shape) == 2:
+                X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
+            
+            # Build LSTM with attention
+            inputs = Input(shape=(X_train.shape[1], X_train.shape[2]))
+            
+            lstm_units = params.get('lstm_units', [64, 32])
+            attention_units = params.get('attention_units', 32)
+            
+            # LSTM layers
+            lstm_out = inputs
+            for units in lstm_units:
+                lstm_out = LSTM(units, return_sequences=True)(lstm_out)
+                lstm_out = Dropout(params.get('dropout_rate', 0.2))(lstm_out)
+            
+            # Attention mechanism
+            attention_layer = Attention()
+            attended = attention_layer([lstm_out, lstm_out])
+            
+            # Global average pooling
+            pooled = tf.keras.layers.GlobalAveragePooling1D()(attended)
+            
+            # Output layer
+            num_classes = len(np.unique(y_train))
+            if num_classes == 2:
+                outputs = Dense(1, activation='sigmoid')(pooled)
+                loss = 'binary_crossentropy'
+            else:
+                outputs = Dense(num_classes, activation='softmax')(pooled)
+                loss = 'sparse_categorical_crossentropy'
+            
+            model = Model(inputs=inputs, outputs=outputs)
+            model.compile(optimizer='adam', loss=loss, metrics=['accuracy'])
+            
+            # Train model
+            model.fit(
+                X_train, y_train,
+                batch_size=params.get('batch_size', 32),
+                epochs=params.get('epochs', 50),
+                validation_split=0.2,
+                verbose=0
+            )
+            
+            return model, params
+            
+        except Exception as e:
+            logger.error(f"Error creating LSTM attention network: {e}")
+            # Fall back to sklearn
+            model = MLPClassifier(hidden_layer_sizes=(64, 32), max_iter=1000, random_state=42)
+            return model, {'fallback': 'sklearn_mlp'}
+    
+    def _create_transformer_network(self,
+                                   algorithm_config: Dict[str, Any],
+                                   X_train: Any,
+                                   y_train: Any,
+                                   hyperparameter_tuning: bool) -> Tuple[Any, Dict[str, Any]]:
+        """Create transformer network with multi-head attention"""
+        try:
+            import tensorflow as tf
+            from tensorflow.keras.models import Model
+            from tensorflow.keras.layers import Input, Dense, MultiHeadAttention, LayerNormalization, Dropout
+            
+            params = algorithm_config['default_params'].copy()
+            
+            # Prepare input
+            if len(X_train.shape) == 2:
+                X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
+            
+            inputs = Input(shape=(X_train.shape[1], X_train.shape[2]))
+            
+            # Multi-head attention layers
+            num_heads = params.get('num_heads', 8)
+            key_dim = params.get('key_dim', 64)
+            ff_dim = params.get('ff_dim', 512)
+            num_layers = params.get('num_layers', 4)
+            
+            x = inputs
+            for _ in range(num_layers):
+                # Multi-head attention
+                attention_output = MultiHeadAttention(
+                    num_heads=num_heads,
+                    key_dim=key_dim
+                )(x, x)
+                attention_output = Dropout(params.get('dropout_rate', 0.1))(attention_output)
+                x = LayerNormalization()(x + attention_output)
+                
+                # Feed forward
+                ff_output = Dense(ff_dim, activation='relu')(x)
+                ff_output = Dense(X_train.shape[2])(ff_output)
+                ff_output = Dropout(params.get('dropout_rate', 0.1))(ff_output)
+                x = LayerNormalization()(x + ff_output)
+            
+            # Global pooling and output
+            pooled = tf.keras.layers.GlobalAveragePooling1D()(x)
+            
+            num_classes = len(np.unique(y_train))
+            if num_classes == 2:
+                outputs = Dense(1, activation='sigmoid')(pooled)
+                loss = 'binary_crossentropy'
+            else:
+                outputs = Dense(num_classes, activation='softmax')(pooled)
+                loss = 'sparse_categorical_crossentropy'
+            
+            model = Model(inputs=inputs, outputs=outputs)
+            model.compile(optimizer='adam', loss=loss, metrics=['accuracy'])
+            
+            # Train model
+            model.fit(
+                X_train, y_train,
+                batch_size=params.get('batch_size', 32),
+                epochs=params.get('epochs', 100),
+                validation_split=0.2,
+                verbose=0
+            )
+            
+            return model, params
+            
+        except Exception as e:
+            logger.error(f"Error creating transformer network: {e}")
+            # Fall back to sklearn
+            model = MLPClassifier(hidden_layer_sizes=(256, 128), max_iter=1000, random_state=42)
+            return model, {'fallback': 'sklearn_mlp'}
     
     def _calculate_performance_metrics(self, y_true: Any, y_pred: Any) -> Dict[str, float]:
         """Calculate comprehensive performance metrics"""

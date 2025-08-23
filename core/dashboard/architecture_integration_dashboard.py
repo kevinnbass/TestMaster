@@ -23,6 +23,14 @@ from web.realtime.websocket_architecture_stream import get_websocket_stream
 from core.templates.template_migration_system import get_migration_system
 from core.intelligence.production_activator import get_production_activator
 
+# Import predictive analytics
+try:
+    from core.dashboard.predictive_analytics_integration import get_predictive_analytics_engine
+    PREDICTIVE_ANALYTICS_AVAILABLE = True
+except ImportError as e:
+    PREDICTIVE_ANALYTICS_AVAILABLE = False
+    print(f"Predictive analytics not available: {e}")
+
 
 class ArchitectureDashboard:
     """
@@ -43,6 +51,12 @@ class ArchitectureDashboard:
         self.stream = get_websocket_stream()
         self.migration = get_migration_system()
         self.activator = get_production_activator()
+        
+        # Predictive analytics
+        if PREDICTIVE_ANALYTICS_AVAILABLE:
+            self.analytics_engine = get_predictive_analytics_engine()
+        else:
+            self.analytics_engine = None
         
         # Flask application
         self.app = Flask(__name__)
@@ -183,6 +197,77 @@ class ArchitectureDashboard:
                     'status': 'success',
                     'report': report,
                     'generated_at': datetime.now().isoformat()
+                })
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
+        
+        # Predictive Analytics Endpoints
+        @self.app.route('/api/predictive-metrics')
+        def api_predictive_metrics():
+            """Get predictive analytics metrics"""
+            if not self.analytics_engine:
+                return jsonify({'error': 'Predictive analytics not available'}), 503
+            
+            try:
+                metrics = self.analytics_engine.generate_predictive_metrics()
+                return jsonify({
+                    'status': 'success',
+                    'predictive_metrics': [
+                        {
+                            'name': m.name,
+                            'current_value': m.current_value,
+                            'predicted_value': m.predicted_value,
+                            'trend_direction': m.trend_direction,
+                            'confidence': m.confidence.value,
+                            'prediction_horizon': m.prediction_horizon,
+                            'factors': m.factors,
+                            'timestamp': m.timestamp.isoformat()
+                        } for m in metrics
+                    ],
+                    'generated_at': datetime.now().isoformat()
+                })
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
+        
+        @self.app.route('/api/predictions')
+        def api_predictions():
+            """Get system predictions"""
+            if not self.analytics_engine:
+                return jsonify({'error': 'Predictive analytics not available'}), 503
+            
+            try:
+                predictions = self.analytics_engine.generate_predictions()
+                return jsonify({
+                    'status': 'success',
+                    'predictions': [
+                        {
+                            'type': p.prediction_type.value,
+                            'target_metric': p.target_metric,
+                            'probability': p.probability,
+                            'confidence': p.confidence.value,
+                            'time_to_event': p.time_to_event,
+                            'factors': p.contributing_factors,
+                            'actions': p.recommended_actions,
+                            'severity': p.severity,
+                            'timestamp': p.timestamp.isoformat()
+                        } for p in predictions
+                    ],
+                    'generated_at': datetime.now().isoformat()
+                })
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
+        
+        @self.app.route('/api/analytics-dashboard')
+        def api_analytics_dashboard():
+            """Get comprehensive analytics dashboard data"""
+            if not self.analytics_engine:
+                return jsonify({'error': 'Predictive analytics not available'}), 503
+            
+            try:
+                dashboard_data = self.analytics_engine.get_analytics_dashboard_data()
+                return jsonify({
+                    'status': 'success',
+                    'data': dashboard_data
                 })
             except Exception as e:
                 return jsonify({'error': str(e)}), 500

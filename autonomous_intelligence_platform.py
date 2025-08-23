@@ -450,7 +450,7 @@ class AutonomousIntelligencePlatform:
         adaptation_factors = []
         if assignment_confidence < 0.7:
             adaptation_factors.append("low_confidence_assignment")
-        if max(historical_performance_data[agent][-5:]) < 70 for agent in available_agents:
+        if any(max(historical_performance_data[agent][-5:]) < 70 for agent in available_agents):
             adaptation_factors.append("recent_performance_decline")
         if task_characteristics.get('priority', 5) > 8:
             adaptation_factors.append("high_priority_task")

@@ -1,0 +1,333 @@
+# Docker Compose for Enterprise Greek Swarm Deployment - Agent Delta Hour 7
+version: '3.8'
+
+services:
+  # ADAMANTIUMCLAD Dashboard (Port 5002)
+  adamantiumclad-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.adamantiumclad
+    container_name: greek-swarm-adamantiumclad
+    ports:
+      - "5002:5002"
+    environment:
+      - FLASK_ENV=production
+      - ADAMANTIUMCLAD_PORT=5002
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./cache:/app/cache
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5002/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+    depends_on:
+      - redis
+      - prometheus
+
+  # Unified Greek Dashboard (Port 5003)
+  unified-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.unified-dashboard
+    container_name: greek-swarm-unified-dashboard
+    ports:
+      - "5003:5003"
+    environment:
+      - FLASK_ENV=production
+      - COORDINATOR_PORT=5002
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5003/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+    depends_on:
+      - adamantiumclad-dashboard
+      - redis
+
+  # Enterprise API Gateway (Port 5004)
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.api-gateway
+    container_name: greek-swarm-api-gateway
+    ports:
+      - "5004:5004"
+    environment:
+      - FLASK_ENV=production
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=enterprise_api_gateway_secret_key_2025
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./logs:/app/logs
+      - ./cache:/app/cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5004/api/gateway/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+    depends_on:
+      - redis
+      - prometheus
+      - unified-dashboard
+
+  # Greek Swarm Coordinator Service (Port 5005)
+  swarm-coordinator:
+    build:
+      context: .
+      dockerfile: Dockerfile.swarm-coordinator
+    container_name: greek-swarm-coordinator
+    ports:
+      - "5005:5005"
+    environment:
+      - COORDINATOR_PORT=5005
+      - DB_PATH=/app/data/greek_swarm_coordination.db
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5005/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+
+  # Redis for Caching and Session Management
+  redis:
+    image: redis:7-alpine
+    container_name: greek-swarm-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+
+  # Prometheus for Metrics Collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: greek-swarm-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus-greek.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+
+  # Grafana for Advanced Visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: greek-swarm-grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/greek-swarm-dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=greekswarm123
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=http://localhost:3000
+      - GF_ANALYTICS_REPORTING_ENABLED=false
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/provisioning/dashboards/greek-swarm-overview.json
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+    depends_on:
+      - prometheus
+
+  # NGINX Load Balancer for High Availability
+  nginx-lb:
+    image: nginx:alpine
+    container_name: greek-swarm-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx-greek-swarm.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+    depends_on:
+      - api-gateway
+      - unified-dashboard
+      - adamantiumclad-dashboard
+
+  # PostgreSQL for Enterprise Data Storage
+  postgres:
+    image: postgres:15-alpine
+    container_name: greek-swarm-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=greek_swarm
+      - POSTGRES_USER=swarm_admin
+      - POSTGRES_PASSWORD=secure_swarm_password_2025
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U swarm_admin -d greek_swarm"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+
+  # RabbitMQ for Message Queuing
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: greek-swarm-rabbitmq
+    ports:
+      - "5672:5672"    # AMQP port
+      - "15672:15672"  # Management UI
+    environment:
+      - RABBITMQ_DEFAULT_USER=swarm_admin
+      - RABBITMQ_DEFAULT_PASS=secure_queue_password_2025
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+
+  # Elasticsearch for Advanced Logging
+  elasticsearch:
+    image: elasticsearch:8.8.0
+    container_name: greek-swarm-elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200/_cluster/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+
+  # Kibana for Log Visualization
+  kibana:
+    image: kibana:8.8.0
+    container_name: greek-swarm-kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    volumes:
+      - kibana-data:/usr/share/kibana/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5601/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+    depends_on:
+      - elasticsearch
+
+  # Jaeger for Distributed Tracing
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: greek-swarm-jaeger
+    ports:
+      - "16686:16686"  # Jaeger UI
+      - "14268:14268"  # Jaeger collector
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:16686"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - greek-swarm-network
+
+volumes:
+  redis-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+  postgres-data:
+    driver: local
+  rabbitmq-data:
+    driver: local
+  elasticsearch-data:
+    driver: local
+  kibana-data:
+    driver: local
+
+networks:
+  greek-swarm-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

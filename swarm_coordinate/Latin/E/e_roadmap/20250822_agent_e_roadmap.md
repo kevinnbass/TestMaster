@@ -30,26 +30,6 @@
 **Timeline:** Revised to 4 weeks collaboration + 20 weeks advanced features
 **Execution:** Collaborative development with Agent Gamma dashboard integration
 
-## ✅ Protocol Compliance Overlay (Binding)
-
-- **Frontend-First (ADAMANTIUMCLAD):** Integrate all personal analytics panels into the unified dashboard (prefer `http://localhost:5000/` or Gamma's active port). Use exemption block only for internal utilities.
-- **Anti-Regression (IRONCLAD/STEELCLAD/COPPERCLAD):** Manual analysis before consolidation; extract unique functionality; verify parity; archive—never delete.
-- **Anti-Duplication (GOLDCLAD):** Run similarity search before new components; prefer enhancement; include justification if creation is necessary.
-- **Version Control (DIAMONDCLAD):** After task completion, update root `README.md`, then stage, commit, and push.
-
-### Adjusted Success Criteria (Local Single-User Scope)
-- **Performance:** FCP < 2.5s; interactive actions p95 < 200ms, p99 < 600ms
-- **Accessibility:** Keyboard navigation, labels, contrast; WCAG AA aspirational
-- **Visualization:** Standard libs; datasets up to ~2k points
-- **Responsiveness:** Mobile-friendly layout with tested breakpoints
-- **Evidence:** Attach screenshots/metrics with each panel
-
-### Verification Gates (apply before marking tasks complete)
-1. Analytics panels added/updated and reachable via dashboard navigation
-2. Data flow documented (API → adapter → component), incl. polling/WS cadence
-3. Evidence attached (screenshots/gifs, perf numbers, or brief test notes)
-4. History updated in `e_history/` with timestamp, changes, and impact
-5. GOLDCLAD justification present for any new component/file
 ---
 
 ## **🔍 ⚠️ CRITICAL: FEATURE DISCOVERY PROTOCOL FOR AGENT E**
