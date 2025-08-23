@@ -313,6 +313,32 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Performance Monitoring Card -->
+            <div class="card">
+                <h2>⚡ Performance Monitor</h2>
+                <div id="performanceMonitoring" class="loading">
+                    <div class="metric">
+                        <span class="metric-label">Performance Score</span>
+                        <span class="metric-value">
+                            <span id="performanceScore">--</span>
+                            <span id="performanceStatus" class="status-indicator"></span>
+                        </span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">CPU Usage</span>
+                        <span class="metric-value" id="cpuUsage">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Memory Usage</span>
+                        <span class="metric-value" id="memoryUsage">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">System Health</span>
+                        <span class="metric-value" id="systemHealth">--</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -349,12 +375,14 @@
                 await this.fetchProactiveInsights();
                 await this.fetchBehaviorPredictions();
                 await this.fetchUnifiedData();
+                await this.fetchPerformanceMetrics();
                 
                 // Set up periodic updates
                 setInterval(() => this.fetchHealthData(), 5000);
                 setInterval(() => this.fetchProactiveInsights(), 10000);
                 setInterval(() => this.fetchBehaviorPredictions(), 15000);
                 setInterval(() => this.fetchUnifiedData(), 8000);
+                setInterval(() => this.fetchPerformanceMetrics(), 3000);
             }
             
             requestInitialData() {
@@ -496,6 +524,40 @@
                     document.getElementById('dataIntegration').classList.remove('loading');
                 } catch (error) {
                     console.error('Error fetching unified data:', error);
+                }
+            }
+            
+            async fetchPerformanceMetrics() {
+                try {
+                    const response = await fetch('/api/performance-metrics');
+                    const data = await response.json();
+                    
+                    if (data.metrics) {
+                        const metrics = data.metrics;
+                        
+                        // Update performance score and status indicator
+                        document.getElementById('performanceScore').textContent = 
+                            `${Math.round(metrics.performance_score)}%`;
+                        
+                        const performanceStatusEl = document.getElementById('performanceStatus');
+                        if (metrics.performance_score >= 80) {
+                            performanceStatusEl.className = 'status-indicator status-excellent';
+                        } else if (metrics.performance_score >= 60) {
+                            performanceStatusEl.className = 'status-indicator status-good';
+                        } else {
+                            performanceStatusEl.className = 'status-indicator status-needs_attention';
+                        }
+                        
+                        // Update system metrics
+                        document.getElementById('cpuUsage').textContent = `${metrics.cpu_usage.toFixed(1)}%`;
+                        document.getElementById('memoryUsage').textContent = `${metrics.memory_usage.toFixed(1)}%`;
+                        document.getElementById('systemHealth').textContent = metrics.system_health;
+                    }
+                    
+                    document.getElementById('performanceMonitoring').classList.remove('loading');
+                } catch (error) {
+                    console.error('Error fetching performance metrics:', error);
+                    document.getElementById('performanceMonitoring').classList.remove('loading');
                 }
             }
             

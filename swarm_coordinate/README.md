@@ -10,6 +10,30 @@
 
 The Swarm Coordination System organizes autonomous agents into coordinated swarms for efficient codebase analysis, enhancement, and management. The system supports both independent agent operations and cross-swarm collaboration through a structured hierarchy.
 
+## 🔧 **AGENT STATUS & CONFIGURATION SYSTEM**
+**Comprehensive Agent Discovery, Access Control, and Collaboration Framework**
+
+### **Two-File Agent Profile System**
+Each agent maintains two critical files in their directory:
+
+1. **`AGENT_CONFIG_[AGENT].md`** - **READ-ONLY** configuration (file system permissions)
+   - Immutable agent profile and capabilities
+   - Access permissions and restrictions
+   - Directory access rules and timing
+   - Tool restrictions and allowed operations
+
+2. **`AGENT_STATUS_[AGENT].md`** - **AGENT-EDITABLE** dynamic status
+   - Current progress and phase
+   - Availability for collaboration  
+   - Skills offered and needed
+   - Active tasks and priorities
+
+### **Framework Benefits**
+- **Controlled Discovery**: Agents can discover each other's capabilities without context bleed
+- **Access Control**: Explicit permissions prevent unauthorized directory access
+- **Collaboration Framework**: Structured process for agent enlistment and cooperation
+- **Status Transparency**: Real-time visibility into agent progress and availability
+
 ## 🚀 **SHARED ROADMAP - Multi-Agent Coordination Framework**
 
 ### Mission Overview

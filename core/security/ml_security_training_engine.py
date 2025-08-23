@@ -70,7 +70,8 @@ except ImportError:
     logger.warning("Pandas not available - using basic data processing")
 
 try:
-    from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, IsolationForest
+    from sklearn.ensemble import (RandomForestClassifier, GradientBoostingClassifier, IsolationForest,
+                                 VotingClassifier, StackingClassifier, AdaBoostClassifier)
     from sklearn.neural_network import MLPClassifier
     from sklearn.svm import SVC
     from sklearn.linear_model import LogisticRegression
@@ -473,6 +474,112 @@ class MLSecurityTrainingEngine:
                     'n_estimators': [50, 100, 200],
                     'max_depth': [3, 6, 9],
                     'learning_rate': [0.05, 0.1, 0.2]
+                }
+            }
+        
+        # Enhanced Advanced Ensemble Methods
+        self.algorithm_configs['voting_ensemble'] = {
+            'class': VotingClassifier,
+            'ensemble_type': 'voting',
+            'default_params': {
+                'voting': 'soft',
+                'n_jobs': -1
+            },
+            'base_estimators': ['random_forest', 'gradient_boosting', 'xgboost'],
+            'hyperparameter_grid': {
+                'voting': ['soft', 'hard'],
+                'weights': [None, [1, 1, 1], [2, 1, 1], [1, 2, 1], [1, 1, 2]]
+            }
+        }
+        
+        self.algorithm_configs['stacking_ensemble'] = {
+            'class': StackingClassifier,
+            'ensemble_type': 'stacking',
+            'default_params': {
+                'cv': 5,
+                'n_jobs': -1,
+                'passthrough': False
+            },
+            'base_estimators': ['random_forest', 'gradient_boosting', 'neural_network'],
+            'meta_learner': 'logistic_regression',
+            'hyperparameter_grid': {
+                'cv': [3, 5, 10],
+                'passthrough': [True, False]
+            }
+        }
+        
+        self.algorithm_configs['adaptive_boosting'] = {
+            'class': AdaBoostClassifier,
+            'default_params': {
+                'n_estimators': 50,
+                'learning_rate': 1.0,
+                'algorithm': 'SAMME.R',
+                'random_state': 42
+            },
+            'hyperparameter_grid': {
+                'n_estimators': [25, 50, 100],
+                'learning_rate': [0.5, 1.0, 1.5],
+                'algorithm': ['SAMME', 'SAMME.R']
+            }
+        }
+        
+        # Advanced Deep Learning Architectures (if TensorFlow available)
+        if TENSORFLOW_AVAILABLE:
+            self.algorithm_configs['deep_neural_network'] = {
+                'class': 'custom_dnn',
+                'model_type': 'deep_learning',
+                'architecture': 'dense_layers',
+                'default_params': {
+                    'hidden_layers': [256, 128, 64],
+                    'dropout_rate': 0.3,
+                    'batch_size': 32,
+                    'epochs': 100,
+                    'learning_rate': 0.001,
+                    'early_stopping_patience': 10
+                },
+                'hyperparameter_grid': {
+                    'hidden_layers': [[128, 64], [256, 128], [256, 128, 64], [512, 256, 128]],
+                    'dropout_rate': [0.2, 0.3, 0.5],
+                    'learning_rate': [0.0001, 0.001, 0.01],
+                    'batch_size': [16, 32, 64]
+                }
+            }
+            
+            self.algorithm_configs['lstm_attention'] = {
+                'class': 'custom_lstm_attention',
+                'model_type': 'sequence_learning',
+                'architecture': 'lstm_with_attention',
+                'default_params': {
+                    'lstm_units': [64, 32],
+                    'attention_units': 32,
+                    'dropout_rate': 0.2,
+                    'recurrent_dropout': 0.2,
+                    'batch_size': 32,
+                    'epochs': 50
+                },
+                'hyperparameter_grid': {
+                    'lstm_units': [[32, 16], [64, 32], [128, 64]],
+                    'attention_units': [16, 32, 64],
+                    'dropout_rate': [0.1, 0.2, 0.3]
+                }
+            }
+            
+            self.algorithm_configs['transformer_security'] = {
+                'class': 'custom_transformer',
+                'model_type': 'transformer_attention',
+                'architecture': 'multi_head_attention',
+                'default_params': {
+                    'num_heads': 8,
+                    'key_dim': 64,
+                    'ff_dim': 512,
+                    'dropout_rate': 0.1,
+                    'num_layers': 4,
+                    'epochs': 100
+                },
+                'hyperparameter_grid': {
+                    'num_heads': [4, 8, 12],
+                    'key_dim': [32, 64, 128],
+                    'num_layers': [2, 4, 6]
                 }
             }
         

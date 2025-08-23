@@ -71,7 +71,7 @@ class DashboardMetrics:
 class AdamantiumcladDashboard:
     """ADAMANTIUMCLAD-compliant dashboard with complete frontend integration"""
     
-    def __init__(self, port: int = 5001):
+    def __init__(self, port: int = 5002):
         self.port = port
         self.app = Flask(__name__)
         CORS(self.app)
@@ -196,11 +196,13 @@ class AdamantiumcladDashboard:
         @self.app.route('/api/agents')
         def get_agents():
             """Greek Swarm agents status"""
+            agents_data = self.swarm_coordinator.discovered_agents if hasattr(self.swarm_coordinator, 'discovered_agents') else {}
             return jsonify({
-                'total_agents': len(self.swarm_coordinator.discovered_agents),
-                'active_agents': sum(1 for agent in self.swarm_coordinator.discovered_agents.values() 
-                                  if agent.status == AgentState.ACTIVE),
-                'agents': {name: asdict(agent) for name, agent in self.swarm_coordinator.discovered_agents.items()}
+                'total_agents': len(agents_data),
+                'active_agents': sum(1 for agent in agents_data.values() 
+                                  if getattr(agent, 'status', 'UNKNOWN') == 'ACTIVE'),
+                'agents': {name: {'status': getattr(agent, 'status', 'UNKNOWN')} 
+                          for name, agent in agents_data.items()}
             })
         
         @self.app.route('/api/security')
@@ -722,12 +724,12 @@ class AdamantiumcladDashboard:
     
     def run(self):
         """Run the ADAMANTIUMCLAD dashboard server"""
-        print(f"🚀 Starting ADAMANTIUMCLAD API Dashboard Server")
-        print(f"📍 Port: {self.port} (ADAMANTIUMCLAD Compliant)")
-        print(f"🎯 Agent: Delta - Hour 6 Complete")
-        print(f"🔗 Frontend Integration: Active")
-        print(f"✅ Dashboard URL: http://localhost:{self.port}")
-        print(f"📊 API Endpoints: /api/metrics, /api/status, /api/health, /api/agents, /api/security, /api/performance")
+        print(f"Starting ADAMANTIUMCLAD API Dashboard Server")
+        print(f"Port: {self.port} (ADAMANTIUMCLAD Compliant)")
+        print(f"Agent: Delta - Hour 6 Complete")
+        print(f"Frontend Integration: Active")
+        print(f"Dashboard URL: http://localhost:{self.port}")
+        print(f"API Endpoints: /api/metrics, /api/status, /api/health, /api/agents, /api/security, /api/performance")
         
         try:
             self.app.run(
@@ -737,20 +739,20 @@ class AdamantiumcladDashboard:
                 threaded=True
             )
         except Exception as e:
-            print(f"❌ Server error: {e}")
+            print(f"Server error: {e}")
 
 def main():
     """Main entry point"""
     print("=" * 80)
-    print("🚀 AGENT DELTA - HOUR 6: ADAMANTIUMCLAD DASHBOARD DEPLOYMENT")
+    print("AGENT DELTA - HOUR 6: ADAMANTIUMCLAD DASHBOARD DEPLOYMENT")
     print("=" * 80)
     print("Status: ADAMANTIUMCLAD Frontend Integration Complete")
-    print("Port: 5001 (Compliant with ADAMANTIUMCLAD Protocol)")
+    print("Port: 5002 (Compliant with ADAMANTIUMCLAD Protocol)")
     print("Integration: Complete API enhancement stack with frontend connectivity")
     print("=" * 80)
     
     # Create and run ADAMANTIUMCLAD dashboard
-    dashboard = AdamantiumcladDashboard(port=5001)
+    dashboard = AdamantiumcladDashboard(port=5002)
     dashboard.run()
 
 if __name__ == "__main__":

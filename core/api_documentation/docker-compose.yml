@@ -1,44 +1,24 @@
 version: '3.8'
 
 services:
-  # API Documentation Server (Port 5020)
-  api-docs:
+  # ADAMANTIUMCLAD Dashboard Server (Port 5002)
+  adamantiumclad-dashboard:
     build:
       context: .
-      dockerfile: Dockerfile.api-docs
-    container_name: testmaster-api-docs
+      dockerfile: Dockerfile.adamantiumclad
+    container_name: testmaster-adamantiumclad-dashboard
     ports:
-      - "5020:5020"
-    volumes:
-      - ./generated_api_docs:/app/generated_api_docs:ro
-    environment:
-      - FLASK_ENV=production
-      - DOCS_DIR=/app/generated_api_docs
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5020/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    restart: unless-stopped
-
-  # Enhanced API Server (Port 5025)  
-  enhanced-api:
-    build:
-      context: .
-      dockerfile: Dockerfile.enhanced-api
-    container_name: testmaster-enhanced-api
-    ports:
-      - "5025:5025"
+      - "5002:5002"  # ADAMANTIUMCLAD compliant port
     volumes:
       - ./cache:/app/cache
       - ./logs:/app/logs
     environment:
       - FLASK_ENV=production
-      - API_PORT=5025
+      - ADAMANTIUMCLAD_PORT=5002
       - CACHE_DIR=/app/cache
       - LOG_LEVEL=INFO
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5025/api/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:5002/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3

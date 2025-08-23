@@ -180,6 +180,9 @@ class AdvancedSecurityCorrelationEngine:
         self.pattern_matcher = ThreatPatternMatcher()
         self.anomaly_detector = StatisticalAnomalyDetector()
         
+        # Enhanced multi-dimensional correlation component
+        self.multi_dimensional_correlator = MultiDimensionalThreatVectorCorrelator()
+        
         # Correlation statistics
         self.correlation_stats = {
             'engine_start_time': datetime.now(),
@@ -258,6 +261,61 @@ class AdvancedSecurityCorrelationEngine:
                             self.correlation_stats['attack_chains_detected'] += 1
             
             return correlations if correlations else None
+    
+    def perform_multi_dimensional_correlation(self, events: List[SecurityEvent]) -> Optional[MultiDimensionalCorrelationResult]:
+        """
+        Perform enhanced multi-dimensional threat vector correlation
+        
+        Args:
+            events: List of security events to correlate across multiple dimensions
+            
+        Returns:
+            MultiDimensionalCorrelationResult: Enhanced correlation analysis result
+        """
+        try:
+            logger.debug(f"Performing multi-dimensional correlation on {len(events)} events")
+            
+            # Use enhanced multi-dimensional correlator
+            multi_dim_result = self.multi_dimensional_correlator.correlate_multi_dimensional_threats(events)
+            
+            # Create primary correlation result for integration
+            primary_correlation = CorrelationResult(
+                correlation_id=multi_dim_result.correlation_id,
+                correlated_events=[e.event_id for e in events],
+                correlation_types=[CorrelationType.BEHAVIORAL, CorrelationType.CAUSAL],
+                threat_confidence=ThreatConfidence.HIGH if multi_dim_result.confidence_score >= 0.8 else ThreatConfidence.MEDIUM,
+                threat_category="multi_dimensional_threat",
+                attack_chain_stage="vector_correlation_analysis",
+                risk_score=multi_dim_result.confidence_score * 10,
+                correlation_strength=multi_dim_result.confidence_score,
+                behavioral_indicators=multi_dim_result.cross_vector_indicators,
+                recommended_actions=multi_dim_result.recommended_response_actions,
+                threat_vectors_involved=list(multi_dim_result.vector_analysis.keys()),
+                vector_correlation_matrix=multi_dim_result.dimensional_correlation_matrix,
+                multi_dimensional_score=multi_dim_result.confidence_score,
+                behavioral_deviation_score=multi_dim_result.behavioral_analysis_results.get('deviation_score', 0.0),
+                cross_system_indicators=multi_dim_result.cross_vector_indicators
+            )
+            
+            # Set primary correlation in result
+            multi_dim_result.primary_correlation = primary_correlation
+            
+            # Store correlation result
+            self.correlation_results.append(primary_correlation)
+            
+            # Update statistics
+            self.correlation_stats['correlations_generated'] += 1
+            if primary_correlation.threat_confidence.value >= ThreatConfidence.HIGH.value:
+                self.correlation_stats['threats_identified'] += 1
+            
+            logger.info(f"Multi-dimensional correlation completed: confidence={multi_dim_result.confidence_score:.3f}, "
+                       f"complexity={multi_dim_result.threat_vector_complexity:.3f}")
+            
+            return multi_dim_result
+            
+        except Exception as e:
+            logger.error(f"Error in multi-dimensional correlation: {e}")
+            return None
     
     def _correlation_processing_loop(self):
         """Main correlation processing loop for continuous analysis"""

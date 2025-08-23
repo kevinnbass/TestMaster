@@ -133,10 +133,16 @@ class GammaDashboardAdapter:
         # Get fresh analytics data
         analytics = self.analytics_service.get_personal_analytics_data()
         
+        # Update predictive engine with new data
+        self.predictive_engine.add_historical_point(analytics)
+        
+        # Get predictions
+        predictions = self.predictive_engine.get_dashboard_predictions()
+        
         # Format for dashboard panel
         panel_data = {
             **self.panel_config,
-            'data': self._format_for_panel(analytics),
+            'data': self._format_for_panel(analytics, predictions),
             'timestamp': datetime.now().isoformat(),
             'status': 'active'
         }
@@ -149,12 +155,13 @@ class GammaDashboardAdapter:
         
         return panel_data
     
-    def _format_for_panel(self, analytics: Dict[str, Any]) -> Dict[str, Any]:
+    def _format_for_panel(self, analytics: Dict[str, Any], predictions: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Format analytics data for optimal panel display.
         
         Args:
             analytics: Raw analytics data from service
+            predictions: Optional predictive analytics data
             
         Returns:
             Formatted data for panel visualization
@@ -162,23 +169,43 @@ class GammaDashboardAdapter:
         quality_metrics = analytics.get('quality_metrics', {})
         productivity = analytics.get('productivity_insights', {})
         
+        # Enhanced summary with predictions
+        summary_data = {
+            'overall_score': quality_metrics.get('overall_score', 0),
+            'productivity_score': productivity.get('productivity_score', 0),
+            'test_coverage': quality_metrics.get('test_coverage', 0),
+            'code_quality': quality_metrics.get('maintainability_index', 0)
+        }
+        
+        # Add predictions if available
+        if predictions:
+            forecasts = predictions.get('forecasts', {})
+            summary_data.update({
+                'predicted_velocity': forecasts.get('velocity', {}).get('next_day', {}).get('commits', 0),
+                'predicted_quality': forecasts.get('quality', {}).get('next_week_score', 0),
+                'prediction_confidence': predictions.get('summary', {}).get('prediction_quality', 'learning')
+            })
+        
         return {
-            'summary': {
-                'overall_score': quality_metrics.get('overall_score', 0),
-                'productivity_score': productivity.get('productivity_score', 0),
-                'test_coverage': quality_metrics.get('test_coverage', 0),
-                'code_quality': quality_metrics.get('maintainability_index', 0)
-            },
+            'summary': summary_data,
             'charts': {
                 'quality_trend': self._format_trend_chart(analytics),
                 'productivity_gauge': self._format_gauge_chart(productivity),
                 'activity_timeline': self._format_timeline(analytics),
-                'metrics_radar': self._format_radar_chart(quality_metrics)
+                'metrics_radar': self._format_radar_chart(quality_metrics),
+                # Enhanced predictive charts
+                'prediction_chart': self._format_prediction_chart(predictions) if predictions else None,
+                'pattern_heatmap': predictions.get('charts', {}).get('pattern_heatmap') if predictions else None
             },
             'insights': {
                 'recommendations': analytics.get('recommendations', [])[:3],  # Top 3
                 'recent_changes': analytics.get('development_patterns', {}).get('most_edited_files', [])[:5],
-                'trend_analysis': analytics.get('trend_analysis', {})
+                'trend_analysis': analytics.get('trend_analysis', {}),
+                # Enhanced ML-powered insights
+                'ml_recommendations': predictions.get('insights', {}).get('recommendations', [])[:3] if predictions else [],
+                'risk_assessment': predictions.get('insights', {}).get('risk_assessment', {}) if predictions else {},
+                'pattern_insights': predictions.get('insights', {}).get('milestone_estimates', {}) if predictions else {},
+                'prediction_confidence': predictions.get('summary', {}).get('prediction_quality', 'learning') if predictions else None
             },
             'statistics': {
                 'commits_today': productivity.get('commits_today', 0),
@@ -261,6 +288,70 @@ class GammaDashboardAdapter:
                     'backgroundColor': 'rgba(0, 255, 0, 0.2)',
                     'borderColor': '#00ff00'
                 }]
+            }
+        }
+    
+    def _format_prediction_chart(self, predictions: Dict[str, Any]) -> Dict[str, Any]:
+        """Format data for predictive analytics chart."""
+        if not predictions or 'forecasts' not in predictions:
+            return None
+            
+        forecasts = predictions['forecasts']
+        velocity_forecast = forecasts.get('velocity', {})
+        quality_forecast = forecasts.get('quality', {})
+        
+        return {
+            'type': 'line',
+            'data': {
+                'labels': ['Today', 'Tomorrow', '+2 Days', '+3 Days', 'Next Week'],
+                'datasets': [
+                    {
+                        'label': 'Predicted Velocity',
+                        'data': [
+                            velocity_forecast.get('today', {}).get('commits', 0),
+                            velocity_forecast.get('next_day', {}).get('commits', 0),
+                            velocity_forecast.get('next_3_days', {}).get('commits', 0),
+                            velocity_forecast.get('next_3_days', {}).get('commits', 0) * 1.1,
+                            velocity_forecast.get('next_week', {}).get('commits', 0)
+                        ],
+                        'borderColor': '#0088ff',
+                        'backgroundColor': 'rgba(0, 136, 255, 0.1)',
+                        'borderDash': [5, 5]
+                    },
+                    {
+                        'label': 'Predicted Quality Score',
+                        'data': [
+                            quality_forecast.get('today_score', 0),
+                            quality_forecast.get('next_day_score', 0),
+                            quality_forecast.get('next_3_days_score', 0),
+                            quality_forecast.get('next_week_score', 0),
+                            quality_forecast.get('next_week_score', 0) * 1.05
+                        ],
+                        'borderColor': '#ff6600',
+                        'backgroundColor': 'rgba(255, 102, 0, 0.1)',
+                        'borderDash': [3, 3]
+                    }
+                ]
+            },
+            'options': {
+                'responsive': True,
+                'maintainAspectRatio': False,
+                'scales': {
+                    'y': {
+                        'beginAtZero': True,
+                        'max': 100
+                    }
+                },
+                'plugins': {
+                    'legend': {
+                        'display': True,
+                        'position': 'top'
+                    },
+                    'title': {
+                        'display': True,
+                        'text': 'ML Predictions'
+                    }
+                }
             }
         }
     
