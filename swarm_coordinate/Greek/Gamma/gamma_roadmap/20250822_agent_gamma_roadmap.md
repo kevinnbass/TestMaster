@@ -1438,6 +1438,27 @@ Transform TestMaster into a visually stunning, highly interactive, and user-frie
 
 ---
 
+## 🤝 COORDINATION REQUIREMENTS
+
+### Inter-Agent Dependencies:
+- **Depends on Alpha**: Cost tracking visualization, budget alerts and warnings integration
+- **Coordinates with Beta**: Performance dashboard integration, system health visualization
+- **Integrates with Delta**: API data visualization, backend-generated data display
+- **Enhanced by Epsilon**: Frontend information richness, sophisticated data presentation
+
+### Communication Protocol:
+- **Regular Updates**: Every 30 minutes to gamma_history/
+- **Coordination Updates**: Every 2 hours to greek_coordinate_ongoing/
+- **Critical Dependencies**: Immediate handoffs to greek_coordinate_handoff/
+
+### Integration Points:
+- **Alpha Integration**: Budget management dashboards, cost tracking widgets, API usage visualization
+- **Beta Integration**: Performance monitoring dashboards, system health indicators, optimization metrics
+- **Delta Integration**: API endpoint visualization, backend data consumption, real-time API metrics
+- **Epsilon Integration**: Advanced frontend components, information architecture enhancement, sophisticated UI elements
+
+---
+
 **Agent Gamma Roadmap Complete**
 **Total Duration:** 500 hours
 **Expected Outcome:** Industry-leading visualization platform with unified dashboard experience, advanced interactivity, and future-ready technology integration.

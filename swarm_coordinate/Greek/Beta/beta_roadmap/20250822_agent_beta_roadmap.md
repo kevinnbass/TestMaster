@@ -1431,6 +1431,27 @@ Transform TestMaster into a high-performance, scalable, and production-ready sys
 
 ---
 
+## 🤝 COORDINATION REQUIREMENTS
+
+### Inter-Agent Dependencies:
+- **Depends on Alpha**: API usage metrics for performance optimization targeting
+- **Coordinates with Gamma**: Performance dashboard integration, system health visualization
+- **Provides to Delta**: Performance metrics for API optimization, caching strategy coordination
+- **Supports Epsilon**: Performance optimization for frontend rendering, real-time data updates
+
+### Communication Protocol:
+- **Regular Updates**: Every 30 minutes to beta_history/
+- **Coordination Updates**: Every 2 hours to greek_coordinate_ongoing/
+- **Critical Dependencies**: Immediate handoffs to greek_coordinate_handoff/
+
+### Integration Points:
+- **Alpha Integration**: Cost-performance correlation analysis, budget-aware scaling
+- **Gamma Integration**: Dashboard performance optimization, visualization rendering speed
+- **Delta Integration**: API endpoint performance monitoring, backend optimization coordination
+- **Epsilon Integration**: Frontend performance optimization, real-time update performance
+
+---
+
 **Agent Beta Roadmap Complete**
 **Total Duration:** 500 hours
 **Expected Outcome:** High-performance, scalable production system with enterprise-grade reliability, comprehensive monitoring, and industry-leading optimization capabilities.

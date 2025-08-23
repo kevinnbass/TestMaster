@@ -1332,6 +1332,27 @@ Transform TestMaster into an intelligent codebase analysis system with comprehen
 
 ---
 
+## 🤝 COORDINATION REQUIREMENTS
+
+### Inter-Agent Dependencies:
+- **Provides to Beta**: API usage metrics for performance optimization targeting
+- **Coordinates with Gamma**: Cost tracking visualization for unified dashboard integration
+- **Provides to Delta**: API cost tracking integration, semantic analysis of endpoints
+- **Supports Epsilon**: Cost tracking visualization, semantic analysis presentation
+
+### Communication Protocol:
+- **Regular Updates**: Every 30 minutes to alpha_history/
+- **Coordination Updates**: Every 2 hours to greek_coordinate_ongoing/
+- **Critical Dependencies**: Immediate handoffs to greek_coordinate_handoff/
+
+### Integration Points:
+- **Beta Integration**: Performance cost correlation, optimization priority scoring
+- **Gamma Integration**: Dashboard cost widgets, budget alert visualization
+- **Delta Integration**: API endpoint cost analysis, tracking for new endpoints
+- **Epsilon Integration**: Rich cost visualization, budget management interface
+
+---
+
 **Agent Alpha Roadmap Complete**
 **Total Duration:** 500 hours
 **Expected Outcome:** Production-ready intelligence platform with comprehensive API cost control, advanced AI integration, and enterprise-grade reliability.

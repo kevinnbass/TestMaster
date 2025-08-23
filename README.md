@@ -182,8 +182,30 @@ python TestMaster/design_pattern_recognizer.py --root TestMaster --output patter
 
 ---
 
-**Agent C Status:** Phase 2 Complete - Utility & Component Extraction Intelligence Achieved ✅  
-**Next Milestone:** Phase 3 - Debug & Markdown Stowage (Hours 51-75)  
+**Agent C Status:** Phase 2 Complete - Utility & Component Extraction Intelligence Achieved ✅
+**Next Milestone:** Phase 3 - Debug & Markdown Stowage (Hours 51-75)
 **Overall Progress:** 56/100 hours completed, exceptional intelligence gathering rate
+
+## 🚀 Development Workflow
+
+### Auto-commit Policy
+
+**CRITICAL**: After completing any coding task that modifies files:
+1. **ALWAYS UPDATE README.md FIRST** - Document all new features, components, and capabilities in README.md
+2. Automatically run `git add .`
+3. Create a descriptive commit message based on the changes made
+4. Commit using `git commit -m "message"`
+5. Push to GitHub origin with `git push origin main` (or current branch)
+
+**README.md UPDATE REQUIREMENT**: Every commit MUST include updated README.md documentation that reflects:
+- New features and capabilities added
+- System architecture changes
+- New commands and usage examples
+- Configuration options and profiles
+- Integration test results and status
+
+**PUSH FAILURE FALLBACK**: If push fails with HTTP 408/500 errors, repository size issues, or timeout at 99%, consult ADVANCED_GIT_PROCEDURES.md for commit splitting and large repository management protocols.
+
+This should happen WITHOUT asking for permission, as part of the natural workflow after completing each task. All changes must be pushed to the GitHub remote repository, not just committed locally.
 
 *Last Updated: August 21, 2025 - Agent C Phase 2 Completion*
