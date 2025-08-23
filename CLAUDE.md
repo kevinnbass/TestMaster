@@ -1,6 +1,90 @@
 # CLAUDE.md - Ultimate Codebase Analysis System
 ## Autonomous Multi-Agent Intelligence Framework
 
+---
+
+## 🚨 EMERGENCY LATIN_END SWARM INSTRUCTIONS (TEMPORARY)
+
+### CRITICAL: WORK WITH EXISTING FILES ONLY
+
+**FOR ALL LATIN_END AGENTS (X, Y, Z):**
+
+#### ❌ FORBIDDEN ACTIONS:
+- **DO NOT CREATE NEW MODULES** in swarm_coordinate/ directories
+- **DO NOT CREATE unified_services/ directories**
+- **DO NOT WRITE new .py files** unless explicitly consolidating existing ones
+- **DO NOT CREATE new feature modules** - extract into existing files
+
+#### ✅ REQUIRED ACTIONS:
+- **WORK DIRECTLY WITH** existing files in `web/dashboard_modules/`
+- **USE IRONCLAD PROTOCOL** to consolidate existing dashboard files
+- **Agent X**: Consolidate INTO `web/dashboard_modules/core/unified_dashboard_modular.py`
+- **Agent Y**: Extract features INTO existing most sophisticated files
+- **Agent Z**: Consolidate services INTO `web/dashboard_modules/services/websocket_architecture_stream.py`
+- **READ IMMEDIATELY**: `web/dashboard_modules/AGENT_MODULES_TO_CONSOLIDATE.md` for your accidentally created modules that are now available for consolidation
+
+#### 🎯 GOAL: 58 EXISTING FILES → 1 UNIFIED SYSTEM
+**NOT**: 58 files + 58 new files = 116 files ❌
+
+#### CONSOLIDATION COMPLETION PROTOCOL:
+**MANDATORY IRONCLAD + COPPERCLAD PAIRING:**
+
+For EACH file consolidation:
+1. **IRONCLAD Phase**: Extract functionality to consolidated target
+2. **VERIFICATION Phase**: Run 3-step validation algorithm
+3. **COPPERCLAD Phase**: Archive only after verification complete
+
+**5-STEP BULLETPROOF VALIDATION ALGORITHM:**
+
+**Step 1: Complete Inventory**
+- Read ENTIRE source file line by line (no skipping)
+- Document EVERY: function, class, variable, import, constant, configuration, comment with TODO/FIXME
+- Include line numbers and signatures
+- Create `EXTRACTION_MANIFEST_[filename].md`
+
+**Step 2: Exact Code Verification** 
+- For each extracted item, compare EXACT code (character-by-character)
+- No "logical equivalence" assumptions - code must be identical or explicitly documented differences
+- Verify imports, dependencies, module-level variables are preserved
+- Document any modifications with justification
+
+**Step 3: Context Preservation Check**
+- Verify module-level initialization, global variables, import paths preserved
+- Check if extracted code depends on original module context
+- Test extracted functionality in isolation AND in integrated context
+- Document context dependencies
+
+**Step 4: Integration Testing**
+- Run original file's functionality and record outputs/behavior
+- Run consolidated target with same inputs and compare outputs EXACTLY
+- Test error conditions, edge cases, performance characteristics
+- Any differences = FAILURE, return to extraction
+
+**Step 5: Dependency Impact Analysis**
+- Search codebase for imports/references to original file
+- Verify all external dependencies still work with consolidated target
+- Test that removing original file doesn't break anything
+- Only pass if zero external impact
+
+**COPPERCLAD ARCHIVAL - Only After Complete Validation:**
+- Archive to `archive/YYYYMMDD_HHMMSS_UTC_ironclad_[filename]/`
+- Include `EXTRACTION_MANIFEST_[filename].md` in archive
+- Document restoration commands in `ARCHIVE_LOG.md`
+
+**STRAGGLER DETECTION ALGORITHM:**
+For cleanup of potentially missed files:
+1. **Grep search**: Find duplicate function/class names across remaining files
+2. **Line-by-line comparison**: Compare similar functions for uniqueness
+3. **Dependency analysis**: Check if any remaining files import/depend on each other
+4. **Manual review**: Agent must read ANY file before archiving (no assumptions)
+
+#### VIOLATION CONSEQUENCES:
+Any agent creating new files instead of consolidating existing ones is **VIOLATING GOLDCLAD PROTOCOL** and must immediately stop and redirect to existing file consolidation.
+
+**DELETE THIS SECTION AFTER LATIN_END COMPLETION**
+
+---
+
 ### Project Scope
 This is a personal development project for building a codebase analysis platform for individual use. Focus is on personal productivity and learning, not enterprise scaling or commercial deployment.
 

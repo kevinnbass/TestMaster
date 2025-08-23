@@ -56,11 +56,9 @@ class PatternDetector:
         """Initialize the pattern detector"""
         self._load_pattern_definitions()
 
-    def _load_pattern_definitions(self) -> None:
-        """Load pattern definitions and detection rules"""
-
-        # Design patterns
-        self.design_patterns = {
+    def _load_creational_patterns(self) -> Dict[str, Dict]:
+        """Load creational design pattern definitions"""
+        return {
             'singleton': {
                 'indicators': [
                     r'class.*:\s*\n.*_instance\s*=\s*None',
@@ -80,7 +78,13 @@ class PatternDetector:
                 ],
                 'keywords': ['factory', 'create', 'make', 'build', 'creator'],
                 'structure': ['creator_method', 'factory_class']
-            },
+            }
+        }
+
+
+    def _load_behavioral_patterns(self) -> Dict[str, Dict]:
+        """Load behavioral design pattern definitions"""
+        return {
             'observer': {
                 'indicators': [
                     r'def.*notify.*\(.*\)',
@@ -97,66 +101,119 @@ class PatternDetector:
                 'indicators': [
                     r'class.*Strategy',
                     r'def.*execute.*\(.*\)',
-                    r'def.*algorithm.*\(.*\)',
-                    r'context.*strategy'
+                    r'def.*algorithm.*\(.*\)'
                 ],
-                'keywords': ['strategy', 'algorithm', 'context', 'execute'],
+                'keywords': ['strategy', 'algorithm', 'context', 'behavior', 'policy'],
                 'structure': ['strategy_interface', 'context_class']
+            }
+        }
+
+
+    def _load_structural_patterns(self) -> Dict[str, Dict]:
+        """Load structural design pattern definitions"""
+        return {
+            'adapter': {
+                'indicators': [
+                    r'class.*Adapter',
+                    r'def.*adapt.*\(.*\)',
+                    r'def.*convert.*\(.*\)',
+                    r'class.*Wrapper'
+                ],
+                'keywords': ['adapter', 'wrapper', 'convert', 'adapt', 'interface'],
+                'structure': ['adapter_class', 'adaptee_interface', 'target_interface']
             },
             'decorator': {
                 'indicators': [
-                    r'@.*\n.*def.*\(.*\)',
                     r'class.*Decorator',
-                    r'def.*__call__.*\(.*\)',
-                    r'wrapped.*=.*args'
+                    r'def.*decorate.*\(.*\)',
+                    r'class.*Component',
+                    r'def.*operation.*\(.*\)'
                 ],
-                'keywords': ['decorator', 'wrapper', 'wrapped', '__call__'],
-                'structure': ['decorator_function', 'decorator_class']
+                'keywords': ['decorator', 'component', 'wrap', 'enhance', 'extend'],
+                'structure': ['decorator_class', 'component_interface']
             }
         }
 
-        # Architectural patterns
-        self.architectural_patterns = {
-            'mvc': {
-                'components': ['model', 'view', 'controller'],
+
+    def _load_design_patterns(self) -> Dict[str, Dict]:
+        """Load all design pattern definitions"""
+        patterns = {}
+
+        # Load patterns by category
+        patterns.update(self._load_creational_patterns())
+        patterns.update(self._load_behavioral_patterns())
+        patterns.update(self._load_structural_patterns())
+
+        return patterns
+
+
+    def _load_enterprise_patterns(self) -> Dict[str, Dict]:
+        """Load enterprise architectural pattern definitions"""
+        return {
+            'layered_architecture': {
                 'indicators': [
-                    r'class.*Model',
-                    r'class.*View',
                     r'class.*Controller',
-                    r'def.*update.*\(.*\)',
-                    r'def.*render.*\(.*\)'
-                ]
-            },
-            'layered': {
-                'layers': ['presentation', 'business', 'data', 'service'],
-                'indicators': [
-                    r'presentation|ui|view',
-                    r'business|logic|domain',
-                    r'data|repository|dao',
-                    r'service|manager'
-                ]
-            },
-            'repository': {
-                'indicators': [
+                    r'class.*Service',
                     r'class.*Repository',
-                    r'def.*save.*\(.*\)',
-                    r'def.*find.*\(.*\)',
-                    r'def.*delete.*\(.*\)',
-                    r'def.*update.*\(.*\)'
-                ]
+                    r'def.*handle.*request',
+                    r'presentation|business|data'
+                ],
+                'keywords': ['layer', 'presentation', 'business', 'data', 'service', 'controller', 'repository'],
+                'structure': ['presentation_layer', 'business_layer', 'data_layer']
             },
-            'service_layer': {
+            'microservices': {
                 'indicators': [
                     r'class.*Service',
-                    r'class.*Manager',
-                    r'def.*process.*\(.*\)',
-                    r'def.*handle.*\(.*\)'
-                ]
+                    r'def.*api.*endpoint',
+                    r'def.*rest.*endpoint',
+                    r'class.*Controller',
+                    r'service.*discovery'
+                ],
+                'keywords': ['microservice', 'api', 'endpoint', 'rest', 'service', 'discovery'],
+                'structure': ['service_component', 'api_endpoint', 'data_service']
             }
         }
 
-        # Coding style patterns
-        self.coding_patterns = {
+
+    def _load_messaging_patterns(self) -> Dict[str, Dict]:
+        """Load messaging and event-driven pattern definitions"""
+        return {
+            'event_driven': {
+                'indicators': [
+                    r'def.*handle.*event',
+                    r'def.*process.*event',
+                    r'class.*Event',
+                    r'class.*Handler',
+                    r'publish.*subscribe'
+                ],
+                'keywords': ['event', 'handler', 'publish', 'subscribe', 'message', 'queue'],
+                'structure': ['event_handler', 'event_publisher', 'message_queue']
+            },
+            'message_queue': {
+                'indicators': [
+                    r'queue.*put',
+                    r'queue.*get',
+                    r'class.*Queue',
+                    r'async.*queue',
+                    r'concurrent.*queue'
+                ],
+                'keywords': ['queue', 'message', 'async', 'concurrent', 'producer', 'consumer'],
+                'structure': ['message_queue', 'producer', 'consumer']
+            }
+        }
+
+
+    def _load_architectural_patterns(self) -> Dict[str, Dict]:
+        """Load all architectural pattern definitions"""
+        patterns = {}
+        patterns.update(self._load_enterprise_patterns())
+        patterns.update(self._load_messaging_patterns())
+        return patterns
+
+
+    def _load_basic_coding_patterns(self) -> Dict[str, Dict]:
+        """Load basic coding style pattern definitions"""
+        return {
             'functional': {
                 'indicators': [
                     r'lambda.*:',
@@ -172,42 +229,40 @@ class PatternDetector:
                     r'class.*:',
                     r'def.*__init__.*\(.*\)',
                     r'self\.',
-                    r'def.*method.*\(.*\)'
+                    r'class.*\(.*\):',
+                    r'instance.*method'
                 ],
-                'keywords': ['class', 'self', 'method', '__init__', 'property']
+                'keywords': ['class', 'self', 'instance', 'method', 'inheritance']
             },
-            'async_await': {
+            'procedural': {
                 'indicators': [
-                    r'async\s+def',
-                    r'await\s+.*\(.*\)',
-                    r'asyncio\.',
-                    r'concurrent\.futures'
+                    r'def.*main.*\(.*\)',
+                    r'if.*__name__.*==.*__main__',
+                    r'global.*variables'
                 ],
-                'keywords': ['async', 'await', 'asyncio', 'concurrent']
-            },
-            'context_management': {
-                'indicators': [
-                    r'with\s+.*:',
-                    r'def.*__enter__.*\(.*\)',
-                    r'def.*__exit__.*\(.*\)',
-                    r'contextlib'
-                ],
-                'keywords': ['with', 'context', '__enter__', '__exit__']
-            },
-            'error_handling': {
-                'indicators': [
-                    r'try:',
-                    r'except.*:',
-                    r'finally:',
-                    r'raise.*Error',
-                    r'logging\.'
-                ],
-                'keywords': ['try', 'except', 'finally', 'raise', 'logging']
+                'keywords': ['main', 'procedure', 'global', 'sequential']
             }
         }
 
-        # Anti-patterns to detect
-        self.anti_patterns = {
+
+    def _load_coding_patterns(self) -> Dict[str, Dict]:
+        """Load all coding pattern definitions"""
+        return self._load_basic_coding_patterns()
+
+
+    def _load_architectural_patterns(self) -> Dict[str, Dict]:
+        """Load architectural pattern definitions - calls helper functions"""
+        return self._load_enterprise_patterns() | self._load_messaging_patterns()
+
+
+    def _load_coding_patterns(self) -> Dict[str, Dict]:
+        """Load coding pattern definitions"""
+        return self._load_basic_coding_patterns()
+
+
+    def _load_anti_patterns(self) -> Dict[str, Dict]:
+        """Load anti-pattern definitions"""
+        return {
             'god_object': {
                 'indicators': [
                     r'class.*:\s*\n(?:.*\n){50,}',  # Very large class
@@ -230,6 +285,44 @@ class PatternDetector:
                 'threshold': 50  # Lines threshold
             }
         }
+
+
+    def detect_patterns(self, content: str, file_path: Optional[Path] = None) -> Dict[str, Any]:
+        """
+        Detect patterns in Python code content.
+
+        Args:
+            content: The code content to analyze
+            file_path: Optional path to the file
+
+        Returns:
+            Dictionary containing pattern analysis results
+        """
+        try:
+            # Initialize pattern detection
+            all_patterns = []
+            pattern_categories = defaultdict(list)
+
+            # Detect different types of patterns
+            design_patterns_found = self._detect_design_patterns(content, tree)
+            architectural_patterns_found = self._detect_architectural_patterns(content, tree)
+            coding_patterns_found = self._detect_coding_patterns(content, tree)
+            anti_patterns_found = self._detect_anti_patterns(content, tree)
+
+            # Combine all patterns
+            all_patterns.extend(design_patterns_found)
+            all_patterns.extend(architectural_patterns_found)
+            all_patterns.extend(coding_patterns_found)
+            all_patterns.extend(anti_patterns_found)
+
+
+    def _load_pattern_definitions(self) -> None:
+        """Load all pattern definitions and detection rules"""
+        self.design_patterns = self._load_design_patterns()
+        self.architectural_patterns = self._load_architectural_patterns()
+        self.coding_patterns = self._load_coding_patterns()
+        self.anti_patterns = self._load_anti_patterns()
+
 
     def detect_patterns(self, content: str, file_path: Optional[Path] = None) -> Dict[str, Any]:
         """
@@ -269,8 +362,22 @@ class PatternDetector:
             # Calculate confidence distribution
             confidence_distribution = self._calculate_confidence_distribution(all_patterns)
 
+            # Convert patterns to dictionaries (replacing complex comprehension with explicit loop)
+            pattern_list = []
+            for pattern in all_patterns:
+                if hasattr(pattern, '__dict__'):
+                    pattern_list.append(pattern.__dict__)
+                else:
+                    pattern_list.append(pattern)
+
+            # Count high confidence patterns (replacing complex comprehension with explicit loop)
+            high_confidence_count = 0
+            for p in all_patterns:
+                if getattr(p, 'confidence', 0) > 0.8:
+                    high_confidence_count += 1
+
             result = {
-                'patterns': [pattern.__dict__ if hasattr(pattern, '__dict__') else pattern for pattern in all_patterns],
+                'patterns': pattern_list,
                 'pattern_categories': pattern_categories,
                 'confidence_distribution': confidence_distribution,
                 'architectural_style': architectural_style,
@@ -278,7 +385,7 @@ class PatternDetector:
                 'recommendations': recommendations,
                 'file_path': str(file_path) if file_path else 'unknown',
                 'total_patterns': len(all_patterns),
-                'high_confidence_patterns': len([p for p in all_patterns if getattr(p, 'confidence', 0) > 0.8])
+                'high_confidence_patterns': high_confidence_count
             }
 
             return result
@@ -551,7 +658,11 @@ class PatternDetector:
 
     def _determine_architectural_style(self, patterns: List[DetectedPattern]) -> str:
         """Determine the overall architectural style"""
-        architectural_patterns = [p for p in patterns if p.category == 'architectural']
+        # Find architectural patterns (replacing complex comprehension with explicit loop)
+        architectural_patterns = []
+        for p in patterns:
+            if p.category == 'architectural':
+                architectural_patterns.append(p)
 
         if not architectural_patterns:
             return 'unknown'
@@ -566,7 +677,11 @@ class PatternDetector:
 
     def _determine_coding_style(self, patterns: List[DetectedPattern]) -> str:
         """Determine the overall coding style"""
-        coding_patterns = [p for p in patterns if p.category == 'coding']
+        # Find coding patterns (replacing complex comprehension with explicit loop)
+        coding_patterns = []
+        for p in patterns:
+            if p.category == 'coding':
+                coding_patterns.append(p)
 
         if not coding_patterns:
             return 'unknown'
@@ -599,8 +714,11 @@ class PatternDetector:
         """Generate recommendations based on detected patterns"""
         recommendations = []
 
-        # Anti-pattern recommendations
-        anti_patterns = [p for p in patterns if p.category == 'anti-pattern']
+        # Anti-pattern recommendations (replacing complex comprehension with explicit loop)
+        anti_patterns = []
+        for p in patterns:
+            if p.category == 'anti-pattern':
+                anti_patterns.append(p)
         for pattern in anti_patterns:
             recommendations.extend(pattern.recommendations)
 
@@ -610,8 +728,11 @@ class PatternDetector:
         elif architectural_style == 'mixed':
             recommendations.append("Consolidate architectural patterns for consistency")
 
-        # Design pattern recommendations
-        design_patterns = [p for p in patterns if p.category == 'design']
+        # Design pattern recommendations (replacing complex comprehension with explicit loop)
+        design_patterns = []
+        for p in patterns:
+            if p.category == 'design':
+                design_patterns.append(p)
         if len(design_patterns) > 3:
             recommendations.append("Many design patterns detected - ensure they are necessary")
         elif len(design_patterns) == 0:

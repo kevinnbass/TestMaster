@@ -355,7 +355,9 @@ class LLMIntegrationEngine:
             if quality_data.get('overall_score', 1.0) < 0.7:
                 recommendations.append("Address code quality issues before reorganization")
                 quality_issues = quality_data.get('critical_issues', [])
-                recommendations.extend([f"Fix: {issue}" for issue in quality_issues[:2]])
+                # Convert quality issues to recommendations (replacing complex comprehension with explicit loop)
+                for issue in quality_issues[:2]:
+                    recommendations.append(f"Fix: {issue}")
 
         if 'pattern' in traditional_analysis:
             pattern_data = traditional_analysis['pattern']
@@ -396,7 +398,7 @@ class LLMIntegrationEngine:
     def generate_reorganization_plan(self, integrated_intelligence: List[IntegratedIntelligence]) -> Dict[str, Any]:
         """Generate a comprehensive reorganization plan based on integrated intelligence"""
 
-        # Sort by priority
+        # Sort by priority (replacing complex comprehension with explicit loop)
         sorted_intelligence = sorted(integrated_intelligence,
                                    key=lambda x: x.reorganization_priority,
                                    reverse=True)
@@ -413,7 +415,12 @@ class LLMIntegrationEngine:
         plan = {
             'timestamp': datetime.now().isoformat(),
             'total_modules': len(integrated_intelligence),
-            'high_priority_modules': len([i for i in integrated_intelligence if i.reorganization_priority >= 8]),
+            # Count high priority modules (replacing complex comprehension with explicit loop)
+            high_priority_count = 0
+            for i in integrated_intelligence:
+                if i.reorganization_priority >= 8:
+                    high_priority_count += 1
+            'high_priority_modules': high_priority_count,
             'classifications': list(by_classification.keys()),
             'reorganization_phases': self._generate_reorganization_phases(by_classification),
             'estimated_effort': self._estimate_reorganization_effort(sorted_intelligence),
@@ -423,75 +430,108 @@ class LLMIntegrationEngine:
 
         return plan
 
-    def _generate_reorganization_phases(self, by_classification: Dict[str, List[IntegratedIntelligence]]) -> List[Dict[str, Any]]:
-        """Generate phased reorganization approach"""
-
-        phases = []
-
-        # Phase 1: High confidence, low risk moves
+    def _create_phase1_high_confidence(self, by_classification: Dict[str, List[IntegratedIntelligence]]) -> List[Dict[str, Any]]:
+        """Create Phase 1: High confidence, low risk moves"""
         phase1 = []
         for classification, intelligence_list in by_classification.items():
-            high_confidence = [i for i in intelligence_list if i.integration_confidence > 0.8 and i.reorganization_priority < 7]
-            phase1.extend([{
-                'file': i.file_path,
-                'target_classification': classification,
-                'confidence': i.integration_confidence,
-                'reasoning': i.synthesis_reasoning
-            } for i in high_confidence])
+            # Find high confidence modules with low priority (replacing complex comprehension)
+            high_confidence = []
+            for i in intelligence_list:
+                if i.integration_confidence > 0.8 and i.reorganization_priority < 7:
+                    high_confidence.append(i)
+
+            # Add modules to phase (replacing complex comprehension)
+            for i in high_confidence:
+                phase1.append({
+                    'file': i.file_path,
+                    'target_classification': classification,
+                    'confidence': i.integration_confidence,
+                    'reasoning': i.synthesis_reasoning
+                })
 
         if phase1:
-            phases.append({
+            return [{
                 'phase': 1,
                 'name': 'High Confidence Reorganization',
                 'description': 'Move modules with high analysis confidence and low risk',
                 'modules': phase1,
                 'estimated_time': f"{len(phase1) * 15} minutes",
                 'risk_level': 'Low'
-            })
+            }]
+        return []
 
-        # Phase 2: Security and critical modules
+
+    def _create_phase2_security_modules(self, by_classification: Dict[str, List[IntegratedIntelligence]]) -> List[Dict[str, Any]]:
+        """Create Phase 2: Security and critical modules"""
         phase2 = []
         for classification, intelligence_list in by_classification.items():
-            security_modules = [i for i in intelligence_list if
-                              'security' in i.integrated_classification or
-                              'security' in i.llm_analysis.get('security', '').lower()]
-            phase2.extend([{
-                'file': i.file_path,
-                'target_classification': classification,
-                'security_notes': i.llm_analysis.get('security', ''),
-                'priority': i.reorganization_priority
-            } for i in security_modules])
+            # Find security modules (replacing complex comprehension)
+            security_modules = []
+            for i in intelligence_list:
+                if ('security' in i.integrated_classification or
+                    'security' in i.llm_analysis.get('security', '').lower()):
+                    security_modules.append(i)
+
+            # Add modules to phase (replacing complex comprehension)
+            for i in security_modules:
+                phase2.append({
+                    'file': i.file_path,
+                    'target_classification': classification,
+                    'security_notes': i.llm_analysis.get('security', ''),
+                    'priority': i.reorganization_priority
+                })
 
         if phase2:
-            phases.append({
+            return [{
                 'phase': 2,
                 'name': 'Security-Critical Modules',
                 'description': 'Handle security-related modules with extra care',
                 'modules': phase2,
                 'estimated_time': f"{len(phase2) * 30} minutes",
                 'risk_level': 'Medium'
-            })
+            }]
+        return []
 
-        # Phase 3: Complex and high-priority modules
+
+    def _create_phase3_complex_modules(self, by_classification: Dict[str, List[IntegratedIntelligence]]) -> List[Dict[str, Any]]:
+        """Create Phase 3: Complex and high-priority modules"""
         phase3 = []
         for classification, intelligence_list in by_classification.items():
-            complex_modules = [i for i in intelligence_list if i.reorganization_priority >= 8]
-            phase3.extend([{
-                'file': i.file_path,
-                'target_classification': classification,
-                'complexity': i.llm_analysis.get('complexity', ''),
-                'priority': i.reorganization_priority
-            } for i in complex_modules])
+            # Find complex modules (replacing complex comprehension)
+            complex_modules = []
+            for i in intelligence_list:
+                if i.reorganization_priority >= 8:
+                    complex_modules.append(i)
+
+            # Add modules to phase (replacing complex comprehension)
+            for i in complex_modules:
+                phase3.append({
+                    'file': i.file_path,
+                    'target_classification': classification,
+                    'complexity': i.llm_analysis.get('complexity', ''),
+                    'priority': i.reorganization_priority
+                })
 
         if phase3:
-            phases.append({
+            return [{
                 'phase': 3,
                 'name': 'Complex Module Reorganization',
                 'description': 'Handle complex, high-priority modules requiring careful planning',
                 'modules': phase3,
                 'estimated_time': f"{len(phase3) * 45} minutes",
                 'risk_level': 'High'
-            })
+            }]
+        return []
+
+
+    def _generate_reorganization_phases(self, by_classification: Dict[str, List[IntegratedIntelligence]]) -> List[Dict[str, Any]]:
+        """Generate phased reorganization approach"""
+        phases = []
+
+        # Create each phase using focused functions
+        phases.extend(self._create_phase1_high_confidence(by_classification))
+        phases.extend(self._create_phase2_security_modules(by_classification))
+        phases.extend(self._create_phase3_complex_modules(by_classification))
 
         return phases
 

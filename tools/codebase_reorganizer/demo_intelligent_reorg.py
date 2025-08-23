@@ -12,9 +12,8 @@ import os
 import sys
 from pathlib import Path
 
-def demonstrate_intelligent_approach() -> None:
-    """Demonstrate the intelligent reorganization approach"""
-
+def _print_intelligent_approach_header() -> None:
+    """Print the intelligent approach header and key insights"""
     print("🧠 INTELLIGENT REORGANIZATION APPROACH")
     print("=" * 50)
 
@@ -24,6 +23,9 @@ def demonstrate_intelligent_approach() -> None:
     print("• Only reorganizes when it clearly adds value")
     print("• Maintains semantic relationships between modules")
 
+
+def _print_what_it_would_do() -> None:
+    """Print what the intelligent approach would do"""
     print("\n📊 WHAT IT WOULD DO:")
 
     # Example of current structure (hypothetical)
@@ -59,6 +61,9 @@ def demonstrate_intelligent_approach() -> None:
             if len(files) > 2:
                 print(f"        • ... and {len(files)-2} more")
 
+
+def _print_reorganization_decisions() -> None:
+    """Print the reorganization decisions that would be made"""
     print("\n✅ REORGANIZATION DECISIONS:")
 
     decisions = [
@@ -80,6 +85,9 @@ def demonstrate_intelligent_approach() -> None:
         print(f"   {icon} {directory} → {decision}")
         print(f"      Reason: {reason}")
 
+
+def _print_final_results_and_benefits() -> None:
+    """Print the final results and benefits"""
     print("\n🎯 FINAL RESULT:")
     print("• 60% of directories preserved as-is")
     print("• 25% get minor reorganization")
@@ -93,6 +101,14 @@ def demonstrate_intelligent_approach() -> None:
     print("• Only improves what actually needs improvement")
     print("• Creates foundation for agent swarm coordination")
     print("• Respects your existing architectural decisions")
+
+
+def demonstrate_intelligent_approach() -> None:
+    """Demonstrate the intelligent reorganization approach"""
+    _print_intelligent_approach_header()
+    _print_what_it_would_do()
+    _print_reorganization_decisions()
+    _print_final_results_and_benefits()
 
 def show_usage() -> None:
     """Show how to use the intelligent reorganizer"""

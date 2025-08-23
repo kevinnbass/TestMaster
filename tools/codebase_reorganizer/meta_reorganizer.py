@@ -291,11 +291,8 @@ class IntelligenceDrivenReorganizer:
 
         return self._basic_dependency_analysis(file_path, content)
 
-    def _combine_analyses(self, semantic: Dict, relationship: Dict,
-                         pattern: Dict, ml: Dict, dependency: Dict,
-                         file_path: Path, content: str) -> Tuple[str, float, List[str]]:
-        """Combine all analyses to determine the best category"""
-
+    def _init_analysis_scores(self) -> Tuple[Dict[str, float], List[str]]:
+        """Initialize category scores and reasoning list"""
         reasoning = []
         category_scores = {
             'core/intelligence': 0,
@@ -310,6 +307,13 @@ class IntelligenceDrivenReorganizer:
             'configuration': 0,
             'utilities': 0
         }
+        return category_scores, reasoning
+
+
+    def _score_analysis_types(self, category_scores: Dict[str, float], reasoning: List[str],
+                             semantic: Dict, relationship: Dict, pattern: Dict,
+                             ml: Dict, dependency: Dict) -> None:
+        """Score each analysis type and update category scores"""
 
         # Semantic analysis scoring
         if semantic.get('category'):
@@ -339,18 +343,37 @@ class IntelligenceDrivenReorganizer:
             category_scores[rel_category] += relationship.get('strength', 0.1)
             reasoning.append(f"Relationship analysis: {relationship['primary_relationship']} → {rel_category}")
 
+
+    def _find_best_category(self, category_scores: Dict[str, float], reasoning: List[str]) -> Tuple[str, float]:
+        """Find the best category and calculate confidence"""
+        best_category = max(category_scores.items(), key=lambda x: x[1])
+        confidence = min(best_category[1], 1.0)
+
+        # Boost confidence if multiple analyses agree
+        agreeing_analyses = sum(1 for score in category_scores.values() if score > 0.3)
+        if agreeing_analyses >= 2:
+            confidence = min(confidence + 0.2, 1.0)
+            reasoning.append(f"Multiple analyses agree ({agreeing_analyses} total)")
+
+        return best_category[0], confidence
+
+
+    def _combine_analyses(self, semantic: Dict, relationship: Dict,
+                         pattern: Dict, ml: Dict, dependency: Dict,
+                         file_path: Path, content: str) -> Tuple[str, float, List[str]]:
+        """Combine all analyses to determine the best category"""
+
+        # Initialize scores and reasoning
+        category_scores, reasoning = self._init_analysis_scores()
+
+        # Score each analysis type
+        self._score_analysis_types(category_scores, reasoning, semantic, relationship,
+                                  pattern, ml, dependency)
+
         # Find the best category
         if category_scores:
-            best_category = max(category_scores.items(), key=lambda x: x[1])
-            confidence = min(best_category[1], 1.0)
-
-            # Boost confidence if multiple analyses agree
-            agreeing_analyses = sum(1 for score in category_scores.values() if score > 0.3)
-            if agreeing_analyses >= 2:
-                confidence = min(confidence + 0.2, 1.0)
-                reasoning.append(f"Multiple analyses agree ({agreeing_analyses} total)")
-
-            return best_category[0], confidence, reasoning
+            best_category, confidence = self._find_best_category(category_scores, reasoning)
+            return best_category, confidence, reasoning
 
         # Fallback to basic analysis
         return self._fallback_categorization(file_path, content, reasoning)
@@ -498,7 +521,13 @@ class IntelligenceDrivenReorganizer:
             return {
                 'predicted_category': best[0],
                 'confidence': min(best[1] * 0.15, 0.8),
-                'features_used': [kw for kw in eval(f"{best[0].split('/')[-1]}_keywords") if kw in content_lower]
+                # Find features used (replacing complex comprehension with explicit loop)
+                features_used = []
+                keyword_list = eval(f"{best[0].split('/')[-1]}_keywords")
+                for kw in keyword_list:
+                    if kw in content_lower:
+                        features_used.append(kw)
+                'features_used': features_used
             }
 
         return {'predicted_category': 'utilities', 'confidence': 0.1}
@@ -584,7 +613,12 @@ class IntelligenceDrivenReorganizer:
             score = sum(1 for keyword in category_keywords if keyword in content_lower)
             if score > 0:
                 scores[category] = score
-                reasoning.append(f"Found {score} keyword(s): {', '.join([k for k in category_keywords if k in content_lower])}")
+                # Find matching keywords (replacing complex comprehension with explicit loop)
+                matching_keywords = []
+                for k in category_keywords:
+                    if k in content_lower:
+                        matching_keywords.append(k)
+                reasoning.append(f"Found {score} keyword(s): {', '.join(matching_keywords)}")
 
         if scores:
             best_category = max(scores.items(), key=lambda x: x[1])
@@ -630,10 +664,18 @@ class IntelligenceDrivenReorganizer:
             'summary': {}
         }
 
-        # Group by confidence levels
-        high_confidence = [a for a in analyses if a.confidence_score >= 0.8]
-        medium_confidence = [a for a in analyses if 0.5 <= a.confidence_score < 0.8]
-        low_confidence = [a for a in analyses if a.confidence_score < 0.5]
+        # Group by confidence levels (replacing complex comprehensions with explicit loops)
+        high_confidence = []
+        medium_confidence = []
+        low_confidence = []
+
+        for a in analyses:
+            if a.confidence_score >= 0.8:
+                high_confidence.append(a)
+            elif 0.5 <= a.confidence_score < 0.8:
+                medium_confidence.append(a)
+            else:
+                low_confidence.append(a)
 
         # Generate moves for high confidence analyses
         for analysis in high_confidence:

@@ -116,13 +116,22 @@ class IntelligentReorganizer:
             root_path = Path(root)
 
             # Skip excluded directories
-            dirs[:] = [d for d in dirs if not self.should_exclude(root_path / d)]
+            # Filter directories (replacing complex comprehension with explicit loop)
+            filtered_dirs = []
+            for d in dirs:
+                if not self.should_exclude(root_path / d):
+                    filtered_dirs.append(d)
+            dirs[:] = filtered_dirs
 
             if self.should_exclude(root_path):
                 continue
 
             # Only analyze directories that contain Python files
-            py_files = [f for f in files if f.endswith('.py')]
+            # Get Python files (replacing complex comprehension with explicit loop)
+            py_files = []
+            for f in files:
+                if f.endswith('.py'):
+                    py_files.append(f)
             if not py_files:
                 continue
 
@@ -141,7 +150,11 @@ class IntelligentReorganizer:
         """Analyze a single directory"""
         try:
             # Get all Python files in this directory
-            files = [dir_path / f for f in py_files if f.endswith('.py')]
+            # Create file paths (replacing complex comprehension with explicit loop)
+            files = []
+            for f in py_files:
+                if f.endswith('.py'):
+                    files.append(dir_path / f)
 
             # Analyze the directory's organization
             is_well_organized = self._assess_organization(dir_path, files, subdirs)
@@ -194,16 +207,36 @@ class IntelligentReorganizer:
         if not files:
             return True
 
-        # Extract base names (without extensions)
-        base_names = [f.stem.lower() for f in files]
+        # Extract base names (without extensions) - replacing complex comprehension with explicit loop
+        base_names = []
+        for f in files:
+            base_names.append(f.stem.lower())
 
-        # Look for common patterns
+        # Look for common patterns (replacing complex comprehensions with explicit loops)
+        class_files = []
+        util_files = []
+        config_files = []
+        test_files = []
+        main_files = []
+
+        for n in base_names:
+            if n.endswith(('class', 'classes', 'model', 'models')):
+                class_files.append(n)
+            if n.endswith(('util', 'utils', 'helper', 'helpers')):
+                util_files.append(n)
+            if 'config' in n:
+                config_files.append(n)
+            if n.startswith(('test_', '_test')):
+                test_files.append(n)
+            if n in ('__init__', 'main', 'app', 'application'):
+                main_files.append(n)
+
         patterns = {
-            'class_files': [n for n in base_names if n.endswith(('class', 'classes', 'model', 'models'))],
-            'util_files': [n for n in base_names if n.endswith(('util', 'utils', 'helper', 'helpers'))],
-            'config_files': [n for n in base_names if 'config' in n],
-            'test_files': [n for n in base_names if n.startswith(('test_', '_test'))],
-            'main_files': [n for n in base_names if n in ('__init__', 'main', 'app', 'application')]
+            'class_files': class_files,
+            'util_files': util_files,
+            'config_files': config_files,
+            'test_files': test_files,
+            'main_files': main_files
         }
 
         # Directory is well-named if files follow consistent patterns

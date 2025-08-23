@@ -472,19 +472,19 @@ class HighReliabilityAuditor:
 
         # Issues by severity
         severity_data = report.detailed_analysis['files_by_severity']
-        print("
-🚨 ISSUES BY SEVERITY:"        print(f"  🔴 High: {severity_data['high']}")
+        print("\n🚨 ISSUES BY SEVERITY:")
+        print(f"  🔴 High: {severity_data['high']}")
         print(f"  🟡 Medium: {severity_data['medium']}")
         print(f"  🔵 Low: {severity_data['low']}")
 
         # Key metrics
-        print("
-📊 KEY METRICS:"        print(".2f")
+        print("\n📊 KEY METRICS:")
+        print(".2f")
         print(".1f")
 
         if report.issues_found:
-            print("
-🔍 TOP ISSUES:"            # Group issues by rule
+            print("\n🔍 TOP ISSUES:")
+            # Group issues by rule
             rule_groups = {}
             for issue in report.issues_found:
                 if issue.rule_number not in rule_groups:
@@ -503,17 +503,17 @@ class HighReliabilityAuditor:
 
         # Compliance assessment
         if report.compliance_score >= 90:
-            print("
-🎉 EXCELLENT COMPLIANCE!"            print("   The codebase follows high-reliability principles effectively.")
+            print("\n🎉 EXCELLENT COMPLIANCE!")
+            print("   The codebase follows high-reliability principles effectively.")
         elif report.compliance_score >= 75:
-            print("
-👍 GOOD COMPLIANCE"            print("   Minor issues found that should be addressed.")
+            print("\n👍 GOOD COMPLIANCE")
+            print("   Minor issues found that should be addressed.")
         elif report.compliance_score >= 50:
-            print("
-⚠️  MODERATE COMPLIANCE"            print("   Several issues need attention to improve reliability.")
+            print("\n⚠️  MODERATE COMPLIANCE")
+            print("   Several issues need attention to improve reliability.")
         else:
-            print("
-🚨 POOR COMPLIANCE"            print("   Significant work needed to meet high-reliability standards.")
+            print("\n🚨 POOR COMPLIANCE")
+            print("   Significant work needed to meet high-reliability standards.")
 
         print("\n" + "="*80)
 

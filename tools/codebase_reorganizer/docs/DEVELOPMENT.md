@@ -1170,3 +1170,4 @@ class MetricsCollector:
 ---
 
 This development guide provides comprehensive information for developers who want to contribute to, extend, or customize the LLM Intelligence System. The system is designed to be extensible and hackable, with clear patterns for adding new features, providers, and analysis methods. Whether you're fixing bugs, adding features, or completely customizing the system for your needs, this guide should provide the foundation you need to be successful.
+

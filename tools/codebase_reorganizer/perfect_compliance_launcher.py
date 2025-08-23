@@ -95,26 +95,53 @@ class CodebaseReorganizerLauncher:
         import os
         from pathlib import Path
 
-        python_files: List[Path] = []
+        # Pre-allocate with known maximum to avoid dynamic resizing
+        MAX_FILES = 1000  # Safety bound for file processing
+        python_files: List[Path] = [None] * MAX_FILES
+        python_file_count = 0
+
         exclusion_patterns = [
             '**/node_modules/**', '**/.*', '**/test*/**', '**/archive*/**',
             '**/__pycache__/**', '**/.*'
         ]
 
         for root, dirs, files in os.walk(self.root_dir):
-            # Remove excluded directories
-            dirs[:] = [d for d in dirs if len(dirs) < 100 and
-                      not any(p in str(Path(root) / d) for p in exclusion_patterns)]
+            if python_file_count >= MAX_FILES:
+                break  # Safety bound reached
+            # Remove excluded directories (replacing complex comprehension with explicit loop)
+            filtered_dirs = []
+            for d in dirs:
+                if len(filtered_dirs) < 100:  # Fixed upper bound
+                    should_exclude = False
+                    for p in exclusion_patterns:
+                        if p in str(Path(root) / d):
+                            should_exclude = True
+                            break
+                    if not should_exclude:
+                        filtered_dirs.append(d)
+            dirs[:] = filtered_dirs
 
             for file in files:
-                file_path = Path(root) / file
-                if (len(python_files) < 5000 and
-                    file.endswith('.py') and
-                    not any(p in str(file_path) for p in exclusion_patterns) and
-                    file_path.stat().st_size <= 10 * 1024 * 1024):
-                    python_files.append(file_path)
+                if python_file_count >= MAX_FILES:
+                    break  # Safety bound reached
 
-        return python_files
+                file_path = Path(root) / file
+                # Check file with explicit bounds checking (replacing complex comprehension)
+                is_excluded = False
+                for p in exclusion_patterns:
+                    if p in str(file_path):
+                        is_excluded = True
+                        break
+
+                if (file.endswith('.py') and
+                    not is_excluded and
+                    python_file_count < MAX_FILES and
+                    file_path.stat().st_size <= 10 * 1024 * 1024):
+                    python_files[python_file_count] = file_path
+                    python_file_count += 1
+
+        # Trim to actual size
+        return python_files[:python_file_count]
 
     def _display_main_results(self, audit_results: Dict, execution_results: Dict) -> None:
         """Display final system report"""

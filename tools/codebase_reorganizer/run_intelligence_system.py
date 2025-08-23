@@ -280,7 +280,10 @@ class IntelligenceSystemRunner:
             if self.planner:
                 # Reconstruct integrated intelligence objects
                 from intelligence_integration_engine import IntegratedIntelligence
-                integrated_intelligence = [IntegratedIntelligence(**item) for item in integrated_data.get('integrated_intelligence', [])]
+                # Convert integrated data to objects (replacing complex comprehension with explicit loop)
+                integrated_intelligence = []
+                for item in integrated_data.get('integrated_intelligence', []):
+                    integrated_intelligence.append(IntegratedIntelligence(**item))
 
                 reorganization_plan = self.planner.create_reorganization_plan(llm_map, integrated_intelligence)
 
@@ -295,12 +298,21 @@ class IntelligenceSystemRunner:
                 results['completed'] = datetime.now().isoformat()
 
         except Exception as e:
-            results['errors'].append(str(e))
+            if error_count < MAX_ERRORS:
+                errors[error_count] = str(e)
+                error_count += 1
 
+        # Update results with trimmed errors list
+        results['errors'] = errors[:error_count]
         return results
 
     def _run_execute_step(self, plan_file: str, batch_id: str, dry_run: bool = True) -> Dict[str, Any]:
         """Run the execution step"""
+
+        # Pre-allocate errors list to avoid dynamic resizing
+        MAX_ERRORS = 10
+        errors = [None] * MAX_ERRORS
+        error_count = 0
 
         results = {
             'step': 'execute',
@@ -316,7 +328,10 @@ class IntelligenceSystemRunner:
             if self.planner:
                 # Reconstruct plan object
                 from reorganization_planner import ReorganizationBatch
-                batches = [ReorganizationBatch(**batch) for batch in plan_data['batches']]
+                # Convert batches to objects (replacing complex comprehension with explicit loop)
+                batches = []
+                for batch in plan_data['batches']:
+                    batches.append(ReorganizationBatch(**batch))
                 from reorganization_planner import DetailedReorganizationPlan
                 plan = DetailedReorganizationPlan(**{k: v for k, v in plan_data.items() if k != 'batches'}, batches=batches)
 
@@ -605,3 +620,4 @@ Examples:
 
 if __name__ == "__main__":
     main()
+

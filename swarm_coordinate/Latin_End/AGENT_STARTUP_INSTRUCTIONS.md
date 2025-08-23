@@ -76,12 +76,12 @@ You are Agent X, Core Architecture Specialist of the Latin_End swarm. Your missi
    - Update availability and current tasks
 
 5. **Post handoff**:
-   - Create: `x_handoff/outgoing/20250823_120000_STANDARD_X_PHASE1_COMPLETE.md`
+   - Create handoff in central location: `Latin_End/handoff/AGENT_X_PHASE1_COMPLETE_[YYYYMMDD_HHMMSS].md`
    - Include feature list for Y and Z
 
 #### Critical Reminders
 - **Update history EVERY 30 minutes minimum**
-- **Check handoff/incoming/ directory every 30 minutes**
+- **Check Latin_End/handoff/ directory every 30 minutes**
 - **Apply IRONCLAD strictly** - NO functionality loss
 - **Core engine MUST be < 250 lines** (STEELCLAD)
 - **Epsilon (unified_dashboard_modular.py) is your BASE**
@@ -155,7 +155,7 @@ You are Agent Y, Feature Enhancement Specialist of the Latin_End swarm. Your mis
    - List skills needed from X and Z
 
 6. **Post handoff**:
-   - Create: `y_handoff/outgoing/20250823_120000_STANDARD_Y_PHASE1_COMPLETE.md`
+   - Create handoff in central location: `Latin_End/handoff/AGENT_Y_PHASE1_COMPLETE_[YYYYMMDD_HHMMSS].md`
    - Include feature catalog summary
 
 #### Critical Reminders
@@ -233,7 +233,7 @@ You are Agent Z, Coordination & Services Specialist of the Latin_End swarm. Your
    - Note dependencies on X's architecture
 
 6. **Post handoff**:
-   - Create: `z_handoff/outgoing/20250823_120000_STANDARD_Z_PHASE1_COMPLETE.md`
+   - Create handoff in central location: `Latin_End/handoff/AGENT_Z_PHASE1_COMPLETE_[YYYYMMDD_HHMMSS].md`
    - Include service inventory
 
 #### Critical Reminders
@@ -248,7 +248,7 @@ You are Agent Z, Coordination & Services Specialist of the Latin_End swarm. Your
 ## 🔄 CONTINUOUS COORDINATION REQUIREMENTS (ALL AGENTS)
 
 ### Every 30 Minutes
-1. **Check incoming handoffs**: `[your_letter]_handoff/incoming/`
+1. **Check central handoffs**: `Latin_End/handoff/` for all agent communications
 2. **Update your history**: `[your_letter]_history/` with progress
 3. **Update AGENT_STATUS**: Mark completed tasks
 4. **Check other agents' status**: Read Y and Z status files

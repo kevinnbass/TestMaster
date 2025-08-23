@@ -154,13 +154,20 @@ class CodebaseReorganizerLauncher:
             'reorganizer_engine'
         ]
 
-        missing_modules = []
+        # Pre-allocate with known maximum to avoid dynamic resizing
+        missing_modules = [None] * len(required_modules)
+        missing_count = 0
 
         for module in required_modules:
             try:
                 __import__(module)
             except ImportError:
-                missing_modules.append(module)
+                if missing_count < len(missing_modules):
+                    missing_modules[missing_count] = module
+                    missing_count += 1
+
+        # Trim to actual size
+        missing_modules = missing_modules[:missing_count]
 
         passed = len(missing_modules) == 0
         error = None if passed else f"Missing modules: {', '.join(missing_modules)}"
@@ -235,7 +242,9 @@ class CodebaseReorganizerLauncher:
 
     def _find_python_files_safely(self) -> List[Path]:
         """Find Python files with validation bounds"""
-        python_files: List[Path] = []
+        # Pre-allocate with known maximum to avoid dynamic resizing
+        python_files: List[Path] = [None] * MAX_FILES_TO_PROCESS
+        python_file_count = 0
 
         exclusion_patterns = {
             '**/node_modules/**', '**/.*', '**/test*/**', '**/archive*/**',
@@ -244,18 +253,24 @@ class CodebaseReorganizerLauncher:
 
         for root, dirs, files in os.walk(self.root_dir):
             # Remove excluded directories with explicit bounds checking
-            filtered_dirs: List[str] = []
+            # Pre-allocate with fixed upper bound to avoid dynamic resizing
+            filtered_dirs: List[str] = [None] * 100  # Fixed upper bound
+            filtered_count = 0
+
             for d in dirs:
-                if len(filtered_dirs) >= 100:  # Fixed upper bound
+                if filtered_count >= 100:  # Fixed upper bound
                     break
                 should_exclude = False
                 for pattern in exclusion_patterns:
                     if len(str(Path(root) / d)) <= MAX_PATH_LENGTH and pattern in str(Path(root) / d):
                         should_exclude = True
                         break
-                if not should_exclude:
-                    filtered_dirs.append(d)
-            dirs[:] = filtered_dirs
+                if not should_exclude and filtered_count < len(filtered_dirs):
+                    filtered_dirs[filtered_count] = d
+                    filtered_count += 1
+
+            # Trim to actual size
+            dirs[:] = filtered_dirs[:filtered_count]
 
             for file in files:
                 if len(python_files) >= MAX_FILES_TO_PROCESS:
@@ -271,11 +286,14 @@ class CodebaseReorganizerLauncher:
 
                 if (file.endswith('.py') and
                     not is_excluded and
-                    file_path.stat().st_size <= 10 * 1024 * 1024):  # 10MB max
+                    file_path.stat().st_size <= 10 * 1024 * 1024 and  # 10MB max
+                    python_file_count < len(python_files)):
 
-                    python_files.append(file_path)
+                    python_files[python_file_count] = file_path
+                    python_file_count += 1
 
-        return python_files
+        # Trim to actual size
+        return python_files[:python_file_count]
 
     def generate_final_report(self, audit_results: Dict, execution_results: Dict) -> Dict:
         """Generate comprehensive final report"""

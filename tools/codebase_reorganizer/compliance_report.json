@@ -1,0 +1,1811 @@
+{
+  "compliance_score": 57.08061002178649,
+  "total_files_analyzed": 27,
+  "total_functions_analyzed": 373,
+  "total_lines_analyzed": 14577,
+  "total_issues": 197,
+  "rule_compliance": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false,
+    "5": true,
+    "6": true,
+    "7": false,
+    "8": true,
+    "9": true,
+    "10": true,
+    "11": true,
+    "12": true,
+    "13": true,
+    "14": false,
+    "15": false,
+    "16": false,
+    "17": true
+  },
+  "detailed_analysis": {
+    "files_by_severity": {
+      "high": 88,
+      "medium": 107,
+      "low": 2
+    },
+    "rules_violated": 8,
+    "assertion_ratio": 0.44235924932975873,
+    "average_function_size": 88.1875
+  },
+  "issues": [
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\analyze_functions.py",
+      "line_number": 9,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'check_function_lengths' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\analyze_functions.py",
+      "line_number": 9,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'check_function_lengths' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (824 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 120,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'analyze_quality' exceeds 60 line limit (65 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 120,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'analyze_quality' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 186,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_complexity' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 237,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_analyze_maintainability' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 237,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_maintainability' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 286,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_readability' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 334,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_best_practices' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 396,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_calculate_max_nesting_from_body' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 404,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_calculate_average_function_length' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 434,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_detect_duplicate_patterns' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 448,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_naming_consistency' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 473,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_analyze_whitespace_usage' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 473,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_whitespace_usage' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 564,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_calculate_category_scores' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 599,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_identify_critical_issues' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 599,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_identify_critical_issues' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 622,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_generate_recommendations' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 622,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_generate_recommendations' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_check.py",
+      "line_number": 9,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'check_high_reliability_compliance' exceeds 60 line limit (97 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_check.py",
+      "line_number": 9,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'check_high_reliability_compliance' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_check.py",
+      "line_number": 9,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'check_high_reliability_compliance' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_check.py",
+      "line_number": 9,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'check_high_reliability_compliance' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\demo_intelligent_reorg.py",
+      "line_number": 15,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'demonstrate_intelligent_approach' exceeds 60 line limit (81 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\demo_intelligent_reorg.py",
+      "line_number": 15,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'demonstrate_intelligent_approach' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_integration_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (1125 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_integration_engine.py",
+      "line_number": 1098,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 1098) (<unknown>, line 1098)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (707 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_reorganizer.py",
+      "line_number": 593,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 593) (<unknown>, line 593)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (463 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 14,
+      "rule_description": "Limited external library dependencies",
+      "severity": "medium",
+      "description": "Module imports potentially risky libraries: subprocess",
+      "suggestion": "Review usage and consider safer alternatives"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 108,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'analyze_directory_structure' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 108,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'analyze_directory_structure' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 140,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_analyze_directory' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 140,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_directory' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 192,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_check_naming_patterns' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 289,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_categorize_directory' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 349,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'generate_reorganization_plan' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 391,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'execute_plan' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (355 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\launcher.py",
+      "line_number": 150,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_check_modules_available' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\launcher.py",
+      "line_number": 150,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_modules_available' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\launcher.py",
+      "line_number": 236,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_find_python_files_safely' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\launcher.py",
+      "line_number": 236,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_find_python_files_safely' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (648 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 592,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'main' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 51,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 93,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'integrate_intelligence' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 93,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'integrate_intelligence' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 344,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_generate_integrated_recommendations' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 371,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_generate_synthesis_reasoning' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 396,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'generate_reorganization_plan' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 396,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'generate_reorganization_plan' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 426,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function '_generate_reorganization_phases' exceeds 60 line limit (71 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 426,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_generate_reorganization_phases' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 426,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_generate_reorganization_phases' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 498,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_estimate_reorganization_effort' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 519,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_assess_reorganization_risks' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 519,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_assess_reorganization_risks' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_scanner.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (871 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_scanner.py",
+      "line_number": 1,
+      "rule_number": 14,
+      "rule_description": "Limited external library dependencies",
+      "severity": "medium",
+      "description": "Module imports potentially risky libraries: requests",
+      "suggestion": "Review usage and consider safer alternatives"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_scanner.py",
+      "line_number": 852,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 852) (<unknown>, line 852)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_system.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (1130 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_system.py",
+      "line_number": 1,
+      "rule_number": 14,
+      "rule_description": "Limited external library dependencies",
+      "severity": "medium",
+      "description": "Module imports potentially risky libraries: requests",
+      "suggestion": "Review usage and consider safer alternatives"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_system.py",
+      "line_number": 1110,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 1110) (<unknown>, line 1110)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (853 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 87,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_discover_intelligence_modules' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 294,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function '_combine_analyses' exceeds 60 line limit (63 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 294,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_combine_analyses' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 428,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_basic_relationship_analysis' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 451,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_basic_pattern_analysis' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 481,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_basic_ml_analysis' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 506,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_basic_dependency_analysis' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 565,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_fallback_categorization' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 565,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_fallback_categorization' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 596,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'analyze_codebase' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 596,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'analyze_codebase' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 596,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'analyze_codebase' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 622,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'generate_intelligent_reorganization_plan' exceeds 60 line limit (64 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 622,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'generate_intelligent_reorganization_plan' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 622,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'generate_intelligent_reorganization_plan' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 687,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_get_intelligent_target_path' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 701,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_extract_insights' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 701,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_insights' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (805 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 59,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function '_load_pattern_definitions' exceeds 60 line limit (174 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 234,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'detect_patterns' exceeds 60 line limit (67 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 234,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'detect_patterns' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 302,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_detect_design_patterns' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 346,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_detect_architectural_patterns' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 388,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_detect_coding_patterns' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 429,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function '_detect_anti_patterns' exceeds 60 line limit (64 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 429,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_detect_anti_patterns' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 543,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_categorize_patterns' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 552,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_determine_architectural_style' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 567,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_determine_coding_style' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 582,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_calculate_confidence_distribution' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 596,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_generate_pattern_recommendations' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 596,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_generate_pattern_recommendations' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 596,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_generate_pattern_recommendations' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\perfect_compliance_launcher.py",
+      "line_number": 93,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_find_python_files_safely' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\perfect_compliance_launcher.py",
+      "line_number": 93,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_find_python_files_safely' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\perfect_compliance_launcher.py",
+      "line_number": 93,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_find_python_files_safely' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactoring_demo.py",
+      "line_number": 50,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'analyze_functions_in_content' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactoring_demo.py",
+      "line_number": 111,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'demonstrate_automated_refactoring' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 10,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'analyze_function_for_refactoring' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 10,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'analyze_function_for_refactoring' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 123,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'generate_refactored_function' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 182,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'generate_refactored_file' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 182,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'generate_refactored_file' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 221,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'main' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (352 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_launcher.py",
+      "line_number": 106,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_check_modules_available' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_launcher.py",
+      "line_number": 106,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_modules_available' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_launcher.py",
+      "line_number": 228,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_find_python_files_safely' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_launcher.py",
+      "line_number": 228,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_find_python_files_safely' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (476 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 68,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'analyze_relationships' exceeds 60 line limit (71 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 140,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_import_relationships' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 167,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_class_relationships' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 209,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_function_relationships' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 261,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_build_relationship_graph' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 290,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_calculate_coupling_metrics' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 344,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_generate_relationship_recommendations' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 387,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_fallback_relationship_analysis' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 387,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_fallback_relationship_analysis' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_planner.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (931 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_planner.py",
+      "line_number": 888,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 888) (<unknown>, line 888)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (848 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 1,
+      "rule_number": 14,
+      "rule_description": "Limited external library dependencies",
+      "severity": "medium",
+      "description": "Module imports potentially risky libraries: subprocess",
+      "suggestion": "Review usage and consider safer alternatives"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 763,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'main' exceeds 60 line limit (82 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 108,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'load_config' exceeds 60 line limit (83 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 192,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_build_exclusion_patterns' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 320,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_imports' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 339,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_classes' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 354,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_functions' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 387,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_categorize_file' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 387,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_categorize_file' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 436,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'analyze_codebase' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 436,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'analyze_codebase' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 436,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'analyze_codebase' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 460,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'generate_reorganization_plan' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 500,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_get_target_path' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 514,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_find_imports_to_update' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 514,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_find_imports_to_update' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 554,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_generate_summary' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 574,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'execute_plan' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 574,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'execute_plan' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 661,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_create_backup' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 686,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_execute_moves' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 705,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_create_symlinks' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 727,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_update_imports' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (513 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer_engine.py",
+      "line_number": 140,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_imports_safe' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer_engine.py",
+      "line_number": 176,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_classes_safe' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer_engine.py",
+      "line_number": 207,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_functions_safe' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (608 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 433,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'main' exceeds 60 line limit (171 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 433,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'main' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 39,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 54,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'run_full_pipeline' exceeds 60 line limit (108 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 302,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_run_execute_step' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 334,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'generate_report' exceeds 60 line limit (65 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 334,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'generate_report' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_reorganizer.py",
+      "line_number": 23,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'find_testmaster_root' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_reorganizer.py",
+      "line_number": 50,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'main' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (746 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 101,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'analyze_semantics' exceeds 60 line limit (85 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 241,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_classes' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 273,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_functions' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 363,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_extract_semantic_keywords' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 363,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_extract_semantic_keywords' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 363,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_semantic_keywords' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 397,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_determine_purpose' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 397,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_determine_purpose' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 449,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_calculate_functionality_score' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 521,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_identify_code_patterns' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 597,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_generate_categorization_hints' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_perfect_launcher.py",
+      "line_number": 56,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_find_files' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_perfect_launcher.py",
+      "line_number": 56,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_find_files' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_perfect_launcher.py",
+      "line_number": 56,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_find_files' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (432 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 106,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_check_modules_available' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 106,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_modules_available' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 251,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_filter_directory_entries' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 251,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_filter_directory_entries' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 288,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_process_file_batch' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 288,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_process_file_batch' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 298,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_find_python_files_safely' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 298,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_find_python_files_safely' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (631 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 1,
+      "rule_number": 14,
+      "rule_description": "Limited external library dependencies",
+      "severity": "medium",
+      "description": "Module imports potentially risky libraries: subprocess",
+      "suggestion": "Review usage and consider safer alternatives"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 239,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'validate_reorganizer_config' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 499,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_code_complexity' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 542,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_safety_violations' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    }
+  ]
+}

@@ -440,10 +440,17 @@ class CodebaseReorganizer:
         analyses = []
 
         for root, dirs, files in os.walk(self.root_dir):
-            # Skip excluded directories early
-            dirs[:] = [d for d in dirs if not any(
-                (Path(root) / d).match(pattern) for pattern in self.exclude_patterns
-            )]
+            # Skip excluded directories early (replacing complex comprehension)
+            filtered_dirs = []
+            for d in dirs:
+                should_exclude = False
+                for pattern in self.exclusion_patterns:
+                    if pattern in str(Path(root) / d):
+                        should_exclude = True
+                        break
+                if not should_exclude:
+                    filtered_dirs.append(d)
+            dirs[:] = filtered_dirs
 
             for file in files:
                 file_path = Path(root) / file
@@ -616,7 +623,12 @@ class CodebaseReorganizer:
             total_files_analyzed=plan['summary']['total_files_to_reorganize'],
             files_reorganized=len(plan['moves']),
             symlinks_created=len(plan['symlinks']),
-            imports_updated=len([u for u in plan['imports_to_update'] if u.get('updated', False)]),
+            # Count updated imports (replacing complex comprehension)
+            updated_imports = 0
+            for u in plan['imports_to_update']:
+                if u.get('updated', False):
+                    updated_imports += 1
+            imports_updated=updated_imports,
             errors=errors,
             warnings=warnings,
             backup_path=backup_path

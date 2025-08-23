@@ -6,8 +6,8 @@ High-Reliability Compliance Check for Docstrings and Type Hints
 import ast
 from pathlib import Path
 
-def check_high_reliability_compliance() -> None:
-    """Check high-reliability compliance for docstrings and type hints"""
+def _get_core_python_files() -> List[Path]:
+    """Get core Python files for compliance analysis"""
     python_files = list(Path('.').rglob('*.py'))
 
     # Focus on core files for compliance check (exclude demo and utility files)
@@ -15,59 +15,87 @@ def check_high_reliability_compliance() -> None:
         'demo_', 'test_', 'refactor_', 'analyze_', 'run_', 'intelligence_', 'meta_', 'pattern_', 'relationship_', 'semantic_', 'quality_'
     }
 
-    python_files = [f for f in python_files if not any(pattern in f.name for pattern in excluded_patterns)]
+    # Replace complex comprehension with explicit loop for compliance
+    core_files = []
+    for f in python_files:
+        exclude = False
+        for pattern in excluded_patterns:
+            if pattern in f.name:
+                exclude = True
+                break
+        if not exclude:
+            core_files.append(f)
 
-    print('🎯 HIGH-RELIABILITY COMPLIANCE CHECK')
-    print('=' * 50)
+    return core_files
 
-    total_functions = 0
-    functions_with_docstrings = 0
-    functions_with_type_hints = 0
-    modules_with_docstrings = 0
-    total_modules = 0
 
-    missing_docstrings = []
-    missing_type_hints = []
+def _analyze_single_file_compliance(file_path: Path) -> Dict[str, Any]:
+    """Analyze a single file for compliance metrics"""
+    try:
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
 
-    for file_path in python_files:
-        try:
-            with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
-                content = f.read()
+        tree = ast.parse(content)
 
-            tree = ast.parse(content)
+        # Check module docstring
+        module_docstring = ast.get_docstring(tree)
+        has_module_docstring = module_docstring is not None
 
-            # Check module docstring
-            total_modules += 1
-            module_docstring = ast.get_docstring(tree)
-            if module_docstring:
-                modules_with_docstrings += 1
+        # Check functions
+        total_functions = 0
+        functions_with_docstrings = 0
+        functions_with_type_hints = 0
+        missing_docstrings = []
+        missing_type_hints = []
 
-            # Check functions
-            for node in ast.walk(tree):
-                if isinstance(node, ast.FunctionDef):
-                    total_functions += 1
-                    func_name = f"{file_path.name}:{node.name}"
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef):
+                total_functions += 1
+                func_name = f"{file_path.name}:{node.name}"
 
-                    # Check docstring
-                    has_docstring = ast.get_docstring(node) is not None
-                    if has_docstring:
-                        functions_with_docstrings += 1
-                    else:
-                        missing_docstrings.append(func_name)
+                # Check docstring
+                has_docstring = ast.get_docstring(node) is not None
+                if has_docstring:
+                    functions_with_docstrings += 1
+                else:
+                    missing_docstrings.append(func_name)
 
-                    # Check type hints
-                    has_return_hint = node.returns is not None
-                    has_arg_hints = all(arg.annotation is not None for arg in node.args.args if arg.arg != 'self')
+                # Check type hints
+                has_return_hint = node.returns is not None
+                has_arg_hints = all(arg.annotation is not None for arg in node.args.args if arg.arg != 'self')
 
-                    if has_return_hint and has_arg_hints:
-                        functions_with_type_hints += 1
-                    else:
-                        missing_type_hints.append(func_name)
+                if has_return_hint and has_arg_hints:
+                    functions_with_type_hints += 1
+                else:
+                    missing_type_hints.append(func_name)
 
-        except Exception as e:
-            if 'unterminated string' not in str(e):
-                print(f'Error analyzing {file_path}: {e}')
+        return {
+            'has_module_docstring': has_module_docstring,
+            'total_functions': total_functions,
+            'functions_with_docstrings': functions_with_docstrings,
+            'functions_with_type_hints': functions_with_type_hints,
+            'missing_docstrings': missing_docstrings,
+            'missing_type_hints': missing_type_hints
+        }
 
+    except Exception as e:
+        if 'unterminated string' not in str(e):
+            print(f'Error analyzing {file_path}: {e}')
+        return {
+            'has_module_docstring': False,
+            'total_functions': 0,
+            'functions_with_docstrings': 0,
+            'functions_with_type_hints': 0,
+            'missing_docstrings': [],
+            'missing_type_hints': []
+        }
+
+
+def _print_compliance_results(total_modules: int, modules_with_docstrings: int,
+                            total_functions: int, functions_with_docstrings: int,
+                            functions_with_type_hints: int, missing_docstrings: List[str],
+                            missing_type_hints: List[str]) -> None:
+    """Print compliance analysis results"""
     print(f'Total modules analyzed: {total_modules}')
     print(f'Modules with docstrings: {modules_with_docstrings} ({modules_with_docstrings/total_modules*100:.1f}%)')
     print(f'Total functions analyzed: {total_functions}')
@@ -89,8 +117,58 @@ def check_high_reliability_compliance() -> None:
         if len(missing_type_hints) > 10:
             print(f'   ... and {len(missing_type_hints) - 10} more')
 
+
+def _calculate_compliance_status(total_functions: int, functions_with_docstrings: int,
+                               functions_with_type_hints: int, total_modules: int,
+                               modules_with_docstrings: int) -> Tuple[bool, bool]:
+    """Calculate compliance status"""
     docstring_compliance = functions_with_docstrings == total_functions and modules_with_docstrings == total_modules
     type_hint_compliance = functions_with_type_hints / total_functions >= 0.95  # 95% compliance
+    return docstring_compliance, type_hint_compliance
+
+
+def check_high_reliability_compliance() -> None:
+    """Check high-reliability compliance for docstrings and type hints"""
+    python_files = _get_core_python_files()
+
+    print('🎯 HIGH-RELIABILITY COMPLIANCE CHECK')
+    print('=' * 50)
+
+    total_functions = 0
+    functions_with_docstrings = 0
+    functions_with_type_hints = 0
+    modules_with_docstrings = 0
+    total_modules = 0
+    all_missing_docstrings = []
+    all_missing_type_hints = []
+
+    # Analyze each file
+    for file_path in python_files:
+        total_modules += 1
+        analysis = _analyze_single_file_compliance(file_path)
+
+        # Aggregate results
+        if analysis['has_module_docstring']:
+            modules_with_docstrings += 1
+
+        total_functions += analysis['total_functions']
+        functions_with_docstrings += analysis['functions_with_docstrings']
+        functions_with_type_hints += analysis['functions_with_type_hints']
+        all_missing_docstrings.extend(analysis['missing_docstrings'])
+        all_missing_type_hints.extend(analysis['missing_type_hints'])
+
+    # Print results
+    _print_compliance_results(
+        total_modules, modules_with_docstrings,
+        total_functions, functions_with_docstrings,
+        functions_with_type_hints, all_missing_docstrings, all_missing_type_hints
+    )
+
+    # Calculate and display compliance status
+    docstring_compliance, type_hint_compliance = _calculate_compliance_status(
+        total_functions, functions_with_docstrings,
+        functions_with_type_hints, total_modules, modules_with_docstrings
+    )
 
     print('\n📋 COMPLIANCE STATUS:')
     print(f'   Docstring compliance: {"✅ FULLY COMPLIANT" if docstring_compliance else "❌ NEEDS WORK"}')

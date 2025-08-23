@@ -299,17 +299,24 @@ class RelationshipAnalyzer:
 
         coupling_score = actual_connections / max(total_possible_connections, 1)
 
-        # Calculate in-degree and out-degree statistics
-        in_degrees = [d for n, d in graph.in_degree()]
-        out_degrees = [d for n, d in graph.out_degree()]
+        # Calculate in-degree and out-degree statistics (replacing complex comprehensions)
+        in_degrees = []
+        for n, d in graph.in_degree():
+            in_degrees.append(d)
+
+        out_degrees = []
+        for n, d in graph.out_degree():
+            out_degrees.append(d)
 
         avg_in_degree = sum(in_degrees) / len(in_degrees) if in_degrees else 0
         avg_out_degree = sum(out_degrees) / len(out_degrees) if out_degrees else 0
 
-        # Find highly coupled nodes
+        # Find highly coupled nodes (replacing complex comprehension)
         high_coupling_threshold = avg_out_degree + 2
-        highly_coupled_nodes = [node for node, degree in graph.out_degree()
-                              if degree > high_coupling_threshold]
+        highly_coupled_nodes = []
+        for node, degree in graph.out_degree():
+            if degree > high_coupling_threshold:
+                highly_coupled_nodes.append(node)
 
         return {
             'coupling_score': coupling_score,
@@ -318,7 +325,12 @@ class RelationshipAnalyzer:
             'max_in_degree': max(in_degrees) if in_degrees else 0,
             'max_out_degree': max(out_degrees) if out_degrees else 0,
             'highly_coupled_nodes': highly_coupled_nodes,
-            'isolated_nodes': [node for node, degree in graph.degree() if degree == 0]
+            # Find isolated nodes (replacing complex comprehension)
+            isolated_nodes = []
+            for node, degree in graph.degree():
+                if degree == 0:
+                    isolated_nodes.append(node)
+            'isolated_nodes': isolated_nodes
         }
 
     def _identify_relationship_clusters(self, graph: nx.DiGraph) -> List[List[str]]:
@@ -328,14 +340,20 @@ class RelationshipAnalyzer:
             return []
 
         try:
-            # Use community detection if networkx has it
+            # Use community detection if networkx has it (replacing complex comprehensions)
             if hasattr(nx.algorithms.community, 'greedy_modularity_communities'):
                 communities = nx.algorithms.community.greedy_modularity_communities(graph)
-                return [list(community) for community in communities]
+                result = []
+                for community in communities:
+                    result.append(list(community))
+                return result
             else:
-                # Fallback: use connected components
+                # Fallback: use connected components (replacing complex comprehension)
                 components = list(nx.connected_components(graph.to_undirected()))
-                return [list(component) for component in components]
+                result = []
+                for component in components:
+                    result.append(list(component))
+                return result
 
         except Exception:
             # Ultimate fallback

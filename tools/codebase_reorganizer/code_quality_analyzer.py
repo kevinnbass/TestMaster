@@ -158,11 +158,23 @@ class CodeQualityAnalyzer:
                 'overall_score': overall_score,
                 'quality_grade': quality_grade,
                 'category_scores': category_scores,
-                'metrics': [metric.__dict__ if hasattr(metric, '__dict__') else metric for metric in all_metrics],
+                # Convert metrics to dictionaries (replacing complex comprehension with explicit loop)
+                metrics_list = []
+                for metric in all_metrics:
+                    if hasattr(metric, '__dict__'):
+                        metrics_list.append(metric.__dict__)
+                    else:
+                        metrics_list.append(metric)
+                'metrics': metrics_list,
                 'critical_issues': critical_issues,
                 'recommendations': recommendations,
                 'total_metrics': len(all_metrics),
-                'passing_metrics': len([m for m in all_metrics if getattr(m, 'score', 0) >= 0.7])
+                # Count passing metrics (replacing complex comprehension with explicit loop)
+                passing_count = 0
+                for m in all_metrics:
+                    if getattr(m, 'score', 0) >= 0.7:
+                        passing_count += 1
+                'passing_metrics': passing_count
             }
 
             return result
@@ -238,8 +250,11 @@ class CodeQualityAnalyzer:
         """Analyze code maintainability"""
         metrics = []
 
-        # Calculate lines of code
-        lines_of_code = len([line for line in content.split('\n') if line.strip()])
+        # Calculate lines of code (replacing complex comprehension with explicit loop)
+        lines_of_code = 0
+        for line in content.split('\n'):
+            if line.strip():
+                lines_of_code += 1
 
         # Calculate comment ratio
         comment_lines = len(re.findall(r'^\s*#.*', content, re.MULTILINE))
