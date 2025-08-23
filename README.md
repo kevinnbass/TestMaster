@@ -254,3 +254,14 @@ python TestMaster/design_pattern_recognizer.py --root TestMaster --output patter
 This should happen WITHOUT asking for permission, as part of the natural workflow after completing each task. All changes must be pushed to the GitHub remote repository, not just committed locally.
 
 *Last Updated: August 21, 2025 - Agent C Phase 2 Completion*
+
+---
+
+## 📜 Recent Roadmap Revisions (2025-08-23)
+
+- **Greek Master Roadmap**: Added metadata, practical success criteria, and binding protocol verification gates aligning with CLAUDE.md
+- **Greek Alpha Roadmap**: Added metadata, practical scope overlay, protocol compliance overlay, and verification gates
+- **Greek Beta Roadmap**: Added protocol overlay, local single-user success criteria, and verification gates
+- **Greek Gamma Roadmap**: Added protocol overlay, local single-user success criteria, and verification gates
+
+These changes standardize frontend-first integration, anti-regression/duplication safeguards, and verifiable completion gates across Greek roadmaps.

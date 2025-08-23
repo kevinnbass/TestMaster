@@ -49,6 +49,27 @@
 **Timeline:** 500 Agent Hours  
 **Execution:** Independent with coordination with other agents
 
+## ✅ Protocol Compliance Overlay (Binding)
+
+- **Frontend-First (ADAMANTIUMCLAD):** All deliverables must be visible in the unified dashboard at `http://localhost:5000/`.
+- **Anti-Regression (IRONCLAD/STEELCLAD/COPPERCLAD):** Manual analysis before consolidation; extract unique functionality; verify parity; archive—never delete.
+- **Anti-Duplication (GOLDCLAD):** Run similarity search before creating new components; prefer enhancement; include justification if creation is necessary.
+- **Version Control (DIAMONDCLAD):** After task completion, update root `README.md`, then stage, commit, and push.
+
+### Adjusted Success Criteria (Local Single-User Scope)
+- **Deployment:** Local SPA; no multi-user guarantees
+- **Performance:** First contentful paint < 2.5s; interactions p95 < 200ms
+- **Accessibility:** Practical WCAG focus: keyboard, contrast, labels; AA aspirational
+- **Charting:** Standard lib use (Chart.js/D3 basics) with datasets up to ~2k points
+- **Reliability:** Local restart safety; recover UI state where reasonable
+
+### Verification Gates (apply before marking tasks complete)
+1. UI component/screens added or updated and reachable via navigation
+2. Data flow documented (API → adapter → component), incl. polling/WS cadence
+3. Evidence attached (screenshots/gifs, perf numbers, or brief test notes)
+4. History updated in `gamma_history/` with timestamp, changes, and impact
+5. GOLDCLAD justification present for any new component/file
+
 ### **📋 ROADMAP DETAIL REFERENCE**
 **Complete Hour-by-Hour Breakdown:** See `greek_coordinate_roadmap/20250822_greek_master_roadmap.md` - AGENT GAMMA ROADMAP section for comprehensive 500-hour detail breakdown with specific technical implementations, metrics, and deliverables for each phase.
 
