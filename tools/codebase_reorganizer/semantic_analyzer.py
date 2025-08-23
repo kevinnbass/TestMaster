@@ -189,7 +189,7 @@ class SemanticAnalyzer:
         standard_library_imports = set()
         third_party_imports = set()
         local_imports = set()
-                    import_patterns: Dict[str, int] = defaultdict(int)
+        import_patterns: Dict[str, int] = defaultdict(int)
 
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
@@ -401,7 +401,7 @@ class SemanticAnalyzer:
         """Determine the primary and secondary purposes of the code"""
 
         # Score each domain based on imports, keywords, and functions
-                    domain_scores: Dict[str, float] = defaultdict(float)
+        domain_scores: Dict[str, float] = defaultdict(float)
 
         # Import-based scoring
         for import_name in imports_analysis['third_party']:

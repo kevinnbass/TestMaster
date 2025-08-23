@@ -80,7 +80,7 @@ class RelationshipAnalyzer:
             tree = ast.parse(content)
 
             # Analyze different types of relationships
-                            import_relationships = self._analyze_import_relationships(tree, str(file_path) if file_path else "unknown")
+            import_relationships = self._analyze_import_relationships(tree, str(file_path) if file_path else "unknown")
             class_relationships = self._analyze_class_relationships(tree)
             function_relationships = self._analyze_function_relationships(tree)
             data_relationships = self._analyze_data_relationships(tree)

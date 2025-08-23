@@ -384,7 +384,7 @@ class CodeQualityAnalyzer:
     def _calculate_max_nesting(self, tree: ast.AST, max_depth: int = 0, current_depth: int = 0) -> int:
         """Calculate maximum nesting depth"""
         for node in ast.walk(tree):
-                            if isinstance(node, (ast.If, ast.For, ast.While, ast.With, ast.Try)):
+            if isinstance(node, (ast.If, ast.For, ast.While, ast.With, ast.Try)):
                 max_depth = max(max_depth, current_depth + 1)
                 if hasattr(node, 'body'):
                     max_depth = max(max_depth, self._calculate_max_nesting_from_body(node.body, current_depth + 1))
@@ -435,7 +435,7 @@ class CodeQualityAnalyzer:
         """Simple duplicate pattern detection"""
         # Look for repeated patterns (very basic implementation)
         lines = content.split('\n')
-                    pattern_count: Dict[str, int] = defaultdict(int)
+        pattern_count: Dict[str, int] = defaultdict(int)
 
         for line in lines:
             if len(line.strip()) > 10:  # Only consider substantial lines
