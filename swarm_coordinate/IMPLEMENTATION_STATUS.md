@@ -38,6 +38,13 @@
 - **Epsilon**: `20250822_agent_epsilon_roadmap.md` - Frontend Information Richness & Sophistication
 - **Coordinate**: `20250822_greek_master_roadmap.md` - Enhanced 500-Hour Production System
 
+#### Verification Gates (Greek)
+- Frontend tie-in for each deliverable (dashboard visibility) or explicit exemption
+- Data flow documented (source → API → UI) with polling/WS cadence
+- Evidence attached (tests, logs, screenshots, metrics)
+- Agent history updates with timestamp and impact
+- GOLDCLAD justification for any new files/components
+
 ### **Latin Swarm Roadmaps**
 - **A**: `20250822_agent_a_roadmap.md` - Directory Hierarchy & Redundancy Intelligence
 - **B**: `20250822_agent_b_roadmap.md` - Documentation & Modularization Excellence

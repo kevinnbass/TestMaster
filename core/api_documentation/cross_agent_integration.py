@@ -167,7 +167,7 @@ class AgentDiscovery:
         self.agents[config.name] = config
         self.agent_status[config.name] = AgentStatus(
             name=config.name,
-            status=AgentStatus.OFFLINE,
+            status=AgentState.OFFLINE,
             last_seen=0,
             response_time=0,
             capabilities=config.capabilities
@@ -186,7 +186,7 @@ class AgentDiscovery:
         """Get list of currently online agents"""
         return [
             name for name, status in self.agent_status.items()
-            if status.status == AgentStatus.ONLINE
+            if status.status == AgentState.ONLINE
         ]
     
     def get_agents_by_capability(self, capability: str) -> List[str]:
@@ -267,10 +267,10 @@ class HealthMonitor:
             status = self.discovery.agent_status[agent_name]
             
             if response.status_code == 200:
-                status.status = AgentStatus.ONLINE
+                status.status = AgentState.ONLINE
                 status.error_count = 0
             else:
-                status.status = AgentStatus.DEGRADED
+                status.status = AgentState.DEGRADED
                 status.error_count += 1
             
             status.last_seen = time.time()
@@ -859,4 +859,4 @@ if __name__ == '__main__':
         })
     
     app = enhance_app_cross_agent(app)
-    app.run(host='0.0.0.0', port=5024, debug=True)
+    app.run(host='0.0.0.0', port=5024, debug=True)  
