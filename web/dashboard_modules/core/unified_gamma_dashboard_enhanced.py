@@ -51,6 +51,7 @@ import json
 import time
 import threading
 import requests
+import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Any, Optional
@@ -60,8 +61,9 @@ from flask_socketio import SocketIO, emit
 import psutil
 import random
 
-# Add path for Agent E integration
+# Add paths for dashboard modules
 sys.path.insert(0, str(Path(__file__).parent.parent / "core" / "analytics"))
+sys.path.insert(0, str(Path(__file__).parent / "dashboard_modules"))
 
 # Agent E Personal Analytics Integration (when available)
 try:
@@ -74,6 +76,17 @@ try:
 except ImportError:
     AGENT_E_INTEGRATION_AVAILABLE = False
     print("Agent E Personal Analytics Service not yet available - dashboard ready for integration")
+
+# Import new dashboard modules
+try:
+    from charts.chart_integration import chart_engine, ChartType
+    from data.data_aggregation_pipeline import data_pipeline, AggregationType, FilterCondition, FilterOperator
+    from filters.advanced_filter_ui import filter_ui, FilterType, FilterField
+    ADVANCED_MODULES_AVAILABLE = True
+    print("[SUCCESS] Advanced dashboard modules loaded: Charts, Data Pipeline, Filters")
+except ImportError as e:
+    ADVANCED_MODULES_AVAILABLE = False
+    print(f"[WARNING] Advanced modules not fully available: {e}")
 
 class EnhancedUnifiedDashboard:
     """
@@ -98,7 +111,7 @@ class EnhancedUnifiedDashboard:
         self.personal_analytics = None
         if AGENT_E_INTEGRATION_AVAILABLE:
             self.personal_analytics = PersonalAnalyticsService()
-            print("✅ Agent E Personal Analytics Integration Active")
+            print("[SUCCESS] Agent E Personal Analytics Integration Active")
         
         # Enhanced backend services with personal analytics support
         self.backend_services = {
@@ -150,6 +163,12 @@ class EnhancedUnifiedDashboard:
         def enhanced_dashboard():
             """Main enhanced dashboard with personal analytics panel space."""
             return render_template_string(ENHANCED_DASHBOARD_HTML)
+        
+        @self.app.route('/charts')
+        def charts_dashboard():
+            """Advanced charts dashboard page."""
+            with open(Path(__file__).parent / 'dashboard_modules' / 'templates' / 'charts_dashboard.html', 'r') as f:
+                return f.read()
         
         @self.app.route('/api/unified-status')
         def unified_status():
@@ -243,6 +262,92 @@ class EnhancedUnifiedDashboard:
                 }
             }
             return jsonify(config)
+        
+        # Chart API Routes
+        if ADVANCED_MODULES_AVAILABLE:
+            @self.app.route('/api/charts', methods=['POST'])
+            def create_chart():
+                """Create a new chart."""
+                data = request.json
+                chart_config = chart_engine.create_chart(
+                    chart_id=data.get('id', str(uuid.uuid4())),
+                    chart_type=ChartType(data['type']),
+                    data=data['data'],
+                    options=data.get('options')
+                )
+                return jsonify(chart_config)
+            
+            @self.app.route('/api/charts/<chart_id>')
+            def get_chart(chart_id):
+                """Get chart configuration."""
+                chart = chart_engine.get_chart_config(chart_id)
+                if chart:
+                    return jsonify(chart)
+                return jsonify({'error': 'Chart not found'}), 404
+            
+            @self.app.route('/api/charts/<chart_id>/data', methods=['PUT'])
+            def update_chart_data(chart_id):
+                """Update chart data."""
+                data = request.json
+                success = chart_engine.update_chart_data(chart_id, data['data'])
+                return jsonify({'success': success})
+            
+            @self.app.route('/api/charts/<chart_id>/export/<format>')
+            def export_chart(chart_id, format):
+                """Export chart in specified format."""
+                export_data = chart_engine.export_chart(chart_id, format)
+                if export_data:
+                    return export_data, 200, {
+                        'Content-Type': 'application/octet-stream',
+                        'Content-Disposition': f'attachment; filename=chart_{chart_id}.{format}'
+                    }
+                return jsonify({'error': 'Export failed'}), 500
+            
+            @self.app.route('/api/data/aggregate', methods=['POST'])
+            async def aggregate_data():
+                """Perform data aggregation."""
+                data = request.json
+                result = await data_pipeline.aggregate_data(
+                    data=data['data'],
+                    group_by=data.get('group_by'),
+                    aggregations=data.get('aggregations'),
+                    filters=data.get('filters'),
+                    time_window=data.get('time_window')
+                )
+                return jsonify(result.to_dict('records'))
+            
+            @self.app.route('/api/filters/ui')
+            def get_filter_ui():
+                """Get filter UI configuration."""
+                fields = request.args.getlist('fields')
+                ui_config = filter_ui.build_filter_ui(fields if fields else None)
+                return jsonify(ui_config)
+            
+            @self.app.route('/api/filters/apply', methods=['POST'])
+            def apply_filters():
+                """Apply filter conditions."""
+                conditions = request.json.get('conditions', [])
+                filter_conditions = filter_ui.apply_filters(conditions)
+                return jsonify({
+                    'success': True,
+                    'filters_applied': len(filter_conditions)
+                })
+            
+            @self.app.route('/api/filters/presets')
+            def get_filter_presets():
+                """Get available filter presets."""
+                return jsonify(filter_ui.get_public_presets())
+            
+            @self.app.route('/api/metrics/dashboard')
+            def get_dashboard_metrics():
+                """Get comprehensive dashboard metrics."""
+                metrics = {
+                    'charts': chart_engine.get_performance_metrics() if ADVANCED_MODULES_AVAILABLE else {},
+                    'data_pipeline': data_pipeline.get_performance_metrics() if ADVANCED_MODULES_AVAILABLE else {},
+                    'filters': filter_ui.get_metrics() if ADVANCED_MODULES_AVAILABLE else {},
+                    'api_usage': self.api_tracker.get_usage_summary()
+                }
+                return jsonify(metrics)
     
     def setup_socketio_events(self):
         """Setup WebSocket events for real-time updates."""
@@ -289,7 +394,7 @@ class EnhancedUnifiedDashboard:
         if AGENT_E_INTEGRATION_AVAILABLE and self.personal_analytics:
             # Register personal analytics endpoints
             register_personal_analytics_endpoints(self.app, self.personal_analytics)
-            print("✅ Agent E API endpoints registered successfully")
+            print("[SUCCESS] Agent E API endpoints registered successfully")
     
     def _check_service_status(self, base_url: str) -> Dict[str, Any]:
         """Check if a backend service is operational."""
@@ -316,10 +421,10 @@ class EnhancedUnifiedDashboard:
     
     def run(self):
         """Start the enhanced unified dashboard server."""
-        print("🚀 STARTING ENHANCED UNIFIED GAMMA DASHBOARD")
+        print("[STARTUP] STARTING ENHANCED UNIFIED GAMMA DASHBOARD")
         print("=" * 60)
         print(f"   Enhanced Dashboard: http://localhost:{self.port}")
-        print(f"   Agent E Integration: {'ACTIVE ✅' if AGENT_E_INTEGRATION_AVAILABLE else 'READY (awaiting service)'}")
+        print(f"   Agent E Integration: {'ACTIVE [SUCCESS]' if AGENT_E_INTEGRATION_AVAILABLE else 'READY (awaiting service)'}")
         print(f"   Personal Analytics Panel: 2x2 grid space allocated")
         print(f"   3D Visualization API: Ready for project structure rendering")
         print(f"   Real-time Updates: WebSocket streaming active")

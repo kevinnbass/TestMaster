@@ -357,7 +357,12 @@ class TemplateGeneratorTester:
         """Test README generator"""
         try:
             generator = ReadmeGenerator()
-            context = TemplateContext(**scenario.parameters)
+            # Fix TemplateContext initialization - ensure all required parameters are provided
+            params = scenario.parameters.copy()
+            # Ensure required fields are present with defaults if not specified
+            if 'tech_stack' not in params:
+                params['tech_stack'] = ''
+            context = TemplateContext(**params)
             
             # Generate README (mock implementation)
             readme_content = f"""# {context.project_name}

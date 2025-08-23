@@ -61,7 +61,8 @@ class ReorganizationResult:
     backup_path: Optional[Path]
 
 class CodebaseReorganizer:
-    def __init__(self, root_dir: Path, mode: str = "preview", config_file: Optional[Path] = None):
+    def __init__(self, root_dir: Path, mode: str = "preview", config_file: Optional[Path] = None) -> None:
+        """Initialize the codebase reorganizer with configuration and logging"""
         self.root_dir = root_dir.resolve()
         self.mode = mode
         self.backup_dir = None
@@ -85,7 +86,7 @@ class CodebaseReorganizer:
         self.logger.info(f"Codebase Reorganizer initialized for {self.root_dir}")
         self.logger.info(f"Mode: {self.mode}")
 
-    def setup_logging(self):
+    def setup_logging(self) -> None:
         """Setup comprehensive logging"""
         log_dir = self.root_dir / "tools" / "codebase_reorganizer" / "logs"
         log_dir.mkdir(parents=True, exist_ok=True)
@@ -386,7 +387,7 @@ class CodebaseReorganizer:
     def _categorize_file(self, path: Path, content: str,
                         imports: List[str], classes: List[str],
                         functions: List[str], keywords: Set[str]) -> Tuple[str, float, List[str]]:
-
+        """Categorize a file based on its content, imports, and path"""
         path_str = str(path.relative_to(self.root_dir)).lower()
         scores = {}
 
@@ -621,7 +622,7 @@ class CodebaseReorganizer:
             backup_path=backup_path
         )
 
-    def _print_plan(self, plan: Dict):
+    def _print_plan(self, plan: Dict) -> None:
         """Print the reorganization plan"""
         print("\n" + "="*80)
         print("CODEBASE REORGANIZATION PLAN")
@@ -759,7 +760,8 @@ class CodebaseReorganizer:
 
         return results
 
-def main():
+def main() -> None:
+    """Main entry point for the codebase reorganization tool"""
     parser = argparse.ArgumentParser(
         description='Codebase Reorganization Tool',
         formatter_class=argparse.RawDescriptionHelpFormatter,

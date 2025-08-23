@@ -43,13 +43,7 @@ Select the file with the richest and most relevant feature set. Consolidation wi
 
 ### Rule #1: Frontend-First Development (All Agents)
 For every task:
-- Assess if output can connect to and display on frontend.
-- If possible, add subtask for frontend integration.
-- Establish data flow from task to frontend visualization.
-- Create/enhance UI components for results.
-- Ensure real-time updates on frontend.
-- Use only ports `http://localhost:5000/`, `5001/`, or `5002/` for dashboards; kill/relaunch as needed.
-- Validate dashboard functionality headlessly when possible.
+<Left blank.>
 
 ### Rule #2: Frontend Integration Verification
 Before completing task:

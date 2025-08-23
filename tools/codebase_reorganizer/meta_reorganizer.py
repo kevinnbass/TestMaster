@@ -54,7 +54,8 @@ class IntelligenceDrivenReorganizer:
     This is the most sophisticated approach possible.
     """
 
-    def __init__(self, root_dir: Path):
+    def __init__(self, root_dir: Path) -> None:
+        """Initialize the intelligence-driven reorganizer"""
         self.root_dir = root_dir.resolve()
         self.intelligence_modules = self._discover_intelligence_modules()
         self.exclusions = self._get_exclusions()
@@ -65,7 +66,7 @@ class IntelligenceDrivenReorganizer:
         self.logger.info(f"Intelligence-Driven Reorganizer initialized")
         self.logger.info(f"Found {len(self.intelligence_modules)} intelligence modules")
 
-    def setup_logging(self):
+    def setup_logging(self) -> None:
         """Setup logging"""
         log_dir = self.root_dir / "tools" / "codebase_reorganizer" / "logs"
         log_dir.mkdir(parents=True, exist_ok=True)
@@ -745,7 +746,7 @@ class IntelligenceDrivenReorganizer:
         # For now, return empty list as placeholder
         return []
 
-    def execute_plan(self, plan: Dict):
+    def execute_plan(self, plan: Dict) -> None:
         """Execute the intelligent reorganization plan"""
         self.logger.info("Executing intelligent reorganization plan...")
 
@@ -775,7 +776,7 @@ class IntelligenceDrivenReorganizer:
         # Report on what was done
         self._print_intelligent_summary(plan)
 
-    def _print_intelligent_summary(self, plan: Dict):
+    def _print_intelligent_summary(self, plan: Dict) -> None:
         """Print intelligent reorganization summary"""
         print("\n" + "="*80)
         print("🤖 INTELLIGENT REORGANIZATION RESULTS")
@@ -815,7 +816,7 @@ class IntelligenceDrivenReorganizer:
         print("   Your semantic analyzers, ML models, and relationship mappers provided")
         print("   the granular understanding that made this possible.")
 
-def main():
+def main() -> None:
     """Main function"""
     print("🤖 Intelligent Codebase Reorganizer")
     print("=" * 40)

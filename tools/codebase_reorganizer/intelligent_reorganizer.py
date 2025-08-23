@@ -54,7 +54,8 @@ class RelationshipAnalysis:
     evidence: List[str]
 
 class IntelligentReorganizer:
-    def __init__(self, root_dir: Path, mode: str = "preview"):
+    def __init__(self, root_dir: Path, mode: str = "preview") -> None:
+        """Initialize the intelligent reorganizer with configuration"""
         self.root_dir = root_dir.resolve()
         self.mode = mode
         self.excluded_dirs = self._get_exclusions()
@@ -64,7 +65,7 @@ class IntelligentReorganizer:
 
         self.logger.info(f"Intelligent Reorganizer initialized for {self.root_dir}")
 
-    def setup_logging(self):
+    def setup_logging(self) -> None:
         """Setup logging"""
         log_dir = self.root_dir / "tools" / "codebase_reorganizer" / "logs"
         log_dir.mkdir(parents=True, exist_ok=True)
@@ -387,7 +388,7 @@ class IntelligentReorganizer:
 
         return plan
 
-    def execute_plan(self, plan: Dict):
+    def execute_plan(self, plan: Dict) -> None:
         """Execute the reorganization plan"""
         if self.mode == 'preview':
             self._print_plan(plan)
@@ -404,7 +405,7 @@ class IntelligentReorganizer:
 
         self.logger.info("Reorganization structure created")
 
-    def _print_plan(self, plan: Dict):
+    def _print_plan(self, plan: Dict) -> None:
         """Print the reorganization plan"""
         print("\n" + "="*80)
         print("INTELLIGENT CODEBASE REORGANIZATION PLAN")
@@ -434,7 +435,7 @@ class IntelligentReorganizer:
         if len(plan['suggested_improvements']) > 10:
             print(f"   ... and {len(plan['suggested_improvements']) - 10} more")
 
-def main():
+def main() -> None:
     """Main function"""
     print("Intelligent Codebase Reorganizer")
     print("=" * 40)

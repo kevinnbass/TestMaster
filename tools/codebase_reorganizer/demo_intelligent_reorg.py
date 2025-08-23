@@ -12,7 +12,7 @@ import os
 import sys
 from pathlib import Path
 
-def demonstrate_intelligent_approach():
+def demonstrate_intelligent_approach() -> None:
     """Demonstrate the intelligent reorganization approach"""
 
     print("🧠 INTELLIGENT REORGANIZATION APPROACH")
@@ -94,7 +94,7 @@ def demonstrate_intelligent_approach():
     print("• Creates foundation for agent swarm coordination")
     print("• Respects your existing architectural decisions")
 
-def show_usage():
+def show_usage() -> None:
     """Show how to use the intelligent reorganizer"""
     print("\n🛠️  HOW TO USE:")
     print("=" * 20)
