@@ -87,18 +87,17 @@ All 10 agents (Greek: Alpha, Beta, Gamma, Delta, Epsilon | Latin: A, B, C, D, E)
 - **`TEMPLATE_AGENT_STATUS.md`**: Complete template for agent status files  
 - **`AGENT_SPEC.md`**: Human documentation explaining the entire system
 
-## 🚀 **SHARED ROADMAP - Multi-Agent Coordination Framework**
+## 🚀 **CORE COORDINATION PRINCIPLES**
 
-### Mission Overview
-The Ultimate Codebase Analysis System is designed to analyze tangled codebases, generate deep insights, produce security audits, create test blueprints, and propose re-architectures into clean hierarchical structures with strong frontend/backend separation, while aggressively identifying and reducing redundancies without losing functionality.
-
-### Core Principles
+### Universal Swarm Principles
 1. **Zero Functionality Loss**: Every consolidation must preserve 100% of original functionality
-2. **Conservative Redundancy Analysis**: When in doubt, keep both implementations
-3. **Autonomous Bootstrapping**: System must be able to analyze and improve itself
-4. **Intelligence Enhancement**: Every iteration should increase system intelligence
-5. **Competitive Superiority**: Maintain 5-100x performance advantage over competitors
-6. **RELENTLESS DOCUMENTATION**: Update agent history files and coordination records CONSTANTLY with EVERY discovery, decision, and insight
+2. **Conservative Analysis**: When in doubt, preserve both implementations
+3. **Continuous Documentation**: Update history files relentlessly with every discovery
+4. **Iterative Improvement**: Each iteration should enhance system capabilities
+5. **Autonomous Operation**: Agents must be self-directed within their roadmaps
+6. **Transparent Coordination**: All decisions and progress must be documented
+
+> **For specific mission objectives and implementation details:** See [`IMPLEMENTATION_STATUS.md`](./IMPLEMENTATION_STATUS.md)
 
 ### Shared Resources & Coordination
 All agents coordinate through the swarm system (see `swarm_coordinate/README.md`):
@@ -156,48 +155,40 @@ For future agent operations, the system includes:
 - **Performance Monitoring**: Real-time system health tracking → **AUTO-UPDATE ongoing coordination**
 - **Intelligence Enhancement**: Self-improving analysis capabilities → **AUTO-UPDATE agent history files**
 
-## 📋 **END-TO-END ANALYSIS PROCESS**
+## 📋 **UNIVERSAL HISTORY UPDATE PRINCIPLES**
 
-### **Phase 1: Discovery & Cataloging (Hours 1-12)**
-**🔴 UPDATE AGENT HISTORY FILES EVERY HOUR WITH ALL DISCOVERIES!**
-**⚡ CHECKPOINT: Agent history files should have 12+ iterative updates by end of Phase 1**
-*See IMPLEMENTATION_STATUS.md for current agent assignments and specializations*
+### **Why History Updates Matter**
+The distributed history system is the foundation of multi-agent coordination. Without relentless updates, agents work in isolation and coordination fails.
 
-### **Phase 2: Analysis & Planning (Hours 13-24)**
-**🔴 UPDATE COORDINATION HISTORY WITH EVERY ANALYSIS RESULT!**
-- Redundancy identification using conservative protocols → **UPDATE coordination history with redundancy groups**
-- Modularization strategy development → **UPDATE coordination history with modularization targets**
-- Security vulnerability assessment → **UPDATE coordination history with security priorities**
-- Performance optimization planning → **UPDATE coordination history with performance bottlenecks**
-- Re-architecture design → **UPDATE coordination history with architecture decisions**
-**⚡ CHECKPOINT: Coordination history should have 24+ cumulative updates by end of Phase 2**
+### **What to Update**
+**🔴 EVERY agent must document:**
+- **Discoveries**: New patterns, insights, or findings → agent history
+- **Decisions**: Architectural choices, consolidations → agent history  
+- **Coordination**: Cross-agent activities → coordination history
+- **Issues**: Problems, conflicts, resolutions → ongoing coordination
+- **Progress**: Milestones, completions → agent history
 
-### **Phase 3: Implementation & Consolidation (Hours 25-48)**
-**🔴 UPDATE AGENT HISTORY WITH EVERY CONSOLIDATION ACTION!**
-- Safe redundancy elimination with full archival → **UPDATE agent history with each consolidation**
-- Systematic modularization following best practices → **UPDATE agent history with each module split**
-- Security hardening implementation → **UPDATE agent history with each security fix**
-- Performance optimization deployment → **UPDATE agent history with performance improvements**
-- Clean architecture refactoring → **UPDATE agent history with refactoring progress**
-**⚡ CHECKPOINT: Agent history files should have 48+ cumulative updates by end of Phase 3**
+### **When to Update**
+- **Minimum**: Every 30 minutes during active work
+- **Ideally**: Every 10 minutes when making discoveries
+- **Immediately**: For critical findings or blockers
+- **Before handoffs**: When other agents depend on your work
 
-### **Phase 4: Validation & Enhancement (Hours 49-72)**
-**🔴 UPDATE COORDINATION HISTORY WITH ALL VALIDATION RESULTS!**
-- Comprehensive testing of consolidated system → **UPDATE coordination history with test results**
-- Performance benchmarking and optimization → **UPDATE coordination history with benchmarks**
-- Security penetration testing → **UPDATE coordination history with security validation**
-- Documentation completion → **UPDATE coordination history with documentation status**
-- Autonomous capability enhancement → **UPDATE coordination history with capability additions**
-**⚡ CHECKPOINT: Coordination history should have 72+ cumulative updates by end of Phase 4**
+### **How to Update**
+- **Format**: Timestamp + Agent ID + Finding Type + Details + Impact
+- **Location**: 
+  - Individual work → `[agent]_history/`
+  - Swarm achievements → `[coordinate]_history/`
+  - Active coordination → `[coordinate]_ongoing/`
+- **Content**: Include code snippets, metrics, diagrams where relevant
 
-### **Phase 5: Bootstrap & Evolution (Hours 73-100)**
-**🔴 UPDATE AGENT HISTORY WITH EVOLUTION PROGRESS!**
-- Self-monitoring system deployment → **UPDATE agent history with monitoring metrics**
-- Autonomous improvement capability activation → **UPDATE agent history with improvements**
-- Competitive analysis and enhancement → **UPDATE agent history with competitive advantages**
-- Future agent coordination framework → **UPDATE coordination history with coordination patterns**
-- Continuous evolution protocols → **UPDATE agent history with evolution strategies**
-**⚡ CHECKPOINT: Agent history files should have 100+ cumulative updates by mission end**
+### **Update Quality Standards**
+- Be specific (file names, line numbers, function names)
+- Be timely (update as you work, not after)
+- Be comprehensive (better too much detail than too little)
+- Be clear (other agents need to understand your updates)
+
+> **Remember**: The history system is not just documentation - it's the distributed intelligence repository that enables true swarm coordination.
 
 ## 🔧 **CRITICAL REMINDER: RELENTLESS HISTORY UPDATES**
 
