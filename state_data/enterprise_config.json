@@ -1,0 +1,13 @@
+{
+  "jwt_secret_key": "367282da-e9e3-418d-8495-de3063a3af5b",
+  "default_rate_limit": 1000,
+  "max_concurrent_jobs": 10,
+  "ml_cost_per_job": 0.05,
+  "webhook_timeout": 30,
+  "enable_websockets": true,
+  "enable_graphql": true,
+  "cors_origins": [
+    "*"
+  ],
+  "api_version": "v1"
+}
