@@ -370,49 +370,8 @@ See `swarm_coordinate/README.md` for documentation and coordination.
 
 ---
 
-### PowerShell on Windows Environment
-- **Operating System**: Windows with PowerShell
-- **Shell**: PowerShell (not bash, zsh, or other Unix shells)
-- **Command Syntax**: Use PowerShell cmdlets and syntax
-- **Path Separators**: Use backslashes (\) for Windows paths
-- **Environment Variables**: Use $env:VARIABLE syntax
-- **Command Chaining**: Use semicolon (;) or separate lines instead of && and ||
-- **File Operations**: Use PowerShell cmdlets like Get-ChildItem, Copy-Item, etc.
-- **Process Management**: Use Start-Process, Get-Process cmdlets
-- **Text Processing**: Use PowerShell's string methods and Where-Object
-- **Script Execution**: Use .ps1 files and PowerShell execution policy
-
-### PowerShell-Specific Patterns
-- **Directory Navigation**: `cd`, `Set-Location`, `Push-Location`
-- **File Listing**: `Get-ChildItem` (not ls)
-- **File Copying**: `Copy-Item` (not cp)
-- **File Moving**: `Move-Item` (not mv)
-- **File Removal**: `Remove-Item` (not rm)
-- **Directory Creation**: `New-Item -ItemType Directory` (not mkdir)
-- **Text Search**: `Select-String` (not grep)
-- **Process Listing**: `Get-Process` (not ps)
-
-### Avoid These Linux/Unix Commands
-- ❌ `ls` → ✅ `Get-ChildItem` or `dir`
-- ❌ `cp` → ✅ `Copy-Item`
-- ❌ `mv` → ✅ `Move-Item`
-- ❌ `rm` → ✅ `Remove-Item`
-- ❌ `mkdir` → ✅ `New-Item -ItemType Directory`
-- ❌ `grep` → ✅ `Select-String`
-- ❌ `find` → ✅ `Get-ChildItem -Recurse`
-- ❌ `&&` → ✅ `;` or separate commands
-- ❌ `||` → ✅ PowerShell error handling
-- ❌ `/path/to/file` → ✅ `C:\path\to\file` or `.\\path\\to\\file`
-- ❌ `chmod` → ✅ Not needed in PowerShell
-- ❌ `chown` → ✅ Not needed in PowerShell
-
-### PowerShell Best Practices
-- Use full cmdlet names for clarity
-- Use PowerShell's object pipeline
-- Leverage PowerShell's error handling with try/catch
-- Use PowerShell modules and cmdlets
-- Avoid aliases in scripts for clarity
-- Use PowerShell's built-in help with Get-Help
+## Conclusion
+This framework guides autonomous multi-agent codebase analysis, providing coordination, operation, excellence, evolution, and assurance. Designed for self-bootstrapping and continuous improvement.
 
 **Status**: READY FOR AUTONOMOUS OPERATION
 **Framework Version**: 1.0.0

@@ -16,23 +16,69 @@ The Swarm Coordination System organizes autonomous agents into coordinated swarm
 ### **Two-File Agent Profile System**
 Each agent maintains two critical files in their directory:
 
-1. **`AGENT_CONFIG_[AGENT].md`** - **READ-ONLY** configuration (file system permissions)
+1. **`AGENT_CONFIG_[AGENT].md`** - **READ-ONLY** configuration (chmod 444)
    - Immutable agent profile and capabilities
-   - Access permissions and restrictions
+   - Access permissions and restrictions  
    - Directory access rules and timing
    - Tool restrictions and allowed operations
 
-2. **`AGENT_STATUS_[AGENT].md`** - **AGENT-EDITABLE** dynamic status
-   - Current progress and phase
-   - Availability for collaboration  
-   - Skills offered and needed
-   - Active tasks and priorities
+2. **`AGENT_STATUS_[AGENT].md`** - **AGENT-EDITABLE** dynamic status (chmod 644)
+   - Current progress and phase completion
+   - Availability for collaboration and response time
+   - Skills offered and needed for collaboration  
+   - Active tasks and upcoming milestones
+   - Recent achievements and communication preferences
 
 ### **Framework Benefits**
 - **Controlled Discovery**: Agents can discover each other's capabilities without context bleed
-- **Access Control**: Explicit permissions prevent unauthorized directory access
-- **Collaboration Framework**: Structured process for agent enlistment and cooperation
+- **Access Control**: Explicit directory permissions prevent unauthorized access
+- **Collaboration Framework**: Structured process for agent enlistment and cooperation  
 - **Status Transparency**: Real-time visibility into agent progress and availability
+
+### **Agent Profile File Locations**
+All 10 agents (Greek: Alpha, Beta, Gamma, Delta, Epsilon | Latin: A, B, C, D, E) have:
+- Config: `swarm_coordinate/[Greek|Latin]/[Agent]/AGENT_CONFIG_[AGENT].md`
+- Status: `swarm_coordinate/[Greek|Latin]/[Agent]/AGENT_STATUS_[AGENT].md` 
+- Handoffs: `swarm_coordinate/[Greek|Latin]/[Agent]/[agent]_handoff/incoming/` & `processed/`
+
+### **How Agents Use the Profile System**
+
+#### **For Agent Discovery & Collaboration:**
+1. **Check Agent Status Files**: Read `AGENT_STATUS_*.md` files of other agents to see:
+   - Current availability level (HIGH/MEDIUM/LOW)
+   - Skills they're offering to help others
+   - Skills they need help with
+   - Response time expectations (within 2-4 hours)
+   - Communication preferences (handoff priority levels)
+
+2. **Review Agent Config Files**: Read `AGENT_CONFIG_*.md` files to understand:
+   - Each agent's specialization and expertise areas
+   - Which directories they can access for collaboration
+   - How to send them collaboration proposals via handoff system
+   - What tools they're allowed to use
+
+3. **Initiate Collaboration**: Send structured collaboration proposals via the enhanced handoff system:
+   - Use format: `YYYYMMDD_HHMMSS_[PRIORITY]_COLLAB_from_[SENDER]_to_[RECIPIENT]_[SUBJECT].md`
+   - Priority levels: CRITICAL (blocking issues), STANDARD (coordination), INFO (updates)
+   - Send to: `[Greek|Latin]/[Agent]/[agent]_handoff/incoming/`
+
+#### **For Status Maintenance:**
+- **Update Every 2 Hours**: Keep your AGENT_STATUS file current during active work
+- **Progress Tracking**: Update phase progress, task completion, and milestones
+- **Availability Management**: Adjust availability level based on current workload
+- **Skill Broadcasting**: Update skills offered/needed as work progresses
+- **Achievement Logging**: Document recent accomplishments and upcoming work
+
+#### **Access Control Compliance:**
+- **Read Permissions**: Can read any agent's STATUS/CONFIG files for discovery
+- **Write Restrictions**: Can only write to your own directory + coordination shared areas
+- **Forbidden Access**: Cannot read other agents' history files or private roadmaps
+- **Handoff System**: Use structured handoff templates for all inter-agent communication
+
+### **Templates Available**
+- **`TEMPLATE_AGENT_CONFIG.md`**: Complete template for agent configuration files
+- **`TEMPLATE_AGENT_STATUS.md`**: Complete template for agent status files  
+- **`AGENT_SPEC.md`**: Human documentation explaining the entire system
 
 ## 🚀 **SHARED ROADMAP - Multi-Agent Coordination Framework**
 

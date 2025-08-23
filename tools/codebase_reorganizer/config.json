@@ -1,0 +1,231 @@
+{
+  "version": "2.0",
+  "description": "Configuration for Codebase Reorganizer",
+  "exclusions": {
+    "research_repos": [
+      "agency-swarm",
+      "autogen",
+      "agent-squad",
+      "agentops",
+      "agentscope",
+      "AgentVerse",
+      "crewAI",
+      "CodeGraph",
+      "falkordb-py",
+      "AWorld",
+      "MetaGPT",
+      "metagpt",
+      "PraisonAI",
+      "praisonai",
+      "llama-agents",
+      "phidata",
+      "swarms",
+      "lagent",
+      "langgraph-supervisor-py"
+    ],
+    "system_dirs": [
+      "__pycache__",
+      ".git",
+      "node_modules",
+      "htmlcov",
+      ".pytest_cache",
+      ".vscode",
+      ".idea",
+      ".DS_Store",
+      "Thumbs.db"
+    ],
+    "archive_dirs": [
+      "archive",
+      "archives",
+      "PRODUCTION_PACKAGES"
+    ],
+    "test_dirs": [
+      "tests",
+      "test_sessions",
+      "testmaster_sessions"
+    ],
+    "build_dirs": [
+      "build",
+      "dist",
+      "*.egg-info",
+      ".eggs"
+    ],
+    "temp_dirs": [
+      "temp",
+      "tmp",
+      "temporary",
+      "cache",
+      ".cache"
+    ]
+  },
+  "categories": {
+    "core/intelligence": {
+      "keywords": [
+        "intelligence", "ml", "ai", "neural", "predictive", "learning",
+        "classifier", "regression", "clustering", "nlp", "llm", "gpt",
+        "transformer", "embedding", "vector", "semantic", "cognitive",
+        "analytics", "forecaster", "predictor", "model", "algorithm"
+      ],
+      "class_patterns": [
+        ".*Intelligence.*", ".*ML.*", ".*AI.*", ".*Neural.*",
+        ".*Predictor.*", ".*Classifier.*", ".*Learner.*", ".*Forecaster.*",
+        ".*Model.*", ".*Algorithm.*"
+      ],
+      "path_patterns": [
+        ".*intelligence.*", ".*ml.*", ".*ai.*", ".*neural.*",
+        ".*predictive.*", ".*semantic.*", ".*cognitive.*", ".*analytics.*"
+      ]
+    },
+    "core/orchestration": {
+      "keywords": [
+        "orchestrator", "orchestration", "coordinator", "coordination",
+        "workflow", "pipeline", "scheduler", "dispatcher", "agent",
+        "swarm", "coordination", "messaging", "queue", "task",
+        "executor", "conductor", "director", "router", "dispatcher",
+        "manager", "supervisor", "controller"
+      ],
+      "class_patterns": [
+        ".*Orchestrator.*", ".*Coordinator.*", ".*Agent.*",
+        ".*Scheduler.*", ".*Workflow.*", ".*Executor.*",
+        ".*Router.*", ".*Dispatcher.*", ".*Manager.*", ".*Supervisor.*"
+      ],
+      "path_patterns": [
+        ".*orchestrat.*", ".*coordinat.*", ".*workflow.*",
+        ".*agent.*", ".*swarm.*", ".*messaging.*", ".*queue.*",
+        ".*router.*", ".*manager.*", ".*supervisor.*"
+      ]
+    },
+    "core/security": {
+      "keywords": [
+        "security", "auth", "authentication", "authorization", "encrypt",
+        "decrypt", "hash", "password", "token", "jwt", "oauth",
+        "vulnerability", "scan", "audit", "compliance", "threat",
+        "firewall", "access", "permission", "credential", "secret",
+        "validation", "sanitization", "encryption", "decryption"
+      ],
+      "class_patterns": [
+        ".*Security.*", ".*Auth.*", ".*Encrypt.*", ".*Audit.*",
+        ".*Compliance.*", ".*Threat.*", ".*Scanner.*", ".*Validator.*",
+        ".*Guard.*", ".*Protector.*"
+      ],
+      "path_patterns": [
+        ".*security.*", ".*auth.*", ".*encrypt.*", ".*audit.*",
+        ".*threat.*", ".*compliance.*", ".*credential.*", ".*validator.*",
+        ".*guard.*", ".*protect.*"
+      ]
+    },
+    "core/foundation": {
+      "keywords": [
+        "base", "abstract", "interface", "foundation", "core",
+        "framework", "abstraction", "protocol", "contract",
+        "utility", "helper", "common", "shared", "library",
+        "config", "settings", "constants", "base", "fundamental"
+      ],
+      "class_patterns": [
+        ".*Base.*", ".*Abstract.*", ".*Interface.*", ".*Foundation.*",
+        ".*Core.*", ".*Helper.*", ".*Config.*", ".*Utility.*"
+      ],
+      "path_patterns": [
+        ".*foundation.*", ".*base.*", ".*abstract.*", ".*interface.*",
+        ".*core.*", ".*framework.*", ".*helper.*", ".*config.*",
+        ".*utility.*", ".*common.*"
+      ]
+    },
+    "security": {
+      "keywords": [
+        "patch", "fix", "vulnerability", "exploit", "injection",
+        "xss", "csrf", "sql", "path", "traversal", "validation",
+        "sanitize", "escape", "filter", "guard", "protection",
+        "hardening", "defense", "remediation", "mitigation"
+      ],
+      "path_patterns": [
+        ".*patch.*", ".*fix.*", ".*security.*", ".*vulnerab.*",
+        ".*exploit.*", ".*remediat.*", ".*mitigat.*"
+      ]
+    },
+    "testing": {
+      "keywords": [
+        "test", "spec", "mock", "stub", "fixture", "assertion",
+        "coverage", "pytest", "unittest", "nose", "behave",
+        "cucumber", "selenium", "automation", "validation",
+        "verify", "check", "benchmark", "performance", "quality"
+      ],
+      "path_patterns": [
+        ".*test.*", ".*spec.*", ".*mock.*", ".*fixture.*",
+        ".*check.*", ".*verify.*", ".*benchmark.*", ".*performance.*"
+      ]
+    },
+    "monitoring": {
+      "keywords": [
+        "monitor", "dashboard", "metric", "log", "alert",
+        "notification", "observability", "telemetry", "trace",
+        "performance", "health", "status", "report", "analytics",
+        "visualization", "graph", "chart", "plot", "panel"
+      ],
+      "class_patterns": [
+        ".*Monitor.*", ".*Dashboard.*", ".*Metric.*", ".*Logger.*",
+        ".*Alert.*", ".*Observer.*", ".*Visualizer.*"
+      ],
+      "path_patterns": [
+        ".*monitor.*", ".*dashboard.*", ".*metric.*", ".*log.*",
+        ".*alert.*", ".*telemetry.*", ".*visual.*", ".*graph.*",
+        ".*chart.*", ".*panel.*"
+      ]
+    },
+    "deployment": {
+      "keywords": [
+        "deploy", "install", "setup", "environment", "docker",
+        "kubernetes", "aws", "azure", "gcp", "server", "production",
+        "staging", "devops", "ci", "cd", "build", "package",
+        "distribution", "release", "infrastructure", "provisioning"
+      ],
+      "path_patterns": [
+        ".*deploy.*", ".*install.*", ".*setup.*", ".*docker.*",
+        ".*environment.*", ".*build.*", ".*package.*", ".*release.*",
+        ".*infrastructure.*", ".*provision.*"
+      ]
+    },
+    "documentation": {
+      "keywords": [
+        "doc", "readme", "guide", "tutorial", "example",
+        "documentation", "manual", "reference", "api", "usage",
+        "howto", "instruction", "help", "faq", "changelog"
+      ],
+      "path_patterns": [
+        ".*readme.*", ".*doc.*", ".*guide.*", ".*tutorial.*",
+        ".*example.*", ".*usage.*", ".*instruction.*", ".*help.*"
+      ]
+    },
+    "configuration": {
+      "keywords": [
+        "config", "setting", "parameter", "option", "preference",
+        "env", "environment", "variable", "constant", "default",
+        "properties", "ini", "yaml", "json", "toml", "xml"
+      ],
+      "path_patterns": [
+        ".*config.*", ".*setting.*", ".*env.*", ".*constant.*",
+        ".*properties.*", ".*\.ini", ".*\.yaml", ".*\.json",
+        ".*\.toml", ".*\.xml"
+      ]
+    }
+  },
+  "operations": {
+    "create_backups": true,
+    "use_symlinks": true,
+    "update_imports": true,
+    "validate_after_reorg": true,
+    "max_file_size": 10485760
+  },
+  "performance": {
+    "max_workers": 4,
+    "batch_size": 100,
+    "memory_limit": 1073741824,
+    "timeout": 300
+  },
+  "logging": {
+    "level": "INFO",
+    "max_file_size": 10485760,
+    "backup_count": 5,
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  }
+}

@@ -39,7 +39,7 @@ other_agents_status:
   purpose: "collaboration_discovery"
 
 other_agents_handoffs:
-  - "Latin/*/[agent]_handoffs/incoming/"
+  - "Latin/*/[agent]_handoff/incoming/"
   access: "write_only"
   purpose: "send_handoff"
 ```

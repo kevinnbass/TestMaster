@@ -1,0 +1,82 @@
+[MAIN]
+# High-Reliability Software Development Standards
+max-line-length=79
+max-args=5
+max-locals=15
+max-returns=6
+max-branches=12
+max-statements=50
+max-parents=7
+max-attributes=7
+min-public-methods=0
+max-public-methods=20
+
+[MESSAGES_CONTROL]
+# Disable some checks that are not relevant for safety-critical code
+disable=
+    # Standard Python conventions
+    C0103,  # invalid-name (we use descriptive names)
+    C0114,  # missing-module-docstring
+    C0115,  # missing-class-docstring
+    C0116,  # missing-function-docstring
+    # Import conventions
+    C0413,  # wrong-import-position
+    # Design patterns
+    R0903,  # too-few-public-methods
+    R0911,  # too-many-return-statements
+    R0912,  # too-many-branches
+    R0913,  # too-many-arguments
+    R0914,  # too-many-locals
+    R0915,  # too-many-statements
+    # Type checking (we use runtime checks)
+    C0121,  # singleton-comparison
+    # Error handling
+    W0718,  # broad-exception-caught
+    W0719,  # broad-exception-raised
+
+[DESIGN]
+# High-reliability software design constraints
+max-args=5
+max-locals=15
+max-returns=6
+max-branches=12
+max-statements=50
+max-parents=7
+max-attributes=7
+min-public-methods=0
+max-public-methods=20
+
+[FORMAT]
+# Code formatting for safety and readability
+max-line-length=79
+max-module-lines=1000
+
+[SIMILARITIES]
+# Detect code duplication
+min-similarity-lines=4
+ignore-comments=yes
+ignore-docstrings=yes
+ignore-imports=no
+
+[REPORTS]
+# Report format for safety analysis
+reports=no
+output-format=text
+
+[BASIC]
+# Variable naming (safety-focused)
+const-naming-style=UPPER_CASE
+class-naming-style=PascalCase
+function-naming-style=snake_case
+method-naming-style=snake_case
+attr-naming-style=snake_case
+argument-naming-style=snake_case
+variable-naming-style=snake_case
+module-naming-style=snake_case
+
+[SAFETY]
+# Custom safety checks
+assert-used=yes
+bounds-check=yes
+recursion-check=yes
+complex-comprehension-check=yes

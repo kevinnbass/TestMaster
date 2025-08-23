@@ -37,7 +37,8 @@ other_agents_status:
   purpose: "collaboration_discovery"
 
 other_agents_handoffs:
-  - "Greek/*/[agent]_handoffs/incoming/"
+  - "Greek/*/[agent]_handoff/incoming/"
+  - "Latin/*/[agent]_handoff/incoming/"
   access: "write_only"
   purpose: "send_handoffs"
 ```

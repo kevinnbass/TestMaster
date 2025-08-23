@@ -1,44 +1,43 @@
-﻿# ðŸ”’ **AGENT CONFIGURATION - E**
-**âš ï¸ READ-ONLY - DO NOT MODIFY - System-managed configuration**
+# 🔒 **AGENT CONFIGURATION - [AGENT_ID]**
+**⚠️ READ-ONLY - DO NOT MODIFY - System-managed configuration**
 
 ## **IMMUTABLE AGENT PROFILE**
-- **Agent ID**: E
-- **Swarm**: Latin
-- **Specialization**: Documentation & User Interface Design
-- **Roadmap Location**: `Latin/E/_roadmap/`
+- **Agent ID**: [AGENT_ID]
+- **Swarm**: [Greek/Latin]
+- **Specialization**: [Agent's primary specialization and focus area]
+- **Roadmap Location**: `[Swarm]/[Agent]/[agent]_roadmap/[specific_roadmap_file.md]`
 - **Total Timeline**: 500 Agent Hours across 4 phases
 
 ## **COMMUNICATION CHANNELS**
-- **Incoming Handoffs**: `_handoffs/incoming/`
-- **Processed Handoffs**: `_handoffs/processed/`
-- **Agent History**: `_history/`
-- **Coordination Updates**: `_coordinate_ongoing/`
-- **Critical Handoffs**: `_coordinate_handoff/`
+- **Incoming Handoffs**: `[agent]_handoff/incoming/`
+- **Processed Handoffs**: `[agent]_handoff/processed/`
+- **Agent History**: `[agent]_history/`
+- **Coordination Updates**: `[swarm]_coordinate_ongoing/`
+- **Critical Handoffs**: `[swarm]_coordinate_handoff/`
 
 ## **ACCESS PERMISSIONS**
 
 ### **ALLOWED DIRECTORIES** (Read Access)
 ```yaml
-own_directory: "Latin/E/"
+own_directory: "[Swarm]/[Agent]/"
   access: "full"
   restrictions: "none"
 
 coordination_shared:
-  - "_coordinate_ongoing/"
-  - "_coordinate_handoff/"
+  - "[swarm]_coordinate_ongoing/"
+  - "[swarm]_coordinate_handoff/"
   access: "read_write"
   
 other_agents_status:
-  - "Latin/*/AGENT_STATUS_*.md"
-  - "Latin/*/AGENT_CONFIG_*.md" 
   - "Greek/*/AGENT_STATUS_*.md"
-  - "Greek/*/AGENT_CONFIG_*.md"
+  - "Greek/*/AGENT_CONFIG_*.md" 
   - "Latin/*/AGENT_STATUS_*.md"
   - "Latin/*/AGENT_CONFIG_*.md"
   access: "read_only"
   purpose: "collaboration_discovery"
 
 other_agents_handoffs:
+  - "Greek/*/[agent]_handoff/incoming/"
   - "Latin/*/[agent]_handoff/incoming/"
   access: "write_only"
   purpose: "send_handoffs"
@@ -47,13 +46,12 @@ other_agents_handoffs:
 ### **FORBIDDEN DIRECTORIES** (No Access)
 ```yaml
 forbidden:
-  - "Latin/*/[other_agent]_history/"
-  - "Latin/*/[other_agent]_roadmap/"
-  - "Greek/*/[other_agent]_history/"  
+  - "Greek/*/[other_agent]_history/"
   - "Greek/*/[other_agent]_roadmap/"
   - "Latin/*/[other_agent]_history/"  
   - "Latin/*/[other_agent]_roadmap/"
-  - "_coordinate_roadmap/"
+  - "greek_coordinate_roadmap/"
+  - "latin_coordinate_roadmap/"
   access: "none"
   reason: "prevent_context_bleed"
 ```
