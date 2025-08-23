@@ -187,9 +187,9 @@ if __name__ == '__main__':
         spec_count = len(list(DOCS_DIR.glob('*.json')))
         print(f"Found {spec_count} API specifications")
     else:
-        print("⚠️  Documentation directory not found")
+        print("WARNING: Documentation directory not found")
         
-    print("🌐 Server starting at: http://localhost:5020")
-    print("📖 Interactive documentation available at: http://localhost:5020/")
+    print("Server starting at: http://localhost:5020")
+    print("Interactive documentation available at: http://localhost:5020/")
     
     app.run(host='0.0.0.0', port=5020, debug=True)
