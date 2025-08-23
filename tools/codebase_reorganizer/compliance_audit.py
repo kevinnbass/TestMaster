@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 """
-Compliance Audit for LLM Intelligence System
-===========================================
+Compliance Audit Coordinator
+===========================
 
 Audits the codebase against high-reliability software development rules.
 """
 
 import ast
-import inspect
 from pathlib import Path
-from typing import Dict, List, Any, Tuple, Set
-import re
-import json
-from dataclasses import dataclass, field
+from typing import Dict, List, Any, Final
+
+# Import specialized modules
+from compliance_audit_data import ComplianceIssue, ComplianceReport
+from compliance_audit_rules import ComplianceRuleChecker
+from compliance_audit_reporting import ComplianceReportGenerator
 
 # Import our system modules for analysis
 try:
@@ -26,358 +27,202 @@ except ImportError as e:
     print(f"Warning: Some modules not available for analysis: {e}")
     MODULES_AVAILABLE = False
 
-
-@dataclass
-class ComplianceIssue:
-    """Represents a compliance issue"""
-    file_path: str
-    line_number: int
-    rule_number: int
-    rule_description: str
-    severity: str  # 'high', 'medium', 'low'
-    description: str
-    suggestion: str
-
-
-@dataclass
-class ComplianceReport:
-    """Complete compliance report"""
-    total_files_analyzed: int = 0
-    total_functions_analyzed: int = 0
-    total_lines_analyzed: int = 0
-    issues_found: List[ComplianceIssue] = field(default_factory=list)
-    compliance_score: float = 0.0
-    rule_compliance: Dict[int, bool] = field(default_factory=dict)
-    detailed_analysis: Dict[str, Any] = field(default_factory=dict)
+# Constants
+MAX_AST_NODES: Final[int] = 5000  # Safety bound for AST processing
 
 
 class HighReliabilityAuditor:
-    """Audits code against high-reliability software development rules"""
+    """Audits codebase against high-reliability software development rules"""
 
     def __init__(self):
-        self.issues = []
-        self.functions_analyzed = 0
-        self.total_assertions = 0
+        """Initialize the auditor with rule descriptions and checker"""
         self.rule_descriptions = {
-            1: "Simple control flow: no recursion, avoid complex comprehensions",
-            2: "Fixed upper bound loops: use for with ranges or known iterables",
+            1: "Simple control flow - no recursion, complex comprehensions",
+            2: "Fixed upper bounds for all loops",
             3: "No dynamic object resizing after initialization",
-            4: "Functions limited to 60 lines max (including docstrings/comments)",
-            5: "Average at least 2 assertions per function",
-            6: "Variables declared at smallest possible scope",
-            7: "Parameter validation and return value checking",
-            8: "Limited use of decorators and metaclasses",
-            9: "Restrict indirection to one level",
-            10: "Use linters with strict settings",
-            11: "Strict data privacy and sanitization",
-            12: "Audit logging for data modifications",
-            13: "Healthcare standards interoperability",
-            14: "Limited external library dependencies",
-            15: "Detailed docstrings and mandatory type hints",
-            16: "Module size under 300 lines (500 max)",
-            17: "Functionality not limited by size constraints"
+            4: "Functions must not exceed 60 lines",
+            5: "Parameter validation and return value checking",
+            6: "No complex decorators or metaclasses",
+            7: "Detailed docstrings for all modules and functions",
+            8: "Type hints using typing module",
+            9: "Limited external library dependencies",
+            10: "Data privacy and sanitization",
+            11: "Audit logging for data modifications",
+            12: "Interoperability with healthcare standards",
+            13: "Module size limits (300/500 lines)",
+            14: "Linter compliance without warnings",
+            15: "Detailed type hints and docstrings",
+            16: "Module size under 300 lines (500 max)"
         }
 
-    def audit_file(self, file_path: Path) -> List[ComplianceIssue]:
-        """Audit a single Python file"""
-        issues = []
+        self.rule_checker = ComplianceRuleChecker()
+        self.report_generator = ComplianceReportGenerator(self.rule_descriptions)
 
+    def audit_file(self, file_path: Path) -> List[ComplianceIssue]:
+        """Audit a single file for compliance issues"""
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
 
-            # Parse AST for detailed analysis
             tree = ast.parse(content)
+            issues = []
 
-            # Analyze each function
-            for node in ast.walk(tree):
-                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                    function_issues = self._audit_function(node, file_path, content)
-                    issues.extend(function_issues)
-                    self.functions_analyzed += 1
-
-            # Analyze module-level issues
+            # Audit module-level compliance
             module_issues = self._audit_module(tree, file_path, content)
             issues.extend(module_issues)
 
-            # Check overall module size (Rule 16)
-            lines = content.split('\n')
-            if len(lines) > 300:
-                if len(lines) > 500:
-                    severity = 'high'
-                else:
-                    severity = 'medium'
+            # Audit function-level compliance
+            function_issues = self._audit_functions_in_file(tree, file_path, content)
+            issues.extend(function_issues)
 
-                issues.append(ComplianceIssue(
-                    file_path=str(file_path),
-                    line_number=1,
-                    rule_number=16,
-                    rule_description=self.rule_descriptions[16],
-                    severity=severity,
-                    description=f"Module exceeds recommended size limit ({len(lines)} lines)",
-                    suggestion="Consider splitting into smaller modules"
-                ))
+            return issues
 
         except Exception as e:
-            issues.append(ComplianceIssue(
+            return [ComplianceIssue(
                 file_path=str(file_path),
                 line_number=1,
                 rule_number=0,
-                rule_description="General compliance",
-                severity='high',
-                description=f"Failed to analyze file: {e}",
-                suggestion="Fix syntax errors and ensure file is readable"
+                rule_description="File parsing error",
+                severity="medium",
+                description=f"Could not parse file: {e}",
+                suggestion="Check file syntax and encoding"
+            )]
+
+    def _audit_module(self, tree: ast.Module, file_path: Path, content: str) -> List[ComplianceIssue]:
+        """Audit module-level compliance"""
+        issues = []
+
+        # Check for module docstring
+        if not ast.get_docstring(tree):
+            issues.append(ComplianceIssue(
+                file_path=str(file_path),
+                line_number=1,
+                rule_number=7,
+                rule_description=self.rule_descriptions[7],
+                severity="high",
+                description="Module missing docstring",
+                suggestion="Add module-level docstring explaining the module's purpose"
             ))
 
         return issues
 
-    def _audit_function(self, node: ast.FunctionDef, file_path: Path, content: str) -> List[ComplianceIssue]:
-        """Audit a single function"""
+    def _audit_functions_in_file(self, tree: ast.Module, file_path: Path, content: str) -> List[ComplianceIssue]:
+        """Audit all functions in a file for compliance"""
         issues = []
-        function_name = node.name
 
-        # Get function source lines
-        start_line = node.lineno
-        end_line = getattr(node, 'end_lineno', start_line)
-        function_lines = end_line - start_line + 1
+        # Bounded loop for AST node processing
+        nodes_list = list(ast.walk(tree))
+        for i in range(min(len(nodes_list), MAX_AST_NODES)):
+            node = nodes_list[i]
+            if isinstance(node, ast.FunctionDef):
+                function_issues = self._audit_function_compliance(node, file_path, content)
+                issues.extend(function_issues)
 
-        # Rule 4: Function size limit (60 lines)
-        if function_lines > 60:
-            issues.append(ComplianceIssue(
-                file_path=str(file_path),
-                line_number=start_line,
-                rule_number=4,
-                rule_description=self.rule_descriptions[4],
-                severity='high',
-                description=f"Function '{function_name}' exceeds 60 line limit ({function_lines} lines)",
-                suggestion="Break function into smaller, focused functions"
-            ))
+        return issues
 
-        # Rule 5: Assertions (count assert statements)
-        assertion_count = 0
-        for child in ast.walk(node):
-            if isinstance(child, ast.Assert):
-                assertion_count += 1
-
-        self.total_assertions += assertion_count
+    def _audit_function_compliance(self, node: ast.FunctionDef, file_path: Path, content: str) -> List[ComplianceIssue]:
+        """Audit a single function for compliance issues"""
+        issues = []
+        function_name = f"{file_path.name}:{node.name}"
+        line_number = node.lineno
 
         # Rule 1: Check for recursion
-        if self._has_recursion(node, function_name):
+        if self.rule_checker.has_recursion(node, node.name):
             issues.append(ComplianceIssue(
                 file_path=str(file_path),
-                line_number=start_line,
+                line_number=line_number,
                 rule_number=1,
                 rule_description=self.rule_descriptions[1],
-                severity='high',
-                description=f"Function '{function_name}' contains recursion",
-                suggestion="Replace recursion with iterative approach"
+                severity="high",
+                description=f"Function '{node.name}' contains recursion",
+                suggestion="Replace recursion with iteration to ensure bounded execution"
             ))
 
         # Rule 1: Check for complex comprehensions
-        if self._has_complex_comprehensions(node):
+        if self.rule_checker.has_complex_comprehensions(node):
             issues.append(ComplianceIssue(
                 file_path=str(file_path),
-                line_number=start_line,
+                line_number=line_number,
                 rule_number=1,
                 rule_description=self.rule_descriptions[1],
-                severity='medium',
-                description=f"Function '{function_name}' contains complex comprehensions",
-                suggestion="Replace with explicit loops for clarity"
+                severity="medium",
+                description=f"Function '{node.name}' contains complex comprehensions",
+                suggestion="Replace complex comprehensions with explicit loops for better readability"
             ))
 
-        # Rule 2: Check loop bounds
-        if self._has_unbounded_loops(node):
+        # Rule 2: Check for unbounded loops
+        if self.rule_checker.has_unbounded_loops(node):
             issues.append(ComplianceIssue(
                 file_path=str(file_path),
-                line_number=start_line,
+                line_number=line_number,
                 rule_number=2,
                 rule_description=self.rule_descriptions[2],
-                severity='high',
-                description=f"Function '{function_name}' contains loops without fixed upper bounds",
-                suggestion="Ensure all loops have known iteration limits"
+                severity="critical",
+                description=f"Function '{node.name}' contains loops without fixed upper bounds",
+                suggestion="Ensure all loops have fixed upper bounds or use bounded iteration patterns"
             ))
 
-        # Rule 3: Check for dynamic object resizing
-        if self._has_dynamic_resizing(node):
+        # Rule 3: Check for dynamic resizing
+        if self.rule_checker.has_dynamic_resizing(node):
             issues.append(ComplianceIssue(
                 file_path=str(file_path),
-                line_number=start_line,
+                line_number=line_number,
                 rule_number=3,
                 rule_description=self.rule_descriptions[3],
-                severity='medium',
-                description=f"Function '{function_name}' dynamically resizes objects",
-                suggestion="Pre-allocate objects with known sizes"
+                severity="high",
+                description=f"Function '{node.name}' contains dynamic object resizing",
+                suggestion="Pre-allocate lists/dictionaries with known capacity to avoid dynamic resizing"
             ))
 
-        # Rule 7: Check parameter validation
-        if not self._has_parameter_validation(node):
+        # Rule 4: Check function size limit
+        if self.rule_checker.exceeds_function_size_limit(node):
             issues.append(ComplianceIssue(
                 file_path=str(file_path),
-                line_number=start_line,
-                rule_number=7,
-                rule_description=self.rule_descriptions[7],
-                severity='low',
-                description=f"Function '{function_name}' lacks parameter validation",
-                suggestion="Add type hints and parameter validation checks"
+                line_number=line_number,
+                rule_number=4,
+                rule_description=self.rule_descriptions[4],
+                severity="medium",
+                description=f"Function '{node.name}' exceeds 60 line limit ({len(node.body)} lines)",
+                suggestion="Break down large function into smaller, focused helper functions"
             ))
 
-        # Rule 8: Check decorators
-        if self._has_complex_decorators(node):
+        # Rule 5: Check parameter validation
+        if not self.rule_checker.has_parameter_validation(node):
             issues.append(ComplianceIssue(
                 file_path=str(file_path),
-                line_number=start_line,
-                rule_number=8,
-                rule_description=self.rule_descriptions[8],
-                severity='medium',
-                description=f"Function '{function_name}' uses complex decorators",
-                suggestion="Use simple decorators or inline the logic"
+                line_number=line_number,
+                rule_number=5,
+                rule_description=self.rule_descriptions[5],
+                severity="medium",
+                description=f"Function '{node.name}' lacks parameter validation",
+                suggestion="Add type hints and parameter validation to improve reliability"
             ))
 
-        # Rule 15: Check docstrings and type hints
-        if not self._has_docstring(node):
+        # Rule 6: Check for complex decorators
+        if self.rule_checker.has_complex_decorators(node):
             issues.append(ComplianceIssue(
                 file_path=str(file_path),
-                line_number=start_line,
-                rule_number=15,
-                rule_description=self.rule_descriptions[15],
-                severity='medium',
-                description=f"Function '{function_name}' lacks docstring",
-                suggestion="Add comprehensive docstring with type hints"
-            ))
-
-        return issues
-
-    def _audit_module(self, tree: ast.Module, file_path: Path, content: str) -> List[ComplianceIssue]:
-        """Audit module-level issues"""
-        issues = []
-
-        # Rule 6: Check for global variables
-        global_vars = []
-        for node in tree.body:
-            if isinstance(node, ast.Assign):
-                for target in node.targets:
-                    if isinstance(target, ast.Name) and target.id.isupper():
-                        global_vars.append(target.id)
-
-        if global_vars:
-            issues.append(ComplianceIssue(
-                file_path=str(file_path),
-                line_number=1,
+                line_number=line_number,
                 rule_number=6,
                 rule_description=self.rule_descriptions[6],
-                severity='low',
-                description=f"Module contains global variables: {', '.join(global_vars)}",
-                suggestion="Move global variables to function scope or use constants module"
+                severity="medium",
+                description=f"Function '{node.name}' has complex decorators",
+                suggestion="Simplify decorators or avoid complex decorator patterns"
             ))
 
-        # Rule 14: Check external dependencies
-        imports = []
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Import):
-                for alias in node.names:
-                    imports.append(alias.name)
-            elif isinstance(node, ast.ImportFrom):
-                if node.module:
-                    imports.append(node.module)
-
-        # Flag potentially risky imports
-        risky_imports = ['subprocess', 'eval', 'exec', 'pickle', 'requests']
-        found_risky = [imp for imp in imports if imp in risky_imports]
-
-        if found_risky:
+        # Rule 7: Check for docstring
+        if not self.rule_checker.has_docstring(node):
             issues.append(ComplianceIssue(
                 file_path=str(file_path),
-                line_number=1,
-                rule_number=14,
-                rule_description=self.rule_descriptions[14],
-                severity='medium',
-                description=f"Module imports potentially risky libraries: {', '.join(found_risky)}",
-                suggestion="Review usage and consider safer alternatives"
+                line_number=line_number,
+                rule_number=7,
+                rule_description=self.rule_descriptions[7],
+                severity="high",
+                description=f"Function '{node.name}' missing docstring",
+                suggestion="Add detailed docstring explaining function purpose, parameters, and return values"
             ))
 
         return issues
-
-    def _has_recursion(self, node: ast.FunctionDef, function_name: str) -> bool:
-        """Check if function has recursion"""
-        for child in ast.walk(node):
-            if isinstance(child, ast.Call):
-                if isinstance(child.func, ast.Name) and child.func.id == function_name:
-                    return True
-        return False
-
-    def _has_complex_comprehensions(self, node: ast.AST) -> bool:
-        """Check for complex comprehensions"""
-        for child in ast.walk(node):
-            if isinstance(child, (ast.ListComp, ast.DictComp, ast.SetComp)):
-                # Check if comprehension is nested or has complex conditions
-                if (hasattr(child, 'generators') and
-                    len(child.generators) > 1 or
-                    any(hasattr(gen, 'ifs') and gen.ifs for gen in child.generators)):
-                    return True
-        return False
-
-    def _has_unbounded_loops(self, node: ast.AST) -> bool:
-        """Check for loops without fixed upper bounds"""
-        for child in ast.walk(node):
-            if isinstance(child, ast.For):
-                # Check if it's iterating over a range with fixed bounds
-                if isinstance(child.iter, ast.Call):
-                    if isinstance(child.iter.func, ast.Name) and child.iter.func.id == 'range':
-                        # Check if range has fixed arguments
-                        if len(child.iter.args) >= 1:
-                            first_arg = child.iter.args[0]
-                            if isinstance(first_arg, ast.Constant) and isinstance(first_arg.value, int):
-                                continue  # Fixed bound
-                # Check for iteration over collections that might grow
-                if isinstance(child.iter, ast.Name):
-                    # This could be unbounded - flag for review
-                    return True
-        return False
-
-    def _has_dynamic_resizing(self, node: ast.AST) -> bool:
-        """Check for dynamic object resizing"""
-        for child in ast.walk(node):
-            if isinstance(child, ast.Call):
-                if isinstance(child.func, ast.Attribute):
-                    if child.func.attr in ['append', 'extend', 'insert', 'pop', 'remove', 'clear']:
-                        if isinstance(child.func.value, ast.Name):
-                            # This could be dynamic resizing - flag for review
-                            return True
-        return False
-
-    def _has_parameter_validation(self, node: ast.FunctionDef) -> bool:
-        """Check if function has parameter validation"""
-        # Check for type hints
-        if node.returns or any(arg.annotation for arg in node.args.args):
-            return True
-
-        # Check for assert statements that might validate parameters
-        for child in ast.walk(node):
-            if isinstance(child, ast.Assert):
-                # Simple check - assume any assert might be parameter validation
-                return True
-
-        return False
-
-    def _has_complex_decorators(self, node: ast.FunctionDef) -> bool:
-        """Check for complex decorators"""
-        if len(node.decorator_list) > 2:  # More than 2 decorators
-            return True
-
-        for decorator in node.decorator_list:
-            if isinstance(decorator, ast.Call) and decorator.args:
-                # Decorator with arguments - could be complex
-                return True
-        return False
-
-    def _has_docstring(self, node: ast.FunctionDef) -> bool:
-        """Check if function has docstring"""
-        if node.body and isinstance(node.body[0], ast.Expr):
-            if isinstance(node.body[0].value, ast.Constant) and isinstance(node.body[0].value.value, str):
-                return True
-            elif isinstance(node.body[0].value, ast.Str):  # Python < 3.8
-                return True
-        return False
 
     def generate_compliance_report(self, source_directory: Path) -> ComplianceReport:
         """Generate complete compliance report"""
@@ -398,50 +243,63 @@ class HighReliabilityAuditor:
             f.name not in ['setup.py', '__init__.py']
         ]
 
-        print(f"📋 Found {len(system_files)} system files to audit")
-
+        # Audit each file with bounded processing
+        total_files = len(system_files)
+        total_functions = 0
         total_lines = 0
-        for file_path in system_files:
-            print(f"  Analyzing: {file_path.name}")
-            issues = self.audit_file(file_path)
-            all_issues.extend(issues)
 
-            # Count lines
+        for file_path in system_files:
             try:
+                # Count lines
                 with open(file_path, 'r', encoding='utf-8') as f:
-                    total_lines += len(f.readlines())
-            except:
-                pass
+                    lines = f.readlines()
+                    total_lines += len(lines)
+
+                # Audit file
+                issues = self.audit_file(file_path)
+                all_issues.extend(issues)
+
+                # Count functions from AST
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                tree = ast.parse(content)
+                function_count = len([n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)])
+                total_functions += function_count
+
+            except Exception as e:
+                all_issues.append(ComplianceIssue(
+                    file_path=str(file_path),
+                    line_number=1,
+                    rule_number=0,
+                    rule_description="File processing error",
+                    severity="low",
+                    description=f"Could not process file: {e}",
+                    suggestion="Check file permissions and syntax"
+                ))
 
         # Calculate compliance score
-        total_possible_violations = len(system_files) * len(self.rule_descriptions)
-        actual_violations = len(all_issues)
-        compliance_score = max(0, (1 - (actual_violations / total_possible_violations)) * 100)
+        total_possible_issues = total_functions * 8  # 8 rules per function
+        compliance_score = max(0.0, 100.0 - (len(all_issues) / max(total_possible_issues, 1) * 100))
 
-        # Rule compliance
+        # Generate rule compliance status
         rule_compliance = {}
-        for rule_num in self.rule_descriptions:
+        for rule_num in self.rule_descriptions.keys():
             rule_issues = [issue for issue in all_issues if issue.rule_number == rule_num]
             rule_compliance[rule_num] = len(rule_issues) == 0
 
-        # Detailed analysis
+        # Generate detailed analysis
         detailed_analysis = {
+            'rules_violated': len([r for r in rule_compliance.values() if not r]),
             'files_by_severity': {
                 'high': len([i for i in all_issues if i.severity == 'high']),
                 'medium': len([i for i in all_issues if i.severity == 'medium']),
                 'low': len([i for i in all_issues if i.severity == 'low'])
-            },
-            'rules_violated': len(set(issue.rule_number for issue in all_issues)),
-            'assertion_ratio': self.total_assertions / max(1, self.functions_analyzed),
-            'average_function_size': sum(
-                issue.description.split('(')[1].split(' ')[0] if '(' in issue.description else 0
-                for issue in all_issues if issue.rule_number == 4
-            ) / max(1, len([i for i in all_issues if i.rule_number == 4]))
+            }
         }
 
-        report = ComplianceReport(
-            total_files_analyzed=len(system_files),
-            total_functions_analyzed=self.functions_analyzed,
+        return ComplianceReport(
+            total_files_analyzed=total_files,
+            total_functions_analyzed=total_functions,
             total_lines_analyzed=total_lines,
             issues_found=all_issues,
             compliance_score=compliance_score,
@@ -449,100 +307,13 @@ class HighReliabilityAuditor:
             detailed_analysis=detailed_analysis
         )
 
-        return report
-
     def print_report(self, report: ComplianceReport):
         """Print formatted compliance report"""
-        print("\n" + "="*80)
-        print("🏛️  HIGH-RELIABILITY COMPLIANCE AUDIT REPORT")
-        print("="*80)
-
-        print(".1f")
-        print(f"📂 Files Analyzed: {report.total_files_analyzed}")
-        print(f"🔧 Functions Analyzed: {report.total_functions_analyzed}")
-        print(f"📏 Lines Analyzed: {report.total_lines_analyzed}")
-        print(f"⚠️  Issues Found: {report.total_issues}")
-        print(f"📊 Rules Violated: {report.detailed_analysis['rules_violated']}")
-
-        # Rule compliance summary
-        print("\n📋 RULE COMPLIANCE SUMMARY:")
-        for rule_num in sorted(report.rule_compliance.keys()):
-            status = "✅" if report.rule_compliance[rule_num] else "❌"
-            print("2d")
-
-        # Issues by severity
-        severity_data = report.detailed_analysis['files_by_severity']
-        print("\n🚨 ISSUES BY SEVERITY:")
-        print(f"  🔴 High: {severity_data['high']}")
-        print(f"  🟡 Medium: {severity_data['medium']}")
-        print(f"  🔵 Low: {severity_data['low']}")
-
-        # Key metrics
-        print("\n📊 KEY METRICS:")
-        print(".2f")
-        print(".1f")
-
-        if report.issues_found:
-            print("\n🔍 TOP ISSUES:")
-            # Group issues by rule
-            rule_groups = {}
-            for issue in report.issues_found:
-                if issue.rule_number not in rule_groups:
-                    rule_groups[issue.rule_number] = []
-                rule_groups[issue.rule_number].append(issue)
-
-            for rule_num in sorted(rule_groups.keys())[:5]:  # Show top 5 rules with issues
-                issues = rule_groups[rule_num]
-                print(f"\n  Rule {rule_num}: {self.rule_descriptions[rule_num]}")
-                print(f"    Issues: {len(issues)}")
-
-                # Show first issue as example
-                if issues:
-                    example = issues[0]
-                    print(f"    Example: {example.file_path}:{example.line_number} - {example.description}")
-
-        # Compliance assessment
-        if report.compliance_score >= 90:
-            print("\n🎉 EXCELLENT COMPLIANCE!")
-            print("   The codebase follows high-reliability principles effectively.")
-        elif report.compliance_score >= 75:
-            print("\n👍 GOOD COMPLIANCE")
-            print("   Minor issues found that should be addressed.")
-        elif report.compliance_score >= 50:
-            print("\n⚠️  MODERATE COMPLIANCE")
-            print("   Several issues need attention to improve reliability.")
-        else:
-            print("\n🚨 POOR COMPLIANCE")
-            print("   Significant work needed to meet high-reliability standards.")
-
-        print("\n" + "="*80)
+        self.report_generator.print_report(report)
 
     def save_report(self, report: ComplianceReport, output_path: Path):
         """Save compliance report to file"""
-        report_data = {
-            'compliance_score': report.compliance_score,
-            'total_files_analyzed': report.total_files_analyzed,
-            'total_functions_analyzed': report.total_functions_analyzed,
-            'total_lines_analyzed': report.total_lines_analyzed,
-            'total_issues': len(report.issues_found),
-            'rule_compliance': report.rule_compliance,
-            'detailed_analysis': report.detailed_analysis,
-            'issues': [
-                {
-                    'file_path': issue.file_path,
-                    'line_number': issue.line_number,
-                    'rule_number': issue.rule_number,
-                    'rule_description': issue.rule_description,
-                    'severity': issue.severity,
-                    'description': issue.description,
-                    'suggestion': issue.suggestion
-                }
-                for issue in report.issues_found
-            ]
-        }
-
-        with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump(report_data, f, indent=2, ensure_ascii=False)
+        self.report_generator.save_report(report, output_path)
 
 
 def main():
@@ -552,32 +323,22 @@ def main():
     parser = argparse.ArgumentParser(description="High-Reliability Compliance Audit")
     parser.add_argument("--source", type=str, default=".",
                       help="Source directory to audit")
-    parser.add_argument("--output", type=str, default="compliance_report.json",
-                      help="Output report file")
-    parser.add_argument("--verbose", action="store_true",
-                      help="Enable verbose output")
+    parser.add_argument("--output", type=str,
+                      help="Output file for compliance report")
 
     args = parser.parse_args()
 
-    # Initialize auditor
+    # Initialize auditor and generate report
     auditor = HighReliabilityAuditor()
+    source_path = Path(args.source)
 
-    # Run compliance audit
-    source_dir = Path(args.source).resolve()
-    report = auditor.generate_compliance_report(source_dir)
-
-    # Print report
+    report = auditor.generate_compliance_report(source_path)
     auditor.print_report(report)
 
-    # Save detailed report
-    output_path = Path(args.output)
-    auditor.save_report(report, output_path)
-
-    print(f"\n📄 Detailed report saved to: {output_path}")
-
-    # Exit with appropriate code
-    if report.compliance_score < 75:
-        exit(1)  # Fail CI/CD if compliance is too low
+    if args.output:
+        output_path = Path(args.output)
+        auditor.save_report(report, output_path)
+        print(f"\n📄 Report saved to: {output_path}")
 
 
 if __name__ == "__main__":

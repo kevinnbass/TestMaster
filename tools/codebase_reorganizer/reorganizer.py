@@ -32,7 +32,6 @@ from dataclasses import dataclass, asdict
 from datetime import datetime
 import logging
 import tempfile
-import subprocess
 
 @dataclass
 class FileAnalysis:

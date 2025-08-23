@@ -793,16 +793,33 @@ class OllamaClient:
 
     def analyze_code(self, prompt: str) -> str:
         try:
-            import requests
-            response = requests.post(
+            import json
+            import urllib.request
+            import urllib.error
+
+            # Use built-in urllib instead of external requests library
+            data = json.dumps({
+                "model": self.model,
+                "prompt": prompt,
+                "stream": False
+            }).encode('utf-8')
+
+            req = urllib.request.Request(
                 f"{self.base_url}/api/generate",
-                json={
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False
-                }
+                data=data,
+                headers={
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Python-URLLib'
+                },
+                method='POST'
             )
-            return response.json().get("response", "No response")
+
+            with urllib.request.urlopen(req, timeout=30) as response:
+                result = json.loads(response.read().decode('utf-8'))
+                return result.get("response", "No response")
+
+        except urllib.error.URLError as e:
+            return f"Network Error: {e}"
         except Exception as e:
             return f"Error: {e}"
 

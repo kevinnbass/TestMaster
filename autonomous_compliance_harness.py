@@ -561,7 +561,7 @@ class OrchestratorAgent(BaseAgent):
         """Report current progress"""
         compliance_rate = context.compliance_score * 100
         print(f"📊 Progress Report (Iteration {iteration})")
-        print(".1f")
+        print(f"   Compliance: {compliance_rate:.1f}%")
         print(f"   Remaining Violations: {len(context.violations)}")
         print(f"   Fixes Applied: {len(context.applied_fixes)}")
         print(f"   Error Rate: {context.error_rate:.1%}")

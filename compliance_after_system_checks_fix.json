@@ -1,0 +1,371 @@
+{
+  "compliance_score": 93.78151260504201,
+  "total_files_analyzed": 35,
+  "total_functions_analyzed": 307,
+  "total_lines_analyzed": 17744,
+  "total_issues": 37,
+  "rule_compliance": {
+    "1": true,
+    "2": true,
+    "3": false,
+    "4": true,
+    "5": true,
+    "6": true,
+    "7": true,
+    "8": true,
+    "9": true,
+    "10": true,
+    "11": true,
+    "12": true,
+    "13": true,
+    "14": true,
+    "15": true,
+    "16": false,
+    "17": true
+  },
+  "detailed_analysis": {
+    "files_by_severity": {
+      "high": 29,
+      "medium": 8,
+      "low": 0
+    },
+    "rules_violated": 2,
+    "assertion_ratio": 0.5667752442996743,
+    "average_function_size": 0.0
+  },
+  "issues": [
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_check.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (306 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_fixes.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (529 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_fixes.py",
+      "line_number": 508,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 508) (<unknown>, line 508)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_integration_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (1126 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_integration_engine.py",
+      "line_number": 1098,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 1098) (<unknown>, line 1098)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (707 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_reorganizer.py",
+      "line_number": 593,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 593) (<unknown>, line 593)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (578 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\launcher_system_checks.py",
+      "line_number": 144,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_modules_available' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (718 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 419,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 419)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_scanner.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (888 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_scanner.py",
+      "line_number": 869,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 869) (<unknown>, line 869)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_system.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (1147 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_system.py",
+      "line_number": 1126,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 1126) (<unknown>, line 1126)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_analyzer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (437 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (895 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 525,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 525)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (926 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 319,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: expected 'except' or 'finally' block (<unknown>, line 319)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\perfect_compliance_launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (304 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (469 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 287,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 287) (<unknown>, line 287)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (406 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (494 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 329,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 329)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_planner.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (932 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_planner.py",
+      "line_number": 888,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 888) (<unknown>, line 888)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (867 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 634,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: invalid syntax. Maybe you meant '==' or ':=' instead of '='? (<unknown>, line 634)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (531 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (946 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (777 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 252,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 252)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_perfect_launcher.py",
+      "line_number": 91,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unmatched ')' (<unknown>, line 91)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (474 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (651 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    }
+  ]
+}
