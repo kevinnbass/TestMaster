@@ -124,3 +124,14 @@ A **personal codebase analysis tool** with good visualization and API management
 ---
 
 **This guidance applies to ALL Greek agent roadmaps and should be used to revise any unrealistic content immediately.**
+
+---
+
+## ✅ Verification Gates (All Greek Agents)
+
+Before marking any roadmap item complete, verify:
+1. **Frontend Tie-In:** Deliverable is visible in the dashboard (`http://localhost:5000/`) or justified as exempt
+2. **Data Flow:** Source → API/Adapter → UI documented, incl. polling/WebSocket cadence if used
+3. **Evidence:** Tests, logs, metrics, or screenshots attached
+4. **History:** Agent history updated with timestamp, changes, and impact
+5. **No Duplication:** New files/components include GOLDCLAD justification; enhancement preferred

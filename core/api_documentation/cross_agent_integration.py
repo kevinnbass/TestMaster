@@ -61,7 +61,7 @@ from urllib3.util.retry import Retry
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class AgentStatus(Enum):
+class AgentState(Enum):
     """Agent status states"""
     ONLINE = "online"
     OFFLINE = "offline"
@@ -92,7 +92,7 @@ class AgentConfig:
 class AgentStatus:
     """Current status of an agent"""
     name: str
-    status: AgentStatus
+    status: AgentState
     last_seen: float
     response_time: float
     capabilities: List[str] = field(default_factory=list)
