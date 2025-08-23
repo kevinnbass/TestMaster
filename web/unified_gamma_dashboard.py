@@ -429,12 +429,12 @@ class UnifiedDashboardEngine:
             except Exception as e:
                 emit('drill_down_error', {'error': f'Drill-down failed: {str(e)}'})
                 
-        print("🧠 EPSILON ENHANCEMENT: Intelligent WebSocket system initialized with:")
-        print("   • Context-aware user session tracking")
-        print("   • Personalized real-time data delivery") 
-        print("   • AI-powered insights and predictions")
-        print("   • Intelligent drill-down capabilities")
-        print("   • Priority-based alert subscriptions")
+        print("EPSILON ENHANCEMENT: Intelligent WebSocket system initialized with:")
+        print("   - Context-aware user session tracking")
+        print("   - Personalized real-time data delivery") 
+        print("   - AI-powered insights and predictions")
+        print("   - Intelligent drill-down capabilities")
+        print("   - Priority-based alert subscriptions")
     
     def start_background_tasks(self):
         """Start background data collection tasks."""

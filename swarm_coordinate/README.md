@@ -407,6 +407,7 @@ swarm_coordinate/
 ### **ROADMAP CREATION PROTOCOL**
 **Upon creation of ANY roadmap:**
 1. **Read System Documentation**: First read `swarm_coordinate/README.md` for complete system understanding
+   **⚠️ CRITICAL:** Also read `swarm_coordinate/PRACTICAL_GUIDANCE.md` to ground expectations with realistic scope
 2. **Use Templates**: 
    - Main/Coordinate roadmaps → Use `swarm_coordinate/TEMPLATE_main_roadmap.md`
    - Agent roadmaps → Use `swarm_coordinate/TEMPLATE_agent_roadmap.md`

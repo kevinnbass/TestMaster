@@ -1,6 +1,9 @@
 # CLAUDE.md - Ultimate Codebase Analysis System
 # Autonomous Multi-Agent Intelligence Framework
 
+## 🎯 PROJECT SCOPE
+This is a personal development project focused on building a sophisticated codebase analysis platform for individual use. While the features are complex and the architecture is robust, the scope is intentionally limited to personal productivity and learning rather than enterprise scaling or commercial deployment. The goal is creating powerful tools that work exceptionally well for one developer, not building software to serve millions of users or generate billions in revenue.
+
 ## 📚 DEFINITIONS & RUBRICS - Appendix A
 
 ### Core Terminology
@@ -37,6 +40,61 @@
    - All cloned repositories: `AWorld/`, `AgentVerse/`, `MetaGPT/`, `OpenAI_Agent_Swarm/`, `PraisonAI/`, `agency-swarm/`, `agent-squad/`, `agentops/`, `agentscope/`, `autogen/`, `crewAI/`, `lagent/`, `llama-agents/`, `phidata/`, `swarm/`, `swarms/`, `TestMaster/`, `TestMaster_BACKUP_*/`
    - Archive directory: `archive/` and all subdirectories
    - These are reference repositories and historical records - USE ONLY FOR READING
+
+## ⚔️ ADAMANTIUMCLAD FRONTEND CONNECTIVITY PROTOCOL
+
+**SWARM RULE #1: FRONTEND-FIRST DEVELOPMENT - UNIVERSAL MANDATE:**
+
+### ADAMANTIUMCLAD Rule #1: FRONTEND CONNECTIVITY IMPERATIVE (ALL AGENTS)
+**For EVERY TASK assigned to ANY agent (Greek or Latin):**
+1. **LLM Frontend Assessment**: Before executing any task, evaluate if the task's output can be connected to and displayed on the frontend
+2. **LLM Frontend Integration**: If possible, add a mandatory subtask to connect the task's results to frontend display systems
+3. **LLM Data Pipeline**: Establish clear data flow from task execution to frontend visualization
+4. **LLM User Interface**: Create or enhance UI components to display the task's results
+5. **LLM Real-time Updates**: Ensure frontend reflects current task status and results
+
+### ADAMANTIUMCLAD Rule #2: FRONTEND INTEGRATION VERIFICATION (MANDATORY CHECK)
+**Before marking any task as complete:**
+1. **Frontend Connection Verified**: Task output is accessible to frontend systems
+2. **UI Component Created/Updated**: Frontend has appropriate display mechanism for task results
+3. **Data Flow Established**: Clear pipeline exists from task execution to user interface
+4. **Real-time Status**: Frontend shows current status of task execution
+5. **User Value Delivered**: End user can see and interact with task results through the interface
+
+### ADAMANTIUMCLAD Rule #3: NON-FRONTEND TASKS (LIMITED EXCEPTIONS)
+**Only these task types may skip frontend integration:**
+1. **Internal Architecture**: Core system restructuring with no user-facing output
+2. **Archive Operations**: COPPERCLAD archival that doesn't affect active functionality
+3. **Build/Deploy**: Infrastructure tasks with no direct user data
+4. **Security Protocols**: Internal security measures with no UI components
+5. **Documentation Exception Justification Block Required**:
+   ```
+   FRONTEND EXEMPTION JUSTIFIED: [timestamp UTC]
+   TASK: [task description]
+   EXEMPTION REASON: [why frontend integration not applicable]
+   FUTURE INTEGRATION PLAN: [how this might connect to frontend later]
+   AGENT: [agent identifier]
+   ```
+
+### ADAMANTIUMCLAD Rule #4: FRONTEND-TASK INTEGRATION PRIORITY MATRIX
+**Task priority enhanced by frontend potential:**
+1. **High Priority**: Tasks with immediate frontend display capability
+2. **Medium Priority**: Tasks requiring minor adaptation for frontend integration
+3. **Low Priority**: Tasks with complex or indirect frontend connection paths
+4. **Deferred**: Tasks requiring significant architecture changes for frontend integration
+5. **Exempt**: Tasks with justified frontend exemptions per Rule #3
+
+### ADAMANTIUMCLAD Rule #5: SWARM COORDINATION ENHANCEMENT (FRONTEND FOCUS)
+**All swarm coordination must emphasize frontend connectivity:**
+1. **Task Assignment**: Prioritize agents with frontend development capabilities
+2. **Progress Reporting**: Include frontend integration status in all agent updates
+3. **Cross-Agent Collaboration**: Ensure agents coordinate on shared frontend components
+4. **User Value Metrics**: Measure success by user-visible improvements in frontend
+5. **Frontend-First Planning**: Design all roadmaps with frontend display as primary goal
+
+**🎯 CORE PRINCIPLE: Every piece of work done by any agent should ultimately enhance what the user sees and interacts with on the frontend. If a task cannot be connected to user-facing functionality, it requires explicit justification.**
+
+---
 
 ## 🔒 IRONCLAD ANTI-REGRESSION CONSOLIDATION PROTOCOL
 

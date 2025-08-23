@@ -180,12 +180,12 @@ def health():
     })
 
 if __name__ == '__main__':
-    print("🚀 Starting TestMaster API Documentation Server...")
-    print(f"📁 Documentation directory: {DOCS_DIR}")
+    print("Starting TestMaster API Documentation Server...")
+    print(f"Documentation directory: {DOCS_DIR}")
     
     if DOCS_DIR.exists():
         spec_count = len(list(DOCS_DIR.glob('*.json')))
-        print(f"📊 Found {spec_count} API specifications")
+        print(f"Found {spec_count} API specifications")
     else:
         print("⚠️  Documentation directory not found")
         
