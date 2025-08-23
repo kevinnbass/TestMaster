@@ -214,6 +214,40 @@
 3. **Update Coordinate History**: Add roadmap achievements to appropriate `[greek|latin]_coordinate_history/`
 4. **Document Collective Achievement**: Coordinate history contains swarm-wide accomplishments derived from agent histories
 
+### CONFLICT RESOLUTION PROTOCOL
+**When coordination issues arise:**
+1. **Log Conflict**: Create timestamped markdown file in `swarm_coordinate/conflict/`
+2. **Include Details**: Agent names, issue description, attempted solutions, current status
+3. **Seek Resolution**: Work with involved agents toward practical solution
+4. **Document Outcome**: Update conflict file with resolution and lessons learned
+5. **Share Information**: Add relevant coordination info to appropriate `*_ongoing/` directories
+
+### ONGOING COORDINATION PROTOCOL  
+**For sharing essential information with other agents:**
+1. **Cross-Swarm Information**: Use `swarm_coordinate/Swarm/swarm_ongoing/` for all-agent information
+2. **Greek Swarm Information**: Use `swarm_coordinate/Greek/Coordinate/greek_coordinate_ongoing/` for Greek agents
+3. **Latin Swarm Information**: Use `swarm_coordinate/Latin/Coordinate/latin_coordinate_ongoing/` for Latin agents
+4. **Format**: Create timestamped markdown files with clear, actionable information
+5. **Update Frequency**: Add information when discovered, review ongoing files regularly
+
+### PERIODIC CHECK PROTOCOL
+**All agents must regularly check these directories:**
+#### Every 2 Hours (Minimum):
+- **Own Roadmap**: `[Greek|Latin]/[Agent]/[agent]_roadmap/` - Current tasks and priorities
+- **Own History**: `[Greek|Latin]/[Agent]/[agent]_history/` - Track progress in current roadmap
+- **Swarm Coordination**: `[Greek|Latin]/Coordinate/[coordinate]_roadmap/` - Swarm-wide objectives
+- **Ongoing Info**: `[Greek|Latin]/Coordinate/[coordinate]_ongoing/` - New coordination information
+
+#### Every 4 Hours (Minimum):
+- **Cross-Swarm**: `Swarm/swarm_roadmap/` - Cross-swarm collaboration tasks
+- **Cross-Swarm Ongoing**: `Swarm/swarm_ongoing/` - Cross-swarm coordination updates
+- **Conflicts**: `conflict/` - Check for new conflicts or resolutions affecting your work
+
+#### On Task Completion:
+- **Update Own History**: Immediately document in `[agent]_history/`
+- **Check Dependencies**: Review other agents' histories if your work affects them
+- **Share Critical Info**: Post to appropriate `*_ongoing/` if others need to know
+
 ### CURRENT AGENT ASSIGNMENTS
 - **Greek Alpha**: [Assign roadmap here - max 3 lines]
 - **Greek Beta**: [Assign roadmap here - max 3 lines]  

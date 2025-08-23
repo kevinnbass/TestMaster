@@ -16,6 +16,7 @@ swarm_coordinate/
 ├── README.md                    (This file - system documentation)
 ├── TEMPLATE_main_roadmap.md     (Template for coordinate/main roadmaps)
 ├── TEMPLATE_agent_roadmap.md    (Template for individual agent roadmaps)
+├── conflict/                    (Conflict resolution logging - agents log issues here)
 │
 ├── Greek/                       (Greek Swarm - Alpha, Beta, Gamma)
 │   ├── Alpha/
@@ -27,19 +28,22 @@ swarm_coordinate/
 │   └── Coordinate/
 │       ├── greek_coordinate_roadmap/      (Greek swarm coordination roadmaps)
 │       ├── greek_coordinate_past_roadmap/ (Archived Greek coordination)
-│       └── greek_coordinate_history/      (Greek swarm collective history)
+│       ├── greek_coordinate_history/      (Greek swarm collective history)
+│       └── greek_coordinate_ongoing/      (Greek swarm ongoing coordination info)
 │
 ├── Latin/                       (Latin Swarm - A, B, C, D, E)
 │   ├── A/, B/, C/, D/, E/       (Same structure as Greek agents)
 │   └── Coordinate/
 │       ├── latin_coordinate_roadmap/      (Latin swarm coordination roadmaps)
 │       ├── latin_coordinate_past_roadmap/ (Archived Latin coordination)
-│       └── latin_coordinate_history/      (Latin swarm collective history)
+│       ├── latin_coordinate_history/      (Latin swarm collective history)
+│       └── latin_coordinate_ongoing/      (Latin swarm ongoing coordination info)
 │
 └── Swarm/                       (Cross-Swarm Coordination)
     ├── swarm_roadmap/           (Inter-swarm collaboration roadmaps)
     ├── swarm_past_roadmap/      (Archived cross-swarm roadmaps)
-    └── swarm_history/           (Cross-swarm collaboration history)
+    ├── swarm_history/           (Cross-swarm collaboration history)
+    └── swarm_ongoing/           (Cross-swarm ongoing coordination info)
 ```
 
 ---
@@ -108,7 +112,43 @@ swarm_coordinate/
 - **Targeted Collaboration**: Specific agent combinations (e.g., Alpha + A,B,C)
 - **Flexible Coordination**: Adaptable to project requirements
 
-### **4. HISTORY AND DOCUMENTATION**
+### **4. REAL-TIME MONITORING AND COORDINATION**
+
+#### **Agent Dashboard**
+- **Location**: Built into the codebase as real-time monitoring system
+- **Purpose**: Live view of all agent progress, coordination status, and system health
+- **Access**: Agents can reference dashboard for current system state
+- **Integration**: Dashboard reflects coordination activities and progress
+
+#### **Ongoing Coordination Channels**
+- **Cross-Swarm**: `Swarm/swarm_ongoing/` - Information essential for all agents across swarms
+- **Greek Coordination**: `Greek/Coordinate/greek_coordinate_ongoing/` - Information essential for Greek swarm agents
+- **Latin Coordination**: `Latin/Coordinate/latin_coordinate_ongoing/` - Information essential for Latin swarm agents
+- **Usage**: Agents write markdown files with information other agents need to know
+- **Format**: Timestamped markdown files with clear, actionable information
+
+#### **Periodic Check Requirements**
+**Every 2 Hours (Minimum):**
+- Own roadmap and history directories for current status
+- Swarm coordination roadmap for team objectives
+- Swarm ongoing directory for new coordination information
+
+**Every 4 Hours (Minimum):**
+- Cross-swarm roadmap and ongoing directories
+- Conflict directory for issues affecting your work
+
+**On Task Completion:**
+- Immediately update own history
+- Check dependent agents' histories
+- Share critical information in appropriate ongoing directory
+
+#### **Conflict Resolution Logging**
+- **Location**: `conflict/` directory
+- **Purpose**: Agents log coordination issues, conflicts, and resolutions
+- **Format**: Markdown files with timestamp, agents involved, issue description, resolution
+- **Process**: Log conflict → Work toward resolution → Document outcome
+
+### **5. HISTORY AND DOCUMENTATION**
 
 #### **Individual Agent History**
 - Location: `[agent]_history/` directories
@@ -187,6 +227,19 @@ All file removals must follow COPPERCLAD anti-deletion archival rules:
 2. Agents from different swarms collaborate on specific objectives
 3. Progress tracked in both individual and cross-swarm histories
 4. Coordination facilitates knowledge transfer between swarms
+
+### **Scenario 4: Ongoing Information Sharing**
+1. Agent discovers important information (new pattern, issue, solution)
+2. Agent creates timestamped markdown file in appropriate `*_ongoing/` directory
+3. Other agents regularly check ongoing directories for new information
+4. Information helps prevent duplicate work and coordination conflicts
+
+### **Scenario 5: Conflict Resolution**
+1. Agent A and Agent B both need to modify the same file
+2. Agent A logs conflict in `conflict/20250122_file_modification_conflict.md`
+3. Agents work together to determine resolution (merge, sequence, split)
+4. Resolution documented in same conflict file for future reference
+5. Coordination information shared in appropriate ongoing directory
 
 ---
 
