@@ -10,6 +10,25 @@
 **Timeline:** 88 Weeks (21 Months) | Iterative Development
 **Execution:** Independent development with comprehensive feature discovery
 
+## ✅ Protocol Compliance Overlay (Binding)
+
+- **Frontend-First (ADAMANTIUMCLAD):** Where outputs are user-visible, integrate into a dashboard (prefer `http://localhost:5000/`). For test artifacts and reports, attach exemption block per CLAUDE Rule #3 with future integration plan.
+- **Anti-Regression (IRONCLAD/STEELCLAD/COPPERCLAD):** Manual analysis before consolidation; extract unique functionality; verify parity; archive—never delete.
+- **Anti-Duplication (GOLDCLAD):** Run similarity search before new files/components; prefer enhancement; include justification if creation is necessary.
+- **Version Control (DIAMONDCLAD):** After task completion, update root `README.md`, then stage, commit, and push.
+
+### Adjusted Success Criteria (Local Single-User Scope)
+- **Artifacts:** Test run outputs and coverage reports exportable (HTML/JSON)
+- **UI:** If integrated, p95 < 200ms interactions; otherwise provide screenshots/attachments
+- **Reliability:** Deterministic runs; config-lite operation
+- **Evidence:** Attach sample outputs and brief rationale with each completion
+
+### Verification Gates (apply before marking tasks complete)
+1. UI component or exemption block present and justified
+2. Data flow documented (discoverer → runner → report/UI)
+3. Evidence attached (reports, screenshots, or tests)
+4. History updated in `c_history/` with timestamp, changes, and impact
+5. GOLDCLAD justification for any new module/file
 ---
 
 ## **🔍 ⚠️ CRITICAL: FEATURE DISCOVERY PROTOCOL FOR AGENT C**
