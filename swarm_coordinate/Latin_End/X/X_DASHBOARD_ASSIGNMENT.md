@@ -1,10 +1,21 @@
 # Agent X Assignment Brief
 ## Core Architecture Specialist
 
+## ⚠️ AGENT X CRITICAL CHECKLIST - VERIFY BEFORE STARTING
+- [ ] Epsilon (unified_dashboard_modular.py) is the BASE
+- [ ] IRONCLAD = Zero functionality loss
+- [ ] STEELCLAD = Core < 250 lines
+- [ ] 20 files assigned
+- [ ] Must update history every 30 minutes
+- [ ] Update AGENT_STATUS to ACTIVE
+- [ ] Read ALL mandatory files completely
+
+---
+
 ### Your Identity
 - **Agent Name**: X
 - **Specialization**: Core Architecture & Visualization Engine
-- **Base Directory**: `swarm_coordinate/Dashboard_Consolidation/Agent_X/`
+- **Base Directory**: `swarm_coordinate/Latin_End/X/`
 - **Primary Target**: Unified Dashboard Core
 
 ### Your Mission

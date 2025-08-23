@@ -1,6 +1,38 @@
 # Master Dashboard Consolidation Roadmap
 ## Three-Agent Parallel Consolidation Strategy
 
+## ⚠️ CRITICAL CHECKLISTS - VERIFY BEFORE STARTING
+
+### All Agents MUST Confirm
+- [ ] Update history every 30 minutes
+- [ ] Check handoffs every 30 minutes  
+- [ ] Read ALL mandatory files completely
+- [ ] Update AGENT_STATUS to ACTIVE
+- [ ] Begin Phase 1 immediately
+
+### Agent X Critical Requirements
+- [ ] Epsilon (unified_dashboard_modular.py) is the BASE
+- [ ] IRONCLAD = Zero functionality loss
+- [ ] STEELCLAD = Core < 250 lines
+- [ ] 20 files assigned
+- [ ] Must update history every 30 minutes
+
+### Agent Y Critical Requirements
+- [ ] Extract ALL unique features
+- [ ] Security > ML > Analytics priority
+- [ ] Modules < 200 lines
+- [ ] Features must be pluggable
+- [ ] 19 files assigned
+
+### Agent Z Critical Requirements
+- [ ] Unify WebSocket implementations
+- [ ] Consolidate all services
+- [ ] < 50ms latency target
+- [ ] Document all endpoints
+- [ ] 19 files assigned
+
+---
+
 ### Mission Statement
 Consolidate 58 dashboard files into a single, unified, modular dashboard system using IRONCLAD consolidation and STEELCLAD modularization protocols.
 

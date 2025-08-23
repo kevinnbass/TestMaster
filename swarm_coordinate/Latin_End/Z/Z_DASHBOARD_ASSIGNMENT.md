@@ -1,10 +1,22 @@
 # Agent Z Assignment Brief
 ## Coordination & Services Specialist
 
+## ⚠️ AGENT Z CRITICAL CHECKLIST - VERIFY BEFORE STARTING
+- [ ] Unify WebSocket implementations
+- [ ] Consolidate all services
+- [ ] < 50ms latency target
+- [ ] Document all endpoints
+- [ ] 19 files assigned
+- [ ] Must update history every 30 minutes
+- [ ] Update AGENT_STATUS to ACTIVE
+- [ ] Read ALL mandatory files completely
+
+---
+
 ### Your Identity
 - **Agent Name**: Z
 - **Specialization**: Multi-Agent Coordination, Real-time Services, APIs
-- **Base Directory**: `swarm_coordinate/Dashboard_Consolidation/Agent_Z/`
+- **Base Directory**: `swarm_coordinate/Latin_End/Z/`
 - **Primary Target**: Service Layer & Inter-Agent Communication
 
 ### Your Mission

@@ -1,10 +1,22 @@
 # Agent Y Assignment Brief
 ## Feature Enhancement Specialist
 
+## ⚠️ AGENT Y CRITICAL CHECKLIST - VERIFY BEFORE STARTING
+- [ ] Extract ALL unique features
+- [ ] Security > ML > Analytics priority
+- [ ] Modules < 200 lines
+- [ ] Features must be pluggable
+- [ ] 19 files assigned
+- [ ] Must update history every 30 minutes
+- [ ] Update AGENT_STATUS to ACTIVE
+- [ ] Read ALL mandatory files completely
+
+---
+
 ### Your Identity
 - **Agent Name**: Y
 - **Specialization**: Advanced Features, Security, Analytics, ML
-- **Base Directory**: `swarm_coordinate/Dashboard_Consolidation/Agent_Y/`
+- **Base Directory**: `swarm_coordinate/Latin_End/Y/`
 - **Primary Target**: Specialized Features & Intelligence
 
 ### Your Mission
