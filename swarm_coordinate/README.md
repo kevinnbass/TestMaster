@@ -31,7 +31,9 @@ swarm_coordinate/
 │       ├── greek_coordinate_roadmap/      (Greek swarm coordination roadmaps)
 │       ├── greek_coordinate_past_roadmap/ (Archived Greek coordination)
 │       ├── greek_coordinate_history/      (Greek swarm collective history)
-│       └── greek_coordinate_ongoing/      (Greek swarm ongoing coordination info)
+│       ├── greek_coordinate_ongoing/      (Greek swarm ongoing coordination info)
+│       ├── greek_coordinate_conflict/     (Greek within-swarm conflict resolution)
+│       └── greek_coordinate_handoff/      (Greek within-swarm task handoffs)
 │
 ├── Latin/                       (Latin Swarm - A, B, C, D, E)
 │   ├── A/, B/, C/, D/, E/       (Same structure as Greek agents)
@@ -39,13 +41,17 @@ swarm_coordinate/
 │       ├── latin_coordinate_roadmap/      (Latin swarm coordination roadmaps)
 │       ├── latin_coordinate_past_roadmap/ (Archived Latin coordination)
 │       ├── latin_coordinate_history/      (Latin swarm collective history)
-│       └── latin_coordinate_ongoing/      (Latin swarm ongoing coordination info)
+│       ├── latin_coordinate_ongoing/      (Latin swarm ongoing coordination info)
+│       ├── latin_coordinate_conflict/     (Latin within-swarm conflict resolution)
+│       └── latin_coordinate_handoff/      (Latin within-swarm task handoffs)
 │
 └── Swarm/                       (Cross-Swarm Coordination)
     ├── swarm_roadmap/           (Inter-swarm collaboration roadmaps)
     ├── swarm_past_roadmap/      (Archived cross-swarm roadmaps)
     ├── swarm_history/           (Cross-swarm collaboration history)
-    └── swarm_ongoing/           (Cross-swarm ongoing coordination info)
+    ├── swarm_ongoing/           (Cross-swarm ongoing coordination info)
+    ├── swarm_coordinate_conflict/ (Between-swarm conflict resolution)
+    └── swarm_coordinate_handoff/   (Between-swarm task handoffs)
 ```
 
 ---
@@ -149,16 +155,22 @@ swarm_coordinate/
 - Create handoff note if others depend on completed work
 
 #### **Dependency Handoff System**
-- **Location**: `handoff/` directory
+- **Within-Swarm Handoff**: 
+  - Greek: `Greek/Coordinate/greek_coordinate_handoff/`
+  - Latin: `Latin/Coordinate/latin_coordinate_handoff/`
+- **Between-Swarm Handoff**: `Swarm/swarm_coordinate_handoff/`
 - **Purpose**: Notify dependent agents when prerequisites are complete
-- **Format**: `[timestamp]_[from]_to_[to]_[description].md`
+- **Format**: `YYYYMMDD_[from]_to_[to]_[description].md`
 - **Process**: Create handoff → Dependent agent acknowledges → Archive to history
 - **Critical**: Prevents wasted time waiting for dependencies
 
 #### **Conflict Resolution Logging**
-- **Location**: `conflict/` directory
+- **Within-Swarm Conflicts**:
+  - Greek: `Greek/Coordinate/greek_coordinate_conflict/`
+  - Latin: `Latin/Coordinate/latin_coordinate_conflict/`
+- **Between-Swarm Conflicts**: `Swarm/swarm_coordinate_conflict/`
 - **Purpose**: Agents log coordination issues, conflicts, and resolutions
-- **Format**: Markdown files with timestamp, agents involved, issue description, resolution
+- **Format**: `YYYYMMDD_conflict_[agents]_[issue].md`
 - **Process**: Log conflict → Work toward resolution → Document outcome
 
 ### **5. HISTORY AND DOCUMENTATION**
