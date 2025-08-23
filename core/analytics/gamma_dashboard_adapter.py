@@ -267,6 +267,120 @@ class GammaDashboardAdapter:
             }
         }
     
+    def get_custom_visualization_data(self, chart_id: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Get custom visualization data for dashboard display.
+        
+        Args:
+            chart_id: Optional specific chart ID, or None for all default charts
+            
+        Returns:
+            Custom visualization data for dashboard integration
+        """
+        start_time = time.time()
+        
+        # Get current analytics data for visualization
+        with self.performance_profiler.time_component('custom_visualization_data_prep'):
+            analytics_data = self.analytics_service.get_personal_analytics_data()
+            predictions = self.predictive_engine.get_dashboard_predictions()
+            performance_data = self.performance_profiler.get_dashboard_performance_data()
+        
+        # Combine all data sources for custom visualizations
+        combined_data = {
+            **analytics_data,
+            'predictions': predictions,
+            'performance': performance_data
+        }
+        
+        if chart_id:
+            # Generate specific chart
+            chart_config = self.visualization_builder.generate_chart_data(chart_id, combined_data)
+            charts = [chart_config]
+        else:
+            # Generate all default charts
+            charts = []
+            for chart_name, chart_id in self.default_chart_ids.items():
+                try:
+                    chart_config = self.visualization_builder.generate_chart_data(chart_id, combined_data)
+                    chart_config['id'] = chart_id
+                    chart_config['name'] = chart_name
+                    charts.append(chart_config)
+                except Exception as e:
+                    import logging
+                    logger = logging.getLogger(__name__)
+                    logger.warning(f"Could not generate chart {chart_name}: {e}")
+        
+        # Record API response time
+        response_time_ms = (time.time() - start_time) * 1000
+        self.performance_profiler.record_api_response(
+            f'/api/personal-analytics/custom-viz/{chart_id or "all"}',
+            response_time_ms,
+            200,
+            len(str(charts))
+        )
+        
+        return {
+            'id': 'agent-e-custom-visualizations',
+            'title': 'Custom Visualizations',
+            'type': 'custom_visualization_panel',
+            'position': {'x': 0, 'y': 2},  # Below main panel
+            'size': {'width': 4, 'height': 3},
+            'data': {
+                'charts': charts,
+                'summary': {
+                    'total_charts': len(charts),
+                    'response_time_ms': round(response_time_ms, 2),
+                    'generated_at': datetime.now().isoformat()
+                }
+            },
+            'timestamp': datetime.now().isoformat(),
+            'status': 'active'
+        }
+    
+    def create_custom_chart(self, title: str, chart_type: str, data_source: str, 
+                          data_fields: List[str], **kwargs) -> str:
+        """
+        Create a new custom chart.
+        
+        Args:
+            title: Chart title
+            chart_type: Chart type (line, bar, pie, etc.)
+            data_source: Data source name
+            data_fields: Fields to visualize
+            **kwargs: Additional configuration
+            
+        Returns:
+            Chart ID
+        """
+        try:
+            chart_id = self.visualization_builder.create_chart(
+                title=title,
+                chart_type=ChartType(chart_type),
+                data_source=DataSource(data_source),
+                data_fields=data_fields,
+                **kwargs
+            )
+            
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.info(f"Created custom chart '{title}' with ID: {chart_id}")
+            
+            return chart_id
+            
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Failed to create custom chart '{title}': {e}")
+            raise
+    
+    def get_visualization_templates(self) -> List[Dict[str, Any]]:
+        """Get available visualization templates."""
+        return self.visualization_builder.get_template_list()
+    
+    def get_custom_charts_list(self) -> List[Dict[str, Any]]:
+        """Get list of all custom charts."""
+        return self.visualization_builder.get_chart_list()
+    
     def _format_for_panel(self, analytics: Dict[str, Any], predictions: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Format analytics data for optimal panel display.
@@ -504,6 +618,21 @@ class GammaDashboardAdapter:
                 'method': 'GET',
                 'handler': self.get_combined_dashboard_data,
                 'description': 'Combined analytics and performance monitoring data'
+            },
+            '/api/personal-analytics/custom-visualizations': {
+                'method': 'GET',
+                'handler': lambda: self.get_custom_visualization_data(),
+                'description': 'Custom visualization panel with user-configurable charts'
+            },
+            '/api/personal-analytics/visualization-templates': {
+                'method': 'GET',
+                'handler': self.get_visualization_templates,
+                'description': 'Available visualization templates'
+            },
+            '/api/personal-analytics/custom-charts': {
+                'method': 'GET',
+                'handler': self.get_custom_charts_list,
+                'description': 'List of user-created custom charts'
             }
         }
     

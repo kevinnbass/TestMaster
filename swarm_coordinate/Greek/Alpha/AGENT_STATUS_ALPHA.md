@@ -47,7 +47,7 @@
 - **Phase Completion**: Estimated completion of Phase 1 by 2025-09-15
 
 ## **COMMUNICATION PREFERENCES**
-- **Best Contact Method**: Enhanced handoff system via `alpha_handoffs/incoming/`
+- **Best Contact Method**: Enhanced handoff system via `alpha_handoff/incoming/`
 - **Response Priority**: Mark CRITICAL for blocking issues, STANDARD for coordination, INFO for updates
 - **Collaboration Style**: Prefer structured proposals with clear objectives and mutual benefits
 

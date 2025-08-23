@@ -198,6 +198,8 @@
         }
     </style>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 </head>
 <body>
     <div id="connectionStatus" class="disconnected">Connecting...</div>
@@ -373,6 +375,53 @@
                     <div id="visualizationResponse" class="api-response" style="display: none;"></div>
                 </div>
             </div>
+            
+            <!-- Hour 8: Real-time Chart Visualization Card -->
+            <div class="card" style="grid-column: span 2;">
+                <h2>📈 Real-time Performance Analytics</h2>
+                <div class="api-testing" style="margin-bottom: 15px;">
+                    <button class="api-button" onclick="startRealTimeStreaming()">Start Live Streaming</button>
+                    <button class="api-button" onclick="stopRealTimeStreaming()">Stop Streaming</button>
+                    <button class="api-button" onclick="requestPredictiveAnalysis()">Get Predictions</button>
+                    <select id="chartTimeRange" onchange="updateChartRange()">
+                        <option value="1h">Last Hour</option>
+                        <option value="6h">Last 6 Hours</option>
+                        <option value="24h">Last 24 Hours</option>
+                    </select>
+                </div>
+                <div style="height: 400px; position: relative;">
+                    <canvas id="realTimeChart"></canvas>
+                </div>
+                <div id="chartStatus" style="text-align: center; margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                    Chart Ready - Click "Start Live Streaming" to begin
+                </div>
+            </div>
+            
+            <!-- Hour 8: Predictive Analytics Card -->
+            <div class="card">
+                <h2>🔮 Predictive Analytics</h2>
+                <div id="predictiveAnalytics" class="loading">
+                    <div class="metric">
+                        <span class="metric-label">Next Hour Forecast</span>
+                        <span class="metric-value" id="nextHourForecast">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Trend Direction</span>
+                        <span class="metric-value" id="trendDirection">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Confidence Level</span>
+                        <span class="metric-value">
+                            <span id="confidenceLevel">--</span>
+                            <span id="confidenceStatus" class="status-indicator"></span>
+                        </span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Anomaly Risk</span>
+                        <span class="metric-value" id="anomalyRisk">--</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -380,8 +429,34 @@
         class ModularDashboard {
             constructor() {
                 this.socket = io();
+                this.realTimeChart = null;
+                this.isStreaming = false;
+                this.chartData = {
+                    labels: [],
+                    datasets: [{
+                        label: 'Performance Score',
+                        data: [],
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.4
+                    }, {
+                        label: 'CPU Usage',
+                        data: [],
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        tension: 0.4
+                    }, {
+                        label: 'Memory Usage',
+                        data: [],
+                        borderColor: 'rgb(54, 162, 235)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        tension: 0.4
+                    }]
+                };
+                this.predictiveData = null;
                 this.setupEventHandlers();
                 this.initializeDashboard();
+                this.initializeRealTimeChart();
             }
             
             setupEventHandlers() {
@@ -400,6 +475,23 @@
                 
                 this.socket.on('analysis_result', (data) => {
                     this.updateContextualAnalysis(data.analysis);
+                });
+                
+                // Hour 8: Real-time streaming event handlers
+                this.socket.on('performance_stream', (data) => {
+                    this.updateRealTimeChart(data.metrics);
+                });
+                
+                this.socket.on('predictive_stream', (data) => {
+                    this.updatePredictiveAnalytics(data.predictions);
+                });
+                
+                this.socket.on('chart_data_update', (data) => {
+                    this.handleChartDataUpdate(data);
+                });
+                
+                this.socket.on('predictive_analysis_result', (data) => {
+                    this.displayPredictiveAnalysis(data);
                 });
             }
             
@@ -641,6 +733,193 @@
                 }
             }
             
+            // Hour 8: Real-time Chart Integration Methods
+            initializeRealTimeChart() {
+                const ctx = document.getElementById('realTimeChart').getContext('2d');
+                
+                this.realTimeChart = new Chart(ctx, {
+                    type: 'line',
+                    data: this.chartData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: {
+                            duration: 750,
+                            easing: 'easeInOutQuad'
+                        },
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'minute',
+                                    displayFormats: {
+                                        minute: 'HH:mm'
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Time'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: 'Percentage'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    afterBody: function(tooltipItems) {
+                                        let total = 0;
+                                        tooltipItems.forEach(function(tooltipItem) {
+                                            total += tooltipItem.parsed.y;
+                                        });
+                                        return 'Combined Load: ' + (total / tooltipItems.length).toFixed(1) + '%';
+                                    }
+                                }
+                            }
+                        },
+                        interaction: {
+                            mode: 'nearest',
+                            axis: 'x',
+                            intersect: false
+                        }
+                    }
+                });
+            }
+            
+            updateRealTimeChart(metrics) {
+                if (!this.realTimeChart || !this.isStreaming) return;
+                
+                const timestamp = new Date();
+                const maxDataPoints = 50;
+                
+                // Add new data point
+                this.chartData.labels.push(timestamp);
+                this.chartData.datasets[0].data.push(metrics.performance_score || 0);
+                this.chartData.datasets[1].data.push(metrics.cpu_usage || 0);
+                this.chartData.datasets[2].data.push(metrics.memory_usage || 0);
+                
+                // Remove old data points if we exceed max
+                if (this.chartData.labels.length > maxDataPoints) {
+                    this.chartData.labels.shift();
+                    this.chartData.datasets.forEach(dataset => dataset.data.shift());
+                }
+                
+                // Update chart
+                this.realTimeChart.update('none'); // No animation for real-time updates
+                
+                // Update chart status
+                document.getElementById('chartStatus').textContent = 
+                    `Live streaming - Last update: ${timestamp.toLocaleTimeString()}`;
+            }
+            
+            updatePredictiveAnalytics(predictions) {
+                if (!predictions.predictions || predictions.predictions.length === 0) return;
+                
+                const nextHour = predictions.predictions[0];
+                const avgConfidence = predictions.confidence?.average || 0;
+                
+                // Update predictive metrics
+                document.getElementById('nextHourForecast').textContent = 
+                    `${Math.round(nextHour.predicted_value)}%`;
+                
+                // Determine trend direction
+                const trend = predictions.confidence?.trend_strength > 0.5 ? 'Upward' : 'Stable';
+                document.getElementById('trendDirection').textContent = trend;
+                
+                // Update confidence level
+                document.getElementById('confidenceLevel').textContent = 
+                    `${Math.round(avgConfidence * 100)}%`;
+                    
+                const confidenceStatusEl = document.getElementById('confidenceStatus');
+                if (avgConfidence >= 0.8) {
+                    confidenceStatusEl.className = 'status-indicator status-excellent';
+                } else if (avgConfidence >= 0.6) {
+                    confidenceStatusEl.className = 'status-indicator status-good';
+                } else {
+                    confidenceStatusEl.className = 'status-indicator status-needs_attention';
+                }
+                
+                // Update anomaly risk
+                const anomalyRisk = predictions.predictions.some(p => p.predicted_value > 90) ? 'High' : 'Low';
+                document.getElementById('anomalyRisk').textContent = anomalyRisk;
+                
+                document.getElementById('predictiveAnalytics').classList.remove('loading');
+            }
+            
+            handleChartDataUpdate(data) {
+                if (data.chart_type === 'performance_line') {
+                    // Handle historical data loading
+                    this.loadHistoricalData(data);
+                }
+            }
+            
+            loadHistoricalData(data) {
+                if (!this.realTimeChart || !data.data || !data.data.points) return;
+                
+                // Clear existing data
+                this.chartData.labels = [];
+                this.chartData.datasets.forEach(dataset => dataset.data = []);
+                
+                // Load historical points
+                data.data.points.forEach(point => {
+                    this.chartData.labels.push(new Date(point.timestamp));
+                    // For historical data, we'll use the value for all datasets as demo
+                    this.chartData.datasets[0].data.push(point.value);
+                    this.chartData.datasets[1].data.push(point.value * 0.8);
+                    this.chartData.datasets[2].data.push(point.value * 1.2);
+                });
+                
+                this.realTimeChart.update();
+                document.getElementById('chartStatus').textContent = 
+                    `Historical data loaded (${data.data.points.length} points)`;
+            }
+            
+            displayPredictiveAnalysis(data) {
+                if (!this.realTimeChart) return;
+                
+                // Add prediction overlay to chart
+                const predictions = data.predictions;
+                if (predictions && predictions.length > 0) {
+                    // Create prediction dataset
+                    const predictionDataset = {
+                        label: 'Forecast',
+                        data: predictions.map(p => ({
+                            x: new Date(p.timestamp),
+                            y: p.predicted_value
+                        })),
+                        borderColor: 'rgba(255, 206, 84, 1)',
+                        backgroundColor: 'rgba(255, 206, 84, 0.2)',
+                        borderDash: [5, 5],
+                        tension: 0.4
+                    };
+                    
+                    // Add or update prediction dataset
+                    const existingPredictionIndex = this.realTimeChart.data.datasets.findIndex(
+                        ds => ds.label === 'Forecast'
+                    );
+                    
+                    if (existingPredictionIndex >= 0) {
+                        this.realTimeChart.data.datasets[existingPredictionIndex] = predictionDataset;
+                    } else {
+                        this.realTimeChart.data.datasets.push(predictionDataset);
+                    }
+                    
+                    this.realTimeChart.update();
+                }
+            }
+            
             updateContextualAnalysis(analysis) {
                 if (!analysis) return;
                 
@@ -791,6 +1070,65 @@
             } catch (error) {
                 showVisualizationResponse('Visualization AI Insights', { error: error.message });
             }
+        }
+        
+        // Hour 8: Real-time Streaming Control Functions
+        function startRealTimeStreaming() {
+            const dashboard = window.dashboard;
+            if (!dashboard.isStreaming) {
+                dashboard.isStreaming = true;
+                dashboard.socket.emit('subscribe_live_data', {
+                    streams: ['performance_metrics', 'predictive_analytics']
+                });
+                
+                // Load initial historical data
+                dashboard.socket.emit('request_chart_data', {
+                    chart_type: 'performance_line',
+                    range: document.getElementById('chartTimeRange').value,
+                    filters: {}
+                });
+                
+                document.getElementById('chartStatus').textContent = 'Starting live stream...';
+                console.log('Real-time streaming started');
+            }
+        }
+        
+        function stopRealTimeStreaming() {
+            const dashboard = window.dashboard;
+            if (dashboard.isStreaming) {
+                dashboard.isStreaming = false;
+                document.getElementById('chartStatus').textContent = 'Streaming stopped';
+                console.log('Real-time streaming stopped');
+            }
+        }
+        
+        function updateChartRange() {
+            const dashboard = window.dashboard;
+            const range = document.getElementById('chartTimeRange').value;
+            
+            // Request new data for the selected range
+            dashboard.socket.emit('request_chart_data', {
+                chart_type: 'performance_line',
+                range: range,
+                filters: {}
+            });
+            
+            document.getElementById('chartStatus').textContent = `Loading ${range} data...`;
+        }
+        
+        function requestPredictiveAnalysis() {
+            const dashboard = window.dashboard;
+            dashboard.socket.emit('request_predictive_analysis', {
+                type: 'trend_forecast',
+                historical_data: {
+                    performance_metrics: dashboard.chartData.datasets[0].data.slice(-10),
+                    cpu_usage: dashboard.chartData.datasets[1].data.slice(-10),
+                    memory_usage: dashboard.chartData.datasets[2].data.slice(-10)
+                },
+                horizon: 12
+            });
+            
+            document.getElementById('chartStatus').textContent = 'Generating predictive analysis...';
         }
         
         // Initialize dashboard when page loads

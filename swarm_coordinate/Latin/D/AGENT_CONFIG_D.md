@@ -41,7 +41,7 @@ other_agents_status:
 other_agents_handoffs:
   - "Latin/*/[agent]_handoffs/incoming/"
   access: "write_only"
-  purpose: "send_handoffs"
+  purpose: "send_handoff"
 ```
 
 ### **FORBIDDEN DIRECTORIES** (No Access)

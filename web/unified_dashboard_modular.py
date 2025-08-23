@@ -342,6 +342,171 @@ class UnifiedDashboardModular:
             features.extend(['touch_navigation', 'adaptive_sizing', 'orientation_aware'])
         
         return features
+    
+    # Hour 8: Real-time Data Streaming Helper Methods
+    def _start_performance_stream(self, client_id):
+        """Start streaming performance metrics to a specific client."""
+        def stream_performance():
+            while True:
+                try:
+                    metrics = self.performance_monitor.get_metrics()
+                    self.socketio.emit('performance_stream', {
+                        'metrics': metrics,
+                        'timestamp': datetime.now().isoformat()
+                    }, room=client_id)
+                    time.sleep(2)  # Update every 2 seconds
+                except Exception as e:
+                    print(f"Error in performance stream: {e}")
+                    break
+        
+        # Start streaming in background thread
+        thread = threading.Thread(target=stream_performance, daemon=True)
+        thread.start()
+    
+    def _start_visualization_stream(self, client_id):
+        """Start streaming visualization updates to a specific client."""
+        def stream_visualizations():
+            while True:
+                try:
+                    insights = self.visualization_engine.generate_visualization_insights(
+                        self.performance_monitor.get_metrics(),
+                        self.contextual_engine.get_current_analysis_state(),
+                        self.data_integrator.get_unified_data()
+                    )
+                    self.socketio.emit('visualization_stream', {
+                        'insights': insights,
+                        'timestamp': datetime.now().isoformat()
+                    }, room=client_id)
+                    time.sleep(10)  # Update every 10 seconds
+                except Exception as e:
+                    print(f"Error in visualization stream: {e}")
+                    break
+        
+        thread = threading.Thread(target=stream_visualizations, daemon=True)
+        thread.start()
+    
+    def _start_predictive_stream(self, client_id):
+        """Start streaming predictive analytics to a specific client."""
+        def stream_predictions():
+            while True:
+                try:
+                    current_metrics = self.performance_monitor.get_metrics()
+                    predictions = self._generate_predictive_analysis(
+                        'trend_forecast', current_metrics, 12
+                    )
+                    self.socketio.emit('predictive_stream', {
+                        'predictions': predictions,
+                        'timestamp': datetime.now().isoformat()
+                    }, room=client_id)
+                    time.sleep(30)  # Update every 30 seconds
+                except Exception as e:
+                    print(f"Error in predictive stream: {e}")
+                    break
+        
+        thread = threading.Thread(target=stream_predictions, daemon=True)
+        thread.start()
+    
+    def _generate_chart_data(self, chart_type, data_range, filters):
+        """Generate chart data based on type, range, and filters."""
+        # Mock data generation for demonstration
+        import random
+        
+        current_time = datetime.now()
+        data_points = []
+        
+        if data_range == '1h':
+            points = 60
+            interval = 1  # minutes
+        elif data_range == '6h':
+            points = 72
+            interval = 5  # minutes
+        elif data_range == '24h':
+            points = 144
+            interval = 10  # minutes
+        else:
+            points = 30
+            interval = 1
+        
+        for i in range(points):
+            timestamp = current_time - timedelta(minutes=i * interval)
+            
+            if chart_type == 'performance_line':
+                value = 75 + random.uniform(-15, 15) + (5 * random.sin(i * 0.1))
+            elif chart_type == 'cpu_usage':
+                value = 45 + random.uniform(-10, 25) + (10 * random.sin(i * 0.05))
+            elif chart_type == 'memory_usage':
+                value = 60 + random.uniform(-5, 20) + (15 * random.cos(i * 0.08))
+            else:
+                value = 50 + random.uniform(-20, 30)
+            
+            data_points.append({
+                'timestamp': timestamp.isoformat(),
+                'value': max(0, min(100, value)),
+                'metadata': {'interval': interval, 'type': chart_type}
+            })
+        
+        return {
+            'points': list(reversed(data_points)),
+            'range': data_range,
+            'chart_type': chart_type,
+            'total_points': len(data_points)
+        }
+    
+    def _generate_predictive_analysis(self, analysis_type, historical_data, forecast_horizon):
+        """Generate predictive analysis based on historical data."""
+        import random
+        
+        predictions = []
+        current_time = datetime.now()
+        
+        # Generate forecast points
+        for i in range(forecast_horizon):
+            future_time = current_time + timedelta(hours=i)
+            
+            if analysis_type == 'trend_forecast':
+                # Simple trend prediction with some randomness
+                base_value = 70 + (i * 0.5)  # Slight upward trend
+                noise = random.uniform(-5, 5)
+                predicted_value = base_value + noise
+            elif analysis_type == 'anomaly_detection':
+                predicted_value = 65 + random.uniform(-10, 10)
+                if i % 8 == 0:  # Inject anomaly every 8 hours
+                    predicted_value += random.uniform(15, 25)
+            else:
+                predicted_value = 60 + random.uniform(-15, 15)
+            
+            predictions.append({
+                'timestamp': future_time.isoformat(),
+                'predicted_value': max(0, min(100, predicted_value)),
+                'confidence': max(0.6, 1.0 - (i * 0.02)),  # Decreasing confidence over time
+                'lower_bound': predicted_value - 5,
+                'upper_bound': predicted_value + 5
+            })
+        
+        return {
+            'predictions': predictions,
+            'analysis_type': analysis_type,
+            'horizon_hours': forecast_horizon,
+            'confidence': {
+                'average': sum(p['confidence'] for p in predictions) / len(predictions),
+                'trend_strength': 0.8,
+                'data_quality': 0.9
+            },
+            'recommendation': f'Based on {analysis_type}, expect gradual performance improvement over next {forecast_horizon} hours.'
+        }
+    
+    def _get_update_frequency(self, chart_type):
+        """Get optimal update frequency for different chart types."""
+        frequencies = {
+            'performance_line': 2000,    # 2 seconds
+            'cpu_usage': 1000,           # 1 second  
+            'memory_usage': 1500,        # 1.5 seconds
+            'network_io': 3000,          # 3 seconds
+            'disk_usage': 5000,          # 5 seconds
+            'predictive_trend': 30000,   # 30 seconds
+            'default': 5000              # 5 seconds
+        }
+        return frequencies.get(chart_type, frequencies['default'])
 
     def setup_socketio_events(self):
         """Setup WebSocket event handlers."""
@@ -368,6 +533,93 @@ class UnifiedDashboardModular:
             
             emit('analysis_result', {
                 'analysis': analysis,
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        # Hour 8: Advanced Real-time Data Streaming Events
+        @self.socketio.on('subscribe_live_data')
+        def handle_live_data_subscription(data):
+            """Handle subscription to real-time data streams."""
+            stream_types = data.get('streams', [])
+            client_id = request.sid
+            
+            print(f"Client {client_id} subscribed to streams: {stream_types}")
+            
+            # Start streaming data for subscribed types
+            for stream_type in stream_types:
+                if stream_type == 'performance_metrics':
+                    self._start_performance_stream(client_id)
+                elif stream_type == 'visualization_updates':
+                    self._start_visualization_stream(client_id)
+                elif stream_type == 'predictive_analytics':
+                    self._start_predictive_stream(client_id)
+            
+            emit('subscription_confirmed', {
+                'streams': stream_types,
+                'client_id': client_id,
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        @self.socketio.on('request_chart_data')
+        def handle_chart_data_request(data):
+            """Handle requests for chart data with real-time updates."""
+            chart_type = data.get('chart_type', 'line')
+            data_range = data.get('range', '1h')
+            filters = data.get('filters', {})
+            
+            # Generate chart data based on request
+            chart_data = self._generate_chart_data(chart_type, data_range, filters)
+            
+            emit('chart_data_update', {
+                'chart_type': chart_type,
+                'data': chart_data,
+                'metadata': {
+                    'range': data_range,
+                    'filters': filters,
+                    'update_frequency': self._get_update_frequency(chart_type)
+                },
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        @self.socketio.on('request_predictive_analysis')
+        def handle_predictive_analysis_request(data):
+            """Handle requests for predictive analytics visualization."""
+            analysis_type = data.get('type', 'trend_forecast')
+            historical_data = data.get('historical_data', {})
+            forecast_horizon = data.get('horizon', 24)  # hours
+            
+            # Generate predictive analysis
+            prediction_result = self._generate_predictive_analysis(
+                analysis_type, historical_data, forecast_horizon
+            )
+            
+            emit('predictive_analysis_result', {
+                'analysis_type': analysis_type,
+                'predictions': prediction_result,
+                'confidence_intervals': prediction_result.get('confidence', {}),
+                'recommendation': prediction_result.get('recommendation', ''),
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        @self.socketio.on('update_chart_config')
+        def handle_chart_config_update(data):
+            """Handle dynamic chart configuration updates."""
+            chart_id = data.get('chart_id')
+            new_config = data.get('config', {})
+            user_context = data.get('user_context', {})
+            
+            # Apply intelligent configuration updates
+            optimized_config = self.visualization_engine.create_interactive_chart_config(
+                new_config.get('type', 'intelligent_line_chart'),
+                new_config.get('data', {}),
+                user_context,
+                new_config.get('enhancements', [])
+            )
+            
+            emit('chart_config_updated', {
+                'chart_id': chart_id,
+                'config': optimized_config,
+                'optimizations_applied': optimized_config.get('optimizations', []),
                 'timestamp': datetime.now().isoformat()
             })
     

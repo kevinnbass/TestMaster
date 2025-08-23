@@ -9,8 +9,8 @@
 - **Total Timeline**: 500 Agent Hours across 4 phases
 
 ## **COMMUNICATION CHANNELS**
-- **Incoming Handoffs**: `alpha_handoffs/incoming/`
-- **Processed Handoffs**: `alpha_handoffs/processed/`
+- **Incoming Handoffs**: `alpha_handoff/incoming/`
+- **Processed Handoffs**: `alpha_handoff/processed/`
 - **Agent History**: `alpha_history/`
 - **Coordination Updates**: `greek_coordinate_ongoing/`
 - **Critical Handoffs**: `greek_coordinate_handoff/`

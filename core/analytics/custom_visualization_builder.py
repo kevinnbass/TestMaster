@@ -633,16 +633,23 @@ class CustomVisualizationBuilder:
                 for chart_id, chart_data in config["charts"].items():
                     chart_data["chart_type"] = ChartType(chart_data["chart_type"])
                     chart_data["data_source"] = DataSource(chart_data["data_source"])
-                    chart_data["created_at"] = datetime.fromisoformat(chart_data["created_at"])
-                    chart_data["updated_at"] = datetime.fromisoformat(chart_data["updated_at"])
+                    
+                    # Handle datetime fields
+                    if isinstance(chart_data["created_at"], str):
+                        chart_data["created_at"] = datetime.fromisoformat(chart_data["created_at"])
+                    if isinstance(chart_data["updated_at"], str):
+                        chart_data["updated_at"] = datetime.fromisoformat(chart_data["updated_at"])
                     
                     self.charts[chart_id] = ChartConfiguration(**chart_data)
             
             # Import panels
             if "panels" in config:
                 for panel_id, panel_data in config["panels"].items():
-                    panel_data["created_at"] = datetime.fromisoformat(panel_data["created_at"])
-                    panel_data["updated_at"] = datetime.fromisoformat(panel_data["updated_at"])
+                    # Handle datetime fields
+                    if isinstance(panel_data["created_at"], str):
+                        panel_data["created_at"] = datetime.fromisoformat(panel_data["created_at"])
+                    if isinstance(panel_data["updated_at"], str):
+                        panel_data["updated_at"] = datetime.fromisoformat(panel_data["updated_at"])
                     
                     self.panels[panel_id] = VisualizationPanel(**panel_data)
             

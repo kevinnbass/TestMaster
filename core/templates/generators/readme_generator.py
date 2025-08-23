@@ -21,11 +21,23 @@ class TemplateContext:
     description: str = ""
     author: str = ""
     version: str = "1.0.0"
+    template_type: str = "generic"
+    tech_stack: str = ""
     additional_vars: Dict[str, Any] = None
     
     def __post_init__(self):
         if self.additional_vars is None:
             self.additional_vars = {}
+        
+        # Store all parameters in additional_vars for template access
+        self.additional_vars.update({
+            'project_name': self.project_name,
+            'description': self.description,
+            'author': self.author,
+            'version': self.version,
+            'template_type': self.template_type,
+            'tech_stack': self.tech_stack
+        })
 
 
 class ReadmeGenerator:
@@ -120,6 +132,269 @@ class ReadmeGenerator:
         }
         
         self.logger.info(f"{self.__class__.__name__} initialized with {len(self.templates)} templates")
+    
+    def generate_readme(self, context: TemplateContext) -> str:
+        """Generate README content based on template context"""
+        template_type = context.template_type.lower()
+        
+        if template_type == "library" or template_type == "python_library":
+            return self._generate_library_readme(context)
+        elif template_type == "web_application":
+            return self._generate_webapp_readme(context)
+        elif template_type == "cli_tool":
+            return self._generate_cli_readme(context)
+        elif template_type == "api" or template_type == "api_service":
+            return self._generate_api_readme(context)
+        else:
+            return self._generate_generic_readme(context)
+    
+    def _generate_generic_readme(self, context: TemplateContext) -> str:
+        """Generate generic README template"""
+        return f"""# {context.project_name}
+
+{context.description}
+
+## Installation
+
+```bash
+pip install {context.project_name.lower().replace(' ', '-')}
+```
+
+## Usage
+
+Basic usage examples for {context.project_name}.
+
+```python
+import {context.project_name.lower().replace(' ', '_')}
+
+# Example usage here
+```
+
+## Features
+
+- Feature 1
+- Feature 2
+- Feature 3
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+{context.author}
+
+## Version
+
+{context.version}
+"""
+    
+    def _generate_library_readme(self, context: TemplateContext) -> str:
+        """Generate Python library README template"""
+        package_name = context.project_name.lower().replace(' ', '_').replace('-', '_')
+        
+        return f"""# {context.project_name}
+
+{context.description}
+
+## Installation
+
+Install from PyPI:
+
+```bash
+pip install {context.project_name.lower().replace(' ', '-')}
+```
+
+## Quick Start
+
+```python
+import {package_name}
+
+# Initialize the library
+lib = {package_name}.{context.project_name.replace(' ', '')}()
+
+# Use the library
+result = lib.main_function()
+print(result)
+```
+
+## API Reference
+
+### Main Classes
+
+#### `{context.project_name.replace(' ', '')}`
+
+Main class for {context.project_name.lower()} functionality.
+
+## Testing
+
+Run tests with pytest:
+
+```bash
+pytest tests/
+```
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+**{context.author}**
+- Version: {context.version}
+
+---
+
+*Generated with Agent A Template Generator*
+"""
+    
+    def _generate_webapp_readme(self, context: TemplateContext) -> str:
+        """Generate web application README template"""
+        tech_stack = context.tech_stack if context.tech_stack else "React, Node.js, PostgreSQL"
+        
+        return f"""# {context.project_name}
+
+{context.description}
+
+## 🚀 Tech Stack
+
+{tech_stack}
+
+## 📋 Features
+
+- ✅ User authentication and authorization
+- ✅ Responsive design for mobile and desktop
+- ✅ Real-time updates
+
+## 🛠️ Installation & Setup
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+- Database (PostgreSQL/MongoDB)
+
+### Local Development
+
+1. Clone the repository:
+```bash
+git clone https://github.com/{context.author.lower()}/{context.project_name.lower().replace(' ', '-')}.git
+cd {context.project_name.lower().replace(' ', '-')}
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start development server:
+```bash
+npm start
+```
+
+## Author
+
+**{context.author}**
+- Version: {context.version}
+
+---
+
+*Generated with Agent A Template Generator*
+"""
+    
+    def _generate_cli_readme(self, context: TemplateContext) -> str:
+        """Generate CLI tool README template"""
+        tool_name = context.project_name.lower().replace(' ', '-')
+        
+        return f"""# {context.project_name}
+
+{context.description}
+
+## 📦 Installation
+
+```bash
+pip install {tool_name}
+```
+
+## 🚀 Quick Start
+
+```bash
+# Basic usage
+{tool_name} --help
+
+# Run with default settings
+{tool_name} input.txt
+```
+
+## 📖 Commands
+
+### Main Commands
+
+#### `{tool_name} process`
+Process files with default settings.
+
+## Author
+
+**{context.author}**
+- Version: {context.version}
+
+---
+
+*Generated with Agent A Template Generator*
+"""
+    
+    def _generate_api_readme(self, context: TemplateContext) -> str:
+        """Generate API service README template"""
+        return f"""# {context.project_name} API
+
+{context.description}
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.8+
+- PostgreSQL/MongoDB
+
+### Installation
+
+```bash
+git clone https://github.com/{context.author.lower()}/{context.project_name.lower().replace(' ', '-')}.git
+cd {context.project_name.lower().replace(' ', '-')}
+pip install -r requirements.txt
+```
+
+### Run the API
+
+```bash
+python app.py
+```
+
+## 📚 API Documentation
+
+- **Swagger UI**: http://localhost:8000/docs
+
+## Author
+
+**{context.author}**
+- API Version: {context.version}
+
+---
+
+*Generated with Agent A Template Generator*
+"""
     
     def generate(self, template_name: str, context: TemplateContext) -> str:
         """Generate template with given context"""
