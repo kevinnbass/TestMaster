@@ -218,7 +218,7 @@ swarm_coordinate/
 ## 🚀 **HOW THE SYSTEM WORKS**
 
 ### **1. SWARM ORGANIZATION**
-- **Greek Swarm**: 3 agents (Alpha, Beta, Gamma) + Greek Coordination
+- **Greek Swarm**: 5 agents (Alpha, Beta, Gamma, Delta, Epsilon) + Greek Coordination
 - **Latin Swarm**: 5 agents (A, B, C, D, E) + Latin Coordination  
 - **Cross-Swarm**: Inter-swarm collaboration (e.g., Alpha + A,B,C)
 
@@ -270,7 +270,7 @@ swarm_coordinate/
 ### **3. COORDINATION MECHANISMS**
 
 #### **Intra-Swarm Coordination**
-- **Greek Agents**: Alpha, Beta, Gamma coordinate through Greek/Coordinate/
+- **Greek Agents**: Alpha, Beta, Gamma, Delta, Epsilon coordinate through Greek/Coordinate/
 - **Latin Agents**: A, B, C, D, E coordinate through Latin/Coordinate/
 - **Shared History**: Individual histories feed into coordinate history
 
@@ -385,7 +385,7 @@ swarm_coordinate/
 ## 📋 **COMPLETE COORDINATION PROTOCOLS**
 
 ### **SWARM ORGANIZATION STRUCTURE**
-- **Greek Swarm**: Alpha, Beta, Gamma agents + Greek Coordinate
+- **Greek Swarm**: Alpha, Beta, Gamma, Delta, Epsilon agents + Greek Coordinate
 - **Latin Swarm**: A, B, C, D, E agents + Latin Coordinate
 - **Inter-Swarm Coordination**: Swarm subdirectory for cross-swarm collaboration
 - **Directory Structure**: `swarm_coordinate/Greek/`, `swarm_coordinate/Latin/`, `swarm_coordinate/Swarm/`
@@ -611,6 +611,8 @@ The Swarm Coordination System is designed for continuous improvement:
 - **Greek Alpha**: [Assign roadmap here - max 3 lines]
 - **Greek Beta**: [Assign roadmap here - max 3 lines]  
 - **Greek Gamma**: [Assign roadmap here - max 3 lines]
+- **Greek Delta**: [Assign roadmap here - max 3 lines]
+- **Greek Epsilon**: [Assign roadmap here - max 3 lines]
 - **Latin A**: [Assign roadmap here - max 3 lines]
 - **Latin B**: [Assign roadmap here - max 3 lines]
 - **Latin C**: [Assign roadmap here - max 3 lines]
