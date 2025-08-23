@@ -107,6 +107,17 @@ class GammaDashboardAdapter:
             }
         }
     
+    def _initialize_predictions(self):
+        """Initialize predictive analytics with current data."""
+        try:
+            current_analytics = self.analytics_service.get_personal_analytics_data()
+            self.predictive_engine.add_historical_point(current_analytics)
+        except Exception as e:
+            # Use logger from imported module
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(f"Could not initialize predictions: {e}")
+    
     def get_dashboard_panel_data(self) -> Dict[str, Any]:
         """
         Format personal analytics data for Gamma's 2x2 dashboard panel.

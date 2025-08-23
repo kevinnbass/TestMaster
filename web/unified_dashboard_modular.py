@@ -179,6 +179,39 @@ class UnifiedDashboardModular:
                 'config': config,
                 'timestamp': datetime.now().isoformat()
             })
+        
+        @self.app.route('/api/performance-metrics')
+        def performance_metrics():
+            """Get comprehensive performance metrics."""
+            metrics = self.performance_monitor.get_metrics()
+            
+            return jsonify({
+                'status': 'success',
+                'metrics': metrics,
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        @self.app.route('/api/performance-analytics')
+        def performance_analytics():
+            """Get performance analytics and insights."""
+            analytics = self.performance_monitor.get_performance_analytics()
+            
+            return jsonify({
+                'status': 'success',
+                'analytics': analytics,
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        @self.app.route('/api/performance-status')
+        def performance_status():
+            """Get real-time performance status."""
+            status = self.performance_monitor.get_real_time_status()
+            
+            return jsonify({
+                'status': 'success',
+                'performance_status': status,
+                'timestamp': datetime.now().isoformat()
+            })
     
     def setup_socketio_events(self):
         """Setup WebSocket event handlers."""
