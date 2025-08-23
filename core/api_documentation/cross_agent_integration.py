@@ -293,7 +293,7 @@ class HealthMonitor:
     def _handle_agent_error(self, agent_name: str, error_type: str):
         """Handle agent error"""
         status = self.discovery.agent_status[agent_name]
-        status.status = AgentStatus.OFFLINE
+        status.status = AgentState.OFFLINE
         status.error_count += 1
         status.metadata['last_error'] = error_type
         status.metadata['last_error_time'] = time.time()
@@ -472,7 +472,7 @@ class LoadBalancer:
         candidates = [
             name for name in self.discovery.get_agents_by_capability(capability)
             if name not in exclude and 
-               self.discovery.get_agent_status(name).status == AgentStatus.ONLINE
+               self.discovery.get_agent_status(name).status == AgentState.ONLINE
         ]
         
         if not candidates:
@@ -575,7 +575,7 @@ class CrossAgentGateway:
             }
         
         status = self.discovery.get_agent_status(agent_name)
-        if status.status != AgentStatus.ONLINE:
+        if status.status != AgentState.ONLINE:
             return {
                 'success': False,
                 'error': f'Agent {agent_name} is not online (status: {status.status.value})',
@@ -859,4 +859,4 @@ if __name__ == '__main__':
         })
     
     app = enhance_app_cross_agent(app)
-    app.run(host='0.0.0.0', port=5024, debug=True)  
+    app.run(host='0.0.0.0', port=5024, debug=True)

@@ -154,6 +154,17 @@ This is a personal development project focused on building a sophisticated codeb
 
 ---
 
+## 🧭 ROADMAP VERIFICATION GATES (CROSS-REFERENCE)
+
+All active roadmaps (Greek/Latin) must satisfy these gates before task completion:
+1. **Frontend Tie-In:** Per ADAMANTIUMCLAD, connect outputs to the frontend and verify UI visibility (or provide an explicit exemption block per Rule #3)
+2. **Data Flow Evidence:** Document end-to-end flow (source → API/Adapter → UI) including polling/WebSocket cadence where applicable
+3. **Evidence Attachment:** Provide tests, logs, screenshots, or metrics demonstrating functionality
+4. **History Update:** Log timestamp, agent, changes, and impact in the appropriate history directory
+5. **Anti-Duplication:** Prior to new files/components, run GOLDCLAD similarity search and include a justification block if creation proceeds
+
+These gates are reflected in `swarm_coordinate/README.md`, enforced in Greek roadmaps, and summarized in `swarm_coordinate/IMPLEMENTATION_STATUS.md` under “Verification Gates (Greek)”.
+
 ## 🛡️ STEELCLAD ANTI-REGRESSION MODULARIZATION PROTOCOL
 
 **LLM MANUAL ANALYSIS AND ITERATIVE MODULARIZATION - NO SCRIPTS ALLOWED:**
