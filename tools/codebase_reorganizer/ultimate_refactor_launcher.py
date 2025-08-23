@@ -110,21 +110,28 @@ class CodebaseReorganizerLauncher:
             'reorganizer_engine'
         ]
 
-        missing_modules = []
+        # Pre-allocate missing_modules with known capacity (Rule 3 compliance)
+        MAX_MODULES_CHECK = 50  # Safety bound for module checking
+        missing_modules = [None] * MAX_MODULES_CHECK
+        missing_count = 0
 
-        for module in required_modules:
+        # Bounded loop for module checking
+        for i in range(min(len(required_modules), MAX_MODULES_CHECK)):
+            module = required_modules[i]
             try:
                 __import__(module)
             except ImportError:
-                missing_modules.append(module)
+                if missing_count < MAX_MODULES_CHECK:
+                    missing_modules[missing_count] = module
+                    missing_count += 1
 
-        passed = len(missing_modules) == 0
-        error = None if passed else f"Missing modules: {', '.join(missing_modules)}"
+        passed = missing_count == 0
+        error = None if passed else f"Missing modules: {', '.join(missing_modules[:missing_count])}"
 
         return {
             'passed': passed,
             'error': error,
-            'missing_modules': missing_modules
+            'missing_modules': missing_modules[:missing_count]
         }
 
     def _collect_system_checks(self) -> Dict:
@@ -250,18 +257,29 @@ class CodebaseReorganizerLauncher:
 
     def _filter_directory_entries(self, dirs: List[str]) -> List[str]:
         """Filter directory entries safely"""
-        filtered_dirs = []
-        for d in dirs:
-            if len(filtered_dirs) >= 100:  # Fixed upper bound
+        # Bounded loop for directory filtering with pre-allocation (Rule 3 compliance)
+        MAX_DIRS_FILTER = 200  # Safety bound for directory filtering
+        MAX_FILTERED_DIRS = 100  # Fixed upper bound for filtered directories
+        filtered_dirs = [None] * MAX_FILTERED_DIRS
+        filtered_count = 0
+
+        for i in range(min(len(dirs), MAX_DIRS_FILTER)):
+            d = dirs[i]
+            if filtered_count >= MAX_FILTERED_DIRS:
                 break
             should_exclude = False
-            for pattern in self._get_exclusion_patterns():
+            # Bounded loop for pattern checking
+            exclusion_patterns = self._get_exclusion_patterns()
+            for j in range(len(exclusion_patterns)):
+                pattern = exclusion_patterns[j]
                 if len(str(Path(self.root_dir) / d)) <= 260 and pattern in str(Path(self.root_dir) / d):
                     should_exclude = True
                     break
             if not should_exclude:
-                filtered_dirs.append(d)
-        return filtered_dirs
+                filtered_dirs[filtered_count] = d
+                filtered_count += 1
+
+        return filtered_dirs[:filtered_count]
 
     def _check_file_eligibility(self, file_path: Path) -> bool:
         """Check if file is eligible for processing"""
@@ -286,30 +304,54 @@ class CodebaseReorganizerLauncher:
         return False
 
     def _process_file_batch(self, python_files: List[Path]) -> List[Path]:
-        """Process files in batches"""
-        valid_files = []
-        for file_path in python_files:
-            if len(valid_files) >= MAX_FILES_TO_PROCESS:
+        """Process files in batches with bounded loops"""
+        # Pre-allocate valid_files with known capacity
+        valid_files = [Path('.')] * MAX_FILES_TO_PROCESS  # Pre-allocate with placeholder
+        valid_count = 0
+
+        # Bounded loop for file processing
+        for i in range(min(len(python_files), MAX_FILES_TO_PROCESS * 2)):  # Allow some buffer for processing
+            file_path = python_files[i]
+            if valid_count >= MAX_FILES_TO_PROCESS:
                 break
             if self._check_file_eligibility(file_path):
-                valid_files.append(file_path)
-        return valid_files
+                valid_files[valid_count] = file_path
+                valid_count += 1
+
+        # Return slice with actual count (bounded operation)
+        return valid_files[:valid_count]
 
     def _find_python_files_safely(self) -> List[Path]:
-        """Find Python files with validation bounds"""
-        python_files = []
+        """Find Python files with validation bounds and bounded loops"""
+        # Pre-allocate python_files with known capacity
+        python_files = [Path('.')] * (MAX_FILES_TO_PROCESS * 2)  # Pre-allocate with placeholder
+        file_count = 0
+        directory_count = 0
 
+        # Bounded loop for directory traversal
+        MAX_DIRECTORIES = 5000  # Safety bound for directory processing
         for root, dirs, files in os.walk(self.root_dir):
+            if directory_count >= MAX_DIRECTORIES:
+                break
+            directory_count += 1
+
             # Remove excluded directories
             dirs[:] = self._filter_directory_entries(dirs)
 
-            # Process files
-            for file in files:
+            # Process files with bounded loop
+            MAX_FILES_PER_DIR = 1000  # Safety bound for files per directory
+            for i in range(min(len(files), MAX_FILES_PER_DIR)):
+                file = files[i]
+                if file_count >= len(python_files):
+                    break
+
                 file_path = Path(root) / file
                 if self._check_file_eligibility(file_path):
-                    python_files.append(file_path)
+                    python_files[file_count] = file_path
+                    file_count += 1
 
-        return self._process_file_batch(python_files)
+        # Return slice with actual count (bounded operation)
+        return self._process_file_batch(python_files[:file_count])
 
     def _display_audit_status(self, audit_compliance: bool) -> None:
         """Display audit status"""

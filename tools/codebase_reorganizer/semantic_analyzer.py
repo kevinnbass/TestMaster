@@ -248,7 +248,14 @@ class SemanticAnalyzer:
                     'name': node.name,
                     'methods': [],
                     'properties': [],
-                    'base_classes': [base.id if hasattr(base, 'id') else str(base) for base in node.bases],
+                    # Convert base classes (replacing complex comprehension with explicit loop)
+                    base_classes = []
+                    for base in node.bases:
+                        if hasattr(base, 'id'):
+                            base_classes.append(base.id)
+                        else:
+                            base_classes.append(str(base))
+                    'base_classes': base_classes,
                     'line_number': node.lineno,
                     'method_count': 0,
                     'property_count': 0
@@ -364,9 +371,12 @@ class SemanticAnalyzer:
         """Extract semantic keywords from content"""
         words = re.findall(r'\b[a-zA-Z_][a-zA-Z0-9_]*\b', content.lower())
 
-        # Remove Python keywords
+        # Remove Python keywords (replacing complex comprehension with explicit loop)
         python_keywords = set(keyword.kwlist)
-        filtered_words = [word for word in words if word not in python_keywords and len(word) > 2]
+        filtered_words = []
+        for word in words:
+            if word not in python_keywords and len(word) > 2:
+                filtered_words.append(word)
 
         # Categorize keywords
         domain_keywords = []
@@ -385,9 +395,23 @@ class SemanticAnalyzer:
                     technical_keywords.append(word)
                     break
 
-        # Remove duplicates and sort by frequency
-        domain_keywords = sorted(set(domain_keywords), key=lambda x: filtered_words.count(x), reverse=True)
-        technical_keywords = sorted(set(technical_keywords), key=lambda x: filtered_words.count(x), reverse=True)
+        # Remove duplicates and sort by frequency (replacing complex comprehension with explicit loop)
+        # Count word frequencies
+        word_counts = {}
+        for word in filtered_words:
+            if word in word_counts:
+                word_counts[word] += 1
+            else:
+                word_counts[word] = 1
+
+        # Sort unique domain keywords by frequency
+        unique_domain_keywords = list(set(domain_keywords))
+        unique_domain_keywords.sort(key=lambda x: word_counts.get(x, 0), reverse=True)
+        domain_keywords = unique_domain_keywords
+        # Sort unique technical keywords by frequency
+        unique_technical_keywords = list(set(technical_keywords))
+        unique_technical_keywords.sort(key=lambda x: word_counts.get(x, 0), reverse=True)
+        technical_keywords = unique_technical_keywords
 
         return {
             'domain_keywords': domain_keywords[:10],  # Top 10
@@ -442,7 +466,14 @@ class SemanticAnalyzer:
 
         sorted_domains = sorted(domain_scores.items(), key=lambda x: x[1], reverse=True)
         primary_purpose = sorted_domains[0][0]
-        secondary_purposes = [domain for domain, score in sorted_domains[1:4] if score > sorted_domains[0][1] * 0.3]
+        # Find secondary purposes (replacing complex comprehension with explicit loop)
+        secondary_purposes = []
+        if len(sorted_domains) > 1:
+            primary_score = sorted_domains[0][1]
+            threshold = primary_score * 0.3
+            for domain, score in sorted_domains[1:4]:
+                if score > threshold:
+                    secondary_purposes.append(domain)
 
         return primary_purpose, secondary_purposes
 

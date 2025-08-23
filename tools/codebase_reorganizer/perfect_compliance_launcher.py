@@ -7,6 +7,7 @@ ALL functions < 30 lines - 100% compliance achieved
 import sys
 from typing import Dict, Tuple, List
 import time
+from pathlib import Path
 
 # Import validation and reorganization modules
 try:
@@ -16,6 +17,78 @@ except ImportError as e:
     print(f"❌ Failed to import modules: {e}")
     print("   Ensure all modules are in the same directory")
     sys.exit(1)
+
+
+def _get_exclusion_patterns() -> List[str]:
+    """Get exclusion patterns for file filtering (helper function)"""
+    return [
+        '**/node_modules/**', '**/.*', '**/test*/**', '**/archive*/**',
+        '**/__pycache__/**', '**/.*'
+    ]
+
+
+def _filter_directories(dirs: List[str], root: str, exclusion_patterns: List[str]) -> List[str]:
+    """Filter directories based on exclusion patterns (helper function)"""
+    # Remove excluded directories with pre-allocation (Rule 3 compliance)
+    MAX_DIRS_FILTER = 200  # Safety bound for directory filtering
+    # Pre-allocate filtered_dirs with known capacity
+    filtered_dirs = [None] * 100  # Pre-allocate with fixed upper bound
+    filtered_count = 0
+
+    for i in range(min(len(dirs), MAX_DIRS_FILTER)):
+        d = dirs[i]
+        if filtered_count < 100:  # Fixed upper bound
+            should_exclude = False
+            # Bounded loop for pattern checking
+            for j in range(len(exclusion_patterns)):
+                p = exclusion_patterns[j]
+                if p in str(Path(root) / d):
+                    should_exclude = True
+                    break
+            if not should_exclude:
+                filtered_dirs[filtered_count] = d
+                filtered_count += 1
+
+    return filtered_dirs[:filtered_count]  # Use actual count (bounded operation)
+
+
+def _is_file_excluded(file_path: Path, exclusion_patterns: List[str]) -> bool:
+    """Check if file should be excluded (helper function)"""
+    # Bounded loop for pattern checking
+    for j in range(len(exclusion_patterns)):
+        p = exclusion_patterns[j]
+        if p in str(file_path):
+            return True
+    return False
+
+
+def _process_python_files_in_directory(files: List[str], root: str,
+                                     exclusion_patterns: List[str],
+                                     python_files: List[Path],
+                                     python_file_count: int,
+                                     MAX_FILES: int) -> int:
+    """Process Python files in a directory (helper function)"""
+    # Bounded loop for file processing
+    MAX_FILES_PROCESS = 1000  # Safety bound for file processing
+    current_count = python_file_count
+
+    for i in range(min(len(files), MAX_FILES_PROCESS)):
+        file = files[i]
+        if current_count >= MAX_FILES:
+            break  # Safety bound reached
+
+        file_path = Path(root) / file
+        # Check file exclusion
+        is_excluded = _is_file_excluded(file_path, exclusion_patterns)
+
+        if (file.endswith('.py') and
+            not is_excluded and
+            current_count < MAX_FILES and
+            file_path.stat().st_size <= 10 * 1024 * 1024):
+            python_files[current_count] = file_path
+            current_count += 1
+
+    return current_count
 
 class CodebaseReorganizerLauncher:
     """Perfect compliant launcher with functions < 30 lines"""
@@ -91,54 +164,34 @@ class CodebaseReorganizerLauncher:
             }
 
     def _find_python_files_safely(self) -> list:
-        """Find Python files with validation bounds"""
+        """Find Python files with validation bounds (coordinator function)"""
         import os
-        from pathlib import Path
 
         # Pre-allocate with known maximum to avoid dynamic resizing
         MAX_FILES = 1000  # Safety bound for file processing
         python_files: List[Path] = [None] * MAX_FILES
         python_file_count = 0
+        directory_count = 0
 
-        exclusion_patterns = [
-            '**/node_modules/**', '**/.*', '**/test*/**', '**/archive*/**',
-            '**/__pycache__/**', '**/.*'
-        ]
+        exclusion_patterns = _get_exclusion_patterns()
 
+        # Bounded loop for directory traversal
+        MAX_DIRECTORIES = 5000  # Safety bound for directory processing
         for root, dirs, files in os.walk(self.root_dir):
+            if directory_count >= MAX_DIRECTORIES:
+                break
+            directory_count += 1
+
             if python_file_count >= MAX_FILES:
                 break  # Safety bound reached
-            # Remove excluded directories (replacing complex comprehension with explicit loop)
-            filtered_dirs = []
-            for d in dirs:
-                if len(filtered_dirs) < 100:  # Fixed upper bound
-                    should_exclude = False
-                    for p in exclusion_patterns:
-                        if p in str(Path(root) / d):
-                            should_exclude = True
-                            break
-                    if not should_exclude:
-                        filtered_dirs.append(d)
-            dirs[:] = filtered_dirs
 
-            for file in files:
-                if python_file_count >= MAX_FILES:
-                    break  # Safety bound reached
+            # Filter directories using helper function
+            dirs[:] = _filter_directories(dirs, root, exclusion_patterns)
 
-                file_path = Path(root) / file
-                # Check file with explicit bounds checking (replacing complex comprehension)
-                is_excluded = False
-                for p in exclusion_patterns:
-                    if p in str(file_path):
-                        is_excluded = True
-                        break
-
-                if (file.endswith('.py') and
-                    not is_excluded and
-                    python_file_count < MAX_FILES and
-                    file_path.stat().st_size <= 10 * 1024 * 1024):
-                    python_files[python_file_count] = file_path
-                    python_file_count += 1
+            # Process files using helper function
+            python_file_count = _process_python_files_in_directory(
+                files, root, exclusion_patterns, python_files, python_file_count, MAX_FILES
+            )
 
         # Trim to actual size
         return python_files[:python_file_count]

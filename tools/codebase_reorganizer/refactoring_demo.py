@@ -48,27 +48,42 @@ def demonstrate_refactoring() -> None:
         print("   • Full high-reliability compliance")
 
 def analyze_functions_in_content(content: str, label: str) -> dict:
-    """Analyze functions in content"""
+    """Analyze functions in content with bounded operations"""
 
     try:
         tree = ast.parse(content)
-        functions = []
+        # Pre-allocate functions list with known capacity (Rule 3 compliance)
+        MAX_FUNCTIONS = 100  # Safety bound for function analysis
+        functions = [0] * MAX_FUNCTIONS  # Pre-allocate with placeholder
+        function_count = 0
 
-        for node in ast.walk(tree):
-            if isinstance(node, ast.FunctionDef):
+        # Bounded loop for AST node processing
+        nodes_list = list(ast.walk(tree))
+        for i in range(min(len(nodes_list), MAX_FUNCTIONS * 2)):
+            node = nodes_list[i]
+            if isinstance(node, ast.FunctionDef) and function_count < MAX_FUNCTIONS:
                 start_line = node.lineno
                 end_line = getattr(node, 'end_lineno', start_line)
                 func_length = end_line - start_line + 1
-                functions.append(func_length)
+                functions[function_count] = func_length
+                function_count += 1
 
-        over_30 = sum(1 for f in functions if f > 30)
-        avg_size = sum(functions) / len(functions) if functions else 0
+        # Calculate statistics with bounded operations
+        over_30 = 0
+        total_size = 0
+        for i in range(function_count):
+            func_length = functions[i]
+            total_size += func_length
+            if func_length > 30:
+                over_30 += 1
+
+        avg_size = total_size / function_count if function_count > 0 else 0
 
         return {
-            'total': len(functions),
+            'total': function_count,
             'over_30': over_30,
             'avg_size': avg_size,
-            'functions': functions
+            'functions': functions[:function_count]
         }
 
     except Exception as e:
@@ -127,7 +142,10 @@ def demonstrate_automated_refactoring() -> None:
         "10. Ensure all extracted functions < 30 lines"
     ]
 
-    for step in steps:
+    # Bounded loop for printing steps
+    MAX_STEPS = 50  # Safety bound for steps
+    for i in range(min(len(steps), MAX_STEPS)):
+        step = steps[i]
         print(f"   {step}")
 
     print("✅ RESULT: Zero functions > 30 lines")

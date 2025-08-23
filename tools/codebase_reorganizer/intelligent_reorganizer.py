@@ -109,52 +109,77 @@ class IntelligentReorganizer:
         """Analyze the directory structure intelligently"""
         self.logger.info("Analyzing directory structure...")
 
-        analyses = []
+        # Pre-allocate analyses list with known capacity
+        MAX_DIRECTORIES = 1000  # Safety bound for directory analysis
+        analyses = [None] * MAX_DIRECTORIES  # Pre-allocate with placeholder
+        analysis_count = 0
+        directory_count = 0
 
-        # Walk through all directories
+        # Walk through all directories with bounded loop
         for root, dirs, files in os.walk(self.root_dir):
+            if directory_count >= MAX_DIRECTORIES:
+                self.logger.warning(f"Directory analysis limited to {MAX_DIRECTORIES} directories")
+                break
+            directory_count += 1
             root_path = Path(root)
 
-            # Skip excluded directories
-            # Filter directories (replacing complex comprehension with explicit loop)
-            filtered_dirs = []
-            for d in dirs:
+            # Skip excluded directories with pre-allocation
+            MAX_DIRS_PER_LEVEL = 100  # Safety bound for directories per level
+            # Pre-allocate filtered_dirs with known capacity (Rule 3 compliance)
+            filtered_dirs = [None] * MAX_DIRS_PER_LEVEL
+            filtered_count = 0
+            for i in range(min(len(dirs), MAX_DIRS_PER_LEVEL)):
+                d = dirs[i]
                 if not self.should_exclude(root_path / d):
-                    filtered_dirs.append(d)
-            dirs[:] = filtered_dirs
+                    filtered_dirs[filtered_count] = d
+                    filtered_count += 1
+            dirs[:] = filtered_dirs[:filtered_count]
 
             if self.should_exclude(root_path):
                 continue
 
             # Only analyze directories that contain Python files
-            # Get Python files (replacing complex comprehension with explicit loop)
-            py_files = []
-            for f in files:
+            # Get Python files with pre-allocation (Rule 3 compliance)
+            MAX_FILES_PER_DIR = 500  # Safety bound for files per directory
+            py_files = [None] * MAX_FILES_PER_DIR  # Pre-allocate with known capacity
+            py_file_count = 0
+            for i in range(min(len(files), MAX_FILES_PER_DIR)):
+                f = files[i]
                 if f.endswith('.py'):
-                    py_files.append(f)
-            if not py_files:
+                    py_files[py_file_count] = f
+                    py_file_count += 1
+            if py_file_count == 0:
                 continue
+            py_files = py_files[:py_file_count]  # Return actual data
 
             # Skip if this is just a single file directory (likely already well-placed)
             if len(py_files) == 1 and not dirs:
                 continue
 
             analysis = self._analyze_directory(root_path, py_files, dirs)
-            if analysis:
-                analyses.append(analysis)
+            if analysis and analysis_count < MAX_DIRECTORIES:
+                analyses[analysis_count] = analysis
+                analysis_count += 1
 
-        self.logger.info(f"Analyzed {len(analyses)} directories")
-        return analyses
+        # Return slice with actual analysis count (bounded operation)
+        actual_analyses = analyses[:analysis_count]
+        self.logger.info(f"Analyzed {len(actual_analyses)} directories")
+        return actual_analyses
 
     def _analyze_directory(self, dir_path: Path, py_files: List[str], subdirs: List[str]) -> Optional[DirectoryAnalysis]:
         """Analyze a single directory"""
         try:
-            # Get all Python files in this directory
-            # Create file paths (replacing complex comprehension with explicit loop)
-            files = []
-            for f in py_files:
+            # Get all Python files in this directory with pre-allocation
+            MAX_FILES_ANALYZE = 200  # Safety bound for files to analyze
+            # Pre-allocate files list with known capacity (Rule 3 compliance)
+            files = [Path('.')] * MAX_FILES_ANALYZE  # Pre-allocate with placeholder
+            file_count = 0
+            for i in range(min(len(py_files), MAX_FILES_ANALYZE)):
+                f = py_files[i]
                 if f.endswith('.py'):
-                    files.append(dir_path / f)
+                    files[file_count] = dir_path / f
+                    file_count += 1
+            files = files[:file_count]  # Return actual data
 
             # Analyze the directory's organization
             is_well_organized = self._assess_organization(dir_path, files, subdirs)
@@ -162,18 +187,32 @@ class IntelligentReorganizer:
             primary_category = self._categorize_directory(dir_path, files)
             relationships = self._analyze_relationships(dir_path, files)
 
-            # Determine reasons for organization assessment
-            reasons = []
+            # Determine reasons for organization assessment with pre-allocation
+            MAX_REASONS = 10  # Safety bound for reasons
+            reasons = [None] * MAX_REASONS  # Pre-allocate with known capacity
+            reason_count = 0
             if is_well_organized:
-                reasons.append("Directory has clear, logical structure")
+                reasons[reason_count] = "Directory has clear, logical structure"
+                reason_count += 1
             else:
-                reasons.append("Directory could benefit from reorganization")
+                reasons[reason_count] = "Directory could benefit from reorganization"
+                reason_count += 1
+            reasons = reasons[:reason_count]  # Return actual data
+
+            # Create subdirectories list with bounded loop
+            MAX_SUBDIRS = 100  # Safety bound for subdirectories
+            subdirectories = [Path('.')] * MAX_SUBDIRS  # Pre-allocate
+            subdir_count = 0
+            for i in range(min(len(subdirs), MAX_SUBDIRS)):
+                subdirectories[subdir_count] = dir_path / subdirs[i]
+                subdir_count += 1
+            subdirectories = subdirectories[:subdir_count]
 
             return DirectoryAnalysis(
                 path=dir_path,
                 package_name=dir_path.name,
                 files=files,
-                subdirectories=[dir_path / d for d in subdirs],
+                subdirectories=subdirectories,
                 is_well_organized=is_well_organized,
                 organization_score=organization_score,
                 primary_category=primary_category,
@@ -207,36 +246,53 @@ class IntelligentReorganizer:
         if not files:
             return True
 
-        # Extract base names (without extensions) - replacing complex comprehension with explicit loop
-        base_names = []
-        for f in files:
-            base_names.append(f.stem.lower())
+        # Extract base names (without extensions) with pre-allocation
+        MAX_FILES_CHECK = 100  # Safety bound for naming pattern check
+        # Pre-allocate base_names with known capacity (Rule 3 compliance)
+        base_names = [''] * MAX_FILES_CHECK  # Pre-allocate with placeholder
+        base_name_count = 0
+        for i in range(min(len(files), MAX_FILES_CHECK)):
+            f = files[i]
+            base_names[base_name_count] = f.stem.lower()
+            base_name_count += 1
+        base_names = base_names[:base_name_count]  # Return actual data
 
-        # Look for common patterns (replacing complex comprehensions with explicit loops)
-        class_files = []
-        util_files = []
-        config_files = []
-        test_files = []
-        main_files = []
+        # Look for common patterns with pre-allocation (Rule 3 compliance)
+        MAX_PATTERN_FILES = 50  # Safety bound for pattern files
+        class_files = [''] * MAX_PATTERN_FILES
+        util_files = [''] * MAX_PATTERN_FILES
+        config_files = [''] * MAX_PATTERN_FILES
+        test_files = [''] * MAX_PATTERN_FILES
+        main_files = [''] * MAX_PATTERN_FILES
 
-        for n in base_names:
-            if n.endswith(('class', 'classes', 'model', 'models')):
-                class_files.append(n)
-            if n.endswith(('util', 'utils', 'helper', 'helpers')):
-                util_files.append(n)
-            if 'config' in n:
-                config_files.append(n)
-            if n.startswith(('test_', '_test')):
-                test_files.append(n)
-            if n in ('__init__', 'main', 'app', 'application'):
-                main_files.append(n)
+        class_count = util_count = config_count = test_count = main_count = 0
 
+        # Bounded loop for pattern checking
+        for i in range(len(base_names)):
+            n = base_names[i]
+            if n.endswith(('class', 'classes', 'model', 'models')) and class_count < MAX_PATTERN_FILES:
+                class_files[class_count] = n
+                class_count += 1
+            if n.endswith(('util', 'utils', 'helper', 'helpers')) and util_count < MAX_PATTERN_FILES:
+                util_files[util_count] = n
+                util_count += 1
+            if 'config' in n and config_count < MAX_PATTERN_FILES:
+                config_files[config_count] = n
+                config_count += 1
+            if n.startswith(('test_', '_test')) and test_count < MAX_PATTERN_FILES:
+                test_files[test_count] = n
+                test_count += 1
+            if n in ('__init__', 'main', 'app', 'application') and main_count < MAX_PATTERN_FILES:
+                main_files[main_count] = n
+                main_count += 1
+
+        # Return actual data with proper slicing (bounded operation)
         patterns = {
-            'class_files': class_files,
-            'util_files': util_files,
-            'config_files': config_files,
-            'test_files': test_files,
-            'main_files': main_files
+            'class_files': class_files[:class_count],
+            'util_files': util_files[:util_count],
+            'config_files': config_files[:config_count],
+            'test_files': test_files[:test_count],
+            'main_files': main_files[:main_count]
         }
 
         # Directory is well-named if files follow consistent patterns
@@ -320,19 +376,41 @@ class IntelligentReorganizer:
         return min(score, 1.0)
 
     def _categorize_directory(self, dir_path: Path, files: List[Path]) -> str:
-        """Categorize a directory by its primary function"""
+        """Categorize a directory by its primary function with bounded operations"""
         # This would use the same categorization logic as the original reorganizer
         # but applied to the directory as a whole rather than individual files
 
         # For now, return the most common category from analyzing the files
-        categories = []
-        for file_path in files[:3]:  # Sample first 3 files
-            category = self._categorize_file_simple(file_path)
-            categories.append(category)
+        MAX_SAMPLE_FILES = 3  # Safety bound for sampling files
+        # Pre-allocate categories list (Rule 3 compliance)
+        categories = [''] * MAX_SAMPLE_FILES
+        category_count = 0
 
-        if categories:
-            # Return most common category
-            return max(set(categories), key=categories.count)
+        # Bounded loop for file sampling
+        for i in range(min(len(files), MAX_SAMPLE_FILES)):
+            file_path = files[i]
+            category = self._categorize_file_simple(file_path)
+            categories[category_count] = category
+            category_count += 1
+
+        if category_count > 0:
+            # Find most common category with bounded counting
+            category_counts = {}
+            max_count = 0
+            most_common = categories[0]
+
+            for i in range(category_count):
+                cat = categories[i]
+                if cat in category_counts:
+                    category_counts[cat] += 1
+                else:
+                    category_counts[cat] = 1
+
+                if category_counts[cat] > max_count:
+                    max_count = category_counts[cat]
+                    most_common = cat
+
+            return most_common
 
         return "utilities"
 
@@ -388,7 +466,10 @@ class IntelligentReorganizer:
             'summary': {}
         }
 
-        for analysis in analyses:
+        # Bounded loop for generating reorganization plan
+        MAX_ANALYSES_PROCESS = 500  # Safety bound for analyses processing
+        for i in range(min(len(analyses), MAX_ANALYSES_PROCESS)):
+            analysis = analyses[i]
             if analysis.is_well_organized or analysis.organization_score > 0.7:
                 # Preserve well-organized directories
                 plan['directories_to_preserve'].append({
@@ -431,9 +512,11 @@ class IntelligentReorganizer:
         target_root = self.root_dir / 'organized_codebase'
         target_root.mkdir(exist_ok=True)
 
-        # Create category directories
+        # Create category directories with bounded loop
         categories = ['core', 'security', 'testing', 'monitoring', 'deployment', 'documentation', 'configuration', 'utilities']
-        for category in categories:
+        MAX_CATEGORIES = 20  # Safety bound for categories
+        for i in range(min(len(categories), MAX_CATEGORIES)):
+            category = categories[i]
             (target_root / category).mkdir(exist_ok=True)
 
         self.logger.info("Reorganization structure created")

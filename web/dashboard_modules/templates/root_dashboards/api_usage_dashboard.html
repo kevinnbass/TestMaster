@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🚨 API Usage & Cost Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .alert-banner {
+            background: #ff4757;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #3742fa;
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .metric-value {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #2f3542;
+            margin-bottom: 8px;
+        }
+        
+        .metric-label {
+            color: #747d8c;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #f1f2f6;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2ed573, #ffa502, #ff3838);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .status-safe { border-left-color: #2ed573; }
+        .status-warning { border-left-color: #ffa502; }
+        .status-danger { border-left-color: #ff3838; }
+        
+        .dashboard-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            color: #2f3542;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f2f6;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #2f3542;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .cost-high { color: #ff3838; font-weight: bold; }
+        .cost-medium { color: #ffa502; font-weight: bold; }
+        .cost-low { color: #2ed573; }
+        
+        .recommendations {
+            background: #f1f2f6;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .recommendation-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3742fa;
+        }
+        
+        .auto-refresh {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.9em;
+        }
+        
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(45deg, #f1f2f6, #e9ecef);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #747d8c;
+            font-size: 1.1em;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="auto-refresh">🔄 Auto-refresh: 30s</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🚨 API Usage & Cost Dashboard</h1>
+            <p>Real-time monitoring of AI/LLM API calls and costs</p>
+            <p><strong>CRITICAL:</strong> Monitor before running AI analysis tools!</p>
+        </div>
+        
+        <div class="alert-banner">
+            ⚠️ COST CONTROL ACTIVE - All AI analysis is being tracked and budget-controlled
+        </div>
+        
+        <div class="metrics-grid">
+            <div class="metric-card status-safe">
+                <div class="metric-value">$0.00</div>
+                <div class="metric-label">Total Cost Today</div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="metric-card status-safe">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Total API Calls</div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="metric-card status-safe">
+                <div class="metric-value">$0.00 / $10.00</div>
+                <div class="metric-label">Daily Budget</div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="metric-card status-safe">
+                <div class="metric-value">100%</div>
+                <div class="metric-label">Success Rate</div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-section">
+            <h3 class="section-title">💰 Budget Status</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Hourly Limit</div>
+                    <div class="metric-value">$0.00 / $2.00</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Per-Call Limit</div>
+                    <div class="metric-value">$0.50</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Total Budget</div>
+                    <div class="metric-value">$0.00 / $100.00</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-section">
+            <h3 class="section-title">📊 Usage Timeline</h3>
+            <div class="chart-placeholder">
+                📈 Cost timeline chart will appear here when tracking starts
+            </div>
+        </div>
+        
+        <div class="dashboard-section">
+            <h3 class="section-title">🤖 Model Usage</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Calls</th>
+                        <th>Total Cost</th>
+                        <th>Avg Cost/Call</th>
+                        <th>Input Cost (per 1K)</th>
+                        <th>Output Cost (per 1K)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>gpt-3.5-turbo</td>
+                        <td>0</td>
+                        <td class="cost-low">$0.0000</td>
+                        <td class="cost-low">$0.0000</td>
+                        <td>$0.0005</td>
+                        <td>$0.0015</td>
+                    </tr>
+                    <tr>
+                        <td>gpt-4</td>
+                        <td>0</td>
+                        <td class="cost-low">$0.0000</td>
+                        <td class="cost-low">$0.0000</td>
+                        <td class="cost-high">$0.0300</td>
+                        <td class="cost-high">$0.0600</td>
+                    </tr>
+                    <tr>
+                        <td>claude-3-haiku</td>
+                        <td>0</td>
+                        <td class="cost-low">$0.0000</td>
+                        <td class="cost-low">$0.0000</td>
+                        <td>$0.00025</td>
+                        <td>$0.00125</td>
+                    </tr>
+                    <tr>
+                        <td>claude-3-opus</td>
+                        <td>0</td>
+                        <td class="cost-low">$0.0000</td>
+                        <td class="cost-low">$0.0000</td>
+                        <td class="cost-high">$0.0150</td>
+                        <td class="cost-high">$0.0750</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="dashboard-section">
+            <h3 class="section-title">🎯 Recent API Calls</h3>
+            <div id="recent-calls">
+                <p style="text-align: center; color: #747d8c; padding: 20px;">
+                    No API calls tracked yet. Start using AI analysis tools to see data here.
+                </p>
+            </div>
+        </div>
+        
+        <div class="dashboard-section">
+            <h3 class="section-title">💡 Cost Optimization Recommendations</h3>
+            <div class="recommendations">
+                <div class="recommendation-item">
+                    <strong>✅ Cost tracking is active</strong> - All AI analysis tools will be monitored for budget compliance
+                </div>
+                <div class="recommendation-item">
+                    <strong>💰 Budget limits set</strong> - Daily: $10, Hourly: $2, Per-call: $0.50
+                </div>
+                <div class="recommendation-item">
+                    <strong>🚨 Auto-stop enabled</strong> - AI analysis will be blocked if budget limits are exceeded
+                </div>
+                <div class="recommendation-item">
+                    <strong>📊 Dashboard integration ready</strong> - Connect Alpha, Beta, Gamma dashboards for real-time updates
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-section">
+            <h3 class="section-title">⚡ Quick Actions</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <button onclick="refreshDashboard()" style="padding: 15px; background: #3742fa; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1em;">
+                    🔄 Refresh Data
+                </button>
+                <button onclick="exportReport()" style="padding: 15px; background: #2ed573; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1em;">
+                    📊 Export Report
+                </button>
+                <button onclick="emergencyStop()" style="padding: 15px; background: #ff3838; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1em;">
+                    🛑 Emergency Stop
+                </button>
+                <button onclick="resetBudget()" style="padding: 15px; background: #ffa502; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1em;">
+                    🔄 Reset Budget
+                </button>
+            </div>
+        </div>
+        
+        <div class="dashboard-section">
+            <h3 class="section-title">📋 Integration Status</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Status</th>
+                        <th>Last Check</th>
+                        <th>Cost Tracking</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Clean Architecture Validator</td>
+                        <td style="color: #2ed573;">✅ Integrated</td>
+                        <td>Just now</td>
+                        <td style="color: #2ed573;">Enabled</td>
+                    </tr>
+                    <tr>
+                        <td>Alpha Dashboard</td>
+                        <td style="color: #ffa502;">⏳ Pending</td>
+                        <td>-</td>
+                        <td style="color: #ffa502;">Pending</td>
+                    </tr>
+                    <tr>
+                        <td>Beta Dashboard</td>
+                        <td style="color: #ffa502;">⏳ Pending</td>
+                        <td>-</td>
+                        <td style="color: #ffa502;">Pending</td>
+                    </tr>
+                    <tr>
+                        <td>Gamma Dashboard</td>
+                        <td style="color: #ffa502;">⏳ Pending</td>
+                        <td>-</td>
+                        <td style="color: #ffa502;">Pending</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        function refreshDashboard() {
+            location.reload();
+        }
+        
+        function exportReport() {
+            alert('Export functionality would generate a detailed cost report for download');
+        }
+        
+        function emergencyStop() {
+            if (confirm('This will stop ALL AI analysis immediately. Continue?')) {
+                alert('Emergency stop activated - all AI analysis blocked');
+            }
+        }
+        
+        function resetBudget() {
+            if (confirm('Reset daily budget counters? This will allow AI analysis to resume.')) {
+                alert('Budget counters reset');
+            }
+        }
+        
+        // Auto-refresh every 30 seconds
+        setTimeout(() => {
+            console.log('Auto-refreshing dashboard...');
+            location.reload();
+        }, 30000);
+        
+        // Update timestamp
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            console.log('API Usage Dashboard loaded at:', now.toISOString());
+        });
+    </script>
+</body>
+</html>

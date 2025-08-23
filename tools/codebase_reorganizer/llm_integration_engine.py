@@ -539,9 +539,19 @@ class LLMIntegrationEngine:
         """Estimate the effort required for reorganization"""
 
         total_modules = len(sorted_intelligence)
-        high_priority = len([i for i in sorted_intelligence if i.reorganization_priority >= 8])
-        medium_priority = len([i for i in sorted_intelligence if 6 <= i.reorganization_priority < 8])
-        low_priority = len([i for i in sorted_intelligence if i.reorganization_priority < 6])
+
+        # Count priority levels (replacing complex comprehensions with explicit loops)
+        high_priority = 0
+        medium_priority = 0
+        low_priority = 0
+
+        for i in sorted_intelligence:
+            if i.reorganization_priority >= 8:
+                high_priority += 1
+            elif 6 <= i.reorganization_priority < 8:
+                medium_priority += 1
+            else:
+                low_priority += 1
 
         # Estimate time in hours
         estimated_hours = (high_priority * 1.5) + (medium_priority * 1.0) + (low_priority * 0.5)
@@ -562,8 +572,11 @@ class LLMIntegrationEngine:
         risks = []
 
         # Check for security modules
-        security_count = len([i for i in sorted_intelligence
-                            if 'security' in i.integrated_classification])
+        # Count security modules (replacing complex comprehension with explicit loop)
+        security_count = 0
+        for i in sorted_intelligence:
+            if 'security' in i.integrated_classification:
+                security_count += 1
 
         if security_count > 0:
             risks.append({
@@ -573,8 +586,11 @@ class LLMIntegrationEngine:
                 'mitigation': 'Review security implications before moving modules'
             })
 
-        # Check for low confidence analyses
-        low_confidence = len([i for i in sorted_intelligence if i.integration_confidence < 0.6])
+        # Check for low confidence analyses (replacing complex comprehension with explicit loop)
+        low_confidence = 0
+        for i in sorted_intelligence:
+            if i.integration_confidence < 0.6:
+                low_confidence += 1
 
         if low_confidence > 0:
             risks.append({
@@ -584,9 +600,11 @@ class LLMIntegrationEngine:
                 'mitigation': 'Manual review required for low-confidence modules'
             })
 
-        # Check for complex modules
-        complex_count = len([i for i in sorted_intelligence
-                           if 'high' in i.llm_analysis.get('complexity', '').lower()])
+        # Check for complex modules (replacing complex comprehension with explicit loop)
+        complex_count = 0
+        for i in sorted_intelligence:
+            if 'high' in i.llm_analysis.get('complexity', '').lower():
+                complex_count += 1
 
         if complex_count > 0:
             risks.append({
@@ -599,7 +617,11 @@ class LLMIntegrationEngine:
         return {
             'risks': risks,
             'overall_risk_level': 'High' if any(r['severity'] == 'High' for r in risks) else 'Medium',
-            'recommendations': [r['mitigation'] for r in risks]
+            # Extract recommendations (replacing complex comprehension with explicit loop)
+            recommendations = []
+            for r in risks:
+                recommendations.append(r['mitigation'])
+            'recommendations': recommendations
         }
 
     def _define_success_metrics(self) -> Dict[str, Any]:
@@ -664,8 +686,16 @@ def main():
     reorganization_plan = engine.generate_reorganization_plan(integrated_intelligence)
 
     # Save results
+    # Convert integrated intelligence to dictionaries (replacing complex comprehension with explicit loop)
+    intelligence_list = []
+    for intel in integrated_intelligence:
+        if hasattr(intel, '__dict__'):
+            intelligence_list.append(intel.__dict__)
+        else:
+            intelligence_list.append(intel)
+
     output_data = {
-        'integrated_intelligence': [intel.__dict__ if hasattr(intel, '__dict__') else intel for intel in integrated_intelligence],
+        'integrated_intelligence': intelligence_list,
         'reorganization_plan': reorganization_plan,
         'metadata': {
             'integration_timestamp': datetime.now().isoformat(),

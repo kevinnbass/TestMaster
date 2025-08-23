@@ -434,17 +434,45 @@ def {function_name}():
         print("\n" + "="*60)
 
 
-def main():
-    """Main compliance fixer function"""
+def _parse_main_arguments() -> argparse.Namespace:
+    """Parse command line arguments for main function"""
     import argparse
-
     parser = argparse.ArgumentParser(description="High-Reliability Compliance Fixes")
     parser.add_argument("--source", type=str, default=".",
                       help="Source directory to fix")
     parser.add_argument("--dry-run", action="store_true",
                       help="Show fixes without applying them")
+    return parser.parse_args()
 
-    args = parser.parse_args()
+
+def _validate_main_arguments(args: argparse.Namespace) -> int:
+    """Validate main function arguments (Rule 7 compliance)"""
+    from pathlib import Path
+
+    if not args.source:
+        print("Error: Source directory cannot be empty")
+        return 1
+
+    source_path = Path(args.source)
+    if not source_path.exists():
+        print(f"Error: Source directory '{args.source}' does not exist")
+        return 1
+
+    if not source_path.is_dir():
+        print(f"Error: Source path '{args.source}' is not a directory")
+        return 1
+
+    # Validate path is not too long (safety bound)
+    if len(str(source_path.absolute())) > 260:  # Windows MAX_PATH
+        print("Error: Source path is too long")
+        return 1
+
+    return 0
+
+
+def _execute_fixes_and_report(args: argparse.Namespace) -> int:
+    """Execute fixes and generate report"""
+    from pathlib import Path
 
     # Initialize fixer
     fixer = ComplianceFixer()
@@ -457,25 +485,42 @@ def main():
     fixer.print_fix_summary(summary)
 
     # Save fixes report
+    # Convert fixes to dictionaries (replacing complex comprehension with explicit loop)
+    fixes_list = []
+    for fix in fixer.fixes_applied:
+        fixes_list.append({
+            'file_path': fix.file_path,
+            'line_number': fix.line_number,
+            'rule_number': fix.rule_number,
+            'description': fix.description,
+            'original_code': fix.original_code,
+            'fixed_code': fix.fixed_code
+        })
+
     fixes_report = {
         'summary': summary,
-        'fixes_applied': [
-            {
-                'file_path': fix.file_path,
-                'line_number': fix.line_number,
-                'rule_number': fix.rule_number,
-                'description': fix.description,
-                'original_code': fix.original_code,
-                'fixed_code': fix.fixed_code
-            }
-            for fix in fixer.fixes_applied
-        ]
+        'fixes_applied': fixes_list
     }
 
     with open('compliance_fixes_report.json', 'w', encoding='utf-8') as f:
         json.dump(fixes_report, f, indent=2)
 
-    print(f"\n📄 Detailed fixes report saved to: compliance_fixes_report.json")
+    print("
+📄 Detailed fixes report saved to: compliance_fixes_report.json"
+    return 0
+
+
+def main():
+    """Main compliance fixer function with parameter validation"""
+
+    # Parse and validate arguments
+    args = _parse_main_arguments()
+    validation_result = _validate_main_arguments(args)
+    if validation_result != 0:
+        return validation_result
+
+    # Execute fixes and generate report
+    return _execute_fixes_and_report(args)
 
 
 if __name__ == "__main__":

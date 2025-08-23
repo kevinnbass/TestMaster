@@ -1,0 +1,677 @@
+{
+  "compliance_score": 85.08403361344537,
+  "total_files_analyzed": 28,
+  "total_functions_analyzed": 210,
+  "total_lines_analyzed": 16142,
+  "total_issues": 71,
+  "rule_compliance": {
+    "1": true,
+    "2": true,
+    "3": false,
+    "4": false,
+    "5": true,
+    "6": true,
+    "7": false,
+    "8": true,
+    "9": true,
+    "10": true,
+    "11": true,
+    "12": true,
+    "13": true,
+    "14": false,
+    "15": false,
+    "16": false,
+    "17": true
+  },
+  "detailed_analysis": {
+    "files_by_severity": {
+      "high": 37,
+      "medium": 33,
+      "low": 1
+    },
+    "rules_violated": 6,
+    "assertion_ratio": 0.7857142857142857,
+    "average_function_size": 74.28571428571429
+  },
+  "issues": [
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (839 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\code_quality_analyzer.py",
+      "line_number": 162,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 162)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_check.py",
+      "line_number": 59,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function '_analyze_single_file_compliance' exceeds 60 line limit (75 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_check.py",
+      "line_number": 175,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'check_high_reliability_compliance' exceeds 60 line limit (73 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_fixes.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (529 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_fixes.py",
+      "line_number": 508,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 508) (<unknown>, line 508)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_integration_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (1126 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_integration_engine.py",
+      "line_number": 1098,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 1098) (<unknown>, line 1098)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (707 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_reorganizer.py",
+      "line_number": 593,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 593) (<unknown>, line 593)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (544 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 14,
+      "rule_description": "Limited external library dependencies",
+      "severity": "medium",
+      "description": "Module imports potentially risky libraries: subprocess",
+      "suggestion": "Review usage and consider safer alternatives"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 244,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_naming_patterns' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 365,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_categorize_directory' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (421 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\launcher.py",
+      "line_number": 150,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_modules_available' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\launcher.py",
+      "line_number": 257,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_filter_directory' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (718 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 419,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 419)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_scanner.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (871 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_scanner.py",
+      "line_number": 1,
+      "rule_number": 14,
+      "rule_description": "Limited external library dependencies",
+      "severity": "medium",
+      "description": "Module imports potentially risky libraries: requests",
+      "suggestion": "Review usage and consider safer alternatives"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_scanner.py",
+      "line_number": 852,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 852) (<unknown>, line 852)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_system.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (1131 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_system.py",
+      "line_number": 1,
+      "rule_number": 14,
+      "rule_description": "Limited external library dependencies",
+      "severity": "medium",
+      "description": "Module imports potentially risky libraries: requests",
+      "suggestion": "Review usage and consider safer alternatives"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_system.py",
+      "line_number": 1110,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 1110) (<unknown>, line 1110)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (895 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 525,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 525)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (926 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 319,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: expected 'except' or 'finally' block (<unknown>, line 319)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\perfect_compliance_launcher.py",
+      "line_number": 93,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function '_find_python_files_safely' exceeds 60 line limit (67 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\perfect_compliance_launcher.py",
+      "line_number": 93,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_find_python_files_safely' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactoring_demo.py",
+      "line_number": 50,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'analyze_functions_in_content' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (306 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 10,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'analyze_function_for_refactoring' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 129,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'generate_refactored_function' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 188,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'generate_refactored_file' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 233,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'main' exceeds 60 line limit (70 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (374 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_launcher.py",
+      "line_number": 106,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_modules_available' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_launcher.py",
+      "line_number": 231,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function '_find_python_files_safely' exceeds 60 line limit (62 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_launcher.py",
+      "line_number": 231,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_find_python_files_safely' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (494 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 329,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 329)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_planner.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (932 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_planner.py",
+      "line_number": 888,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 888) (<unknown>, line 888)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (868 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 1,
+      "rule_number": 14,
+      "rule_description": "Limited external library dependencies",
+      "severity": "medium",
+      "description": "Module imports potentially risky libraries: subprocess",
+      "suggestion": "Review usage and consider safer alternatives"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 635,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: invalid syntax. Maybe you meant '==' or ':=' instead of '='? (<unknown>, line 635)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (513 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer_engine.py",
+      "line_number": 140,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_imports_safe' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer_engine.py",
+      "line_number": 176,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_classes_safe' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer_engine.py",
+      "line_number": 207,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_extract_functions_safe' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (713 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 654,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'main' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 39,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 54,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'run_full_pipeline' exceeds 60 line limit (108 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 262,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_run_plan_step' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 309,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_run_execute_step' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 360,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'generate_report' exceeds 60 line limit (65 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 360,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'generate_report' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_reorganizer.py",
+      "line_number": 57,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'main' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (777 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 252,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 252)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_perfect_launcher.py",
+      "line_number": 91,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unmatched ')' (<unknown>, line 91)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (465 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 106,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_modules_available' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 254,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_filter_directory_entries' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (636 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 1,
+      "rule_number": 14,
+      "rule_description": "Limited external library dependencies",
+      "severity": "medium",
+      "description": "Module imports potentially risky libraries: subprocess",
+      "suggestion": "Review usage and consider safer alternatives"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 504,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_code_complexity' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 547,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_check_safety_violations' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    }
+  ]
+}

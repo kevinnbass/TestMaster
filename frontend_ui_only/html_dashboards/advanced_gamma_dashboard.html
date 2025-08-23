@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Gamma Dashboard - Phase 1 Enhanced</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/3d-force-graph"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://unpkg.com/fuse.js/dist/fuse.min.js"></script>
+    
+    <style>
+        /* Enhanced Design System */
+        :root {
+            --primary-50: #eff6ff;
+            --primary-500: #3b82f6;
+            --primary-900: #1e3a8a;
+            --secondary-500: #8b5cf6;
+            --accent-500: #00f5ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #06b6d4;
+            
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            
+            --font-display: 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif;
+            --font-body: 'SF Pro Text', 'Inter', 'Segoe UI', sans-serif;
+            --font-mono: 'SF Mono', 'Consolas', monospace;
+            
+            --duration-fast: 150ms;
+            --duration-normal: 300ms;
+            --duration-slow: 500ms;
+            
+            --ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.5;
+            color: white;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Enhanced Header */
+        .advanced-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--spacing-lg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .advanced-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500), var(--accent-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .advanced-controls {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        /* Command Palette */
+        .command-palette {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 600px;
+            max-width: 90vw;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            z-index: 2000;
+            opacity: 0;
+            transition: all var(--duration-normal) var(--ease);
+        }
+        
+        .command-palette.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        
+        .command-search {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+        }
+        
+        .command-results {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .command-item {
+            padding: var(--spacing-md);
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background var(--duration-fast) var(--ease);
+        }
+        
+        .command-item:hover,
+        .command-item.selected {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        /* Advanced Dashboard Grid */
+        .advanced-main {
+            margin-top: 80px;
+            padding: var(--spacing-lg);
+            min-height: calc(100vh - 80px);
+        }
+        
+        .advanced-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        /* Enhanced Cards */
+        .advanced-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: var(--spacing-lg);
+            backdrop-filter: blur(15px);
+            transition: all var(--duration-normal) var(--ease);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .advanced-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-500), var(--secondary-500));
+            transform: scaleX(0);
+            transition: transform var(--duration-normal) var(--ease);
+        }
+        
+        .advanced-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 25px 50px rgba(59, 130, 246, 0.2);
+            border-color: var(--primary-500);
+        }
+        
+        .advanced-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        /* Predictive Insights */
+        .insight-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .insight-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--secondary-500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .insight-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary-500);
+        }
+        
+        .insight-content {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Advanced Analytics Chart */
+        .analytics-container {
+            height: 300px;
+            position: relative;
+        }
+        
+        /* Performance Metrics */
+        .performance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .metric-card {
+            text-align: center;
+            padding: var(--spacing-md);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--success), var(--info));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: var(--spacing-xs);
+        }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: var(--spacing-lg);
+            right: var(--spacing-lg);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-500), var(--secondary-500));
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-xl);
+            transition: all var(--duration-normal) var(--ease-bounce);
+            z-index: 1000;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 25px 50px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Responsive Enhancements */
+        @media (max-width: 768px) {
+            .advanced-header {
+                padding: 0 var(--spacing-md);
+            }
+            
+            .advanced-logo {
+                font-size: 1.25rem;
+            }
+            
+            .advanced-main {
+                padding: var(--spacing-md);
+            }
+            
+            .advanced-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+            
+            .command-palette {
+                width: 95vw;
+            }
+        }
+        
+        /* Accessibility Enhancements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .advanced-card {
+                border: 2px solid white;
+                background: rgba(0, 0, 0, 0.9);
+            }
+        }
+        
+        /* Loading States */
+        .loading-shimmer {
+            background: linear-gradient(90deg, 
+                rgba(255, 255, 255, 0.1) 25%, 
+                rgba(255, 255, 255, 0.2) 50%, 
+                rgba(255, 255, 255, 0.1) 75%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced Header -->
+    <header class="advanced-header">
+        <div class="advanced-logo">Advanced Gamma Dashboard</div>
+        <div class="advanced-controls">
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span id="connection-status">Connected</span>
+            </div>
+            <button class="btn btn-primary" onclick="showCommandPalette()">⌘ Commands</button>
+        </div>
+    </header>
+    
+    <!-- Command Palette -->
+    <div class="command-palette" id="commandPalette">
+        <input type="text" class="command-search" placeholder="Type a command..." id="commandSearch">
+        <div class="command-results" id="commandResults"></div>
+    </div>
+    
+    <!-- Main Dashboard -->
+    <main class="advanced-main">
+        <!-- Advanced Analytics Grid -->
+        <section class="advanced-grid">
+            <!-- Predictive Insights Card -->
+            <div class="advanced-card insight-card">
+                <div class="insight-header">
+                    <div class="insight-icon">🔮</div>
+                    <div class="insight-title">Predictive Insights</div>
+                </div>
+                <div class="insight-content" id="predictive-insights">
+                    <div class="loading-shimmer" style="height: 60px; border-radius: 4px;"></div>
+                </div>
+            </div>
+            
+            <!-- Advanced Analytics Card -->
+            <div class="advanced-card">
+                <div class="card-header">
+                    <h2 class="card-title">📊 Advanced Analytics</h2>
+                    <button class="btn btn-primary" onclick="refreshAnalytics()">🔄 Refresh</button>
+                </div>
+                <div class="analytics-container">
+                    <canvas id="advanced-analytics-chart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Performance Metrics Card -->
+            <div class="advanced-card">
+                <div class="card-header">
+                    <h2 class="card-title">⚡ Performance Metrics</h2>
+                    <button class="btn btn-primary" onclick="showPerformanceDetail()">📈 Detail</button>
+                </div>
+                <div class="performance-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="render-time">--</div>
+                        <div class="metric-label">Render Time (ms)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="fps-counter">--</div>
+                        <div class="metric-label">FPS</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="memory-usage">--</div>
+                        <div class="metric-label">Memory (MB)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="api-latency">--</div>
+                        <div class="metric-label">API Latency (ms)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Enhanced 3D Visualization -->
+        <section class="advanced-grid">
+            <div class="advanced-card" style="grid-column: 1 / -1;">
+                <div class="card-header">
+                    <h2 class="card-title">🌐 Enhanced 3D Network</h2>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="toggleAdvancedControls()">🎛️ Controls</button>
+                        <button class="btn btn-primary" onclick="saveViewPreset()">💾 Save View</button>
+                        <button class="btn btn-primary" onclick="exportVisualization()">📤 Export</button>
+                    </div>
+                </div>
+                <div class="visualization-container" id="enhanced-3d-visualization">
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Floating Action Button -->
+    <button class="fab" onclick="showQuickActions()" title="Quick Actions">+</button>
+    
+    <script>
+        // Enhanced Dashboard Controller
+        class AdvancedGammaDashboard {
+            constructor() {
+                this.socket = null;
+                this.charts = {};
+                this.graph3d = null;
+                this.commandPalette = null;
+                this.userBehavior = new UserBehaviorTracker();
+                this.performanceMonitor = new PerformanceMonitor();
+                
+                this.init();
+            }
+            
+            async init() {
+                await this.setupSocketIO();
+                this.setupCharts();
+                this.setup3DVisualization();
+                this.setupCommandPalette();
+                this.setupKeyboardShortcuts();
+                this.startPerformanceMonitoring();
+                
+                console.log('Advanced Gamma Dashboard initialized');
+            }
+            
+            async setupSocketIO() {
+                this.socket = io();
+                
+                this.socket.on('connect', () => {
+                    console.log('Connected to advanced dashboard backend');
+                    this.socket.emit('advanced_connect');
+                });
+                
+                this.socket.on('advanced_initial_data', (data) => {
+                    this.updateAdvancedDashboard(data);
+                });
+                
+                this.socket.on('insight_response', (insights) => {
+                    this.displayPredictiveInsights(insights);
+                });
+            }
+            
+            setupCommandPalette() {
+                this.commandPalette = new CommandPalette();
+                
+                // Command palette commands
+                const commands = [
+                    { name: 'Toggle 3D View', action: 'toggle3D', keywords: ['3d', 'visualization', 'graph'] },
+                    { name: 'Export Report', action: 'exportReport', keywords: ['export', 'download', 'report'] },
+                    { name: 'Performance Analysis', action: 'showPerformance', keywords: ['performance', 'metrics', 'speed'] },
+                    { name: 'Predictive Insights', action: 'showInsights', keywords: ['predict', 'forecast', 'insights'] },
+                    { name: 'Custom Dashboard', action: 'customizeDashboard', keywords: ['custom', 'layout', 'personalize'] }
+                ];
+                
+                this.commandPalette.setCommands(commands);
+            }
+            
+            setupKeyboardShortcuts() {
+                const shortcuts = {
+                    'Ctrl+K': () => this.commandPalette.show(),
+                    'Ctrl+/': () => this.showShortcutHelp(),
+                    'Ctrl+E': () => this.exportCurrentView(),
+                    'R': () => this.resetView(),
+                    'F': () => this.frameSelection(),
+                    'Escape': () => this.clearSelections()
+                };
+                
+                document.addEventListener('keydown', (e) => {
+                    const key = (e.ctrlKey ? 'Ctrl+' : '') + e.key;
+                    if (shortcuts[key]) {
+                        e.preventDefault();
+                        shortcuts[key]();
+                    }
+                });
+            }
+            
+            displayPredictiveInsights(insights) {
+                const container = document.getElementById('predictive-insights');
+                
+                if (insights.length === 0) {
+                    container.innerHTML = '<p>No significant insights detected at this time.</p>';
+                    return;
+                }
+                
+                const insightHTML = insights.map(insight => `
+                    <div class="insight-item">
+                        <div class="insight-type">${insight.type.toUpperCase()}</div>
+                        <div class="insight-description">${insight.description}</div>
+                        <div class="insight-confidence">Confidence: ${(insight.confidence * 100).toFixed(1)}%</div>
+                    </div>
+                `).join('');
+                
+                container.innerHTML = insightHTML;
+            }
+            
+            startPerformanceMonitoring() {
+                this.performanceMonitor.start();
+                
+                setInterval(() => {
+                    const metrics = this.performanceMonitor.getMetrics();
+                    this.updatePerformanceMetrics(metrics);
+                }, 1000);
+            }
+            
+            updatePerformanceMetrics(metrics) {
+                document.getElementById('render-time').textContent = metrics.renderTime || '--';
+                document.getElementById('fps-counter').textContent = metrics.fps || '--';
+                document.getElementById('memory-usage').textContent = metrics.memoryUsage || '--';
+                document.getElementById('api-latency').textContent = metrics.apiLatency || '--';
+            }
+        }
+        
+        // Command Palette Implementation
+        class CommandPalette {
+            constructor() {
+                this.commands = [];
+                this.selectedIndex = 0;
+                this.isVisible = false;
+            }
+            
+            setCommands(commands) {
+                this.commands = commands;
+            }
+            
+            show() {
+                const palette = document.getElementById('commandPalette');
+                palette.classList.add('active');
+                this.isVisible = true;
+                
+                const searchInput = document.getElementById('commandSearch');
+                searchInput.focus();
+                searchInput.value = '';
+                
+                this.renderCommands(this.commands);
+            }
+            
+            hide() {
+                const palette = document.getElementById('commandPalette');
+                palette.classList.remove('active');
+                this.isVisible = false;
+            }
+            
+            renderCommands(commands) {
+                const container = document.getElementById('commandResults');
+                container.innerHTML = commands.map((cmd, index) => `
+                    <div class="command-item ${index === this.selectedIndex ? 'selected' : ''}" 
+                         data-index="${index}">
+                        <div class="command-name">${cmd.name}</div>
+                        <div class="command-keywords">${cmd.keywords.join(', ')}</div>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        // User Behavior Tracking
+        class UserBehaviorTracker {
+            constructor() {
+                this.interactions = [];
+                this.startTime = Date.now();
+            }
+            
+            trackInteraction(type, element, context = {}) {
+                this.interactions.push({
+                    timestamp: Date.now(),
+                    type: type,
+                    element: element,
+                    context: context
+                });
+                
+                // Send to backend for analysis
+                if (window.dashboard && window.dashboard.socket) {
+                    window.dashboard.socket.emit('track_interaction', {
+                        type: type,
+                        element: element,
+                        context: context
+                    });
+                }
+            }
+        }
+        
+        // Performance Monitor
+        class PerformanceMonitor {
+            constructor() {
+                this.metrics = {};
+                this.isRunning = false;
+            }
+            
+            start() {
+                this.isRunning = true;
+                this.monitor();
+            }
+            
+            monitor() {
+                if (!this.isRunning) return;
+                
+                // Measure performance metrics
+                this.metrics = {
+                    renderTime: this.measureRenderTime(),
+                    fps: this.calculateFPS(),
+                    memoryUsage: this.getMemoryUsage(),
+                    apiLatency: this.measureAPILatency()
+                };
+                
+                requestAnimationFrame(() => this.monitor());
+            }
+            
+            measureRenderTime() {
+                return Math.round(Math.random() * 50 + 10); // Simulated
+            }
+            
+            calculateFPS() {
+                return Math.round(Math.random() * 10 + 55); // Simulated
+            }
+            
+            getMemoryUsage() {
+                if (performance.memory) {
+                    return Math.round(performance.memory.usedJSHeapSize / 1024 / 1024);
+                }
+                return Math.round(Math.random() * 50 + 30); // Simulated
+            }
+            
+            measureAPILatency() {
+                return Math.round(Math.random() * 100 + 50); // Simulated
+            }
+            
+            getMetrics() {
+                return this.metrics;
+            }
+        }
+        
+        // Global functions
+        function showCommandPalette() {
+            if (window.dashboard && window.dashboard.commandPalette) {
+                window.dashboard.commandPalette.show();
+            }
+        }
+        
+        function refreshAnalytics() {
+            console.log('Refreshing analytics...');
+            if (window.dashboard && window.dashboard.socket) {
+                window.dashboard.socket.emit('request_insight', { type: 'refresh' });
+            }
+        }
+        
+        function showPerformanceDetail() {
+            console.log('Showing performance details...');
+        }
+        
+        function toggleAdvancedControls() {
+            console.log('Toggling advanced controls...');
+        }
+        
+        function saveViewPreset() {
+            console.log('Saving view preset...');
+        }
+        
+        function exportVisualization() {
+            console.log('Exporting visualization...');
+        }
+        
+        function showQuickActions() {
+            console.log('Showing quick actions...');
+        }
+        
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.dashboard = new AdvancedGammaDashboard();
+        });
+        
+        // Handle command palette escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && window.dashboard && window.dashboard.commandPalette.isVisible) {
+                window.dashboard.commandPalette.hide();
+            }
+        });
+    </script>
+</body>
+</html>

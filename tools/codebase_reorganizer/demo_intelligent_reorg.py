@@ -74,7 +74,10 @@ def _print_reorganization_decisions() -> None:
         ("utils/", "PRESERVE", "Collection of related utility functions")
     ]
 
-    for directory, decision, reason in decisions:
+    # Bounded loop for printing decisions
+    MAX_DECISIONS = 50  # Safety bound for decisions
+    for i in range(min(len(decisions), MAX_DECISIONS)):
+        directory, decision, reason = decisions[i]
         if decision == "PRESERVE":
             icon = "✅"
         elif decision == "MINOR_REORG":

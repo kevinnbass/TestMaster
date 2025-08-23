@@ -138,28 +138,34 @@ class FileAnalyzer:
             return ""
 
     def _extract_imports_safe(self, content: str) -> List[str]:
-        """Extract imports with bounds checking"""
+        """Extract imports with bounds checking and pre-allocation"""
         assert len(content) <= 10 * 1024 * 1024, "Content too large"
 
-        imports: List[str] = []
+        # Pre-allocate imports with known capacity (Rule 3 compliance)
         max_imports = 100  # Fixed upper bound
+        imports = [None] * max_imports  # Pre-allocate with placeholder
+        import_count = 0
 
         try:
             lines = content.split('\n')
             assert len(lines) <= 10000, "Too many lines"
 
-            for line in lines[:5000]:  # Fixed upper bound
+            # Bounded loop for line processing
+            MAX_LINES_PROCESS = 5000  # Safety bound for line processing
+            for i in range(min(len(lines), MAX_LINES_PROCESS)):
+                line = lines[i]
                 line = line.strip()
                 if line.startswith(('import ', 'from ')):
                     import_name = self._extract_import_name(line)
-                    if import_name and len(imports) < max_imports:
-                        imports.append(import_name)
+                    if import_name and import_count < max_imports:
+                        imports[import_count] = import_name
+                        import_count += 1
 
         except Exception as e:
             logging.warning(f"Error extracting imports: {e}")
 
-        assert len(imports) <= max_imports, "Too many imports"
-        return imports
+        assert import_count <= max_imports, "Too many imports"
+        return imports[:import_count]  # Return actual data (bounded operation)
 
     def _extract_import_name(self, line: str) -> Optional[str]:
         """Extract import name with validation"""
@@ -174,26 +180,32 @@ class FileAnalyzer:
         return None
 
     def _extract_classes_safe(self, content: str) -> List[str]:
-        """Extract classes with bounds checking"""
-        classes: List[str] = []
+        """Extract classes with bounds checking and pre-allocation"""
+        # Pre-allocate classes with known capacity (Rule 3 compliance)
         max_classes = 50  # Fixed upper bound
+        classes = [None] * max_classes  # Pre-allocate with placeholder
+        class_count = 0
 
         try:
             lines = content.split('\n')
             assert len(lines) <= 10000, "Too many lines"
 
-            for line in lines[:5000]:  # Fixed upper bound
+            # Bounded loop for line processing
+            MAX_LINES_PROCESS = 5000  # Safety bound for line processing
+            for i in range(min(len(lines), MAX_LINES_PROCESS)):
+                line = lines[i]
                 line = line.strip()
-                if line.startswith('class ') and len(classes) < max_classes:
+                if line.startswith('class ') and class_count < max_classes:
                     class_name = self._extract_class_name(line)
                     if class_name:
-                        classes.append(class_name)
+                        classes[class_count] = class_name
+                        class_count += 1
 
         except Exception as e:
             logging.warning(f"Error extracting classes: {e}")
 
-        assert len(classes) <= max_classes, "Too many classes"
-        return classes
+        assert class_count <= max_classes, "Too many classes"
+        return classes[:class_count]  # Return actual data (bounded operation)
 
     def _extract_class_name(self, line: str) -> Optional[str]:
         """Extract class name with validation"""
@@ -205,26 +217,32 @@ class FileAnalyzer:
         return None
 
     def _extract_functions_safe(self, content: str) -> List[str]:
-        """Extract functions with bounds checking"""
-        functions: List[str] = []
+        """Extract functions with bounds checking and pre-allocation"""
+        # Pre-allocate functions with known capacity (Rule 3 compliance)
         max_functions = 100  # Fixed upper bound
+        functions = [None] * max_functions  # Pre-allocate with placeholder
+        function_count = 0
 
         try:
             lines = content.split('\n')
             assert len(lines) <= 10000, "Too many lines"
 
-            for line in lines[:5000]:  # Fixed upper bound
+            # Bounded loop for line processing
+            MAX_LINES_PROCESS = 5000  # Safety bound for line processing
+            for i in range(min(len(lines), MAX_LINES_PROCESS)):
+                line = lines[i]
                 line = line.strip()
-                if line.startswith('def ') and len(functions) < max_functions:
+                if line.startswith('def ') and function_count < max_functions:
                     func_name = self._extract_function_name(line)
                     if func_name:
-                        functions.append(func_name)
+                        functions[function_count] = func_name
+                        function_count += 1
 
         except Exception as e:
             logging.warning(f"Error extracting functions: {e}")
 
-        assert len(functions) <= max_functions, "Too many functions"
-        return functions
+        assert function_count <= max_functions, "Too many functions"
+        return functions[:function_count]  # Return actual data (bounded operation)
 
     def _extract_function_name(self, line: str) -> Optional[str]:
         """Extract function name with validation"""

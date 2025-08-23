@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster Dashboard v2.0</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/themes.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>TestMaster Dashboard v2.0</h1>
+            <div class="header-status">
+                <span id="connection-status" class="status-indicator">●</span>
+                <span id="current-codebase">/testmaster</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="tab-navigation">
+        <button class="tab-button active" data-tab="overview">Overview</button>
+        <button class="tab-button" data-tab="analytics">Analytics</button>
+        <button class="tab-button" data-tab="tests">Tests</button>
+        <button class="tab-button" data-tab="workflow">Workflow</button>
+        <button class="tab-button" data-tab="refactor">Refactor</button>
+        <button class="tab-button" data-tab="analyzer">Analyzer</button>
+    </nav>
+
+    <!-- Codebase Management -->
+    <div class="codebase-section">
+        <div class="codebase-tabs" id="codebase-tabs-container">
+            <!-- Dynamic codebase tabs -->
+        </div>
+        
+        <!-- LLM Toggle Button -->
+        <div class="llm-toggle-container">
+            <button id="llm-toggle-btn" class="llm-toggle-btn" title="Toggle LLM API">
+                <span id="llm-status-text">LLM</span>
+                <span id="llm-status-indicator" class="status-dot"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        
+        <!-- Overview Tab -->
+        <div id="overview-tab" class="tab-content active">
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <h3>System Status</h3>
+                    <div id="system-status">Loading...</div>
+                </div>
+                <div class="overview-card">
+                    <h3>Recent Activity</h3>
+                    <div id="recent-activity">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics-tab" class="tab-content">
+            <div class="analytics-container">
+                
+                <!-- Performance Monitoring Section -->
+                <section class="analytics-section">
+                    <h2>📡 Performance Monitoring</h2>
+                    <div class="performance-charts">
+                        <div class="chart-card">
+                            <div class="chart-header">🔥 CPU Load</div>
+                            <canvas id="analytics-cpu-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">💾 Memory Usage</div>
+                            <canvas id="analytics-memory-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">🌐 Network Activity</div>
+                            <canvas id="analytics-network-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- System Metrics Section -->
+                <section class="analytics-section">
+                    <h2>📊 System Metrics</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <span class="metric-label">Uptime</span>
+                            <span class="metric-value" id="system-uptime">--</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Active Processes</span>
+                            <span class="metric-value" id="active-processes">--</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Test Analytics Section -->
+                <section class="analytics-section">
+                    <h2>🧪 Test Analytics</h2>
+                    <div class="test-metrics">
+                        <div class="metric-card">
+                            <span class="metric-label">Total Tests</span>
+                            <span class="metric-value" id="total-tests">--</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Coverage</span>
+                            <span class="metric-value" id="test-coverage">--%</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Additional Analytics Sections -->
+                <section class="analytics-section">
+                    <h2>🔍 Security Analysis</h2>
+                    <div id="security-analysis">Analysis data will appear here</div>
+                </section>
+
+                <section class="analytics-section">
+                    <h2>🔧 Refactoring Insights</h2>
+                    <div id="refactoring-insights">Insights will appear here</div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- Tests Tab -->
+        <div id="tests-tab" class="tab-content">
+            <h2>Test Management</h2>
+            <div id="test-results">
+                <p>Test results will appear here</p>
+            </div>
+        </div>
+
+        <!-- Workflow Tab -->
+        <div id="workflow-tab" class="tab-content">
+            <h2>Workflow Management</h2>
+            <div class="workflow-grid">
+                <div class="workflow-card">
+                    <h3>Workflow Status</h3>
+                    <div id="workflow-status">
+                        <div class="workflow-metric">
+                            <span>Running:</span>
+                            <span id="workflow-running">--</span>
+                        </div>
+                        <div class="workflow-metric">
+                            <span>Queued:</span>
+                            <span id="workflow-queued">--</span>
+                        </div>
+                        <div class="workflow-metric">
+                            <span>Completed:</span>
+                            <span id="workflow-completed">--</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="workflow-card">
+                    <h3>DAG Visualization</h3>
+                    <div id="dag-visualization">DAG will appear here</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Refactor Tab -->
+        <div id="refactor-tab" class="tab-content">
+            <h2>Refactoring Analysis</h2>
+            <div id="refactor-content">
+                <p>Refactoring analysis will appear here</p>
+            </div>
+        </div>
+
+        <!-- Analyzer Tab -->
+        <div id="analyzer-tab" class="tab-content">
+            <h2>Code Analyzer</h2>
+            <div id="analyzer-content">
+                <p>Code analysis will appear here</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <span>TestMaster Dashboard v2.0</span>
+            <span id="last-update">Last update: --</span>
+        </div>
+    </footer>
+
+    <!-- Modular JavaScript -->
+    <script src="js/utils/constants.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/api/client.js"></script>
+    <script src="js/api/endpoints.js"></script>
+    <script src="js/charts/performance.js"></script>
+    <script src="js/tabs/manager.js"></script>
+    <script src="js/tabs/analytics.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>

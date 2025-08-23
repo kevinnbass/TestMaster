@@ -1,0 +1,84 @@
+=== SECOND EXHAUSTIVE SEARCH ===
+Using different discovery angles and patterns...
+
+MINIFIED/COMPRESSED FILES:
+7
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/utils/audio/ogg-opus-decoder/ogg-opus-decoder.min.js
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/utils/blob-util/blob-util.min.js
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/utils/dat.gui/dat.gui.min.js
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/utils/lokijs/lokijs.min.js
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/utils/lzstring/lz-string.min.js
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/utils/marked/marked.min.js
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/utils/mustache/mustache.min.js
+
+SOURCE MAP FILES:
+0
+
+DATA VISUALIZATION FILES:
+69
+frontend_final/agentops/app/dashboard/app/(with-layout)/overview/overview-chart.tsx
+frontend_final/agentops/app/dashboard/app/(with-layout)/traces/_components/graph-view.tsx
+frontend_final/agentops/app/dashboard/components/charts
+frontend_final/agentops/app/dashboard/components/charts/bar-chart
+frontend_final/agentops/app/dashboard/components/charts/bar-chart/chart.tsx
+frontend_final/agentops/app/dashboard/components/charts/bar-chart/spans-gantt-chart.tsx
+frontend_final/agentops/app/dashboard/components/charts/bar-chart/trace-cost-distribution-chart.tsx
+frontend_final/agentops/app/dashboard/components/charts/bar-chart/trace-duration-distribution-chart.tsx
+frontend_final/agentops/app/dashboard/components/charts/common-chart.tsx
+frontend_final/agentops/app/dashboard/components/charts/line-chart
+frontend_final/agentops/app/dashboard/components/charts/line-chart/chart.tsx
+frontend_final/agentops/app/dashboard/components/charts/line-chart/failed-traces-chart.tsx
+frontend_final/agentops/app/dashboard/components/charts/pie-chart
+frontend_final/agentops/app/dashboard/components/charts/pie-chart/billing-breakdown-chart.tsx
+frontend_final/agentops/app/dashboard/components/ui/chart-card.tsx
+
+PYTHON FILES WITH HTML/UI STRINGS:
+51
+frontend_final/archive/20250823_redundancy_cleanup/unified_gamma_dashboard_streamlined.py
+frontend_final/coordination/agent_coordination_dashboard.py
+frontend_final/coordination/agent_coordination_dashboard_root.py
+frontend_final/coordination/gamma_alpha_collaboration_dashboard.py
+frontend_final/coordination/unified_cross_agent_dashboard.py
+frontend_final/coordination/unified_greek_dashboard.py
+frontend_final/core/advanced/gamma_dashboard_logic.py
+frontend_final/core/api_routes_manager.py
+frontend_final/core/atomic_master_dashboard.py
+frontend_final/core/enhancements/gamma_enhancements.py
+frontend_final/core/enhancements/ui_enhancements.py
+frontend_final/core/flask_routes_consolidated.py
+frontend_final/core/ironclad_master_dashboard.py
+frontend_final/core/unified_dashboard.py
+frontend_final/core/unified_gamma_dashboard.py
+
+LOCK FILES (dependency management):
+3
+frontend_final/AgentVerse/ui/package-lock.json
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/gameobjects/live2d/framework/package-lock.json
+frontend_final/autogen/python/packages/frontend/yarn.lock
+
+DOCKERFILE/DOCKER COMPOSE WITH UI:
+2
+frontend_final/agentops/app/dashboard/Dockerfile
+frontend_final/external_ui/agentops/dashboard/Dockerfile
+
+ANIMATION/SHADER FILES:
+2
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/gameobjects/shader
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/shaders
+
+WEB WORKER FILES:
+0
+
+TEST FILES WITH UI COMPONENTS:
+27
+frontend_final/agentops/app/dashboard/cypress/support/tier-testing.ts
+frontend_final/agentops/app/dashboard/tests/cost-warning.test.ts
+frontend_final/agentops/app/dashboard/tests/helpers.test.ts
+frontend_final/agentops/app/dashboard/tests/number_formatting.test.ts
+frontend_final/agentops/app/dashboard/tests/utils.test.ts
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/behaviors/containerperspective/ContainerPerspective.d.ts
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/behaviors/containerperspective/ContainerPerspective.js
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/gameobjects/mesh/perspective/utils/CreatePerspectiveObject.js
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/perspectiveimage-plugin.js
+frontend_final/AgentVerse/ui/src/phaser3-rex-plugins/plugins/perspectiveimage.d.ts
+

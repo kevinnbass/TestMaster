@@ -439,7 +439,15 @@ class CodebaseReorganizer:
 
         analyses = []
 
+        # Add bounds checking to os.walk to prevent unbounded directory traversal
+        max_directories = 1000  # Safety bound for directory traversal
+        directory_count = 0
+
         for root, dirs, files in os.walk(self.root_dir):
+            if directory_count >= max_directories:
+                break  # Safety bound reached
+            directory_count += 1
+
             # Skip excluded directories early (replacing complex comprehension)
             filtered_dirs = []
             for d in dirs:

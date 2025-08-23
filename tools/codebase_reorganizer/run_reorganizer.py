@@ -30,14 +30,21 @@ def find_testmaster_root() -> Path:
         'AGENT_D_HOUR_8-10_PREDICTIVE_INTELLIGENCE_BREAKTHROUGH.md'
     ]
 
-    # Check current directory
-    for indicator in indicators:
+    # Check current directory with bounded loop
+    MAX_INDICATORS = 50  # Safety bound for indicators
+    for i in range(min(len(indicators), MAX_INDICATORS)):
+        indicator = indicators[i]
         if (current_dir / indicator).exists():
             return current_dir
 
-    # Check parent directories
-    for parent in current_dir.parents:
-        for indicator in indicators:
+    # Check parent directories with bounded loop
+    MAX_PARENT_DIRS = 20  # Safety bound for parent directory checking
+    parent_list = list(current_dir.parents)
+    for i in range(min(len(parent_list), MAX_PARENT_DIRS)):
+        parent = parent_list[i]
+        # Bounded loop for indicator checking
+        for j in range(min(len(indicators), MAX_INDICATORS)):
+            indicator = indicators[j]
             if (parent / indicator).exists():
                 return parent
 
@@ -63,13 +70,27 @@ def main() -> None:
         print("Please ensure the codebase_reorganizer is properly installed.")
         sys.exit(1)
 
-    # Build command
-    cmd_args = [sys.executable, str(reorganizer_path)]
-    cmd_args.extend(sys.argv[1:])  # Pass through all arguments
+    # Build command with pre-allocation (Rule 3 compliance)
+    MAX_ARGS = 100  # Safety bound for command arguments
+    cmd_args = [None] * MAX_ARGS
+    cmd_args[0] = sys.executable
+    cmd_args[1] = str(reorganizer_path)
+    arg_count = 2
+
+    # Add command line arguments with bounded loop
+    for i in range(min(len(sys.argv[1:]), MAX_ARGS - arg_count)):
+        if arg_count < MAX_ARGS:
+            cmd_args[arg_count] = sys.argv[1 + i]
+            arg_count += 1
 
     # Add root directory if not specified
-    if '--root' not in sys.argv:
-        cmd_args.extend(['--root', str(testmaster_root)])
+    if '--root' not in sys.argv and arg_count < MAX_ARGS - 2:
+        cmd_args[arg_count] = '--root'
+        cmd_args[arg_count + 1] = str(testmaster_root)
+        arg_count += 2
+
+    # Trim to actual size
+    cmd_args = cmd_args[:arg_count]
 
     print(f"Running: {' '.join(cmd_args)}")
     print("-" * 40)

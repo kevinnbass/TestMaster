@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster Ultimate 3D Visualization Dashboard - Agent Gamma</title>
+    
+    <!-- Three.js for 3D Graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- D3.js for Advanced Visualizations -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <!-- Force Graph 3D -->
+    <script src="https://unpkg.com/3d-force-graph"></script>
+    
+    <!-- GSAP for Professional Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Chart.js for 2D Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Socket.IO for Real-Time Data -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background */
+        #particle-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0d1929 100%);
+        }
+        
+        #particle-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 204, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(255, 0, 255, 0.05) 0%, transparent 50%);
+            animation: gradientShift 20s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+        }
+        
+        /* Header */
+        .header {
+            position: relative;
+            z-index: 100;
+            padding: 30px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #00ff88, #00ccff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            animation: titleGlow 3s ease infinite;
+        }
+        
+        @keyframes titleGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2) drop-shadow(0 0 20px rgba(0, 255, 136, 0.5)); }
+        }
+        
+        .subtitle {
+            color: #888;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            padding: 12px 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 30px;
+            color: #00ff88;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.3) 0%, transparent 70%);
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%);
+        }
+        
+        .nav-tab:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+        
+        .nav-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            background: rgba(0, 255, 136, 0.1);
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 204, 255, 0.2));
+            border-color: #00ff88;
+            color: #fff;
+        }
+        
+        /* 3D Visualization Container */
+        #visualization-3d {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .metric-card {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg at 50% 50%, 
+                transparent 0deg, 
+                rgba(0, 255, 136, 0.1) 60deg, 
+                transparent 120deg);
+            animation: rotateConic 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .metric-card:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes rotateConic {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #00ff88;
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2),
+                        inset 0 0 20px rgba(0, 255, 136, 0.05);
+        }
+        
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #00ff88, #00ccff);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 10px 0;
+            line-height: 1;
+        }
+        
+        .metric-label {
+            color: #888;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .metric-trend {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 10px;
+            gap: 5px;
+        }
+        
+        .trend-up {
+            background: rgba(0, 255, 100, 0.2);
+            color: #00ff64;
+        }
+        
+        .trend-down {
+            background: rgba(255, 100, 0, 0.2);
+            color: #ff6400;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-tabs {
+                padding: 10px;
+            }
+            
+            .nav-tab {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            
+            #visualization-3d {
+                height: 400px;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+        }
+        
+        /* Touch Interaction Indicators */
+        .touch-indicator {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid #00ff88;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0);
+            animation: touchRipple 0.6s ease;
+        }
+        
+        @keyframes touchRipple {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+        
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(0, 255, 136, 0.2);
+            border-top-color: #00ff88;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00ff88, #00ccff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+    
+    <!-- Particle Background -->
+    <div id="particle-background"></div>
+    
+    <!-- Header -->
+    <div class="header">
+        <h1>TestMaster Ultimate Dashboard</h1>
+        <div class="subtitle">Agent Gamma - 3D Visualization Powerhouse</div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="nav-tabs">
+        <div class="nav-tab active" onclick="switchView('3d-graph')">3D Neo4j Galaxy</div>
+        <div class="nav-tab" onclick="switchView('performance')">Performance Landscape</div>
+        <div class="nav-tab" onclick="switchView('metrics')">Live Metrics</div>
+        <div class="nav-tab" onclick="switchView('intelligence')">AI Intelligence</div>
+        <div class="nav-tab" onclick="switchView('mobile')">Mobile View</div>
+    </div>
+    
+    <!-- 3D Visualization Container -->
+    <div id="visualization-3d"></div>
+    
+    <!-- Metrics Grid -->
+    <div class="metrics-grid">
+        <div class="metric-card" onclick="animateCard(this)">
+            <div class="metric-icon">⚡</div>
+            <div class="metric-label">Performance Score</div>
+            <div class="metric-value">98</div>
+            <div class="metric-trend trend-up">↑ 3% improved</div>
+        </div>
+        
+        <div class="metric-card" onclick="animateCard(this)">
+            <div class="metric-icon">🔥</div>
+            <div class="metric-label">System Health</div>
+            <div class="metric-value">95%</div>
+            <div class="metric-trend trend-up">↑ Optimal</div>
+        </div>
+        
+        <div class="metric-card" onclick="animateCard(this)">
+            <div class="metric-icon">📊</div>
+            <div class="metric-label">Active Nodes</div>
+            <div class="metric-value">2,847</div>
+            <div class="metric-trend trend-up">↑ 247 new</div>
+        </div>
+        
+        <div class="metric-card" onclick="animateCard(this)">
+            <div class="metric-icon">🚀</div>
+            <div class="metric-label">Response Time</div>
+            <div class="metric-value">42ms</div>
+            <div class="metric-trend trend-up">↑ 18ms faster</div>
+        </div>
+        
+        <div class="metric-card" onclick="animateCard(this)">
+            <div class="metric-icon">💾</div>
+            <div class="metric-label">Cache Hit Rate</div>
+            <div class="metric-value">92%</div>
+            <div class="metric-trend trend-up">↑ 5% improved</div>
+        </div>
+        
+        <div class="metric-card" onclick="animateCard(this)">
+            <div class="metric-icon">🔄</div>
+            <div class="metric-label">Live Updates</div>
+            <div class="metric-value">847/s</div>
+            <div class="metric-trend trend-up">↑ Streaming</div>
+        </div>
+    </div>
+    
+    <!-- Floating Action Button -->
+    <div class="fab" onclick="toggleFullscreen()">
+        <span style="color: #000; font-size: 24px;">⛶</span>
+    </div>
+    
+    <script>
+        // Initialize 3D Visualization
+        let graph3D;
+        let currentView = '3d-graph';
+        
+        // Create 3D Force Graph
+        function init3DGraph() {
+            const container = document.getElementById('visualization-3d');
+            
+            // Generate sample graph data
+            const N = 300;
+            const gData = {
+                nodes: [...Array(N).keys()].map(i => ({
+                    id: i,
+                    name: `Node ${i}`,
+                    val: Math.random() * 20,
+                    color: i % 5 === 0 ? '#00ff88' : i % 3 === 0 ? '#00ccff' : '#ff00ff'
+                })),
+                links: [...Array(N).keys()]
+                    .filter(id => id)
+                    .map(id => ({
+                        source: id,
+                        target: Math.round(Math.random() * (id - 1))
+                    }))
+            };
+            
+            // Create the 3D graph
+            graph3D = ForceGraph3D()(container)
+                .graphData(gData)
+                .nodeAutoColorBy('val')
+                .nodeThreeObject(node => {
+                    const sprite = new THREE.Sprite(
+                        new THREE.SpriteMaterial({
+                            map: new THREE.CanvasTexture(createNodeCanvas(node)),
+                            blending: THREE.AdditiveBlending
+                        })
+                    );
+                    sprite.scale.set(12, 12);
+                    return sprite;
+                })
+                .linkColor(() => 'rgba(0, 255, 136, 0.2)')
+                .linkOpacity(0.5)
+                .backgroundColor('rgba(0, 0, 0, 0)')
+                .showNavInfo(false)
+                .enableNodeDrag(true)
+                .enableNavigationControls(true)
+                .onNodeClick(node => {
+                    // Animate camera to focus on clicked node
+                    const distance = 100;
+                    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+                    
+                    graph3D.cameraPosition(
+                        { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio },
+                        node,
+                        3000
+                    );
+                    
+                    showNodeInfo(node);
+                });
+            
+            // Auto-rotate
+            let angle = 0;
+            setInterval(() => {
+                if (currentView === '3d-graph') {
+                    angle += Math.PI / 300;
+                    graph3D.cameraPosition({
+                        x: 300 * Math.sin(angle),
+                        y: 100,
+                        z: 300 * Math.cos(angle)
+                    });
+                }
+            }, 50);
+        }
+        
+        // Create node canvas for custom rendering
+        function createNodeCanvas(node) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 128;
+            canvas.height = 128;
+            
+            // Draw glowing circle
+            const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+            gradient.addColorStop(0, node.color || '#00ff88');
+            gradient.addColorStop(0.5, node.color ? node.color + '88' : '#00ff8888');
+            gradient.addColorStop(1, 'transparent');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 128, 128);
+            
+            return canvas;
+        }
+        
+        // Show node information
+        function showNodeInfo(node) {
+            console.log('Node clicked:', node);
+            // Could show a modal or tooltip with node details
+        }
+        
+        // Switch visualization views
+        function switchView(view) {
+            currentView = view;
+            
+            // Update active tab
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update visualization based on view
+            const container = document.getElementById('visualization-3d');
+            
+            switch(view) {
+                case '3d-graph':
+                    // Already initialized
+                    break;
+                case 'performance':
+                    createPerformanceLandscape();
+                    break;
+                case 'metrics':
+                    createMetricsVisualization();
+                    break;
+                case 'intelligence':
+                    createIntelligenceView();
+                    break;
+                case 'mobile':
+                    createMobileView();
+                    break;
+            }
+        }
+        
+        // Create performance landscape visualization
+        function createPerformanceLandscape() {
+            const container = document.getElementById('visualization-3d');
+            container.innerHTML = '<canvas id="performanceCanvas" style="width: 100%; height: 100%;"></canvas>';
+            
+            const canvas = document.getElementById('performanceCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+            
+            // Create animated performance waves
+            let time = 0;
+            function animateWaves() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Create gradient background
+                const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                gradient.addColorStop(0, 'rgba(0, 255, 136, 0.1)');
+                gradient.addColorStop(1, 'rgba(0, 204, 255, 0.1)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw performance waves
+                ctx.strokeStyle = '#00ff88';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                for (let x = 0; x < canvas.width; x += 5) {
+                    const y = canvas.height / 2 + 
+                             Math.sin((x + time) * 0.01) * 50 + 
+                             Math.sin((x + time * 2) * 0.02) * 30;
+                    
+                    if (x === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                
+                ctx.stroke();
+                
+                time += 2;
+                requestAnimationFrame(animateWaves);
+            }
+            
+            animateWaves();
+        }
+        
+        // Create metrics visualization
+        function createMetricsVisualization() {
+            const container = document.getElementById('visualization-3d');
+            container.innerHTML = `
+                <div style="padding: 20px;">
+                    <canvas id="metricsChart" style="width: 100%; height: 500px;"></canvas>
+                </div>
+            `;
+            
+            const ctx = document.getElementById('metricsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Performance', 'Security', 'Reliability', 'Scalability', 'Usability', 'Efficiency'],
+                    datasets: [{
+                        label: 'Current Status',
+                        data: [98, 95, 92, 88, 90, 94],
+                        borderColor: '#00ff88',
+                        backgroundColor: 'rgba(0, 255, 136, 0.2)',
+                        pointBackgroundColor: '#00ff88',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#00ff88'
+                    }, {
+                        label: 'Target',
+                        data: [100, 100, 95, 90, 95, 95],
+                        borderColor: '#00ccff',
+                        backgroundColor: 'rgba(0, 204, 255, 0.1)',
+                        pointBackgroundColor: '#00ccff',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#00ccff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            pointLabels: {
+                                color: '#fff'
+                            },
+                            ticks: {
+                                color: '#888',
+                                backdropColor: 'transparent'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Create intelligence view
+        function createIntelligenceView() {
+            const container = document.getElementById('visualization-3d');
+            container.innerHTML = `
+                <div style="padding: 40px; text-align: center;">
+                    <h2 style="color: #00ff88; margin-bottom: 30px;">AI Intelligence Systems</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div class="metric-card" style="text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">🧠</div>
+                            <div>Semantic Analysis</div>
+                            <div style="color: #00ff88; font-size: 24px; margin-top: 10px;">Active</div>
+                        </div>
+                        <div class="metric-card" style="text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">🔮</div>
+                            <div>Predictive Engine</div>
+                            <div style="color: #00ff88; font-size: 24px; margin-top: 10px;">98% Accuracy</div>
+                        </div>
+                        <div class="metric-card" style="text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">🤖</div>
+                            <div>ML Optimization</div>
+                            <div style="color: #00ff88; font-size: 24px; margin-top: 10px;">Learning</div>
+                        </div>
+                        <div class="metric-card" style="text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">⚡</div>
+                            <div>Real-time Analysis</div>
+                            <div style="color: #00ff88; font-size: 24px; margin-top: 10px;">847 ops/s</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Create mobile view
+        function createMobileView() {
+            const container = document.getElementById('visualization-3d');
+            container.innerHTML = `
+                <div style="padding: 20px; text-align: center;">
+                    <h2 style="color: #00ff88; margin-bottom: 20px;">Mobile-Optimized Dashboard</h2>
+                    <p style="color: #888; margin-bottom: 30px;">Touch-enabled interface with gesture support</p>
+                    <div style="display: flex; flex-direction: column; gap: 15px; max-width: 400px; margin: 0 auto;">
+                        <button class="nav-tab" style="width: 100%; padding: 20px;">Swipe Navigation ←→</button>
+                        <button class="nav-tab" style="width: 100%; padding: 20px;">Pinch to Zoom 🔍</button>
+                        <button class="nav-tab" style="width: 100%; padding: 20px;">Touch Interactions 👆</button>
+                        <button class="nav-tab" style="width: 100%; padding: 20px;">Voice Commands 🎤</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Animate metric card
+        function animateCard(card) {
+            // Add ripple effect
+            const ripple = document.createElement('div');
+            ripple.className = 'touch-indicator';
+            ripple.style.left = '50%';
+            ripple.style.top = '50%';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            card.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+            
+            // Animate the card
+            gsap.to(card, {
+                scale: 0.95,
+                duration: 0.1,
+                ease: "power2.in",
+                onComplete: () => {
+                    gsap.to(card, {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "elastic.out(1, 0.3)"
+                    });
+                }
+            });
+        }
+        
+        // Toggle fullscreen
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        // Initialize on load
+        window.addEventListener('load', () => {
+            // Hide loading overlay
+            setTimeout(() => {
+                const overlay = document.getElementById('loadingOverlay');
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.display = 'none', 500);
+            }, 1000);
+            
+            // Initialize 3D graph
+            init3DGraph();
+            
+            // Add touch support
+            if ('ontouchstart' in window) {
+                document.body.addEventListener('touchstart', (e) => {
+                    const touch = e.touches[0];
+                    const indicator = document.createElement('div');
+                    indicator.className = 'touch-indicator';
+                    indicator.style.left = touch.clientX + 'px';
+                    indicator.style.top = touch.clientY + 'px';
+                    document.body.appendChild(indicator);
+                    setTimeout(() => indicator.remove(), 600);
+                });
+            }
+            
+            // Animate metrics on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        gsap.from(entry.target, {
+                            opacity: 0,
+                            y: 50,
+                            duration: 0.8,
+                            ease: "power3.out"
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.metric-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+        
+        // Connect to WebSocket for real-time updates
+        const socket = io('http://localhost:5001');
+        
+        socket.on('performance_update', (data) => {
+            // Update metric values with real-time data
+            if (data.performance_score) {
+                document.querySelector('.metric-value').textContent = data.performance_score;
+            }
+        });
+    </script>
+</body>
+</html>

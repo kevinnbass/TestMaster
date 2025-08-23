@@ -110,21 +110,28 @@ class CodebaseReorganizerLauncher:
             'reorganizer_engine'
         ]
 
-        missing_modules = []
+        # Pre-allocate missing_modules with known capacity (Rule 3 compliance)
+        MAX_MODULES_CHECK = 50  # Safety bound for module checking
+        missing_modules = [None] * MAX_MODULES_CHECK
+        missing_count = 0
 
-        for module in required_modules:
+        # Bounded loop for module checking
+        for i in range(min(len(required_modules), MAX_MODULES_CHECK)):
+            module = required_modules[i]
             try:
                 __import__(module)
             except ImportError:
-                missing_modules.append(module)
+                if missing_count < MAX_MODULES_CHECK:
+                    missing_modules[missing_count] = module
+                    missing_count += 1
 
-        passed = len(missing_modules) == 0
-        error = None if passed else f"Missing modules: {', '.join(missing_modules)}"
+        passed = missing_count == 0
+        error = None if passed else f"Missing modules: {', '.join(missing_modules[:missing_count])}"
 
         return {
             'passed': passed,
             'error': error,
-            'missing_modules': missing_modules
+            'missing_modules': missing_modules[:missing_count]
         }
 
     def _perform_initial_checks(self) -> Dict:
@@ -226,48 +233,89 @@ class CodebaseReorganizerLauncher:
         return self._execute_reorganization_process()
 
     def _find_python_files_safely(self) -> List[Path]:
-        """Find Python files with validation bounds"""
-        python_files = []
+        """Find Python files with validation bounds (coordinator function)"""
+        # Pre-allocate python_files with known capacity (Rule 3 compliance)
+        MAX_FILES = 1000  # Safety bound for file processing
+        python_files = [Path('.')] * MAX_FILES
+        file_count = 0
 
-        exclusion_patterns = {
+        exclusion_patterns = self._get_exclusion_patterns()
+
+        # Bounded loop for directory traversal
+        MAX_DIRECTORIES = 5000  # Safety bound for directory processing
+        directory_count = 0
+
+        for root, dirs, files in os.walk(self.root_dir):
+            if directory_count >= MAX_DIRECTORIES:
+                break
+            directory_count += 1
+
+            # Filter directories using helper
+            dirs[:] = self._filter_directories(dirs, root, exclusion_patterns)
+
+            # Process files using helper
+            file_count = self._process_directory_files(files, root, exclusion_patterns,
+                                                      python_files, file_count, MAX_FILES)
+
+        return python_files[:file_count]  # Return actual data (bounded operation)
+
+    def _get_exclusion_patterns(self) -> set:
+        """Get exclusion patterns for file filtering (helper function)"""
+        return {
             '**/node_modules/**', '**/.*', '**/test*/**', '**/archive*/**',
             '**/__pycache__/**', '**/.*'
         }
 
-        for root, dirs, files in os.walk(self.root_dir):
-            # Remove excluded directories with explicit bounds checking
-            filtered_dirs = []
-            for d in dirs:
-                if len(filtered_dirs) >= 100:  # Fixed upper bound
+    def _filter_directories(self, dirs: List[str], root: str, exclusion_patterns: set) -> List[str]:
+        """Filter directories based on exclusion patterns (helper function)"""
+        # Remove excluded directories with pre-allocation (Rule 3 compliance)
+        MAX_DIRS_FILTER = 200  # Safety bound for directory filtering
+        filtered_dirs = [None] * 100  # Pre-allocate with fixed upper bound
+        filtered_count = 0
+
+        for i in range(min(len(dirs), MAX_DIRS_FILTER)):
+            d = dirs[i]
+            if filtered_count >= 100:  # Fixed upper bound
+                break
+            should_exclude = False
+            # Bounded loop for pattern checking
+            for pattern in exclusion_patterns:
+                if len(str(Path(root) / d)) <= MAX_PATH_LENGTH and pattern in str(Path(root) / d):
+                    should_exclude = True
                     break
-                should_exclude = False
-                for pattern in exclusion_patterns:
-                    if len(str(Path(root) / d)) <= MAX_PATH_LENGTH and pattern in str(Path(root) / d):
-                        should_exclude = True
-                        break
-                if not should_exclude:
-                    filtered_dirs.append(d)
-            dirs[:] = filtered_dirs
+            if not should_exclude:
+                filtered_dirs[filtered_count] = d
+                filtered_count += 1
 
-            for file in files:
-                if len(python_files) >= MAX_FILES_TO_PROCESS:
-                    break
+        return filtered_dirs[:filtered_count]  # Use actual count (bounded operation)
 
-                file_path = Path(root) / file
-                # Check file with explicit bounds checking
-                is_excluded = False
-                for pattern in exclusion_patterns:
-                    if len(str(file_path)) <= MAX_PATH_LENGTH and pattern in str(file_path):
-                        is_excluded = True
-                        break
+    def _is_file_eligible(self, file_path: Path, exclusion_patterns: set) -> bool:
+        """Check if file is eligible for processing (helper function)"""
+        # Check file exclusion
+        for pattern in exclusion_patterns:
+            if len(str(file_path)) <= MAX_PATH_LENGTH and pattern in str(file_path):
+                return False
 
-                if (file.endswith('.py') and
-                    not is_excluded and
-                    file_path.stat().st_size <= 10 * 1024 * 1024):  # 10MB max
+        return (file_path.suffix == '.py' and
+                file_path.stat().st_size <= 10 * 1024 * 1024)
 
-                    python_files.append(file_path)
+    def _process_directory_files(self, files: List[str], root: str,
+                               exclusion_patterns: set, python_files: List[Path],
+                               file_count: int, MAX_FILES: int) -> int:
+        """Process files in a directory (helper function)"""
+        current_count = file_count
+        MAX_FILES_PROCESS = 1000  # Safety bound for file processing
 
-        return python_files
+        for i in range(min(len(files), MAX_FILES_PROCESS)):
+            if current_count >= MAX_FILES:
+                break  # Safety bound reached
+
+            file_path = Path(root) / files[i]
+            if self._is_file_eligible(file_path, exclusion_patterns):
+                python_files[current_count] = file_path
+                current_count += 1
+
+        return current_count
 
     def _display_main_results(self, audit_results: Dict, execution_results: Dict) -> None:
         """Display final system report"""

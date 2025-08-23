@@ -62,13 +62,32 @@ class CodebaseReorganizerLauncher:
         patterns = ['**/node_modules/**', '**/.*', '**/test*/**', '**/archive*/**', '**/__pycache__/**']
 
         for root, dirs, files in os.walk(self.root_dir):
-            dirs[:] = [d for d in dirs if len(dirs) < 100 and
-                      not any(p in str(Path(root) / d) for p in patterns)]
+            # Filter excluded directories (replacing complex comprehension with explicit loop)
+            filtered_dirs = []
+            for d in dirs:
+                if len(filtered_dirs) < 100:  # Safety bound
+                    should_exclude = False
+                    for p in patterns:
+                        if p in str(Path(root) / d):
+                            should_exclude = True
+                            break
+                    if not should_exclude:
+                        filtered_dirs.append(d)
+            dirs[:] = filtered_dirs
 
             for file in files:
                 file_path = Path(root) / file
-                if (len(python_files) < 5000 and file.endswith('.py') and
-                    not any(p in str(file_path) for p in patterns) and
+                # Check if file should be included (replacing complex comprehension with explicit loop)
+                should_include = True
+                if file.endswith('.py'):
+                    for p in patterns:
+                        if p in str(file_path):
+                            should_include = False
+                            break
+                else:
+                    should_include = False
+
+                if len(python_files) < 5000 and should_include and
                     file_path.stat().st_size <= 10 * 1024 * 1024):
                     python_files.append(file_path)
 

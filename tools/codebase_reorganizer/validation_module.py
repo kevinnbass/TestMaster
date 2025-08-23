@@ -250,8 +250,11 @@ class ConfigurationValidator:
         categories = config['categories']
         assert Validator.validate_dict_bounds(categories, 20, "categories"), "Categories dict too large"
 
-        # Validate each category
-        for category_name, category_config in categories.items():
+        # Validate each category with bounded loop
+        category_items = list(categories.items())
+        MAX_CATEGORIES = 50  # Safety bound for category validation
+        for i in range(min(len(category_items), MAX_CATEGORIES)):
+            category_name, category_config = category_items[i]
             assert Validator.validate_string_not_empty(category_name, "category name"), "Category name invalid"
             assert Validator.validate_dict_bounds(category_config, 10, f"category {category_name}"), "Category config too large"
 
@@ -259,7 +262,9 @@ class ConfigurationValidator:
             if 'keywords' in category_config:
                 keywords = category_config['keywords']
                 assert Validator.validate_list_bounds(keywords, 50, f"{category_name} keywords"), "Keywords list too large"
-                for keyword in keywords:
+                # Bounded loop for keyword validation
+                for j in range(min(len(keywords), 100)):  # Safety bound for keywords
+                    keyword = keywords[j]
                     assert Validator.validate_string_not_empty(keyword, f"keyword in {category_name}"), "Keyword invalid"
 
         return True
@@ -502,7 +507,11 @@ class LinterValidator:
             from pathlib import Path
             import ast
 
-            violations = []
+            # Pre-allocate violations with known capacity (Rule 3 compliance)
+            MAX_VIOLATIONS = 50  # Safety bound for violations
+            violations = [None] * MAX_VIOLATIONS
+            violation_count = 0
+
             python_files = list(Path('.').rglob('*.py'))
 
             for py_file in python_files[:10]:  # Limit for performance
@@ -523,16 +532,18 @@ class LinterValidator:
                                 if brace_count <= 0 and j > i + 2:
                                     break
                                 if func_lines > 60:  # High-reliability limit
-                                    violations.append(f"{py_file}: Function exceeds 60 lines")
+                                    if violation_count < MAX_VIOLATIONS:
+                                        violations[violation_count] = f"{py_file}: Function exceeds 60 lines"
+                                        violation_count += 1
                                     break
 
                 except Exception as e:
                     continue
 
-            passed = len(violations) == 0
+            passed = violation_count == 0
             return {
                 'passed': passed,
-                'violations': violations[:10]  # Limit output
+                'violations': violations[:min(violation_count, 10)]  # Limit output to actual violations
             }
 
         except Exception as e:
@@ -544,7 +555,11 @@ class LinterValidator:
         try:
             from pathlib import Path
 
-            violations = []
+            # Pre-allocate violations with known capacity (Rule 3 compliance)
+            MAX_VIOLATIONS = 50  # Safety bound for violations
+            violations = [None] * MAX_VIOLATIONS
+            violation_count = 0
+
             python_files = list(Path('.').rglob('*.py'))
 
             for py_file in python_files[:10]:  # Limit for performance
@@ -558,21 +573,25 @@ class LinterValidator:
                         # This is a simplified check; full AST analysis would be better
                         if py_file.name in content and 'def ' in content:
                             if content.count(py_file.stem + '(') > 1:
-                                violations.append(f"{py_file}: Potential recursion detected")
+                                if violation_count < MAX_VIOLATIONS:
+                                    violations[violation_count] = f"{py_file}: Potential recursion detected"
+                                    violation_count += 1
 
                     # Check for complex comprehensions
                     if any(comp in content for comp in ['[x for x', '{x for x', '(x for x']):
                         # Look for nested comprehensions
                         if content.count('for ') > 1 and any(comp in content for comp in ['[x for', '{x for', '(x for']):
-                            violations.append(f"{py_file}: Complex comprehension detected")
+                            if violation_count < MAX_VIOLATIONS:
+                                violations[violation_count] = f"{py_file}: Complex comprehension detected"
+                                violation_count += 1
 
                 except Exception as e:
                     continue
 
-            passed = len(violations) == 0
+            passed = violation_count == 0
             return {
                 'passed': passed,
-                'violations': violations[:10]  # Limit output
+                'violations': violations[:min(violation_count, 10)]  # Limit output to actual violations
             }
 
         except Exception as e:

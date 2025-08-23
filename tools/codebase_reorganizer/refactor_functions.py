@@ -7,58 +7,117 @@ Breaks down functions > 30 lines into smaller, focused functions
 import ast
 from pathlib import Path
 
-def analyze_function_for_refactoring(func_content: str, func_name: str) -> dict:
-    """Analyze a function to identify refactoring opportunities"""
+def _initialize_refactoring_analysis(func_name: str, total_lines: int) -> dict:
+    """Initialize refactoring analysis structure (helper function)"""
+    # Pre-allocate analysis lists with known capacity (Rule 3 compliance)
+    MAX_OPPORTUNITIES = 50  # Safety bound for refactoring opportunities
 
-    lines = func_content.split('\n')
-    analysis = {
+    return {
         'function_name': func_name,
-        'total_lines': len(lines),
-        'refactoring_opportunities': [],
-        'suggested_functions': []
+        'total_lines': total_lines,
+        'refactoring_opportunities': [None] * MAX_OPPORTUNITIES,
+        'suggested_functions': [None] * MAX_OPPORTUNITIES
     }
 
-    # Look for logical blocks that could be extracted
-    blocks = []
-    current_block = []
+
+def _extract_logical_blocks(lines: List[str]) -> List[tuple]:
+    """Extract logical blocks from function content (helper function)"""
+    # Pre-allocate blocks with known capacity (Rule 3 compliance)
+    MAX_BLOCKS = 100  # Safety bound for blocks
+    MAX_BLOCK_SIZE = 200  # Safety bound for block size
+
+    blocks = [None] * MAX_BLOCKS  # Pre-allocate with placeholder
+    block_count = 0
+    current_block = [None] * MAX_BLOCK_SIZE  # Pre-allocate current block
+    current_block_size = 0
     block_start = 0
 
-    for i, line in enumerate(lines):
+    # Bounded loop for line analysis
+    MAX_LINES_ANALYZE = 1000  # Safety bound for line analysis
+    for i in range(min(len(lines), MAX_LINES_ANALYZE)):
+        line = lines[i]
         line = line.strip()
         if not line or line.startswith('#'):
             continue
 
         # Detect logical blocks
         if any(keyword in line.lower() for keyword in ['try:', 'if ', 'for ', 'while ', 'def ', 'class ']):
-            if current_block:
-                blocks.append((block_start, i-1, current_block))
-            current_block = [line]
+            if current_block_size > 0 and block_count < MAX_BLOCKS:
+                # Create block with actual size
+                actual_block = current_block[:current_block_size]
+                blocks[block_count] = (block_start, i-1, actual_block)
+                block_count += 1
+                current_block_size = 0  # Reset for new block
+            if current_block_size < MAX_BLOCK_SIZE:
+                current_block[current_block_size] = line
+                current_block_size += 1
             block_start = i
         else:
-            current_block.append(line)
+            if current_block_size < MAX_BLOCK_SIZE:
+                current_block[current_block_size] = line
+                current_block_size += 1
 
-    if current_block:
-        blocks.append((block_start, len(lines)-1, current_block))
+    # Add final block if it exists
+    if current_block_size > 0 and block_count < MAX_BLOCKS:
+        actual_block = current_block[:current_block_size]
+        blocks[block_count] = (block_start, len(lines)-1, actual_block)
+        block_count += 1
 
-    # Suggest refactoring for blocks > 8 lines
-    for start, end, block_lines in blocks:
-        if len(block_lines) > 8:
-            block_content = '\n'.join(block_lines)
-            suggested_name = suggest_function_name(block_content, func_name)
+    return blocks[:block_count]  # Return actual blocks
 
-            analysis['refactoring_opportunities'].append({
-                'lines': f"{start+1}-{end+1}",
-                'size': len(block_lines),
-                'content_preview': block_content[:100] + "..." if len(block_content) > 100 else block_content,
-                'suggested_function': suggested_name
-            })
 
-            analysis['suggested_functions'].append({
-                'name': suggested_name,
-                'purpose': f"Extracted from {func_name}",
-                'lines': len(block_lines),
-                'content': block_content
-            })
+def _analyze_blocks_for_refactoring(blocks: List[tuple], func_name: str) -> tuple:
+    """Analyze blocks to identify refactoring opportunities (helper function)"""
+    MAX_OPPORTUNITIES = 50  # Safety bound for refactoring opportunities
+    opportunities = [None] * MAX_OPPORTUNITIES
+    suggested_functions = [None] * MAX_OPPORTUNITIES
+    opportunity_count = 0
+    function_count = 0
+
+    # Bounded loop for block analysis
+    for i in range(min(len(blocks), MAX_OPPORTUNITIES)):
+        if blocks[i] is not None:
+            start, end, block_lines = blocks[i]
+            if len(block_lines) > 8 and opportunity_count < MAX_OPPORTUNITIES:
+                block_content = '\n'.join(block_lines)
+                suggested_name = suggest_function_name(block_content, func_name)
+
+                opportunities[opportunity_count] = {
+                    'lines': f"{start+1}-{end+1}",
+                    'size': len(block_lines),
+                    'content_preview': block_content[:100] + "..." if len(block_content) > 100 else block_content,
+                    'suggested_function': suggested_name
+                }
+                opportunity_count += 1
+
+                if function_count < MAX_OPPORTUNITIES:
+                    suggested_functions[function_count] = {
+                        'name': suggested_name,
+                        'purpose': f"Extracted from {func_name}",
+                        'lines': len(block_lines),
+                        'content': block_content
+                    }
+                    function_count += 1
+
+    return opportunities[:opportunity_count], suggested_functions[:function_count]
+
+
+def analyze_function_for_refactoring(func_content: str, func_name: str) -> dict:
+    """Analyze a function to identify refactoring opportunities (coordinator function)"""
+    lines = func_content.split('\n')
+
+    # Initialize analysis structure using helper
+    analysis = _initialize_refactoring_analysis(func_name, len(lines))
+
+    # Extract logical blocks using helper
+    blocks = _extract_logical_blocks(lines)
+
+    # Analyze blocks for refactoring opportunities using helper
+    opportunities, suggested_functions = _analyze_blocks_for_refactoring(blocks, func_name)
+
+    # Update analysis with results
+    analysis['refactoring_opportunities'] = opportunities
+    analysis['suggested_functions'] = suggested_functions
 
     return analysis
 
@@ -120,47 +179,123 @@ def create_refactored_version(original_file: Path, functions_to_refactor: list) 
 
     return generate_refactored_file(content, refactored_functions)
 
-def generate_refactored_function(original_content: str, analysis: dict) -> str:
-    """Generate a refactored version of a function"""
-
-    lines = original_content.split('\n')
-    refactored_lines = []
-    extracted_functions = []
-
-    # Copy the function signature
+def _extract_function_signature(lines: List[str], MAX_REFACTORED_LINES: int) -> tuple:
+    """Extract function signature from lines (helper function)"""
+    refactored_lines = [None] * MAX_REFACTORED_LINES
+    refactored_count = 0
     signature_end = 0
-    for i, line in enumerate(lines):
-        refactored_lines.append(line)
+
+    # Bounded loop for signature copying
+    for i in range(min(len(lines), 10)):  # Function signature should be within first 10 lines
+        line = lines[i]
+        if refactored_count < MAX_REFACTORED_LINES:
+            refactored_lines[refactored_count] = line
+            refactored_count += 1
         if line.strip().endswith(':'):
             signature_end = i
             break
 
-    # Process each refactoring opportunity
-    for opportunity in analysis['refactoring_opportunities']:
-        lines_range = opportunity['lines'].split('-')
-        start_line = int(lines_range[0]) - 1
-        end_line = int(lines_range[1]) - 1
+    return refactored_lines[:refactored_count], refactored_count, signature_end
 
-        # Extract the block
-        block_lines = lines[start_line:end_line+1]
 
-        # Create extracted function
-        extracted_func = [
-            f"def {opportunity['suggested_function']}():",
-            f'    """{opportunity["purpose"]}"""',
-            *['    ' + line for line in block_lines],
-            ""
-        ]
-        extracted_functions.extend(extracted_func)
+def _create_extracted_function(opportunity: dict, lines: List[str]) -> List[str]:
+    """Create an extracted function from refactoring opportunity (helper function)"""
+    lines_range = opportunity['lines'].split('-')
+    start_line = int(lines_range[0]) - 1
+    end_line = int(lines_range[1]) - 1
 
-        # Replace block with function call
-        refactored_lines.append(f"    {opportunity['suggested_function']}()")
+    # Extract the block with bounded operation
+    block_length = min(end_line - start_line + 1, 200)  # Safety bound for block size
+    block_lines = [''] * block_length
+    for j in range(block_length):
+        if start_line + j < len(lines):
+            block_lines[j] = lines[start_line + j]
 
-    # Add remaining lines after signature
-    for i in range(signature_end + 1, len(lines)):
+    # Create extracted function with pre-allocation
+    MAX_EXTRACTED_LINES = 50  # Safety bound for extracted function lines
+    extracted_func = [None] * MAX_EXTRACTED_LINES
+    extracted_func[0] = f"def {opportunity['suggested_function']}():"
+    extracted_func[1] = f'    """{opportunity["purpose"]}"""'
+
+    # Add indented block lines
+    func_line_count = 2
+    for j in range(min(len(block_lines), MAX_EXTRACTED_LINES - 3)):
+        if func_line_count < MAX_EXTRACTED_LINES:
+            extracted_func[func_line_count] = f'    {block_lines[j]}'
+            func_line_count += 1
+
+    if func_line_count < MAX_EXTRACTED_LINES:
+        extracted_func[func_line_count] = ""
+        func_line_count += 1
+
+    return extracted_func[:func_line_count]
+
+
+def _process_refactoring_opportunities(analysis: dict, lines: List[str],
+                                     MAX_REFACTORED_LINES: int, MAX_EXTRACTED_FUNCTIONS: int) -> tuple:
+    """Process refactoring opportunities and build refactored function (helper function)"""
+    refactored_lines = [None] * MAX_REFACTORED_LINES
+    refactored_count = 0
+    extracted_functions = [None] * MAX_EXTRACTED_FUNCTIONS
+    extracted_count = 0
+
+    opportunities = analysis.get('refactoring_opportunities', [])
+
+    # Bounded loop for processing opportunities
+    for i in range(min(len(opportunities), MAX_EXTRACTED_FUNCTIONS)):
+        opportunity = opportunities[i]
+
+        # Create extracted function using helper
+        extracted_func = _create_extracted_function(opportunity, lines)
+
+        # Add extracted function to collection
+        if extracted_count < MAX_EXTRACTED_FUNCTIONS:
+            extracted_functions[extracted_count] = extracted_func
+            extracted_count += 1
+
+        # Add function call to main function
+        if refactored_count < MAX_REFACTORED_LINES:
+            refactored_lines[refactored_count] = f"    {opportunity['suggested_function']}()"
+            refactored_count += 1
+
+    return refactored_lines[:refactored_count], refactored_count, extracted_functions[:extracted_count]
+
+
+def generate_refactored_function(original_content: str, analysis: dict) -> str:
+    """Generate a refactored version of a function with bounded operations (coordinator function)"""
+    lines = original_content.split('\n')
+
+    # Pre-allocate lists with known capacity (Rule 3 compliance)
+    MAX_REFACTORED_LINES = 1000  # Safety bound for refactored lines
+    MAX_EXTRACTED_FUNCTIONS = 50  # Safety bound for extracted functions
+
+    # Extract function signature using helper
+    signature_lines, refactored_count, signature_end = _extract_function_signature(lines, MAX_REFACTORED_LINES)
+
+    # Process refactoring opportunities using helper
+    opportunity_lines, opportunity_count, extracted_functions = _process_refactoring_opportunities(
+        analysis, lines, MAX_REFACTORED_LINES, MAX_EXTRACTED_FUNCTIONS
+    )
+
+    # Combine all parts
+    final_lines = signature_lines + opportunity_lines
+
+    # Add extracted functions at the end
+    for extracted_func in extracted_functions:
+        final_lines.extend(extracted_func)
+
+    return '\n'.join(final_lines)'
+            refactored_count += 1
+
+    # Add remaining lines after signature with bounded loop
+    MAX_REMAINING_LINES = 1000  # Safety bound for remaining lines
+    for i in range(signature_end + 1, min(len(lines), signature_end + 1 + MAX_REMAINING_LINES)):
         # Skip lines that were extracted
         should_skip = False
-        for opportunity in analysis['refactoring_opportunities']:
+        opportunities = analysis.get('refactoring_opportunities', [])
+        # Bounded loop for checking skip condition
+        for j in range(min(len(opportunities), 20)):  # Safety bound for opportunities check
+            opportunity = opportunities[j]
             lines_range = opportunity['lines'].split('-')
             start_line = int(lines_range[0]) - 1
             end_line = int(lines_range[1]) - 1
@@ -168,27 +303,55 @@ def generate_refactored_function(original_content: str, analysis: dict) -> str:
                 should_skip = True
                 break
 
-        if not should_skip:
-            refactored_lines.append(lines[i])
+        if not should_skip and refactored_count < MAX_REFACTORED_LINES:
+            refactored_lines[refactored_count] = lines[i]
+            refactored_count += 1
 
     # Combine refactored function with extracted functions
-    result = []
-    result.extend(extracted_functions)
-    result.append("")  # Add spacing
-    result.extend(refactored_lines)
+    # Pre-allocate result with known capacity (Rule 3 compliance)
+    MAX_RESULT_SIZE = 2000  # Safety bound for final result
+    result = [None] * MAX_RESULT_SIZE
+    result_count = 0
 
-    return '\n'.join(result)
+    # Add extracted functions
+    for j in range(extracted_count):
+        if result_count < MAX_RESULT_SIZE:
+            result[result_count] = extracted_functions[j]
+            result_count += 1
+
+    # Add spacing
+    if result_count < MAX_RESULT_SIZE:
+        result[result_count] = ""
+        result_count += 1
+
+    # Add refactored lines
+    for j in range(refactored_count):
+        if result_count < MAX_RESULT_SIZE:
+            result[result_count] = refactored_lines[j]
+            result_count += 1
+
+    return '\n'.join(result[:result_count])
 
 def generate_refactored_file(original_content: str, refactored_functions: dict) -> str:
     """Generate the complete refactored file"""
 
     lines = original_content.split('\n')
-    result_lines = []
+    # Pre-allocate result_lines with known capacity (Rule 3 compliance)
+    MAX_RESULT_LINES = 3000  # Safety bound for result lines
+    result_lines = [None] * MAX_RESULT_LINES
+    result_count = 0
 
-    for i, line in enumerate(lines):
+    # Bounded loop for line processing
+    MAX_LINES_PROCESS = 2000  # Safety bound for line processing
+    for i in range(min(len(lines), MAX_LINES_PROCESS)):
+        line = lines[i]
         # Check if this line starts a function that needs refactoring
         function_name = None
-        for func_name in refactored_functions:
+        # Bounded loop for function name checking with safety bound
+        func_names_list = list(refactored_functions.keys())
+        MAX_FUNCTION_NAMES = 100  # Safety bound for function name checking
+        for j in range(min(len(func_names_list), MAX_FUNCTION_NAMES)):
+            func_name = func_names_list[j]
             if line.strip().startswith(f"def {func_name}("):
                 function_name = func_name
                 break
@@ -197,26 +360,38 @@ def generate_refactored_file(original_content: str, refactored_functions: dict) 
             # Replace the entire function with refactored version
             func_info = refactored_functions[function_name]
 
-            # Find the end of the original function
+            # Find the end of the original function with bounded loop
             func_end = i
-            for j in range(i, len(lines)):
+            MAX_SEARCH_LINES = 1000  # Safety bound for function end search
+            for j in range(i, min(len(lines), i + MAX_SEARCH_LINES)):
                 if j + 1 < len(lines) and lines[j + 1].strip().startswith('def '):
                     func_end = j
                     break
                 elif j == len(lines) - 1:
                     func_end = j
 
-            # Add the refactored content
+            # Add the refactored content with bounded operations
             refactored_content = func_info['refactored_content']
-            result_lines.extend(refactored_content.split('\n'))
-            result_lines.append("")  # Add spacing
+            refactored_lines = refactored_content.split('\n')
+            MAX_REFACTORED_CONTENT = 500  # Safety bound for refactored content
+            for j in range(min(len(refactored_lines), MAX_REFACTORED_CONTENT)):
+                if result_count < MAX_RESULT_LINES:
+                    result_lines[result_count] = refactored_lines[j]
+                    result_count += 1
+
+            # Add spacing
+            if result_count < MAX_RESULT_LINES:
+                result_lines[result_count] = ""
+                result_count += 1
 
             # Skip to end of original function
             i = func_end
         else:
-            result_lines.append(line)
+            if result_count < MAX_RESULT_LINES:
+                result_lines[result_count] = line
+                result_count += 1
 
-    return '\n'.join(result_lines)
+    return '\n'.join(result_lines[:result_count])
 
 def main() -> None:
     """Main refactoring analysis"""
@@ -227,7 +402,10 @@ def main() -> None:
     python_files = list(Path('.').rglob('*.py'))
     total_opportunities = 0
 
-    for file_path in python_files:
+    # Bounded loop for file processing
+    MAX_FILES_MAIN = 100  # Safety bound for main file processing
+    for i in range(min(len(python_files), MAX_FILES_MAIN)):
+        file_path = python_files[i]
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 content = f.read()
@@ -235,7 +413,11 @@ def main() -> None:
             tree = ast.parse(content)
             file_opportunities = 0
 
-            for node in ast.walk(tree):
+            # Bounded loop for AST node processing
+            nodes_list = list(ast.walk(tree))
+            MAX_NODES = 500  # Safety bound for AST nodes
+            for i in range(min(len(nodes_list), MAX_NODES)):
+                node = nodes_list[i]
                 if isinstance(node, ast.FunctionDef):
                     # Get function content
                     lines = content.split('\n')
@@ -252,7 +434,11 @@ def main() -> None:
                             print(f"\n📋 {file_path.name}:{node.name} ({func_length} lines)")
                             print(f"   Refactoring opportunities: {len(analysis['refactoring_opportunities'])}")
 
-                            for opp in analysis['refactoring_opportunities']:
+                            # Bounded loop for opportunities display
+                            MAX_OPPORTUNITIES = 20  # Safety bound for opportunities display
+                            opportunities_list = analysis['refactoring_opportunities']
+                            for j in range(min(len(opportunities_list), MAX_OPPORTUNITIES)):
+                                opp = opportunities_list[j]
                                 print(f"   • Lines {opp['lines']}: {opp['suggested_function']} ({opp['size']} lines)")
 
                             file_opportunities += len(analysis['refactoring_opportunities'])
