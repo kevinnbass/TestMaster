@@ -33,6 +33,27 @@
 **Timeline:** 500 Agent Hours  
 **Execution:** Independent with coordination with other agents
 
+## ✅ Protocol Compliance Overlay (Binding)
+
+- **Frontend-First (ADAMANTIUMCLAD):** Every performance deliverable must include a UI tie-in and visible status in the dashboard at `http://localhost:5000/`.
+- **Anti-Regression (IRONCLAD/STEELCLAD/COPPERCLAD):** Manual analysis before consolidation; extract unique functionality; verify parity; archive—never delete.
+- **Anti-Duplication (GOLDCLAD):** Run similarity search before creating new files; prefer enhancement over creation; include justification if creation is necessary.
+- **Version Control (DIAMONDCLAD):** After task completion, update root `README.md`, then stage, commit, and push.
+
+### Adjusted Success Criteria (Local Single-User Scope)
+- **Deployment:** Local workstation; no multi-user guarantees
+- **Overhead:** Monitoring overhead ≤ 5% CPU and ≤ 150 MB RAM in steady state
+- **UI Performance:** p95 < 200ms for dashboard interactions, p99 < 600ms
+- **Sampling:** Default 2s sampling with configurable 1–10s range
+- **Reliability:** Local restart safety; config rollback checkpoints
+
+### Verification Gates (apply before marking tasks complete)
+1. UI component updated/added with visible state and error handling
+2. End-to-end data flow documented (source → collector → API → UI), incl. sampling/WS cadence
+3. Evidence attached (tests, screenshots, logs, or metrics)
+4. History updated in `beta_history/` with timestamp, changes, and impact
+5. GOLDCLAD justification present for any new file
+
 ### **📋 ROADMAP DETAIL REFERENCE**
 **Complete Hour-by-Hour Breakdown:** See `greek_coordinate_roadmap/20250822_greek_master_roadmap.md` - AGENT BETA ROADMAP section for comprehensive 500-hour detail breakdown with specific technical implementations, metrics, and deliverables for each phase.
 
