@@ -924,6 +924,9 @@ class PerformanceValidationFramework:
     """Main performance validation orchestrator"""
     
     def __init__(self):
+        # Set up logging first
+        self.logger = logging.getLogger('PerformanceValidationFramework')
+        
         # Initialize components
         self.benchmarker = PerformanceBenchmarker()
         self.load_tester = LoadTestExecutor()
@@ -936,9 +939,6 @@ class PerformanceValidationFramework:
         
         if OPTIMIZATION_SYSTEMS_AVAILABLE:
             self._initialize_optimization_integration()
-        
-        # Set up logging
-        self.logger = logging.getLogger('PerformanceValidationFramework')
     
     def _initialize_optimization_integration(self):
         """Initialize integration with optimization systems"""

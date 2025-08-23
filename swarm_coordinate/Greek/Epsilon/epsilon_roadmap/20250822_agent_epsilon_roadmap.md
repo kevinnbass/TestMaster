@@ -16,6 +16,11 @@
 **Timeline:** 125 Weeks (30 Months) | 500+ Agent Hours
 **Execution:** Fully Independent with Alpha/Beta/Gamma/Delta coordination
 
+### **📋 ROADMAP DETAIL REFERENCE**
+**Complete Hour-by-Hour Breakdown:** See `greek_coordinate_roadmap/20250822_greek_master_roadmap.md` - AGENT EPSILON ROADMAP section for comprehensive 500-hour detail breakdown with specific technical implementations, metrics, and deliverables for each phase.
+
+**This individual roadmap provides Epsilon-specific execution guidance, coordination points, and autonomous capabilities while the master roadmap contains the complete technical implementation details.**
+
 ---
 
 ## **🔍 ⚠️ CRITICAL: FEATURE DISCOVERY PROTOCOL FOR AGENT EPSILON**

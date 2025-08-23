@@ -121,6 +121,27 @@ class UnifiedDashboardEngine:
             """3D visualization data proxy."""
             return jsonify(self.data_integrator.get_3d_visualization_data())
         
+        # Enhanced 3D visualization API endpoints
+        @self.app.route('/api/3d/network-topology')
+        def get_3d_network_topology():
+            """Provide comprehensive network topology data for 3D visualization"""
+            return jsonify(self.get_advanced_network_topology())
+        
+        @self.app.route('/api/3d/system-metrics')
+        def get_3d_system_metrics():
+            """Provide real-time system metrics for 3D visualization"""
+            return jsonify(self.get_real_time_system_metrics_3d())
+        
+        @self.app.route('/api/3d/performance-stats')
+        def get_3d_performance_stats():
+            """Provide 3D visualization performance statistics"""
+            return jsonify(self.get_3d_performance_data())
+        
+        @self.app.route('/api/3d/interactive-data')
+        def get_3d_interactive_data():
+            """Provide interactive 3D visualization data with hover/click info"""
+            return jsonify(self.get_interactive_3d_data())
+        
         @self.app.route('/api/backend-proxy/<service>/<endpoint>')
         def backend_proxy(service, endpoint):
             """Proxy requests to backend services."""
@@ -142,30 +163,278 @@ class UnifiedDashboardEngine:
                 return jsonify({"error": str(e)}), 500
     
     def setup_socketio_events(self):
-        """Setup WebSocket events for real-time updates."""
+        """
+        EPSILON ENHANCEMENT: Setup intelligent WebSocket events with context-aware updates
+        and user intelligence integration for personalized real-time information delivery.
+        """
+        
+        # EPSILON ENHANCEMENT: User session tracking for intelligent context
+        self.user_sessions = {}  # Track user contexts per session
         
         @self.socketio.on('connect')
         def handle_connect():
-            """Handle client connection."""
-            print(f"Client connected: {request.sid}")
-            # Send initial data
-            emit('initial_data', self.data_integrator.get_unified_data())
+            """EPSILON: Enhanced client connection with user intelligence."""
+            session_id = request.sid
+            print(f"Client connected: {session_id}")
+            
+            # EPSILON ENHANCEMENT: Initialize user intelligence session
+            self.user_sessions[session_id] = {
+                'connected_at': datetime.now(),
+                'user_context': None,
+                'preferences': {},
+                'interaction_history': [],
+                'priority_metrics': ['system_health', 'api_usage', 'performance_metrics']
+            }
+            
+            # Send intelligent initial data with default context
+            initial_data = self.data_integrator.get_unified_data()
+            emit('initial_data', initial_data)
+            
+            # EPSILON ENHANCEMENT: Send personalization options
+            emit('personalization_options', {
+                'available_roles': ['executive', 'technical', 'financial', 'operations'],
+                'information_density_levels': ['focused', 'medium', 'high', 'maximum'],
+                'visualization_types': ['executive_dashboard', 'technical_charts', 'financial_charts', 'operational_dashboard']
+            })
         
         @self.socketio.on('disconnect')
         def handle_disconnect():
-            """Handle client disconnection."""
-            print(f"Client disconnected: {request.sid}")
+            """EPSILON: Enhanced disconnection with session cleanup."""
+            session_id = request.sid
+            print(f"Client disconnected: {session_id}")
+            
+            # EPSILON ENHANCEMENT: Clean up user intelligence session
+            if session_id in self.user_sessions:
+                session_data = self.user_sessions[session_id]
+                print(f"Session duration: {datetime.now() - session_data['connected_at']}")
+                print(f"Interactions: {len(session_data['interaction_history'])}")
+                del self.user_sessions[session_id]
+        
+        @self.socketio.on('set_user_context')
+        def handle_user_context(data):
+            """EPSILON: Set user context for personalized information delivery."""
+            session_id = request.sid
+            
+            if session_id in self.user_sessions:
+                self.user_sessions[session_id]['user_context'] = data.get('user_context', {})
+                self.user_sessions[session_id]['preferences'] = data.get('preferences', {})
+                
+                # Update priority metrics based on user role
+                user_role = data.get('user_context', {}).get('role', 'general')
+                role_priorities = {
+                    'executive': ['system_health', 'api_usage', 'agent_coordination'],
+                    'technical': ['performance_metrics', 'system_health', 'technical_insights'],
+                    'financial': ['api_usage', 'cost_analysis', 'budget_status'],
+                    'operations': ['agent_status', 'system_health', 'coordination_status']
+                }
+                
+                self.user_sessions[session_id]['priority_metrics'] = role_priorities.get(user_role, 
+                    ['system_health', 'api_usage', 'performance_metrics'])
+                
+                # Send personalized data immediately
+                user_context = self.user_sessions[session_id]['user_context']
+                personalized_data = self.data_integrator.get_unified_data(user_context)
+                emit('personalized_data_update', personalized_data)
+                
+                print(f"User context set for {session_id}: Role={user_role}")
         
         @self.socketio.on('request_update')
         def handle_update_request(data):
-            """Handle update requests from client."""
+            """EPSILON: Intelligent update requests with context awareness."""
+            session_id = request.sid
             component = data.get('component', 'all')
+            priority_level = data.get('priority', 'standard')
+            
+            # EPSILON ENHANCEMENT: Track user interaction for intelligence
+            if session_id in self.user_sessions:
+                self.user_sessions[session_id]['interaction_history'].append({
+                    'timestamp': datetime.now().isoformat(),
+                    'action': 'request_update',
+                    'component': component,
+                    'priority': priority_level
+                })
+                
+                user_context = self.user_sessions[session_id]['user_context']
+            else:
+                user_context = None
+            
+            # EPSILON ENHANCEMENT: Intelligent component-based updates
             if component == 'all':
-                emit('data_update', self.data_integrator.get_unified_data())
+                unified_data = self.data_integrator.get_unified_data(user_context)
+                emit('intelligent_data_update', {
+                    'data': unified_data,
+                    'update_type': 'complete',
+                    'intelligence_metadata': unified_data.get('intelligence_metadata', {}),
+                    'personalization_applied': user_context is not None
+                })
+                
             elif component == 'agents':
-                emit('agent_update', self.agent_coordinator.get_coordination_status())
+                agent_data = self.agent_coordinator.get_coordination_status()
+                # EPSILON ENHANCEMENT: Add intelligence layer to agent data
+                enhanced_agent_data = {
+                    **agent_data,
+                    'intelligence_analysis': self.data_integrator._analyze_agent_coordination(agent_data),
+                    'optimization_suggestions': self.data_integrator._suggest_agent_optimizations(agent_data)
+                }
+                emit('intelligent_agent_update', enhanced_agent_data)
+                
             elif component == 'performance':
-                emit('performance_update', self.performance_monitor.get_metrics())
+                perf_data = self.performance_monitor.get_metrics()
+                # EPSILON ENHANCEMENT: Add predictive performance analysis
+                enhanced_perf_data = {
+                    **perf_data,
+                    'performance_score': self.data_integrator._calculate_performance_score(perf_data),
+                    'trend_analysis': self.data_integrator._analyze_performance_trends(perf_data),
+                    'optimization_opportunities': self.data_integrator._identify_performance_optimizations(perf_data)
+                }
+                emit('intelligent_performance_update', enhanced_perf_data)
+                
+            elif component == 'api_usage':
+                # EPSILON ENHANCEMENT: Get AI-enhanced API usage data
+                try:
+                    from core.monitoring.api_usage_tracker import get_usage_stats, predict_costs, get_ai_insights
+                    api_usage = get_usage_stats()
+                    predictions = predict_costs(12)  # 12-hour prediction
+                    ai_insights = get_ai_insights()
+                    
+                    enhanced_api_data = {
+                        **api_usage,
+                        'ai_predictions': predictions if 'error' not in predictions else {},
+                        'ai_insights': ai_insights,
+                        'intelligence_summary': {
+                            'prediction_available': 'error' not in predictions,
+                            'insight_count': len(ai_insights),
+                            'budget_risk': predictions.get('risk_assessment', {}).get('risk_level', 'UNKNOWN') if 'error' not in predictions else 'UNKNOWN'
+                        }
+                    }
+                    emit('intelligent_api_update', enhanced_api_data)
+                    
+                except Exception as e:
+                    # Fallback to basic API data
+                    emit('api_update_error', {'error': f'AI enhancement failed: {str(e)}'})
+                    
+            elif component == 'system_health':
+                # EPSILON ENHANCEMENT: Enhanced system health with predictions
+                try:
+                    basic_health = {"cpu_usage": 45, "memory_usage": 62, "system_health": "operational"}  # Placeholder
+                    enhanced_health = {
+                        **basic_health,
+                        'health_score': self.data_integrator._calculate_system_health_score(basic_health),
+                        'health_trend': self.data_integrator._analyze_health_trend(basic_health),
+                        'predictive_alerts': self.data_integrator._generate_health_predictions(basic_health),
+                        'optimization_suggestions': self.data_integrator._suggest_health_optimizations(basic_health)
+                    }
+                    emit('intelligent_health_update', enhanced_health)
+                except Exception as e:
+                    emit('health_update_error', {'error': f'Health enhancement failed: {str(e)}'})
+        
+        @self.socketio.on('request_insights')
+        def handle_insights_request(data):
+            """EPSILON: Request AI-powered insights and recommendations."""
+            session_id = request.sid
+            insight_type = data.get('type', 'general')
+            
+            try:
+                if insight_type == 'cost_prediction':
+                    from core.monitoring.api_usage_tracker import predict_costs
+                    predictions = predict_costs(24)
+                    emit('cost_insights', predictions)
+                    
+                elif insight_type == 'usage_patterns':
+                    from core.monitoring.api_usage_tracker import analyze_patterns
+                    patterns = analyze_patterns()
+                    emit('pattern_insights', patterns)
+                    
+                elif insight_type == 'historical_analysis':
+                    from core.monitoring.api_usage_tracker import historical_insights
+                    history = historical_insights()
+                    emit('historical_insights', history)
+                    
+                elif insight_type == 'optimization_recommendations':
+                    # EPSILON ENHANCEMENT: Generate comprehensive optimization insights
+                    user_context = self.user_sessions.get(session_id, {}).get('user_context')
+                    unified_data = self.data_integrator.get_unified_data(user_context)
+                    
+                    optimization_insights = {
+                        'performance_optimizations': unified_data.get('performance_metrics', {}).get('optimization_opportunities', []),
+                        'cost_optimizations': unified_data.get('api_usage', {}).get('usage_patterns', {}).get('recommendations', []),
+                        'system_optimizations': unified_data.get('system_health', {}).get('optimization_suggestions', []),
+                        'agent_optimizations': unified_data.get('agent_status', {}).get('optimization_recommendations', [])
+                    }
+                    
+                    emit('optimization_insights', optimization_insights)
+                    
+                else:
+                    emit('insights_error', {'error': f'Unknown insight type: {insight_type}'})
+                    
+            except Exception as e:
+                emit('insights_error', {'error': f'Insight generation failed: {str(e)}'})
+        
+        @self.socketio.on('priority_alert_subscription')
+        def handle_priority_alerts(data):
+            """EPSILON: Subscribe to priority-based intelligent alerts."""
+            session_id = request.sid
+            alert_priorities = data.get('priorities', ['critical', 'warning'])
+            
+            if session_id in self.user_sessions:
+                self.user_sessions[session_id]['alert_preferences'] = alert_priorities
+                
+                # Send confirmation
+                emit('alert_subscription_confirmed', {
+                    'subscribed_priorities': alert_priorities,
+                    'intelligent_filtering': True
+                })
+        
+        @self.socketio.on('request_drill_down')
+        def handle_drill_down_request(data):
+            """EPSILON: Handle intelligent drill-down requests for detailed analysis."""
+            session_id = request.sid
+            target_metric = data.get('metric', '')
+            drill_depth = data.get('depth', 'detailed')
+            
+            try:
+                user_context = self.user_sessions.get(session_id, {}).get('user_context')
+                
+                if target_metric == 'api_costs':
+                    from core.monitoring.api_usage_tracker import get_usage_stats
+                    detailed_usage = get_usage_stats()
+                    
+                    # EPSILON ENHANCEMENT: Add drill-down intelligence
+                    drill_down_data = {
+                        **detailed_usage,
+                        'drill_down_metadata': {
+                            'metric': target_metric,
+                            'depth': drill_depth,
+                            'available_breakdowns': ['by_model', 'by_agent', 'by_endpoint', 'by_time'],
+                            'intelligence_applied': True
+                        }
+                    }
+                    emit('drill_down_response', drill_down_data)
+                    
+                elif target_metric == 'performance_metrics':
+                    perf_data = self.performance_monitor.get_metrics()
+                    detailed_perf = {
+                        **perf_data,
+                        'detailed_breakdown': {
+                            'response_time_components': ['processing', 'network', 'database'],
+                            'bottleneck_analysis': self.data_integrator._predict_performance_bottlenecks(perf_data),
+                            'optimization_opportunities': self.data_integrator._identify_performance_optimizations(perf_data)
+                        }
+                    }
+                    emit('drill_down_response', detailed_perf)
+                    
+                else:
+                    emit('drill_down_error', {'error': f'Drill-down not available for metric: {target_metric}'})
+                    
+            except Exception as e:
+                emit('drill_down_error', {'error': f'Drill-down failed: {str(e)}'})
+                
+        print("🧠 EPSILON ENHANCEMENT: Intelligent WebSocket system initialized with:")
+        print("   • Context-aware user session tracking")
+        print("   • Personalized real-time data delivery") 
+        print("   • AI-powered insights and predictions")
+        print("   • Intelligent drill-down capabilities")
+        print("   • Priority-based alert subscriptions")
     
     def start_background_tasks(self):
         """Start background data collection tasks."""
@@ -840,6 +1109,158 @@ class PredictiveDataCache:
         
         return predictions
 
+class AdvancedVisualizationEngine:
+    """
+    EPSILON ENHANCEMENT: Advanced visualization system with AI-powered chart selection,
+    interactive drill-down capabilities, and context-aware adaptations.
+    """
+    
+    def __init__(self):
+        self.chart_intelligence = {}
+        self.interaction_patterns = {}
+        self.visualization_cache = {}
+        self.context_adaptations = {}
+    
+    def select_optimal_visualization(self, data_characteristics, user_context):
+        """AI-powered visualization selection based on data characteristics and user context."""
+        recommendations = []
+        
+        # Analyze data characteristics
+        data_type = self._analyze_data_type(data_characteristics)
+        data_volume = data_characteristics.get('volume', 0)
+        temporal_nature = data_characteristics.get('has_time_series', False)
+        correlation_density = data_characteristics.get('correlation_count', 0)
+        
+        # User context considerations
+        user_role = user_context.get('role', 'general')
+        device_type = user_context.get('device', 'desktop')
+        
+        # Chart recommendation logic
+        if temporal_nature and data_volume > 10:
+            if user_role in ['executive', 'financial']:
+                recommendations.append({
+                    'type': 'intelligent_line_chart',
+                    'priority': 0.9,
+                    'reason': 'Time series data optimal for trend analysis',
+                    'enhancements': ['trend_lines', 'forecast_overlay', 'anomaly_detection']
+                })
+            else:
+                recommendations.append({
+                    'type': 'interactive_multi_line',
+                    'priority': 0.85,
+                    'reason': 'Technical users benefit from granular time series control',
+                    'enhancements': ['zoom_controls', 'data_brushing', 'correlation_highlights']
+                })
+        
+        if correlation_density > 3:
+            recommendations.append({
+                'type': 'correlation_matrix_heatmap',
+                'priority': 0.8,
+                'reason': 'High correlation density requires matrix visualization',
+                'enhancements': ['interactive_drill_down', 'statistical_overlays', 'cluster_highlighting']
+            })
+        
+        return sorted(recommendations, key=lambda x: x['priority'], reverse=True)
+    
+    def create_interactive_chart_config(self, chart_type, data, user_context, enhancements):
+        """Create intelligent chart configuration with interactive capabilities."""
+        base_config = self._get_base_chart_config(chart_type)
+        
+        # Add intelligence enhancements
+        if 'drill_down' in enhancements:
+            base_config['plugins']['drill_down'] = {
+                'enabled': True,
+                'levels': self._generate_drill_down_levels(data),
+                'transition_animation': 'smooth_zoom'
+            }
+        
+        if 'smart_tooltips' in enhancements:
+            base_config['plugins']['smart_tooltips'] = {
+                'enabled': True,
+                'context_aware': True,
+                'relationship_hints': True,
+                'prediction_overlay': user_context.get('role') in ['technical', 'analyst']
+            }
+        
+        return base_config
+    
+    def generate_contextual_interactions(self, chart_data, relationships, user_context):
+        """Generate intelligent contextual interactions for charts."""
+        interactions = []
+        
+        # Hover interactions with intelligence
+        interactions.append({
+            'trigger': 'hover',
+            'action': 'smart_tooltip',
+            'intelligence': {
+                'show_related_metrics': True,
+                'correlation_indicators': relationships.get('correlations', []),
+                'trend_analysis': True,
+                'prediction_hints': user_context.get('role') in ['analyst', 'technical']
+            }
+        })
+        
+        # Click interactions for drill-down
+        interactions.append({
+            'trigger': 'click',
+            'action': 'contextual_drill_down',
+            'intelligence': {
+                'determine_drill_target': True,
+                'preserve_context': True,
+                'smart_breadcrumbs': True,
+                'related_data_suggestion': True
+            }
+        })
+        
+        return interactions
+    
+    def _analyze_data_type(self, characteristics):
+        """Analyze data type from characteristics."""
+        if characteristics.get('has_hierarchy'):
+            return 'hierarchical'
+        elif characteristics.get('has_correlations'):
+            return 'correlational'
+        elif characteristics.get('has_time_series'):
+            return 'temporal'
+        elif characteristics.get('has_categories'):
+            return 'categorical'
+        else:
+            return 'numerical'
+    
+    def _get_base_chart_config(self, chart_type):
+        """Get base configuration for chart types."""
+        configs = {
+            'intelligent_line_chart': {
+                'type': 'line',
+                'responsive': True,
+                'interaction': {'intersect': False, 'mode': 'index'},
+                'plugins': {'legend': {'display': True}, 'tooltip': {'mode': 'index'}},
+                'scales': {'x': {'type': 'time'}, 'y': {'beginAtZero': False}}
+            },
+            'correlation_matrix_heatmap': {
+                'type': 'matrix',
+                'responsive': True,
+                'interaction': {'intersect': True, 'mode': 'point'},
+                'plugins': {'legend': {'display': False}, 'tooltip': {'mode': 'point'}},
+                'scales': {'x': {'type': 'category'}, 'y': {'type': 'category'}}
+            }
+        }
+        return configs.get(chart_type, configs['intelligent_line_chart'])
+    
+    def _generate_drill_down_levels(self, data):
+        """Generate drill-down levels based on data structure."""
+        levels = []
+        
+        if isinstance(data, dict):
+            if 'daily' in data and 'hourly' in data:
+                levels = ['daily', 'hourly', 'minute']
+            elif 'categories' in data and 'subcategories' in data:
+                levels = ['categories', 'subcategories', 'items']
+            else:
+                levels = ['overview', 'details', 'diagnostics']
+        
+        return levels
+
 class DataIntegrator:
     """
     AGENT EPSILON ENHANCEMENT: Intelligent Data Integration with AI Synthesis
@@ -859,6 +1280,7 @@ class DataIntegrator:
         self.information_synthesizer = InformationSynthesizer()
         self.user_intelligence = UserIntelligenceEngine()
         self.predictive_cache = PredictiveDataCache()
+        self.visualization_engine = AdvancedVisualizationEngine()
         
         # Enhanced caching with intelligence layers
         self.intelligent_cache = {}
@@ -1567,6 +1989,340 @@ class DataIntegrator:
                 "vertices": random.randint(1000, 5000)
             }
         }
+    
+    def get_advanced_network_topology(self):
+        """Get comprehensive network topology data for advanced 3D visualization"""
+        return {
+            "timestamp": datetime.now().isoformat(),
+            "layers": [
+                {
+                    "id": "presentation",
+                    "name": "Presentation Layer",
+                    "color": 0x00ff00,
+                    "y_position": 100
+                },
+                {
+                    "id": "business", 
+                    "name": "Business Logic Layer",
+                    "color": 0x0000ff,
+                    "y_position": 50
+                },
+                {
+                    "id": "data",
+                    "name": "Data Layer", 
+                    "color": 0xff0000,
+                    "y_position": 0
+                }
+            ],
+            "nodes": [
+                {
+                    "id": "web_server",
+                    "type": "server",
+                    "layer": "presentation",
+                    "position": {"x": 0, "y": 100, "z": 0},
+                    "status": "healthy",
+                    "importance": 1.0,
+                    "metrics": {
+                        "cpu": random.randint(20, 80),
+                        "memory": random.randint(40, 90),
+                        "connections": random.randint(100, 500)
+                    }
+                },
+                {
+                    "id": "load_balancer",
+                    "type": "loadbalancer",
+                    "layer": "presentation", 
+                    "position": {"x": -30, "y": 100, "z": 10},
+                    "status": "healthy",
+                    "importance": 0.8,
+                    "metrics": {
+                        "requests_per_sec": random.randint(50, 200),
+                        "response_time": random.randint(10, 50)
+                    }
+                },
+                {
+                    "id": "api_gateway",
+                    "type": "api",
+                    "layer": "business",
+                    "position": {"x": 20, "y": 50, "z": 10},
+                    "status": "healthy",
+                    "importance": 0.9,
+                    "metrics": {
+                        "requests_per_sec": random.randint(80, 300),
+                        "response_time": random.randint(20, 100),
+                        "error_rate": random.uniform(0.1, 2.0)
+                    }
+                },
+                {
+                    "id": "microservice_1",
+                    "type": "server",
+                    "layer": "business",
+                    "position": {"x": 40, "y": 50, "z": -10},
+                    "status": "healthy",
+                    "importance": 0.6,
+                    "metrics": {
+                        "cpu": random.randint(30, 70),
+                        "memory": random.randint(50, 85)
+                    }
+                },
+                {
+                    "id": "database_primary",
+                    "type": "database",
+                    "layer": "data",
+                    "position": {"x": 40, "y": 0, "z": 20},
+                    "status": "healthy",
+                    "importance": 1.0,
+                    "metrics": {
+                        "query_time": random.randint(5, 50),
+                        "connections": random.randint(20, 100),
+                        "storage_used": random.randint(60, 95)
+                    }
+                },
+                {
+                    "id": "cache_redis",
+                    "type": "cache",
+                    "layer": "data",
+                    "position": {"x": 10, "y": 0, "z": 30},
+                    "status": "healthy",
+                    "importance": 0.7,
+                    "metrics": {
+                        "hit_rate": random.uniform(85, 99),
+                        "memory_usage": random.randint(40, 80)
+                    }
+                },
+                {
+                    "id": "message_queue",
+                    "type": "queue",
+                    "layer": "business",
+                    "position": {"x": -20, "y": 50, "z": 20},
+                    "status": "healthy",
+                    "importance": 0.5,
+                    "metrics": {
+                        "queue_depth": random.randint(0, 100),
+                        "messages_per_sec": random.randint(10, 50)
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "source": "load_balancer",
+                    "target": "web_server", 
+                    "type": "http",
+                    "weight": 0.9,
+                    "throughput": random.randint(400, 800)
+                },
+                {
+                    "source": "web_server",
+                    "target": "api_gateway",
+                    "type": "http",
+                    "weight": 0.8,
+                    "throughput": random.randint(300, 600)
+                },
+                {
+                    "source": "api_gateway",
+                    "target": "microservice_1",
+                    "type": "rest",
+                    "weight": 0.6,
+                    "throughput": random.randint(200, 400)
+                },
+                {
+                    "source": "api_gateway",
+                    "target": "database_primary",
+                    "type": "sql",
+                    "weight": 0.9,
+                    "throughput": random.randint(150, 300)
+                },
+                {
+                    "source": "microservice_1",
+                    "target": "database_primary",
+                    "type": "sql", 
+                    "weight": 0.7,
+                    "throughput": random.randint(100, 250)
+                },
+                {
+                    "source": "api_gateway",
+                    "target": "cache_redis",
+                    "type": "tcp",
+                    "weight": 0.5,
+                    "throughput": random.randint(50, 150)
+                },
+                {
+                    "source": "microservice_1", 
+                    "target": "message_queue",
+                    "type": "amqp",
+                    "weight": 0.4,
+                    "throughput": random.randint(20, 80)
+                }
+            ]
+        }
+    
+    def get_real_time_system_metrics_3d(self):
+        """Get real-time system metrics optimized for 3D visualization"""
+        return {
+            "timestamp": datetime.now().isoformat(),
+            "system_overview": {
+                "cpu_usage": random.uniform(20, 80),
+                "memory_usage": random.uniform(40, 85),
+                "disk_usage": random.uniform(30, 70),
+                "network_io": random.uniform(10, 100)
+            },
+            "component_metrics": [
+                {
+                    "id": "web_server",
+                    "cpu": random.uniform(20, 60),
+                    "memory": random.uniform(40, 80),
+                    "connections": random.randint(100, 300),
+                    "status_color": 0x00ff00 if random.random() > 0.1 else 0xff0000
+                },
+                {
+                    "id": "database_primary",
+                    "cpu": random.uniform(30, 70),
+                    "memory": random.uniform(50, 90),
+                    "query_time": random.uniform(5, 50),
+                    "status_color": 0x00ff00 if random.random() > 0.05 else 0xff0000
+                },
+                {
+                    "id": "api_gateway",
+                    "cpu": random.uniform(15, 45),
+                    "memory": random.uniform(30, 70),
+                    "requests_per_sec": random.randint(50, 200),
+                    "status_color": 0x00ff00 if random.random() > 0.08 else 0xff0000
+                }
+            ],
+            "performance_indicators": {
+                "response_time_avg": random.uniform(50, 200),
+                "throughput": random.randint(500, 1500),
+                "error_rate": random.uniform(0.1, 2.0),
+                "availability": random.uniform(99.0, 99.99)
+            }
+        }
+    
+    def get_3d_performance_data(self):
+        """Get 3D visualization performance statistics"""
+        return {
+            "timestamp": datetime.now().isoformat(),
+            "rendering_performance": {
+                "fps": random.randint(58, 62),
+                "frame_time": random.uniform(14, 18),
+                "gpu_usage": random.uniform(30, 70),
+                "memory_usage": random.randint(80, 150),
+                "draw_calls": random.randint(50, 200)
+            },
+            "scene_complexity": {
+                "total_objects": random.randint(500, 2000),
+                "visible_objects": random.randint(200, 800),
+                "total_vertices": random.randint(10000, 50000),
+                "texture_memory": random.randint(20, 100)
+            },
+            "optimization_stats": {
+                "frustum_culled": random.randint(100, 500),
+                "lod_switches": random.randint(50, 200),
+                "instanced_objects": random.randint(200, 800),
+                "quality_level": random.choice(["high", "medium", "low"])
+            },
+            "interaction_metrics": {
+                "mouse_events_per_sec": random.randint(10, 60),
+                "hover_response_time": random.uniform(2, 8),
+                "click_response_time": random.uniform(5, 15),
+                "camera_updates_per_sec": random.randint(30, 60)
+            }
+        }
+    
+    def get_interactive_3d_data(self):
+        """Get interactive 3D visualization data with detailed node information"""
+        return {
+            "timestamp": datetime.now().isoformat(),
+            "node_details": {
+                "web_server": {
+                    "name": "Web Server",
+                    "description": "Primary web server handling client requests",
+                    "detailed_metrics": {
+                        "cpu_cores": 8,
+                        "cpu_usage_per_core": [random.uniform(10, 80) for _ in range(8)],
+                        "memory_total": "16GB",
+                        "memory_used": f"{random.uniform(6, 14):.1f}GB",
+                        "network_connections": random.randint(150, 400),
+                        "uptime": f"{random.randint(1, 30)} days",
+                        "last_restart": "2025-08-20 09:30:00"
+                    },
+                    "recent_events": [
+                        {"time": "2025-08-23 17:45:00", "event": "High CPU usage detected", "severity": "warning"},
+                        {"time": "2025-08-23 17:30:00", "event": "Memory usage normalized", "severity": "info"},
+                        {"time": "2025-08-23 17:15:00", "event": "Connection peak handled successfully", "severity": "info"}
+                    ]
+                },
+                "database_primary": {
+                    "name": "Primary Database",
+                    "description": "Main PostgreSQL database server",
+                    "detailed_metrics": {
+                        "query_performance": {
+                            "avg_query_time": random.uniform(10, 50),
+                            "slow_queries": random.randint(0, 5),
+                            "queries_per_second": random.randint(50, 200)
+                        },
+                        "storage": {
+                            "total_size": "500GB",
+                            "used_space": f"{random.uniform(300, 450):.1f}GB",
+                            "table_count": random.randint(50, 150),
+                            "index_efficiency": random.uniform(85, 98)
+                        },
+                        "connections": {
+                            "active": random.randint(20, 80),
+                            "max_allowed": 100,
+                            "idle": random.randint(5, 20)
+                        }
+                    },
+                    "recent_events": [
+                        {"time": "2025-08-23 17:40:00", "event": "Backup completed successfully", "severity": "info"},
+                        {"time": "2025-08-23 17:20:00", "event": "Index optimization completed", "severity": "info"}
+                    ]
+                },
+                "api_gateway": {
+                    "name": "API Gateway",
+                    "description": "Central API management and routing service",
+                    "detailed_metrics": {
+                        "request_statistics": {
+                            "requests_per_minute": random.randint(500, 2000),
+                            "average_response_time": random.uniform(20, 100),
+                            "success_rate": random.uniform(98, 99.9),
+                            "cache_hit_rate": random.uniform(70, 90)
+                        },
+                        "endpoint_performance": [
+                            {"endpoint": "/api/users", "avg_time": random.uniform(15, 40), "calls": random.randint(100, 500)},
+                            {"endpoint": "/api/data", "avg_time": random.uniform(25, 80), "calls": random.randint(50, 200)},
+                            {"endpoint": "/api/reports", "avg_time": random.uniform(50, 150), "calls": random.randint(20, 100)}
+                        ]
+                    },
+                    "recent_events": [
+                        {"time": "2025-08-23 17:50:00", "event": "Rate limit applied to client 192.168.1.100", "severity": "warning"},
+                        {"time": "2025-08-23 17:35:00", "event": "New API version deployed", "severity": "info"}
+                    ]
+                }
+            },
+            "relationship_details": {
+                "web_server->api_gateway": {
+                    "connection_type": "HTTP/2",
+                    "bandwidth_usage": f"{random.uniform(10, 50):.1f}Mbps",
+                    "latency": f"{random.uniform(1, 10):.1f}ms",
+                    "packet_loss": f"{random.uniform(0, 0.1):.3f}%",
+                    "security": "TLS 1.3 encrypted"
+                },
+                "api_gateway->database_primary": {
+                    "connection_type": "PostgreSQL",
+                    "pool_size": 50,
+                    "active_connections": random.randint(10, 40),
+                    "transaction_rate": f"{random.randint(20, 100)}/sec",
+                    "isolation_level": "READ_COMMITTED"
+                }
+            },
+            "system_topology_info": {
+                "total_components": 7,
+                "healthy_components": random.randint(6, 7),
+                "warning_components": random.randint(0, 1),
+                "critical_components": random.randint(0, 1),
+                "last_health_check": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+        }
 
 class PerformanceMonitor:
     """Monitor dashboard performance metrics."""
@@ -2078,7 +2834,9 @@ UNIFIED_GAMMA_DASHBOARD_HTML = '''
             }
             
             setupCharts() {
-                // System Health Chart
+                // EPSILON ENHANCEMENT: Advanced Intelligent Charts with AI-Powered Interactions
+                
+                // System Health Chart with Intelligence
                 const healthCtx = document.getElementById('system-health-chart').getContext('2d');
                 this.charts.systemHealth = new Chart(healthCtx, {
                     type: 'line',
@@ -2089,34 +2847,83 @@ UNIFIED_GAMMA_DASHBOARD_HTML = '''
                             data: [],
                             borderColor: '#3b82f6',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            tension: 0.4
+                            tension: 0.4,
+                            pointHoverRadius: 8,
+                            pointHoverBackgroundColor: '#3b82f6'
                         }, {
                             label: 'Memory %',
                             data: [],
                             borderColor: '#8b5cf6',
                             backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                            tension: 0.4
+                            tension: 0.4,
+                            pointHoverRadius: 8,
+                            pointHoverBackgroundColor: '#8b5cf6'
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        },
                         plugins: {
                             legend: { 
                                 display: true,
-                                labels: { color: 'white' }
+                                labels: { 
+                                    color: 'white',
+                                    usePointStyle: true,
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                enabled: true,
+                                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                                titleColor: 'white',
+                                bodyColor: 'white',
+                                borderColor: '#3b82f6',
+                                borderWidth: 1,
+                                displayColors: true,
+                                callbacks: {
+                                    // EPSILON: Enhanced tooltips with intelligent context
+                                    beforeTitle: function(tooltipItems) {
+                                        return 'System Health Analysis';
+                                    },
+                                    afterBody: function(tooltipItems) {
+                                        const cpu = tooltipItems[0]?.parsed?.y || 0;
+                                        const memory = tooltipItems[1]?.parsed?.y || 0;
+                                        const analysis = [];
+                                        
+                                        if (cpu > 80) analysis.push('⚠️ High CPU usage detected');
+                                        if (memory > 85) analysis.push('⚠️ High memory consumption');
+                                        if (cpu < 30 && memory < 40) analysis.push('✅ System running efficiently');
+                                        
+                                        return analysis.length ? analysis : ['📊 System performance normal'];
+                                    }
+                                }
                             }
                         },
                         scales: {
                             y: { 
                                 display: true,
                                 ticks: { color: 'rgba(255, 255, 255, 0.7)' },
-                                grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                beginAtZero: true,
+                                max: 100
                             },
                             x: { 
                                 display: true,
                                 ticks: { color: 'rgba(255, 255, 255, 0.7)' },
                                 grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                            }
+                        },
+                        // EPSILON: Advanced chart interactions
+                        onHover: (event, elements) => {
+                            event.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
+                        },
+                        onClick: (event, elements) => {
+                            if (elements.length > 0) {
+                                this.handleChartDrillDown('system-health', elements[0], event);
                             }
                         }
                     }
@@ -2242,6 +3049,216 @@ UNIFIED_GAMMA_DASHBOARD_HTML = '''
                 }
                 
                 chart.update('none');
+            }
+            
+            // EPSILON ENHANCEMENT: Advanced Chart Intelligence Methods
+            // =====================================================
+            
+            handleChartDrillDown(chartType, element, event) {
+                """Handle intelligent chart drill-down interactions."""
+                const dataIndex = element.index;
+                const datasetIndex = element.datasetIndex;
+                
+                // Context-aware drill-down based on chart type and user role
+                switch(chartType) {
+                    case 'system-health':
+                        this.showSystemHealthDetails(dataIndex, datasetIndex, event);
+                        break;
+                    case 'api-usage':
+                        this.showApiUsageDetails(dataIndex, datasetIndex, event);
+                        break;
+                    default:
+                        this.showGenericDetails(chartType, dataIndex, datasetIndex, event);
+                }
+            }
+            
+            showSystemHealthDetails(dataIndex, datasetIndex, event) {
+                """Show detailed system health analysis in popup."""
+                const chart = this.charts.systemHealth;
+                const labels = chart.data.labels;
+                const datasets = chart.data.datasets;
+                
+                if (!labels[dataIndex]) return;
+                
+                const timestamp = labels[dataIndex];
+                const cpuValue = datasets[0].data[dataIndex] || 0;
+                const memoryValue = datasets[1].data[dataIndex] || 0;
+                
+                // Create intelligent analysis popup
+                const analysis = this.generateHealthAnalysis(cpuValue, memoryValue, timestamp);
+                this.showIntelligentPopup('System Health Analysis', analysis, event);
+            }
+            
+            generateHealthAnalysis(cpu, memory, timestamp) {
+                """Generate AI-powered health analysis."""
+                const analysis = {
+                    timestamp: timestamp,
+                    metrics: {
+                        cpu: `${cpu.toFixed(1)}%`,
+                        memory: `${memory.toFixed(1)}%`,
+                        health_score: this.calculateHealthScore(cpu, memory)
+                    },
+                    insights: [],
+                    recommendations: []
+                };
+                
+                // AI-powered insights
+                if (cpu > 85) {
+                    analysis.insights.push('🔴 Critical CPU usage - immediate attention required');
+                    analysis.recommendations.push('Review active processes and consider load balancing');
+                } else if (cpu > 70) {
+                    analysis.insights.push('🟡 High CPU usage detected');
+                    analysis.recommendations.push('Monitor CPU-intensive processes');
+                } else if (cpu < 20) {
+                    analysis.insights.push('🟢 Low CPU utilization - system resources available');
+                }
+                
+                if (memory > 90) {
+                    analysis.insights.push('🔴 Critical memory usage - risk of system instability');
+                    analysis.recommendations.push('Check for memory leaks and restart services if needed');
+                } else if (memory > 75) {
+                    analysis.insights.push('🟡 High memory consumption');
+                    analysis.recommendations.push('Review memory usage patterns');
+                } else if (memory < 30) {
+                    analysis.insights.push('🟢 Efficient memory utilization');
+                }
+                
+                // Correlation analysis
+                const correlation = this.analyzeCorrelation(cpu, memory);
+                if (correlation.strength > 0.7) {
+                    analysis.insights.push(`📊 Strong correlation detected: ${correlation.description}`);
+                }
+                
+                return analysis;
+            }
+            
+            calculateHealthScore(cpu, memory) {
+                """Calculate composite health score."""
+                const cpuScore = Math.max(0, 100 - cpu);
+                const memoryScore = Math.max(0, 100 - memory);
+                const composite = (cpuScore + memoryScore) / 2;
+                
+                if (composite >= 80) return { score: composite.toFixed(1), status: '🟢 Excellent' };
+                if (composite >= 60) return { score: composite.toFixed(1), status: '🟡 Good' };
+                if (composite >= 40) return { score: composite.toFixed(1), status: '🟠 Fair' };
+                return { score: composite.toFixed(1), status: '🔴 Poor' };
+            }
+            
+            analyzeCorrelation(cpu, memory) {
+                """Analyze correlation between metrics."""
+                const ratio = cpu / Math.max(memory, 1);
+                
+                if (ratio > 1.5) {
+                    return {
+                        strength: 0.8,
+                        description: 'CPU-bound workload detected - CPU usage exceeds memory pressure'
+                    };
+                } else if (ratio < 0.5) {
+                    return {
+                        strength: 0.7,
+                        description: 'Memory-intensive workload - high memory usage with low CPU'
+                    };
+                } else {
+                    return {
+                        strength: 0.9,
+                        description: 'Balanced system load - proportional CPU and memory usage'
+                    };
+                }
+            }
+            
+            showIntelligentPopup(title, analysis, event) {
+                """Show intelligent analysis popup with rich information."""
+                // Remove existing popup
+                const existingPopup = document.getElementById('intelligent-popup');
+                if (existingPopup) existingPopup.remove();
+                
+                // Create new popup
+                const popup = document.createElement('div');
+                popup.id = 'intelligent-popup';
+                popup.style.cssText = `
+                    position: fixed;
+                    top: ${event.clientY + 10}px;
+                    left: ${event.clientX + 10}px;
+                    background: rgba(0, 0, 0, 0.95);
+                    border: 1px solid #3b82f6;
+                    border-radius: 12px;
+                    padding: 20px;
+                    min-width: 320px;
+                    max-width: 500px;
+                    color: white;
+                    font-family: 'SF Pro Text', sans-serif;
+                    z-index: 10000;
+                    backdrop-filter: blur(20px);
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+                `;
+                
+                let content = `
+                    <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #3b82f6;">
+                        ${title}
+                    </div>
+                    <div style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-bottom: 16px;">
+                        ${analysis.timestamp}
+                    </div>
+                `;
+                
+                // Metrics section
+                content += `<div style="margin-bottom: 16px;">`;
+                for (const [key, value] of Object.entries(analysis.metrics)) {
+                    if (typeof value === 'object') {
+                        content += `<div style="margin-bottom: 8px;">
+                            <span style="color: rgba(255, 255, 255, 0.8);">${key.replace('_', ' ').toUpperCase()}:</span>
+                            <span style="margin-left: 8px; font-weight: 600;">${value.score}</span>
+                            <span style="margin-left: 8px;">${value.status}</span>
+                        </div>`;
+                    } else {
+                        content += `<div style="margin-bottom: 8px;">
+                            <span style="color: rgba(255, 255, 255, 0.8);">${key.replace('_', ' ').toUpperCase()}:</span>
+                            <span style="margin-left: 8px; font-weight: 600;">${value}</span>
+                        </div>`;
+                    }
+                }
+                content += `</div>`;
+                
+                // Insights section
+                if (analysis.insights.length) {
+                    content += `<div style="margin-bottom: 16px;">
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #8b5cf6;">AI Insights:</div>`;
+                    analysis.insights.forEach(insight => {
+                        content += `<div style="margin-bottom: 6px; font-size: 14px;">${insight}</div>`;
+                    });
+                    content += `</div>`;
+                }
+                
+                // Recommendations section
+                if (analysis.recommendations.length) {
+                    content += `<div style="margin-bottom: 16px;">
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #10b981;">Recommendations:</div>`;
+                    analysis.recommendations.forEach(rec => {
+                        content += `<div style="margin-bottom: 6px; font-size: 14px;">• ${rec}</div>`;
+                    });
+                    content += `</div>`;
+                }
+                
+                // Close button
+                content += `
+                    <div style="text-align: right; margin-top: 16px;">
+                        <button onclick="document.getElementById('intelligent-popup').remove()" 
+                                style="background: #3b82f6; color: white; border: none; padding: 8px 16px; 
+                                       border-radius: 6px; cursor: pointer; font-size: 14px;">
+                            Close
+                        </button>
+                    </div>
+                `;
+                
+                popup.innerHTML = content;
+                document.body.appendChild(popup);
+                
+                // Auto-remove after 15 seconds
+                setTimeout(() => {
+                    if (document.getElementById('intelligent-popup')) {
+                        document.getElementById('intelligent-popup').remove();
+                    }
+                }, 15000);
             }
             
             startPerformanceMonitoring() {

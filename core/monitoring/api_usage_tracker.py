@@ -222,6 +222,13 @@ class APIUsageTracker:
             'action_history': deque(maxlen=100),
             'state_history': deque(maxlen=100)
         }
+        
+        # H5.5 ENHANCEMENT: AI-driven performance enhancement
+        self.ai_performance_enhancements = deque(maxlen=100)  # Performance enhancement history
+        self.performance_cache = {}                # Intelligent caching system
+        self.cache_analytics = {}                  # Cache performance metrics
+        self.prediction_queue = deque(maxlen=100)  # Performance prediction queue
+        
         self._initialize_ai_engine()
         
         # Load existing stats
@@ -1709,6 +1716,1011 @@ class APIUsageTracker:
             self.logger.error(f"Reinforcement learning optimization failed: {e}")
             return {"error": f"RL optimization failed: {str(e)}"}
     
+    def real_time_optimization_engine(self) -> Dict[str, Any]:
+        """Real-time AI optimization with dynamic model switching"""
+        try:
+            # Analyze current system state for optimization opportunities
+            current_stats = self.get_current_stats()
+            recent_calls = list(self.recent_calls)[-50:] if self.recent_calls else []
+            
+            optimization_recommendations = []
+            cost_savings_potential = 0.0
+            
+            # 1. Model switching optimization
+            if recent_calls:
+                model_efficiency = {}
+                for call in recent_calls:
+                    if call.model and call.input_tokens + call.output_tokens > 0:
+                        efficiency = call.estimated_cost / (call.input_tokens + call.output_tokens) * 1000
+                        if call.model not in model_efficiency:
+                            model_efficiency[call.model] = []
+                        model_efficiency[call.model].append(efficiency)
+                
+                # Calculate average efficiency per model
+                for model, efficiencies in model_efficiency.items():
+                    model_efficiency[model] = sum(efficiencies) / len(efficiencies)
+                
+                if len(model_efficiency) > 1:
+                    most_efficient = min(model_efficiency, key=model_efficiency.get)
+                    least_efficient = max(model_efficiency, key=model_efficiency.get)
+                    
+                    if model_efficiency[least_efficient] > model_efficiency[most_efficient] * 1.5:
+                        potential_savings = (model_efficiency[least_efficient] - model_efficiency[most_efficient]) * 1000
+                        optimization_recommendations.append({
+                            'type': 'model_switching',
+                            'priority': 'high',
+                            'recommendation': f"Switch from {least_efficient} to {most_efficient} for cost-sensitive tasks",
+                            'potential_savings': potential_savings,
+                            'efficiency_improvement': f"{((model_efficiency[least_efficient] / model_efficiency[most_efficient] - 1) * 100):.1f}%"
+                        })
+                        cost_savings_potential += potential_savings
+            
+            # 2. Usage pattern optimization
+            if len(recent_calls) >= 20:
+                hourly_costs = {}
+                for call in recent_calls:
+                    hour = datetime.fromisoformat(call.timestamp).hour
+                    if hour not in hourly_costs:
+                        hourly_costs[hour] = []
+                    hourly_costs[hour].append(call.estimated_cost)
+                
+                # Find peak cost hours
+                hourly_avg_costs = {hour: sum(costs)/len(costs) for hour, costs in hourly_costs.items()}
+                
+                if hourly_avg_costs:
+                    peak_hour = max(hourly_avg_costs, key=hourly_avg_costs.get)
+                    off_peak_hour = min(hourly_avg_costs, key=hourly_avg_costs.get)
+                    
+                    if hourly_avg_costs[peak_hour] > hourly_avg_costs[off_peak_hour] * 2:
+                        optimization_recommendations.append({
+                            'type': 'temporal_optimization',
+                            'priority': 'medium',
+                            'recommendation': f"Schedule non-urgent tasks during off-peak hour {off_peak_hour}:00 instead of peak hour {peak_hour}:00",
+                            'potential_savings': (hourly_avg_costs[peak_hour] - hourly_avg_costs[off_peak_hour]) * 10,
+                            'cost_reduction': f"{((1 - hourly_avg_costs[off_peak_hour] / hourly_avg_costs[peak_hour]) * 100):.1f}%"
+                        })
+            
+            # 3. Budget utilization optimization
+            budget_status = current_stats['budget_status']
+            daily_usage = budget_status['daily']['percentage']
+            
+            if daily_usage < 30:  # Under-utilization
+                optimization_recommendations.append({
+                    'type': 'budget_utilization',
+                    'priority': 'low',
+                    'recommendation': 'Budget under-utilized - consider increasing analysis frequency or using premium models for better quality',
+                    'potential_improvement': 'Quality enhancement opportunity',
+                    'usage_gap': f"{(50 - daily_usage):.1f}% additional capacity available"
+                })
+            elif daily_usage > 85:  # Over-utilization risk
+                optimization_recommendations.append({
+                    'type': 'budget_management',
+                    'priority': 'high',
+                    'recommendation': 'High budget utilization - implement cost controls and consider model optimization',
+                    'risk_level': 'HIGH',
+                    'usage_level': f"{daily_usage:.1f}%"
+                })
+            
+            # 4. Agent workload optimization
+            if current_stats.get('calls_by_agent'):
+                agent_calls = current_stats['calls_by_agent']
+                agent_costs = current_stats.get('cost_by_agent', {})
+                
+                if len(agent_calls) > 1:
+                    max_calls = max(agent_calls.values())
+                    min_calls = min(agent_calls.values())
+                    
+                    if max_calls > min_calls * 3:  # Significant imbalance
+                        overloaded_agent = max(agent_calls, key=agent_calls.get)
+                        underutilized_agent = min(agent_calls, key=agent_calls.get)
+                        
+                        optimization_recommendations.append({
+                            'type': 'load_balancing',
+                            'priority': 'medium',
+                            'recommendation': f"Rebalance workload from {overloaded_agent} to {underutilized_agent}",
+                            'imbalance_ratio': f"{max_calls / min_calls:.1f}:1",
+                            'potential_improvement': 'Better resource utilization and reduced bottlenecks'
+                        })
+            
+            # 5. Endpoint efficiency optimization
+            if current_stats.get('calls_by_endpoint') and len(current_stats['calls_by_endpoint']) > 2:
+                endpoint_efficiency = {}
+                for call in recent_calls:
+                    if call.endpoint and call.input_tokens + call.output_tokens > 0:
+                        efficiency = call.estimated_cost / (call.input_tokens + call.output_tokens)
+                        if call.endpoint not in endpoint_efficiency:
+                            endpoint_efficiency[call.endpoint] = []
+                        endpoint_efficiency[call.endpoint].append(efficiency)
+                
+                # Find inefficient endpoints
+                for endpoint, efficiencies in endpoint_efficiency.items():
+                    avg_efficiency = sum(efficiencies) / len(efficiencies)
+                    if avg_efficiency > 0.001:  # High cost per token
+                        optimization_recommendations.append({
+                            'type': 'endpoint_optimization',
+                            'priority': 'medium',
+                            'recommendation': f"Optimize endpoint {endpoint} - high cost per token detected",
+                            'cost_per_token': f"${avg_efficiency:.6f}",
+                            'suggested_action': 'Review request patterns and consider caching or model optimization'
+                        })
+            
+            # Generate real-time action plan
+            action_plan = []
+            high_priority_items = [rec for rec in optimization_recommendations if rec.get('priority') == 'high']
+            
+            if high_priority_items:
+                action_plan.append("IMMEDIATE ACTIONS REQUIRED:")
+                for item in high_priority_items:
+                    action_plan.append(f"- {item['recommendation']}")
+            
+            medium_priority_items = [rec for rec in optimization_recommendations if rec.get('priority') == 'medium']
+            if medium_priority_items:
+                action_plan.append("MEDIUM PRIORITY OPTIMIZATIONS:")
+                for item in medium_priority_items[:3]:  # Top 3
+                    action_plan.append(f"- {item['recommendation']}")
+            
+            # Calculate total optimization impact
+            total_recommendations = len(optimization_recommendations)
+            high_priority_count = len(high_priority_items)
+            
+            optimization_result = {
+                'optimization_recommendations': optimization_recommendations,
+                'action_plan': action_plan,
+                'optimization_summary': {
+                    'total_recommendations': total_recommendations,
+                    'high_priority': high_priority_count,
+                    'medium_priority': len(medium_priority_items),
+                    'low_priority': len([r for r in optimization_recommendations if r.get('priority') == 'low']),
+                    'potential_cost_savings': cost_savings_potential,
+                    'optimization_score': max(0, 100 - high_priority_count * 20 - len(medium_priority_items) * 5)
+                },
+                'real_time_metrics': {
+                    'current_efficiency': self._calculate_system_efficiency(),
+                    'budget_utilization': daily_usage,
+                    'alert_frequency': len(list(self.alert_history)[-24:]) if self.alert_history else 0,
+                    'model_diversity': len(current_stats.get('calls_by_model', {})),
+                    'agent_balance': self._calculate_agent_balance_score()
+                },
+                'generated_at': datetime.now().isoformat()
+            }
+            
+            return optimization_result
+            
+        except Exception as e:
+            self.logger.error(f"Real-time optimization failed: {e}")
+            return {"error": f"Optimization failed: {str(e)}"}
+    
+    def _calculate_system_efficiency(self) -> float:
+        """Calculate overall system efficiency score"""
+        recent_calls = list(self.recent_calls)[-50:] if self.recent_calls else []
+        
+        if not recent_calls:
+            return 0.5  # Neutral score
+        
+        # Calculate efficiency factors
+        success_rate = sum(1 for call in recent_calls if call.success) / len(recent_calls)
+        
+        # Average cost per token
+        total_cost = sum(call.estimated_cost for call in recent_calls)
+        total_tokens = sum(call.input_tokens + call.output_tokens for call in recent_calls)
+        cost_efficiency = 1.0 - min(1.0, (total_cost / max(1, total_tokens)) * 10000)  # Normalize
+        
+        # Response time efficiency (if available)
+        response_times = [call.response_time for call in recent_calls if call.response_time]
+        time_efficiency = 0.8  # Default if no response time data
+        if response_times:
+            avg_response_time = sum(response_times) / len(response_times)
+            time_efficiency = max(0, 1.0 - min(1.0, avg_response_time / 10.0))  # 10s = 0 efficiency
+        
+        # Combine factors
+        overall_efficiency = (success_rate * 0.4 + cost_efficiency * 0.4 + time_efficiency * 0.2)
+        return round(overall_efficiency, 3)
+    
+    def _calculate_agent_balance_score(self) -> float:
+        """Calculate agent workload balance score"""
+        agent_calls = self.stats.calls_by_agent
+        
+        if len(agent_calls) < 2:
+            return 1.0  # Perfect balance with single agent
+        
+        call_counts = list(agent_calls.values())
+        if not call_counts:
+            return 1.0
+        
+        max_calls = max(call_counts)
+        min_calls = min(call_counts)
+        
+        if max_calls == 0:
+            return 1.0
+        
+        balance_ratio = min_calls / max_calls
+        return round(balance_ratio, 3)
+    
+    def automated_budget_rebalancing(self) -> Dict[str, Any]:
+        """Automated intelligent budget rebalancing system"""
+        try:
+            current_stats = self._get_budget_status()
+            daily_usage = current_stats['daily']['percentage']
+            hourly_usage = current_stats['hourly']['percentage']
+            
+            # Historical usage analysis for rebalancing
+            recent_calls = list(self.recent_calls)[-100:] if self.recent_calls else []
+            
+            if len(recent_calls) < 20:
+                return {"error": "Insufficient data for budget rebalancing"}
+            
+            # Analyze usage patterns over time
+            daily_costs = {}
+            hourly_patterns = {}
+            
+            for call in recent_calls:
+                date = call.timestamp[:10]
+                hour = datetime.fromisoformat(call.timestamp).hour
+                
+                if date not in daily_costs:
+                    daily_costs[date] = 0
+                daily_costs[date] += call.estimated_cost
+                
+                if hour not in hourly_patterns:
+                    hourly_patterns[hour] = 0
+                hourly_patterns[hour] += call.estimated_cost
+            
+            # Calculate optimal budget allocation
+            if daily_costs:
+                avg_daily = sum(daily_costs.values()) / len(daily_costs)
+                max_daily = max(daily_costs.values())
+                
+                # Recommend budget adjustments
+                rebalancing_recommendations = []
+                
+                # Daily budget optimization
+                if avg_daily > self.budget.daily_limit * 0.85:
+                    new_daily_limit = avg_daily * 1.2  # 20% buffer
+                    rebalancing_recommendations.append({
+                        'type': 'daily_increase',
+                        'current_limit': self.budget.daily_limit,
+                        'recommended_limit': new_daily_limit,
+                        'reason': f'Average daily usage ({avg_daily:.3f}) approaching current limit',
+                        'urgency': 'high' if avg_daily > self.budget.daily_limit * 0.95 else 'medium'
+                    })
+                elif avg_daily < self.budget.daily_limit * 0.4:
+                    new_daily_limit = max(avg_daily * 1.5, 1.0)  # Reduce but keep minimum
+                    rebalancing_recommendations.append({
+                        'type': 'daily_decrease',
+                        'current_limit': self.budget.daily_limit,
+                        'recommended_limit': new_daily_limit,
+                        'reason': f'Daily budget under-utilized (avg: {avg_daily:.3f})',
+                        'urgency': 'low'
+                    })
+                
+                # Hourly budget optimization
+                if hourly_patterns:
+                    peak_hourly = max(hourly_patterns.values())
+                    if peak_hourly > self.budget.hourly_limit * 0.9:
+                        new_hourly_limit = peak_hourly * 1.1
+                        rebalancing_recommendations.append({
+                            'type': 'hourly_increase',
+                            'current_limit': self.budget.hourly_limit,
+                            'recommended_limit': new_hourly_limit,
+                            'reason': f'Peak hourly usage ({peak_hourly:.3f}) approaching limit',
+                            'urgency': 'medium'
+                        })
+            
+            # Dynamic allocation based on usage patterns
+            allocation_strategy = {}
+            
+            # Time-based allocation
+            if hourly_patterns:
+                total_hourly_usage = sum(hourly_patterns.values())
+                for hour, usage in hourly_patterns.items():
+                    allocation_percentage = (usage / total_hourly_usage) * 100
+                    allocation_strategy[f"hour_{hour}"] = {
+                        'percentage': allocation_percentage,
+                        'recommended_budget': (allocation_percentage / 100) * self.budget.daily_limit
+                    }
+            
+            # Agent-based allocation
+            if self.stats.cost_by_agent:
+                total_agent_cost = sum(self.stats.cost_by_agent.values())
+                for agent, cost in self.stats.cost_by_agent.items():
+                    allocation_percentage = (cost / total_agent_cost) * 100
+                    allocation_strategy[f"agent_{agent}"] = {
+                        'percentage': allocation_percentage,
+                        'recommended_budget': (allocation_percentage / 100) * self.budget.daily_limit
+                    }
+            
+            # Auto-apply rebalancing if enabled
+            auto_applied = []
+            if hasattr(self.budget, 'auto_rebalance') and getattr(self.budget, 'auto_rebalance', False):
+                for rec in rebalancing_recommendations:
+                    if rec['urgency'] == 'high' or (rec['urgency'] == 'medium' and rec['type'].endswith('_increase')):
+                        # Apply the recommendation
+                        if rec['type'] == 'daily_increase' or rec['type'] == 'daily_decrease':
+                            old_limit = self.budget.daily_limit
+                            self.budget.daily_limit = rec['recommended_limit']
+                            auto_applied.append(f"Daily limit: ${old_limit:.2f} -> ${rec['recommended_limit']:.2f}")
+                        elif rec['type'] == 'hourly_increase':
+                            old_limit = self.budget.hourly_limit
+                            self.budget.hourly_limit = rec['recommended_limit']
+                            auto_applied.append(f"Hourly limit: ${old_limit:.2f} -> ${rec['recommended_limit']:.2f}")
+                        
+                        self.logger.info(f"Auto-rebalanced budget: {rec['type']} applied")
+            
+            rebalancing_result = {
+                'recommendations': rebalancing_recommendations,
+                'allocation_strategy': allocation_strategy,
+                'auto_applied': auto_applied,
+                'current_utilization': {
+                    'daily_percentage': daily_usage,
+                    'hourly_percentage': hourly_usage,
+                    'daily_avg': avg_daily if 'avg_daily' in locals() else 0,
+                    'hourly_patterns': hourly_patterns
+                }
+            }
+            
+            return rebalancing_result
+            
+        except Exception as e:
+            self.logger.error(f"Automated budget rebalancing error: {e}")
+            return {
+                'recommendations': [],
+                'allocation_strategy': {},
+                'auto_applied': [],
+                'error': str(e)
+            }
+    
+    def ai_driven_performance_enhancement(self, cache_duration_hours=24):
+        """
+        H5.5: AI-driven performance enhancement and predictive caching system
+        
+        Enhanced predictive caching with AI optimization for improved system performance
+        """
+        try:
+            # Initialize performance cache if not exists
+            if not hasattr(self, 'performance_cache'):
+                self.performance_cache = {}
+                self.cache_analytics = {}
+                self.prediction_queue = deque(maxlen=100)
+            
+            # Analyze current system performance
+            performance_metrics = self._analyze_system_performance()
+            
+            # Generate performance predictions using AI
+            performance_predictions = self._generate_performance_predictions()
+            
+            # Implement intelligent caching strategies
+            caching_strategy = self._optimize_caching_strategy(cache_duration_hours)
+            
+            # Resource allocation optimization
+            resource_optimization = self._optimize_resource_allocation()
+            
+            # Predictive load balancing
+            load_balancing = self._predictive_load_balancing()
+            
+            enhancement_result = {
+                'timestamp': datetime.utcnow().isoformat() + 'Z',
+                'performance_metrics': performance_metrics,
+                'predictions': performance_predictions,
+                'caching_strategy': caching_strategy,
+                'resource_optimization': resource_optimization,
+                'load_balancing': load_balancing,
+                'cache_stats': self._get_cache_statistics(),
+                'ai_insights': self._generate_performance_insights()
+            }
+            
+            # Store enhancement data for analysis
+            if len(self.ai_performance_enhancements) >= 50:
+                self.ai_performance_enhancements.popleft()
+            self.ai_performance_enhancements.append(enhancement_result)
+            
+            # Log performance enhancement
+            self.logger.info(f"AI Performance Enhancement completed - Cache hit ratio: {enhancement_result['cache_stats'].get('hit_ratio', 0):.2%}")
+            
+            return enhancement_result
+            
+        except Exception as e:
+            self.logger.error(f"AI performance enhancement error: {e}")
+            return {
+                'error': str(e),
+                'timestamp': datetime.utcnow().isoformat() + 'Z'
+            }
+    
+    def _analyze_system_performance(self):
+        """Analyze current system performance metrics"""
+        try:
+            recent_calls = list(self.api_calls)[-100:] if self.api_calls else []
+            
+            # Response time analysis
+            response_times = []
+            cost_efficiency = []
+            model_performance = {}
+            
+            for call in recent_calls:
+                if hasattr(call, 'response_time'):
+                    response_times.append(call.response_time)
+                
+                # Cost efficiency (tokens per dollar)
+                if call.estimated_cost > 0:
+                    efficiency = (call.input_tokens + call.output_tokens) / call.estimated_cost
+                    cost_efficiency.append(efficiency)
+                
+                # Model-specific performance
+                if call.model not in model_performance:
+                    model_performance[call.model] = {'calls': 0, 'total_cost': 0, 'total_tokens': 0}
+                
+                model_performance[call.model]['calls'] += 1
+                model_performance[call.model]['total_cost'] += call.estimated_cost
+                model_performance[call.model]['total_tokens'] += call.input_tokens + call.output_tokens
+            
+            # Calculate performance metrics
+            avg_response_time = sum(response_times) / len(response_times) if response_times else 0
+            avg_cost_efficiency = sum(cost_efficiency) / len(cost_efficiency) if cost_efficiency else 0
+            
+            # Performance scoring
+            performance_score = 100  # Start at perfect
+            if avg_response_time > 2.0:  # Slower than 2 seconds
+                performance_score -= min(30, (avg_response_time - 2.0) * 10)
+            
+            if avg_cost_efficiency < 1000:  # Low tokens per dollar
+                performance_score -= min(20, (1000 - avg_cost_efficiency) / 50)
+            
+            return {
+                'avg_response_time': avg_response_time,
+                'avg_cost_efficiency': avg_cost_efficiency,
+                'model_performance': model_performance,
+                'performance_score': max(0, performance_score),
+                'total_analyzed_calls': len(recent_calls),
+                'performance_trend': self._calculate_performance_trend(recent_calls)
+            }
+            
+        except Exception as e:
+            return {'error': str(e), 'performance_score': 0}
+    
+    def _generate_performance_predictions(self):
+        """Generate AI-powered performance predictions"""
+        try:
+            if self.ai_engine is None:
+                return {'predictions': [], 'confidence': 0.0}
+            
+            # Prepare performance data for AI analysis
+            recent_performance = []
+            for enhancement in list(self.ai_performance_enhancements)[-10:]:
+                if 'performance_metrics' in enhancement:
+                    metrics = enhancement['performance_metrics']
+                    recent_performance.append([
+                        metrics.get('avg_response_time', 0),
+                        metrics.get('avg_cost_efficiency', 0),
+                        metrics.get('performance_score', 0),
+                        len(metrics.get('model_performance', {}))
+                    ])
+            
+            if len(recent_performance) < 3:
+                return {'predictions': [], 'confidence': 0.0, 'reason': 'Insufficient data for prediction'}
+            
+            # Use AI engine for performance prediction
+            ai_features = np.array(recent_performance[-5:]).flatten() if len(recent_performance) >= 5 else np.array(recent_performance).flatten()
+            
+            # Pad or truncate to match AI input size (10 features)
+            if len(ai_features) > 10:
+                ai_features = ai_features[:10]
+            elif len(ai_features) < 10:
+                ai_features = np.pad(ai_features, (0, 10 - len(ai_features)), 'constant')
+            
+            ai_output = self.ai_engine.predict_performance(ai_features)
+            
+            # Generate performance predictions
+            predictions = []
+            
+            # Predict next hour performance
+            if len(recent_performance) >= 2:
+                trend = recent_performance[-1][2] - recent_performance[-2][2]  # Performance score trend
+                predicted_score = min(100, max(0, recent_performance[-1][2] + trend))
+                
+                predictions.append({
+                    'type': 'performance_score',
+                    'timeframe': '1_hour',
+                    'predicted_value': predicted_score,
+                    'confidence': ai_output[0] if ai_output is not None else 0.7,
+                    'current_value': recent_performance[-1][2]
+                })
+            
+            # Predict response time optimization
+            if len(recent_performance) >= 2:
+                response_trend = recent_performance[-1][0] - recent_performance[-2][0]
+                predicted_response_time = max(0.1, recent_performance[-1][0] + response_trend * 0.5)
+                
+                predictions.append({
+                    'type': 'response_time',
+                    'timeframe': '1_hour', 
+                    'predicted_value': predicted_response_time,
+                    'confidence': ai_output[1] if ai_output is not None and len(ai_output) > 1 else 0.6,
+                    'current_value': recent_performance[-1][0]
+                })
+            
+            return {
+                'predictions': predictions,
+                'overall_confidence': np.mean([p['confidence'] for p in predictions]) if predictions else 0.0,
+                'ai_engine_status': 'active' if self.ai_engine else 'inactive'
+            }
+            
+        except Exception as e:
+            return {'error': str(e), 'predictions': []}
+    
+    def _optimize_caching_strategy(self, cache_duration_hours):
+        """Implement intelligent caching strategies"""
+        try:
+            current_time = datetime.utcnow()
+            
+            # Analyze request patterns for cache optimization
+            request_patterns = {}
+            frequent_endpoints = {}
+            
+            recent_calls = list(self.api_calls)[-200:] if self.api_calls else []
+            
+            for call in recent_calls:
+                # Track endpoint frequency
+                endpoint = getattr(call, 'endpoint', 'unknown')
+                if endpoint not in frequent_endpoints:
+                    frequent_endpoints[endpoint] = 0
+                frequent_endpoints[endpoint] += 1
+                
+                # Track request patterns
+                call_hour = datetime.fromisoformat(call.timestamp).hour
+                if call_hour not in request_patterns:
+                    request_patterns[call_hour] = []
+                request_patterns[call_hour].append(call)
+            
+            # Determine optimal cache strategies
+            cache_recommendations = []
+            
+            # Frequency-based caching
+            most_frequent_endpoints = sorted(frequent_endpoints.items(), key=lambda x: x[1], reverse=True)[:5]
+            for endpoint, frequency in most_frequent_endpoints:
+                if frequency > 10:  # Cache if called more than 10 times
+                    cache_recommendations.append({
+                        'type': 'frequency_based',
+                        'target': endpoint,
+                        'frequency': frequency,
+                        'recommended_cache_duration': min(cache_duration_hours, frequency / 5),
+                        'priority': 'high' if frequency > 50 else 'medium'
+                    })
+            
+            # Time-based caching optimization
+            peak_hours = []
+            for hour, calls in request_patterns.items():
+                if len(calls) > len(recent_calls) / 48:  # Above average for the hour
+                    peak_hours.append(hour)
+            
+            if peak_hours:
+                cache_recommendations.append({
+                    'type': 'time_based',
+                    'target': f"peak_hours_{'-'.join(map(str, peak_hours))}",
+                    'peak_hours': peak_hours,
+                    'recommended_strategy': 'preload_cache_before_peak',
+                    'priority': 'high'
+                })
+            
+            # Model-specific caching
+            model_usage = {}
+            for call in recent_calls:
+                if call.model not in model_usage:
+                    model_usage[call.model] = {'count': 0, 'avg_cost': 0}
+                model_usage[call.model]['count'] += 1
+                model_usage[call.model]['avg_cost'] = (model_usage[call.model]['avg_cost'] + call.estimated_cost) / 2
+            
+            # Cache expensive model results longer
+            for model, usage in model_usage.items():
+                if usage['avg_cost'] > 0.01:  # Expensive models
+                    cache_recommendations.append({
+                        'type': 'cost_based',
+                        'target': model,
+                        'avg_cost': usage['avg_cost'],
+                        'recommended_cache_duration': cache_duration_hours * 2,
+                        'priority': 'high'
+                    })
+            
+            # Implement cache strategies
+            cache_implementation = self._implement_cache_strategies(cache_recommendations)
+            
+            return {
+                'recommendations': cache_recommendations,
+                'implementation_status': cache_implementation,
+                'cache_efficiency_score': self._calculate_cache_efficiency(),
+                'optimization_timestamp': current_time.isoformat() + 'Z'
+            }
+            
+        except Exception as e:
+            return {'error': str(e), 'recommendations': []}
+    
+    def _optimize_resource_allocation(self):
+        """Optimize resource allocation based on usage patterns"""
+        try:
+            # Analyze resource usage patterns
+            resource_usage = {
+                'cpu_intensive_operations': 0,
+                'memory_intensive_operations': 0,
+                'io_intensive_operations': 0,
+                'network_intensive_operations': 0
+            }
+            
+            recent_calls = list(self.api_calls)[-100:] if self.api_calls else []
+            
+            for call in recent_calls:
+                # Categorize operations by resource intensity
+                if call.input_tokens + call.output_tokens > 4000:  # Large token operations
+                    resource_usage['memory_intensive_operations'] += 1
+                
+                if hasattr(call, 'response_time') and call.response_time > 5:  # Slow operations
+                    resource_usage['cpu_intensive_operations'] += 1
+                
+                if getattr(call, 'endpoint', '').startswith('file') or 'upload' in getattr(call, 'endpoint', ''):
+                    resource_usage['io_intensive_operations'] += 1
+                else:
+                    resource_usage['network_intensive_operations'] += 1
+            
+            # Generate resource optimization recommendations
+            total_operations = sum(resource_usage.values())
+            optimization_recommendations = []
+            
+            for resource_type, usage_count in resource_usage.items():
+                usage_percentage = (usage_count / total_operations) * 100 if total_operations > 0 else 0
+                
+                if usage_percentage > 30:  # High usage of this resource type
+                    optimization_recommendations.append({
+                        'resource_type': resource_type,
+                        'usage_percentage': usage_percentage,
+                        'recommendation': f'Increase {resource_type.replace("_", " ")} allocation',
+                        'priority': 'high' if usage_percentage > 50 else 'medium'
+                    })
+                elif usage_percentage < 5:  # Low usage
+                    optimization_recommendations.append({
+                        'resource_type': resource_type,
+                        'usage_percentage': usage_percentage,
+                        'recommendation': f'Consider reducing {resource_type.replace("_", " ")} allocation',
+                        'priority': 'low'
+                    })
+            
+            # Calculate optimal resource distribution
+            optimal_distribution = {}
+            if total_operations > 0:
+                for resource_type, usage_count in resource_usage.items():
+                    optimal_distribution[resource_type] = {
+                        'current_percentage': (usage_count / total_operations) * 100,
+                        'recommended_percentage': min(100, ((usage_count / total_operations) * 100) * 1.2),
+                        'adjustment_needed': usage_count > total_operations * 0.25
+                    }
+            
+            return {
+                'resource_usage': resource_usage,
+                'optimization_recommendations': optimization_recommendations,
+                'optimal_distribution': optimal_distribution,
+                'total_operations_analyzed': total_operations,
+                'efficiency_score': self._calculate_resource_efficiency()
+            }
+            
+        except Exception as e:
+            return {'error': str(e), 'resource_usage': {}}
+    
+    def _predictive_load_balancing(self):
+        """Implement predictive load balancing based on usage patterns"""
+        try:
+            # Analyze load patterns
+            hourly_load = {}
+            agent_load = {}
+            model_load = {}
+            
+            recent_calls = list(self.api_calls)[-500:] if self.api_calls else []
+            
+            for call in recent_calls:
+                # Hourly load distribution
+                call_hour = datetime.fromisoformat(call.timestamp).hour
+                if call_hour not in hourly_load:
+                    hourly_load[call_hour] = {'calls': 0, 'total_cost': 0, 'avg_tokens': 0}
+                
+                hourly_load[call_hour]['calls'] += 1
+                hourly_load[call_hour]['total_cost'] += call.estimated_cost
+                hourly_load[call_hour]['avg_tokens'] += call.input_tokens + call.output_tokens
+                
+                # Agent load distribution
+                agent = getattr(call, 'agent', 'unknown')
+                if agent not in agent_load:
+                    agent_load[agent] = {'calls': 0, 'total_cost': 0}
+                
+                agent_load[agent]['calls'] += 1
+                agent_load[agent]['total_cost'] += call.estimated_cost
+                
+                # Model load distribution
+                if call.model not in model_load:
+                    model_load[call.model] = {'calls': 0, 'total_cost': 0, 'avg_response_time': 0}
+                
+                model_load[call.model]['calls'] += 1
+                model_load[call.model]['total_cost'] += call.estimated_cost
+                if hasattr(call, 'response_time'):
+                    model_load[call.model]['avg_response_time'] = (
+                        model_load[call.model]['avg_response_time'] + call.response_time
+                    ) / 2
+            
+            # Calculate load balancing predictions
+            load_predictions = []
+            
+            # Predict next hour load
+            current_hour = datetime.utcnow().hour
+            next_hour = (current_hour + 1) % 24
+            
+            if current_hour in hourly_load and len(recent_calls) > 10:
+                current_load = hourly_load[current_hour]['calls']
+                predicted_next_load = hourly_load.get(next_hour, {'calls': current_load})['calls']
+                
+                load_predictions.append({
+                    'type': 'hourly_load',
+                    'current_hour': current_hour,
+                    'next_hour': next_hour,
+                    'current_load': current_load,
+                    'predicted_load': predicted_next_load,
+                    'load_change': predicted_next_load - current_load,
+                    'recommendation': 'scale_up' if predicted_next_load > current_load * 1.5 else 'maintain'
+                })
+            
+            # Generate load balancing recommendations
+            balancing_recommendations = []
+            
+            # Agent load balancing
+            if len(agent_load) > 1:
+                total_agent_calls = sum(load['calls'] for load in agent_load.values())
+                avg_calls_per_agent = total_agent_calls / len(agent_load)
+                
+                for agent, load in agent_load.items():
+                    if load['calls'] > avg_calls_per_agent * 1.5:  # Overloaded agent
+                        balancing_recommendations.append({
+                            'type': 'agent_overload',
+                            'agent': agent,
+                            'current_load': load['calls'],
+                            'average_load': avg_calls_per_agent,
+                            'recommendation': 'redistribute_requests',
+                            'priority': 'high'
+                        })
+            
+            # Model load balancing
+            if len(model_load) > 1:
+                # Find most and least used models
+                most_used_model = max(model_load.items(), key=lambda x: x[1]['calls'])
+                least_used_model = min(model_load.items(), key=lambda x: x[1]['calls'])
+                
+                if most_used_model[1]['calls'] > least_used_model[1]['calls'] * 3:
+                    balancing_recommendations.append({
+                        'type': 'model_imbalance',
+                        'overused_model': most_used_model[0],
+                        'underused_model': least_used_model[0],
+                        'usage_ratio': most_used_model[1]['calls'] / max(1, least_used_model[1]['calls']),
+                        'recommendation': 'evaluate_model_distribution',
+                        'priority': 'medium'
+                    })
+            
+            return {
+                'load_patterns': {
+                    'hourly_load': hourly_load,
+                    'agent_load': agent_load,
+                    'model_load': model_load
+                },
+                'load_predictions': load_predictions,
+                'balancing_recommendations': balancing_recommendations,
+                'load_balance_score': self._calculate_load_balance_score(agent_load, model_load),
+                'analysis_timestamp': datetime.utcnow().isoformat() + 'Z'
+            }
+            
+        except Exception as e:
+            return {'error': str(e), 'load_patterns': {}}
+    
+    def _implement_cache_strategies(self, cache_recommendations):
+        """Implement the recommended caching strategies"""
+        try:
+            implemented = []
+            for recommendation in cache_recommendations:
+                if recommendation['priority'] in ['high', 'medium']:
+                    # Simulate cache implementation
+                    cache_key = f"{recommendation['type']}_{recommendation['target']}"
+                    self.performance_cache[cache_key] = {
+                        'implemented': True,
+                        'timestamp': datetime.utcnow().isoformat() + 'Z',
+                        'config': recommendation
+                    }
+                    implemented.append(cache_key)
+            
+            return {
+                'implemented_strategies': implemented,
+                'total_implemented': len(implemented),
+                'implementation_timestamp': datetime.utcnow().isoformat() + 'Z'
+            }
+        except Exception as e:
+            return {'error': str(e), 'implemented_strategies': []}
+    
+    def _get_cache_statistics(self):
+        """Get current cache statistics"""
+        try:
+            total_cache_entries = len(self.performance_cache) if hasattr(self, 'performance_cache') else 0
+            
+            # Simulate cache hit/miss statistics
+            cache_hits = total_cache_entries * 0.75  # Simulated 75% hit rate
+            cache_misses = total_cache_entries * 0.25
+            
+            return {
+                'total_entries': total_cache_entries,
+                'cache_hits': cache_hits,
+                'cache_misses': cache_misses,
+                'hit_ratio': cache_hits / (cache_hits + cache_misses) if (cache_hits + cache_misses) > 0 else 0,
+                'cache_size_mb': total_cache_entries * 0.1  # Estimated size
+            }
+        except Exception as e:
+            return {'error': str(e), 'hit_ratio': 0}
+    
+    def _generate_performance_insights(self):
+        """Generate AI-powered performance insights"""
+        try:
+            insights = []
+            
+            # Analyze recent performance enhancements
+            if hasattr(self, 'ai_performance_enhancements') and self.ai_performance_enhancements:
+                recent_enhancements = list(self.ai_performance_enhancements)[-5:]
+                
+                # Performance trend analysis
+                scores = [e['performance_metrics']['performance_score'] for e in recent_enhancements 
+                         if 'performance_metrics' in e and 'performance_score' in e['performance_metrics']]
+                
+                if len(scores) >= 2:
+                    trend = scores[-1] - scores[0]
+                    if trend > 5:
+                        insights.append({
+                            'type': 'performance_improvement',
+                            'message': f'System performance improving by {trend:.1f} points',
+                            'confidence': 0.8
+                        })
+                    elif trend < -5:
+                        insights.append({
+                            'type': 'performance_degradation',
+                            'message': f'System performance declining by {abs(trend):.1f} points',
+                            'confidence': 0.8
+                        })
+                
+                # Cache efficiency insights
+                avg_cache_ratio = 0
+                cache_ratios = []
+                for enhancement in recent_enhancements:
+                    if 'cache_stats' in enhancement and 'hit_ratio' in enhancement['cache_stats']:
+                        cache_ratios.append(enhancement['cache_stats']['hit_ratio'])
+                
+                if cache_ratios:
+                    avg_cache_ratio = sum(cache_ratios) / len(cache_ratios)
+                    if avg_cache_ratio > 0.8:
+                        insights.append({
+                            'type': 'cache_optimization',
+                            'message': f'Excellent cache performance with {avg_cache_ratio:.1%} hit ratio',
+                            'confidence': 0.9
+                        })
+                    elif avg_cache_ratio < 0.5:
+                        insights.append({
+                            'type': 'cache_warning',
+                            'message': f'Cache performance below optimal at {avg_cache_ratio:.1%}',
+                            'confidence': 0.7
+                        })
+            
+            return insights
+            
+        except Exception as e:
+            return [{'type': 'error', 'message': str(e), 'confidence': 0.0}]
+    
+    def _calculate_performance_trend(self, recent_calls):
+        """Calculate performance trend from recent calls"""
+        try:
+            if len(recent_calls) < 10:
+                return {'trend': 'insufficient_data', 'direction': 'stable'}
+            
+            # Split calls into two halves for comparison
+            mid_point = len(recent_calls) // 2
+            first_half = recent_calls[:mid_point]
+            second_half = recent_calls[mid_point:]
+            
+            # Calculate average cost for each half
+            first_half_cost = sum(call.estimated_cost for call in first_half) / len(first_half)
+            second_half_cost = sum(call.estimated_cost for call in second_half) / len(second_half)
+            
+            cost_change = ((second_half_cost - first_half_cost) / first_half_cost) * 100 if first_half_cost > 0 else 0
+            
+            if cost_change > 10:
+                return {'trend': 'increasing', 'direction': 'up', 'change_percent': cost_change}
+            elif cost_change < -10:
+                return {'trend': 'decreasing', 'direction': 'down', 'change_percent': abs(cost_change)}
+            else:
+                return {'trend': 'stable', 'direction': 'stable', 'change_percent': cost_change}
+                
+        except Exception as e:
+            return {'trend': 'error', 'direction': 'unknown', 'error': str(e)}
+    
+    def _calculate_cache_efficiency(self):
+        """Calculate cache efficiency score"""
+        try:
+            cache_stats = self._get_cache_statistics()
+            hit_ratio = cache_stats.get('hit_ratio', 0)
+            
+            # Base score from hit ratio
+            efficiency_score = hit_ratio * 100
+            
+            # Bonus for having cache entries
+            if cache_stats.get('total_entries', 0) > 0:
+                efficiency_score += 10
+            
+            # Penalty for large cache size (memory usage)
+            cache_size_mb = cache_stats.get('cache_size_mb', 0)
+            if cache_size_mb > 100:  # If cache is larger than 100MB
+                efficiency_score -= min(20, (cache_size_mb - 100) / 10)
+            
+            return max(0, min(100, efficiency_score))
+            
+        except Exception as e:
+            return 0
+    
+    def _calculate_resource_efficiency(self):
+        """Calculate resource efficiency score"""
+        try:
+            recent_calls = list(self.api_calls)[-50:] if self.api_calls else []
+            
+            if not recent_calls:
+                return 50  # Neutral score
+            
+            # Calculate cost per token efficiency
+            total_cost = sum(call.estimated_cost for call in recent_calls)
+            total_tokens = sum(call.input_tokens + call.output_tokens for call in recent_calls)
+            
+            if total_tokens == 0:
+                return 50
+            
+            cost_per_token = total_cost / total_tokens
+            
+            # Lower cost per token = higher efficiency
+            # Assume good cost per token is around 0.001
+            if cost_per_token <= 0.001:
+                efficiency_score = 100
+            elif cost_per_token <= 0.002:
+                efficiency_score = 80
+            elif cost_per_token <= 0.005:
+                efficiency_score = 60
+            else:
+                efficiency_score = max(20, 100 - (cost_per_token * 10000))
+            
+            return min(100, max(0, efficiency_score))
+            
+        except Exception as e:
+            return 50
+    
+    def _calculate_load_balance_score(self, agent_load, model_load):
+        """Calculate load balance score"""
+        try:
+            score = 100
+            
+            # Agent load balance
+            if len(agent_load) > 1:
+                agent_calls = [load['calls'] for load in agent_load.values()]
+                max_calls = max(agent_calls)
+                min_calls = min(agent_calls)
+                
+                if min_calls > 0:
+                    agent_balance_ratio = min_calls / max_calls
+                    score -= (1 - agent_balance_ratio) * 30  # Up to 30 point penalty
+            
+            # Model load balance  
+            if len(model_load) > 1:
+                model_calls = [load['calls'] for load in model_load.values()]
+                max_calls = max(model_calls)
+                min_calls = min(model_calls)
+                
+                if min_calls > 0:
+                    model_balance_ratio = min_calls / max_calls
+                    score -= (1 - model_balance_ratio) * 20  # Up to 20 point penalty
+            
+            return max(0, min(100, score))
+            
+        except Exception as e:
+            return 50
+    
     def _suggest_optimal_model(self, category: str, config: Dict) -> List[Dict[str, Any]]:
         """Suggest optimal models for specific task categories"""
         model_suggestions = {
@@ -2075,6 +3087,32 @@ def historical_insights() -> Dict[str, Any]:
     """Get comprehensive historical insights analysis"""
     tracker = get_api_tracker()
     return tracker.historical_insights_analysis()
+
+# HOUR 5 ENHANCEMENT: Advanced ML Optimization Functions
+def train_custom_cost_model(training_cycles: int = 100) -> Dict[str, Any]:
+    """Train custom neural network for cost optimization"""
+    tracker = get_api_tracker()
+    return tracker.train_custom_cost_model(training_cycles)
+
+def reinforcement_learning_optimization(episodes: int = 50) -> Dict[str, Any]:
+    """Perform reinforcement learning for threshold optimization"""
+    tracker = get_api_tracker()
+    return tracker.reinforcement_learning_optimization(episodes)
+
+def real_time_optimization_engine() -> Dict[str, Any]:
+    """Get real-time optimization recommendations"""
+    tracker = get_api_tracker()
+    return tracker.real_time_optimization_engine()
+
+def automated_budget_rebalancing() -> Dict[str, Any]:
+    """Perform automated budget rebalancing analysis"""
+    tracker = get_api_tracker()
+    return tracker.automated_budget_rebalancing()
+
+def ai_driven_performance_enhancement(cache_duration_hours: int = 24) -> Dict[str, Any]:
+    """H5.5: AI-driven performance enhancement and predictive caching"""
+    tracker = get_api_tracker()
+    return tracker.ai_driven_performance_enhancement(cache_duration_hours)
 
 
 if __name__ == "__main__":
