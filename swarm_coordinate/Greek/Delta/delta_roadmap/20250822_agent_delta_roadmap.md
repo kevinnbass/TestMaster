@@ -40,6 +40,26 @@
 **Timeline:** 500 Agent Hours  
 **Execution:** Independent with coordination with other agents
 
+## ✅ Protocol Compliance Overlay (Binding)
+
+- **Frontend-First (ADAMANTIUMCLAD):** All APIs must surface in the dashboard at `http://localhost:5000/` with visible status and errors.
+- **Anti-Regression (IRONCLAD/STEELCLAD/COPPERCLAD):** Manual analysis before consolidation; extract unique functionality; verify parity; archive—never delete.
+- **Anti-Duplication (GOLDCLAD):** Run similarity search before creating new endpoints/files; prefer enhancement; include justification if creation is necessary.
+- **Version Control (DIAMONDCLAD):** After task completion, update root `README.md`, then stage, commit, and push.
+
+### Adjusted Success Criteria (Local Single-User Scope)
+- **Deployment:** Local only; minimal config
+- **Latency:** p95 < 200ms for standard endpoints; p99 < 600ms
+- **Docs:** Auto-generated OpenAPI available at `/docs` or equivalent
+- **Testing:** Unit + integration smoke tests; realistic fixtures; CI optional
+- **Reliability:** Local restart safety; basic retry/backoff where needed
+
+### Verification Gates (apply before marking tasks complete)
+1. Endpoint visible in dashboard; 2 happy-path and 2 error-path screenshots/logs
+2. Data flow documented (module → route → controller/service → UI)
+3. Tests or evidence attached (pytest logs/screenshots)
+4. History updated in `delta_history/` with timestamp, changes, and impact
+5. GOLDCLAD justification present for any new file/endpoint family
 ### **📋 ROADMAP DETAIL REFERENCE**
 **Complete Hour-by-Hour Breakdown:** See `greek_coordinate_roadmap/20250822_greek_master_roadmap.md` - AGENT DELTA ROADMAP section for comprehensive 500-hour detail breakdown with specific technical implementations, metrics, and deliverables for each phase.
 
