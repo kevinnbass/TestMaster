@@ -40,6 +40,26 @@
 **Timeline:** 500 Agent Hours
 **Execution:** Independent with coordination with other agents
 
+## ✅ Protocol Compliance Overlay (Binding)
+
+- **Frontend-First (ADAMANTIUMCLAD):** All enhancements must be visible in the dashboard at `http://localhost:5000/` with live status where applicable.
+- **Anti-Regression (IRONCLAD/STEELCLAD/COPPERCLAD):** Manual analysis before consolidation; extract unique functionality; verify parity; archive—never delete.
+- **Anti-Duplication (GOLDCLAD):** Run similarity search before creating new components/files; prefer enhancement; include justification if creation is necessary.
+- **Version Control (DIAMONDCLAD):** After task completion, update root `README.md`, then stage, commit, and push.
+
+### Adjusted Success Criteria (Local Single-User Scope)
+- **Performance:** FCP < 2.5s; interactive actions p95 < 200ms, p99 < 600ms
+- **Accessibility:** Keyboard navigation, labels, contrast; WCAG AA aspirational
+- **Visualization:** Standard libs; datasets up to ~2k points
+- **Responsiveness:** Mobile-friendly layout with tested breakpoints
+- **Reliability:** Local restart safety; minimal persisted UI prefs
+
+### Verification Gates (apply before marking tasks complete)
+1. UI component/screens added or updated and reachable via navigation
+2. Data flow documented (API → adapter → component), incl. polling/WS cadence if used
+3. Evidence attached (screenshots/gifs, perf numbers, or brief test notes)
+4. History updated in `epsilon_history/` with timestamp, changes, and impact
+5. GOLDCLAD justification present for any new component/file
 ### **📋 ROADMAP DETAIL REFERENCE**
 **Complete Hour-by-Hour Breakdown:** See `greek_coordinate_roadmap/20250822_greek_master_roadmap.md` - AGENT EPSILON ROADMAP section for comprehensive 500-hour detail breakdown with specific technical implementations, metrics, and deliverables for each phase.
 
