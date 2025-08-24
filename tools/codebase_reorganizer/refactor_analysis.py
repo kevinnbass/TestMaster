@@ -170,3 +170,4 @@ def analyze_function_for_refactoring(func_content: str, func_name: str) -> Dict:
     analysis['total_opportunities'] = len(opportunities)
 
     return analysis
+

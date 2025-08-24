@@ -108,3 +108,4 @@ def validate_file_for_analysis(file_path: Path) -> bool:
             return False
 
     return True
+

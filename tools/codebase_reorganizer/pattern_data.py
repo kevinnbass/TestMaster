@@ -53,3 +53,4 @@ class PatternDetectionResult:
     evidence: List[str]
     location: str
     recommendations: List[str]
+

@@ -501,3 +501,4 @@ class PatternDetector:
             recommendations.append(f"{len(low_confidence)} patterns have low confidence - may need better implementation")
 
         return recommendations
+

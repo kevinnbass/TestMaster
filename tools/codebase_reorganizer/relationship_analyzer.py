@@ -114,8 +114,8 @@ if __name__ == "__main__":
     print("📝 Analyzing sample code for relationships...")
     result = analyze_relationships(sample_code, "sample.py")
 
-    print("
-🔍 Analysis Results:"    print(f"📊 Coupling Score: {result['coupling_metrics']['coupling_score']:.3f}")
+    print("\n🔍 Analysis Results:")
+    print(f"📊 Coupling Score: {result['coupling_metrics']['coupling_score']:.3f}")
     print(f"📦 Import Relationships: {len(result['import_relationships'])}")
     print(f"🏗️  Class Relationships: {len(result['class_relationships'])}")
     print(f"🔄 Function Calls: {len(result['function_relationships'])}")
@@ -123,12 +123,12 @@ if __name__ == "__main__":
     print(f"🔗 Graph Edges: {result['relationship_graph']['edge_count']}")
 
     if result['recommendations']:
-        print("
-💡 Recommendations:"        for rec in result['recommendations']:
+        print("\n💡 Recommendations:")
+        for rec in result['recommendations']:
             print(f"   • {rec}")
 
-    print("
-✅ Analysis complete!"    print()
+    print("\n✅ Analysis complete!")
+    print()
     print("This analyzer helps understand how components interact")
     print("and identifies opportunities for improving modularity.")
 

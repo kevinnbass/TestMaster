@@ -1,0 +1,24 @@
+@use "@angular/material" as mat;
+@include mat.core();
+
+@import "./variables";
+
+:root {
+    --mat-dialog-container-min-width: 500px;
+    --mat-dialog-actions-alignment: flex-end;
+
+    --mat-toolbar-container-background-color: #{$cc-primary-color};
+    --mat-toolbar-container-text-color: #fff;
+    --mat-text-button-horizontal-padding: 8px;
+
+    // HACK: For the lack of a better way to change the checkmark colors directly in theme
+    .mat-mdc-checkbox.mat-accent {
+        --mdc-checkbox-selected-checkmark-color: #fff !important;
+    }
+
+    .cdk-overlay-pane {
+        &.cc-incompatible-maps-dialog {
+            --mdc-dialog-supporting-text-color: $cc-font-color;
+        }
+    }
+}

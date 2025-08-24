@@ -71,3 +71,4 @@ class RelationshipAnalysis:
     coupling_metrics: CouplingMetrics
     clusters: List[RelationshipCluster]
     recommendations: List[str]
+

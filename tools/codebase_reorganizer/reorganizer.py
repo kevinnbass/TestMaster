@@ -626,15 +626,16 @@ class CodebaseReorganizer:
             errors.extend(import_results['errors'])
             warnings.extend(import_results['warnings'])
 
+        # Count updated imports (replacing complex comprehension)
+        updated_imports = 0
+        for u in plan['imports_to_update']:
+            if u.get('updated', False):
+                updated_imports += 1
+
         return ReorganizationResult(
             total_files_analyzed=plan['summary']['total_files_to_reorganize'],
             files_reorganized=len(plan['moves']),
             symlinks_created=len(plan['symlinks']),
-            # Count updated imports (replacing complex comprehension)
-            updated_imports = 0
-            for u in plan['imports_to_update']:
-                if u.get('updated', False):
-                    updated_imports += 1
             imports_updated=updated_imports,
             errors=errors,
             warnings=warnings,

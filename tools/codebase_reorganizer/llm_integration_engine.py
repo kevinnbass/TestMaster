@@ -412,14 +412,15 @@ class LLMIntegrationEngine:
             by_classification[classification].append(intelligence)
 
         # Generate plan
+        # Count high priority modules (replacing complex comprehension with explicit loop)
+        high_priority_count = 0
+        for i in integrated_intelligence:
+            if i.reorganization_priority >= 8:
+                high_priority_count += 1
+
         plan = {
             'timestamp': datetime.now().isoformat(),
             'total_modules': len(integrated_intelligence),
-            # Count high priority modules (replacing complex comprehension with explicit loop)
-            high_priority_count = 0
-            for i in integrated_intelligence:
-                if i.reorganization_priority >= 8:
-                    high_priority_count += 1
             'high_priority_modules': high_priority_count,
             'classifications': list(by_classification.keys()),
             'reorganization_phases': self._generate_reorganization_phases(by_classification),
@@ -618,10 +619,7 @@ class LLMIntegrationEngine:
             'risks': risks,
             'overall_risk_level': 'High' if any(r['severity'] == 'High' for r in risks) else 'Medium',
             # Extract recommendations (replacing complex comprehension with explicit loop)
-            recommendations = []
-            for r in risks:
-                recommendations.append(r['mitigation'])
-            'recommendations': recommendations
+            'recommendations': [r['mitigation'] for r in risks]
         }
 
     def _define_success_metrics(self) -> Dict[str, Any]:

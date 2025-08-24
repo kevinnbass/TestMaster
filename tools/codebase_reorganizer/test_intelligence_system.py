@@ -194,14 +194,15 @@ def run_test():
             output_file = test_root / "test_intelligence_map.json"
             intelligence_map = scanner.scan_and_analyze(output_file, max_files=5)
 
-            print("✅ Scan completed successfully!"            print(f"   Files scanned: {intelligence_map.total_files_scanned}")
+            print("✅ Scan completed successfully!")
+            print(f"   Files scanned: {intelligence_map.total_files_scanned}")
             print(f"   Lines analyzed: {intelligence_map.total_lines_analyzed}")
 
             # Show sample analysis
             if intelligence_map.intelligence_entries:
                 sample_entry = intelligence_map.intelligence_entries[0]
-                print("
-📋 Sample Analysis:"                print(f"   File: {sample_entry.relative_path}")
+                print("\n📋 Sample Analysis:")
+                print(f"   File: {sample_entry.relative_path}")
                 print(f"   Classification: {sample_entry.primary_classification}")
                 print(f"   Confidence: {sample_entry.confidence_score:.2f}")
                 print(f"   Summary: {sample_entry.module_summary[:100]}...")
@@ -232,8 +233,8 @@ def run_test():
             print(f"✅ Reorganization plan created - {reorganization_plan.total_batches} batches")
 
             # Show plan summary
-            print("
-📊 Plan Summary:"            print(f"   Total tasks: {reorganization_plan.total_tasks}")
+            print("\n📊 Plan Summary:")
+            print(f"   Total tasks: {reorganization_plan.total_tasks}")
             print(f"   Total batches: {reorganization_plan.total_batches}")
             print(".1f")
 
@@ -262,8 +263,8 @@ def run_test():
             with open(results_file, 'w', encoding='utf-8') as f:
                 json.dump(test_results, f, indent=2, ensure_ascii=False)
 
-            print("
-✅ Test completed successfully!"            print(f"📄 Results saved to: {results_file}")
+            print("\n✅ Test completed successfully!")
+            print(f"📄 Results saved to: {results_file}")
 
             return True
 

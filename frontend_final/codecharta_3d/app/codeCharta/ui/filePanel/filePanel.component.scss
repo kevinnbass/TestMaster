@@ -1,0 +1,10 @@
+@use "variables";
+
+:host {
+    display: flex;
+    gap: inherit;
+
+    &.hidden {
+        display: none;
+    }
+}

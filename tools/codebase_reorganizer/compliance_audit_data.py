@@ -32,3 +32,4 @@ class ComplianceReport:
     compliance_score: float = 0.0
     rule_compliance: Dict[int, bool] = field(default_factory=dict)
     summary: Dict[str, int] = field(default_factory=dict)
+

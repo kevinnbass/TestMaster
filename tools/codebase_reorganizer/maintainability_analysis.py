@@ -141,3 +141,4 @@ class MaintainabilityAnalysis:
         threshold = self.config.COMPLEXITY_THRESHOLDS['class_length']['warning']
         return len([n for n in ast.walk(tree)
                    if isinstance(n, ast.ClassDef) and len(n.body) > threshold])
+

@@ -105,3 +105,4 @@ class ComplianceRuleChecker:
     def has_function_size_limit_compliance(self, node: ast.FunctionDef) -> bool:
         """Check function size compliance"""
         return not self.exceeds_function_size_limit(node)
+

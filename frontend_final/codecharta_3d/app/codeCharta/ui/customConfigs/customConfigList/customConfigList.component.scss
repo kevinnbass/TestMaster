@@ -1,0 +1,26 @@
+@use "variables";
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+}
+
+.custom-config-documentation-hint {
+    margin: 10px 0 20px 0;
+    font-size: 1.4em;
+    line-height: 1.4em;
+    color: variables.$cc-font-color;
+}
+
+.no-custom-configs-box {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.toggle-non-applicable-configs-button {
+    width: 100%;
+    height: 30px;
+    margin: 5px 0;
+}

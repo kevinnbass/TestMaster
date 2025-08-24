@@ -87,8 +87,8 @@ class CodebaseReorganizerLauncher:
                 else:
                     should_include = False
 
-                if len(python_files) < 5000 and should_include and
-                    file_path.stat().st_size <= 10 * 1024 * 1024):
+                if len(python_files) < 5000 and should_include and \
+                    file_path.stat().st_size <= 10 * 1024 * 1024:
                     python_files.append(file_path)
 
         return python_files

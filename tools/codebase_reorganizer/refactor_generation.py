@@ -160,3 +160,4 @@ def create_refactored_version(original_file: Path, functions_to_refactor: List) 
                     }
 
     return generate_refactored_file(content, refactored_functions)
+

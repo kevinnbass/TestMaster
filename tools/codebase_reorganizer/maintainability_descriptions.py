@@ -93,3 +93,4 @@ class MaintainabilityDescriptions:
 
         testability_ratio = small_functions / function_count
         return ".1%"
+

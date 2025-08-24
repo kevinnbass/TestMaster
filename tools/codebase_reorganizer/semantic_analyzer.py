@@ -244,17 +244,18 @@ class SemanticAnalyzer:
 
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
+                # Convert base classes (replacing complex comprehension with explicit loop)
+                base_classes = []
+                for base in node.bases:
+                    if hasattr(base, 'id'):
+                        base_classes.append(base.id)
+                    else:
+                        base_classes.append(str(base))
+
                 class_info = {
                     'name': node.name,
                     'methods': [],
                     'properties': [],
-                    # Convert base classes (replacing complex comprehension with explicit loop)
-                    base_classes = []
-                    for base in node.bases:
-                        if hasattr(base, 'id'):
-                            base_classes.append(base.id)
-                        else:
-                            base_classes.append(str(base))
                     'base_classes': base_classes,
                     'line_number': node.lineno,
                     'method_count': 0,

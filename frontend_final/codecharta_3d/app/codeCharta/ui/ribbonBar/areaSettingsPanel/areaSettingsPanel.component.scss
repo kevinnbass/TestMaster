@@ -1,0 +1,9 @@
+:host {
+    text-align: left;
+    max-height: 300px;
+
+    .options {
+        display: flex;
+        flex-direction: column;
+    }
+}

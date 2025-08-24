@@ -160,8 +160,8 @@ if __name__ == "__main__":
     print("📝 Analyzing sample code for patterns...")
     result = detect_patterns(sample_code, "sample.py")
 
-    print("
-🔍 Analysis Results:"    print(f"📊 Total Patterns: {result['total_patterns']}")
+    print("\n🔍 Analysis Results:")
+    print(f"📊 Total Patterns: {result['total_patterns']}")
     print(f"🎯 High Confidence Patterns: {result['high_confidence_patterns']}")
     print(f"🏗️  Architectural Style: {result['architectural_style']}")
     print(f"💻 Coding Style: {result['coding_style']}")
@@ -169,20 +169,20 @@ if __name__ == "__main__":
     print(f"📈 Confidence Distribution: {result['confidence_distribution']}")
 
     if result['patterns']:
-        print("
-🎨 Detected Patterns:"        for i, pattern in enumerate(result['patterns'][:3], 1):  # Show first 3
+        print("\n🎨 Detected Patterns:")
+        for i, pattern in enumerate(result['patterns'][:3], 1):  # Show first 3
             print(f"   {i}. {pattern['pattern_name']} ({pattern['pattern_type']})")
             print(".3f")
             print(f"      📍 {pattern['location']}")
             print()
 
     if result['recommendations']:
-        print("
-💡 Recommendations:"        for rec in result['recommendations'][:2]:  # Show first 2
+        print("\n💡 Recommendations:")
+        for rec in result['recommendations'][:2]:  # Show first 2
             print(f"   • {rec}")
 
-    print("
-✅ Pattern analysis complete!"    print()
+    print("\n✅ Pattern analysis complete!")
+    print()
     print("This detector helps identify design patterns, architectural styles,")
     print("and coding patterns that can inform code organization and improvement.")
 

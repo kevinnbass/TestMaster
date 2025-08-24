@@ -156,3 +156,4 @@ class MaintainabilityRecommendations:
             rec_count += 1
 
         return recommendations[:rec_count]
+

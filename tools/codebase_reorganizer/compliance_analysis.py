@@ -181,3 +181,4 @@ def analyze_compliance_batch(files: List[Path]) -> Dict[str, Any]:
         'functions_with_docstrings': functions_with_docstrings,
         'functions_with_type_hints': functions_with_type_hints
     }
+

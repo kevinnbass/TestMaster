@@ -1095,16 +1095,16 @@ def main():
     # Save results
     engine.save_integration_results(integrated_intelligence, reorganization_plan, Path(args.output))
 
-    print("
-✅ Integration completed!"    print(f"Integrated {len(integrated_intelligence)} modules")
+    print("\n✅ Integration completed!")
+    print(f"Integrated {len(integrated_intelligence)} modules")
     print(f"Generated reorganization plan with {len(reorganization_plan.reorganization_phases)} phases")
     print(".1f")
     print(f"Output saved to: {args.output}")
 
     # Print summary
     if integrated_intelligence:
-        print("
-📊 Integration Summary:"        high_priority = len([i for i in integrated_intelligence if i.reorganization_priority >= 8])
+        print("\n📊 Integration Summary:")
+        high_priority = len([i for i in integrated_intelligence if i.reorganization_priority >= 8])
         security_modules = len([i for i in integrated_intelligence if 'security' in i.integrated_classification])
         low_confidence = len([i for i in integrated_intelligence if i.integration_confidence < 0.6])
 

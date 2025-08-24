@@ -345,3 +345,4 @@ class RelationshipAnalyzer:
             'file_path': file_path,
             'analysis_type': 'fallback'
         }
+

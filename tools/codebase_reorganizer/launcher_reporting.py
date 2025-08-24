@@ -105,3 +105,4 @@ class ReportGenerator:
     def create_summary(self, audit_results: Dict, execution_results: Dict) -> Dict:
         """Create execution summary"""
         return create_execution_summary(audit_results, execution_results, self.system_status)
+

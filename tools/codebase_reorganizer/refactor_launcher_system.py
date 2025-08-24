@@ -189,3 +189,4 @@ class SystemChecker:
     def print_status(self, system_status: Dict) -> None:
         """Print system status"""
         print_system_status(system_status)
+

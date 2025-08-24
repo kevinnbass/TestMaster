@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture Dashboard - Agent A</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .metric-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .metric-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #333; }
+        .metric-value { font-size: 36px; font-weight: bold; margin: 10px 0; }
+        .metric-value.excellent { color: #4CAF50; }
+        .metric-value.good { color: #FFC107; }
+        .metric-value.needs_attention { color: #FF9800; }
+        .progress-bar { width: 100%; height: 10px; background: #ddd; border-radius: 5px; overflow: hidden; margin: 10px 0; }
+        .progress-fill { height: 100%; background: #4CAF50; transition: width 0.3s ease; }
+        .recommendations { background: #e3f2fd; padding: 15px; border-radius: 8px; margin-top: 20px; }
+        .timestamp { text-align: center; color: #666; font-size: 14px; margin-top: 30px; }
+        .export-links { text-align: center; margin: 20px 0; }
+        .export-links a { margin: 0 10px; padding: 8px 16px; background: #2196F3; color: white; text-decoration: none; border-radius: 4px; }
+        .export-links a:hover { background: #1976D2; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Architecture Dashboard</h1>
+        <p>Agent A - Real-time Architecture Monitoring</p>
+    </div>
+    
+    <div class="export-links">
+        <a href="/api/export/json" target="_blank">Export JSON</a>
+        <a href="/api/export/svg" target="_blank">Export SVG</a>
+        <a href="/api/generate-report" target="_blank">Generate Report</a>
+    </div>
+    
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-title">Architecture Health</div>
+            <div class="metric-value {{ metrics.health.status }}">{{ "%.1f"|format(metrics.health.overall) }}%</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ metrics.health.overall }}%"></div>
+            </div>
+            <div>Layer Compliance: {{ "%.1f"|format(metrics.health.layer_compliance) }}%</div>
+            <div>Dependency Health: {{ "%.1f"|format(metrics.health.dependency_health) }}%</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-title">Services Registry</div>
+            <div class="metric-value excellent">{{ metrics.services.total_registered }}</div>
+            <div>Success Rate: {{ "%.1f"|format(metrics.services.success_rate) }}%</div>
+            <div>By Layer: {{ metrics.services.by_layer|length }} layers</div>
+            <div>By Type: {{ metrics.services.by_type|length }} types</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-title">Template System</div>
+            <div class="metric-value excellent">{{ metrics.templates.migrated }}</div>
+            <div>Templates Discovered: {{ metrics.templates.discovered }}</div>
+            <div>Migration Rate: {{ "%.1f"|format(metrics.templates.success_rate) }}%</div>
+            <div>Generators Created: {{ metrics.templates.generators_created }}</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-title">Intelligence Platform</div>
+            <div class="metric-value excellent">{{ metrics.intelligence.modules_activated }}</div>
+            <div>Modules Discovered: {{ metrics.intelligence.modules_discovered }}</div>
+            <div>Activation Rate: {{ "%.1f"|format(metrics.intelligence.success_rate) }}%</div>
+            <div>Services Registered: {{ metrics.intelligence.services_registered }}</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-title">WebSocket Streaming</div>
+            <div class="metric-value {{ 'excellent' if metrics.websocket.available else 'needs_attention' }}">
+                {{ 'Available' if metrics.websocket.available else 'Unavailable' }}
+            </div>
+            <div>Status: {{ 'Running' if metrics.websocket.running else 'Stopped' }}</div>
+            <div>Port: {{ metrics.websocket.port }}</div>
+            <div>Clients: {{ metrics.websocket.clients_connected }}</div>
+        </div>
+    </div>
+    
+    {% if metrics.recommendations %}
+    <div class="recommendations">
+        <h3>Recommendations</h3>
+        <ul>
+            {% for rec in metrics.recommendations %}
+            <li>{{ rec }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+    <div class="timestamp">
+        Last updated: {{ timestamp }}
+    </div>
+    
+    <script>
+        // Auto-refresh every 30 seconds
+        setTimeout(function() {
+            window.location.reload();
+        }, 30000);
+    </script>
+</body>
+</html>

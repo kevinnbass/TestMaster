@@ -35,7 +35,10 @@ class ComplianceFixer:
 
     def fix_complex_comprehensions(self, file_path: Path) -> List[Fix]:
         """Fix complex comprehensions by replacing with explicit loops"""
-        fixes = []
+        # Pre-allocate with safety bound (Rule 3 compliance)
+        MAX_FIXES = 50  # Safety bound for comprehension fixes per file
+        fixes = [None] * MAX_FIXES
+        fix_count = 0
 
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -63,19 +66,21 @@ class ComplianceFixer:
                         # Generate replacement code
                         replacement_code = self._generate_loop_replacement(node, comprehension_code)
 
-                        fixes.append(Fix(
-                            file_path=str(file_path),
-                            line_number=start_line + 1,
-                            original_code=comprehension_code,
-                            fixed_code=replacement_code,
-                            description="Replace complex comprehension with explicit loop",
-                            rule_number=1
-                        ))
+                        if fix_count < MAX_FIXES:
+                            fixes[fix_count] = Fix(
+                                file_path=str(file_path),
+                                line_number=start_line + 1,
+                                original_code=comprehension_code,
+                                fixed_code=replacement_code,
+                                description="Replace complex comprehension with explicit loop",
+                                rule_number=1
+                            )
+                            fix_count += 1
 
         except Exception as e:
             print(f"Error fixing comprehensions in {file_path}: {e}")
 
-        return fixes
+        return fixes[:fix_count]  # Return only the fixes that were actually added
 
     def _generate_loop_replacement(self, node: ast.AST, comprehension_code: str) -> str:
         """Generate explicit loop replacement for comprehension"""
@@ -106,7 +111,10 @@ result"""
 
     def fix_unbounded_loops(self, file_path: Path) -> List[Fix]:
         """Fix loops without fixed upper bounds"""
-        fixes = []
+        # Pre-allocate with safety bound (Rule 3 compliance)
+        MAX_FIXES = 50  # Safety bound for loop fixes per file
+        fixes = [None] * MAX_FIXES
+        fix_count = 0
 
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -129,19 +137,21 @@ result"""
                         # Add bounds checking
                         bounded_code = self._add_loop_bounds_checking(loop_code)
 
-                        fixes.append(Fix(
-                            file_path=str(file_path),
-                            line_number=start_line + 1,
-                            original_code=loop_code,
-                            fixed_code=bounded_code,
-                            description="Add bounds checking to potentially unbounded loop",
-                            rule_number=2
-                        ))
+                        if fix_count < MAX_FIXES:
+                            fixes[fix_count] = Fix(
+                                file_path=str(file_path),
+                                line_number=start_line + 1,
+                                original_code=loop_code,
+                                fixed_code=bounded_code,
+                                description="Add bounds checking to potentially unbounded loop",
+                                rule_number=2
+                            )
+                            fix_count += 1
 
         except Exception as e:
             print(f"Error fixing loops in {file_path}: {e}")
 
-        return fixes
+        return fixes[:fix_count]  # Return only the fixes that were actually added
 
     def _add_loop_bounds_checking(self, loop_code: str) -> str:
         """Add bounds checking to loop code"""
@@ -153,7 +163,10 @@ result"""
 
     def fix_dynamic_resizing(self, file_path: Path) -> List[Fix]:
         """Fix dynamic object resizing issues"""
-        fixes = []
+        # Pre-allocate with safety bound (Rule 3 compliance)
+        MAX_FIXES = 50  # Safety bound for resizing fixes per file
+        fixes = [None] * MAX_FIXES
+        fix_count = 0
 
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -177,19 +190,21 @@ result"""
                                 # Replace with pre-allocated approach
                                 preallocated_code = self._replace_with_preallocated(operation_code)
 
-                                fixes.append(Fix(
-                                    file_path=str(file_path),
-                                    line_number=start_line + 1,
-                                    original_code=operation_code,
-                                    fixed_code=preallocated_code,
-                                    description="Replace dynamic resizing with pre-allocated approach",
-                                    rule_number=3
-                                ))
+                                if fix_count < MAX_FIXES:
+                                    fixes[fix_count] = Fix(
+                                        file_path=str(file_path),
+                                        line_number=start_line + 1,
+                                        original_code=operation_code,
+                                        fixed_code=preallocated_code,
+                                        description="Replace dynamic resizing with pre-allocated approach",
+                                        rule_number=3
+                                    )
+                                    fix_count += 1
 
         except Exception as e:
             print(f"Error fixing dynamic resizing in {file_path}: {e}")
 
-        return fixes
+        return fixes[:fix_count]  # Return only the fixes that were actually added
 
     def _replace_with_preallocated(self, operation_code: str) -> str:
         """Replace dynamic operations with pre-allocated alternatives"""
@@ -200,7 +215,10 @@ result"""
 
     def fix_large_functions(self, file_path: Path) -> List[Fix]:
         """Fix functions that exceed 60 line limit"""
-        fixes = []
+        # Pre-allocate with safety bound (Rule 3 compliance)
+        MAX_FIXES = 50  # Safety bound for function fixes per file
+        fixes = [None] * MAX_FIXES
+        fix_count = 0
 
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -225,19 +243,21 @@ result"""
                         # Split large function
                         split_functions = self._split_large_function(function_code, function_name)
 
-                        fixes.append(Fix(
-                            file_path=str(file_path),
-                            line_number=start_line + 1,
-                            original_code=function_code,
-                            fixed_code=split_functions,
-                            description=f"Split large function '{function_name}' ({function_lines} lines) into smaller functions",
-                            rule_number=4
-                        ))
+                        if fix_count < MAX_FIXES:
+                            fixes[fix_count] = Fix(
+                                file_path=str(file_path),
+                                line_number=start_line + 1,
+                                original_code=function_code,
+                                fixed_code=split_functions,
+                                description=f"Split large function '{function_name}' ({function_lines} lines) into smaller functions",
+                                rule_number=4
+                            )
+                            fix_count += 1
 
         except Exception as e:
             print(f"Error fixing large functions in {file_path}: {e}")
 
-        return fixes
+        return fixes[:fix_count]  # Return only the fixes that were actually added
 
     def _split_large_function(self, function_code: str, function_name: str) -> str:
         """Split a large function into smaller functions"""
@@ -260,7 +280,10 @@ def {function_name}():
 
     def add_parameter_validation(self, file_path: Path) -> List[Fix]:
         """Add parameter validation to functions missing it"""
-        fixes = []
+        # Pre-allocate with safety bound (Rule 3 compliance)
+        MAX_FIXES = 50  # Safety bound for validation fixes per file
+        fixes = [None] * MAX_FIXES
+        fix_count = 0
 
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -285,19 +308,21 @@ def {function_name}():
                         # Add type hints and validation
                         enhanced_function = self._add_type_hints_and_validation(node, lines[start_line:])
 
-                        fixes.append(Fix(
-                            file_path=str(file_path),
-                            line_number=start_line + 1,
-                            original_code=lines[start_line],  # Just the def line for now
-                            fixed_code=enhanced_function,
-                            description=f"Add type hints and parameter validation to '{function_name}'",
-                            rule_number=7
-                        ))
+                        if fix_count < MAX_FIXES:
+                            fixes[fix_count] = Fix(
+                                file_path=str(file_path),
+                                line_number=start_line + 1,
+                                original_code=lines[start_line],  # Just the def line for now
+                                fixed_code=enhanced_function,
+                                description=f"Add type hints and parameter validation to '{function_name}'",
+                                rule_number=7
+                            )
+                            fix_count += 1
 
         except Exception as e:
             print(f"Error adding parameter validation to {file_path}: {e}")
 
-        return fixes
+        return fixes[:fix_count]  # Return only the fixes that were actually added
 
     def _add_type_hints_and_validation(self, node: ast.FunctionDef, lines: List[str]) -> str:
         """Add type hints and validation to function"""
@@ -352,7 +377,10 @@ def {function_name}():
         print("🔧 Running Compliance Fixes...")
         print("=" * 50)
 
-        all_fixes = []
+        # Pre-allocate with safety bound (Rule 3 compliance)
+        MAX_FIXES = 1000  # Safety bound for all fixes across all files
+        all_fixes = [None] * MAX_FIXES
+        fix_count = 0
 
         # Find Python files to fix (replacing complex comprehension with explicit loop)
         python_files = list(source_directory.rglob("*.py"))
@@ -377,21 +405,26 @@ def {function_name}():
             fixes.extend(self.fix_large_functions(file_path))
             fixes.extend(self.add_parameter_validation(file_path))
 
-            all_fixes.extend(fixes)
+            # Add fixes to pre-allocated array (Rule 3 compliance)
+            for fix in fixes:
+                if fix_count < MAX_FIXES:
+                    all_fixes[fix_count] = fix
+                    fix_count += 1
 
-        # Apply all fixes
-        self.apply_fixes(all_fixes)
+        # Apply all fixes (trim to actual count)
+        actual_fixes = all_fixes[:fix_count]
+        self.apply_fixes(actual_fixes)
 
         # Generate summary
         summary = {
-            'total_fixes_identified': len(all_fixes),
+            'total_fixes_identified': fix_count,
             'files_affected': len(self.files_modified),
             'fixes_by_rule': {},
             'fixes_applied': len(self.fixes_applied)
         }
 
         # Count fixes by rule
-        for fix in all_fixes:
+        for fix in actual_fixes:
             rule_num = fix.rule_number
             if rule_num not in summary['fixes_by_rule']:
                 summary['fixes_by_rule'][rule_num] = 0
@@ -486,27 +519,32 @@ def _execute_fixes_and_report(args: argparse.Namespace) -> int:
 
     # Save fixes report
     # Convert fixes to dictionaries (replacing complex comprehension with explicit loop)
-    fixes_list = []
+    # Pre-allocate with safety bound (Rule 3 compliance)
+    MAX_FIXES = 1000  # Safety bound for fixes list
+    fixes_list = [None] * MAX_FIXES
+    fix_count = 0
+
     for fix in fixer.fixes_applied:
-        fixes_list.append({
-            'file_path': fix.file_path,
-            'line_number': fix.line_number,
-            'rule_number': fix.rule_number,
-            'description': fix.description,
-            'original_code': fix.original_code,
-            'fixed_code': fix.fixed_code
-        })
+        if fix_count < MAX_FIXES:
+            fixes_list[fix_count] = {
+                'file_path': fix.file_path,
+                'line_number': fix.line_number,
+                'rule_number': fix.rule_number,
+                'description': fix.description,
+                'original_code': fix.original_code,
+                'fixed_code': fix.fixed_code
+            }
+            fix_count += 1
 
     fixes_report = {
         'summary': summary,
-        'fixes_applied': fixes_list
+        'fixes_applied': fixes_list[:fix_count]  # Use actual count
     }
 
     with open('compliance_fixes_report.json', 'w', encoding='utf-8') as f:
         json.dump(fixes_report, f, indent=2)
 
-    print("
-📄 Detailed fixes report saved to: compliance_fixes_report.json"
+    print("\n📄 Detailed fixes report saved to: compliance_fixes_report.json")
     return 0
 
 

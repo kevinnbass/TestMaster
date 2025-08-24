@@ -590,38 +590,40 @@ class IntelligenceReorganizer:
         print("=" * 60)
 
         summary = plan.summary
-        print("
-📊 SUMMARY:"        print(f"   Files analyzed with intelligence: {summary['total_files_analyzed']}")
+        print("\n📊 SUMMARY:")
+        print(f"   Files analyzed with intelligence: {summary['total_files_analyzed']}")
         print(f"   High-confidence moves: {summary['high_confidence_moves']}")
         print(f"   Medium-confidence moves: {summary['medium_confidence_moves']}")
         print(f"   Low-confidence items: {summary['low_confidence_moves']}")
         print(f"   Intelligence modules used: {summary['intelligence_modules_used']}")
-        print(".3f"
-        print("🎯 INSIGHTS FROM YOUR INTELLIGENCE MODULES:"
+        print(".3f")
+        print("🎯 INSIGHTS FROM YOUR INTELLIGENCE MODULES:")
         for insight in plan.intelligence_insights[:5]:
             print(f"   💡 {insight['file']}: Confidence {insight['confidence']:.2f}")
             if insight['insights']:
                 print(f"      {insight['insights'][0]}")
 
-        print("
-✅ HIGH-CONFIDENCE MOVES EXECUTED:"        for move in plan.high_confidence_moves[:10]:
-            print(".2f"            print(f"      Based on: {', '.join(move['intelligence_reasoning'][:2])}")
+        print("\n✅ HIGH-CONFIDENCE MOVES EXECUTED:")
+        for move in plan.high_confidence_moves[:10]:
+            print(".2f")
+            print(f"      Based on: {', '.join(move['intelligence_reasoning'][:2])}")
 
         if len(plan.high_confidence_moves) > 10:
             print(f"   ... and {len(plan.high_confidence_moves) - 10} more high-confidence moves")
 
-        print("
-🔄 MEDIUM-CONFIDENCE ITEMS (REVIEW MANUALLY):"        for move in plan.medium_confidence_moves[:5]:
-            print(".2f"
+        print("\n🔄 MEDIUM-CONFIDENCE ITEMS (REVIEW MANUALLY):")
+        for move in plan.medium_confidence_moves[:5]:
+            print(".2f")
         if len(plan.medium_confidence_moves) > 5:
             print(f"   ... and {len(plan.medium_confidence_moves) - 5} more for review")
 
-        print("
-📈 INTELLIGENCE MODULES LEVERAGED:"        for module_type, module_path in self.intelligence_modules.items():
+        print("\n📈 INTELLIGENCE MODULES LEVERAGED:")
+        for module_type, module_path in self.intelligence_modules.items():
             print(f"   🧠 {module_type}: {module_path.name}")
 
-        print("
-🎉 This reorganization was driven by YOUR OWN intelligence infrastructure!"        print("   Your AI detectors, cohesion analyzers, and pattern matchers provided"        print("   the sophisticated understanding that made this possible.")
+        print("\n🎉 This reorganization was driven by YOUR OWN intelligence infrastructure!")
+        print("   Your AI detectors, cohesion analyzers, and pattern matchers provided")
+        print("   the sophisticated understanding that made this possible.")
 
     def _execute_moves(self, moves: List[Dict[str, Any]], confidence_level: str) -> None:
         """Execute reorganization moves"""

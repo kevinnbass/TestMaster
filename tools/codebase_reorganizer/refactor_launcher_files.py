@@ -119,3 +119,4 @@ class FileOperations:
     def find_python_files(self) -> List[Path]:
         """Find Python files using safe file discovery"""
         return find_python_files_safely(self.root_dir)
+

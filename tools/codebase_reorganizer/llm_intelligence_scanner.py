@@ -375,18 +375,23 @@ class LLMIntelligenceScanner:
         """Generate a comprehensive analysis prompt for the LLM"""
         relative_path = file_path.relative_to(self.root_dir)
 
+        # Prepare content outside f-string to avoid backslash issues
+        file_size = len(content.encode('utf-8'))
+        lines_of_code = len(content.split('\n'))
+        truncated_content = content[:4000]
+
         prompt = f"""
 You are an expert Python code analyst tasked with deeply understanding a Python module for reorganization purposes.
 
 FILE TO ANALYZE:
 - Full path: {file_path}
 - Relative path: {relative_path}
-- File size: {len(content.encode('utf-8'))} bytes
-- Lines of code: {len(content.split('\n'))}
+- File size: {file_size} bytes
+- Lines of code: {lines_of_code}
 
 CODE CONTENT:
 ```
-{content[:4000]}...  # Truncated for brevity
+""" + truncated_content + """...  # Truncated for brevity
 ```
 
 Please provide a comprehensive analysis in the following JSON format:
@@ -866,20 +871,20 @@ def main():
 
     intelligence_map = scanner.scan_and_analyze(output_file)
 
-    print("
-✅ Scan completed!"    print(f"Files analyzed: {intelligence_map.total_files_scanned}")
+    print("\n✅ Scan completed!")
+    print(f"Files analyzed: {intelligence_map.total_files_scanned}")
     print(f"Total lines: {intelligence_map.total_lines_analyzed}")
     print(f"Output saved to: {output_file}")
 
     # Print classification summary
-    print("
-📊 Classification Summary:"    for category, count in sorted(intelligence_map.classification_summary.items(),
+    print("\n📊 Classification Summary:")
+    for category, count in sorted(intelligence_map.classification_summary.items(),
                                key=lambda x: x[1], reverse=True):
         print(f"  {category}: {count}")
 
     if intelligence_map.reorganization_insights['problematic_modules']:
-        print("
-⚠️  Problematic modules identified:"        for module in intelligence_map.reorganization_insights['problematic_modules'][:5]:
+        print("\n⚠️  Problematic modules identified:")
+        for module in intelligence_map.reorganization_insights['problematic_modules'][:5]:
             print(f"  {module['path']}: {', '.join(module['issues'])}")
 
 
