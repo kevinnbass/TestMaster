@@ -1,0 +1,805 @@
+{
+  "checked": 0,
+  "failed": [
+    [
+      "utilities.advanced_alert_system",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.advanced_caching_architecture",
+      "No module named 'monitoring'"
+    ],
+    [
+      "monitoring.advanced_caching_strategy_evolution",
+      "No module named 'monitoring'"
+    ],
+    [
+      "utilities.advanced_emergent_pattern_detection",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.cc_2.advanced_monitoring_alerting_system",
+      "No module named 'monitoring'"
+    ],
+    [
+      "core.security.cc_2.advanced_security_compliance_system",
+      "No module named 'core'"
+    ],
+    [
+      "monitoring.advanced_system_integration",
+      "No module named 'monitoring'"
+    ],
+    [
+      "core.orchestration.agents.agent_a_consolidation_plan",
+      "No module named 'core'"
+    ],
+    [
+      "core.orchestration.agents.agent_a_export_scanner",
+      "No module named 'core'"
+    ],
+    [
+      "core.orchestration.agents.agent_a_framework_unification_plan",
+      "No module named 'core'"
+    ],
+    [
+      "core.orchestration.agents.agent_a_redundancy_analyzer",
+      "No module named 'core'"
+    ],
+    [
+      "core.orchestration.agents.agent_a_safe_consolidator",
+      "No module named 'core'"
+    ],
+    [
+      "core.orchestration.agents.agent_a_size_analyzer",
+      "No module named 'core'"
+    ],
+    [
+      "core.orchestration.agents.cc_2.agent_b_analysis",
+      "No module named 'core'"
+    ],
+    [
+      "core.orchestration.agents.agent_b_documentation_compiler",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.ai_intelligence_core",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.ai_intelligence_engine",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.ai_models",
+      "No module named 'core'"
+    ],
+    [
+      "utilities.automated_optimization_system",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.automate_modularization",
+      "No module named 'utilities'"
+    ],
+    [
+      "core.security.cc_2.autonomous_compliance_harness",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.autonomous_intelligence_platform",
+      "No module named 'core'"
+    ],
+    [
+      "monitoring.cc_2.backup_monitor",
+      "No module named 'monitoring'"
+    ],
+    [
+      "utilities.break_commits",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.budget_control_alert_system",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.cc_2.cache_metrics_tracker",
+      "No module named 'monitoring'"
+    ],
+    [
+      "utilities.caching_models",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.check_modules",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.chunked_git_push",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.codebase_inventory_analysis",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.codebase_reorganizer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.codebase_toolkit",
+      "No module named 'utilities'"
+    ],
+    [
+      "frontend.python_ui.commercial_features_suite",
+      "No module named 'frontend'"
+    ],
+    [
+      "utilities.commit_splitter",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.commit_splitter_system",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.competitive_excellence_framework",
+      "No module named 'monitoring'"
+    ],
+    [
+      "core.security.cc_2.compliance_rules_engine",
+      "No module named 'core'"
+    ],
+    [
+      "utilities.comprehensive_cleanup",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.connection_pool_manager",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.cc_2.CONTINUOUS_MONITORING_SYSTEM",
+      "No module named 'monitoring'"
+    ],
+    [
+      "core.intelligence.cc_2.cross_agent_intelligence_integration",
+      "No module named 'core'"
+    ],
+    [
+      "utilities.cross_system_validation",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.database_optimization_core",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.database_optimization_models",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.database_performance_optimizer_modular",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.db_growth_tracker",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.cc_2.db_monitor_standalone",
+      "No module named 'monitoring'"
+    ],
+    [
+      "utilities.debug_pattern_recognizer",
+      "No module named 'utilities'"
+    ],
+    [
+      "core.security.cc_2.DEPLOY_SECURITY_FIXES",
+      "No module named 'core'"
+    ],
+    [
+      "core.security.cc_2.DEPLOY_SECURITY_FIXES_PHASE2",
+      "No module named 'core'"
+    ],
+    [
+      "utilities.distributed_performance_scaling",
+      "No module named 'utilities'"
+    ],
+    [
+      "core.intelligence.cc_2.enhanced_ml_performance_intelligence",
+      "No module named 'core'"
+    ],
+    [
+      "monitoring.cc_2.enterprise_analytics_engine",
+      "No module named 'monitoring'"
+    ],
+    [
+      "monitoring.enterprise_deployment_infrastructure",
+      "No module named 'monitoring'"
+    ],
+    [
+      "core.intelligence.enterprise_integration_framework",
+      "No module named 'core'"
+    ],
+    [
+      "core.security.cc_2.enterprise_multitenant_security",
+      "No module named 'core'"
+    ],
+    [
+      "utilities.find_active_python_modules",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.fixed_cleanup",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.gamma_visualization_server",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.garbage_collection_optimizer",
+      "No module named 'utilities'"
+    ],
+    [
+      "documentation.tooling.generate_api_docs",
+      "No module named 'documentation'"
+    ],
+    [
+      "utilities.generate_evidence",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.global_customer_deployment_validation",
+      "No module named 'monitoring'"
+    ],
+    [
+      "monitoring.global_market_penetration_scaling_strategy",
+      "No module named 'monitoring'"
+    ],
+    [
+      "core.orchestration.cc_2.greek_swarm_coordination_platform",
+      "No module named 'core'"
+    ],
+    [
+      "utilities.hybrid_push_system",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.incremental_push",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.index_optimizer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.integration_database",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.integration_models",
+      "No module named 'utilities'"
+    ],
+    [
+      "testing.integration.cc_2.integration_test_suite",
+      "No module named 'testing'"
+    ],
+    [
+      "utilities.intelligent_performance_automation",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.intelligent_push_system",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.legacy_code_preservation_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "testing.cc_2.load_test_executor",
+      "No module named 'testing'"
+    ],
+    [
+      "utilities.market_expansion_competitive_positioning",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.memory_cache_layer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.memory_leak_detector",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.memory_management_core",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.memory_management_models",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.memory_management_optimizer_modular",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.memory_pool_manager",
+      "No module named 'utilities'"
+    ],
+    [
+      "core.intelligence.cc_2.ml_performance_optimizer",
+      "No module named 'core'"
+    ],
+    [
+      "monitoring.cc_2.monitoring_infrastructure",
+      "No module named 'monitoring'"
+    ],
+    [
+      "core.orchestration.agents.multi_agent_ml_optimization",
+      "No module named 'core'"
+    ],
+    [
+      "utilities.multi_database_integration",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.multi_system_performance_coordinator",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.multi_tenant_scaling_optimization",
+      "No module named 'monitoring'"
+    ],
+    [
+      "core.intelligence.cc_2.neural_network_simulator",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.optimized_synthesis_algorithms",
+      "No module named 'core'"
+    ],
+    [
+      "utilities.pattern_recognition",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.performance_baseline_profiler",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.performance_benchmarker",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.performance_models",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.cc_2.performance_monitoring_infrastructure",
+      "No module named 'monitoring'"
+    ],
+    [
+      "monitoring.performance_optimization_competitive_benchmarking",
+      "No module named 'monitoring'"
+    ],
+    [
+      "monitoring.performance_optimization_system",
+      "No module named 'monitoring'"
+    ],
+    [
+      "utilities.performance_optimized_linkage",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.performance_regression_detector",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.performance_validation_core",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.performance_validation_framework_modular",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.persistent_push_system",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.PRODUCTION_DEPLOYMENT_PACKAGE",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.production_deployment_platform",
+      "No module named 'monitoring'"
+    ],
+    [
+      "utilities.production_deployment_system",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.production_streaming_platform_enterprise",
+      "No module named 'monitoring'"
+    ],
+    [
+      "utilities.query_optimization_engine",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.query_performance_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "frontend.python_ui.quick_organization_script",
+      "No module named 'frontend'"
+    ],
+    [
+      "utilities.redis_cache_layer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.redis_connection_manager",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.reorganize_codebase",
+      "No module named 'utilities'"
+    ],
+    [
+      "monitoring.cc_2.service_health_monitor",
+      "No module named 'monitoring'"
+    ],
+    [
+      "utilities.simple_chunk_push",
+      "No module named 'utilities'"
+    ],
+    [
+      "testing.simple_framework_test",
+      "No module named 'testing'"
+    ],
+    [
+      "utilities.smart_chunk_push",
+      "No module named 'utilities'"
+    ],
+    [
+      "frontend.streaming_platform_frontend_integration",
+      "No module named 'frontend'"
+    ],
+    [
+      "utilities.system_integration_core",
+      "No module named 'utilities'"
+    ],
+    [
+      "testing.system_optimization_engine",
+      "No module named 'testing'"
+    ],
+    [
+      "utilities.task_management",
+      "No module named 'utilities'"
+    ],
+    [
+      "testing.performance.testmaster_performance_engine",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_api_interface_validator",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_api_validation_framework",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_architecture_validation_framework",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_autonomous_harness",
+      "No module named 'testing'"
+    ],
+    [
+      "configuration.test_configuration_documentation",
+      "No module named 'configuration'"
+    ],
+    [
+      "testing.unit.test_consolidated_converter",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_documentation_api",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_knowledge_direct",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_knowledge_management",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_knowledge_simple",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_legacy_integration",
+      "No module named 'testing'"
+    ],
+    [
+      "monitoring.test_monitoring",
+      "No module named 'monitoring'"
+    ],
+    [
+      "testing.unit.test_performance_quality_validator",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_system_integration_validator",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_unified_framework",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_unified_framework_8_adapters",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_unified_framework_complete",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_unified_framework_expanded",
+      "No module named 'testing'"
+    ],
+    [
+      "testing.unit.test_validation_ecosystem_integration",
+      "No module named 'testing'"
+    ],
+    [
+      "monitoring.cc_2.unified_enhanced_monitor",
+      "No module named 'monitoring'"
+    ],
+    [
+      "core.intelligence.unified_intelligence_platform",
+      "No module named 'core'"
+    ],
+    [
+      "utilities.UNQUARANTINE_SYSTEM",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.validate_modularization",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.validate_modularization_comprehensive",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.verify_all_modules",
+      "No module named 'utilities'"
+    ],
+    [
+      "core.orchestration.agents.agent_a_redundancy_analyzer",
+      "No module named 'core'"
+    ],
+    [
+      "core.orchestration.agents.agent_a_size_analyzer",
+      "No module named 'core'"
+    ],
+    [
+      "core.orchestration.agents.agent_b_analysis",
+      "No module named 'core'"
+    ],
+    [
+      "utilities.api_dependency_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.codebase_inventory_analysis",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.debug_pattern_recognizer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.dependency_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "documentation.tooling.documentation_architecture_analyzer",
+      "No module named 'documentation'"
+    ],
+    [
+      "utilities.file_breakdown_advisor",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.focus_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.functional_linkage_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.legacy_code_preservation_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.organization_advisor",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.personal_coding_behavior_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.personal_development_trend_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.query_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.simple_codebase_analyzer",
+      "No module named 'utilities'"
+    ],
+    [
+      "utilities.__init__",
+      "No module named 'utilities'"
+    ],
+    [
+      "core.intelligence.clean_architecture_validator",
+      "No module named 'core'"
+    ],
+    [
+      "sandbox.analyze_functions",
+      "No module named 'sandbox'"
+    ],
+    [
+      "core.security.cc_2.autonomous_compliance_harness",
+      "No module named 'core'"
+    ],
+    [
+      "sandbox.best_practices_analyzer",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.code_quality_analyzer",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.complexity_analyzer",
+      "No module named 'sandbox'"
+    ],
+    [
+      "core.security.cc_2.compliance_audit",
+      "No module named 'core'"
+    ],
+    [
+      "core.security.compliance_check",
+      "No module named 'core'"
+    ],
+    [
+      "core.security.compliance_fixes",
+      "No module named 'core'"
+    ],
+    [
+      "core.security.cc_2.compliance_rules_engine",
+      "No module named 'core'"
+    ],
+    [
+      "sandbox.demo_autonomous_system",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.demo_intelligent_reorg",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.integration_classification",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.integration_models",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.integration_planning",
+      "No module named 'sandbox'"
+    ],
+    [
+      "core.intelligence.intelligence_cli",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.intelligence_integration_engine",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.intelligence_integration_engine_new",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.intelligence_pipeline",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.intelligence_reorganizer",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.intelligence_reports",
+      "No module named 'core'"
+    ],
+    [
+      "sandbox.intelligent_reorganizer",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.launcher",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.llm_integration_engine",
+      "No module named 'sandbox'"
+    ],
+    [
+      "core.intelligence.cc_2.llm_intelligence_scanner",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.llm_intelligence_scanner_new",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.llm_intelligence_system",
+      "No module named 'core'"
+    ],
+    [
+      "core.intelligence.cc_2.maintainability_analyzer",
+      "No module named 'core'"
+    ],
+    [
+      "sandbox.meta_reorganizer",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.pattern_detector",
+      "No module named 'sandbox'"
+    ],
+    [
+      "core.security.perfect_compliance_launcher",
+      "No module named 'core'"
+    ],
+    [
+      "sandbox.quality_config",
+      "No module named 'sandbox'"
+    ],
+    [
+      "utilities.cc_2.quality_utils",
+      "No module named 'utilities'"
+    ],
+    [
+      "sandbox.readability_analyzer",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.refactoring_demo",
+      "No module named 'sandbox'"
+    ],
+    [
+      "sandbox.refactor_functions",
+      "No module named 'sandbox'"
+    ]
+  ]
+}
