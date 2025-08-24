@@ -1,0 +1,89 @@
+{
+  "version": "1.0",
+  "description": "Configuration for Clean Reorganizer",
+  "exclusions": {
+    "directories": [
+      "__pycache__",
+      ".git",
+      "node_modules",
+      "htmlcov",
+      ".pytest_cache",
+      ".vscode",
+      ".idea",
+      "archives",
+      "archive",
+      "dist",
+      "build",
+      "PRODUCTION_PACKAGES"
+    ],
+    "file_globs": [
+      "*.pyc",
+      "*.pyo",
+      "*.log",
+      "*.tmp"
+    ],
+    "tests": [
+      "tests",
+      "test_sessions",
+      "testmaster_sessions"
+    ]
+  },
+  "categories": {
+    "core/intelligence": {
+      "keywords": ["intelligence", "ml", "ai", "neural", "predictive", "nlp", "llm", "embedding", "vector", "semantic"],
+      "class_patterns": [".*Intelligence.*", ".*ML.*", ".*AI.*", ".*Neural.*"],
+      "path_patterns": [".*intelligence.*", ".*ml.*", ".*ai.*", ".*neural.*"]
+    },
+    "core/orchestration": {
+      "keywords": ["orchestrator", "orchestration", "coordinator", "workflow", "agent", "swarm"],
+      "class_patterns": [".*Orchestrator.*", ".*Coordinator.*", ".*Agent.*"],
+      "path_patterns": [".*orchestrat.*", ".*workflow.*", ".*agent.*", ".*swarm.*"]
+    },
+    "core/security": {
+      "keywords": ["security", "auth", "encrypt", "decrypt", "vulnerability", "audit", "compliance"],
+      "class_patterns": [".*Security.*", ".*Auth.*", ".*Audit.*", ".*Compliance.*"],
+      "path_patterns": [".*security.*", ".*auth.*", ".*audit.*", ".*compliance.*"]
+    },
+    "monitoring": {
+      "keywords": ["monitor", "dashboard", "metric", "alert", "logging"],
+      "class_patterns": [".*Monitor.*", ".*Dashboard.*", ".*Metric.*"],
+      "path_patterns": [".*monitor.*", ".*dashboard.*", ".*metric.*", ".*log.*"]
+    },
+    "testing": {
+      "keywords": ["test", "spec", "mock", "fixture", "assert"],
+      "class_patterns": [".*Test.*"],
+      "path_patterns": [".*test.*", ".*spec.*", ".*mock.*", ".*fixture.*"]
+    },
+    "documentation": {
+      "keywords": ["readme", "doc", "guide", "tutorial", "howto"],
+      "class_patterns": [],
+      "path_patterns": [".*readme.*", ".*doc.*", ".*guide.*"]
+    },
+    "configuration": {
+      "keywords": ["config", "setting", "env", "variable", "constant", "toml", "yaml", "json", "ini"],
+      "class_patterns": [],
+      "path_patterns": [".*config.*", ".*setting.*", ".*env.*"]
+    },
+    "utilities": {
+      "keywords": ["util", "helper", "common", "shared"],
+      "class_patterns": [".*Helper.*", ".*Util.*"],
+      "path_patterns": [".*util.*", ".*helper.*", ".*common.*", ".*shared.*"]
+    }
+  },
+  "operations": {
+    "create_backups": true,
+    "update_imports": false,
+    "validate_after": true,
+    "max_file_size_bytes": 10485760,
+    "use_symlinks": false
+  },
+  "bounds": {
+    "max_directories": 5000,
+    "max_files": 20000,
+    "max_lines_per_file": 20000,
+    "max_path_length": 32000
+  },
+  "target_root": "organized_codebase"
+}
+
+
