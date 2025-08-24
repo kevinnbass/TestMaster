@@ -1,0 +1,98 @@
+{
+  "validation_summary": {
+    "total_tests": 7,
+    "passed": 4,
+    "failed": 3,
+    "success_rate": 57.14285714285714,
+    "total_execution_time": 0.095378,
+    "timestamp": "2025-08-21T16:28:44.255893"
+  },
+  "test_results": [
+    {
+      "test_name": "State Management",
+      "status": "FAIL",
+      "execution_time": 0.07869386672973633,
+      "details": {
+        "error": "APPLICATION"
+      },
+      "error": "APPLICATION"
+    },
+    {
+      "test_name": "Cache System",
+      "status": "PASS",
+      "execution_time": 0.01094198226928711,
+      "details": {
+        "basic_operations": "PASS",
+        "cache_miss_handling": "PASS",
+        "decorator_caching": "PASS",
+        "metrics_collection": "PASS",
+        "cache_hits": 1
+      },
+      "error": null
+    },
+    {
+      "test_name": "Workflow Engine",
+      "status": "PASS",
+      "execution_time": 0.003465890884399414,
+      "details": {
+        "async_execution": "PASS",
+        "dependency_resolution": "PASS",
+        "sync_step_support": "PASS",
+        "workflow_builder": "PASS",
+        "steps_executed": 3
+      },
+      "error": null
+    },
+    {
+      "test_name": "Unified Tools",
+      "status": "FAIL",
+      "execution_time": 0.0010499954223632812,
+      "details": {
+        "error": "No module named 'unified_tools'"
+      },
+      "error": "No module named 'unified_tools'"
+    },
+    {
+      "test_name": "Orchestration System",
+      "status": "PASS",
+      "execution_time": 0.0,
+      "details": {
+        "modules_present": 5,
+        "missing_modules": [],
+        "total_lines": 1157,
+        "modularization": "PASS"
+      },
+      "error": null
+    },
+    {
+      "test_name": "Configuration System",
+      "status": "PASS",
+      "execution_time": 0.001226186752319336,
+      "details": {
+        "modular_configs": 9,
+        "main_configs": [
+          "config/testmaster_config.py",
+          "config/enhanced_unified_config.py"
+        ],
+        "configuration_structure": "VALIDATED"
+      },
+      "error": null
+    },
+    {
+      "test_name": "Integration Tests",
+      "status": "FAIL",
+      "execution_time": 0.0,
+      "details": {
+        "error": "APPLICATION"
+      },
+      "error": "APPLICATION"
+    }
+  ],
+  "infrastructure_status": "ISSUES_DETECTED",
+  "recommendations": [
+    "[FAIL] Infrastructure validation detected issues",
+    "[FIX] Fix State Management: APPLICATION",
+    "[FIX] Fix Unified Tools: No module named 'unified_tools'",
+    "[FIX] Fix Integration Tests: APPLICATION"
+  ]
+}

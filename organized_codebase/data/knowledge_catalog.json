@@ -1,0 +1,66 @@
+{
+  "timestamp": "2025-08-21T08:27:37.483372",
+  "analyzer": "Agent D - Knowledge Management",
+  "statistics": {
+    "total_items": 1410,
+    "sources_processed": 1410,
+    "by_type": {
+      "code_documentation": 1267,
+      "documentation": 143
+    }
+  },
+  "sample_items": [
+    {
+      "title": "adaptive_template_system",
+      "type": "code_documentation",
+      "source": "adaptive_template_system.py"
+    },
+    {
+      "title": "agency_swarm_analyzer",
+      "type": "code_documentation",
+      "source": "agency_swarm_analyzer.py"
+    },
+    {
+      "title": "api_docs_extractor",
+      "type": "code_documentation",
+      "source": "api_docs_extractor.py"
+    },
+    {
+      "title": "api_spec_builder",
+      "type": "code_documentation",
+      "source": "api_spec_builder.py"
+    },
+    {
+      "title": "api_validation_framework",
+      "type": "code_documentation",
+      "source": "api_validation_framework.py"
+    },
+    {
+      "title": "auto_api_docs_generator",
+      "type": "code_documentation",
+      "source": "auto_api_docs_generator.py"
+    },
+    {
+      "title": "auto_generator",
+      "type": "code_documentation",
+      "source": "auto_generator.py"
+    },
+    {
+      "title": "bilingual_docs_processor",
+      "type": "code_documentation",
+      "source": "bilingual_docs_processor.py"
+    },
+    {
+      "title": "changelog_generator",
+      "type": "code_documentation",
+      "source": "changelog_generator.py"
+    },
+    {
+      "title": "comprehensive_visualization_engine",
+      "type": "code_documentation",
+      "source": "comprehensive_visualization_engine.py"
+    }
+  ],
+  "relationships_found": 0,
+  "search_tests_performed": 5
+}

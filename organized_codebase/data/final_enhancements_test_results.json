@@ -1,0 +1,78 @@
+{
+  "timestamp": "2025-08-18T20:13:08.746508",
+  "total_time_seconds": 102.29546117782593,
+  "overall_success": true,
+  "success_rate": 100.0,
+  "test_results": {
+    "integrity_guardian": {
+      "success": true,
+      "registrations": 100,
+      "verifications": 50,
+      "integrity_violations": 0,
+      "recoveries": 0,
+      "performance_ms": 2922.8084087371826,
+      "error": null
+    },
+    "quantum_retry": {
+      "success": true,
+      "submissions": 50,
+      "successful_retries": 9,
+      "strategy_switches": 0,
+      "quantum_cycles": 9,
+      "performance_ms": 10271.726608276367,
+      "error": null
+    },
+    "deduplication": {
+      "success": true,
+      "analytics_processed": 1100,
+      "duplicates_detected": 1099,
+      "exact_duplicates": 0,
+      "near_duplicates": 0,
+      "duplicates_merged": 0,
+      "performance_ms": 13604.294776916504,
+      "error": null
+    },
+    "emergency_backup": {
+      "success": true,
+      "emergency_backups": 1,
+      "scheduled_backups": 0,
+      "instant_recoveries": 1,
+      "backup_verification": 1,
+      "compression_ratio": -1.5934584337981006,
+      "performance_ms": 15102.930545806885,
+      "error": null
+    },
+    "flow_optimizer": {
+      "success": true,
+      "predictions_generated": 0,
+      "optimizations_triggered": 0,
+      "strategies_tested": 3,
+      "efficiency_score": 100.0,
+      "prediction_accuracy": 100.0,
+      "performance_ms": 30003.049850463867,
+      "error": null
+    },
+    "integrated_system": {
+      "success": true,
+      "total_analytics_processed": 1,
+      "integrity_maintained": 1102,
+      "duplicates_handled": 0,
+      "backups_created": 2,
+      "optimizations_applied": 0,
+      "overall_efficiency": 99.9546690843155,
+      "performance_ms": 21349.000215530396,
+      "error": null
+    },
+    "stress_test": {
+      "success": true,
+      "concurrent_threads": 10,
+      "total_operations": 400,
+      "successful_operations": 400,
+      "average_response_time": 96.86976850032806,
+      "max_response_time": 150.86054801940918,
+      "error_rate": 0.0,
+      "performance_ms": 3912.219524383545,
+      "error": null
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-08-21T08:20:29.085855",
+  "analyzer": "Agent D - Legacy Integration Framework",
+  "archive_analysis": {
+    "total_components": 320,
+    "total_lines": 220611,
+    "preservation_status": "excellent"
+  },
+  "legacy_components": {
+    "total": 0,
+    "by_type": {},
+    "by_status": {},
+    "by_complexity": {}
+  },
+  "oversized_modules": {
+    "total": 18,
+    "total_lines": 23111
+  },
+  "legacy_scripts": {
+    "total": 76,
+    "categories": {
+      "test_generation": 40,
+      "coverage_analysis": 12,
+      "conversion": 14,
+      "monitoring": 2,
+      "fixing": 3
+    }
+  },
+  "migration_plans": {
+    "generated": 3
+  }
+}

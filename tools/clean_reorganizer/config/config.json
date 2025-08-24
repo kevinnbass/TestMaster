@@ -159,7 +159,7 @@
     "create_backups": true,
     "update_imports": false,
     "update_web_imports": false,
-    "remove_duplicate_sources": false,
+    "remove_duplicate_sources": true,
     "validate_after": true,
     "max_file_size_bytes": 10485760,
     "use_symlinks": false

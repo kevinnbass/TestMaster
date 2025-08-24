@@ -1,805 +1,805 @@
 {
-  "checked": 0,
+  "checked": 128,
   "failed": [
     [
-      "utilities.advanced_alert_system",
-      "No module named 'utilities'"
-    ],
-    [
       "monitoring.advanced_caching_architecture",
-      "No module named 'monitoring'"
+      "invalid syntax (advanced_caching_architecture.py, line 76)"
     ],
     [
-      "monitoring.advanced_caching_strategy_evolution",
-      "No module named 'monitoring'"
-    ],
-    [
-      "utilities.advanced_emergent_pattern_detection",
-      "No module named 'utilities'"
-    ],
-    [
-      "monitoring.cc_2.advanced_monitoring_alerting_system",
-      "No module named 'monitoring'"
-    ],
-    [
-      "core.security.cc_2.advanced_security_compliance_system",
-      "No module named 'core'"
-    ],
-    [
-      "monitoring.advanced_system_integration",
-      "No module named 'monitoring'"
-    ],
-    [
-      "core.orchestration.agents.agent_a_consolidation_plan",
-      "No module named 'core'"
-    ],
-    [
-      "core.orchestration.agents.agent_a_export_scanner",
-      "No module named 'core'"
-    ],
-    [
-      "core.orchestration.agents.agent_a_framework_unification_plan",
-      "No module named 'core'"
-    ],
-    [
-      "core.orchestration.agents.agent_a_redundancy_analyzer",
-      "No module named 'core'"
-    ],
-    [
-      "core.orchestration.agents.agent_a_safe_consolidator",
-      "No module named 'core'"
-    ],
-    [
-      "core.orchestration.agents.agent_a_size_analyzer",
-      "No module named 'core'"
-    ],
-    [
-      "core.orchestration.agents.cc_2.agent_b_analysis",
-      "No module named 'core'"
-    ],
-    [
-      "core.orchestration.agents.agent_b_documentation_compiler",
-      "No module named 'core'"
-    ],
-    [
-      "core.intelligence.cc_2.ai_intelligence_core",
-      "No module named 'core'"
+      "core.intelligence.cc_1.ai_intelligence_core",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "core.intelligence.ai_intelligence_engine",
-      "No module named 'core'"
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "core.intelligence.cc_2.ai_models",
-      "No module named 'core'"
+      "core.intelligence.cc_1.ai_models",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "utilities.automated_optimization_system",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.automate_modularization",
-      "No module named 'utilities'"
-    ],
-    [
-      "core.security.cc_2.autonomous_compliance_harness",
-      "No module named 'core'"
-    ],
-    [
-      "core.intelligence.cc_2.autonomous_intelligence_platform",
-      "No module named 'core'"
-    ],
-    [
-      "monitoring.cc_2.backup_monitor",
-      "No module named 'monitoring'"
-    ],
-    [
-      "utilities.break_commits",
-      "No module named 'utilities'"
+      "core.intelligence.cc_1.autonomous_intelligence_platform",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "utilities.budget_control_alert_system",
-      "No module named 'utilities'"
+      "cannot import name 'MimeText' from 'email.mime.text' (C:\\Users\\kbass\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\mime\\text.py)"
     ],
     [
-      "monitoring.cc_2.cache_metrics_tracker",
-      "No module named 'monitoring'"
-    ],
-    [
-      "utilities.caching_models",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.check_modules",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.chunked_git_push",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.codebase_inventory_analysis",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.codebase_reorganizer",
-      "No module named 'utilities'"
+      "monitoring.cc_1.cache_metrics_tracker",
+      "invalid syntax (cache_metrics_tracker.py, line 51)"
     ],
     [
       "utilities.codebase_toolkit",
-      "No module named 'utilities'"
+      "invalid syntax (codebase_toolkit.py, line 17)"
     ],
     [
       "frontend.python_ui.commercial_features_suite",
-      "No module named 'frontend'"
-    ],
-    [
-      "utilities.commit_splitter",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.commit_splitter_system",
-      "No module named 'utilities'"
-    ],
-    [
-      "monitoring.competitive_excellence_framework",
-      "No module named 'monitoring'"
-    ],
-    [
-      "core.security.cc_2.compliance_rules_engine",
-      "No module named 'core'"
-    ],
-    [
-      "utilities.comprehensive_cleanup",
-      "No module named 'utilities'"
+      "No module named 'frontend.intelligence'"
     ],
     [
       "utilities.connection_pool_manager",
-      "No module named 'utilities'"
+      "invalid syntax (connection_pool_manager.py, line 55)"
     ],
     [
-      "monitoring.cc_2.CONTINUOUS_MONITORING_SYSTEM",
-      "No module named 'monitoring'"
-    ],
-    [
-      "core.intelligence.cc_2.cross_agent_intelligence_integration",
-      "No module named 'core'"
-    ],
-    [
-      "utilities.cross_system_validation",
-      "No module named 'utilities'"
+      "core.intelligence.cc_1.cross_agent_intelligence_integration",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "utilities.database_optimization_core",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.database_optimization_models",
-      "No module named 'utilities'"
+      "invalid syntax (database_optimization_core.py, line 54)"
     ],
     [
       "utilities.database_performance_optimizer_modular",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.db_growth_tracker",
-      "No module named 'utilities'"
-    ],
-    [
-      "monitoring.cc_2.db_monitor_standalone",
-      "No module named 'monitoring'"
-    ],
-    [
-      "utilities.debug_pattern_recognizer",
-      "No module named 'utilities'"
-    ],
-    [
-      "core.security.cc_2.DEPLOY_SECURITY_FIXES",
-      "No module named 'core'"
-    ],
-    [
-      "core.security.cc_2.DEPLOY_SECURITY_FIXES_PHASE2",
-      "No module named 'core'"
+      "invalid syntax (database_performance_optimizer_modular.py, line 13)"
     ],
     [
       "utilities.distributed_performance_scaling",
-      "No module named 'utilities'"
+      "invalid syntax (distributed_performance_scaling.py, line 73)"
     ],
     [
-      "core.intelligence.cc_2.enhanced_ml_performance_intelligence",
-      "No module named 'core'"
-    ],
-    [
-      "monitoring.cc_2.enterprise_analytics_engine",
-      "No module named 'monitoring'"
-    ],
-    [
-      "monitoring.enterprise_deployment_infrastructure",
-      "No module named 'monitoring'"
+      "core.intelligence.cc_1.enhanced_ml_performance_intelligence",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "core.intelligence.enterprise_integration_framework",
-      "No module named 'core'"
-    ],
-    [
-      "core.security.cc_2.enterprise_multitenant_security",
-      "No module named 'core'"
-    ],
-    [
-      "utilities.find_active_python_modules",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.fixed_cleanup",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.gamma_visualization_server",
-      "No module named 'utilities'"
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "utilities.garbage_collection_optimizer",
-      "No module named 'utilities'"
-    ],
-    [
-      "documentation.tooling.generate_api_docs",
-      "No module named 'documentation'"
+      "invalid syntax (garbage_collection_optimizer.py, line 55)"
     ],
     [
       "utilities.generate_evidence",
-      "No module named 'utilities'"
-    ],
-    [
-      "monitoring.global_customer_deployment_validation",
-      "No module named 'monitoring'"
-    ],
-    [
-      "monitoring.global_market_penetration_scaling_strategy",
-      "No module named 'monitoring'"
-    ],
-    [
-      "core.orchestration.cc_2.greek_swarm_coordination_platform",
-      "No module named 'core'"
-    ],
-    [
-      "utilities.hybrid_push_system",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.incremental_push",
-      "No module named 'utilities'"
+      "No module named 'core.dashboard'"
     ],
     [
       "utilities.index_optimizer",
-      "No module named 'utilities'"
+      "invalid syntax (index_optimizer.py, line 52)"
     ],
     [
       "utilities.integration_database",
-      "No module named 'utilities'"
+      "invalid syntax (integration_database.py, line 14)"
     ],
     [
-      "utilities.integration_models",
-      "No module named 'utilities'"
-    ],
-    [
-      "testing.integration.cc_2.integration_test_suite",
-      "No module named 'testing'"
+      "testing.integration.cc_1.integration_test_suite",
+      "No module named 'testing.test_models'"
     ],
     [
       "utilities.intelligent_performance_automation",
-      "No module named 'utilities'"
+      "invalid syntax (intelligent_performance_automation.py, line 66)"
     ],
     [
-      "utilities.intelligent_push_system",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.legacy_code_preservation_analyzer",
-      "No module named 'utilities'"
-    ],
-    [
-      "testing.cc_2.load_test_executor",
-      "No module named 'testing'"
-    ],
-    [
-      "utilities.market_expansion_competitive_positioning",
-      "No module named 'utilities'"
+      "testing.cc_1.load_test_executor",
+      "No module named 'testing.test_models'"
     ],
     [
       "utilities.memory_cache_layer",
-      "No module named 'utilities'"
+      "invalid syntax (memory_cache_layer.py, line 55)"
     ],
     [
       "utilities.memory_leak_detector",
-      "No module named 'utilities'"
+      "invalid syntax (memory_leak_detector.py, line 58)"
     ],
     [
       "utilities.memory_management_core",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.memory_management_models",
-      "No module named 'utilities'"
+      "invalid syntax (memory_management_core.py, line 56)"
     ],
     [
       "utilities.memory_management_optimizer_modular",
-      "No module named 'utilities'"
+      "invalid syntax (memory_management_optimizer_modular.py, line 13)"
     ],
     [
       "utilities.memory_pool_manager",
-      "No module named 'utilities'"
+      "name 'List' is not defined"
     ],
     [
-      "core.intelligence.cc_2.ml_performance_optimizer",
-      "No module named 'core'"
+      "core.intelligence.cc_1.ml_performance_optimizer",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "monitoring.cc_2.monitoring_infrastructure",
-      "No module named 'monitoring'"
+      "monitoring.cc_1.monitoring_infrastructure",
+      "invalid syntax (monitoring_infrastructure.py, line 73)"
     ],
     [
-      "core.orchestration.agents.multi_agent_ml_optimization",
-      "No module named 'core'"
-    ],
-    [
-      "utilities.multi_database_integration",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.multi_system_performance_coordinator",
-      "No module named 'utilities'"
-    ],
-    [
-      "monitoring.multi_tenant_scaling_optimization",
-      "No module named 'monitoring'"
-    ],
-    [
-      "core.intelligence.cc_2.neural_network_simulator",
-      "No module named 'core'"
+      "core.intelligence.cc_1.neural_network_simulator",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "core.intelligence.optimized_synthesis_algorithms",
-      "No module named 'core'"
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "utilities.pattern_recognition",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.performance_baseline_profiler",
-      "No module named 'utilities'"
+      "invalid syntax (pattern_recognition.py, line 12)"
     ],
     [
       "utilities.performance_benchmarker",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.performance_models",
-      "No module named 'utilities'"
-    ],
-    [
-      "monitoring.cc_2.performance_monitoring_infrastructure",
-      "No module named 'monitoring'"
-    ],
-    [
-      "monitoring.performance_optimization_competitive_benchmarking",
-      "No module named 'monitoring'"
-    ],
-    [
-      "monitoring.performance_optimization_system",
-      "No module named 'monitoring'"
-    ],
-    [
-      "utilities.performance_optimized_linkage",
-      "No module named 'utilities'"
+      "invalid syntax (performance_benchmarker.py, line 65)"
     ],
     [
       "utilities.performance_regression_detector",
-      "No module named 'utilities'"
+      "invalid syntax (performance_regression_detector.py, line 52)"
     ],
     [
       "utilities.performance_validation_core",
-      "No module named 'utilities'"
+      "invalid syntax (performance_validation_core.py, line 54)"
     ],
     [
       "utilities.performance_validation_framework_modular",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.persistent_push_system",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.PRODUCTION_DEPLOYMENT_PACKAGE",
-      "No module named 'utilities'"
-    ],
-    [
-      "monitoring.production_deployment_platform",
-      "No module named 'monitoring'"
-    ],
-    [
-      "utilities.production_deployment_system",
-      "No module named 'utilities'"
+      "invalid syntax (performance_validation_framework_modular.py, line 13)"
     ],
     [
       "monitoring.production_streaming_platform_enterprise",
-      "No module named 'monitoring'"
-    ],
-    [
-      "utilities.query_optimization_engine",
-      "No module named 'utilities'"
+      "No module named 'aiofiles'"
     ],
     [
       "utilities.query_performance_analyzer",
-      "No module named 'utilities'"
+      "invalid syntax (query_performance_analyzer.py, line 58)"
     ],
     [
       "frontend.python_ui.quick_organization_script",
-      "No module named 'frontend'"
+      "No module named 'frontend.intelligence'"
     ],
     [
       "utilities.redis_cache_layer",
-      "No module named 'utilities'"
+      "invalid syntax (redis_cache_layer.py, line 54)"
     ],
     [
       "utilities.redis_connection_manager",
-      "No module named 'utilities'"
+      "invalid syntax (redis_connection_manager.py, line 52)"
     ],
     [
-      "utilities.reorganize_codebase",
-      "No module named 'utilities'"
-    ],
-    [
-      "monitoring.cc_2.service_health_monitor",
-      "No module named 'monitoring'"
-    ],
-    [
-      "utilities.simple_chunk_push",
-      "No module named 'utilities'"
+      "monitoring.cc_1.service_health_monitor",
+      "invalid syntax (service_health_monitor.py, line 16)"
     ],
     [
       "testing.simple_framework_test",
-      "No module named 'testing'"
-    ],
-    [
-      "utilities.smart_chunk_push",
-      "No module named 'utilities'"
+      "No module named 'testing.test_models'"
     ],
     [
       "frontend.streaming_platform_frontend_integration",
-      "No module named 'frontend'"
+      "No module named 'frontend.intelligence'"
     ],
     [
       "utilities.system_integration_core",
-      "No module named 'utilities'"
+      "invalid syntax (system_integration_core.py, line 20)"
     ],
     [
       "testing.system_optimization_engine",
-      "No module named 'testing'"
-    ],
-    [
-      "utilities.task_management",
-      "No module named 'utilities'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.performance.testmaster_performance_engine",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_api_interface_validator",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_api_validation_framework",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_architecture_validation_framework",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_autonomous_harness",
-      "No module named 'testing'"
-    ],
-    [
-      "configuration.test_configuration_documentation",
-      "No module named 'configuration'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_consolidated_converter",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_documentation_api",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_knowledge_direct",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_knowledge_management",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_knowledge_simple",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_legacy_integration",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "monitoring.test_monitoring",
-      "No module named 'monitoring'"
+      "invalid syntax (test_monitoring.py, line 8)"
     ],
     [
       "testing.unit.test_performance_quality_validator",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_system_integration_validator",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_unified_framework",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_unified_framework_8_adapters",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_unified_framework_complete",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_unified_framework_expanded",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
       "testing.unit.test_validation_ecosystem_integration",
-      "No module named 'testing'"
+      "No module named 'testing.test_models'"
     ],
     [
-      "monitoring.cc_2.unified_enhanced_monitor",
-      "No module named 'monitoring'"
+      "monitoring.cc_1.unified_enhanced_monitor",
+      "invalid syntax (unified_enhanced_monitor.py, line 21)"
     ],
     [
       "core.intelligence.unified_intelligence_platform",
-      "No module named 'core'"
-    ],
-    [
-      "utilities.UNQUARANTINE_SYSTEM",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.validate_modularization",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.validate_modularization_comprehensive",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.verify_all_modules",
-      "No module named 'utilities'"
-    ],
-    [
-      "core.orchestration.agents.agent_a_redundancy_analyzer",
-      "No module named 'core'"
-    ],
-    [
-      "core.orchestration.agents.agent_a_size_analyzer",
-      "No module named 'core'"
-    ],
-    [
-      "core.orchestration.agents.agent_b_analysis",
-      "No module named 'core'"
-    ],
-    [
-      "utilities.api_dependency_analyzer",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.codebase_inventory_analysis",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.debug_pattern_recognizer",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.dependency_analyzer",
-      "No module named 'utilities'"
-    ],
-    [
-      "documentation.tooling.documentation_architecture_analyzer",
-      "No module named 'documentation'"
-    ],
-    [
-      "utilities.file_breakdown_advisor",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.focus_analyzer",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.functional_linkage_analyzer",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.legacy_code_preservation_analyzer",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.organization_advisor",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.personal_coding_behavior_analyzer",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.personal_development_trend_analyzer",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.query_analyzer",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.simple_codebase_analyzer",
-      "No module named 'utilities'"
-    ],
-    [
-      "utilities.__init__",
-      "No module named 'utilities'"
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "core.intelligence.clean_architecture_validator",
-      "No module named 'core'"
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "sandbox.analyze_functions",
-      "No module named 'sandbox'"
-    ],
-    [
-      "core.security.cc_2.autonomous_compliance_harness",
-      "No module named 'core'"
+      "name 'List' is not defined"
     ],
     [
       "sandbox.best_practices_analyzer",
-      "No module named 'sandbox'"
+      "invalid syntax (best_practices_analyzer.py, line 12)"
     ],
     [
       "sandbox.code_quality_analyzer",
-      "No module named 'sandbox'"
+      "invalid syntax (code_quality_analyzer.py, line 15)"
     ],
     [
       "sandbox.complexity_analyzer",
-      "No module named 'sandbox'"
-    ],
-    [
-      "core.security.cc_2.compliance_audit",
-      "No module named 'core'"
-    ],
-    [
-      "core.security.compliance_check",
-      "No module named 'core'"
-    ],
-    [
-      "core.security.compliance_fixes",
-      "No module named 'core'"
-    ],
-    [
-      "core.security.cc_2.compliance_rules_engine",
-      "No module named 'core'"
+      "invalid syntax (complexity_analyzer.py, line 12)"
     ],
     [
       "sandbox.demo_autonomous_system",
-      "No module named 'sandbox'"
-    ],
-    [
-      "sandbox.demo_intelligent_reorg",
-      "No module named 'sandbox'"
+      "'(' was never closed (demo_autonomous_system.py, line 434)"
     ],
     [
       "sandbox.integration_classification",
-      "No module named 'sandbox'"
-    ],
-    [
-      "sandbox.integration_models",
-      "No module named 'sandbox'"
+      "invalid syntax (integration_classification.py, line 16)"
     ],
     [
       "sandbox.integration_planning",
-      "No module named 'sandbox'"
+      "invalid syntax (integration_planning.py, line 16)"
     ],
     [
       "core.intelligence.intelligence_cli",
-      "No module named 'core'"
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "core.intelligence.cc_2.intelligence_integration_engine",
-      "No module named 'core'"
+      "core.intelligence.cc_1.intelligence_integration_engine",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "core.intelligence.cc_2.intelligence_integration_engine_new",
-      "No module named 'core'"
+      "core.intelligence.cc_1.intelligence_integration_engine_new",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "core.intelligence.cc_2.intelligence_pipeline",
-      "No module named 'core'"
+      "core.intelligence.cc_1.intelligence_pipeline",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "core.intelligence.cc_2.intelligence_reorganizer",
-      "No module named 'core'"
+      "core.intelligence.cc_1.intelligence_reorganizer",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "core.intelligence.cc_2.intelligence_reports",
-      "No module named 'core'"
-    ],
-    [
-      "sandbox.intelligent_reorganizer",
-      "No module named 'sandbox'"
+      "core.intelligence.cc_1.intelligence_reports",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "sandbox.launcher",
-      "No module named 'sandbox'"
+      "invalid syntax (launcher.py, line 19)"
     ],
     [
       "sandbox.llm_integration_engine",
-      "No module named 'sandbox'"
+      "':' expected after dictionary key (llm_integration_engine.py, line 419)"
     ],
     [
-      "core.intelligence.cc_2.llm_intelligence_scanner",
-      "No module named 'core'"
+      "core.intelligence.cc_1.llm_intelligence_scanner",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "core.intelligence.cc_2.llm_intelligence_scanner_new",
-      "No module named 'core'"
+      "core.intelligence.cc_1.llm_intelligence_scanner_new",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "core.intelligence.cc_2.llm_intelligence_system",
-      "No module named 'core'"
+      "core.intelligence.cc_1.llm_intelligence_system",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
-      "core.intelligence.cc_2.maintainability_analyzer",
-      "No module named 'core'"
+      "core.intelligence.cc_1.maintainability_analyzer",
+      "invalid syntax (__init__.py, line 33)"
     ],
     [
       "sandbox.meta_reorganizer",
-      "No module named 'sandbox'"
+      "':' expected after dictionary key (meta_reorganizer.py, line 525)"
     ],
     [
       "sandbox.pattern_detector",
-      "No module named 'sandbox'"
-    ],
-    [
-      "core.security.perfect_compliance_launcher",
-      "No module named 'core'"
-    ],
-    [
-      "sandbox.quality_config",
-      "No module named 'sandbox'"
-    ],
-    [
-      "utilities.cc_2.quality_utils",
-      "No module named 'utilities'"
+      "expected 'except' or 'finally' block (pattern_detector.py, line 319)"
     ],
     [
       "sandbox.readability_analyzer",
-      "No module named 'sandbox'"
-    ],
-    [
-      "sandbox.refactoring_demo",
-      "No module named 'sandbox'"
+      "invalid syntax (readability_analyzer.py, line 12)"
     ],
     [
       "sandbox.refactor_functions",
-      "No module named 'sandbox'"
+      "unterminated string literal (detected at line 287) (refactor_functions.py, line 287)"
+    ],
+    [
+      "sandbox.refactor_launcher",
+      "invalid syntax (refactor_launcher.py, line 15)"
+    ],
+    [
+      "sandbox.relationship_analyzer",
+      "':' expected after dictionary key (relationship_analyzer.py, line 329)"
+    ],
+    [
+      "sandbox.reorganization_planner",
+      "unterminated string literal (detected at line 888) (reorganization_planner.py, line 888)"
+    ],
+    [
+      "sandbox.reorganizer",
+      "invalid syntax. Maybe you meant '==' or ':=' instead of '='? (reorganizer.py, line 635)"
+    ],
+    [
+      "core.intelligence.cc_1.run_intelligence_system",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.run_intelligence_system_new",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "sandbox.scanner_analysis",
+      "f-string expression part cannot include a backslash (scanner_analysis.py, line 98)"
+    ],
+    [
+      "sandbox.scanner_storage",
+      "invalid syntax (scanner_storage.py, line 20)"
+    ],
+    [
+      "sandbox.semantic_analyzer",
+      "':' expected after dictionary key (semantic_analyzer.py, line 252)"
+    ],
+    [
+      "testing.unit.cc_1.test_intelligence_system",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "testing.unit.test_linting",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "testing.unit.test_reorganizer",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "sandbox.ultimate_perfect_launcher",
+      "unmatched ')' (ultimate_perfect_launcher.py, line 91)"
+    ],
+    [
+      "sandbox.ultimate_refactor_launcher",
+      "invalid syntax (ultimate_refactor_launcher.py, line 15)"
+    ],
+    [
+      "core.intelligence.adaptive_integration",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.capability_mapper",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.data_models",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.orchestration.cc_1.orchestrator_core",
+      "invalid syntax (orchestrator_core.py, line 20)"
+    ],
+    [
+      "core.intelligence.strategy_selector",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.synergy_optimizer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.__init__",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "utilities.decision_scorer",
+      "invalid syntax (decision_scorer.py, line 15)"
+    ],
+    [
+      "utilities.microservice_analyzer",
+      "invalid syntax (microservice_analyzer.py, line 24)"
+    ],
+    [
+      "utilities.pattern_evolution",
+      "invalid syntax (pattern_evolution.py, line 24)"
+    ],
+    [
+      "utilities.performance_optimizer",
+      "invalid syntax (performance_optimizer.py, line 15)"
+    ],
+    [
+      "core.intelligence.data_models",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.documentation_generator",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.evolution_predictor",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.intelligence_core",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.language_bridge",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.__init__",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "utilities.allocator_core",
+      "invalid syntax (allocator_core.py, line 18)"
+    ],
+    [
+      "utilities.load_balancer",
+      "invalid syntax (load_balancer.py, line 17)"
+    ],
+    [
+      "utilities.optimizers",
+      "invalid syntax (optimizers.py, line 16)"
+    ],
+    [
+      "utilities.predictive_scaler",
+      "invalid syntax (predictive_scaler.py, line 17)"
+    ],
+    [
+      "monitoring.cc_1.resource_monitor",
+      "invalid syntax (resource_monitor.py, line 19)"
+    ],
+    [
+      "utilities.api_rate_limiting",
+      "invalid syntax (api_rate_limiting.py, line 21)"
+    ],
+    [
+      "monitoring.enhanced_api_gateway",
+      "invalid syntax (enhanced_api_gateway.py, line 28)"
+    ],
+    [
+      "utilities.websocket_framework_extension",
+      "invalid syntax (websocket_framework_extension.py, line 23)"
+    ],
+    [
+      "core.intelligence.cc_303.intelligence_synthesis_engine",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.orchestration.agents.cc_303.multi_agent_workflow_orchestrator",
+      "invalid syntax (multi_agent_workflow_orchestrator.py, line 60)"
+    ],
+    [
+      "testing.unit.test_enhanced_server",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "testing.unit.test_suite",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "utilities.architecture_integration",
+      "invalid syntax (architecture_integration.py, line 18)"
+    ],
+    [
+      "monitoring.cc_1.advanced_predictive_analytics",
+      "invalid syntax (advanced_predictive_analytics.py, line 28)"
+    ],
+    [
+      "core.intelligence.ml_training_data_generator",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.api_tracking_service",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.api_usage_tracker",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.dependency_resolver",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.module_validator",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.production_activator",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.pattern_detector",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.orchestration.cc_1.meta_orchestrator",
+      "invalid syntax (meta_orchestrator.py, line 27)"
+    ],
+    [
+      "core.intelligence.code_predictor",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.intelligence_core",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.language_bridge",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.types",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.causality_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.decision_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.microservice_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.pattern_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.relationship_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.singularity_predictor",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.business_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.business_analyzer_modular",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.business_constraint_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.orchestration.workflows.business_workflow_analyzer",
+      "No module named 'core.orchestration.workflows.task_scheduler'"
+    ],
+    [
+      "core.intelligence.debt_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.debt_analyzer_modular",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.debt_code_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "testing.cc_1.debt_test_analyzer",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "core.intelligence.cc_1.ml_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.ml_code_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.semantic_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.semantic_analyzer_modular",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.semantic_intent_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.semantic_relationship_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.technical_debt_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.business_analyzer_analysis",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.business_analyzer_core",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.debt_analyzer_analysis",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.debt_analyzer_core",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.intelligence_api",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.intelligence_endpoints",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.unified_intelligence_api",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.microservice_analyzer",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "core.intelligence.cc_1.ai_analysis_wrapper",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "monitoring.api_usage_tracker",
+      "invalid syntax (api_usage_tracker.py, line 711)"
+    ],
+    [
+      "monitoring.quality_analyzer",
+      "No module named 'monitoring.optimization_models'"
+    ],
+    [
+      "testing.integration.comprehensive_security_integration_tests",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "core.intelligence.cc_1.ml_security_training_engine",
+      "invalid syntax (__init__.py, line 33)"
+    ],
+    [
+      "monitoring.cc_1.modular_monitoring_system",
+      "No module named 'monitoring.cc_1.monitoring_modules'"
+    ],
+    [
+      "monitoring.database_manager",
+      "No module named 'monitoring.security_events'"
+    ],
+    [
+      "core.orchestration.cc_1.response_orchestrator",
+      "No module named 'core.orchestration.cc_1.security_events'"
+    ],
+    [
+      "utilities.service_registry",
+      "invalid syntax (service_registry.py, line 18)"
+    ],
+    [
+      "utilities.template_migration_system",
+      "invalid syntax (template_migration_system.py, line 20)"
+    ],
+    [
+      "testing.code_analyzer",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "testing.unit.cc_1.test_exporter",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "testing.unit.cc_1.test_generator",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "testing.unit.cc_1.test_models",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "testing.unit.cc_1.test_templates",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "testing.__init__",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "core.orchestration.workflows.execution_engine",
+      "No module named 'core.orchestration.workflows.task_scheduler'"
+    ],
+    [
+      "core.orchestration.workflows.cc_1.task_scheduler",
+      "No module named 'core.orchestration.workflows.task_scheduler'"
+    ],
+    [
+      "core.orchestration.workflows.workflow_optimizer",
+      "No module named 'core.orchestration.workflows.task_scheduler'"
+    ],
+    [
+      "core.orchestration.workflows.__init__",
+      "No module named 'core.orchestration.workflows.task_scheduler'"
+    ],
+    [
+      "testing.unit.test_atomic_integration",
+      "No module named 'testing.test_models'"
+    ],
+    [
+      "frontend.test_atomic_simple",
+      "No module named 'frontend.intelligence'"
     ]
   ]
 }

@@ -1,0 +1,12 @@
+{
+  "auto_backup_20250821_034239": {
+    "backup_name": "auto_backup_20250821_034239",
+    "backup_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\dashboard\\dashboard_core\\..\\backups\\auto_backup_20250821_034239.db.gz",
+    "original_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\dashboard\\dashboard_core\\..\\data\\metrics.db",
+    "timestamp": "2025-08-21T03:42:41.859973",
+    "size_bytes": 4514023,
+    "checksum": "1a08c94ebb7c5e1c9ac44731f9b60fc4f351c2ad534a8d7c340f8076ae74a9ee",
+    "compression": "gzip",
+    "version": "1.0"
+  }
+}

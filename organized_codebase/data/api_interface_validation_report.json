@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-08-21T13:00:00",
+  "api_endpoints_found": 34,
+  "interfaces_discovered": 1683,
+  "validation_tests_executed": 570,
+  "api_success_rate": 88.5,
+  "interface_success_rate": 92.0,
+  "overall_success_rate": 90.25,
+  "api_documentation_files": 6,
+  "summary": "Discovered 34 API endpoints and 1683 interfaces with 90.25% validation success rate"
+}

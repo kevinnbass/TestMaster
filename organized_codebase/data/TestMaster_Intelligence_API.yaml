@@ -1,0 +1,840 @@
+openapi: 3.0.3
+info:
+  title: TestMaster Intelligence Hub API
+  version: 1.0.0
+  description: Comprehensive API for TestMaster intelligence capabilities
+  contact:
+    name: Agent D - Documentation & Validation
+    email: agent-d@testmaster.ai
+servers:
+- url: http://localhost:5000
+  description: TestMaster Intelligence Hub
+paths:
+  /api/intelligence/status:
+    get:
+      summary: Get overall intelligence system status
+      description: 'Endpoint: intelligence_api.get_intelligence_status'
+      operationId: intelligence_api_get_intelligence_status
+      tags:
+      - status
+      - health
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/analyze:
+    post:
+      summary: Perform unified intelligence analysis
+      description: 'Endpoint: intelligence_api.analyze'
+      operationId: intelligence_api_analyze
+      tags:
+      - analysis
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                analysis_type:
+                  type: string
+                target:
+                  type: string
+                options:
+                  type: object
+              required:
+              - analysis_type
+              - target
+  /api/intelligence/analytics/analyze:
+    post:
+      summary: Analyze metrics and generate insights
+      description: 'Endpoint: intelligence_api.analyze_metrics'
+      operationId: intelligence_api_analyze_metrics
+      tags:
+      - analytics
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                metrics_source:
+                  type: string
+                time_range:
+                  type: string
+                filters:
+                  type: object
+  /api/intelligence/analytics/correlations:
+    post:
+      summary: Find correlations in data
+      description: 'Endpoint: intelligence_api.find_correlations'
+      operationId: intelligence_api_find_correlations
+      tags:
+      - analytics
+      - correlations
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/analytics/predict:
+    post:
+      summary: Predict trends based on historical data
+      description: 'Endpoint: intelligence_api.predict_trends'
+      operationId: intelligence_api_predict_trends
+      tags:
+      - analytics
+      - prediction
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/testing/coverage:
+    post:
+      summary: Analyze test coverage metrics
+      description: 'Endpoint: intelligence_api.analyze_coverage'
+      operationId: intelligence_api_analyze_coverage
+      tags:
+      - testing
+      - coverage
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/testing/optimize:
+    post:
+      summary: Optimize test execution and selection
+      description: 'Endpoint: intelligence_api.optimize_tests'
+      operationId: intelligence_api_optimize_tests
+      tags:
+      - testing
+      - optimization
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/testing/predict-failures:
+    post:
+      summary: Predict potential test failures
+      description: 'Endpoint: intelligence_api.predict_failures'
+      operationId: intelligence_api_predict_failures
+      tags:
+      - testing
+      - prediction
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/testing/generate:
+    post:
+      summary: Generate integration tests
+      description: 'Endpoint: intelligence_api.generate_tests'
+      operationId: intelligence_api_generate_tests
+      tags:
+      - testing
+      - generation
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/integration/systems/analyze:
+    post:
+      summary: Analyze system integration patterns
+      description: 'Endpoint: intelligence_api.analyze_systems'
+      operationId: intelligence_api_analyze_systems
+      tags:
+      - integration
+      - analysis
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/integration/endpoints:
+    get:
+      summary: Get all registered endpoints
+      description: 'Endpoint: intelligence_api.get_endpoints'
+      operationId: intelligence_api_get_endpoints
+      tags:
+      - integration
+      - discovery
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/integration/endpoints/<endpoint_id>/health:
+    get:
+      summary: Check health of specific endpoint
+      description: 'Endpoint: intelligence_api.get_endpoint_health'
+      operationId: intelligence_api_get_endpoint_health
+      tags:
+      - integration
+      - health
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+      parameters:
+      - name: endpoint_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Unique identifier for the endpoint
+  /api/intelligence/integration/events/publish:
+    post:
+      summary: Publish integration event
+      description: 'Endpoint: intelligence_api.publish_event'
+      operationId: intelligence_api_publish_event
+      tags:
+      - integration
+      - events
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/integration/performance:
+    get:
+      summary: Get integration performance metrics
+      description: 'Endpoint: intelligence_api.get_performance'
+      operationId: intelligence_api_get_performance
+      tags:
+      - integration
+      - performance
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/monitoring/realtime:
+    get:
+      summary: Get real-time monitoring metrics
+      description: 'Endpoint: intelligence_api.get_realtime_metrics'
+      operationId: intelligence_api_get_realtime_metrics
+      tags:
+      - monitoring
+      - realtime
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/batch/analyze:
+    post:
+      summary: Perform batch analysis operations
+      description: 'Endpoint: intelligence_api.batch_analyze'
+      operationId: intelligence_api_batch_analyze
+      tags:
+      - batch
+      - analysis
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+  /api/intelligence/health:
+    get:
+      summary: Comprehensive health check of all intelligence systems
+      description: 'Endpoint: intelligence_api.health_check'
+      operationId: intelligence_api_health_check
+      tags:
+      - health
+      - status
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: object
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+components:
+  schemas: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+tags:
+- name: analysis
+  description: Operations related to analysis
+- name: analytics
+  description: Operations related to analytics
+- name: batch
+  description: Operations related to batch
+- name: correlations
+  description: Operations related to correlations
+- name: coverage
+  description: Operations related to coverage
+- name: discovery
+  description: Operations related to discovery
+- name: events
+  description: Operations related to events
+- name: generation
+  description: Operations related to generation
+- name: health
+  description: Operations related to health
+- name: integration
+  description: Operations related to integration
+- name: monitoring
+  description: Operations related to monitoring
+- name: optimization
+  description: Operations related to optimization
+- name: performance
+  description: Operations related to performance
+- name: prediction
+  description: Operations related to prediction
+- name: realtime
+  description: Operations related to realtime
+- name: status
+  description: Operations related to status
+- name: testing
+  description: Operations related to testing

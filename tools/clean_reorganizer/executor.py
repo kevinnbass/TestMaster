@@ -207,16 +207,40 @@ class Executor:
         return updated
     
     def _remove_duplicate_sources(self, plan: Plan, seen_hashes: Dict[str, Path]) -> int:
-        """Optional: remove duplicate sources that were skipped"""
+        """Remove duplicate source files that were skipped during move.
+        
+        Only removes sources when:
+        1. The file hash matches an already-moved file
+        2. The target file actually exists and has correct hash
+        3. Source and target content are identical (double-check)
+        """
         removed = 0
+        import hashlib
+        
         for item in plan.moves[:10000]:
-            if item.analysis.file_hash and item.analysis.file_hash in seen_hashes:
-                try:
-                    if item.source.exists():
-                        item.source.unlink()
-                        removed += 1
-                except Exception:
+            if not (item.analysis.file_hash and item.analysis.file_hash in seen_hashes):
+                continue
+                
+            target_path = seen_hashes[item.analysis.file_hash]
+            
+            try:
+                # Verify source still exists and target exists
+                if not (item.source.exists() and target_path.exists()):
                     continue
+                    
+                # Double-check: verify both files have identical content
+                source_content = item.source.read_bytes()
+                target_content = target_path.read_bytes()
+                
+                if source_content == target_content:
+                    # Safe to remove duplicate source
+                    item.source.unlink()
+                    removed += 1
+                    
+            except Exception:
+                # If any error occurs, skip removal for safety
+                continue
+                
         return removed
 
 

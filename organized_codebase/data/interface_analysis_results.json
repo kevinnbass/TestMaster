@@ -1,0 +1,531 @@
+{
+  "analysis_metadata": {
+    "analyzer": "Agent B - Interface Analysis",
+    "phase": "Hours 36-40",
+    "modules_analyzed": 10,
+    "total_violations": 31
+  },
+  "module_interfaces": {
+    "core/intelligence/__init__.py": {
+      "functions": 3,
+      "public_functions": 3,
+      "classes": 2,
+      "public_classes": 2,
+      "constants": 10,
+      "exports": 7,
+      "interface_complexity": 1.5722222222222224,
+      "stability_score": 0.995,
+      "contract_violations": 0,
+      "api_version": "1.0.0",
+      "deprecation_warnings": 0
+    },
+    "core/intelligence/testing/__init__.py": {
+      "functions": 0,
+      "public_functions": 0,
+      "classes": 1,
+      "public_classes": 1,
+      "constants": 0,
+      "exports": 11,
+      "interface_complexity": 1.5133333333333339,
+      "stability_score": 0.6666666666666666,
+      "contract_violations": 0,
+      "api_version": "2.0.0",
+      "deprecation_warnings": 0
+    },
+    "core/intelligence/api/__init__.py": {
+      "functions": 0,
+      "public_functions": 0,
+      "classes": 0,
+      "public_classes": 0,
+      "constants": 2,
+      "exports": 16,
+      "interface_complexity": 0.0,
+      "stability_score": 0.5,
+      "contract_violations": 0,
+      "api_version": "2.0.0",
+      "deprecation_warnings": 0
+    },
+    "core/intelligence/analytics/__init__.py": {
+      "functions": 0,
+      "public_functions": 0,
+      "classes": 6,
+      "public_classes": 6,
+      "constants": 6,
+      "exports": 28,
+      "interface_complexity": 1.8,
+      "stability_score": 1.0666666666666667,
+      "contract_violations": 0,
+      "api_version": null,
+      "deprecation_warnings": 0
+    },
+    "testmaster_orchestrator.py": {
+      "functions": 2,
+      "public_functions": 2,
+      "classes": 5,
+      "public_classes": 5,
+      "constants": 16,
+      "exports": 13,
+      "interface_complexity": 3.247916666666667,
+      "stability_score": 0.8,
+      "contract_violations": 3,
+      "api_version": null,
+      "deprecation_warnings": 0
+    },
+    "intelligent_test_builder.py": {
+      "functions": 2,
+      "public_functions": 2,
+      "classes": 1,
+      "public_classes": 1,
+      "constants": 0,
+      "exports": 6,
+      "interface_complexity": 3.3111111111111113,
+      "stability_score": 0.9972222222222222,
+      "contract_violations": 2,
+      "api_version": null,
+      "deprecation_warnings": 0
+    },
+    "enhanced_self_healing_verifier.py": {
+      "functions": 7,
+      "public_functions": 7,
+      "classes": 1,
+      "public_classes": 1,
+      "constants": 1,
+      "exports": 9,
+      "interface_complexity": 4.65,
+      "stability_score": 0.9415873015873016,
+      "contract_violations": 7,
+      "api_version": null,
+      "deprecation_warnings": 0
+    },
+    "agentic_test_monitor.py": {
+      "functions": 0,
+      "public_functions": 0,
+      "classes": 0,
+      "public_classes": 0,
+      "constants": 0,
+      "exports": 0,
+      "interface_complexity": 0.0,
+      "stability_score": 0.0,
+      "contract_violations": 0,
+      "api_version": null,
+      "deprecation_warnings": 0
+    },
+    "parallel_converter.py": {
+      "functions": 4,
+      "public_functions": 4,
+      "classes": 1,
+      "public_classes": 1,
+      "constants": 1,
+      "exports": 6,
+      "interface_complexity": 3.72,
+      "stability_score": 0.8583333333333333,
+      "contract_violations": 6,
+      "api_version": null,
+      "deprecation_warnings": 0
+    },
+    "config/__init__.py": {
+      "functions": 0,
+      "public_functions": 0,
+      "classes": 1,
+      "public_classes": 1,
+      "constants": 0,
+      "exports": 49,
+      "interface_complexity": 1.0999999999999999,
+      "stability_score": 0.18333333333333332,
+      "contract_violations": 13,
+      "api_version": null,
+      "deprecation_warnings": 0
+    }
+  },
+  "interface_violations": [
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "testmaster_orchestrator.py",
+      "description": "Function 'main' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "testmaster_orchestrator.py",
+      "description": "Function 'visit' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "testmaster_orchestrator.py",
+      "description": "Function 'visit' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "intelligent_test_builder.py",
+      "description": "Function 'test_gemini_connection' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "intelligent_test_builder.py",
+      "description": "Function 'main' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "enhanced_self_healing_verifier.py",
+      "description": "Function 'get_remaining_modules' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "enhanced_self_healing_verifier.py",
+      "description": "Function 'make_llm_call' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "enhanced_self_healing_verifier.py",
+      "description": "Function 'fix_syntax_error' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "enhanced_self_healing_verifier.py",
+      "description": "Function 'verify_test_exhaustiveness' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "enhanced_self_healing_verifier.py",
+      "description": "Function 'generate_enhanced_test' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "enhanced_self_healing_verifier.py",
+      "description": "Function 'process_modules_enhanced' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "enhanced_self_healing_verifier.py",
+      "description": "Function 'main' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "parallel_converter.py",
+      "description": "Function 'get_remaining_modules' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "parallel_converter.py",
+      "description": "Function 'generate_test' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "parallel_converter.py",
+      "description": "Function 'process_modules_parallel' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_type_hint",
+      "severity": "low",
+      "module": "parallel_converter.py",
+      "description": "Function 'main' missing return type hint",
+      "recommendation": "Add type hints using typing module for better interface clarity",
+      "impact": "Impact assessment needed"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "parallel_converter.py",
+      "description": "Class 'RateLimiter' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "parallel_converter.py",
+      "description": "Method 'RateLimiter.wait_if_needed' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.api' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.generation' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.security' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.monitoring' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.caching' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.execution' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.reporting' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.quality' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.optimization' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.testing' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.ml' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.infrastructure' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    },
+    {
+      "type": "missing_documentation",
+      "severity": "medium",
+      "module": "config/__init__.py",
+      "description": "Method 'EnhancedConfigBridge.integration' missing docstring",
+      "recommendation": "Add comprehensive docstring with parameter descriptions and return value documentation",
+      "impact": "Reduces code understandability and maintainability"
+    }
+  ],
+  "interface_contracts": {
+    "core/intelligence/__init__.py::get_intelligence_hub": {
+      "signature": "get_intelligence_hub(config: Optional[IntelligenceHubConfig] = None) -> IntelligenceHub",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": "1.0.0"
+    },
+    "core/intelligence/__init__.py::get_intelligence_capabilities": {
+      "signature": "get_intelligence_capabilities() -> Dict[str, bool]",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": "1.0.0"
+    },
+    "core/intelligence/__init__.py::initialize_intelligence_hub": {
+      "signature": "initialize_intelligence_hub(config: Optional[IntelligenceHubConfig] = None) -> IntelligenceHub",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": "1.0.0"
+    },
+    "testmaster_orchestrator.py::main": {
+      "signature": "main()",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "testmaster_orchestrator.py::visit": {
+      "signature": "visit(task_id)",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "intelligent_test_builder.py::test_gemini_connection": {
+      "signature": "test_gemini_connection()",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "intelligent_test_builder.py::main": {
+      "signature": "main()",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "enhanced_self_healing_verifier.py::get_remaining_modules": {
+      "signature": "get_remaining_modules()",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "enhanced_self_healing_verifier.py::make_llm_call": {
+      "signature": "make_llm_call(prompt, purpose = 'generation')",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "enhanced_self_healing_verifier.py::fix_syntax_error": {
+      "signature": "fix_syntax_error(test_code, error_msg, iteration = 1)",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "enhanced_self_healing_verifier.py::verify_test_exhaustiveness": {
+      "signature": "verify_test_exhaustiveness(test_code, module_code, module_name, pass_number = 1)",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "enhanced_self_healing_verifier.py::generate_enhanced_test": {
+      "signature": "generate_enhanced_test(module_path, max_healing_iterations = 5, max_verifier_passes = 3)",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "enhanced_self_healing_verifier.py::process_modules_enhanced": {
+      "signature": "process_modules_enhanced(modules, max_workers = 3)",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "enhanced_self_healing_verifier.py::main": {
+      "signature": "main()",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "parallel_converter.py::get_remaining_modules": {
+      "signature": "get_remaining_modules()",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "parallel_converter.py::generate_test": {
+      "signature": "generate_test(module_path)",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "parallel_converter.py::process_modules_parallel": {
+      "signature": "process_modules_parallel(modules, max_workers = 5)",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    },
+    "parallel_converter.py::main": {
+      "signature": "main()",
+      "is_compatible": true,
+      "deprecation_status": "active",
+      "version": null
+    }
+  },
+  "interface_metrics": {
+    "total_modules_analyzed": 10,
+    "total_public_functions": 18,
+    "total_public_classes": 18,
+    "interface_violations_found": 31,
+    "contract_violations_found": 0,
+    "average_interface_stability": 0.7008809523809524,
+    "interface_complexity_distribution": {
+      "low": 6,
+      "medium": 3,
+      "high": 1,
+      "average": 2.0914583333333336
+    },
+    "documentation_coverage": 0.9444444444444444,
+    "critical_interface_stability": 0.8070833333333334,
+    "high_interface_stability": 0.18333333333333332,
+    "medium_interface_stability": 0.8986111111111111,
+    "low_interface_stability": 0.5999735449735449
+  },
+  "recommendations": [
+    {
+      "category": "violation_resolution",
+      "priority": "high",
+      "description": "Found 31 interface violations",
+      "actions": [
+        "Resolve missing documentation violations",
+        "Add type hints where missing",
+        "Simplify complex interface signatures"
+      ]
+    }
+  ]
+}

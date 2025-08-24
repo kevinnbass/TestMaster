@@ -1,6 +1,6 @@
 {
-  "total_imports": 63961,
-  "unresolved_imports": 56607,
+  "total_imports": 62859,
+  "unresolved_imports": 55870,
   "unresolved_by_file_sample": {
     "advanced_alert_system.py": [
       "time",
@@ -58,18 +58,6 @@
       "enum",
       "collections",
       "uuid"
-    ],
-    "advanced_security_compliance_system.py": [
-      "asyncio",
-      "logging",
-      "time",
-      "hashlib",
-      "hmac",
-      "secrets",
-      "datetime",
-      "typing",
-      "dataclasses",
-      "enum"
     ],
     "advanced_system_integration.py": [
       "sqlite3",
@@ -179,18 +167,6 @@
       "pathlib",
       "typing",
       "logging"
-    ],
-    "autonomous_compliance_harness.py": [
-      "asyncio",
-      "os",
-      "sys",
-      "time",
-      "dataclasses",
-      "datetime",
-      "enum",
-      "pathlib",
-      "typing",
-      "abc"
     ],
     "autonomous_intelligence_platform.py": [
       "numpy",
@@ -324,14 +300,6 @@
       "collections",
       "logging"
     ],
-    "compliance_rules_engine.py": [
-      "dataclasses",
-      "typing",
-      "pathlib",
-      "ast",
-      "re",
-      "enum"
-    ],
     "comprehensive_cleanup.py": [
       "os",
       "shutil",
@@ -424,27 +392,6 @@
       "datetime",
       "argparse"
     ],
-    "DEPLOY_SECURITY_FIXES.py": [
-      "SECURITY_PATCHES.fix_command_injection",
-      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
-      "os",
-      "sys",
-      "subprocess",
-      "shutil",
-      "time",
-      "pathlib",
-      "typing",
-      "logging"
-    ],
-    "DEPLOY_SECURITY_FIXES_PHASE2.py": [
-      "os",
-      "shutil",
-      "subprocess",
-      "time",
-      "logging",
-      "datetime",
-      "typing"
-    ],
     "distributed_performance_scaling.py": [
       "os",
       "sys",
@@ -505,18 +452,6 @@
       "datetime",
       "enum"
     ],
-    "enterprise_multitenant_security.py": [
-      "asyncio",
-      "hashlib",
-      "hmac",
-      "secrets",
-      "time",
-      "jwt",
-      "bcrypt",
-      "datetime",
-      "typing",
-      "dataclasses"
-    ],
     "find_active_python_modules.py": [
       "os",
       "sys",
@@ -549,11 +484,6 @@
       "datetime",
       "typing",
       "dataclasses"
-    ],
-    "generate_api_docs.py": [
-      "pathlib",
-      "datetime",
-      "os"
     ],
     "global_customer_deployment_validation.py": [
       "asyncio",
@@ -1338,13 +1268,6 @@
       "typing",
       "collections"
     ],
-    "analyzers/documentation_architecture_analyzer.py": [
-      "os",
-      "hashlib",
-      "time",
-      "collections",
-      "re"
-    ],
     "analyzers/file_breakdown_advisor.py": [
       "ast",
       "pathlib",
@@ -1444,18 +1367,6 @@
       "ast",
       "pathlib"
     ],
-    "autonomous_sandbox/autonomous_compliance_harness.py": [
-      "asyncio",
-      "os",
-      "sys",
-      "time",
-      "dataclasses",
-      "datetime",
-      "enum",
-      "pathlib",
-      "typing",
-      "abc"
-    ],
     "autonomous_sandbox/best_practices_analyzer.py": [
       "re",
       "typing"
@@ -1468,35 +1379,6 @@
     "autonomous_sandbox/complexity_analyzer.py": [
       "ast",
       "typing"
-    ],
-    "autonomous_sandbox/compliance_audit.py": [
-      "ast",
-      "inspect",
-      "pathlib",
-      "typing",
-      "re",
-      "dataclasses",
-      "argparse"
-    ],
-    "autonomous_sandbox/compliance_check.py": [
-      "ast",
-      "pathlib"
-    ],
-    "autonomous_sandbox/compliance_fixes.py": [
-      "ast",
-      "re",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "argparse"
-    ],
-    "autonomous_sandbox/compliance_rules_engine.py": [
-      "dataclasses",
-      "typing",
-      "pathlib",
-      "ast",
-      "re",
-      "enum"
     ],
     "autonomous_sandbox/demo_autonomous_system.py": [
       "asyncio",
@@ -1657,13 +1539,6 @@
       "collections",
       "asyncio"
     ],
-    "autonomous_sandbox/perfect_compliance_launcher.py": [
-      "sys",
-      "typing",
-      "time",
-      "pathlib",
-      "os"
-    ],
     "autonomous_sandbox/quality_config.py": [
       "dataclasses",
       "typing"
@@ -1799,15 +1674,6 @@
       "pandas",
       "numpy",
       "sklearn.model_selection"
-    ],
-    "autonomous_sandbox/simple_compliance_check.py": [
-      "ast",
-      "os",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "re",
-      "argparse"
     ],
     "autonomous_sandbox/test_autonomous_harness.py": [
       "asyncio",
@@ -1984,14 +1850,6 @@
       "typing",
       "logging"
     ],
-    "core/analysis/predictive_intelligence/security_analyzer.py": [
-      "ast",
-      "re",
-      "hashlib",
-      "datetime",
-      "typing",
-      "logging"
-    ],
     "core/analysis/resources/allocator_core.py": [
       "asyncio",
       "logging",
@@ -2073,30 +1931,6 @@
       "collections",
       "logging"
     ],
-    "core/api/gateway/api_authentication.py": [
-      "secrets",
-      "logging",
-      "typing",
-      "datetime",
-      "hashlib",
-      "hmac",
-      "jwt"
-    ],
-    "core/api/gateway/api_documentation.py": [
-      "logging",
-      "typing",
-      "dataclasses",
-      "enum"
-    ],
-    "core/api/gateway/api_gateway_core.py": [
-      "asyncio",
-      "logging",
-      "time",
-      "uuid",
-      "typing",
-      "datetime",
-      "collections"
-    ],
     "core/api/gateway/api_models.py": [
       "dataclasses",
       "typing",
@@ -2158,21 +1992,6 @@
       "asyncio",
       "functools"
     ],
-    "core/api_documentation/api_documentation_server.py": [
-      "os",
-      "pathlib",
-      "flask"
-    ],
-    "core/api_documentation/api_enhancement_patterns.py": [
-      "time",
-      "logging",
-      "threading",
-      "functools",
-      "typing",
-      "dataclasses",
-      "enum",
-      "flask"
-    ],
     "core/api_documentation/cross_agent_integration.py": [
       "time",
       "asyncio",
@@ -2184,51 +2003,6 @@
       "functools",
       "flask",
       "requests"
-    ],
-    "core/api_documentation/enhanced_api_server.py": [
-      "os",
-      "time",
-      "logging",
-      "threading",
-      "pathlib",
-      "flask",
-      "argparse"
-    ],
-    "core/api_documentation/enterprise_api_gateway.py": [
-      "asyncio",
-      "aiohttp",
-      "time",
-      "hashlib",
-      "uuid",
-      "datetime",
-      "typing",
-      "dataclasses",
-      "enum",
-      "jwt"
-    ],
-    "core/api_documentation/enterprise_external_gateway.py": [
-      "time",
-      "hashlib",
-      "hmac",
-      "secrets",
-      "uuid",
-      "datetime",
-      "typing",
-      "dataclasses",
-      "enum",
-      "sqlite3"
-    ],
-    "core/api_documentation/flask_blueprint_analyzer.py": [
-      "os",
-      "ast",
-      "sys",
-      "logging",
-      "inspect",
-      "importlib",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "re"
     ],
     "core/api_documentation/greek_swarm_coordinator.py": [
       "asyncio",
@@ -2266,67 +2040,12 @@
       "threading",
       "concurrent.futures"
     ],
-    "core/api_documentation/openapi_generator.py": [
-      "os",
-      "sys",
-      "inspect",
-      "logging",
-      "datetime",
-      "typing",
-      "pathlib",
-      "dataclasses",
-      "flask",
-      "re"
-    ],
-    "core/api_documentation/performance_optimization.py": [
-      "os",
-      "time",
-      "gzip",
-      "sqlite3",
-      "threading",
-      "hashlib",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "functools"
-    ],
     "core/api_documentation/prometheus_metrics.py": [
       "time",
       "threading",
       "typing",
       "flask",
       "logging"
-    ],
-    "core/api_documentation/schema_generator.py": [
-      "os",
-      "sys",
-      "logging",
-      "typing",
-      "pathlib",
-      "re"
-    ],
-    "core/api_documentation/security_integration.py": [
-      "os",
-      "re",
-      "time",
-      "secrets",
-      "hashlib",
-      "logging",
-      "typing",
-      "dataclasses",
-      "functools",
-      "enum"
-    ],
-    "core/api_documentation/simple_enhanced_server.py": [
-      "time",
-      "flask"
-    ],
-    "core/api_documentation/simple_schema_generator.py": [
-      "os",
-      "re",
-      "logging",
-      "typing",
-      "pathlib"
     ],
     "core/api_documentation/test_enhanced_server.py": [
       "time",
@@ -2818,55 +2537,9 @@
       "collections",
       "pathlib"
     ],
-    "core/optimization/security_optimizer.py": [
-      "ast",
-      "re",
-      "hashlib",
-      "logging",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "base64"
-    ],
     "core/optimization/__init__.py": [
       "logging",
       "ast"
-    ],
-    "core/security/advanced_correlation_engine.py": [
-      "asyncio",
-      "logging",
-      "time",
-      "math",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "collections",
-      "concurrent.futures",
-      "threading"
-    ],
-    "core/security/automated_response_coordinator.py": [
-      "asyncio",
-      "logging",
-      "time",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum",
-      "concurrent.futures",
-      "threading",
-      "uuid"
-    ],
-    "core/security/automated_threat_hunter.py": [
-      "asyncio",
-      "logging",
-      "time",
-      "numpy",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "collections",
-      "sqlite3",
-      "pathlib"
     ],
     "core/security/comprehensive_security_integration_tests.py": [
       "asyncio",
@@ -2913,62 +2586,6 @@
       "collections",
       "statistics"
     ],
-    "core/security/performance_optimization_engine.py": [
-      "asyncio",
-      "logging",
-      "time",
-      "gc",
-      "sys",
-      "os",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "collections"
-    ],
-    "core/security/predictive_security_analytics.py": [
-      "asyncio",
-      "datetime",
-      "logging",
-      "numpy",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "collections",
-      "sqlite3",
-      "enum"
-    ],
-    "core/security/security_integration_coordinator.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "concurrent.futures"
-    ],
-    "core/security/security_orchestration_engine.py": [
-      "asyncio",
-      "logging",
-      "time",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "collections",
-      "concurrent.futures",
-      "threading",
-      "sqlite3"
-    ],
-    "core/security/security_testing_framework.py": [
-      "asyncio",
-      "datetime",
-      "logging",
-      "os",
-      "subprocess",
-      "tempfile",
-      "unittest",
-      "pathlib",
-      "typing",
-      "dataclasses"
-    ],
     "core/security/monitoring_modules/database_manager.py": [
       "sqlite3",
       "datetime",
@@ -3008,53 +2625,6 @@
       "datetime",
       "hashlib"
     ],
-    "core/security/monitoring_modules/threat_detector.py": [
-      "re",
-      "hashlib",
-      "os",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime"
-    ],
-    "core/security/unified_scanner/security_correlations.py": [
-      "logging",
-      "typing",
-      "dataclasses",
-      "numpy",
-      "collections",
-      "math"
-    ],
-    "core/security/unified_scanner/security_orchestrator.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "concurrent.futures",
-      "dataclasses",
-      "time"
-    ],
-    "core/security/unified_scanner/security_scan_models.py": [
-      "dataclasses",
-      "typing",
-      "enum",
-      "datetime",
-      "uuid",
-      "time"
-    ],
-    "core/security/unified_scanner/unified_scanner_core.py": [
-      "asyncio",
-      "logging",
-      "time",
-      "hashlib",
-      "pathlib",
-      "typing",
-      "datetime",
-      "collections",
-      "dataclasses"
-    ],
-    "core/security/unified_scanner/__init__.py": [
-      "logging"
-    ],
     "core/services/service_registry.py": [
       "logging",
       "pathlib",
@@ -3074,19 +2644,7 @@
       "ast",
       "re"
     ],
-    "core/templates/generators/api_documentation_generator.py": [
-      "logging",
-      "typing",
-      "dataclasses",
-      "datetime"
-    ],
     "core/templates/generators/project_structure_generator.py": [
-      "logging",
-      "typing",
-      "dataclasses",
-      "datetime"
-    ],
-    "core/templates/generators/readme_generator.py": [
       "logging",
       "typing",
       "dataclasses",
@@ -40562,11 +40120,6 @@
       "sys",
       "os"
     ],
-    "frontend_final/external_ui/testmaster/api/security.py": [
-      "logging",
-      "flask",
-      "datetime"
-    ],
     "frontend_final/external_ui/testmaster/api/swarm_orchestration.py": [
       "flask",
       "datetime",
@@ -43909,14 +43462,6 @@
       "enum",
       "collections"
     ],
-    "frontend_final/python_ui/atoms/security_dashboard_ui.py": [
-      "datetime",
-      "typing"
-    ],
-    "frontend_final/python_ui/atoms/security_visualizations.py": [
-      "datetime",
-      "typing"
-    ],
     "frontend_final/python_ui/atoms/service_frontend_bridge.py": [
       "asyncio",
       "time",
@@ -46211,9 +45756,6 @@
       "gatsby",
       "../components/views/settings/manager"
     ],
-    "frontend_final/security/security_dashboard.py": [
-      "datetime"
-    ],
     "frontend_final/services/adamantiumclad_dashboard_server.py": [
       "os",
       "time",
@@ -46971,14 +46513,6 @@
       "dataclasses",
       "enum",
       "collections"
-    ],
-    "frontend_final/specialized/atoms/security_dashboard_ui.py": [
-      "datetime",
-      "typing"
-    ],
-    "frontend_final/specialized/atoms/security_visualizations.py": [
-      "datetime",
-      "typing"
     ],
     "frontend_final/specialized/atoms/service_frontend_bridge.py": [
       "asyncio",
@@ -59764,11 +59298,6 @@
       "sys",
       "os"
     ],
-    "frontend_final/TestMaster/dashboard/api/security.py": [
-      "logging",
-      "flask",
-      "datetime"
-    ],
     "frontend_final/TestMaster/dashboard/api/swarm_orchestration.py": [
       "flask",
       "datetime",
@@ -62309,18 +61838,6 @@
       "psutil",
       "gc"
     ],
-    "GENERATED_TESTS/test_security_comprehensive.py": [
-      "pytest",
-      "asyncio",
-      "sys",
-      "os",
-      "subprocess",
-      "time",
-      "unittest.mock",
-      "typing",
-      "requests",
-      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities"
-    ],
     "GENERATED_TESTS/mass_generated/test_analytics_deduplication_comprehensive.py": [
       "pytest",
       "asyncio",
@@ -62818,6 +62335,1250 @@
       "TestMaster\\core\\intelligence\\analysis\\__init__",
       "psutil"
     ],
+    "organized_codebase/core/security/advanced_correlation_engine.py": [
+      "asyncio",
+      "logging",
+      "time",
+      "math",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "collections",
+      "concurrent.futures",
+      "threading"
+    ],
+    "organized_codebase/core/security/api_gateway_core.py": [
+      "asyncio",
+      "logging",
+      "time",
+      "uuid",
+      "typing",
+      "datetime",
+      "collections"
+    ],
+    "organized_codebase/core/security/automated_response_coordinator.py": [
+      "asyncio",
+      "logging",
+      "time",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "enum",
+      "concurrent.futures",
+      "threading",
+      "uuid"
+    ],
+    "organized_codebase/core/security/automated_threat_hunter.py": [
+      "asyncio",
+      "logging",
+      "time",
+      "numpy",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "collections",
+      "sqlite3",
+      "pathlib"
+    ],
+    "organized_codebase/core/security/compliance_automation.py": [
+      "asyncio",
+      "logging",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "enum",
+      "re"
+    ],
+    "organized_codebase/core/security/compliance_check.py": [
+      "ast",
+      "pathlib"
+    ],
+    "organized_codebase/core/security/compliance_fixes.py": [
+      "ast",
+      "re",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "argparse"
+    ],
+    "organized_codebase/core/security/comprehensive_feature_audit.py": [
+      "ast",
+      "re",
+      "pathlib",
+      "typing",
+      "dataclasses"
+    ],
+    "organized_codebase/core/security/data_integrity_guardian.py": [
+      "uuid",
+      "time",
+      "hashlib",
+      "hmac",
+      "logging",
+      "threading",
+      "sqlite3",
+      "zlib",
+      "base64",
+      "typing"
+    ],
+    "organized_codebase/core/security/dependency_scanner.py": [
+      "re",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "logging"
+    ],
+    "organized_codebase/core/security/document_classification_security.py": [
+      "logging",
+      "re",
+      "hashlib",
+      "time",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "pathlib"
+    ],
+    "organized_codebase/core/security/error_isolation_system.py": [
+      "logging",
+      "time",
+      "threading",
+      "sqlite3",
+      "datetime",
+      "typing",
+      "collections",
+      "dataclasses",
+      "enum",
+      "os"
+    ],
+    "organized_codebase/core/security/error_recovery_framework.py": [
+      "logging",
+      "time",
+      "traceback",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "abc"
+    ],
+    "organized_codebase/core/security/fault_tolerance_engine.py": [
+      "logging",
+      "time",
+      "threading",
+      "sqlite3",
+      "datetime",
+      "typing",
+      "collections",
+      "dataclasses",
+      "enum",
+      "os"
+    ],
+    "organized_codebase/core/security/governance_framework.py": [
+      "asyncio",
+      "logging",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "enum",
+      "uuid"
+    ],
+    "organized_codebase/core/security/graceful_degradation_manager.py": [
+      "logging",
+      "time",
+      "threading",
+      "sqlite3",
+      "datetime",
+      "typing",
+      "collections",
+      "dataclasses",
+      "enum",
+      "os"
+    ],
+    "organized_codebase/core/security/identity_validation_system.py": [
+      "re",
+      "uuid",
+      "hashlib",
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum"
+    ],
+    "organized_codebase/core/security/integration_validator.py": [
+      "asyncio",
+      "logging",
+      "typing",
+      "datetime",
+      "pathlib"
+    ],
+    "organized_codebase/core/security/perfect_compliance_launcher.py": [
+      "sys",
+      "typing",
+      "time",
+      "pathlib",
+      "os"
+    ],
+    "organized_codebase/core/security/performance_optimization_engine.py": [
+      "asyncio",
+      "logging",
+      "time",
+      "gc",
+      "sys",
+      "os",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "collections"
+    ],
+    "organized_codebase/core/security/quantum_retry_engine.py": [
+      "logging",
+      "threading",
+      "time",
+      "datetime",
+      "typing",
+      "collections",
+      "retry_models",
+      "retry_database",
+      "retry_strategies",
+      "retry_analysis"
+    ],
+    "organized_codebase/core/security/rate_limiter.py": [
+      "time",
+      "redis",
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "collections",
+      "threading",
+      "hashlib"
+    ],
+    "organized_codebase/core/security/retry_analysis.py": [
+      "logging",
+      "threading",
+      "time",
+      "datetime",
+      "typing",
+      "collections",
+      "hashlib",
+      "retry_models",
+      "retry_database"
+    ],
+    "organized_codebase/core/security/retry_database.py": [
+      "sqlite3",
+      "logging",
+      "os",
+      "typing",
+      "datetime",
+      "collections",
+      "retry_models"
+    ],
+    "organized_codebase/core/security/retry_mechanism_system.py": [
+      "logging",
+      "time",
+      "asyncio",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "abc"
+    ],
+    "organized_codebase/core/security/retry_models.py": [
+      "dataclasses",
+      "datetime",
+      "typing",
+      "enum"
+    ],
+    "organized_codebase/core/security/retry_strategies.py": [
+      "math",
+      "datetime",
+      "typing",
+      "collections",
+      "retry_models"
+    ],
+    "organized_codebase/core/security/run_security_scan.py": [
+      "datetime"
+    ],
+    "organized_codebase/core/security/secure_message_delivery.py": [
+      "uuid",
+      "time",
+      "hashlib",
+      "hmac",
+      "logging",
+      "threading",
+      "sqlite3",
+      "typing",
+      "datetime",
+      "dataclasses"
+    ],
+    "organized_codebase/core/security/secure_performance_optimizer.py": [
+      "uuid",
+      "time",
+      "hashlib",
+      "logging",
+      "threading",
+      "asyncio",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum"
+    ],
+    "organized_codebase/core/security/self_healing_coordinator.py": [
+      "logging",
+      "time",
+      "threading",
+      "traceback",
+      "datetime",
+      "typing",
+      "collections",
+      "dataclasses",
+      "enum",
+      "sqlite3"
+    ],
+    "organized_codebase/core/security/simple_compliance_check.py": [
+      "ast",
+      "os",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "re",
+      "argparse"
+    ],
+    "organized_codebase/core/security/test_security_api_server.py": [
+      "sys",
+      "pathlib",
+      "traceback"
+    ],
+    "organized_codebase/core/security/test_security_comprehensive.py": [
+      "pytest",
+      "asyncio",
+      "sys",
+      "os",
+      "subprocess",
+      "time",
+      "unittest.mock",
+      "typing",
+      "requests",
+      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities"
+    ],
+    "organized_codebase/core/security/test_security_full_integration.py": [
+      "asyncio",
+      "sys",
+      "os",
+      "pathlib",
+      "time",
+      "typing",
+      "requests",
+      "unittest.mock",
+      "core.intelligence.knowledge_graph.knowledge_graph_engine",
+      "flask"
+    ],
+    "organized_codebase/core/security/test_security_integration_validation.py": [
+      "asyncio",
+      "sys",
+      "os",
+      "pathlib",
+      "time",
+      "typing",
+      "core.intelligence.knowledge_graph.knowledge_graph_engine",
+      "traceback"
+    ],
+    "organized_codebase/core/security/thread_safety_manager.py": [
+      "logging",
+      "threading",
+      "asyncio",
+      "time",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "contextlib",
+      "concurrent.futures"
+    ],
+    "organized_codebase/core/security/threat_detector.py": [
+      "re",
+      "hashlib",
+      "os",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "datetime"
+    ],
+    "organized_codebase/core/security/threat_modeler.py": [
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "enum",
+      "logging"
+    ],
+    "organized_codebase/core/security/vulnerability_detection_framework.py": [
+      "sqlite3",
+      "hashlib",
+      "time",
+      "threading",
+      "ast",
+      "re",
+      "datetime",
+      "dataclasses",
+      "typing",
+      "enum"
+    ],
+    "organized_codebase/core/security/vulnerability_scanner.py": [
+      "ast",
+      "re",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "logging"
+    ],
+    "organized_codebase/core/security/cc_121/api_authentication.py": [
+      "secrets",
+      "logging",
+      "typing",
+      "datetime",
+      "hashlib",
+      "hmac",
+      "jwt"
+    ],
+    "organized_codebase/core/security/cc_2/adaptive_security_resilience.py": [
+      "uuid",
+      "time",
+      "math",
+      "logging",
+      "threading",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "collections"
+    ],
+    "organized_codebase/core/security/cc_2/advanced_owasp_tester.py": [
+      "time",
+      "re",
+      "base64",
+      "hashlib",
+      "typing",
+      "dataclasses",
+      "enum",
+      "string"
+    ],
+    "organized_codebase/core/security/cc_2/advanced_security_compliance_system.py": [
+      "asyncio",
+      "logging",
+      "time",
+      "hashlib",
+      "hmac",
+      "secrets",
+      "datetime",
+      "typing",
+      "dataclasses",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/api_security_layer.py": [
+      "os",
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "SECURITY_PATCHES.api_security_framework",
+      "SECURITY_PATCHES.authentication_framework",
+      "flask",
+      "ipaddress"
+    ],
+    "organized_codebase/core/security/cc_2/api_security_tester.py": [
+      "asyncio",
+      "time",
+      "hashlib",
+      "hmac",
+      "base64",
+      "re",
+      "typing",
+      "dataclasses",
+      "enum",
+      "requests"
+    ],
+    "organized_codebase/core/security/cc_2/audit_events.py": [
+      "dataclasses",
+      "typing",
+      "enum",
+      "datetime"
+    ],
+    "organized_codebase/core/security/cc_2/audit_interface.py": [
+      "typing",
+      "logging",
+      "datetime",
+      "csv"
+    ],
+    "organized_codebase/core/security/cc_2/audit_logger.py": [
+      "typing",
+      "logging",
+      "audit"
+    ],
+    "organized_codebase/core/security/cc_2/audit_reporter.py": [
+      "typing",
+      "logging"
+    ],
+    "organized_codebase/core/security/cc_2/audit_storage.py": [
+      "hashlib",
+      "pathlib",
+      "typing",
+      "logging",
+      "csv"
+    ],
+    "organized_codebase/core/security/cc_2/authentication_manager.py": [
+      "hashlib",
+      "jwt",
+      "logging",
+      "secrets",
+      "time",
+      "datetime",
+      "typing"
+    ],
+    "organized_codebase/core/security/cc_2/authentication_system.py": [
+      "os",
+      "jwt",
+      "hashlib",
+      "secrets",
+      "logging",
+      "datetime",
+      "typing",
+      "dataclasses"
+    ],
+    "organized_codebase/core/security/cc_2/autonomous_compliance_harness.py": [
+      "asyncio",
+      "os",
+      "sys",
+      "time",
+      "dataclasses",
+      "datetime",
+      "enum",
+      "pathlib",
+      "typing",
+      "abc"
+    ],
+    "organized_codebase/core/security/cc_2/byzantine_consensus_security.py": [
+      "uuid",
+      "time",
+      "hashlib",
+      "logging",
+      "threading",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "concurrent.futures"
+    ],
+    "organized_codebase/core/security/cc_2/cloud_event_security.py": [
+      "uuid",
+      "time",
+      "hmac",
+      "base64",
+      "hashlib",
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/code_generation_security.py": [
+      "SECURITY_PATCHES.fix_command_injection",
+      "logging",
+      "re",
+      "ast",
+      "hashlib",
+      "time",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/code_vulnerability_scanner.py": [
+      "ast",
+      "re",
+      "asyncio",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "logging"
+    ],
+    "organized_codebase/core/security/cc_2/compliance_audit.py": [
+      "ast",
+      "inspect",
+      "pathlib",
+      "typing",
+      "re",
+      "dataclasses",
+      "argparse"
+    ],
+    "organized_codebase/core/security/cc_2/compliance_checker.py": [
+      "ast",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "logging"
+    ],
+    "organized_codebase/core/security/cc_2/compliance_framework.py": [
+      "dataclasses",
+      "typing",
+      "enum",
+      "datetime",
+      "re"
+    ],
+    "organized_codebase/core/security/cc_2/compliance_rules_engine.py": [
+      "dataclasses",
+      "typing",
+      "pathlib",
+      "ast",
+      "re",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/compliance_validator.py": [
+      "asyncio",
+      "time",
+      "re",
+      "hashlib",
+      "typing",
+      "dataclasses",
+      "enum",
+      "pathlib",
+      "sqlite3"
+    ],
+    "organized_codebase/core/security/cc_2/configuration_security.py": [
+      "os",
+      "re",
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "uuid"
+    ],
+    "organized_codebase/core/security/cc_2/container_security_validator.py": [
+      "logging",
+      "os",
+      "subprocess",
+      "hashlib",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "pathlib"
+    ],
+    "organized_codebase/core/security/cc_2/continuous_security_monitor.py": [
+      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
+      "ast",
+      "os",
+      "time",
+      "hashlib",
+      "threading",
+      "asyncio",
+      "logging",
+      "pathlib",
+      "typing"
+    ],
+    "organized_codebase/core/security/cc_2/deployment_pipeline_security.py": [
+      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
+      "logging",
+      "os",
+      "subprocess",
+      "hashlib",
+      "base64",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/DEPLOY_SECURITY_FIXES.py": [
+      "SECURITY_PATCHES.fix_command_injection",
+      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
+      "os",
+      "sys",
+      "subprocess",
+      "shutil",
+      "time",
+      "pathlib",
+      "typing",
+      "logging"
+    ],
+    "organized_codebase/core/security/cc_2/DEPLOY_SECURITY_FIXES_PHASE2.py": [
+      "os",
+      "shutil",
+      "subprocess",
+      "time",
+      "logging",
+      "datetime",
+      "typing"
+    ],
+    "organized_codebase/core/security/cc_2/distributed_communication_security.py": [
+      "uuid",
+      "time",
+      "hashlib",
+      "hmac",
+      "logging",
+      "threading",
+      "ssl",
+      "typing",
+      "datetime",
+      "dataclasses"
+    ],
+    "organized_codebase/core/security/cc_2/distributed_coordination_security.py": [
+      "logging",
+      "uuid",
+      "time",
+      "hashlib",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "collections",
+      "threading"
+    ],
+    "organized_codebase/core/security/cc_2/distributed_key_management_security.py": [
+      "uuid",
+      "time",
+      "hashlib",
+      "hmac",
+      "secrets",
+      "string",
+      "logging",
+      "threading",
+      "typing",
+      "datetime"
+    ],
+    "organized_codebase/core/security/cc_2/enhanced_security_intelligence_agent.py": [
+      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
+      "ast",
+      "os",
+      "re",
+      "time",
+      "hashlib",
+      "dataclasses",
+      "typing",
+      "enum",
+      "pathlib"
+    ],
+    "organized_codebase/core/security/cc_2/enterprise_audit_logging.py": [
+      "time",
+      "uuid",
+      "hashlib",
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "pathlib"
+    ],
+    "organized_codebase/core/security/cc_2/enterprise_authentication.py": [
+      "logging",
+      "jwt",
+      "hashlib",
+      "secrets",
+      "time",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "threading"
+    ],
+    "organized_codebase/core/security/cc_2/enterprise_auth_gateway.py": [
+      "sqlite3",
+      "hashlib",
+      "secrets",
+      "time",
+      "jwt",
+      "datetime",
+      "dataclasses",
+      "threading",
+      "typing",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/enterprise_multitenant_security.py": [
+      "asyncio",
+      "hashlib",
+      "hmac",
+      "secrets",
+      "time",
+      "jwt",
+      "bcrypt",
+      "datetime",
+      "typing",
+      "dataclasses"
+    ],
+    "organized_codebase/core/security/cc_2/enum_security.py": [
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/error_handler.py": [
+      "logging",
+      "traceback",
+      "datetime",
+      "typing",
+      "contextlib"
+    ],
+    "organized_codebase/core/security/cc_2/file_security_handler.py": [
+      "os",
+      "mimetypes",
+      "hashlib",
+      "magic",
+      "logging",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "shutil"
+    ],
+    "organized_codebase/core/security/cc_2/flow_persistence_security.py": [
+      "logging",
+      "sqlite3",
+      "uuid",
+      "threading",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "contextlib",
+      "pathlib",
+      "hashlib"
+    ],
+    "organized_codebase/core/security/cc_2/incident_responder.py": [
+      "asyncio",
+      "logging",
+      "typing",
+      "datetime",
+      "enum",
+      "dataclasses",
+      "collections"
+    ],
+    "organized_codebase/core/security/cc_2/knowledge_graph_integration.py": [
+      "typing",
+      "dataclasses",
+      "logging"
+    ],
+    "organized_codebase/core/security/cc_2/license_compliance_framework.py": [
+      "os",
+      "re",
+      "logging",
+      "hashlib",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "fnmatch"
+    ],
+    "organized_codebase/core/security/cc_2/message_context_security.py": [
+      "uuid",
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "re"
+    ],
+    "organized_codebase/core/security/cc_2/metaprog_security_analyzer.py": [
+      "ast",
+      "re",
+      "typing",
+      "pathlib",
+      "collections",
+      "logging"
+    ],
+    "organized_codebase/core/security/cc_2/network_security_controls.py": [
+      "logging",
+      "ssl",
+      "socket",
+      "hashlib",
+      "hmac",
+      "time",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/operational_security.py": [
+      "os",
+      "time",
+      "psutil",
+      "hashlib",
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "threading"
+    ],
+    "organized_codebase/core/security/cc_2/predictive_security_analytics.py": [
+      "asyncio",
+      "datetime",
+      "logging",
+      "numpy",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "collections",
+      "sqlite3",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/security.py": [
+      "logging",
+      "flask",
+      "datetime"
+    ],
+    "organized_codebase/core/security/cc_2/security_analysis.py": [
+      "ast",
+      "re",
+      "pathlib",
+      "typing",
+      "collections"
+    ],
+    "organized_codebase/core/security/cc_2/security_analyzer.py": [
+      "re",
+      "os",
+      "pathlib",
+      "typing",
+      "collections"
+    ],
+    "organized_codebase/core/security/cc_2/security_api.py": [
+      "flask",
+      "typing",
+      "os",
+      "datetime",
+      "logging",
+      "threat_modeler",
+      "dependency_scanner",
+      "SECURITY_PATCHES.api_security_framework",
+      "SECURITY_PATCHES.authentication_framework",
+      "pathlib"
+    ],
+    "organized_codebase/core/security/cc_2/security_compliance_validator.py": [
+      "asyncio",
+      "hashlib",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "enum",
+      "logging"
+    ],
+    "organized_codebase/core/security/cc_2/security_config.py": [
+      "dataclasses",
+      "typing",
+      "pathlib",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/security_correlations.py": [
+      "logging",
+      "typing",
+      "dataclasses",
+      "numpy",
+      "collections",
+      "math"
+    ],
+    "organized_codebase/core/security/cc_2/security_dashboard.py": [
+      "datetime"
+    ],
+    "organized_codebase/core/security/cc_2/security_dashboard_ui.py": [
+      "datetime",
+      "typing"
+    ],
+    "organized_codebase/core/security/cc_2/security_fuzzer.py": [
+      "string",
+      "re",
+      "base64",
+      "typing",
+      "dataclasses",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/security_integration_coordinator.py": [
+      "asyncio",
+      "logging",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "concurrent.futures"
+    ],
+    "organized_codebase/core/security/cc_2/security_intelligence_agent.py": [
+      "re",
+      "time",
+      "dataclasses",
+      "typing",
+      "enum",
+      "pathlib",
+      "datetime",
+      "hierarchical_planning",
+      "consensus"
+    ],
+    "organized_codebase/core/security/cc_2/security_optimizer.py": [
+      "ast",
+      "re",
+      "hashlib",
+      "logging",
+      "typing",
+      "dataclasses",
+      "pathlib",
+      "base64"
+    ],
+    "organized_codebase/core/security/cc_2/security_orchestration_engine.py": [
+      "asyncio",
+      "logging",
+      "time",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "collections",
+      "concurrent.futures",
+      "threading",
+      "sqlite3"
+    ],
+    "organized_codebase/core/security/cc_2/security_orchestrator.py": [
+      "asyncio",
+      "logging",
+      "typing",
+      "concurrent.futures",
+      "dataclasses",
+      "time"
+    ],
+    "organized_codebase/core/security/cc_2/security_scan_models.py": [
+      "dataclasses",
+      "typing",
+      "enum",
+      "datetime",
+      "uuid",
+      "time"
+    ],
+    "organized_codebase/core/security/cc_2/security_testing_framework.py": [
+      "asyncio",
+      "datetime",
+      "logging",
+      "os",
+      "subprocess",
+      "tempfile",
+      "unittest",
+      "pathlib",
+      "typing",
+      "dataclasses"
+    ],
+    "organized_codebase/core/security/cc_2/security_test_generator.py": [
+      "dataclasses",
+      "typing",
+      "enum",
+      "datetime"
+    ],
+    "organized_codebase/core/security/cc_2/security_validator.py": [
+      "asyncio",
+      "logging",
+      "pathlib",
+      "typing",
+      "datetime",
+      "collections"
+    ],
+    "organized_codebase/core/security/cc_2/security_visualizations.py": [
+      "datetime",
+      "typing"
+    ],
+    "organized_codebase/core/security/cc_2/service_mesh_security.py": [
+      "logging",
+      "ssl",
+      "time",
+      "hashlib",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum",
+      "contextlib",
+      "cryptography.x509"
+    ],
+    "organized_codebase/core/security/cc_2/ultimate_security_orchestrator.py": [
+      "asyncio",
+      "logging",
+      "time",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/unified_scanner_core.py": [
+      "asyncio",
+      "logging",
+      "time",
+      "hashlib",
+      "pathlib",
+      "typing",
+      "datetime",
+      "collections",
+      "dataclasses"
+    ],
+    "organized_codebase/core/security/cc_2/unified_security_scanner.py": [
+      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
+      "ast",
+      "os",
+      "re",
+      "time",
+      "hashlib",
+      "asyncio",
+      "threading",
+      "pathlib",
+      "typing"
+    ],
+    "organized_codebase/core/security/cc_2/unified_security_service.py": [
+      "asyncio",
+      "logging",
+      "typing",
+      "datetime",
+      "security.identity_validation_system",
+      "security.vulnerability_detection_framework",
+      "security.graceful_degradation_manager"
+    ],
+    "organized_codebase/core/security/cc_2/universal_scanner.py": [
+      "dataclasses",
+      "typing",
+      "enum",
+      "re",
+      "hashlib",
+      "datetime",
+      "pathlib",
+      "fnmatch"
+    ],
+    "organized_codebase/core/security/cc_2/validation_framework.py": [
+      "re",
+      "logging",
+      "typing",
+      "datetime",
+      "pydantic"
+    ],
+    "organized_codebase/core/security/cc_2/validation_security.py": [
+      "re",
+      "time",
+      "hmac",
+      "hashlib",
+      "logging",
+      "asyncio",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "enum"
+    ],
+    "organized_codebase/core/security/cc_2/vulnerability_scanner.py": [
+      "re",
+      "logging",
+      "typing",
+      "dataclasses",
+      "enum",
+      "datetime"
+    ],
+    "organized_codebase/core/security/cc_2/websocket_security_stream.py": [
+      "asyncio",
+      "websockets",
+      "uuid",
+      "logging",
+      "typing",
+      "datetime"
+    ],
+    "organized_codebase/core/security/cc_321/security_integration.py": [
+      "os",
+      "re",
+      "time",
+      "secrets",
+      "hashlib",
+      "logging",
+      "typing",
+      "dataclasses",
+      "functools",
+      "enum"
+    ],
+    "organized_codebase/documentation/tooling/adaptive_template_system.py": [
+      "os",
+      "re",
+      "typing",
+      "dataclasses",
+      "pathlib",
+      "enum",
+      "logging"
+    ],
+    "organized_codebase/documentation/tooling/auto_generator.py": [
+      "ast",
+      "logging",
+      "pathlib",
+      "typing",
+      "dataclasses",
+      "datetime"
+    ],
+    "organized_codebase/documentation/tooling/bilingual_docs_processor.py": [
+      "os",
+      "re",
+      "typing",
+      "dataclasses",
+      "pathlib",
+      "enum",
+      "logging",
+      "datetime"
+    ],
+    "organized_codebase/documentation/tooling/example_docs_system.py": [
+      "os",
+      "re",
+      "ast",
+      "typing",
+      "dataclasses",
+      "pathlib",
+      "enum",
+      "logging"
+    ],
+    "organized_codebase/documentation/tooling/interactive_chat_interface.py": [
+      "asyncio",
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "collections",
+      "enum"
+    ],
+    "organized_codebase/documentation/tooling/interactive_docs_system.py": [
+      "os",
+      "shutil",
+      "typing",
+      "dataclasses",
+      "pathlib",
+      "enum",
+      "logging"
+    ],
+    "organized_codebase/documentation/tooling/markdown_generator.py": [
+      "re",
+      "typing",
+      "dataclasses",
+      "datetime",
+      "logging"
+    ],
+    "organized_codebase/documentation/tooling/recipe_based_learning.py": [
+      "os",
+      "re",
+      "typing",
+      "dataclasses",
+      "pathlib",
+      "enum",
+      "logging"
+    ],
+    "organized_codebase/documentation/tooling/tutorial_grid_system.py": [
+      "os",
+      "typing",
+      "dataclasses",
+      "pathlib",
+      "enum",
+      "logging"
+    ],
+    "organized_codebase/documentation/tooling/unified_doc_generator.py": [
+      "os",
+      "typing",
+      "dataclasses",
+      "pathlib",
+      "enum",
+      "logging",
+      "recipe_based_learning"
+    ],
     "production_deployment/core_systems/adaptive_learning_engine.py": [
       "asyncio",
       "logging",
@@ -63098,22 +63859,6 @@
       "dataclasses",
       "enum"
     ],
-    "swarm_coordinate/Latin_End/Y/extracted_features/security/vulnerability_scanner.py": [
-      "re",
-      "logging",
-      "typing",
-      "dataclasses",
-      "enum",
-      "datetime"
-    ],
-    "swarm_coordinate/Latin_End/Y/extracted_features/security/websocket_security_stream.py": [
-      "asyncio",
-      "websockets",
-      "uuid",
-      "logging",
-      "typing",
-      "datetime"
-    ],
     "TestMaster/accelerated_converter.py": [
       "os",
       "time",
@@ -63269,17 +64014,6 @@
       "typing",
       "dataclasses"
     ],
-    "TestMaster/auto_readme_updater.py": [
-      "os",
-      "re",
-      "subprocess",
-      "datetime",
-      "typing",
-      "pathlib",
-      "dataclasses",
-      "ast",
-      "importlib.util"
-    ],
     "TestMaster/batch_convert_broken_tests.py": [
       "sys",
       "pathlib",
@@ -63357,13 +64091,6 @@
       "typing",
       "datetime"
     ],
-    "TestMaster/comprehensive_feature_audit.py": [
-      "ast",
-      "re",
-      "pathlib",
-      "typing",
-      "dataclasses"
-    ],
     "TestMaster/concrete_tools.py": [
       "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
       "os",
@@ -63406,18 +64133,6 @@
       "enum",
       "collections",
       "uuid"
-    ],
-    "TestMaster/continuous_security_monitor.py": [
-      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
-      "ast",
-      "os",
-      "time",
-      "hashlib",
-      "threading",
-      "asyncio",
-      "logging",
-      "pathlib",
-      "typing"
     ],
     "TestMaster/contribution_analysis_detailed.py": [
       "ast",
@@ -63573,18 +64288,6 @@
       "datetime",
       "networkx"
     ],
-    "TestMaster/deployment_pipeline_security.py": [
-      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
-      "logging",
-      "os",
-      "subprocess",
-      "hashlib",
-      "base64",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
     "TestMaster/design_pattern_recognizer.py": [
       "os",
       "ast",
@@ -63596,26 +64299,6 @@
       "pathlib",
       "dataclasses",
       "collections"
-    ],
-    "TestMaster/documentation_architecture_analyzer.py": [
-      "argparse",
-      "re",
-      "pathlib",
-      "collections",
-      "typing",
-      "networkx"
-    ],
-    "TestMaster/documentation_cli.py": [
-      "os",
-      "sys",
-      "time",
-      "argparse",
-      "subprocess",
-      "pathlib",
-      "typing",
-      "datetime",
-      "concurrent.futures",
-      "threading"
     ],
     "TestMaster/documentation_enhancement_analysis.py": [
       "ast",
@@ -63631,16 +64314,6 @@
       "typing",
       "dataclasses",
       "datetime"
-    ],
-    "TestMaster/doc_validator.py": [
-      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
-      "re",
-      "ast",
-      "logging",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "enum"
     ],
     "TestMaster/duplicate_code_detector.py": [
       "os",
@@ -63732,18 +64405,6 @@
       "datetime",
       "SECURITY_PATCHES.api_security_framework",
       "SECURITY_PATCHES.authentication_framework"
-    ],
-    "TestMaster/enhanced_security_intelligence_agent.py": [
-      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
-      "ast",
-      "os",
-      "re",
-      "time",
-      "hashlib",
-      "dataclasses",
-      "typing",
-      "enum",
-      "pathlib"
     ],
     "TestMaster/enhanced_self_healing_verifier.py": [
       "os",
@@ -64655,9 +65316,6 @@
       "time",
       "re"
     ],
-    "TestMaster/run_security_scan.py": [
-      "datetime"
-    ],
     "TestMaster/safety_checker.py": [
       "ast",
       "sys",
@@ -64689,7 +65347,8 @@
     "TestMaster/simple_test.py": [
       "sys",
       "os",
-      "pathlib"
+      "pathlib",
+      "documentation_cli"
     ],
     "TestMaster/simple_test_runner.py": [
       "subprocess",
@@ -65146,33 +65805,6 @@
       "sys",
       "pathlib"
     ],
-    "TestMaster/test_security_api_server.py": [
-      "sys",
-      "pathlib",
-      "traceback"
-    ],
-    "TestMaster/test_security_full_integration.py": [
-      "asyncio",
-      "sys",
-      "os",
-      "pathlib",
-      "time",
-      "typing",
-      "requests",
-      "unittest.mock",
-      "core.intelligence.knowledge_graph.knowledge_graph_engine",
-      "flask"
-    ],
-    "TestMaster/test_security_integration_validation.py": [
-      "asyncio",
-      "sys",
-      "os",
-      "pathlib",
-      "time",
-      "typing",
-      "core.intelligence.knowledge_graph.knowledge_graph_engine",
-      "traceback"
-    ],
     "TestMaster/test_streaming_generation.py": [
       "asyncio",
       "time",
@@ -65235,18 +65867,6 @@
     "TestMaster/unified_orchestration_example.py": [
       "argparse",
       "sys",
-      "pathlib",
-      "typing"
-    ],
-    "TestMaster/unified_security_scanner.py": [
-      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
-      "ast",
-      "os",
-      "re",
-      "time",
-      "hashlib",
-      "asyncio",
-      "threading",
       "pathlib",
       "typing"
     ],
@@ -65621,14 +66241,6 @@
       "collections",
       "logging"
     ],
-    "TestMaster/analysis/comprehensive_analysis/metaprog_analysis/metaprog_security_analyzer.py": [
-      "ast",
-      "re",
-      "typing",
-      "pathlib",
-      "collections",
-      "logging"
-    ],
     "TestMaster/analysis/comprehensive_analysis/metaprog_analysis/_shared_utils.py": [
       "ast",
       "re",
@@ -65940,12 +66552,6 @@
       "dataclasses",
       "typing",
       "pathlib"
-    ],
-    "TestMaster/config/modules/security_config.py": [
-      "dataclasses",
-      "typing",
-      "pathlib",
-      "enum"
     ],
     "TestMaster/config/modules/testing_config.py": [
       "dataclasses",
@@ -66815,15 +67421,6 @@
       "typing",
       "collections"
     ],
-    "TestMaster/core/domains/intelligence/documentation/adaptive_template_system.py": [
-      "os",
-      "re",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
-    ],
     "TestMaster/core/domains/intelligence/documentation/agency_swarm_analyzer.py": [
       "os",
       "re",
@@ -66883,24 +67480,6 @@
       "enum",
       "logging"
     ],
-    "TestMaster/core/domains/intelligence/documentation/auto_generator.py": [
-      "ast",
-      "logging",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime"
-    ],
-    "TestMaster/core/domains/intelligence/documentation/bilingual_docs_processor.py": [
-      "os",
-      "re",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging",
-      "datetime"
-    ],
     "TestMaster/core/domains/intelligence/documentation/comprehensive_visualization_engine.py": [
       "typing",
       "dataclasses",
@@ -66957,6 +67536,7 @@
       "os",
       "datetime",
       "logging",
+      "markdown_generator",
       "SECURITY_PATCHES.api_security_framework",
       "SECURITY_PATCHES.authentication_framework"
     ],
@@ -66978,7 +67558,9 @@
       "typing",
       "dataclasses",
       "datetime",
-      "logging"
+      "logging",
+      "auto_generator",
+      "markdown_generator"
     ],
     "TestMaster/core/domains/intelligence/documentation/enterprise_api_docs.py": [
       "typing",
@@ -66987,16 +67569,6 @@
       "pathlib",
       "re",
       "datetime"
-    ],
-    "TestMaster/core/domains/intelligence/documentation/example_docs_system.py": [
-      "os",
-      "re",
-      "ast",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
     ],
     "TestMaster/core/domains/intelligence/documentation/faq_system.py": [
       "typing",
@@ -67042,15 +67614,6 @@
       "datetime",
       "logging"
     ],
-    "TestMaster/core/domains/intelligence/documentation/interactive_docs_system.py": [
-      "os",
-      "shutil",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
-    ],
     "TestMaster/core/domains/intelligence/documentation/json_docs_processor.py": [
       "re",
       "typing",
@@ -67093,19 +67656,17 @@
       "threading",
       "logging"
     ],
-    "TestMaster/core/domains/intelligence/documentation/markdown_generator.py": [
-      "re",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "logging"
-    ],
     "TestMaster/core/domains/intelligence/documentation/master_documentation_orchestrator.py": [
       "typing",
       "dataclasses",
       "enum",
       "datetime",
-      "asyncio"
+      "asyncio",
+      "example_docs_system",
+      "bilingual_docs_processor",
+      "tutorial_grid_system",
+      "interactive_docs_system",
+      "recipe_based_learning"
     ],
     "TestMaster/core/domains/intelligence/documentation/mdx_generator.py": [
       "typing",
@@ -67186,15 +67747,6 @@
       "datetime",
       "asyncio"
     ],
-    "TestMaster/core/domains/intelligence/documentation/recipe_based_learning.py": [
-      "os",
-      "re",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
-    ],
     "TestMaster/core/domains/intelligence/documentation/roadmap_generator.py": [
       "typing",
       "dataclasses",
@@ -67264,28 +67816,12 @@
       "re",
       "pathlib"
     ],
-    "TestMaster/core/domains/intelligence/documentation/tutorial_grid_system.py": [
-      "os",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
-    ],
     "TestMaster/core/domains/intelligence/documentation/tutorial_system.py": [
       "typing",
       "dataclasses",
       "pathlib",
       "enum",
       "re"
-    ],
-    "TestMaster/core/domains/intelligence/documentation/unified_doc_generator.py": [
-      "os",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
     ],
     "TestMaster/core/domains/intelligence/documentation/ux_excellence_framework.py": [
       "typing",
@@ -67310,6 +67846,9 @@
       "pathlib",
       "datetime"
     ],
+    "TestMaster/core/domains/intelligence/documentation/__init__.py": [
+      "auto_generator"
+    ],
     "TestMaster/core/domains/intelligence/documentation/enterprise/documentation_intelligence.py": [
       "asyncio",
       "logging",
@@ -67332,7 +67871,8 @@
       "dataclasses",
       "datetime",
       "logging",
-      "sys"
+      "sys",
+      "testmaster.intelligence.documentation.core.quality_assessor"
     ],
     "TestMaster/core/domains/intelligence/documentation/enterprise/workflow_automation.py": [
       "asyncio",
@@ -67426,15 +67966,6 @@
       "pathlib",
       "ast",
       "re",
-      "dataclasses",
-      "collections",
-      "enum"
-    ],
-    "TestMaster/core/domains/intelligence/documentation/revolutionary/interactive_chat_interface.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "datetime",
       "dataclasses",
       "collections",
       "enum"
@@ -68514,67 +69045,12 @@
       "typing",
       "logging"
     ],
-    "TestMaster/core/domains/intelligence/security/audit_logger.py": [
-      "typing",
-      "logging",
-      "audit"
-    ],
-    "TestMaster/core/domains/intelligence/security/code_vulnerability_scanner.py": [
-      "ast",
-      "re",
-      "asyncio",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "pathlib",
-      "logging"
-    ],
-    "TestMaster/core/domains/intelligence/security/compliance_checker.py": [
-      "ast",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "logging"
-    ],
-    "TestMaster/core/domains/intelligence/security/dependency_scanner.py": [
-      "re",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "logging"
-    ],
-    "TestMaster/core/domains/intelligence/security/knowledge_graph_integration.py": [
-      "typing",
-      "dataclasses",
-      "logging"
-    ],
     "TestMaster/core/domains/intelligence/security/security_analytics.py": [
       "numpy",
       "datetime",
       "typing",
       "dataclasses",
       "collections",
-      "logging"
-    ],
-    "TestMaster/core/domains/intelligence/security/security_api.py": [
-      "flask",
-      "typing",
-      "os",
-      "datetime",
-      "logging",
-      "SECURITY_PATCHES.api_security_framework",
-      "SECURITY_PATCHES.authentication_framework",
-      "pathlib"
-    ],
-    "TestMaster/core/domains/intelligence/security/security_compliance_validator.py": [
-      "asyncio",
-      "hashlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum",
       "logging"
     ],
     "TestMaster/core/domains/intelligence/security/security_dashboard.py": [
@@ -68584,7 +69060,9 @@
       "dataclasses",
       "threading",
       "collections",
-      "logging"
+      "logging",
+      "threat_modeler",
+      "dependency_scanner"
     ],
     "TestMaster/core/domains/intelligence/security/threat_intelligence_engine.py": [
       "asyncio",
@@ -68597,103 +69075,11 @@
       "logging",
       "re"
     ],
-    "TestMaster/core/domains/intelligence/security/threat_modeler.py": [
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum",
-      "logging"
-    ],
-    "TestMaster/core/domains/intelligence/security/ultimate_security_orchestrator.py": [
-      "asyncio",
-      "logging",
-      "time",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum"
-    ],
-    "TestMaster/core/domains/intelligence/security/unified_security_service.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "datetime"
-    ],
-    "TestMaster/core/domains/intelligence/security/vulnerability_scanner.py": [
-      "ast",
-      "re",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "logging"
-    ],
-    "TestMaster/core/domains/intelligence/security/audit/audit_events.py": [
-      "dataclasses",
-      "typing",
-      "enum",
-      "datetime"
-    ],
-    "TestMaster/core/domains/intelligence/security/audit/audit_interface.py": [
-      "typing",
-      "logging",
-      "datetime",
-      "csv"
-    ],
-    "TestMaster/core/domains/intelligence/security/audit/audit_reporter.py": [
-      "typing",
-      "logging"
-    ],
-    "TestMaster/core/domains/intelligence/security/audit/audit_storage.py": [
-      "hashlib",
-      "pathlib",
-      "typing",
-      "logging",
-      "csv"
-    ],
-    "TestMaster/core/domains/intelligence/security/enterprise/compliance_automation.py": [
-      "asyncio",
-      "logging",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum",
-      "re"
-    ],
-    "TestMaster/core/domains/intelligence/security/enterprise/governance_framework.py": [
-      "asyncio",
-      "logging",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum",
-      "uuid"
-    ],
     "TestMaster/core/domains/intelligence/security/enterprise/security_intelligence.py": [
       "asyncio",
       "logging",
       "typing",
       "datetime",
-      "collections"
-    ],
-    "TestMaster/core/domains/intelligence/security/enterprise/security_validator.py": [
-      "asyncio",
-      "logging",
-      "pathlib",
-      "typing",
-      "datetime",
-      "collections"
-    ],
-    "TestMaster/core/domains/intelligence/security/enterprise/intelligence/incident_responder.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "datetime",
-      "enum",
-      "dataclasses",
       "collections"
     ],
     "TestMaster/core/domains/intelligence/security/enterprise/intelligence/threat_detector.py": [
@@ -68706,20 +69092,6 @@
       "collections",
       "statistics",
       "numpy"
-    ],
-    "TestMaster/core/domains/intelligence/security/enterprise/validation/compliance_validator.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "datetime",
-      "pathlib"
-    ],
-    "TestMaster/core/domains/intelligence/security/enterprise/validation/integration_validator.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "datetime",
-      "pathlib"
     ],
     "TestMaster/core/domains/intelligence/security/enterprise/validation/penetration_tester.py": [
       "asyncio",
@@ -68842,14 +69214,6 @@
       "enum",
       "datetime",
       "statistics"
-    ],
-    "TestMaster/core/domains/intelligence/testing/security_fuzzer.py": [
-      "string",
-      "re",
-      "base64",
-      "typing",
-      "dataclasses",
-      "enum"
     ],
     "TestMaster/core/domains/intelligence/testing/testing_api.py": [
       "flask",
@@ -69117,39 +69481,6 @@
       "time",
       "unittest.mock"
     ],
-    "TestMaster/core/domains/intelligence/testing/security/advanced_owasp_tester.py": [
-      "time",
-      "re",
-      "base64",
-      "hashlib",
-      "typing",
-      "dataclasses",
-      "enum",
-      "string"
-    ],
-    "TestMaster/core/domains/intelligence/testing/security/api_security_tester.py": [
-      "asyncio",
-      "time",
-      "hashlib",
-      "hmac",
-      "base64",
-      "re",
-      "typing",
-      "dataclasses",
-      "enum",
-      "requests"
-    ],
-    "TestMaster/core/domains/intelligence/testing/security/compliance_validator.py": [
-      "asyncio",
-      "time",
-      "re",
-      "hashlib",
-      "typing",
-      "dataclasses",
-      "enum",
-      "pathlib",
-      "sqlite3"
-    ],
     "TestMaster/core/domains/intelligence/validation/integration_test_suite.py": [
       "integration_test_suite_modules"
     ],
@@ -69319,18 +69650,6 @@
       "dataclasses",
       "enum"
     ],
-    "TestMaster/core/domains/security/adaptive_security_resilience.py": [
-      "uuid",
-      "time",
-      "math",
-      "logging",
-      "threading",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "collections"
-    ],
     "TestMaster/core/domains/security/agent_communication_security.py": [
       "uuid",
       "time",
@@ -69343,39 +69662,6 @@
       "re",
       "hmac"
     ],
-    "TestMaster/core/domains/security/api_security_layer.py": [
-      "os",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "SECURITY_PATCHES.api_security_framework",
-      "SECURITY_PATCHES.authentication_framework",
-      "flask",
-      "ipaddress"
-    ],
-    "TestMaster/core/domains/security/authentication_system.py": [
-      "os",
-      "jwt",
-      "hashlib",
-      "secrets",
-      "logging",
-      "datetime",
-      "typing",
-      "dataclasses"
-    ],
-    "TestMaster/core/domains/security/byzantine_consensus_security.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "logging",
-      "threading",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "concurrent.futures"
-    ],
     "TestMaster/core/domains/security/circuit_breaker_matrix.py": [
       "logging",
       "time",
@@ -69387,63 +69673,6 @@
       "enum",
       "functools",
       "sqlite3"
-    ],
-    "TestMaster/core/domains/security/cloud_event_security.py": [
-      "uuid",
-      "time",
-      "hmac",
-      "base64",
-      "hashlib",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/domains/security/code_generation_security.py": [
-      "SECURITY_PATCHES.fix_command_injection",
-      "logging",
-      "re",
-      "ast",
-      "hashlib",
-      "time",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/domains/security/compliance_framework.py": [
-      "sqlite3",
-      "hashlib",
-      "threading",
-      "time",
-      "datetime",
-      "dataclasses",
-      "typing",
-      "enum",
-      "logging",
-      "re"
-    ],
-    "TestMaster/core/domains/security/configuration_security.py": [
-      "os",
-      "re",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "uuid"
-    ],
-    "TestMaster/core/domains/security/container_security_validator.py": [
-      "logging",
-      "os",
-      "subprocess",
-      "hashlib",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "pathlib"
     ],
     "TestMaster/core/domains/security/data_integrity_guardian.py": [
       "uuid",
@@ -69468,114 +69697,6 @@
       "dataclasses",
       "enum",
       "concurrent.futures"
-    ],
-    "TestMaster/core/domains/security/distributed_communication_security.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "hmac",
-      "logging",
-      "threading",
-      "ssl",
-      "typing",
-      "datetime",
-      "dataclasses"
-    ],
-    "TestMaster/core/domains/security/distributed_coordination_security.py": [
-      "logging",
-      "uuid",
-      "time",
-      "hashlib",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "collections",
-      "threading"
-    ],
-    "TestMaster/core/domains/security/distributed_key_management_security.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "hmac",
-      "secrets",
-      "string",
-      "logging",
-      "threading",
-      "typing",
-      "datetime"
-    ],
-    "TestMaster/core/domains/security/document_classification_security.py": [
-      "logging",
-      "re",
-      "hashlib",
-      "time",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "pathlib"
-    ],
-    "TestMaster/core/domains/security/enterprise_audit_logging.py": [
-      "time",
-      "uuid",
-      "hashlib",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "pathlib"
-    ],
-    "TestMaster/core/domains/security/enterprise_authentication.py": [
-      "logging",
-      "jwt",
-      "hashlib",
-      "secrets",
-      "time",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "threading"
-    ],
-    "TestMaster/core/domains/security/enterprise_auth_gateway.py": [
-      "sqlite3",
-      "hashlib",
-      "secrets",
-      "time",
-      "jwt",
-      "datetime",
-      "dataclasses",
-      "threading",
-      "typing",
-      "enum"
-    ],
-    "TestMaster/core/domains/security/enum_security.py": [
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/domains/security/error_handler.py": [
-      "logging",
-      "traceback",
-      "datetime",
-      "typing",
-      "contextlib"
-    ],
-    "TestMaster/core/domains/security/error_isolation_system.py": [
-      "logging",
-      "time",
-      "threading",
-      "sqlite3",
-      "datetime",
-      "typing",
-      "collections",
-      "dataclasses",
-      "enum",
-      "os"
     ],
     "TestMaster/core/domains/security/error_recovery_framework.py": [
       "logging",
@@ -69611,42 +69732,6 @@
       "enum",
       "os"
     ],
-    "TestMaster/core/domains/security/file_security_handler.py": [
-      "os",
-      "mimetypes",
-      "hashlib",
-      "magic",
-      "logging",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "shutil"
-    ],
-    "TestMaster/core/domains/security/flow_persistence_security.py": [
-      "logging",
-      "sqlite3",
-      "uuid",
-      "threading",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "contextlib",
-      "pathlib",
-      "hashlib"
-    ],
-    "TestMaster/core/domains/security/graceful_degradation_manager.py": [
-      "logging",
-      "time",
-      "threading",
-      "sqlite3",
-      "datetime",
-      "typing",
-      "collections",
-      "dataclasses",
-      "enum",
-      "os"
-    ],
     "TestMaster/core/domains/security/guardrail_security_system.py": [
       "logging",
       "time",
@@ -69667,36 +69752,6 @@
       "dataclasses",
       "enum",
       "psutil"
-    ],
-    "TestMaster/core/domains/security/identity_validation_system.py": [
-      "re",
-      "uuid",
-      "hashlib",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/domains/security/license_compliance_framework.py": [
-      "os",
-      "re",
-      "logging",
-      "hashlib",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "fnmatch"
-    ],
-    "TestMaster/core/domains/security/message_context_security.py": [
-      "uuid",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "re"
     ],
     "TestMaster/core/domains/security/multi_agent_access_control.py": [
       "logging",
@@ -69720,30 +69775,6 @@
       "enum",
       "concurrent.futures"
     ],
-    "TestMaster/core/domains/security/network_security_controls.py": [
-      "logging",
-      "ssl",
-      "socket",
-      "hashlib",
-      "hmac",
-      "time",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/domains/security/operational_security.py": [
-      "os",
-      "time",
-      "psutil",
-      "hashlib",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "threading"
-    ],
     "TestMaster/core/domains/security/quantum_retry_engine.py": [
       "logging",
       "time",
@@ -69754,17 +69785,6 @@
       "collections",
       "dataclasses",
       "enum",
-      "hashlib"
-    ],
-    "TestMaster/core/domains/security/rate_limiter.py": [
-      "time",
-      "redis",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "collections",
-      "threading",
       "hashlib"
     ],
     "TestMaster/core/domains/security/resilience_orchestrator.py": [
@@ -69788,30 +69808,6 @@
       "dataclasses",
       "enum",
       "abc"
-    ],
-    "TestMaster/core/domains/security/secure_message_delivery.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "hmac",
-      "logging",
-      "threading",
-      "sqlite3",
-      "typing",
-      "datetime",
-      "dataclasses"
-    ],
-    "TestMaster/core/domains/security/secure_performance_optimizer.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "logging",
-      "threading",
-      "asyncio",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
     ],
     "TestMaster/core/domains/security/security_monitoring_system.py": [
       "uuid",
@@ -69837,18 +69833,6 @@
       "enum",
       "sqlite3"
     ],
-    "TestMaster/core/domains/security/service_mesh_security.py": [
-      "logging",
-      "ssl",
-      "time",
-      "hashlib",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "contextlib",
-      "cryptography.x509"
-    ],
     "TestMaster/core/domains/security/thread_safety_manager.py": [
       "logging",
       "threading",
@@ -69870,30 +69854,6 @@
       "typing",
       "enum",
       "logging"
-    ],
-    "TestMaster/core/domains/security/validation_security.py": [
-      "re",
-      "time",
-      "hmac",
-      "hashlib",
-      "logging",
-      "asyncio",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/domains/security/vulnerability_detection_framework.py": [
-      "sqlite3",
-      "hashlib",
-      "time",
-      "threading",
-      "ast",
-      "re",
-      "datetime",
-      "dataclasses",
-      "typing",
-      "enum"
     ],
     "TestMaster/core/domains/testing/adaptive_testing_framework.py": [
       "os",
@@ -72027,15 +71987,6 @@
       "typing",
       "collections"
     ],
-    "TestMaster/core/intelligence/documentation/adaptive_template_system.py": [
-      "os",
-      "re",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
-    ],
     "TestMaster/core/intelligence/documentation/agency_swarm_analyzer.py": [
       "os",
       "re",
@@ -72094,24 +72045,6 @@
       "pathlib",
       "enum",
       "logging"
-    ],
-    "TestMaster/core/intelligence/documentation/auto_generator.py": [
-      "ast",
-      "logging",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime"
-    ],
-    "TestMaster/core/intelligence/documentation/bilingual_docs_processor.py": [
-      "os",
-      "re",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging",
-      "datetime"
     ],
     "TestMaster/core/intelligence/documentation/comprehensive_visualization_engine.py": [
       "typing",
@@ -72181,6 +72114,7 @@
       "os",
       "datetime",
       "logging",
+      "markdown_generator",
       "SECURITY_PATCHES.api_security_framework",
       "SECURITY_PATCHES.authentication_framework"
     ],
@@ -72214,7 +72148,9 @@
       "typing",
       "dataclasses",
       "datetime",
-      "logging"
+      "logging",
+      "auto_generator",
+      "markdown_generator"
     ],
     "TestMaster/core/intelligence/documentation/enterprise_api_docs.py": [
       "typing",
@@ -72223,16 +72159,6 @@
       "pathlib",
       "re",
       "datetime"
-    ],
-    "TestMaster/core/intelligence/documentation/example_docs_system.py": [
-      "os",
-      "re",
-      "ast",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
     ],
     "TestMaster/core/intelligence/documentation/faq_system.py": [
       "typing",
@@ -72278,15 +72204,6 @@
       "datetime",
       "logging"
     ],
-    "TestMaster/core/intelligence/documentation/interactive_docs_system.py": [
-      "os",
-      "shutil",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
-    ],
     "TestMaster/core/intelligence/documentation/json_docs_processor.py": [
       "re",
       "typing",
@@ -72329,19 +72246,17 @@
       "threading",
       "logging"
     ],
-    "TestMaster/core/intelligence/documentation/markdown_generator.py": [
-      "re",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "logging"
-    ],
     "TestMaster/core/intelligence/documentation/master_documentation_orchestrator.py": [
       "typing",
       "dataclasses",
       "enum",
       "datetime",
-      "asyncio"
+      "asyncio",
+      "example_docs_system",
+      "bilingual_docs_processor",
+      "tutorial_grid_system",
+      "interactive_docs_system",
+      "recipe_based_learning"
     ],
     "TestMaster/core/intelligence/documentation/mdx_generator.py": [
       "typing",
@@ -72422,15 +72337,6 @@
       "datetime",
       "asyncio"
     ],
-    "TestMaster/core/intelligence/documentation/recipe_based_learning.py": [
-      "os",
-      "re",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
-    ],
     "TestMaster/core/intelligence/documentation/roadmap_generator.py": [
       "typing",
       "dataclasses",
@@ -72500,28 +72406,12 @@
       "re",
       "pathlib"
     ],
-    "TestMaster/core/intelligence/documentation/tutorial_grid_system.py": [
-      "os",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
-    ],
     "TestMaster/core/intelligence/documentation/tutorial_system.py": [
       "typing",
       "dataclasses",
       "pathlib",
       "enum",
       "re"
-    ],
-    "TestMaster/core/intelligence/documentation/unified_doc_generator.py": [
-      "os",
-      "typing",
-      "dataclasses",
-      "pathlib",
-      "enum",
-      "logging"
     ],
     "TestMaster/core/intelligence/documentation/ux_excellence_framework.py": [
       "typing",
@@ -72556,6 +72446,9 @@
       "pathlib",
       "datetime"
     ],
+    "TestMaster/core/intelligence/documentation/__init__.py": [
+      "auto_generator"
+    ],
     "TestMaster/core/intelligence/documentation/enterprise/documentation_intelligence.py": [
       "asyncio",
       "logging",
@@ -72578,7 +72471,8 @@
       "dataclasses",
       "datetime",
       "logging",
-      "sys"
+      "sys",
+      "testmaster.intelligence.documentation.core.quality_assessor"
     ],
     "TestMaster/core/intelligence/documentation/enterprise/workflow_automation.py": [
       "asyncio",
@@ -72672,15 +72566,6 @@
       "pathlib",
       "ast",
       "re",
-      "dataclasses",
-      "collections",
-      "enum"
-    ],
-    "TestMaster/core/intelligence/documentation/revolutionary/interactive_chat_interface.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "datetime",
       "dataclasses",
       "collections",
       "enum"
@@ -73816,67 +73701,12 @@
       "typing",
       "logging"
     ],
-    "TestMaster/core/intelligence/security/audit_logger.py": [
-      "typing",
-      "logging",
-      "audit"
-    ],
-    "TestMaster/core/intelligence/security/code_vulnerability_scanner.py": [
-      "ast",
-      "re",
-      "asyncio",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "pathlib",
-      "logging"
-    ],
-    "TestMaster/core/intelligence/security/compliance_checker.py": [
-      "ast",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "logging"
-    ],
-    "TestMaster/core/intelligence/security/dependency_scanner.py": [
-      "re",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "logging"
-    ],
-    "TestMaster/core/intelligence/security/knowledge_graph_integration.py": [
-      "typing",
-      "dataclasses",
-      "logging"
-    ],
     "TestMaster/core/intelligence/security/security_analytics.py": [
       "numpy",
       "datetime",
       "typing",
       "dataclasses",
       "collections",
-      "logging"
-    ],
-    "TestMaster/core/intelligence/security/security_api.py": [
-      "flask",
-      "typing",
-      "os",
-      "datetime",
-      "logging",
-      "SECURITY_PATCHES.api_security_framework",
-      "SECURITY_PATCHES.authentication_framework",
-      "pathlib"
-    ],
-    "TestMaster/core/intelligence/security/security_compliance_validator.py": [
-      "asyncio",
-      "hashlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum",
       "logging"
     ],
     "TestMaster/core/intelligence/security/security_dashboard.py": [
@@ -73886,7 +73716,9 @@
       "dataclasses",
       "threading",
       "collections",
-      "logging"
+      "logging",
+      "threat_modeler",
+      "dependency_scanner"
     ],
     "TestMaster/core/intelligence/security/threat_intelligence_engine.py": [
       "asyncio",
@@ -73899,103 +73731,14 @@
       "logging",
       "re"
     ],
-    "TestMaster/core/intelligence/security/threat_modeler.py": [
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum",
-      "logging"
-    ],
-    "TestMaster/core/intelligence/security/ultimate_security_orchestrator.py": [
-      "asyncio",
-      "logging",
-      "time",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum"
-    ],
-    "TestMaster/core/intelligence/security/unified_security_service.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "datetime"
-    ],
-    "TestMaster/core/intelligence/security/vulnerability_scanner.py": [
-      "ast",
-      "re",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "logging"
-    ],
-    "TestMaster/core/intelligence/security/audit/audit_events.py": [
-      "dataclasses",
-      "typing",
-      "enum",
-      "datetime"
-    ],
-    "TestMaster/core/intelligence/security/audit/audit_interface.py": [
-      "typing",
-      "logging",
-      "datetime",
-      "csv"
-    ],
-    "TestMaster/core/intelligence/security/audit/audit_reporter.py": [
-      "typing",
-      "logging"
-    ],
-    "TestMaster/core/intelligence/security/audit/audit_storage.py": [
-      "hashlib",
-      "pathlib",
-      "typing",
-      "logging",
-      "csv"
-    ],
-    "TestMaster/core/intelligence/security/enterprise/compliance_automation.py": [
-      "asyncio",
-      "logging",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum",
-      "re"
-    ],
-    "TestMaster/core/intelligence/security/enterprise/governance_framework.py": [
-      "asyncio",
-      "logging",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "enum",
-      "uuid"
+    "TestMaster/core/intelligence/security/__init__.py": [
+      "threat_modeler"
     ],
     "TestMaster/core/intelligence/security/enterprise/security_intelligence.py": [
       "asyncio",
       "logging",
       "typing",
       "datetime",
-      "collections"
-    ],
-    "TestMaster/core/intelligence/security/enterprise/security_validator.py": [
-      "asyncio",
-      "logging",
-      "pathlib",
-      "typing",
-      "datetime",
-      "collections"
-    ],
-    "TestMaster/core/intelligence/security/enterprise/intelligence/incident_responder.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "datetime",
-      "enum",
-      "dataclasses",
       "collections"
     ],
     "TestMaster/core/intelligence/security/enterprise/intelligence/threat_detector.py": [
@@ -74010,13 +73753,6 @@
       "numpy"
     ],
     "TestMaster/core/intelligence/security/enterprise/validation/compliance_validator.py": [
-      "asyncio",
-      "logging",
-      "typing",
-      "datetime",
-      "pathlib"
-    ],
-    "TestMaster/core/intelligence/security/enterprise/validation/integration_validator.py": [
       "asyncio",
       "logging",
       "typing",
@@ -74144,14 +73880,6 @@
       "enum",
       "datetime",
       "statistics"
-    ],
-    "TestMaster/core/intelligence/testing/security_fuzzer.py": [
-      "string",
-      "re",
-      "base64",
-      "typing",
-      "dataclasses",
-      "enum"
     ],
     "TestMaster/core/intelligence/testing/testing_api.py": [
       "flask",
@@ -74419,39 +74147,6 @@
       "time",
       "unittest.mock"
     ],
-    "TestMaster/core/intelligence/testing/security/advanced_owasp_tester.py": [
-      "time",
-      "re",
-      "base64",
-      "hashlib",
-      "typing",
-      "dataclasses",
-      "enum",
-      "string"
-    ],
-    "TestMaster/core/intelligence/testing/security/api_security_tester.py": [
-      "asyncio",
-      "time",
-      "hashlib",
-      "hmac",
-      "base64",
-      "re",
-      "typing",
-      "dataclasses",
-      "enum",
-      "requests"
-    ],
-    "TestMaster/core/intelligence/testing/security/compliance_validator.py": [
-      "asyncio",
-      "time",
-      "re",
-      "hashlib",
-      "typing",
-      "dataclasses",
-      "enum",
-      "pathlib",
-      "sqlite3"
-    ],
     "TestMaster/core/intelligence/validation/integration_test_suite.py": [
       "integration_test_suite_modules"
     ],
@@ -74690,15 +74385,6 @@
       "dataclasses",
       "datetime",
       "enum",
-      "typing"
-    ],
-    "TestMaster/core/orchestration/api/authentication_manager.py": [
-      "hashlib",
-      "jwt",
-      "logging",
-      "secrets",
-      "time",
-      "datetime",
       "typing"
     ],
     "TestMaster/core/orchestration/api/rate_limiter.py": [
@@ -75209,18 +74895,6 @@
       "dataclasses",
       "enum"
     ],
-    "TestMaster/core/security/adaptive_security_resilience.py": [
-      "uuid",
-      "time",
-      "math",
-      "logging",
-      "threading",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "collections"
-    ],
     "TestMaster/core/security/agent_communication_security.py": [
       "uuid",
       "time",
@@ -75232,39 +74906,6 @@
       "enum",
       "re",
       "hmac"
-    ],
-    "TestMaster/core/security/api_security_layer.py": [
-      "os",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "SECURITY_PATCHES.api_security_framework",
-      "SECURITY_PATCHES.authentication_framework",
-      "flask",
-      "ipaddress"
-    ],
-    "TestMaster/core/security/authentication_system.py": [
-      "os",
-      "jwt",
-      "hashlib",
-      "secrets",
-      "logging",
-      "datetime",
-      "typing",
-      "dataclasses"
-    ],
-    "TestMaster/core/security/byzantine_consensus_security.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "logging",
-      "threading",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "concurrent.futures"
     ],
     "TestMaster/core/security/circuit_breaker_matrix.py": [
       "logging",
@@ -75278,30 +74919,6 @@
       "functools",
       "sqlite3"
     ],
-    "TestMaster/core/security/cloud_event_security.py": [
-      "uuid",
-      "time",
-      "hmac",
-      "base64",
-      "hashlib",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/security/code_generation_security.py": [
-      "SECURITY_PATCHES.fix_command_injection",
-      "logging",
-      "re",
-      "ast",
-      "hashlib",
-      "time",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
     "TestMaster/core/security/compliance_framework.py": [
       "sqlite3",
       "hashlib",
@@ -75313,51 +74930,6 @@
       "enum",
       "logging",
       "re"
-    ],
-    "TestMaster/core/security/configuration_security.py": [
-      "os",
-      "re",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "uuid"
-    ],
-    "TestMaster/core/security/container_security_validator.py": [
-      "logging",
-      "os",
-      "subprocess",
-      "hashlib",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "pathlib"
-    ],
-    "TestMaster/core/security/data_integrity_guardian.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "hmac",
-      "logging",
-      "threading",
-      "sqlite3",
-      "zlib",
-      "base64",
-      "typing"
-    ],
-    "TestMaster/core/security/deployment_pipeline_security.py": [
-      "SECURITY_PATCHES.fix_eval_exec_vulnerabilities",
-      "logging",
-      "os",
-      "subprocess",
-      "hashlib",
-      "base64",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
     ],
     "TestMaster/core/security/distributed_agent_registry.py": [
       "uuid",
@@ -75371,124 +74943,6 @@
       "enum",
       "concurrent.futures"
     ],
-    "TestMaster/core/security/distributed_communication_security.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "hmac",
-      "logging",
-      "threading",
-      "ssl",
-      "typing",
-      "datetime",
-      "dataclasses"
-    ],
-    "TestMaster/core/security/distributed_coordination_security.py": [
-      "logging",
-      "uuid",
-      "time",
-      "hashlib",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "collections",
-      "threading"
-    ],
-    "TestMaster/core/security/distributed_key_management_security.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "hmac",
-      "secrets",
-      "string",
-      "logging",
-      "threading",
-      "typing",
-      "datetime"
-    ],
-    "TestMaster/core/security/document_classification_security.py": [
-      "logging",
-      "re",
-      "hashlib",
-      "time",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "pathlib"
-    ],
-    "TestMaster/core/security/enterprise_audit_logging.py": [
-      "time",
-      "uuid",
-      "hashlib",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "pathlib"
-    ],
-    "TestMaster/core/security/enterprise_authentication.py": [
-      "logging",
-      "jwt",
-      "hashlib",
-      "secrets",
-      "time",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "threading"
-    ],
-    "TestMaster/core/security/enterprise_auth_gateway.py": [
-      "sqlite3",
-      "hashlib",
-      "secrets",
-      "time",
-      "jwt",
-      "datetime",
-      "dataclasses",
-      "threading",
-      "typing",
-      "enum"
-    ],
-    "TestMaster/core/security/enum_security.py": [
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/security/error_handler.py": [
-      "logging",
-      "traceback",
-      "datetime",
-      "typing",
-      "contextlib"
-    ],
-    "TestMaster/core/security/error_isolation_system.py": [
-      "logging",
-      "time",
-      "threading",
-      "sqlite3",
-      "datetime",
-      "typing",
-      "collections",
-      "dataclasses",
-      "enum",
-      "os"
-    ],
-    "TestMaster/core/security/error_recovery_framework.py": [
-      "logging",
-      "time",
-      "traceback",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "abc"
-    ],
     "TestMaster/core/security/exception_monitoring.py": [
       "sys",
       "traceback",
@@ -75499,54 +74953,6 @@
       "dataclasses",
       "enum",
       "re",
-      "os"
-    ],
-    "TestMaster/core/security/fault_tolerance_engine.py": [
-      "logging",
-      "time",
-      "threading",
-      "sqlite3",
-      "datetime",
-      "typing",
-      "collections",
-      "dataclasses",
-      "enum",
-      "os"
-    ],
-    "TestMaster/core/security/file_security_handler.py": [
-      "os",
-      "mimetypes",
-      "hashlib",
-      "magic",
-      "logging",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "datetime",
-      "shutil"
-    ],
-    "TestMaster/core/security/flow_persistence_security.py": [
-      "logging",
-      "sqlite3",
-      "uuid",
-      "threading",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "contextlib",
-      "pathlib",
-      "hashlib"
-    ],
-    "TestMaster/core/security/graceful_degradation_manager.py": [
-      "logging",
-      "time",
-      "threading",
-      "sqlite3",
-      "datetime",
-      "typing",
-      "collections",
-      "dataclasses",
-      "enum",
       "os"
     ],
     "TestMaster/core/security/guardrail_security_system.py": [
@@ -75570,36 +74976,6 @@
       "enum",
       "psutil"
     ],
-    "TestMaster/core/security/identity_validation_system.py": [
-      "re",
-      "uuid",
-      "hashlib",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/security/license_compliance_framework.py": [
-      "os",
-      "re",
-      "logging",
-      "hashlib",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "fnmatch"
-    ],
-    "TestMaster/core/security/message_context_security.py": [
-      "uuid",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "re"
-    ],
     "TestMaster/core/security/multi_agent_access_control.py": [
       "logging",
       "uuid",
@@ -75622,57 +74998,6 @@
       "enum",
       "concurrent.futures"
     ],
-    "TestMaster/core/security/network_security_controls.py": [
-      "logging",
-      "ssl",
-      "socket",
-      "hashlib",
-      "hmac",
-      "time",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/security/operational_security.py": [
-      "os",
-      "time",
-      "psutil",
-      "hashlib",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "threading"
-    ],
-    "TestMaster/core/security/quantum_retry_engine.py": [
-      "logging",
-      "threading",
-      "time",
-      "datetime",
-      "typing",
-      "collections"
-    ],
-    "TestMaster/core/security/quantum_retry_engine_new.py": [
-      "logging",
-      "threading",
-      "time",
-      "datetime",
-      "typing",
-      "collections"
-    ],
-    "TestMaster/core/security/rate_limiter.py": [
-      "time",
-      "redis",
-      "logging",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "collections",
-      "threading",
-      "hashlib"
-    ],
     "TestMaster/core/security/resilience_orchestrator.py": [
       "logging",
       "time",
@@ -75684,69 +75009,6 @@
       "dataclasses",
       "enum",
       "os"
-    ],
-    "TestMaster/core/security/retry_analysis.py": [
-      "logging",
-      "threading",
-      "time",
-      "datetime",
-      "typing",
-      "collections",
-      "hashlib"
-    ],
-    "TestMaster/core/security/retry_database.py": [
-      "sqlite3",
-      "logging",
-      "os",
-      "typing",
-      "datetime",
-      "collections"
-    ],
-    "TestMaster/core/security/retry_mechanism_system.py": [
-      "logging",
-      "time",
-      "asyncio",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "abc"
-    ],
-    "TestMaster/core/security/retry_models.py": [
-      "dataclasses",
-      "datetime",
-      "typing",
-      "enum"
-    ],
-    "TestMaster/core/security/retry_strategies.py": [
-      "math",
-      "datetime",
-      "typing",
-      "collections"
-    ],
-    "TestMaster/core/security/secure_message_delivery.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "hmac",
-      "logging",
-      "threading",
-      "sqlite3",
-      "typing",
-      "datetime",
-      "dataclasses"
-    ],
-    "TestMaster/core/security/secure_performance_optimizer.py": [
-      "uuid",
-      "time",
-      "hashlib",
-      "logging",
-      "threading",
-      "asyncio",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
     ],
     "TestMaster/core/security/security_monitoring_system.py": [
       "uuid",
@@ -75760,41 +75022,6 @@
       "dataclasses",
       "enum"
     ],
-    "TestMaster/core/security/self_healing_coordinator.py": [
-      "logging",
-      "time",
-      "threading",
-      "traceback",
-      "datetime",
-      "typing",
-      "collections",
-      "dataclasses",
-      "enum",
-      "sqlite3"
-    ],
-    "TestMaster/core/security/service_mesh_security.py": [
-      "logging",
-      "ssl",
-      "time",
-      "hashlib",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum",
-      "contextlib",
-      "cryptography.x509"
-    ],
-    "TestMaster/core/security/thread_safety_manager.py": [
-      "logging",
-      "threading",
-      "asyncio",
-      "time",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "contextlib",
-      "concurrent.futures"
-    ],
     "TestMaster/core/security/threat_intelligence_system.py": [
       "sqlite3",
       "hashlib",
@@ -75807,36 +75034,11 @@
       "logging",
       "asyncio"
     ],
-    "TestMaster/core/security/validation_framework.py": [
-      "re",
-      "logging",
-      "typing",
-      "datetime",
-      "pydantic"
-    ],
-    "TestMaster/core/security/validation_security.py": [
-      "re",
-      "time",
-      "hmac",
-      "hashlib",
-      "logging",
-      "asyncio",
-      "typing",
-      "datetime",
-      "dataclasses",
-      "enum"
-    ],
-    "TestMaster/core/security/vulnerability_detection_framework.py": [
-      "sqlite3",
-      "hashlib",
-      "time",
-      "threading",
-      "ast",
-      "re",
-      "datetime",
-      "dataclasses",
-      "typing",
-      "enum"
+    "TestMaster/core/security/__init__.py": [
+      "identity_validation_system",
+      "document_classification_security",
+      "graceful_degradation_manager",
+      "error_isolation_system"
     ],
     "TestMaster/core/state/enhanced_state_manager.py": [
       "asyncio",
@@ -76965,11 +76167,6 @@
       "logging",
       "sys",
       "os"
-    ],
-    "TestMaster/dashboard/api/security.py": [
-      "logging",
-      "flask",
-      "datetime"
     ],
     "TestMaster/dashboard/api/swarm_orchestration.py": [
       "flask",
@@ -78882,13 +78079,6 @@
       "typing",
       "collections"
     ],
-    "TestMaster/testmaster/analysis/comprehensive_analysis/security_analysis.py": [
-      "ast",
-      "re",
-      "pathlib",
-      "typing",
-      "collections"
-    ],
     "TestMaster/testmaster/analysis/comprehensive_analysis/software_metrics.py": [
       "ast",
       "re",
@@ -79369,7 +78559,8 @@
       "logging",
       "pathlib",
       "typing",
-      "dataclasses"
+      "dataclasses",
+      "quality_assessor"
     ],
     "TestMaster/testmaster/intelligence/documentation/core/llm_integration.py": [
       "time",
@@ -79383,23 +78574,17 @@
       "pathlib",
       "os"
     ],
-    "TestMaster/testmaster/intelligence/documentation/core/quality_assessor.py": [
-      "re",
-      "ast",
-      "logging",
-      "typing",
-      "dataclasses",
-      "enum"
-    ],
     "TestMaster/testmaster/intelligence/documentation/core/__init__.py": [
-      "doc_analyzer"
+      "doc_analyzer",
+      "quality_assessor"
     ],
     "TestMaster/testmaster/intelligence/documentation/generators/api_doc_generator.py": [
       "ast",
       "logging",
       "pathlib",
       "typing",
-      "dataclasses"
+      "dataclasses",
+      "core.quality_assessor"
     ],
     "TestMaster/testmaster/intelligence/documentation/generators/architecture_doc_generator.py": [
       "ast",
@@ -79408,20 +78593,23 @@
       "typing",
       "dataclasses",
       "datetime",
-      "asyncio"
+      "asyncio",
+      "core.quality_assessor"
     ],
     "TestMaster/testmaster/intelligence/documentation/generators/docstring_generator.py": [
       "ast",
       "re",
       "logging",
       "typing",
-      "pathlib"
+      "pathlib",
+      "core.quality_assessor"
     ],
     "TestMaster/testmaster/intelligence/documentation/generators/readme_generator.py": [
       "logging",
       "pathlib",
       "typing",
-      "dataclasses"
+      "dataclasses",
+      "core.quality_assessor"
     ],
     "TestMaster/testmaster/intelligence/documentation/generators/tutorial_generator.py": [
       "ast",
@@ -79431,7 +78619,8 @@
       "typing",
       "dataclasses",
       "datetime",
-      "asyncio"
+      "asyncio",
+      "core.quality_assessor"
     ],
     "TestMaster/testmaster/intelligence/documentation/integrations/ci_cd_integration.py": [
       "os",
@@ -79439,7 +78628,8 @@
       "typing",
       "pathlib",
       "dataclasses",
-      "enum"
+      "enum",
+      "quality.doc_validator"
     ],
     "TestMaster/testmaster/intelligence/documentation/integrations/git_integration.py": [
       "re",
@@ -79465,19 +78655,6 @@
       "dataclasses",
       "enum",
       "re"
-    ],
-    "TestMaster/testmaster/intelligence/documentation/templates/template_engine.py": [
-      "re",
-      "pathlib",
-      "typing",
-      "dataclasses",
-      "enum",
-      "abc",
-      "jinja2",
-      "pystache"
-    ],
-    "TestMaster/testmaster/intelligence/documentation/templates/__init__.py": [
-      "api_templates"
     ],
     "TestMaster/testmaster/intelligence/documentation/templates/api/base.py": [
       "typing",
@@ -79508,11 +78685,6 @@
       "hashlib"
     ],
     "TestMaster/testmaster/intelligence/documentation/templates/api/websocket_templates.py": [
-      "typing"
-    ],
-    "TestMaster/testmaster/intelligence/documentation/templates/readme_template_modules/data_models.py": [
-      "dataclasses",
-      "enum",
       "typing"
     ],
     "TestMaster/testmaster/intelligence/documentation/templates/readme_template_modules/generic_templates.py": [
@@ -79555,7 +78727,8 @@
       "dataclasses",
       "datetime",
       "pathlib",
-      "classical_analysis.analysis_orchestrator"
+      "classical_analysis.analysis_orchestrator",
+      "documentation.quality.doc_validator"
     ],
     "TestMaster/testmaster/intelligence/integration/coordination/analysis_coordinator.py": [
       "asyncio",
@@ -79708,17 +78881,6 @@
       "dataclasses",
       "math",
       "re"
-    ],
-    "TestMaster/testmaster/intelligence/security/security_intelligence_agent.py": [
-      "re",
-      "time",
-      "dataclasses",
-      "typing",
-      "enum",
-      "pathlib",
-      "datetime",
-      "hierarchical_planning",
-      "consensus"
     ],
     "TestMaster/testmaster/intelligence/tree_of_thought/test_thought_generator.py": [
       "dataclasses",
@@ -79966,29 +79128,6 @@
       "typing",
       "dataclasses",
       "enum"
-    ],
-    "TestMaster/testmaster/security/compliance_framework.py": [
-      "dataclasses",
-      "typing",
-      "enum",
-      "datetime",
-      "re"
-    ],
-    "TestMaster/testmaster/security/security_test_generator.py": [
-      "dataclasses",
-      "typing",
-      "enum",
-      "datetime"
-    ],
-    "TestMaster/testmaster/security/universal_scanner.py": [
-      "dataclasses",
-      "typing",
-      "enum",
-      "re",
-      "hashlib",
-      "datetime",
-      "pathlib",
-      "fnmatch"
     ],
     "TestMaster/testmaster/streaming/collaborative_generator.py": [
       "threading",
@@ -80700,9 +79839,6 @@
       "collections",
       "typing"
     ],
-    "web/dashboard_modules/security/security_dashboard.py": [
-      "datetime"
-    ],
     "web/dashboard_modules/services/agent_x_integration_bridge.py": [
       "asyncio",
       "logging",
@@ -81275,14 +80411,6 @@
       "enum",
       "collections"
     ],
-    "web/dashboard_modules/specialized/atoms/security_dashboard_ui.py": [
-      "datetime",
-      "typing"
-    ],
-    "web/dashboard_modules/specialized/atoms/security_visualizations.py": [
-      "datetime",
-      "typing"
-    ],
     "web/dashboard_modules/specialized/atoms/service_frontend_bridge.py": [
       "asyncio",
       "time",
@@ -81380,13 +80508,6 @@
     "_misc_non_frontend/analysis/quality_analyzer.py": [
       "re",
       "math",
-      "os",
-      "pathlib",
-      "typing",
-      "collections"
-    ],
-    "_misc_non_frontend/analysis/security_analyzer.py": [
-      "re",
       "os",
       "pathlib",
       "typing",
@@ -81554,22 +80675,6 @@
       "dataclasses",
       "enum"
     ],
-    "_misc_non_frontend/ml/extracted_features_temp/security/vulnerability_scanner.py": [
-      "re",
-      "logging",
-      "typing",
-      "dataclasses",
-      "enum",
-      "datetime"
-    ],
-    "_misc_non_frontend/ml/extracted_features_temp/security/websocket_security_stream.py": [
-      "asyncio",
-      "websockets",
-      "uuid",
-      "logging",
-      "typing",
-      "datetime"
-    ],
     "_misc_non_frontend/processing/dashboard/advanced_predictive_analytics.py": [
       "logging",
       "numpy",
@@ -81644,35 +80749,35 @@
     ],
     [
       "typing",
-      2474
+      2377
     ],
     [
       "datetime",
-      2006
+      1931
     ],
     [
       "dataclasses",
-      1631
+      1554
     ],
     [
       "logging",
-      1506
+      1422
     ],
     [
       "time",
-      1371
+      1335
     ],
     [
       "pathlib",
-      1226
+      1180
     ],
     [
       "enum",
-      1143
+      1085
     ],
     [
       "collections",
-      1062
+      1049
     ],
     [
       "react",
@@ -81680,43 +80785,43 @@
     ],
     [
       "asyncio",
-      926
+      908
     ],
     [
       "threading",
-      863
+      840
     ],
     [
       "os",
-      843
+      811
     ],
     [
       "sys",
-      554
+      549
     ],
     [
       "phaser",
       534
     ],
     [
-      "re",
-      514
-    ],
-    [
       "selector",
       485
     ],
     [
+      "re",
+      474
+    ],
+    [
       "ast",
-      477
+      463
     ],
     [
       "hashlib",
-      453
+      417
     ],
     [
       "uuid",
-      435
+      417
     ],
     [
       "@/lib/utils",
@@ -81740,19 +80845,19 @@
     ],
     [
       "futures",
-      304
-    ],
-    [
-      "flask",
-      303
+      300
     ],
     [
       "statistics",
-      293
+      292
+    ],
+    [
+      "flask",
+      291
     ],
     [
       "psutil",
-      233
+      232
     ],
     [
       "hugeicons-react",
@@ -81767,16 +80872,16 @@
       193
     ],
     [
-      "sqlite3",
-      184
-    ],
-    [
       "@angular/core",
       182
     ],
     [
+      "sqlite3",
+      174
+    ],
+    [
       "subprocess",
-      177
+      174
     ],
     [
       "@/components/ui/button",
@@ -81788,11 +80893,11 @@
     ],
     [
       "requests",
-      151
+      150
     ],
     [
       "abc",
-      142
+      140
     ],
     [
       "mock",
@@ -81816,7 +80921,7 @@
     ],
     [
       "math",
-      118
+      117
     ],
     [
       "@angular/core/testing",
@@ -81836,7 +80941,7 @@
     ],
     [
       "tempfile",
-      101
+      100
     ]
   ]
 }
