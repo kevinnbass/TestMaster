@@ -83,6 +83,10 @@ class Categorizer:
             return CategoryDecision(category="utilities", confidence=0.1, reasons=["no-rules"])
 
         best = max(scores.items(), key=lambda x: x[1][0])
-        return CategoryDecision(category=best[0], confidence=best[1][0], reasons=best[1][1])
+        best_cat, (best_score, best_reasons) = best
+        # Fallback to utilities if classification confidence is too low
+        if best_score < 0.25:
+            return CategoryDecision(category="utilities", confidence=best_score, reasons=["low-score"] + best_reasons)
+        return CategoryDecision(category=best_cat, confidence=best_score, reasons=best_reasons)
 
 

@@ -14,13 +14,24 @@
       "archive",
       "dist",
       "build",
-      "PRODUCTION_PACKAGES"
+      "PRODUCTION_PACKAGES",
+      "research_repos"
+    ],
+    "directory_globs": [
+      "*BACKUP*",
+      "*_BACKUP_*",
+      "TestMaster_BACKUP_*"
+    ],
+    "exclude_paths": [
+      "tools/codebase_reorganizer",
+      "tools/clean_reorganizer"
     ],
     "file_globs": [
       "*.pyc",
       "*.pyo",
       "*.log",
-      "*.tmp"
+      "*.tmp",
+      "*.bak"
     ],
     "tests": [
       "tests",
@@ -28,16 +39,65 @@
       "testmaster_sessions"
     ]
   },
+  "include_extensions": [
+    ".py", ".md", ".ps1", ".bat", ".cmd", ".sh", ".ipynb",
+    ".json", ".yaml", ".yml", ".toml", ".ini",
+    ".csv", ".tsv", ".db", ".sqlite", ".parquet", ".sql",
+    ".log", ".txt",
+    ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp",
+    ".ttf", ".woff", ".woff2",
+    ".js", ".ts", ".tsx", ".jsx", ".html", ".css", ".scss"
+  ],
   "categories": {
+    "frontend": {
+      "keywords": ["frontend", "ui", "component", "react", "dashboard", "widget"],
+      "class_patterns": [".*Component.*", ".*Widget.*"],
+      "path_patterns": [".*frontend.*", ".*python_ui.*", ".*ui.*"]
+    },
+    "scripts": {
+      "keywords": ["script", "debug", "dev", "utility", "tool", "ops"],
+      "class_patterns": [],
+      "path_patterns": [".*scripts.*", ".*tools.*", ".*bin.*", ".*\\.(ps1|bat|cmd|sh)$"]
+    },
+    "notebooks": {
+      "keywords": ["notebook", "analysis", "exploration"],
+      "class_patterns": [],
+      "path_patterns": [".*\\.ipynb$"]
+    },
+    "data": {
+      "keywords": ["data", "dataset", "export", "import"],
+      "class_patterns": [],
+      "path_patterns": [".*\\.(csv|tsv|json|yaml|yml|toml|ini|db|sqlite|parquet)$"]
+    },
+    "assets": {
+      "keywords": ["asset", "image", "font", "icon"],
+      "class_patterns": [],
+      "path_patterns": [".*\\.(png|jpe?g|gif|svg|ico|webp|ttf|woff2?)$"]
+    },
+    "logs": {
+      "keywords": ["log", "logs"],
+      "class_patterns": [],
+      "path_patterns": [".*\\.log$"]
+    },
+    "backups": {
+      "keywords": ["backup", "bak"],
+      "class_patterns": [],
+      "path_patterns": [".*BACKUP.*", ".*\\.bak$"]
+    },
+    "sandbox": {
+      "keywords": ["sandbox", "experimental", "autonomous", "prototype"],
+      "class_patterns": [],
+      "path_patterns": [".*autonomous_sandbox.*", ".*sandbox.*"]
+    },
     "core/intelligence": {
       "keywords": ["intelligence", "ml", "ai", "neural", "predictive", "nlp", "llm", "embedding", "vector", "semantic"],
       "class_patterns": [".*Intelligence.*", ".*ML.*", ".*AI.*", ".*Neural.*"],
       "path_patterns": [".*intelligence.*", ".*ml.*", ".*ai.*", ".*neural.*"]
     },
     "core/orchestration": {
-      "keywords": ["orchestrator", "orchestration", "coordinator", "workflow", "agent", "swarm"],
-      "class_patterns": [".*Orchestrator.*", ".*Coordinator.*", ".*Agent.*"],
-      "path_patterns": [".*orchestrat.*", ".*workflow.*", ".*agent.*", ".*swarm.*"]
+      "keywords": ["orchestrator", "orchestration", "coordinator", "workflow", "agent", "swarm", "scheduler", "router", "dispatcher", "pipeline", "executor"],
+      "class_patterns": [".*Orchestrator.*", ".*Coordinator.*", ".*Agent.*", ".*Scheduler.*", ".*Router.*"],
+      "path_patterns": [".*orchestrat.*", ".*workflow.*", ".*agent.*", ".*swarm.*", ".*schedule.*", ".*router.*", ".*pipeline.*"]
     },
     "core/security": {
       "keywords": ["security", "auth", "encrypt", "decrypt", "vulnerability", "audit", "compliance"],
@@ -45,9 +105,9 @@
       "path_patterns": [".*security.*", ".*auth.*", ".*audit.*", ".*compliance.*"]
     },
     "monitoring": {
-      "keywords": ["monitor", "dashboard", "metric", "alert", "logging"],
-      "class_patterns": [".*Monitor.*", ".*Dashboard.*", ".*Metric.*"],
-      "path_patterns": [".*monitor.*", ".*dashboard.*", ".*metric.*", ".*log.*"]
+      "keywords": ["monitor", "dashboard", "metric", "alert", "logging", "telemetry", "tracing", "observability", "analytics", "reporting"],
+      "class_patterns": [".*Monitor.*", ".*Dashboard.*", ".*Metric.*", ".*Telemetry.*", ".*Analytics.*"],
+      "path_patterns": [".*monitor.*", ".*dashboard.*", ".*metric.*", ".*log(?!o).*", ".*telemetry.*", ".*trace.*", ".*analytics.*"]
     },
     "testing": {
       "keywords": ["test", "spec", "mock", "fixture", "assert"],
@@ -57,7 +117,7 @@
     "documentation": {
       "keywords": ["readme", "doc", "guide", "tutorial", "howto"],
       "class_patterns": [],
-      "path_patterns": [".*readme.*", ".*doc.*", ".*guide.*"]
+      "path_patterns": [".*readme.*", ".*doc.*", ".*guide.*", ".*\\.(md|txt)$"]
     },
     "configuration": {
       "keywords": ["config", "setting", "env", "variable", "constant", "toml", "yaml", "json", "ini"],
@@ -70,16 +130,43 @@
       "path_patterns": [".*util.*", ".*helper.*", ".*common.*", ".*shared.*"]
     }
   },
+  "subcategories": {
+    "core/orchestration": [
+      { "name": "agents", "keywords": ["agent", "agents", "coordinator"], "path_patterns": [".*agents?.*"], "extensions": [] },
+      { "name": "workflows", "keywords": ["workflow", "pipeline"], "path_patterns": [".*workflow.*", ".*pipeline.*"], "extensions": [] },
+      { "name": "executors", "keywords": ["executor", "runner", "scheduler"], "path_patterns": [".*executor.*", ".*schedule.*"], "extensions": [] }
+    ],
+    "testing": [
+      { "name": "unit", "keywords": ["unit"], "path_patterns": [".*unit.*", ".*\\btest_.*"], "extensions": [".py"] },
+      { "name": "integration", "keywords": ["integration"], "path_patterns": [".*integration.*"], "extensions": [".py"] },
+      { "name": "performance", "keywords": ["perf", "performance"], "path_patterns": [".*perf.*", ".*performance.*"], "extensions": [] }
+    ],
+    "frontend": [
+      { "name": "python_ui", "keywords": ["python_ui", "ui", "widget", "component"], "path_patterns": [".*python_ui.*", ".*ui.*", ".*atoms.*"], "extensions": [".py"] },
+      { "name": "web", "keywords": ["web", "http"], "path_patterns": [".*web.*"], "extensions": [".js", ".ts", ".tsx", ".jsx", ".html", ".css", ".scss"] },
+      { "name": "assets", "keywords": ["asset", "image", "font", "icon"], "path_patterns": [], "extensions": [".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp", ".ttf", ".woff", ".woff2"] }
+    ],
+    "documentation": [
+      { "name": "content", "keywords": ["readme", "doc", "guide", "report", "changelog"], "path_patterns": [".*readme.*", ".*doc.*", ".*guide.*"], "extensions": [".md", ".txt"] },
+      { "name": "tooling", "keywords": ["doc", "documentation", "server", "builder", "lint"], "path_patterns": [".*documentation.*"], "extensions": [".py", ".ps1", ".sh"] },
+      { "name": "assets", "keywords": ["image", "font", "diagram"], "path_patterns": [], "extensions": [".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp", ".ttf", ".woff", ".woff2"] }
+    ],
+    "data": [
+      { "name": "sql", "keywords": ["sql", "migrate", "migration"], "path_patterns": [".*migration.*", ".*migrations.*"], "extensions": [".sql"] }
+    ]
+  },
   "operations": {
     "create_backups": true,
     "update_imports": false,
+    "update_web_imports": false,
+    "remove_duplicate_sources": false,
     "validate_after": true,
     "max_file_size_bytes": 10485760,
     "use_symlinks": false
   },
   "bounds": {
-    "max_directories": 5000,
-    "max_files": 20000,
+    "max_directories": 20000,
+    "max_files": 50000,
     "max_lines_per_file": 20000,
     "max_path_length": 32000
   },
