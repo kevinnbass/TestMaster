@@ -1,0 +1,46 @@
+{
+  "service_metadata": {
+    "service_name": "analytics_aggregator",
+    "service_version": "1.0.0",
+    "instance_id": "645bb399-4768-4bc3-96df-b7a0151d4211",
+    "hostname": "KevinPC",
+    "start_time": "2025-08-18T17:25:03.349881"
+  },
+  "events": [
+    {
+      "event_id": "427de503-e01b-410a-81c1-dc9436bfaac5",
+      "timestamp": "2025-08-18T17:25:08.967833",
+      "level": "info",
+      "component": "analytics_aggregator",
+      "operation": "get_comprehensive_analytics",
+      "message": "Starting comprehensive analytics collection",
+      "duration_ms": null,
+      "trace_id": "63cf8e56-d9ff-4c1f-83d5-030faa0c8dfd",
+      "span_id": "0708bbfd-5729-4a66-ac54-c777958c89a7",
+      "parent_span_id": null,
+      "attributes": {},
+      "metrics": {},
+      "error": null,
+      "stack_trace": null
+    },
+    {
+      "event_id": "acffbe27-cd07-40e2-ae88-e413c7a0e763",
+      "timestamp": "2025-08-18T17:25:48.115971",
+      "level": "info",
+      "component": "analytics_aggregator",
+      "operation": "get_comprehensive_analytics",
+      "message": "Comprehensive analytics collection completed",
+      "duration_ms": 39148.13852310181,
+      "trace_id": "63cf8e56-d9ff-4c1f-83d5-030faa0c8dfd",
+      "span_id": "0708bbfd-5729-4a66-ac54-c777958c89a7",
+      "parent_span_id": null,
+      "attributes": {
+        "components_collected": 31,
+        "enhancement_level": "full"
+      },
+      "metrics": {},
+      "error": null,
+      "stack_trace": null
+    }
+  ]
+}

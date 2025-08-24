@@ -1,0 +1,3564 @@
+{
+  "apis": [
+    {
+      "file": "testmaster\\communication\\claude_messenger.py",
+      "type": "api_endpoint",
+      "category": "claude_messenger"
+    },
+    {
+      "file": "testmaster\\communication\\dynamic_handoff.py",
+      "type": "api_endpoint",
+      "category": "dynamic_handoff"
+    },
+    {
+      "file": "testmaster\\core\\workflow_graph.py",
+      "type": "api_endpoint",
+      "category": "workflow_graph"
+    },
+    {
+      "file": "testmaster\\flow_optimizer\\execution_router.py",
+      "type": "api_endpoint",
+      "category": "execution_router"
+    },
+    {
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "type": "api_endpoint",
+      "category": "protocol_communication_bridge"
+    },
+    {
+      "file": "testmaster\\orchestrator\\file_tagger.py",
+      "type": "api_endpoint",
+      "category": "file_tagger"
+    },
+    {
+      "file": "testmaster\\orchestrator\\work_distributor.py",
+      "type": "api_endpoint",
+      "category": "work_distributor"
+    },
+    {
+      "file": "testmaster\\overview\\coverage_intelligence.py",
+      "type": "api_endpoint",
+      "category": "coverage_intelligence"
+    },
+    {
+      "file": "testmaster\\overview\\performance_dashboard.py",
+      "type": "api_endpoint",
+      "category": "performance_dashboard"
+    },
+    {
+      "file": "testmaster\\overview\\structure_mapper.py",
+      "type": "api_endpoint",
+      "category": "structure_mapper"
+    },
+    {
+      "file": "testmaster\\refactoring\\hierarchical_analyzer.py",
+      "type": "api_endpoint",
+      "category": "hierarchical_analyzer"
+    },
+    {
+      "file": "dashboard\\api\\analytics.py",
+      "type": "api_endpoint",
+      "category": "analytics"
+    },
+    {
+      "file": "dashboard\\api\\async_processing.py",
+      "type": "api_endpoint",
+      "category": "async_processing"
+    },
+    {
+      "file": "dashboard\\api\\comprehensive_monitoring.py",
+      "type": "api_endpoint",
+      "category": "comprehensive_monitoring"
+    },
+    {
+      "file": "dashboard\\api\\coverage.py",
+      "type": "api_endpoint",
+      "category": "coverage"
+    },
+    {
+      "file": "dashboard\\api\\flow_optimization.py",
+      "type": "api_endpoint",
+      "category": "flow_optimization"
+    },
+    {
+      "file": "dashboard\\api\\health.py",
+      "type": "api_endpoint",
+      "category": "health"
+    },
+    {
+      "file": "dashboard\\api\\intelligence.py",
+      "type": "api_endpoint",
+      "category": "intelligence"
+    },
+    {
+      "file": "dashboard\\api\\llm.py",
+      "type": "api_endpoint",
+      "category": "llm"
+    },
+    {
+      "file": "dashboard\\api\\monitoring.py",
+      "type": "api_endpoint",
+      "category": "monitoring"
+    },
+    {
+      "file": "dashboard\\api\\performance.py",
+      "type": "api_endpoint",
+      "category": "performance"
+    },
+    {
+      "file": "dashboard\\api\\quality_assurance.py",
+      "type": "api_endpoint",
+      "category": "quality_assurance"
+    },
+    {
+      "file": "dashboard\\api\\real_codebase_scanner.py",
+      "type": "api_endpoint",
+      "category": "real_codebase_scanner"
+    },
+    {
+      "file": "dashboard\\api\\refactor.py",
+      "type": "api_endpoint",
+      "category": "refactor"
+    },
+    {
+      "file": "dashboard\\api\\security.py",
+      "type": "api_endpoint",
+      "category": "security"
+    },
+    {
+      "file": "dashboard\\api\\telemetry.py",
+      "type": "api_endpoint",
+      "category": "telemetry"
+    },
+    {
+      "file": "dashboard\\api\\tests.py",
+      "type": "api_endpoint",
+      "category": "tests"
+    },
+    {
+      "file": "dashboard\\api\\test_generation.py",
+      "type": "api_endpoint",
+      "category": "test_generation"
+    },
+    {
+      "file": "dashboard\\api\\workflow.py",
+      "type": "api_endpoint",
+      "category": "workflow"
+    }
+  ],
+  "intelligence_agents": [
+    {
+      "name": "ContextScope",
+      "file": "testmaster\\intelligence\\bridges\\context_variables_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "ContextType",
+      "file": "testmaster\\intelligence\\bridges\\context_variables_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "ContextAccess",
+      "file": "testmaster\\intelligence\\bridges\\context_variables_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "ContextVariable",
+      "file": "testmaster\\intelligence\\bridges\\context_variables_bridge.py",
+      "methods": [
+        "to_dict"
+      ]
+    },
+    {
+      "name": "ContextNamespace",
+      "file": "testmaster\\intelligence\\bridges\\context_variables_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "ContextOperation",
+      "file": "testmaster\\intelligence\\bridges\\context_variables_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "ContextResolver",
+      "file": "testmaster\\intelligence\\bridges\\context_variables_bridge.py",
+      "methods": [
+        "__init__",
+        "_register_default_functions",
+        "_get_environment_variable",
+        "resolve_variable",
+        "_resolve_collection",
+        "_resolve_reference",
+        "_resolve_template",
+        "_resolve_function",
+        "_resolve_computed",
+        "_resolve_value"
+      ]
+    },
+    {
+      "name": "ContextManager",
+      "file": "testmaster\\intelligence\\bridges\\context_variables_bridge.py",
+      "methods": [
+        "__init__",
+        "_create_default_namespaces",
+        "create_namespace",
+        "set_variable",
+        "get_variable",
+        "_find_variable",
+        "_build_context_map",
+        "_check_access_permission",
+        "_notify_watchers",
+        "add_watcher",
+        "remove_watcher",
+        "cleanup_expired_variables",
+        "get_namespace_variables",
+        "get_manager_metrics"
+      ]
+    },
+    {
+      "name": "ContextVariablesBridge",
+      "file": "testmaster\\intelligence\\bridges\\context_variables_bridge.py",
+      "methods": [
+        "__init__",
+        "_setup_bridge_integrations",
+        "_setup_default_contexts",
+        "_start_background_tasks",
+        "register_component_context",
+        "set_context_variable",
+        "get_context_variable",
+        "create_context_template",
+        "create_computed_variable",
+        "create_function_variable",
+        "watch_context_changes",
+        "get_component_context",
+        "inherit_context",
+        "sync_with_shared_state",
+        "_perform_cross_system_sync",
+        "_optimize_context_cache",
+        "add_context_synchronizer",
+        "create_nested_context",
+        "validate_context_consistency",
+        "get_comprehensive_metrics",
+        "export_context_snapshot",
+        "shutdown"
+      ]
+    },
+    {
+      "name": "EventType",
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "EventSeverity",
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "EventStatus",
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "TestMasterEvent",
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "methods": [
+        "to_dict",
+        "from_dict"
+      ]
+    },
+    {
+      "name": "EventSubscription",
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "EventCorrelation",
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "EventBus",
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "methods": [
+        "__init__",
+        "start_processing",
+        "stop_processing",
+        "_process_events",
+        "publish_event",
+        "_distribute_event",
+        "_matches_subscription",
+        "subscribe",
+        "unsubscribe",
+        "register_publisher",
+        "get_events",
+        "get_metrics"
+      ]
+    },
+    {
+      "name": "EventPersistence",
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "methods": [
+        "__init__",
+        "_initialize_database",
+        "store_event",
+        "retrieve_events",
+        "store_correlation",
+        "cleanup_expired_events",
+        "get_storage_metrics"
+      ]
+    },
+    {
+      "name": "EventCorrelationEngine",
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "methods": [
+        "__init__",
+        "_setup_default_correlation_rules",
+        "add_correlation_rule",
+        "analyze_events",
+        "_detect_error_burst",
+        "_detect_performance_degradation",
+        "_detect_security_incident",
+        "get_correlation_metrics"
+      ]
+    },
+    {
+      "name": "EventMonitoringBridge",
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "methods": [
+        "__init__",
+        "_setup_system_integrations",
+        "subscribe_to_workflow_events",
+        "subscribe_to_performance_events",
+        "subscribe_to_security_events",
+        "_start_correlation_monitoring",
+        "publish_event",
+        "create_alert_event",
+        "enable_cross_system_events",
+        "ingest_external_event",
+        "get_comprehensive_metrics",
+        "optimize_event_system",
+        "shutdown"
+      ]
+    },
+    {
+      "name": "MessageProtocol",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "RoutingStrategy",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "MessagePriority",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "MessageStatus",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "CommunicationChannel",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "AgentMessage",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "MessageResponse",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "MessageBus",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": [
+        "__init__",
+        "create_channel",
+        "send_message",
+        "_find_or_create_channel",
+        "_route_message",
+        "_route_direct",
+        "_route_broadcast",
+        "_route_multicast",
+        "_route_publish_subscribe",
+        "_route_load_balanced",
+        "_route_priority_based",
+        "receive_message",
+        "subscribe",
+        "unsubscribe",
+        "get_metrics"
+      ]
+    },
+    {
+      "name": "MessageRouter",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": [
+        "__init__",
+        "add_routing_rule",
+        "route_with_intelligence",
+        "optimize_routing",
+        "get_routing_metrics"
+      ]
+    },
+    {
+      "name": "AgentCommunicator",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": [
+        "__init__",
+        "create_channel",
+        "send_message",
+        "receive_messages",
+        "register_handler",
+        "subscribe",
+        "broadcast",
+        "request_response",
+        "get_communication_metrics"
+      ]
+    },
+    {
+      "name": "ProtocolCommunicationBridge",
+      "file": "testmaster\\intelligence\\bridges\\protocol_communication_bridge.py",
+      "methods": [
+        "__init__",
+        "_setup_default_routing_rules",
+        "_route_high_priority",
+        "_route_consensus_message",
+        "_route_monitoring_message",
+        "_initialize_system_channels",
+        "register_agent",
+        "authenticate_agent",
+        "send_system_message",
+        "enable_cross_system_messaging",
+        "_translate_message",
+        "optimize_communication",
+        "get_comprehensive_metrics",
+        "shutdown"
+      ]
+    },
+    {
+      "name": "SessionStatus",
+      "file": "testmaster\\intelligence\\bridges\\session_tracking_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SessionType",
+      "file": "testmaster\\intelligence\\bridges\\session_tracking_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "StateScope",
+      "file": "testmaster\\intelligence\\bridges\\session_tracking_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SessionMetadata",
+      "file": "testmaster\\intelligence\\bridges\\session_tracking_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SessionState",
+      "file": "testmaster\\intelligence\\bridges\\session_tracking_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SessionCheckpoint",
+      "file": "testmaster\\intelligence\\bridges\\session_tracking_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SessionAnalytics",
+      "file": "testmaster\\intelligence\\bridges\\session_tracking_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SessionManager",
+      "file": "testmaster\\intelligence\\bridges\\session_tracking_bridge.py",
+      "methods": [
+        "__init__",
+        "_initialize_storage",
+        "create_session",
+        "get_session",
+        "update_session_status",
+        "set_session_state",
+        "get_session_state",
+        "create_checkpoint",
+        "restore_from_checkpoint",
+        "close_session",
+        "_calculate_performance_score",
+        "_persist_session_metadata",
+        "_load_session_metadata",
+        "_persist_session_state",
+        "_load_session_state",
+        "_persist_checkpoint",
+        "_load_latest_checkpoint",
+        "_archive_session",
+        "get_session_metrics"
+      ]
+    },
+    {
+      "name": "SessionTrackingBridge",
+      "file": "testmaster\\intelligence\\bridges\\session_tracking_bridge.py",
+      "methods": [
+        "__init__",
+        "_setup_session_integrations",
+        "_start_background_tasks",
+        "start_session",
+        "save_component_state",
+        "load_component_state",
+        "create_session_checkpoint",
+        "resume_session",
+        "end_session",
+        "subscribe_to_session_events",
+        "_notify_session_event",
+        "_process_auto_checkpoints",
+        "_cleanup_expired_sessions",
+        "_update_session_analytics",
+        "get_session_info",
+        "get_comprehensive_metrics",
+        "optimize_session_storage",
+        "shutdown"
+      ]
+    },
+    {
+      "name": "SOPType",
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SOPComplexity",
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SOPStatus",
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SOPStep",
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SOPTemplate",
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "methods": [
+        "to_dict"
+      ]
+    },
+    {
+      "name": "SOPExecution",
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SOPPattern",
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "SOPPatternMatcher",
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "methods": [
+        "__init__",
+        "_initialize_common_patterns",
+        "detect_patterns",
+        "_matches_pattern",
+        "_calculate_pattern_confidence",
+        "_calculate_sequence_similarity",
+        "_calculate_parameter_similarity",
+        "_extract_common_parameters",
+        "_extract_success_indicators",
+        "recommend_reuse"
+      ]
+    },
+    {
+      "name": "SOPDAGConverter",
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "methods": [
+        "__init__",
+        "_register_default_tasks",
+        "convert_sop_to_dag",
+        "_create_task_from_step",
+        "_setup_parallel_groups",
+        "_default_task_function",
+        "_analyze_code_task",
+        "_generate_tests_task",
+        "_validate_tests_task",
+        "_fix_imports_task",
+        "_vulnerability_scan_task",
+        "_dependency_check_task",
+        "_performance_analysis_task",
+        "_deployment_check_task"
+      ]
+    },
+    {
+      "name": "SOPWorkflowBridge",
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "methods": [
+        "__init__",
+        "_load_existing_sops",
+        "_setup_bridge_integrations",
+        "create_sop_template",
+        "execute_sop",
+        "_execute_dag_simulation",
+        "_update_sop_analytics",
+        "get_sop_recommendations",
+        "optimize_sop_patterns",
+        "_optimize_sop_template",
+        "_persist_sop_template",
+        "get_execution_status",
+        "get_comprehensive_metrics",
+        "shutdown"
+      ]
+    },
+    {
+      "name": "AgentRole",
+      "file": "testmaster\\intelligence\\consensus\\agent_coordination.py",
+      "methods": []
+    },
+    {
+      "name": "CoordinationStatus",
+      "file": "testmaster\\intelligence\\consensus\\agent_coordination.py",
+      "methods": []
+    },
+    {
+      "name": "AgentInfo",
+      "file": "testmaster\\intelligence\\consensus\\agent_coordination.py",
+      "methods": []
+    },
+    {
+      "name": "CoordinationConfig",
+      "file": "testmaster\\intelligence\\consensus\\agent_coordination.py",
+      "methods": []
+    },
+    {
+      "name": "CoordinationTask",
+      "file": "testmaster\\intelligence\\consensus\\agent_coordination.py",
+      "methods": []
+    },
+    {
+      "name": "AgentCoordinator",
+      "file": "testmaster\\intelligence\\consensus\\agent_coordination.py",
+      "methods": [
+        "__init__",
+        "register_agent",
+        "unregister_agent",
+        "create_coordination_task",
+        "submit_vote",
+        "get_coordination_result",
+        "_check_and_process_consensus",
+        "_process_consensus",
+        "_select_consensus_strategy",
+        "_update_agent_performance",
+        "get_coordination_stats",
+        "cleanup_expired_tasks"
+      ]
+    },
+    {
+      "name": "VotingMethod",
+      "file": "testmaster\\intelligence\\consensus\\consensus_engine.py",
+      "methods": []
+    },
+    {
+      "name": "ConsensusStrategy",
+      "file": "testmaster\\intelligence\\consensus\\consensus_engine.py",
+      "methods": []
+    },
+    {
+      "name": "AgentVote",
+      "file": "testmaster\\intelligence\\consensus\\consensus_engine.py",
+      "methods": []
+    },
+    {
+      "name": "ConsensusResult",
+      "file": "testmaster\\intelligence\\consensus\\consensus_engine.py",
+      "methods": []
+    },
+    {
+      "name": "ConsensusEngine",
+      "file": "testmaster\\intelligence\\consensus\\consensus_engine.py",
+      "methods": [
+        "__init__",
+        "reach_consensus",
+        "_first_past_post_consensus",
+        "_weighted_average_consensus",
+        "_median_consensus",
+        "_iterative_consensus",
+        "_byzantine_fault_tolerant_consensus",
+        "_simulate_agent_adjustment",
+        "_parse_choice",
+        "get_consensus_stats",
+        "_get_strategy_usage_stats"
+      ]
+    },
+    {
+      "name": "MessageRole",
+      "file": "testmaster\\intelligence\\llm_providers\\universal_llm_provider.py",
+      "methods": []
+    },
+    {
+      "name": "ProviderType",
+      "file": "testmaster\\intelligence\\llm_providers\\universal_llm_provider.py",
+      "methods": []
+    },
+    {
+      "name": "LLMMessage",
+      "file": "testmaster\\intelligence\\llm_providers\\universal_llm_provider.py",
+      "methods": [
+        "to_dict",
+        "from_dict"
+      ]
+    },
+    {
+      "name": "LLMResponse",
+      "file": "testmaster\\intelligence\\llm_providers\\universal_llm_provider.py",
+      "methods": [
+        "to_dict"
+      ]
+    },
+    {
+      "name": "LLMProviderConfig",
+      "file": "testmaster\\intelligence\\llm_providers\\universal_llm_provider.py",
+      "methods": [
+        "to_dict"
+      ]
+    },
+    {
+      "name": "UniversalLLMProvider",
+      "file": "testmaster\\intelligence\\llm_providers\\universal_llm_provider.py",
+      "methods": [
+        "__init__",
+        "generate_sync",
+        "validate_request",
+        "_check_rate_limits",
+        "_estimate_tokens",
+        "_estimate_cost",
+        "_record_request",
+        "get_metrics",
+        "reset_metrics"
+      ]
+    },
+    {
+      "name": "LLMProviderManager",
+      "file": "testmaster\\intelligence\\llm_providers\\universal_llm_provider.py",
+      "methods": [
+        "__init__",
+        "register_provider",
+        "set_fallback_order",
+        "generate_sync",
+        "_get_provider_order",
+        "get_provider_metrics",
+        "get_best_provider",
+        "optimize_provider_selection",
+        "health_check"
+      ]
+    },
+    {
+      "name": "BridgeMode",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "BridgeConfiguration",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "UnifiedResourceDecision",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_bridge.py",
+      "methods": []
+    },
+    {
+      "name": "AdaptiveResourceBridge",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_bridge.py",
+      "methods": [
+        "__init__",
+        "_initialize_resource_sync",
+        "_start_sync_thread",
+        "_sync_worker",
+        "_perform_sync",
+        "_sync_predictions",
+        "_perform_cross_optimization",
+        "_suggest_pool_optimization",
+        "make_unified_decision",
+        "_get_agent_decision",
+        "_get_optimizer_decision",
+        "_combine_decisions",
+        "_create_hybrid_decision",
+        "_create_consensus_decision",
+        "_create_agent_only_decision",
+        "_create_optimizer_only_decision",
+        "_update_consensus_history",
+        "get_bridge_metrics",
+        "optimize_bridge_configuration",
+        "shutdown"
+      ]
+    },
+    {
+      "name": "ScalingDirection",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "methods": []
+    },
+    {
+      "name": "ScalingTrigger",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "methods": []
+    },
+    {
+      "name": "ResourceStrategy",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "methods": []
+    },
+    {
+      "name": "ResourceMetrics",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "methods": []
+    },
+    {
+      "name": "ScalingDecision",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "methods": []
+    },
+    {
+      "name": "ResourcePrediction",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "methods": []
+    },
+    {
+      "name": "AdaptiveConfiguration",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "methods": []
+    },
+    {
+      "name": "ResourcePredictor",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "methods": [
+        "__init__",
+        "add_observation",
+        "predict_demand",
+        "_calculate_time_based_prediction",
+        "_calculate_trend_adjustment",
+        "_calculate_prediction_confidence",
+        "_identify_prediction_factors",
+        "_get_historical_accuracy",
+        "update_prediction_accuracy"
+      ]
+    },
+    {
+      "name": "ResourceScaler",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "methods": [
+        "__init__",
+        "can_scale",
+        "execute_scaling",
+        "_scale_up_resource",
+        "_scale_down_resource",
+        "_store_scaling_result"
+      ]
+    },
+    {
+      "name": "AdaptiveResourceManagementAgent",
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "methods": [
+        "__init__",
+        "start_adaptive_management",
+        "stop_adaptive_management",
+        "_management_loop",
+        "_collect_resource_metrics",
+        "_get_historical_utilization",
+        "_calculate_resource_efficiency",
+        "_calculate_cost_per_hour",
+        "_calculate_performance_impact",
+        "_update_predictor",
+        "_analyze_and_decide",
+        "_analyze_resource_scaling_need",
+        "_estimate_cost_impact",
+        "_estimate_performance_impact",
+        "_calculate_execution_priority",
+        "_coordinate_scaling_consensus",
+        "_execute_scaling_decisions",
+        "get_resource_status",
+        "generate_resource_optimization_report",
+        "_generate_optimization_recommendations"
+      ]
+    },
+    {
+      "name": "BottleneckType",
+      "file": "testmaster\\intelligence\\monitoring\\bottleneck_detection_resolution_agent.py",
+      "methods": []
+    },
+    {
+      "name": "ResolutionStrategy",
+      "file": "testmaster\\intelligence\\monitoring\\bottleneck_detection_resolution_agent.py",
+      "methods": []
+    },
+    {
+      "name": "BottleneckSeverity",
+      "file": "testmaster\\intelligence\\monitoring\\bottleneck_detection_resolution_agent.py",
+      "methods": []
+    },
+    {
+      "name": "BottleneckDetection",
+      "file": "testmaster\\intelligence\\monitoring\\bottleneck_detection_resolution_agent.py",
+      "methods": []
+    },
+    {
+      "name": "ResolutionAction",
+      "file": "testmaster\\intelligence\\monitoring\\bottleneck_detection_resolution_agent.py",
+      "methods": []
+    },
+    {
+      "name": "BottleneckResolution",
+      "file": "testmaster\\intelligence\\monitoring\\bottleneck_detection_resolution_agent.py",
+      "methods": []
+    },
+    {
+      "name": "BottleneckDetector",
+      "file": "testmaster\\intelligence\\monitoring\\bottleneck_detection_resolution_agent.py",
+      "methods": [
+        "__init__",
+        "detect_bottlenecks",
+        "_get_flow_analysis_data",
+        "_get_dependency_data",
+        "_get_sample_tasks",
+        "_detect_dependency_bottlenecks",
+        "_detect_resource_bottlenecks",
+        "_detect_serialization_bottlenecks",
+        "_detect_hotspot_bottlenecks",
+        "_detect_queue_bottlenecks",
+        "_get_queue_metrics",
+        "_calculate_severity"
+      ]
+    },
+    {
+      "name": "BottleneckResolver",
+      "file": "testmaster\\intelligence\\monitoring\\bottleneck_detection_resolution_agent.py",
+      "methods": [
+        "__init__",
+        "_initialize_resolution_strategies",
+        "generate_resolution_plan",
+        "_create_resolution_action",
+        "_create_fallback_action",
+        "_calculate_resolution_priority",
+        "_generate_implementation_plan",
+        "_define_success_metrics",
+        "_assess_risks"
+      ]
+    },
+    {
+      "name": "BottleneckDetectionResolutionAgent",
+      "file": "testmaster\\intelligence\\monitoring\\bottleneck_detection_resolution_agent.py",
+      "methods": [
+        "__init__",
+        "analyze_and_resolve_bottlenecks",
+        "execute_resolution",
+        "_coordinate_resolution_consensus",
+        "_store_analysis_results",
+        "_bottleneck_to_dict",
+        "_resolution_to_dict",
+        "_generate_recommendations",
+        "get_agent_status"
+      ]
+    },
+    {
+      "name": "MonitoringScope",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": []
+    },
+    {
+      "name": "AlertSeverity",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": []
+    },
+    {
+      "name": "PerformanceMetricType",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": []
+    },
+    {
+      "name": "PerformanceThreshold",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": []
+    },
+    {
+      "name": "PerformanceAlert",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": []
+    },
+    {
+      "name": "WorkflowMetrics",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": []
+    },
+    {
+      "name": "MonitoringConfiguration",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": []
+    },
+    {
+      "name": "PerformanceDataCollector",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": [
+        "__init__",
+        "collect_workflow_metrics",
+        "_get_legacy_execution_data",
+        "_collect_telemetry_stats",
+        "_calculate_performance_score"
+      ]
+    },
+    {
+      "name": "ThresholdManager",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": [
+        "__init__",
+        "_initialize_default_thresholds",
+        "update_baselines",
+        "_update_adaptive_thresholds",
+        "get_thresholds",
+        "check_threshold_breach",
+        "_exceeds_threshold"
+      ]
+    },
+    {
+      "name": "AlertManager",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": [
+        "__init__",
+        "create_alert",
+        "resolve_alert",
+        "get_active_alerts",
+        "get_alert_summary"
+      ]
+    },
+    {
+      "name": "WorkflowPerformanceMonitorAgent",
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "methods": [
+        "__init__",
+        "start_monitoring",
+        "stop_monitoring",
+        "_monitoring_loop",
+        "_monitor_workflow",
+        "_check_and_create_alerts",
+        "_store_metrics",
+        "_coordinate_performance_consensus",
+        "get_monitoring_status",
+        "get_workflow_performance_report",
+        "_generate_performance_recommendations"
+      ]
+    },
+    {
+      "name": "OptimizationObjective",
+      "file": "testmaster\\intelligence\\optimization\\multi_objective_optimization_agent.py",
+      "methods": []
+    },
+    {
+      "name": "OptimizationStrategy",
+      "file": "testmaster\\intelligence\\optimization\\multi_objective_optimization_agent.py",
+      "methods": []
+    },
+    {
+      "name": "ObjectiveWeights",
+      "file": "testmaster\\intelligence\\optimization\\multi_objective_optimization_agent.py",
+      "methods": [
+        "normalize"
+      ]
+    },
+    {
+      "name": "OptimizationCandidate",
+      "file": "testmaster\\intelligence\\optimization\\multi_objective_optimization_agent.py",
+      "methods": []
+    },
+    {
+      "name": "OptimizationResult",
+      "file": "testmaster\\intelligence\\optimization\\multi_objective_optimization_agent.py",
+      "methods": []
+    },
+    {
+      "name": "MultiObjectiveOptimizer",
+      "file": "testmaster\\intelligence\\optimization\\multi_objective_optimization_agent.py",
+      "methods": [
+        "__init__",
+        "optimize",
+        "_initialize_population",
+        "_evaluate_population",
+        "_evaluate_candidate",
+        "_evaluate_coverage",
+        "_evaluate_performance",
+        "_evaluate_security",
+        "_evaluate_maintainability",
+        "_evaluate_resource_efficiency",
+        "_evaluate_execution_speed",
+        "_evaluate_reliability",
+        "_evaluate_comprehensiveness",
+        "_nsga_ii_step",
+        "_calculate_pareto_ranks",
+        "_dominates",
+        "_calculate_crowding_distances",
+        "_tournament_selection",
+        "_crossover",
+        "_mutate",
+        "_nsga_ii_selection",
+        "_pareto_optimization_step",
+        "_weighted_sum_step",
+        "_evolutionary_step",
+        "_generate_random_solution",
+        "_calculate_diversity"
+      ]
+    },
+    {
+      "name": "OptimizationPlanGenerator",
+      "file": "testmaster\\intelligence\\optimization\\multi_objective_optimization_agent.py",
+      "methods": [
+        "__init__",
+        "generate",
+        "_create_base_solutions"
+      ]
+    },
+    {
+      "name": "OptimizationPlanEvaluator",
+      "file": "testmaster\\intelligence\\optimization\\multi_objective_optimization_agent.py",
+      "methods": [
+        "__init__",
+        "evaluate"
+      ]
+    },
+    {
+      "name": "MultiObjectiveOptimizationAgent",
+      "file": "testmaster\\intelligence\\optimization\\multi_objective_optimization_agent.py",
+      "methods": [
+        "__init__",
+        "optimize_test_generation",
+        "_generate_optimization_plan",
+        "_create_fallback_optimization_plan",
+        "_coordinate_optimization_consensus",
+        "_generate_optimization_recommendations"
+      ]
+    },
+    {
+      "name": "NSGAIIOptimizer",
+      "file": "testmaster\\intelligence\\optimization\\optimization_algorithms.py",
+      "methods": [
+        "__init__",
+        "_environmental_selection",
+        "_fast_non_dominated_sort",
+        "_calculate_crowding_distance"
+      ]
+    },
+    {
+      "name": "MOEADOptimizer",
+      "file": "testmaster\\intelligence\\optimization\\optimization_algorithms.py",
+      "methods": [
+        "__init__",
+        "_generate_weight_vectors",
+        "_define_neighborhoods",
+        "_initialize_reference_point",
+        "_tchebycheff_scalarization"
+      ]
+    },
+    {
+      "name": "ParticleSwarmOptimizer",
+      "file": "testmaster\\intelligence\\optimization\\optimization_algorithms.py",
+      "methods": [
+        "__init__",
+        "_initialize_population",
+        "_update_particles"
+      ]
+    },
+    {
+      "name": "SimulatedAnnealingOptimizer",
+      "file": "testmaster\\intelligence\\optimization\\optimization_algorithms.py",
+      "methods": [
+        "__init__",
+        "_accept_solution",
+        "_cool_down",
+        "_perturb_solution"
+      ]
+    },
+    {
+      "name": "GeneticAlgorithmOptimizer",
+      "file": "testmaster\\intelligence\\optimization\\optimization_algorithms.py",
+      "methods": [
+        "__init__",
+        "_crossover",
+        "_two_point_crossover",
+        "_uniform_crossover",
+        "_mutation",
+        "_gaussian_mutation",
+        "_uniform_mutation",
+        "_boundary_mutation"
+      ]
+    },
+    {
+      "name": "SecurityTestStrategy",
+      "file": "testmaster\\intelligence\\security\\security_intelligence_agent.py",
+      "methods": []
+    },
+    {
+      "name": "SecurityTestPlan",
+      "file": "testmaster\\intelligence\\security\\security_intelligence_agent.py",
+      "methods": []
+    },
+    {
+      "name": "SecurityFinding",
+      "file": "testmaster\\intelligence\\security\\security_intelligence_agent.py",
+      "methods": []
+    },
+    {
+      "name": "SecurityPlanGenerator",
+      "file": "testmaster\\intelligence\\security\\security_intelligence_agent.py",
+      "methods": [
+        "__init__",
+        "generate",
+        "_analyze_security_context",
+        "_check_vulnerability_pattern",
+        "_assess_severity",
+        "_assess_impact",
+        "_get_remediation",
+        "_determine_security_strategies",
+        "_create_security_plan",
+        "_create_vulnerability_plan",
+        "_create_compliance_plan",
+        "_create_threat_model_plan",
+        "_create_code_review_plan",
+        "_create_default_security_plan",
+        "_generate_test_scenarios"
+      ]
+    },
+    {
+      "name": "SecurityPlanEvaluator",
+      "file": "testmaster\\intelligence\\security\\security_intelligence_agent.py",
+      "methods": [
+        "__init__",
+        "evaluate",
+        "_evaluate_coverage",
+        "_evaluate_detection_capability",
+        "_evaluate_compliance",
+        "_evaluate_feasibility"
+      ]
+    },
+    {
+      "name": "VulnerabilityTestGenerator",
+      "file": "testmaster\\intelligence\\security\\security_intelligence_agent.py",
+      "methods": [
+        "__init__",
+        "generate_vulnerability_tests",
+        "_load_test_templates",
+        "_generate_generic_test"
+      ]
+    },
+    {
+      "name": "OWASPComplianceChecker",
+      "file": "testmaster\\intelligence\\security\\security_intelligence_agent.py",
+      "methods": [
+        "__init__",
+        "check_compliance",
+        "_generate_compliance_recommendations"
+      ]
+    },
+    {
+      "name": "SecurityIntelligenceAgent",
+      "file": "testmaster\\intelligence\\security\\security_intelligence_agent.py",
+      "methods": [
+        "__init__",
+        "analyze_security",
+        "_convert_scan_results",
+        "_generate_security_plan",
+        "_create_fallback_security_plan",
+        "_finding_to_dict",
+        "_get_highest_severity",
+        "_generate_recommendations",
+        "coordinate_security_consensus"
+      ]
+    },
+    {
+      "name": "TestStrategyType",
+      "file": "testmaster\\intelligence\\tree_of_thought\\test_thought_generator.py",
+      "methods": []
+    },
+    {
+      "name": "TestGenerationThought",
+      "file": "testmaster\\intelligence\\tree_of_thought\\test_thought_generator.py",
+      "methods": [
+        "to_dict"
+      ]
+    },
+    {
+      "name": "TestStrategyThought",
+      "file": "testmaster\\intelligence\\tree_of_thought\\test_thought_generator.py",
+      "methods": [
+        "to_dict"
+      ]
+    },
+    {
+      "name": "TestCoverageThought",
+      "file": "testmaster\\intelligence\\tree_of_thought\\test_thought_generator.py",
+      "methods": [
+        "to_dict"
+      ]
+    },
+    {
+      "name": "TestThoughtGenerator",
+      "file": "testmaster\\intelligence\\tree_of_thought\\test_thought_generator.py",
+      "methods": [
+        "__init__",
+        "generate",
+        "_generate_strategy_thoughts",
+        "_generate_test_case_thoughts",
+        "_generate_coverage_thoughts",
+        "_generate_optimization_thoughts",
+        "_generate_happy_path_tests",
+        "_generate_edge_case_tests",
+        "_generate_error_tests",
+        "_generate_security_tests",
+        "_create_thought_node",
+        "_find_complex_functions",
+        "_find_public_api",
+        "_find_security_sensitive",
+        "_get_all_functions",
+        "_get_function_complexity",
+        "_calculate_quality_score",
+        "_generate_typical_inputs",
+        "_generate_valid_inputs",
+        "_generate_boundary_inputs",
+        "_generate_empty_inputs",
+        "_generate_invalid_inputs"
+      ]
+    },
+    {
+      "name": "TestThoughtEvaluator",
+      "file": "testmaster\\intelligence\\tree_of_thought\\test_thought_generator.py",
+      "methods": [
+        "__init__",
+        "evaluate"
+      ]
+    },
+    {
+      "name": "ReasoningStrategy",
+      "file": "testmaster\\intelligence\\tree_of_thought\\tot_reasoning.py",
+      "methods": []
+    },
+    {
+      "name": "EvaluationCriteria",
+      "file": "testmaster\\intelligence\\tree_of_thought\\tot_reasoning.py",
+      "methods": [
+        "evaluate"
+      ]
+    },
+    {
+      "name": "ThoughtNode",
+      "file": "testmaster\\intelligence\\tree_of_thought\\tot_reasoning.py",
+      "methods": [
+        "add_child",
+        "get_path",
+        "prune_subtree",
+        "to_dict"
+      ]
+    },
+    {
+      "name": "ThoughtTree",
+      "file": "testmaster\\intelligence\\tree_of_thought\\tot_reasoning.py",
+      "methods": [
+        "__post_init__",
+        "add_node",
+        "get_leaf_nodes",
+        "get_best_path",
+        "get_statistics",
+        "_calculate_avg_branching",
+        "visualize",
+        "_visualize_node"
+      ]
+    },
+    {
+      "name": "ThoughtGenerator",
+      "file": "testmaster\\intelligence\\tree_of_thought\\tot_reasoning.py",
+      "methods": [
+        "generate"
+      ]
+    },
+    {
+      "name": "ThoughtEvaluator",
+      "file": "testmaster\\intelligence\\tree_of_thought\\tot_reasoning.py",
+      "methods": [
+        "evaluate"
+      ]
+    },
+    {
+      "name": "TreeOfThoughtReasoner",
+      "file": "testmaster\\intelligence\\tree_of_thought\\tot_reasoning.py",
+      "methods": [
+        "__init__",
+        "add_criterion",
+        "reason",
+        "_breadth_first_search",
+        "_depth_first_search",
+        "_best_first_search",
+        "_beam_search",
+        "_monte_carlo_search",
+        "_expand_node"
+      ]
+    },
+    {
+      "name": "SimpleThoughtGenerator",
+      "file": "testmaster\\intelligence\\tree_of_thought\\tot_reasoning.py",
+      "methods": [
+        "generate"
+      ]
+    },
+    {
+      "name": "SimpleThoughtEvaluator",
+      "file": "testmaster\\intelligence\\tree_of_thought\\tot_reasoning.py",
+      "methods": [
+        "evaluate"
+      ]
+    },
+    {
+      "name": "BenchmarkType",
+      "file": "testmaster\\agent_qa\\benchmarking_suite.py",
+      "methods": []
+    },
+    {
+      "name": "PerformanceMetric",
+      "file": "testmaster\\agent_qa\\benchmarking_suite.py",
+      "methods": []
+    },
+    {
+      "name": "BenchmarkResult",
+      "file": "testmaster\\agent_qa\\benchmarking_suite.py",
+      "methods": []
+    },
+    {
+      "name": "BenchmarkingSuite",
+      "file": "testmaster\\agent_qa\\benchmarking_suite.py",
+      "methods": [
+        "__init__",
+        "_setup_default_thresholds",
+        "run_benchmarks",
+        "_run_single_benchmark",
+        "_execute_benchmark",
+        "_benchmark_response_time",
+        "_benchmark_throughput",
+        "_benchmark_memory_usage",
+        "_benchmark_cpu_utilization",
+        "_benchmark_accuracy",
+        "_benchmark_scalability",
+        "_benchmark_reliability",
+        "_get_metric_unit",
+        "_get_baseline",
+        "_calculate_overall_benchmark_score",
+        "_get_metric_weight",
+        "_determine_benchmark_status",
+        "set_baseline",
+        "get_benchmark_history",
+        "get_performance_trends"
+      ]
+    },
+    {
+      "name": "QualityLevel",
+      "file": "testmaster\\agent_qa\\quality_inspector.py",
+      "methods": []
+    },
+    {
+      "name": "QualityCheck",
+      "file": "testmaster\\agent_qa\\quality_inspector.py",
+      "methods": []
+    },
+    {
+      "name": "QualityMetric",
+      "file": "testmaster\\agent_qa\\quality_inspector.py",
+      "methods": []
+    },
+    {
+      "name": "QualityReport",
+      "file": "testmaster\\agent_qa\\quality_inspector.py",
+      "methods": [
+        "__post_init__"
+      ]
+    },
+    {
+      "name": "QualityInspector",
+      "file": "testmaster\\agent_qa\\quality_inspector.py",
+      "methods": [
+        "__init__",
+        "inspect_agent",
+        "_check_syntax_quality",
+        "_check_semantic_quality",
+        "_check_performance_quality",
+        "_check_security_quality",
+        "_check_reliability_quality",
+        "_calculate_overall_score",
+        "_determine_quality_status",
+        "_generate_recommendations",
+        "get_inspection_history",
+        "get_quality_trends"
+      ]
+    },
+    {
+      "name": "AlertType",
+      "file": "testmaster\\agent_qa\\quality_monitor.py",
+      "methods": []
+    },
+    {
+      "name": "QualityThreshold",
+      "file": "testmaster\\agent_qa\\quality_monitor.py",
+      "methods": []
+    },
+    {
+      "name": "QualityAlert",
+      "file": "testmaster\\agent_qa\\quality_monitor.py",
+      "methods": []
+    },
+    {
+      "name": "QualityMonitor",
+      "file": "testmaster\\agent_qa\\quality_monitor.py",
+      "methods": [
+        "__init__",
+        "_setup_default_thresholds",
+        "start_monitoring",
+        "stop_monitoring",
+        "_monitoring_loop",
+        "_check_all_agents",
+        "_check_agent_quality",
+        "_check_threshold_breach",
+        "_detect_trend_anomaly",
+        "_create_alert",
+        "_create_trend_alert",
+        "_raise_alert",
+        "record_metric",
+        "add_threshold",
+        "add_alert_callback",
+        "get_alerts",
+        "acknowledge_alert",
+        "get_status",
+        "get_agent_status",
+        "clear_old_alerts"
+      ]
+    },
+    {
+      "name": "ScoreCategory",
+      "file": "testmaster\\agent_qa\\scoring_system.py",
+      "methods": []
+    },
+    {
+      "name": "ScoreWeight",
+      "file": "testmaster\\agent_qa\\scoring_system.py",
+      "methods": []
+    },
+    {
+      "name": "ScoreBreakdown",
+      "file": "testmaster\\agent_qa\\scoring_system.py",
+      "methods": []
+    },
+    {
+      "name": "QualityScore",
+      "file": "testmaster\\agent_qa\\scoring_system.py",
+      "methods": [
+        "__post_init__",
+        "_calculate_grade"
+      ]
+    },
+    {
+      "name": "ScoringSystem",
+      "file": "testmaster\\agent_qa\\scoring_system.py",
+      "methods": [
+        "__init__",
+        "_setup_default_weights",
+        "calculate_score",
+        "_calculate_category_score",
+        "_filter_metrics_by_category",
+        "_get_metric_weight",
+        "_get_category_details",
+        "_apply_custom_weights",
+        "_determine_score_status",
+        "_calculate_percentile",
+        "get_scoring_history",
+        "get_score_trends",
+        "set_benchmark",
+        "compare_to_benchmark"
+      ]
+    },
+    {
+      "name": "ValidationType",
+      "file": "testmaster\\agent_qa\\validation_engine.py",
+      "methods": []
+    },
+    {
+      "name": "ValidationRule",
+      "file": "testmaster\\agent_qa\\validation_engine.py",
+      "methods": []
+    },
+    {
+      "name": "ValidationIssue",
+      "file": "testmaster\\agent_qa\\validation_engine.py",
+      "methods": []
+    },
+    {
+      "name": "ValidationResult",
+      "file": "testmaster\\agent_qa\\validation_engine.py",
+      "methods": [
+        "add_issue"
+      ]
+    },
+    {
+      "name": "ValidationEngine",
+      "file": "testmaster\\agent_qa\\validation_engine.py",
+      "methods": [
+        "__init__",
+        "_setup_default_rules",
+        "validate_output",
+        "_check_syntax",
+        "_check_indentation",
+        "_check_json_format",
+        "_check_naming_consistency",
+        "_check_not_empty",
+        "_check_content_relevance",
+        "_check_response_time",
+        "_calculate_similarity",
+        "_calculate_validation_score",
+        "_get_suggestion",
+        "add_custom_rule",
+        "get_validation_history"
+      ]
+    }
+  ],
+  "test_generators": [
+    {
+      "file": "enhanced_context_aware_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "integration_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "intelligent_test_builder.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "intelligent_test_builder_offline.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "intelligent_test_builder_v2.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "specialized_test_generators.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\ai_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\enhanced_context_aware_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\gemini_powered_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\gemini_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\integration_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\intelligent_test_builder.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\intelligent_test_builder_offline.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\intelligent_test_builder_v2.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\quick_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\simple_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\smart_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\specialized_test_generators.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\legacy_scripts\\working_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\enhanced_context_aware_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\integration_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\intelligent_test_builder.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\intelligent_test_builder_offline.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\intelligent_test_builder_v2.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\specialized_test_generators.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\scripts\\ai_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\scripts\\gemini_powered_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\scripts\\gemini_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\scripts\\quick_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\scripts\\simple_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\scripts\\smart_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "archive\\original_backup\\scripts\\working_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "scripts\\ai_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "scripts\\gemini_powered_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "scripts\\gemini_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "scripts\\quick_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "scripts\\simple_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "scripts\\smart_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "scripts\\working_test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "testmaster\\core\\framework_abstraction\\test_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "testmaster\\intelligence\\hierarchical_planning\\test_plan_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "testmaster\\intelligence\\tree_of_thought\\test_thought_generator.py",
+      "type": "test_generator"
+    },
+    {
+      "file": "testmaster\\security\\security_test_generator.py",
+      "type": "test_generator"
+    }
+  ],
+  "security_features": [
+    {
+      "file": "dashboard\\api\\real_codebase_scanner.py",
+      "type": "security_feature"
+    },
+    {
+      "file": "dashboard\\api\\security.py",
+      "type": "security_feature"
+    },
+    {
+      "file": "testmaster\\intelligence\\security\\security_intelligence_agent.py",
+      "type": "security_feature"
+    },
+    {
+      "file": "testmaster\\security\\compliance_framework.py",
+      "type": "security_feature"
+    },
+    {
+      "file": "testmaster\\security\\security_test_generator.py",
+      "type": "security_feature"
+    },
+    {
+      "file": "testmaster\\security\\universal_scanner.py",
+      "type": "security_feature"
+    }
+  ],
+  "monitoring_systems": [
+    {
+      "file": "agentic_test_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "llm_analysis_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "monitor_progress.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "monitor_to_100.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "real_time_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "simple_web_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "start_monitoring.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "test_advanced_telemetry_system.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "test_performance_dashboard_integration.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "web_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "archive\\20250818\\web_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "archive\\COMPLETE_REFACTOR_20250818_112844\\web_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "archive\\legacy_scripts\\agentic_test_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "archive\\legacy_scripts\\monitor_progress.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "archive\\legacy_scripts\\monitor_to_100.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "archive\\original_backup\\agentic_test_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "archive\\original_backup\\monitor_progress.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "archive\\original_backup\\monitor_to_100.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\test_analytics_import.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\api\\analytics.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\api\\comprehensive_monitoring.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\api\\monitoring.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\api\\performance.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\api\\telemetry.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_aggregator.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_anomaly_detector.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_backup.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_batch_processor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_circuit_breaker.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_compressor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_connectivity_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_correlator.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_data_sanitizer.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_dead_letter_queue.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_deduplication.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_deduplication_engine.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_delivery_enhancer.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_delivery_guarantee.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_delivery_verifier.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_error_recovery.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_event_queue.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_export_manager.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_fallback_system.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_flow_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_health_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_heartbeat_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_integrity_guardian.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_integrity_verifier.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_metrics_collector.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_normalizer.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_optimizer.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_performance_booster.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_performance_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_performance_optimizer.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_persistence.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_pipeline.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_pipeline_health_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_priority_queue.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_quality_assurance.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_quantum_retry.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_rate_limiter.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_receipt_tracker.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_recovery_orchestrator.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_redundancy.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_retry_manager.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_sla_tracker.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_smart_cache.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_streaming.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_telemetry.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_validator.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\analytics_watchdog.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\metrics_feed.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\realtime_analytics_tracker.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "dashboard\\core\\system_observability_metrics.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\agent_qa\\quality_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\async_processing\\async_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\core\\monitoring_decorators.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\monitoring\\test_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\overview\\performance_dashboard.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\reporting\\metrics_analyzer.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\streaming\\stream_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\telemetry\\performance_monitor.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\telemetry\\telemetry_collector.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\telemetry\\telemetry_dashboard.py",
+      "type": "monitoring_system"
+    },
+    {
+      "file": "testmaster\\ui\\metrics_display.py",
+      "type": "monitoring_system"
+    }
+  ],
+  "data_processors": [],
+  "visualization_candidates": [
+    {
+      "file": "enable_deep_integration.py",
+      "indicators": [
+        "graph",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "enable_features.py",
+      "indicators": [
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "enhance_auto_generated_tests.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "fix_syntax.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "implement_test_stubs.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "integration_test_generator.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "intelligent_test_builder.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "intelligent_test_builder_offline.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "intelligent_test_builder_v2.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "layer3_integration_example.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "real_time_monitor.py",
+      "indicators": [
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "run_integration_test.py",
+      "indicators": [
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "simple_web_monitor.py",
+      "indicators": [
+        "graph",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "start_monitoring.py",
+      "indicators": [
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster_orchestrator.py",
+      "indicators": [
+        "graph",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "test_advanced_telemetry_system.py",
+      "indicators": [
+        "visualization",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "test_agent_qa_system.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "test_analyzer_tab.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "test_enhanced_server.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "test_exhaustive_features.py",
+      "indicators": [
+        "visualization"
+      ]
+    },
+    {
+      "file": "test_flow_optimizer_system.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "test_graph_workflow_integration.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "test_performance_dashboard_integration.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "test_reporting_system.py",
+      "indicators": [
+        "chart",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "test_streaming_generation.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "test_tot_integration.py",
+      "indicators": [
+        "visualization"
+      ]
+    },
+    {
+      "file": "test_tot_output.py",
+      "indicators": [
+        "graph",
+        "heatmap",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "test_universal_ast_system.py",
+      "indicators": [
+        "graph"
+      ]
+    },
+    {
+      "file": "web_monitor.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\20250818\\web_monitor.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\COMPLETE_REFACTOR_20250818_112844\\fix_syntax.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "archive\\COMPLETE_REFACTOR_20250818_112844\\web_monitor.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\coverage_analysis.py",
+      "indicators": [
+        "chart",
+        "plot",
+        "visualization",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\data_flow_tests.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\enhance_auto_generated_tests.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\implement_test_stubs.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\integration_test_generator.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\integration_test_matrix.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\intelligent_test_builder.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\intelligent_test_builder_offline.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\intelligent_test_builder_v2.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\simple_100_percent.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\legacy_scripts\\testmaster_orchestrator.py",
+      "indicators": [
+        "graph",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\enhance_auto_generated_tests.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\implement_test_stubs.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\integration_test_generator.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\intelligent_test_builder.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\intelligent_test_builder_offline.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\intelligent_test_builder_v2.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\testmaster_orchestrator.py",
+      "indicators": [
+        "graph",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\config\\testmaster_config.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\dashboard\\quality_dashboard.py",
+      "indicators": [
+        "chart",
+        "visualization",
+        "heatmap",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\incremental\\dependency_tracker.py",
+      "indicators": [
+        "graph",
+        "visualization"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\integration\\cross_module_tester.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\scripts\\simple_100_percent.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\src\\coverage_analysis.py",
+      "indicators": [
+        "chart",
+        "plot",
+        "visualization",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\src\\data_flow_tests.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "archive\\original_backup\\src\\integration_test_matrix.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "config\\testmaster_config.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\automated_frontend_simulator.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "visualization",
+        "heatmap",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\automated_frontend_tester.py",
+      "indicators": [
+        "chart",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\comprehensive_frontend_test.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "visualization",
+        "heatmap",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\comprehensive_frontend_validator.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "visualization",
+        "heatmap",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\debug_blueprints.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\demo_automated_frontend_testing.py",
+      "indicators": [
+        "chart",
+        "visualization",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\discover_backend_features.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "plot",
+        "visualization",
+        "heatmap",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\frontend_display_validator.py",
+      "indicators": [
+        "chart",
+        "visualization",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\gunicorn_config.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\quality_dashboard.py",
+      "indicators": [
+        "chart",
+        "visualization",
+        "heatmap",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\quick_frontend_test.py",
+      "indicators": [
+        "chart",
+        "visualization"
+      ]
+    },
+    {
+      "file": "dashboard\\quick_integration_test.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "visualization",
+        "heatmap",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\server.py",
+      "indicators": [
+        "visualization",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\test_all_features.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\test_api_endpoints.py",
+      "indicators": [
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\test_final_enhancements.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\test_frontend_automated.py",
+      "indicators": [
+        "chart",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\test_frontend_integration.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\test_new_robustness_features.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\test_new_visualization_apis.py",
+      "indicators": [
+        "chart",
+        "visualization",
+        "heatmap",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\test_robustness_suite.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\test_ultra_reliability.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\ultimate_frontend_validator.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "visualization",
+        "heatmap",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\wsgi.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\__init__.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\analytics.py",
+      "indicators": [
+        "chart",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\async_processing.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "visualization",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\comprehensive_monitoring.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\coverage.py",
+      "indicators": [
+        "chart",
+        "visualization",
+        "heatmap"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\flow_optimization.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "visualization",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\health.py",
+      "indicators": [
+        "chart",
+        "visualization",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\intelligence.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "plot",
+        "visualization",
+        "heatmap",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\monitoring.py",
+      "indicators": [
+        "chart",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\performance.py",
+      "indicators": [
+        "chart"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\quality_assurance.py",
+      "indicators": [
+        "chart",
+        "visualization"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\real_codebase_scanner.py",
+      "indicators": [
+        "chart",
+        "visualization",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\security.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "heatmap"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\telemetry.py",
+      "indicators": [
+        "chart",
+        "visualization",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\test_generation.py",
+      "indicators": [
+        "chart",
+        "heatmap"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\websocket_dashboard.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\api\\workflow.py",
+      "indicators": [
+        "visualization",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_aggregator.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_connectivity_monitor.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_data_sanitizer.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_delivery_enhancer.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_delivery_guarantee.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_delivery_verifier.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_flow_monitor.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_heartbeat_monitor.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_optimizer.py",
+      "indicators": [
+        "visualization"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_pipeline.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_priority_queue.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_rate_limiter.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_receipt_tracker.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_recovery_orchestrator.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_redundancy.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_sla_tracker.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\analytics_streaming.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\data_store.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\emergency_backup_recovery.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\error_handler.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\metrics_feed.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\monitor.py",
+      "indicators": [
+        "chart"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\predictive_flow_optimizer.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\realtime_analytics_tracker.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\real_data_extractor.py",
+      "indicators": [
+        "graph",
+        "dashboard",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\system_observability_metrics.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "dashboard\\core\\test_collector.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "incremental\\dependency_tracker.py",
+      "indicators": [
+        "graph",
+        "visualization"
+      ]
+    },
+    {
+      "file": "integration\\cross_module_tester.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "prioritization\\test_prioritizer.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "scripts\\simple_100_percent.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "src\\coverage_analysis.py",
+      "indicators": [
+        "chart",
+        "plot",
+        "visualization",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "src\\data_flow_tests.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "src\\integration_test_matrix.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\layer2_integration.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "testmaster\\agent_qa\\quality_inspector.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\communication\\claude_messenger.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\core\\config.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\core\\context_manager.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\core\\feature_flags.py",
+      "indicators": [
+        "graph",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\core\\layer_manager.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\core\\orchestrator.py",
+      "indicators": [
+        "graph",
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\core\\shared_state.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\core\\workflow_graph.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\core\\ast_abstraction\\universal_ast.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\core\\language_detection\\universal_detector.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\flow_optimizer\\dependency_resolver.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\flow_optimizer\\execution_router.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\flow_optimizer\\flow_analyzer.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\flow_optimizer\\parallel_executor.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\flow_optimizer\\resource_optimizer.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\flow_optimizer\\__init__.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\generators\\base.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\generators\\intelligent.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\integration\\final_integration_test.py",
+      "indicators": [
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\bridges\\context_variables_bridge.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\bridges\\event_monitoring_bridge.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\bridges\\session_tracking_bridge.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\bridges\\sop_workflow_bridge.py",
+      "indicators": [
+        "dag",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\bridges\\__init__.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\llm_providers\\provider_optimization.py",
+      "indicators": [
+        "graph"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_bridge.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\monitoring\\adaptive_resource_management_agent.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\monitoring\\bottleneck_detection_resolution_agent.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\monitoring\\workflow_performance_monitor_agent.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\monitoring\\__init__.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\optimization\\multi_objective_optimization_agent.py",
+      "indicators": [
+        "graph"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\security\\security_intelligence_agent.py",
+      "indicators": [
+        "graph"
+      ]
+    },
+    {
+      "file": "testmaster\\intelligence\\tree_of_thought\\tot_reasoning.py",
+      "indicators": [
+        "visualization"
+      ]
+    },
+    {
+      "file": "testmaster\\mapping\\dependency_tracker.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\mapping\\__init__.py",
+      "indicators": [
+        "graph"
+      ]
+    },
+    {
+      "file": "testmaster\\monitoring\\test_monitor.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\orchestration\\output_system.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\orchestrator\\handoff_manager.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\orchestrator\\investigator.py",
+      "indicators": [
+        "graph"
+      ]
+    },
+    {
+      "file": "testmaster\\orchestrator\\__init__.py",
+      "indicators": [
+        "graph"
+      ]
+    },
+    {
+      "file": "testmaster\\overview\\coverage_intelligence.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\overview\\performance_dashboard.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "visualization",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "testmaster\\overview\\structure_mapper.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "testmaster\\refactoring\\hierarchical_analyzer.py",
+      "indicators": [
+        "graph"
+      ]
+    },
+    {
+      "file": "testmaster\\reporting\\dashboard_builder.py",
+      "indicators": [
+        "chart",
+        "visualization",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "testmaster\\reporting\\report_generator.py",
+      "indicators": [
+        "chart",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\reporting\\report_scheduler.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "testmaster\\reporting\\__init__.py",
+      "indicators": [
+        "chart",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "testmaster\\security\\security_test_generator.py",
+      "indicators": [
+        "graph"
+      ]
+    },
+    {
+      "file": "testmaster\\security\\universal_scanner.py",
+      "indicators": [
+        "graph",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\streaming\\incremental_enhancer.py",
+      "indicators": [
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\telemetry\\flow_analyzer.py",
+      "indicators": [
+        "visualization",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\telemetry\\telemetry_dashboard.py",
+      "indicators": [
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\telemetry\\__init__.py",
+      "indicators": [
+        "visualization",
+        "dashboard",
+        "flow"
+      ]
+    },
+    {
+      "file": "testmaster\\ui\\alert_system.py",
+      "indicators": [
+        "dashboard"
+      ]
+    },
+    {
+      "file": "testmaster\\ui\\dashboard.py",
+      "indicators": [
+        "visualization",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "testmaster\\ui\\metrics_display.py",
+      "indicators": [
+        "graph",
+        "chart",
+        "visualization",
+        "heatmap",
+        "dashboard"
+      ]
+    },
+    {
+      "file": "testmaster\\ui\\__init__.py",
+      "indicators": [
+        "graph",
+        "visualization",
+        "dashboard",
+        "flow"
+      ]
+    }
+  ]
+}

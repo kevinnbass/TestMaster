@@ -1,14 +1,11 @@
 export default {
     setDefaultTypingSpeed(speed) {
-        this.defaultSpeed = speed;
+        this.defaultTypingSpeed = speed;
         return this;
     },
 
     setTypingSpeed(speed) {
-        if (speed === undefined) {
-            speed = this.defaultSpeed;
-        }
-        this.speed = speed;
+        this.typingSpeed = speed;
         return this;
-    },
+    }
 }

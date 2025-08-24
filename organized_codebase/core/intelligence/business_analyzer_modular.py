@@ -13,7 +13,7 @@ import logging
 
 from .business_base import BusinessAnalysisConfiguration
 from .business_rule_extractor import BusinessRuleExtractor
-from .C:.Users.kbass.OneDrive.Documents.testmaster.organized_codebase.core.orchestration.workflows.business_workflow_analyzer import BusinessWorkflowAnalyzer
+from .business_workflow_analyzer import BusinessWorkflowAnalyzer
 from .business_constraint_analyzer import BusinessConstraintAnalyzer
 
 

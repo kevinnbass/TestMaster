@@ -1,6 +1,10 @@
-export type Vector2Like = { x?: number, y?: number };
+export type QuestionType = {
+    key?: string,
+    [param: string]: any,
+    options?: OptionsType[],
+}
 
-export class Vector2 {
-    x: number;
-    y: number;
+export type OptionsType = {
+    key?: string,
+    [param: string]: any,
 }

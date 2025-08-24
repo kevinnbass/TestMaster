@@ -1,58 +1,66 @@
-// import * as Phaser from 'phaser';
-import Sizer from '../sizer/Sizer';
-import RoundRecrangle from '../../../plugins/roundrectangle';
-
+import ComponentBase from '../../utils/componentbase/ComponentBase';
 
 export default Slider;
 
 declare namespace Slider {
+    type ValueChangeCallbackType = (newValue: number, oldValue: number) => void;
 
-    type InputTypes = 0 | 1 | -1 | 'drag' | 'pan' | 'click' | 'none';
-
-    interface IConfig extends Sizer.IConfig {
-        reverseAxis?: boolean,
-        background?: Phaser.GameObjects.GameObject | RoundRecrangle.IConfig,
-        track?: Phaser.GameObjects.GameObject | RoundRecrangle.IConfig,
-        indicator?: Phaser.GameObjects.GameObject | RoundRecrangle.IConfig,
-        thumb?: Phaser.GameObjects.GameObject | RoundRecrangle.IConfig,
-
-        input?: InputTypes,
-
-        gap?: number,
-
+    interface IConfig {
+        endPoints?: [
+            { x: number, y: number },
+            { x: number, y: number }
+        ],
         value?: number,
-        min?: number, max?: number,
-
-        easeValue?: {
-            duration?: number,
-            ease?: string
-        },
-
-        valuechangeCallback: (newValue: number, oldValue: number, slider: Slider) => void,
-
         enable?: boolean,
+
+        valuechangeCallback?: ValueChangeCallbackType,
+        valuechangeCallbackScope?: Object
+    }
+
+    namespace Events {
+        type ValueChangeCallbackType = (newValue: number, oldValue: number) => void;
     }
 }
 
-declare class Slider extends Sizer {
+declare class Slider extends ComponentBase {
     constructor(
-        scene: Phaser.Scene,
+        gameObject: Phaser.GameObjects.GameObject,
         config?: Slider.IConfig
     );
 
-    value: number;
-    getValue(min?: number, max?: number): number;
-    setValue(value?: number, min?: number, max?: number): this;
-    addValue(inc?: number, min?: number, max?: number): this;
-
-    easeValueTo(value?: number, min?: number, max?: number): this;
-    stopEaseValue(): this;
-    setEaseValueDuration(duration: number): this;
-    setEaseValueFunction(ease: string): this;
-
-    setGap(gap?: number, min?: number, max?: number): this;
-    gap: number;
-
     setEnable(enable?: boolean): this;
+    toggleEnable(): this;
     enable: boolean;
+
+    setEndPoints(
+        p0x: number, p0y: number,
+        p1x: number, p1y: number
+    ): this;
+
+    setEndPoints(
+        p0: { x: number, y: number },
+        p1: { x: number, y: number }
+    ): this;
+
+    setEndPoints(
+        points: [
+            { x: number, y: number },
+            { x: number, y: number }
+        ]
+    ): this;
+
+    getValue(min?: number, max?: number): number;
+    value: number;
+
+    setValue(
+        newValue: number,
+        min?: number, max?: number
+    ): this;
+
+    addValue(
+        inc: number,
+        min?: number, max?: number
+    ): this;
+
+    readonly isDragging: boolean;
 }

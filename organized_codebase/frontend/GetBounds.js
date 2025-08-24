@@ -1,33 +1,21 @@
-/**
- * @author       Richard Davey <rich@photonstorm.com>
- * @copyright    2019 Photon Storm Ltd.
- * @license      {@link https://opensource.org/licenses/MIT|MIT License}
- */
+import Rectangle from '../../../utils/geom/rectangle/Rectangle.js';
 
-import Rectangle from '../rectangle/Rectangle.js';
+var GetBounds = function (tileX, tileY, out) {
+    if (out === undefined) {
+        out = new Rectangle;
+    } else if (out === true) {
+        out = globalBounds;
+    }
 
-/**
- * Returns the bounds of the Ellipse object.
- *
- * @function Phaser.Geom.Ellipse.GetBounds
- * @since 3.0.0
- *
- * @generic {Phaser.Geom.Rectangle} O - [out,$return]
- *
- * @param {Phaser.Geom.Ellipse} ellipse - The Ellipse to get the bounds from.
- * @param {(Phaser.Geom.Rectangle|object)} [out] - A Rectangle, or rectangle-like object, to store the ellipse bounds in. If not given a new Rectangle will be created.
- *
- * @return {(Phaser.Geom.Rectangle|object)} The Rectangle object containing the Ellipse bounds.
- */
-var GetBounds = function (ellipse, out) {
-    if (out === undefined) { out = new Rectangle(); }
-
-    out.x = ellipse.left;
-    out.y = ellipse.top;
-    out.width = ellipse.width;
-    out.height = ellipse.height;
+    var worldXY = this.getWorldXY(tileX, tileY, true);
+    out.x = worldXY.x - (this.width * 0.5);
+    out.y = worldXY.y - (this.height * 0.5);
+    out.width = this.width;
+    out.height = this.height;
 
     return out;
-};
+}
+
+var globalBounds = new Rectangle();
 
 export default GetBounds;

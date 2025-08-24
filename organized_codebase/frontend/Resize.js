@@ -1,17 +1,20 @@
 var Resize = function (width, height) {
-    if (this.scene.sys.scale.autoRound) {
-        width = Math.floor(width);
-        height = Math.floor(height);
-    }
-
     if ((this.width === width) && (this.height === height)) {
         return this;
     }
 
-    var style = this.node.style;
-    style.width = `${width}px`;
-    style.height = `${height}px`;
-    this.updateSize();
+    this.width = width;
+    this.height = height;
+
+    this.updateDisplayOrigin();
+
+    var input = this.input;
+
+    if (input && !input.customHitArea) {
+        input.hitArea.width = width;
+        input.hitArea.height = height;
+    }
+
     return this;
 }
 

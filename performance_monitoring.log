@@ -1,0 +1,78 @@
+2025-08-22 21:35:52,538 - MetricsCollector - INFO - Started metric collection (interval: 2.0s)
+2025-08-22 21:35:52,547 - PerformanceAlerting - INFO - Started performance alerting system
+2025-08-22 21:35:52,548 - PerformanceAlerting - WARNING - ALERT TRIGGERED: cpu_usage_percent = 66.70 (threshold: 50.0)
+2025-08-22 21:35:52,649 - PrometheusExporter - INFO - Prometheus metrics server started on port 9090
+2025-08-22 21:35:52,649 - PerformanceMonitoringSystem - INFO - Performance monitoring system started successfully
+2025-08-22 21:35:52,650 - MetricsCollector - INFO - Registered custom metric: demo_operations_total
+2025-08-22 21:35:52,652 - PerformanceMonitoringSystem - INFO - Added custom metric: demo_operations_total
+2025-08-22 21:35:52,661 - MetricsCollector - ERROR - Error in collection loop: dictionary changed size during iteration
+2025-08-22 21:35:56,549 - PerformanceAlerting - INFO - ALERT RESOLVED: cpu_usage_percent = 21.60
+2025-08-22 21:36:46,810 - MetricsCollector - INFO - Started metric collection (interval: 1.0s)
+2025-08-22 21:36:46,811 - PerformanceAlerting - INFO - Started performance alerting system
+2025-08-22 21:36:46,825 - PrometheusExporter - INFO - Prometheus metrics server started on port 9091
+2025-08-22 21:36:46,825 - PerformanceMonitoringSystem - INFO - Performance monitoring system started successfully
+2025-08-22 21:36:55,071 - MetricsCollector - INFO - Stopped metric collection
+2025-08-22 21:36:56,813 - PerformanceAlerting - INFO - Stopped performance alerting system
+2025-08-22 21:36:57,062 - PrometheusExporter - INFO - Prometheus metrics server stopped
+2025-08-22 21:36:57,062 - PerformanceMonitoringSystem - INFO - Performance monitoring system stopped
+2025-08-22 21:43:30,945 - MetricsCollector - INFO - Registered custom metric: db_active_connections
+2025-08-22 21:43:30,945 - PerformanceMonitoringSystem - INFO - Added custom metric: db_active_connections
+2025-08-22 21:43:30,945 - MetricsCollector - INFO - Registered custom metric: db_available_connections
+2025-08-22 21:43:30,945 - PerformanceMonitoringSystem - INFO - Added custom metric: db_available_connections
+2025-08-22 21:43:30,945 - MetricsCollector - INFO - Registered custom metric: db_query_rate
+2025-08-22 21:43:30,945 - PerformanceMonitoringSystem - INFO - Added custom metric: db_query_rate
+2025-08-22 21:43:31,101 - DatabasePerformanceOptimizer - INFO - Created sample database: testmaster.db
+2025-08-22 21:43:31,105 - MetricsCollector - INFO - Started metric collection (interval: 5.0s)
+2025-08-22 21:43:31,105 - PerformanceMonitoringSystem - INFO - Performance monitoring system started successfully
+2025-08-22 21:43:31,106 - DatabasePerformanceOptimizer - INFO - Phase 1: Benchmarking current performance...
+2025-08-22 21:43:31,106 - DatabasePerformanceOptimizer - INFO - Starting query benchmarks...
+2025-08-22 21:43:31,551 - DatabasePerformanceOptimizer - INFO - Benchmarked simple_select: 0.0014s avg
+2025-08-22 21:43:31,674 - DatabasePerformanceOptimizer - INFO - Benchmarked complex_join: 0.0054s avg
+2025-08-22 21:43:31,781 - DatabasePerformanceOptimizer - INFO - Benchmarked aggregation: 0.0040s avg
+2025-08-22 21:43:31,861 - DatabasePerformanceOptimizer - INFO - Benchmarked range_query: 0.0009s avg
+2025-08-22 21:43:31,951 - DatabasePerformanceOptimizer - INFO - Benchmarked count_query: 0.0003s avg
+2025-08-22 21:43:31,952 - DatabasePerformanceOptimizer - INFO - Phase 2: Analyzing query patterns...
+2025-08-22 21:43:31,955 - DatabasePerformanceOptimizer - INFO - Phase 3: Generating index recommendations...
+2025-08-22 21:43:31,958 - DatabasePerformanceOptimizer - INFO - Phase 4: Applying database optimizations...
+2025-08-22 21:43:31,961 - DatabasePerformanceOptimizer - INFO - Applied: PRAGMA journal_mode=WAL
+2025-08-22 21:43:31,962 - DatabasePerformanceOptimizer - INFO - Applied: PRAGMA synchronous=NORMAL
+2025-08-22 21:43:31,962 - DatabasePerformanceOptimizer - INFO - Applied: PRAGMA cache_size=10000
+2025-08-22 21:43:31,962 - DatabasePerformanceOptimizer - INFO - Applied: PRAGMA temp_store=MEMORY
+2025-08-22 21:43:31,962 - DatabasePerformanceOptimizer - INFO - Applied: PRAGMA mmap_size=268435456
+2025-08-22 21:43:31,962 - DatabasePerformanceOptimizer - INFO - Phase 5: Benchmarking optimized performance...
+2025-08-22 21:43:31,962 - DatabasePerformanceOptimizer - INFO - Starting query benchmarks...
+2025-08-22 21:43:32,037 - DatabasePerformanceOptimizer - INFO - Benchmarked simple_select: 0.0009s avg
+2025-08-22 21:43:32,170 - DatabasePerformanceOptimizer - INFO - Benchmarked complex_join: 0.0060s avg
+2025-08-22 21:43:32,325 - DatabasePerformanceOptimizer - INFO - Benchmarked aggregation: 0.0055s avg
+2025-08-22 21:43:32,405 - DatabasePerformanceOptimizer - INFO - Benchmarked range_query: 0.0006s avg
+2025-08-22 21:43:32,483 - DatabasePerformanceOptimizer - INFO - Benchmarked count_query: 0.0002s avg
+2025-08-22 21:43:36,551 - MetricsCollector - INFO - Stopped metric collection
+2025-08-22 21:43:36,551 - PerformanceMonitoringSystem - INFO - Performance monitoring system stopped
+2025-08-22 21:43:36,551 - ConnectionPoolManager - INFO - Connection pool cleaned up
+2025-08-22 21:48:20,237 - MetricsCollector - INFO - Registered custom metric: memory_usage_mb
+2025-08-22 21:48:20,238 - PerformanceMonitoringSystem - INFO - Added custom metric: memory_usage_mb
+2025-08-22 21:48:20,238 - MetricsCollector - INFO - Registered custom metric: memory_leak_count
+2025-08-22 21:48:20,239 - PerformanceMonitoringSystem - INFO - Added custom metric: memory_leak_count
+2025-08-22 21:48:20,239 - MetricsCollector - INFO - Registered custom metric: gc_objects_total
+2025-08-22 21:48:20,240 - PerformanceMonitoringSystem - INFO - Added custom metric: gc_objects_total
+2025-08-22 21:48:20,240 - MetricsCollector - INFO - Registered custom metric: memory_pool_utilization
+2025-08-22 21:48:20,240 - PerformanceMonitoringSystem - INFO - Added custom metric: memory_pool_utilization
+2025-08-22 21:48:20,244 - MetricsCollector - INFO - Started metric collection (interval: 30.0s)
+2025-08-22 21:48:20,245 - PerformanceAlerting - INFO - Started performance alerting system
+2025-08-22 21:48:20,246 - PerformanceMonitoringSystem - INFO - Performance monitoring system started successfully
+2025-08-22 21:48:20,258 - MemoryLeakDetector - INFO - Started memory leak monitoring (interval: 60.0s)
+2025-08-22 21:48:21,220 - GarbageCollectionOptimizer - INFO - Optimized GC settings for balanced: (1000, 12, 12)
+2025-08-22 21:48:21,227 - GarbageCollectionOptimizer - INFO - Collected 0 objects during optimization
+2025-08-22 21:48:21,238 - MemoryManager - INFO - Memory management system started
+2025-08-22 21:48:21,254 - MemoryManager - INFO - Created memory pool: 1024 bytes, 500 objects
+2025-08-22 21:48:21,268 - MemoryManager - INFO - Created memory pool: 8192 bytes, 100 objects
+2025-08-22 21:49:27,195 - GarbageCollectionOptimizer - INFO - Optimized GC settings for balanced: (1000, 12, 12)
+2025-08-22 21:49:27,196 - GarbageCollectionOptimizer - INFO - Collected 132 objects during optimization
+2025-08-22 21:49:27,558 - GarbageCollectionOptimizer - INFO - GC performance benchmark completed
+2025-08-22 21:49:27,578 - MemoryManager - INFO - Memory cleanup completed: 1.66MB freed, 3 objects
+2025-08-22 21:49:38,308 - MemoryLeakDetector - INFO - Stopped memory leak monitoring
+2025-08-22 21:49:43,309 - MetricsCollector - INFO - Stopped metric collection
+2025-08-22 21:49:48,310 - PerformanceAlerting - INFO - Stopped performance alerting system
+2025-08-22 21:49:48,311 - PerformanceMonitoringSystem - INFO - Performance monitoring system stopped
+2025-08-22 21:49:48,312 - GarbageCollectionOptimizer - INFO - Reset GC settings to original: (700, 10, 10)
+2025-08-22 21:49:48,312 - MemoryManager - INFO - Memory management system stopped

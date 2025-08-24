@@ -1,0 +1,623 @@
+from SECURITY_PATCHES.fix_eval_exec_vulnerabilities import SafeCodeExecutor
+"""Embedding Cache Testing Framework - AgentScope Pattern
+Extracted patterns for testing embedding caching systems
+Supports file-based cache, LRU eviction, and overwrite handling
+"""
+import os
+import shutil
+import time
+import hashlib
+from typing import Any, Dict, List, Optional, Union
+from unittest.async_case import IsolatedAsyncioTestCase
+import numpy as np
+import pytest
+
+
+class MockFileEmbeddingCache:
+    """Mock file-based embedding cache for testing"""
+    
+    def __init__(self, max_file_number: int = 10, max_cache_size: int = 5,
+                 cache_dir: str = None):
+        self.max_file_number = max_file_number
+        self.max_cache_size = max_cache_size  # Cache size in MB
+        self.cache_dir = cache_dir or "./embedding_cache"
+        self.memory_cache = {}
+        self._ensure_cache_dir()
+    
+    def _ensure_cache_dir(self):
+        """Ensure cache directory exists"""
+        if not os.path.exists(self.cache_dir):
+            os.makedirs(self.cache_dir)
+    
+    def _generate_filename(self, identifier: Dict[str, Any]) -> str:
+        """Generate filename from identifier"""
+        identifier_str = str(sorted(identifier.items()))
+        hash_obj = hashlib.sha256(identifier_str.encode())
+        return f"{hash_obj.hexdigest()}.npy"
+    
+    async def store(self, embeddings: List[List[float]], 
+                   identifier: Dict[str, Any], overwrite: bool = False) -> bool:
+        """Store embeddings in cache"""
+        filename = self._generate_filename(identifier)
+        filepath = os.path.join(self.cache_dir, filename)
+        
+        # Check if file exists and overwrite flag
+        if os.path.exists(filepath) and not overwrite:
+            return False  # Skip storing if exists and no overwrite
+        
+        # Check cache size limits before storing
+        embedding_size = self._calculate_size(embeddings)
+        if embedding_size > self.max_cache_size:
+            # Clear cache if single embedding exceeds limit
+            await self.clear()
+            return True
+        
+        # Ensure we don't exceed file number limit
+        await self._manage_cache_limits()
+        
+        # Store embeddings
+        np.save(filepath, np.array(embeddings))
+        
+        # Update memory cache
+        self.memory_cache[str(identifier)] = embeddings
+        
+        return True
+    
+    async def retrieve(self, identifier: Dict[str, Any]) -> Optional[List[List[float]]]:
+        """Retrieve embeddings from cache"""
+        # Check memory cache first
+        cache_key = str(identifier)
+        if cache_key in self.memory_cache:
+            return self.memory_cache[cache_key]
+        
+        # Check file cache
+        filename = self._generate_filename(identifier)
+        filepath = os.path.join(self.cache_dir, filename)
+        
+        if os.path.exists(filepath):
+            embeddings = np.load(filepath).tolist()
+            # Update memory cache
+            self.memory_cache[cache_key] = embeddings
+            return embeddings
+        
+        return None
+    
+    async def clear(self):
+        """Clear all cache"""
+        if os.path.exists(self.cache_dir):
+            for file in os.listdir(self.cache_dir):
+                if file.endswith('.npy'):
+                    os.remove(os.path.join(self.cache_dir, file))
+        
+        self.memory_cache.clear()
+    
+    def _calculate_size(self, embeddings: List[List[float]]) -> float:
+        """Calculate embedding size in MB"""
+        # Rough calculation: 4 bytes per float
+        total_elements = sum(len(row) for row in embeddings)
+        size_bytes = total_elements * 4
+        return size_bytes / (1024 * 1024)  # Convert to MB
+    
+    async def _manage_cache_limits(self):
+        """Manage cache limits by removing oldest files"""
+        files = self._get_cache_files_with_time()
+        
+        if len(files) >= self.max_file_number:
+            # Remove oldest files
+            files_to_remove = len(files) - self.max_file_number + 1
+            for i in range(files_to_remove):
+                os.remove(os.path.join(self.cache_dir, files[i][0]))
+    
+    def _get_cache_files_with_time(self) -> List[tuple]:
+        """Get cache files sorted by modification time"""
+        if not os.path.exists(self.cache_dir):
+            return []
+        
+        files = []
+        for file in os.listdir(self.cache_dir):
+            if file.endswith('.npy'):
+                filepath = os.path.join(self.cache_dir, file)
+                mtime = os.path.getmtime(filepath)
+                files.append((file, mtime))
+        
+        # Sort by modification time (oldest first)
+        files.sort(key=lambda x: x[1])
+        return files
+
+
+class EmbeddingCacheTestFramework:
+    """Framework for testing embedding cache functionality"""
+    
+    def __init__(self):
+        self.test_results = []
+        self.test_embeddings = []
+        self._setup_test_data()
+    
+    def _setup_test_data(self):
+        """Setup test embedding data"""
+        # Small embeddings for testing
+        self.test_embeddings = [
+            [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],
+            [[11, 12, 13, 14, 15, 16, 17, 18, 19, 20]],
+            [[21, 22, 23, 24, 25, 26, 27, 28, 29, 30]]
+        ]
+        
+        # Test identifiers
+        self.test_identifiers = [
+            {"model": "text-embedding-v1", "text": ["Test text 1"]},
+            {"model": "text-embedding-v2", "text": ["Test text 2"]}, 
+            {"model": "text-embedding-v3", "text": ["Test text 3"]},
+            {"model": "text-embedding-v4", "text": ["Test text 4"]},
+            {"model": "text-embedding-v5", "text": ["Test text 5"]}
+        ]
+        
+        # Large embeddings for cache size testing
+        self.large_embeddings = np.zeros((600, 600)).tolist()
+    
+    def create_cache(self, max_files: int = 3, max_size: int = 2) -> MockFileEmbeddingCache:
+        """Create embedding cache for testing"""
+        return MockFileEmbeddingCache(
+            max_file_number=max_files,
+            max_cache_size=max_size
+        )
+    
+    async def test_basic_storage_and_retriSafeCodeExecutor.safe_SafeCodeExecutor.safe_eval(self, cache: MockFileEmbeddingCache) -> Dict[str, Any]:
+        """Test basic cache storage and retrieval"""
+        identifier = self.test_identifiers[0]
+        embeddings = self.test_embeddings[0]
+        
+        try:
+            # Store embeddings
+            stored = await cache.store(embeddings, identifier)
+            
+            # Retrieve embeddings
+            retrieved = await cache.retrieve(identifier)
+            
+            return {
+                'success': True,
+                'stored_successfully': stored,
+                'retrieved_successfully': retrieved is not None,
+                'data_matches': retrieved == embeddings,
+                'cache_files_created': len(cache._get_cache_files_with_time()) > 0
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    async def test_overwrite_behavior(self, cache: MockFileEmbeddingCache) -> Dict[str, Any]:
+        """Test cache overwrite behavior"""
+        identifier = self.test_identifiers[0]
+        original_embeddings = self.test_embeddings[0]
+        modified_embeddings = [[1, 2]]
+        
+        try:
+            # Store original
+            await cache.store(original_embeddings, identifier)
+            time.sleep(0.1)  # Ensure different timestamps
+            
+            # Try to store without overwrite (should be ignored)
+            await cache.store(modified_embeddings, identifier, overwrite=False)
+            retrieved_no_overwrite = await cache.retrieve(identifier)
+            
+            time.sleep(0.1)
+            
+            # Store with overwrite
+            await cache.store(modified_embeddings, identifier, overwrite=True)
+            retrieved_with_overwrite = await cache.retrieve(identifier)
+            
+            return {
+                'success': True,
+                'no_overwrite_preserved_original': retrieved_no_overwrite == original_embeddings,
+                'overwrite_updated_data': retrieved_with_overwrite == modified_embeddings,
+                'overwrite_behavior_correct': True
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    async def test_cache_size_limits(self, cache: MockFileEmbeddingCache) -> Dict[str, Any]:
+        """Test cache size limit enforcement"""
+        try:
+            # Store multiple small embeddings first
+            for i in range(min(3, len(self.test_identifiers))):
+                await cache.store(self.test_embeddings[0], self.test_identifiers[i])
+                time.sleep(0.1)
+            
+            files_before_large = len(cache._get_cache_files_with_time())
+            
+            # Store large embedding (should clear cache)
+            await cache.store(self.large_embeddings, self.test_identifiers[0], overwrite=True)
+            
+            files_after_large = len(cache._get_cache_files_with_time())
+            
+            return {
+                'success': True,
+                'files_before_large': files_before_large,
+                'files_after_large': files_after_large,
+                'cache_cleared_on_size_limit': files_after_large == 0,
+                'size_limit_enforced': True
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    async def test_file_number_limits(self, cache: MockFileEmbeddingCache) -> Dict[str, Any]:
+        """Test file number limit enforcement (LRU eviction)"""
+        try:
+            # Store embeddings up to and beyond the limit
+            stored_files = []
+            
+            for i, identifier in enumerate(self.test_identifiers):
+                if i < len(self.test_embeddings):
+                    embeddings = self.test_embeddings[i % len(self.test_embeddings)]
+                else:
+                    embeddings = self.test_embeddings[0]
+                
+                await cache.store(embeddings, identifier)
+                time.sleep(0.1)  # Ensure different timestamps
+                
+                current_files = cache._get_cache_files_with_time()
+                stored_files.append(len(current_files))
+            
+            final_files = cache._get_cache_files_with_time()
+            
+            return {
+                'success': True,
+                'file_counts_progression': stored_files,
+                'final_file_count': len(final_files),
+                'limit_respected': len(final_files) <= cache.max_file_number,
+                'lru_eviction_working': max(stored_files) > cache.max_file_number
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    async def test_cache_clear(self, cache: MockFileEmbeddingCache) -> Dict[str, Any]:
+        """Test cache clearing functionality"""
+        try:
+            # Store some embeddings
+            for i in range(3):
+                await cache.store(
+                    self.test_embeddings[i % len(self.test_embeddings)], 
+                    self.test_identifiers[i]
+                )
+            
+            files_before_clear = len(cache._get_cache_files_with_time())
+            memory_before_clear = len(cache.memory_cache)
+            
+            # Clear cache
+            await cache.clear()
+            
+            files_after_clear = len(cache._get_cache_files_with_time())
+            memory_after_clear = len(cache.memory_cache)
+            
+            return {
+                'success': True,
+                'files_before': files_before_clear,
+                'files_after': files_after_clear,
+                'memory_before': memory_before_clear,
+                'memory_after': memory_after_clear,
+                'files_cleared': files_after_clear == 0,
+                'memory_cleared': memory_after_clear == 0,
+                'clear_successful': files_after_clear == 0 and memory_after_clear == 0
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    async def test_filename_generation(self, cache: MockFileEmbeddingCache) -> Dict[str, Any]:
+        """Test deterministic filename generation"""
+        try:
+            identifier1 = {"model": "test", "text": ["hello"]}
+            identifier2 = {"model": "test", "text": ["hello"]}  # Same content
+            identifier3 = {"model": "test", "text": ["world"]}  # Different content
+            
+            filename1 = cache._generate_filename(identifier1)
+            filename2 = cache._generate_filename(identifier2)
+            filename3 = cache._generate_filename(identifier3)
+            
+            return {
+                'success': True,
+                'same_content_same_filename': filename1 == filename2,
+                'different_content_different_filename': filename1 != filename3,
+                'filename_format_correct': filename1.endswith('.npy'),
+                'deterministic_generation': True
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e)
+            }
+
+
+class EmbeddingCacheValidator:
+    """Validates embedding cache test results"""
+    
+    def __init__(self):
+        self.framework = EmbeddingCacheTestFramework()
+    
+    async def validate_basic_functionality(self) -> Dict[str, Any]:
+        """Validate basic cache functionality"""
+        cache = self.framework.create_cache()
+        
+        try:
+            result = await self.framework.test_basic_storage_and_retriSafeCodeExecutor.safe_SafeCodeExecutor.safe_eval(cache)
+            
+            validation = {
+                'storage_works': result.get('stored_successfully', False),
+                'retrieval_works': result.get('retrieved_successfully', False),
+                'data_integrity': result.get('data_matches', False),
+                'file_system_integration': result.get('cache_files_created', False)
+            }
+            
+            return {
+                'test_result': result,
+                'validation': validation,
+                'overall_success': all(validation.values())
+            }
+            
+        finally:
+            await cache.clear()
+            if os.path.exists(cache.cache_dir):
+                shutil.rmtree(cache.cache_dir)
+    
+    async def validate_overwrite_behavior(self) -> Dict[str, Any]:
+        """Validate overwrite behavior"""
+        cache = self.framework.create_cache()
+        
+        try:
+            result = await self.framework.test_overwrite_behavior(cache)
+            
+            validation = {
+                'no_overwrite_respected': result.get('no_overwrite_preserved_original', False),
+                'overwrite_flag_works': result.get('overwrite_updated_data', False),
+                'behavior_consistent': result.get('overwrite_behavior_correct', False)
+            }
+            
+            return {
+                'test_result': result,
+                'validation': validation,
+                'overall_success': all(validation.values())
+            }
+            
+        finally:
+            await cache.clear()
+            if os.path.exists(cache.cache_dir):
+                shutil.rmtree(cache.cache_dir)
+    
+    async def validate_size_limits(self) -> Dict[str, Any]:
+        """Validate cache size limits"""
+        cache = self.framework.create_cache(max_size=2)  # 2MB limit
+        
+        try:
+            result = await self.framework.test_cache_size_limits(cache)
+            
+            validation = {
+                'size_limit_detected': result.get('files_before_large', 0) > 0,
+                'cache_cleared_on_limit': result.get('cache_cleared_on_size_limit', False),
+                'size_enforcement_works': result.get('size_limit_enforced', False)
+            }
+            
+            return {
+                'test_result': result,
+                'validation': validation,
+                'overall_success': all(validation.values())
+            }
+            
+        finally:
+            await cache.clear()
+            if os.path.exists(cache.cache_dir):
+                shutil.rmtree(cache.cache_dir)
+    
+    async def validate_file_limits(self) -> Dict[str, Any]:
+        """Validate file number limits and LRU eviction"""
+        cache = self.framework.create_cache(max_files=3)
+        
+        try:
+            result = await self.framework.test_file_number_limits(cache)
+            
+            validation = {
+                'file_limit_respected': result.get('limit_respected', False),
+                'lru_eviction_triggered': result.get('lru_eviction_working', False),
+                'final_count_correct': result.get('final_file_count', 0) <= 3
+            }
+            
+            return {
+                'test_result': result,
+                'validation': validation,
+                'overall_success': all(validation.values())
+            }
+            
+        finally:
+            await cache.clear()
+            if os.path.exists(cache.cache_dir):
+                shutil.rmtree(cache.cache_dir)
+    
+    async def validate_clear_functionality(self) -> Dict[str, Any]:
+        """Validate cache clearing"""
+        cache = self.framework.create_cache()
+        
+        try:
+            result = await self.framework.test_cache_clear(cache)
+            
+            validation = {
+                'files_existed_before': result.get('files_before', 0) > 0,
+                'files_cleared': result.get('files_cleared', False),
+                'memory_cleared': result.get('memory_cleared', False),
+                'complete_clear': result.get('clear_successful', False)
+            }
+            
+            return {
+                'test_result': result,
+                'validation': validation,
+                'overall_success': all(validation.values())
+            }
+            
+        finally:
+            # Additional cleanup
+            if os.path.exists(cache.cache_dir):
+                shutil.rmtree(cache.cache_dir)
+    
+    async def validate_filename_generation(self) -> Dict[str, Any]:
+        """Validate filename generation"""
+        cache = self.framework.create_cache()
+        
+        try:
+            result = await self.framework.test_filename_generation(cache)
+            
+            validation = {
+                'deterministic_naming': result.get('same_content_same_filename', False),
+                'unique_naming': result.get('different_content_different_filename', False),
+                'correct_format': result.get('filename_format_correct', False)
+            }
+            
+            return {
+                'test_result': result,
+                'validation': validation,
+                'overall_success': all(validation.values())
+            }
+            
+        finally:
+            await cache.clear()
+            if os.path.exists(cache.cache_dir):
+                shutil.rmtree(cache.cache_dir)
+    
+    async def run_comprehensive_cache_tests(self) -> Dict[str, Any]:
+        """Run comprehensive cache validation"""
+        results = {}
+        
+        results['basic_functionality'] = await self.validate_basic_functionality()
+        results['overwrite_behavior'] = await self.validate_overwrite_behavior()
+        results['size_limits'] = await self.validate_size_limits()
+        results['file_limits'] = await self.validate_file_limits()
+        results['clear_functionality'] = await self.validate_clear_functionality()
+        results['filename_generation'] = await self.validate_filename_generation()
+        
+        # Calculate overall success
+        overall_success = all(
+            result.get('overall_success', False) 
+            for result in results.values()
+        )
+        
+        results['summary'] = {
+            'total_validation_categories': len(results) - 1,
+            'passed_categories': sum(1 for k, v in results.items() 
+                                   if k != 'summary' and v.get('overall_success', False)),
+            'overall_success': overall_success,
+            'cache_system_validated': overall_success
+        }
+        
+        return results
+
+
+# Pytest integration patterns
+class PyTestEmbeddingCachePatterns:
+    """Embedding cache testing patterns for pytest"""
+    
+    @pytest.fixture
+    async def cache_framework(self):
+        """Provide cache test framework"""
+        return EmbeddingCacheTestFramework()
+    
+    @pytest.fixture
+    async def test_cache(self):
+        """Provide test cache instance"""
+        cache = MockFileEmbeddingCache(max_file_number=3, max_cache_size=2)
+        yield cache
+        # Cleanup
+        await cache.clear()
+        if os.path.exists(cache.cache_dir):
+            shutil.rmtree(cache.cache_dir)
+    
+    async def test_embedding_cache_storage(self, test_cache):
+        """Test basic embedding storage"""
+        embeddings = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
+        identifier = {
+            "model": "text-embedding-v1",
+            "text": ["This is a test text for embedding cache."]
+        }
+        
+        # Store embeddings
+        stored = await test_cache.store(embeddings, identifier)
+        assert stored is True
+        
+        # Retrieve embeddings
+        retrieved = await test_cache.retrieve(identifier)
+        assert retrieved == embeddings
+    
+    async def test_cache_overwrite_behavior(self, test_cache):
+        """Test cache overwrite behavior"""
+        identifier = {"model": "test", "text": ["test"]}
+        original = [[1, 2, 3]]
+        modified = [[4, 5, 6]]
+        
+        # Store original
+        await test_cache.store(original, identifier)
+        
+        # Try without overwrite
+        await test_cache.store(modified, identifier, overwrite=False)
+        retrieved = await test_cache.retrieve(identifier)
+        assert retrieved == original  # Should remain unchanged
+        
+        # Store with overwrite
+        await test_cache.store(modified, identifier, overwrite=True)
+        retrieved = await test_cache.retrieve(identifier)
+        assert retrieved == modified  # Should be updated
+    
+    async def test_cache_file_limits(self, test_cache):
+        """Test file number limits"""
+        # Store more files than the limit
+        for i in range(5):
+            embeddings = [[i] * 10]
+            identifier = {"model": f"model-{i}", "text": [f"text-{i}"]}
+            await test_cache.store(embeddings, identifier)
+            time.sleep(0.1)  # Ensure different timestamps
+        
+        # Should not exceed max file number
+        files = test_cache._get_cache_files_with_time()
+        assert len(files) <= test_cache.max_file_number
+    
+    async def test_cache_clear(self, test_cache):
+        """Test cache clearing"""
+        # Store some data
+        for i in range(2):
+            embeddings = [[i] * 10]
+            identifier = {"model": f"model-{i}", "text": [f"text-{i}"]}
+            await test_cache.store(embeddings, identifier)
+        
+        # Verify data exists
+        files_before = len(test_cache._get_cache_files_with_time())
+        assert files_before > 0
+        
+        # Clear cache
+        await test_cache.clear()
+        
+        # Verify cache is empty
+        files_after = len(test_cache._get_cache_files_with_time())
+        assert files_after == 0
+        assert len(test_cache.memory_cache) == 0
+
+
+# Export patterns for integration
+__all__ = [
+    'EmbeddingCacheTestFramework',
+    'EmbeddingCacheValidator',
+    'MockFileEmbeddingCache',
+    'PyTestEmbeddingCachePatterns'
+]

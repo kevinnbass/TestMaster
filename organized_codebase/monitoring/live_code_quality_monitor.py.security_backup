@@ -1,0 +1,1045 @@
+#!/usr/bin/env python3
+"""
+Live Code Quality Metrics Monitor
+=================================
+Real-time code quality monitoring and feedback system that provides instant
+insights into code quality metrics as developers write code.
+"""
+
+import ast
+import os
+import time
+import json
+import threading
+import asyncio
+import logging
+import hashlib
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Set, Callable, Union
+from dataclasses import dataclass, field, asdict
+from collections import defaultdict, deque
+from datetime import datetime, timedelta
+import statistics
+import psutil
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+@dataclass
+class QualityMetric:
+    """Individual quality metric measurement."""
+    name: str
+    value: float
+    category: str  # 'complexity', 'maintainability', 'reliability', 'security', 'performance'
+    severity: str  # 'info', 'warning', 'error', 'critical'
+    description: str
+    file_path: str
+    line_number: Optional[int] = None
+    suggestion: Optional[str] = None
+    timestamp: float = field(default_factory=time.time)
+
+@dataclass
+class QualitySnapshot:
+    """Complete quality snapshot for a file or project."""
+    timestamp: float
+    file_path: str
+    overall_score: float
+    metrics: List[QualityMetric]
+    trends: Dict[str, float]
+    hotspots: List[Dict[str, Any]]
+    summary: Dict[str, Any]
+
+@dataclass
+class QualityTrend:
+    """Quality trend over time."""
+    metric_name: str
+    values: deque
+    timestamps: deque
+    trend_direction: str  # 'improving', 'degrading', 'stable'
+    trend_strength: float  # 0.0 to 1.0
+
+class ComplexityAnalyzer:
+    """Analyzes code complexity in real-time."""
+    
+    def analyze_complexity(self, tree: ast.AST, content: str, file_path: str) -> List[QualityMetric]:
+        """Analyze complexity metrics."""
+        metrics = []
+        
+        # Cyclomatic complexity
+        cyclomatic = self._calculate_cyclomatic_complexity(tree)
+        metrics.append(QualityMetric(
+            name='cyclomatic_complexity',
+            value=cyclomatic,
+            category='complexity',
+            severity=self._get_complexity_severity(cyclomatic),
+            description=f'Cyclomatic complexity: {cyclomatic}',
+            file_path=file_path,
+            suggestion=self._get_complexity_suggestion(cyclomatic)
+        ))
+        
+        # Nesting depth
+        max_depth = self._calculate_nesting_depth(tree)
+        metrics.append(QualityMetric(
+            name='nesting_depth',
+            value=max_depth,
+            category='complexity',
+            severity=self._get_depth_severity(max_depth),
+            description=f'Maximum nesting depth: {max_depth}',
+            file_path=file_path,
+            suggestion=self._get_depth_suggestion(max_depth)
+        ))
+        
+        # Function complexity
+        function_metrics = self._analyze_function_complexity(tree, file_path)
+        metrics.extend(function_metrics)
+        
+        return metrics
+    
+    def _calculate_cyclomatic_complexity(self, tree: ast.AST) -> int:
+        """Calculate cyclomatic complexity."""
+        complexity = 1  # Base complexity
+        
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.If, ast.While, ast.For, ast.AsyncFor)):
+                complexity += 1
+            elif isinstance(node, ast.BoolOp):
+                complexity += len(node.values) - 1
+            elif isinstance(node, (ast.Break, ast.Continue)):
+                complexity += 1
+            elif isinstance(node, ast.ExceptHandler):
+                complexity += 1
+            elif isinstance(node, ast.With):
+                complexity += len(node.items)
+        
+        return complexity
+    
+    def _calculate_nesting_depth(self, tree: ast.AST) -> int:
+        """Calculate maximum nesting depth."""
+        max_depth = 0
+        
+        def calculate_depth(node, depth=0):
+            nonlocal max_depth
+            max_depth = max(max_depth, depth)
+            
+            for child in ast.iter_child_nodes(node):
+                if isinstance(child, (ast.If, ast.For, ast.While, ast.With, ast.Try, 
+                                    ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                    calculate_depth(child, depth + 1)
+                else:
+                    calculate_depth(child, depth)
+        
+        calculate_depth(tree)
+        return max_depth
+    
+    def _analyze_function_complexity(self, tree: ast.AST, file_path: str) -> List[QualityMetric]:
+        """Analyze complexity of individual functions."""
+        metrics = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                func_complexity = self._calculate_cyclomatic_complexity(node)
+                func_length = len(node.body)
+                
+                metrics.append(QualityMetric(
+                    name='function_complexity',
+                    value=func_complexity,
+                    category='complexity',
+                    severity=self._get_complexity_severity(func_complexity),
+                    description=f'Function {node.name} complexity: {func_complexity}',
+                    file_path=file_path,
+                    line_number=node.lineno,
+                    suggestion=f'Consider breaking down function {node.name} if complexity > 10'
+                ))
+                
+                if func_length > 20:
+                    metrics.append(QualityMetric(
+                        name='function_length',
+                        value=func_length,
+                        category='maintainability',
+                        severity='warning' if func_length > 50 else 'info',
+                        description=f'Function {node.name} has {func_length} lines',
+                        file_path=file_path,
+                        line_number=node.lineno,
+                        suggestion=f'Consider breaking down long function {node.name}'
+                    ))
+        
+        return metrics
+    
+    def _get_complexity_severity(self, complexity: int) -> str:
+        """Get severity level for complexity."""
+        if complexity <= 5:
+            return 'info'
+        elif complexity <= 10:
+            return 'warning'
+        elif complexity <= 20:
+            return 'error'
+        else:
+            return 'critical'
+    
+    def _get_depth_severity(self, depth: int) -> str:
+        """Get severity level for nesting depth."""
+        if depth <= 3:
+            return 'info'
+        elif depth <= 5:
+            return 'warning'
+        elif depth <= 7:
+            return 'error'
+        else:
+            return 'critical'
+    
+    def _get_complexity_suggestion(self, complexity: int) -> str:
+        """Get suggestion for complexity improvement."""
+        if complexity <= 5:
+            return 'Good! Complexity is manageable.'
+        elif complexity <= 10:
+            return 'Consider extracting some logic into separate functions.'
+        elif complexity <= 20:
+            return 'High complexity detected. Refactor to improve maintainability.'
+        else:
+            return 'Critical complexity! Urgent refactoring needed.'
+    
+    def _get_depth_suggestion(self, depth: int) -> str:
+        """Get suggestion for depth improvement."""
+        if depth <= 3:
+            return 'Good nesting depth.'
+        elif depth <= 5:
+            return 'Consider reducing nesting with early returns or helper functions.'
+        else:
+            return 'Deep nesting detected. Refactor to improve readability.'
+
+class MaintainabilityAnalyzer:
+    """Analyzes code maintainability in real-time."""
+    
+    def analyze_maintainability(self, tree: ast.AST, content: str, file_path: str) -> List[QualityMetric]:
+        """Analyze maintainability metrics."""
+        metrics = []
+        lines = content.split('\n')
+        
+        # Documentation coverage
+        doc_coverage = self._calculate_documentation_coverage(tree)
+        metrics.append(QualityMetric(
+            name='documentation_coverage',
+            value=doc_coverage,
+            category='maintainability',
+            severity='warning' if doc_coverage < 50 else 'info',
+            description=f'Documentation coverage: {doc_coverage:.1f}%',
+            file_path=file_path,
+            suggestion=self._get_doc_suggestion(doc_coverage)
+        ))
+        
+        # Code duplication (simplified)
+        duplication_score = self._detect_code_duplication(lines)
+        if duplication_score > 0:
+            metrics.append(QualityMetric(
+                name='code_duplication',
+                value=duplication_score,
+                category='maintainability',
+                severity='warning' if duplication_score > 20 else 'info',
+                description=f'Potential code duplication detected: {duplication_score:.1f}%',
+                file_path=file_path,
+                suggestion='Consider extracting common patterns into reusable functions.'
+            ))
+        
+        # Long parameter lists
+        param_metrics = self._analyze_parameter_lists(tree, file_path)
+        metrics.extend(param_metrics)
+        
+        # Naming conventions
+        naming_metrics = self._analyze_naming_conventions(tree, file_path)
+        metrics.extend(naming_metrics)
+        
+        return metrics
+    
+    def _calculate_documentation_coverage(self, tree: ast.AST) -> float:
+        """Calculate documentation coverage percentage."""
+        documented_items = 0
+        total_items = 0
+        
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                total_items += 1
+                
+                # Check if has docstring
+                if (len(node.body) > 0 and 
+                    isinstance(node.body[0], ast.Expr) and
+                    isinstance(node.body[0].value, (ast.Str, ast.Constant))):
+                    documented_items += 1
+        
+        return (documented_items / total_items * 100) if total_items > 0 else 100
+    
+    def _detect_code_duplication(self, lines: List[str]) -> float:
+        """Detect potential code duplication (simplified)."""
+        # Simplified duplication detection
+        line_counts = defaultdict(int)
+        
+        for line in lines:
+            stripped = line.strip()
+            if stripped and not stripped.startswith('#') and len(stripped) > 10:
+                line_counts[stripped] += 1
+        
+        duplicated_lines = sum(count - 1 for count in line_counts.values() if count > 1)
+        total_significant_lines = len([line for line in lines if line.strip() and not line.strip().startswith('#')])
+        
+        return (duplicated_lines / total_significant_lines * 100) if total_significant_lines > 0 else 0
+    
+    def _analyze_parameter_lists(self, tree: ast.AST, file_path: str) -> List[QualityMetric]:
+        """Analyze function parameter lists."""
+        metrics = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                param_count = len(node.args.args)
+                
+                if param_count > 5:
+                    metrics.append(QualityMetric(
+                        name='parameter_count',
+                        value=param_count,
+                        category='maintainability',
+                        severity='warning' if param_count > 7 else 'info',
+                        description=f'Function {node.name} has {param_count} parameters',
+                        file_path=file_path,
+                        line_number=node.lineno,
+                        suggestion=f'Consider using a configuration object for function {node.name}'
+                    ))
+        
+        return metrics
+    
+    def _analyze_naming_conventions(self, tree: ast.AST, file_path: str) -> List[QualityMetric]:
+        """Analyze naming conventions."""
+        metrics = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef):
+                if not self._is_snake_case(node.name) and not node.name.startswith('__'):
+                    metrics.append(QualityMetric(
+                        name='naming_convention',
+                        value=0,
+                        category='maintainability',
+                        severity='info',
+                        description=f'Function {node.name} should use snake_case',
+                        file_path=file_path,
+                        line_number=node.lineno,
+                        suggestion='Use snake_case for function names'
+                    ))
+            
+            elif isinstance(node, ast.ClassDef):
+                if not self._is_pascal_case(node.name):
+                    metrics.append(QualityMetric(
+                        name='naming_convention',
+                        value=0,
+                        category='maintainability',
+                        severity='info',
+                        description=f'Class {node.name} should use PascalCase',
+                        file_path=file_path,
+                        line_number=node.lineno,
+                        suggestion='Use PascalCase for class names'
+                    ))
+        
+        return metrics
+    
+    def _is_snake_case(self, name: str) -> bool:
+        """Check if name follows snake_case convention."""
+        return name.islower() and '_' in name or name.islower()
+    
+    def _is_pascal_case(self, name: str) -> bool:
+        """Check if name follows PascalCase convention."""
+        return name[0].isupper() and name.replace('_', '').isalnum()
+    
+    def _get_doc_suggestion(self, coverage: float) -> str:
+        """Get suggestion for documentation improvement."""
+        if coverage >= 80:
+            return 'Excellent documentation coverage!'
+        elif coverage >= 60:
+            return 'Good documentation coverage. Consider documenting remaining functions.'
+        elif coverage >= 40:
+            return 'Moderate documentation coverage. Add docstrings to improve maintainability.'
+        else:
+            return 'Low documentation coverage. Add docstrings to functions and classes.'
+
+class SecurityAnalyzer:
+    """Analyzes security-related code quality metrics."""
+    
+    def analyze_security(self, tree: ast.AST, content: str, file_path: str) -> List[QualityMetric]:
+        """Analyze security metrics."""
+        metrics = []
+        
+        # Detect dangerous functions
+        dangerous_functions = self._detect_dangerous_functions(tree, file_path)
+        metrics.extend(dangerous_functions)
+        
+        # Detect hardcoded secrets
+        secrets = self._detect_hardcoded_secrets(content, file_path)
+        metrics.extend(secrets)
+        
+        # Detect SQL injection risks
+        sql_risks = self._detect_sql_injection_risks(tree, file_path)
+        metrics.extend(sql_risks)
+        
+        return metrics
+    
+    def _detect_dangerous_functions(self, tree: ast.AST, file_path: str) -> List[QualityMetric]:
+        """Detect usage of dangerous functions."""
+        metrics = []
+        dangerous_funcs = ['eval', 'exec', 'compile', '__import__']
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+                if node.func.id in dangerous_funcs:
+                    metrics.append(QualityMetric(
+                        name='dangerous_function',
+                        value=1,
+                        category='security',
+                        severity='critical',
+                        description=f'Dangerous function {node.func.id}() detected',
+                        file_path=file_path,
+                        line_number=node.lineno,
+                        suggestion=f'Avoid using {node.func.id}(). Consider safer alternatives.'
+                    ))
+        
+        return metrics
+    
+    def _detect_hardcoded_secrets(self, content: str, file_path: str) -> List[QualityMetric]:
+        """Detect potential hardcoded secrets."""
+        metrics = []
+        lines = content.split('\n')
+        
+        secret_patterns = [
+            ('password', 'password'),
+            ('api_key', 'API key'),
+            ('secret', 'secret'),
+            ('token', 'token'),
+            ('auth', 'authentication')
+        ]
+        
+        for line_num, line in enumerate(lines, 1):
+            line_lower = line.lower()
+            for pattern, description in secret_patterns:
+                if pattern in line_lower and '=' in line and '"' in line:
+                    # Simple heuristic for potential hardcoded values
+                    if len(line.split('"')[1]) > 8:  # Assuming secrets are > 8 chars
+                        metrics.append(QualityMetric(
+                            name='hardcoded_secret',
+                            value=1,
+                            category='security',
+                            severity='error',
+                            description=f'Potential hardcoded {description} detected',
+                            file_path=file_path,
+                            line_number=line_num,
+                            suggestion='Use environment variables or configuration files for secrets.'
+                        ))
+        
+        return metrics
+    
+    def _detect_sql_injection_risks(self, tree: ast.AST, file_path: str) -> List[QualityMetric]:
+        """Detect potential SQL injection risks."""
+        metrics = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                # Check for string formatting in SQL contexts
+                if isinstance(node.func, ast.Attribute):
+                    if (hasattr(node.func.value, 'id') and 
+                        'sql' in getattr(node.func.value, 'id', '').lower()):
+                        
+                        # Check for format() or % operator
+                        if node.func.attr in ['format', 'replace']:
+                            metrics.append(QualityMetric(
+                                name='sql_injection_risk',
+                                value=1,
+                                category='security',
+                                severity='error',
+                                description='Potential SQL injection risk detected',
+                                file_path=file_path,
+                                line_number=node.lineno,
+                                suggestion='Use parameterized queries instead of string formatting.'
+                            ))
+        
+        return metrics
+
+class PerformanceAnalyzer:
+    """Analyzes performance-related code quality metrics."""
+    
+    def analyze_performance(self, tree: ast.AST, content: str, file_path: str) -> List[QualityMetric]:
+        """Analyze performance metrics."""
+        metrics = []
+        
+        # Detect inefficient patterns
+        inefficient_patterns = self._detect_inefficient_patterns(tree, file_path)
+        metrics.extend(inefficient_patterns)
+        
+        # Analyze loop complexity
+        loop_metrics = self._analyze_loops(tree, file_path)
+        metrics.extend(loop_metrics)
+        
+        return metrics
+    
+    def _detect_inefficient_patterns(self, tree: ast.AST, file_path: str) -> List[QualityMetric]:
+        """Detect inefficient coding patterns."""
+        metrics = []
+        
+        for node in ast.walk(tree):
+            # Detect string concatenation in loops
+            if isinstance(node, (ast.For, ast.While)):
+                for child in ast.walk(node):
+                    if isinstance(child, ast.AugAssign) and isinstance(child.op, ast.Add):
+                        if isinstance(child.target, ast.Name):
+                            metrics.append(QualityMetric(
+                                name='string_concatenation_in_loop',
+                                value=1,
+                                category='performance',
+                                severity='warning',
+                                description='String concatenation in loop detected',
+                                file_path=file_path,
+                                line_number=child.lineno,
+                                suggestion='Use list.join() or f-strings for better performance.'
+                            ))
+        
+        return metrics
+    
+    def _analyze_loops(self, tree: ast.AST, file_path: str) -> List[QualityMetric]:
+        """Analyze loop complexity and patterns."""
+        metrics = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.For, ast.While)):
+                # Count nested loops
+                nested_loops = self._count_nested_loops(node)
+                
+                if nested_loops > 2:
+                    metrics.append(QualityMetric(
+                        name='deeply_nested_loops',
+                        value=nested_loops,
+                        category='performance',
+                        severity='warning',
+                        description=f'Deeply nested loops detected (depth: {nested_loops})',
+                        file_path=file_path,
+                        line_number=node.lineno,
+                        suggestion='Consider algorithm optimization or breaking into smaller functions.'
+                    ))
+        
+        return metrics
+    
+    def _count_nested_loops(self, node: ast.AST) -> int:
+        """Count the depth of nested loops."""
+        max_depth = 0
+        
+        def count_depth(node, depth=0):
+            nonlocal max_depth
+            
+            if isinstance(node, (ast.For, ast.While)):
+                depth += 1
+                max_depth = max(max_depth, depth)
+            
+            for child in ast.iter_child_nodes(node):
+                count_depth(child, depth)
+        
+        count_depth(node)
+        return max_depth
+
+class LiveCodeQualityMonitor:
+    """Main class for live code quality monitoring."""
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        self.config = config or {}
+        
+        # Analyzers
+        self.complexity_analyzer = ComplexityAnalyzer()
+        self.maintainability_analyzer = MaintainabilityAnalyzer()
+        self.security_analyzer = SecurityAnalyzer()
+        self.performance_analyzer = PerformanceAnalyzer()
+        
+        # Quality tracking
+        self.quality_history = defaultdict(lambda: deque(maxlen=100))
+        self.quality_trends = {}
+        self.quality_snapshots = deque(maxlen=1000)
+        
+        # Real-time monitoring
+        self.monitoring = False
+        self.monitor_thread = None
+        self.file_watch_list = set()
+        self.last_analysis_times = {}
+        
+        # Callbacks
+        self.quality_callbacks = []
+        self.threshold_callbacks = []
+        
+        # Quality thresholds
+        self.quality_thresholds = {
+            'cyclomatic_complexity': 10,
+            'nesting_depth': 5,
+            'function_length': 50,
+            'documentation_coverage': 60,
+            'overall_score': 70
+        }
+        
+        # Configuration
+        self.analysis_interval = self.config.get('analysis_interval', 2.0)  # seconds
+        self.enable_trends = self.config.get('enable_trends', True)
+        self.max_history_size = self.config.get('max_history_size', 100)
+        
+        self.logger = logging.getLogger(__name__)
+    
+    def start_monitoring(self, watch_paths: List[str] = None):
+        """Start live quality monitoring."""
+        if self.monitoring:
+            return
+        
+        self.monitoring = True
+        
+        if watch_paths:
+            for path in watch_paths:
+                self.add_watch_path(path)
+        
+        self.monitor_thread = threading.Thread(target=self._monitoring_loop, daemon=True)
+        self.monitor_thread.start()
+        
+        self.logger.info(f"Live code quality monitoring started")
+    
+    def stop_monitoring(self):
+        """Stop live quality monitoring."""
+        if not self.monitoring:
+            return
+        
+        self.monitoring = False
+        
+        if self.monitor_thread:
+            self.monitor_thread.join(timeout=5.0)
+        
+        self.logger.info("Live code quality monitoring stopped")
+    
+    def add_watch_path(self, path: str):
+        """Add a path to the watch list."""
+        path_obj = Path(path)
+        
+        if path_obj.is_file() and path_obj.suffix == '.py':
+            self.file_watch_list.add(str(path_obj))
+        elif path_obj.is_dir():
+            for py_file in path_obj.rglob('*.py'):
+                self.file_watch_list.add(str(py_file))
+    
+    def remove_watch_path(self, path: str):
+        """Remove a path from the watch list."""
+        self.file_watch_list.discard(path)
+    
+    def analyze_file_quality(self, file_path: str) -> Optional[QualitySnapshot]:
+        """Analyze quality metrics for a single file."""
+        try:
+            path_obj = Path(file_path)
+            if not path_obj.exists():
+                return None
+            
+            content = path_obj.read_text(encoding='utf-8')
+            
+            try:
+                tree = ast.parse(content)
+            except SyntaxError as e:
+                self.logger.warning(f"Syntax error in {file_path}: {e}")
+                return None
+            
+            # Collect metrics from all analyzers
+            all_metrics = []
+            
+            all_metrics.extend(self.complexity_analyzer.analyze_complexity(tree, content, file_path))
+            all_metrics.extend(self.maintainability_analyzer.analyze_maintainability(tree, content, file_path))
+            all_metrics.extend(self.security_analyzer.analyze_security(tree, content, file_path))
+            all_metrics.extend(self.performance_analyzer.analyze_performance(tree, content, file_path))
+            
+            # Calculate overall score
+            overall_score = self._calculate_overall_score(all_metrics)
+            
+            # Identify hotspots
+            hotspots = self._identify_hotspots(all_metrics)
+            
+            # Generate summary
+            summary = self._generate_summary(all_metrics, overall_score)
+            
+            # Calculate trends
+            trends = self._calculate_trends(file_path, all_metrics)
+            
+            snapshot = QualitySnapshot(
+                timestamp=time.time(),
+                file_path=file_path,
+                overall_score=overall_score,
+                metrics=all_metrics,
+                trends=trends,
+                hotspots=hotspots,
+                summary=summary
+            )
+            
+            # Store snapshot
+            self.quality_snapshots.append(snapshot)
+            
+            # Update history for trend analysis
+            if self.enable_trends:
+                self._update_quality_history(file_path, all_metrics, overall_score)
+            
+            # Check thresholds and notify callbacks
+            self._check_quality_thresholds(snapshot)
+            self._notify_quality_callbacks(snapshot)
+            
+            return snapshot
+            
+        except Exception as e:
+            self.logger.error(f"Error analyzing {file_path}: {e}")
+            return None
+    
+    def _monitoring_loop(self):
+        """Main monitoring loop."""
+        self.logger.info("Quality monitoring loop started")
+        
+        while self.monitoring:
+            try:
+                current_time = time.time()
+                
+                for file_path in self.file_watch_list.copy():
+                    # Check if file needs analysis
+                    if self._should_analyze_file(file_path, current_time):
+                        self.analyze_file_quality(file_path)
+                        self.last_analysis_times[file_path] = current_time
+                
+                time.sleep(self.analysis_interval)
+                
+            except Exception as e:
+                self.logger.error(f"Error in monitoring loop: {e}")
+    
+    def _should_analyze_file(self, file_path: str, current_time: float) -> bool:
+        """Determine if a file should be analyzed."""
+        path_obj = Path(file_path)
+        
+        if not path_obj.exists():
+            return False
+        
+        # Check if file was modified since last analysis
+        last_analysis = self.last_analysis_times.get(file_path, 0)
+        file_mtime = path_obj.stat().st_mtime
+        
+        return file_mtime > last_analysis
+    
+    def _calculate_overall_score(self, metrics: List[QualityMetric]) -> float:
+        """Calculate overall quality score."""
+        if not metrics:
+            return 100.0
+        
+        # Weighted scoring based on severity
+        severity_weights = {
+            'info': 0.0,
+            'warning': -5.0,
+            'error': -15.0,
+            'critical': -30.0
+        }
+        
+        total_deduction = sum(severity_weights.get(metric.severity, 0) for metric in metrics)
+        score = max(0.0, 100.0 + total_deduction)
+        
+        return score
+    
+    def _identify_hotspots(self, metrics: List[QualityMetric]) -> List[Dict[str, Any]]:
+        """Identify quality hotspots."""
+        hotspots = []
+        
+        # Group metrics by line number and severity
+        critical_lines = defaultdict(list)
+        
+        for metric in metrics:
+            if metric.severity in ['error', 'critical'] and metric.line_number:
+                critical_lines[metric.line_number].append(metric)
+        
+        # Create hotspots for lines with multiple issues
+        for line_num, line_metrics in critical_lines.items():
+            if len(line_metrics) > 1:
+                hotspots.append({
+                    'line_number': line_num,
+                    'issue_count': len(line_metrics),
+                    'severity': max(metric.severity for metric in line_metrics),
+                    'issues': [metric.description for metric in line_metrics]
+                })
+        
+        return sorted(hotspots, key=lambda x: x['issue_count'], reverse=True)
+    
+    def _generate_summary(self, metrics: List[QualityMetric], overall_score: float) -> Dict[str, Any]:
+        """Generate quality summary."""
+        metrics_by_category = defaultdict(list)
+        metrics_by_severity = defaultdict(int)
+        
+        for metric in metrics:
+            metrics_by_category[metric.category].append(metric)
+            metrics_by_severity[metric.severity] += 1
+        
+        return {
+            'overall_score': overall_score,
+            'total_issues': len(metrics),
+            'issues_by_severity': dict(metrics_by_severity),
+            'issues_by_category': {
+                category: len(category_metrics)
+                for category, category_metrics in metrics_by_category.items()
+            },
+            'quality_grade': self._get_quality_grade(overall_score)
+        }
+    
+    def _get_quality_grade(self, score: float) -> str:
+        """Get quality grade based on score."""
+        if score >= 90:
+            return 'A'
+        elif score >= 80:
+            return 'B'
+        elif score >= 70:
+            return 'C'
+        elif score >= 60:
+            return 'D'
+        else:
+            return 'F'
+    
+    def _calculate_trends(self, file_path: str, metrics: List[QualityMetric]) -> Dict[str, float]:
+        """Calculate quality trends."""
+        trends = {}
+        
+        if not self.enable_trends:
+            return trends
+        
+        # Calculate trends for key metrics
+        key_metrics = ['cyclomatic_complexity', 'nesting_depth', 'documentation_coverage']
+        
+        for metric_name in key_metrics:
+            metric_values = [m.value for m in metrics if m.name == metric_name]
+            if metric_values:
+                current_value = metric_values[0]
+                
+                # Get historical values
+                history_key = f"{file_path}_{metric_name}"
+                if history_key in self.quality_history:
+                    historical_values = list(self.quality_history[history_key])
+                    
+                    if len(historical_values) >= 2:
+                        # Simple trend calculation
+                        recent_avg = statistics.mean(historical_values[-5:])
+                        older_avg = statistics.mean(historical_values[-10:-5]) if len(historical_values) >= 10 else recent_avg
+                        
+                        trend_value = (recent_avg - older_avg) / older_avg if older_avg != 0 else 0
+                        trends[metric_name] = trend_value
+        
+        return trends
+    
+    def _update_quality_history(self, file_path: str, metrics: List[QualityMetric], overall_score: float):
+        """Update quality history for trend analysis."""
+        timestamp = time.time()
+        
+        # Store overall score
+        overall_key = f"{file_path}_overall_score"
+        self.quality_history[overall_key].append((timestamp, overall_score))
+        
+        # Store individual metrics
+        for metric in metrics:
+            metric_key = f"{file_path}_{metric.name}"
+            self.quality_history[metric_key].append((timestamp, metric.value))
+    
+    def _check_quality_thresholds(self, snapshot: QualitySnapshot):
+        """Check if quality thresholds are exceeded."""
+        violations = []
+        
+        for metric in snapshot.metrics:
+            threshold = self.quality_thresholds.get(metric.name)
+            
+            if threshold and metric.value > threshold:
+                violations.append({
+                    'metric': metric.name,
+                    'value': metric.value,
+                    'threshold': threshold,
+                    'file_path': snapshot.file_path
+                })
+        
+        # Check overall score
+        if snapshot.overall_score < self.quality_thresholds.get('overall_score', 70):
+            violations.append({
+                'metric': 'overall_score',
+                'value': snapshot.overall_score,
+                'threshold': self.quality_thresholds['overall_score'],
+                'file_path': snapshot.file_path
+            })
+        
+        if violations:
+            for callback in self.threshold_callbacks:
+                try:
+                    callback(violations)
+                except Exception as e:
+                    self.logger.error(f"Error in threshold callback: {e}")
+    
+    def _notify_quality_callbacks(self, snapshot: QualitySnapshot):
+        """Notify quality callbacks."""
+        for callback in self.quality_callbacks:
+            try:
+                callback(snapshot)
+            except Exception as e:
+                self.logger.error(f"Error in quality callback: {e}")
+    
+    def add_quality_callback(self, callback: Callable[[QualitySnapshot], None]):
+        """Add callback for quality updates."""
+        self.quality_callbacks.append(callback)
+    
+    def add_threshold_callback(self, callback: Callable[[List[Dict]], None]):
+        """Add callback for threshold violations."""
+        self.threshold_callbacks.append(callback)
+    
+    def get_file_quality_history(self, file_path: str, hours: int = 24) -> List[QualitySnapshot]:
+        """Get quality history for a file."""
+        cutoff_time = time.time() - (hours * 3600)
+        
+        return [
+            snapshot for snapshot in self.quality_snapshots
+            if snapshot.file_path == file_path and snapshot.timestamp >= cutoff_time
+        ]
+    
+    def get_quality_statistics(self) -> Dict[str, Any]:
+        """Get overall quality statistics."""
+        if not self.quality_snapshots:
+            return {}
+        
+        recent_snapshots = [s for s in self.quality_snapshots if s.timestamp > time.time() - 3600]
+        
+        if not recent_snapshots:
+            return {}
+        
+        overall_scores = [s.overall_score for s in recent_snapshots]
+        
+        return {
+            'average_quality_score': statistics.mean(overall_scores),
+            'median_quality_score': statistics.median(overall_scores),
+            'files_monitored': len(self.file_watch_list),
+            'total_snapshots': len(self.quality_snapshots),
+            'recent_snapshots': len(recent_snapshots),
+            'quality_distribution': self._calculate_quality_distribution(recent_snapshots)
+        }
+    
+    def _calculate_quality_distribution(self, snapshots: List[QualitySnapshot]) -> Dict[str, int]:
+        """Calculate distribution of quality grades."""
+        distribution = defaultdict(int)
+        
+        for snapshot in snapshots:
+            grade = self._get_quality_grade(snapshot.overall_score)
+            distribution[grade] += 1
+        
+        return dict(distribution)
+    
+    def export_quality_report(self, output_file: str = None) -> str:
+        """Export quality report to JSON."""
+        if output_file is None:
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            output_file = f"quality_report_{timestamp}.json"
+        
+        report_data = {
+            'timestamp': time.time(),
+            'statistics': self.get_quality_statistics(),
+            'recent_snapshots': [
+                asdict(snapshot) for snapshot in self.quality_snapshots
+                if snapshot.timestamp > time.time() - 3600
+            ],
+            'configuration': {
+                'quality_thresholds': self.quality_thresholds,
+                'analysis_interval': self.analysis_interval,
+                'enable_trends': self.enable_trends
+            }
+        }
+        
+        with open(output_file, 'w') as f:
+            json.dump(report_data, f, indent=2, default=str)
+        
+        self.logger.info(f"Quality report exported to: {output_file}")
+        return output_file
+
+
+def main():
+    """Demo and testing of live code quality monitor."""
+    # Create monitor
+    monitor = LiveCodeQualityMonitor()
+    
+    # Add callbacks
+    def quality_callback(snapshot: QualitySnapshot):
+        logger.info(f"Quality update for {snapshot.file_path}: Score = {snapshot.overall_score:.1f}")
+        if snapshot.hotspots:
+            logger.info(f"  Hotspots: {len(snapshot.hotspots)}")
+    
+    def threshold_callback(violations: List[Dict]):
+        for violation in violations:
+            logger.warning(f"Threshold violation: {violation['metric']} = {violation['value']} "
+                          f"(threshold: {violation['threshold']})")
+    
+    monitor.add_quality_callback(quality_callback)
+    monitor.add_threshold_callback(threshold_callback)
+    
+    # Create test file
+    test_file = 'test_quality.py'
+    test_content = '''
+def complex_function(a, b, c, d, e, f, g):  # Too many parameters
+    if a > 0:
+        if b > 0:
+            if c > 0:
+                if d > 0:
+                    if e > 0:  # Deep nesting
+                        return a + b + c + d + e + f + g
+    return 0
+
+class UndocumentedClass:  # No docstring
+    def method_without_docs(self):  # No docstring
+        password = "hardcoded_secret_123"  # Security issue
+        eval("1 + 1")  # Dangerous function
+        
+        # String concatenation in loop (performance issue)
+        result = ""
+        for i in range(100):
+            result += str(i)
+        
+        return result
+'''
+    
+    try:
+        # Write test file
+        with open(test_file, 'w') as f:
+            f.write(test_content)
+        
+        # Add to watch list and start monitoring
+        monitor.add_watch_path(test_file)
+        monitor.start_monitoring()
+        
+        # Let it run for a bit
+        logger.info("Monitoring for 5 seconds...")
+        time.sleep(5)
+        
+        # Analyze the file directly
+        logger.info("Performing direct analysis...")
+        snapshot = monitor.analyze_file_quality(test_file)
+        
+        if snapshot:
+            logger.info(f"Analysis results:")
+            logger.info(f"  Overall score: {snapshot.overall_score:.1f}")
+            logger.info(f"  Total issues: {len(snapshot.metrics)}")
+            logger.info(f"  Quality grade: {snapshot.summary['quality_grade']}")
+            
+            # Show issues by category
+            for category, count in snapshot.summary['issues_by_category'].items():
+                logger.info(f"  {category}: {count} issues")
+            
+            # Show some specific issues
+            critical_issues = [m for m in snapshot.metrics if m.severity == 'critical']
+            for issue in critical_issues[:3]:  # Show first 3 critical issues
+                logger.info(f"  CRITICAL: {issue.description} (line {issue.line_number})")
+        
+        # Get statistics
+        stats = monitor.get_quality_statistics()
+        logger.info(f"Quality statistics: {stats}")
+        
+        # Export report
+        report_file = monitor.export_quality_report()
+        logger.info(f"Report exported to: {report_file}")
+        
+        # Clean up
+        os.remove(test_file)
+        if os.path.exists(report_file):
+            os.remove(report_file)
+        
+    finally:
+        monitor.stop_monitoring()
+        logger.info("Live code quality monitor demo completed")
+
+
+if __name__ == "__main__":
+    main()

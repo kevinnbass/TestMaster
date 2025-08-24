@@ -1,2 +1,2 @@
-import TransitionImage from '../../../plugins/transitionimage';
+import TransitionImage from './gameobjects/container/transitionimage/TransitionImage';
 export default TransitionImage;

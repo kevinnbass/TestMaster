@@ -1,58 +1,44 @@
 import { SetLastOpenedEditor } from './LastOpenedEditor.js';
-import IsFunction from '../../../utils/object/IsFunction.js';
-import CreateInputTextFromText from './CreateInputText.js';
-import NextTick from '../../../utils/time/NextTick.js';
+import CreateElement from './CreateElement.js';
 
-const GetValue = Phaser.Utils.Objects.GetValue;
-const Merge = Phaser.Utils.Objects.Merge;
-
-var Open = function (config, onCloseCallback) {
-    if (config === undefined) {
-        config = {};
+var Open = function () {
+    // Already opened
+    if (this.isOpened) {
+        return this;
     }
-    config = Merge(config, this.openConfig)
+    // Read only
+    if (this.readOnly) {
+        return this;
+    }
 
     SetLastOpenedEditor(this);
 
-    if (IsFunction(config)) {
-        onCloseCallback = config;
-        config = undefined;
+    this.isOpened = true;
+
+    if (!this.node) {
+        // Create input text element when opening editor
+        this.node = CreateElement(this, this.nodeConfig);
     }
-    if (onCloseCallback === undefined) {
-        onCloseCallback = GetValue(config, 'onClose', undefined);
-    }
 
-    var onOpenCallback = GetValue(config, 'onOpen', undefined);
-    var customOnTextChanged = GetValue(config, 'onTextChanged', undefined);
+    this.setFocus();
 
-    this.inputText = CreateInputTextFromText(this.parent, config)
-        .on('textchange', function (inputText) {
-            var text = inputText.text;
-            if (customOnTextChanged) { // Custom on-text-changed callback
-                customOnTextChanged(this.parent, text);
-            } else { // Default on-text-changed callback
-                this.parent.text = text;
-            }
-        }, this)
-        .setFocus();
-    this.parent.setVisible(false); // Set parent text invisible
+    this.initText();
 
-    // Attach close event
-    this.onClose = onCloseCallback;
-    if (GetValue(config, 'enterClose', true)) {
+    if (this.enterCloseEnable) {
         this.scene.input.keyboard.once('keydown-ENTER', this.close, this);
     }
-    // Attach pointerdown (outside of input-text) event, at next tick
-    this.delayCall = NextTick(this.scene, function () {
-        this.scene.input.once('pointerdown', this.close, this);
 
-        // Open editor completly, invoke onOpenCallback
-        if (onOpenCallback) {
-            onOpenCallback(this.parent);
-        }
-        this.emit('open', this.parent);
+    // There is no cursor-position-change event, 
+    // so updating cursor position every tick
+    this.scene.sys.events.on('postupdate', this.updateText, this);
 
-    }, this);
+    this.scene.input.on('pointerdown', this.onClickOutside, this);
+
+    if (this.onOpenCallback) {
+        this.onOpenCallback(this.parent, this);
+    }
+
+    this.emit('open', this);
 
     return this;
 }

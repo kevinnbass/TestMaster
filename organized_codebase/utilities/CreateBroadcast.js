@@ -13,19 +13,20 @@ var CreateBroadcast = function (config) {
             receive: 'broadcast.receive'
         },
 
-        root: this.rootPath,
-        receiverID: 'broadcast',
+        receiverID: 'boradcast',
         senderID: this.userInfo,
         history: GetValue(broadcastConfig, 'history', false)
     });
 
     this
-        .on('room.join', function () {
-            broadcast.startReceiving()
-        })
+        .on('room.join', function (roomConfig) {
+            broadcast
+                .setRootPath(this.getRoomDataPath(roomConfig.roomID))
+                .startReceiving()
+        }, this)
         .on('room.leave', function () {
             broadcast.stopReceiving()
-        })
+        }, this)
         .on('userlist.changename', function (userID, userName) {
             broadcast.changeUserName(userID, userName);
         }, this)

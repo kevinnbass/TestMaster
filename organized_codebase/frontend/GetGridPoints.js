@@ -1,9 +1,9 @@
-import SetPoints from '../../../geom/quad/SetPoints.js';
+import SetPoints from '../../../geom/hexagon/SetPoints.js';
 import InitPoints from '../../../geom/utils/InitPoints.js';
 
 var GetGridPoints = function (tileX, tileY, points) {
     if (points === undefined) {
-        points = InitPoints(4);
+        points = InitPoints(6);
     } else if (points === true) {
         points = globPoints;
     }
@@ -14,12 +14,20 @@ var GetGridPoints = function (tileX, tileY, points) {
     } else {
         this.getWorldXY(tileX, tileY, globWorldXY);
     }
-    var quadType = (this.mode === 0) ? 0 : 1;
-    SetPoints(globWorldXY.x, globWorldXY.y, this.width, this.height, quadType, points);
+    var size;
+    if (this.size !== undefined) {
+        size = this.size;
+    } else {
+        size = globSize;
+        size.width = this.width;
+        size.height = this.height;
+    }
+    SetPoints(globWorldXY.x, globWorldXY.y, size, this.staggeraxis, points);
     return points;
 }
 
+var globPoints = InitPoints(6);
 var globWorldXY = {};
-var globPoints = InitPoints(4);
+var globSize = {};
 
 export default GetGridPoints;

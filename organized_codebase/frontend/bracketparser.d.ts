@@ -1,44 +1,26 @@
-import EventEmitter from '../../../utils/eventemitter/EventEmitter';
+import BracketParserBase from '../bracketparserbase/BracketParser';
+
 export default BracketParser;
 
 declare namespace BracketParser {
-    type ValueConvertCallback = (s: string) => any;
-    type TranslateTagNameCallbackType = (s: string) => string;
+    interface IConfig extends BracketParserBase.IConfig {
 
-    interface IConfig {
-        multipleLinesTag?: boolean,
-        delimiters?: string | [string, string],
-        valueConvert?: boolean | ValueConvertCallback,
-        translateTagNameCallback?: TranslateTagNameCallbackType,
+    }
 
-        eventEmitter?: EventEmitter | false,
+    namespace Events {
+        type StartCallbackType = (parser: BracketParser) => void;
+        type CompleteCallbackType = (parser: BracketParser) => void;
+        type PauseCallbackType = (parser: BracketParser) => void;
+        type ResumeCallbackType = (parser: BracketParser) => void;
 
-        loop?: boolean
+        type TagOnCallbackType = (payload: { [name: string]: any }) => void;
+        type AnyTagOnCallbackType = (tagName: string, payload: { [name: string]: any }) => void;
+        type TagOffCallbackType = (payload: { [name: string]: any }) => void;
+        type AnyTagOffCallbackType = (tagName: string, payload: { [name: string]: any }) => void;
+        type ContentCallbackType = (content: string) => void;
     }
 }
 
-declare class BracketParser extends EventEmitter {
-    constructor(
-        config?: BracketParser.IConfig
-    );
-
-    start(text: string): this;
-
-    pause(): this;
-    pauseUntilEvent(
-        eventEmitter: EventEmitter,
-        eventName: string
-    ): this;
-
-    next(): this;
-
-    restart(): this;
-
-    skipEvent(): this;
-
-    readonly isRunning: boolean;
-    readonly isPaused: boolean;
-
-    setDelimiters(delimiterLeft: string, delimiterRight?: string): this;
-    setTranslateTagNameCallback(callback?: BracketParser.TranslateTagNameCallbackType): this;
+declare class BracketParser extends BracketParserBase {
+    constructor(config?: BracketParser.IConfig);
 }

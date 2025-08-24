@@ -1,48 +1,43 @@
-// import * as Phaser from 'phaser';
-import BaseShape from '../../../plugins/gameobjects/shape/shapes/BaseShapes';
-
 export default Base;
 
-declare namespace Base {
-
-    interface IConfig {
-        x?: number, y?: number,
-        width?: number, height?: number,
-        color?: number,
-
-        duration?: number,
-        start?: boolean,
-
-        ease?: string,
-    }
-
-}
-
-declare class Base extends BaseShape {
+declare class Base extends Phaser.GameObjects.Zone {
     constructor(
         scene: Phaser.Scene,
-        config?: Base.IConfig
-    )
+        x?: number, y?: number,
+        width?: number, height?: number,
+    );
 
-    start(duration?: number): this;
-    pause(): this;
-    resume(): this;
-    stop(): this;
-    readonly isRunning: boolean;
+    contains(
+        gameObject: Phaser.GameObjects.GameObject
+    ): boolean;
 
-    setValue(t: number): this;
-    value: number;
+    add(
+        child: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[]
+    ): this;
 
-    setColor(color: number): this;
-    color: number;
+    remove(
+        gameObject: Phaser.GameObjects.GameObject,
+        destroyChild?: boolean
+    ): this;
 
-    setDuration(duration: number): this;
-    duration: this;
+    clear(
+        destroyChild?: boolean
+    ): this;
 
-    setEase(ease: string): this;
-    ease: string;
 
-    readonly centerX: number;
-    readonly centerY: number;
-    readonly radius: number;
+    // Components
+    clearAlpha(): this;
+    setAlpha(topLeft?: number, topRight?: number, bottomLeft?: number, bottomRight?: number): this;
+    alpha: number;
+    alphaTopLeft: number;
+    alphaTopRight: number;
+    alphaBottomLeft: number;
+    alphaBottomRight: number;
+
+    toggleFlipX(): this;
+    toggleFlipY(): this;
+    setFlipX(value: boolean): this;
+    setFlipY(value: boolean): this;
+    setFlip(x: boolean, y: boolean): this;
+    resetFlip(): this;
 }

@@ -1,0 +1,23 @@
+2025-08-22 21:32:49,150 - PerformanceProfiler - INFO - Performance Profiler initialized. Output: performance_data
+2025-08-22 21:32:49,150 - PerformanceProfiler - INFO - System Baseline - CPU: 16 cores, Memory: 37.84GB
+2025-08-22 21:32:49,151 - PerformanceProfiler - INFO - System monitoring started (interval: 0.5s)
+2025-08-22 21:32:49,151 - PerformanceProfiler - INFO - Starting CPU profiling for: cpu_intensive_test
+2025-08-22 21:32:49,230 - PerformanceProfiler - INFO - CPU profiling completed for cpu_intensive_test: 0.0755s, 26 total calls
+2025-08-22 21:32:49,230 - PerformanceProfiler - INFO - Starting memory profiling for: memory_intensive_test
+2025-08-22 21:32:49,843 - PerformanceProfiler - INFO - Memory profiling completed for memory_intensive_test: Delta 2.74MB, Peak 106.34MB
+2025-08-22 21:32:49,843 - PerformanceProfiler - WARNING - Slow operation detected: memory_intensive_test took 0.6124s
+2025-08-22 21:32:54,853 - PerformanceProfiler - WARNING - High network latency: 0.6000s for /api/slow
+2025-08-22 21:32:54,853 - PerformanceProfiler - INFO - Stopping system monitoring...
+2025-08-22 21:32:54,853 - PerformanceProfiler - INFO - System monitoring stopped
+2025-08-22 21:33:03,597 - PerformanceProfiler - INFO - Performance Profiler initialized. Output: performance_data
+2025-08-22 21:33:03,599 - PerformanceProfiler - INFO - System Baseline - CPU: 16 cores, Memory: 37.84GB
+2025-08-22 21:33:03,599 - PerformanceProfiler - INFO - System monitoring started (interval: 0.5s)
+2025-08-22 21:33:03,599 - PerformanceProfiler - INFO - Starting CPU profiling for: cpu_intensive_test
+2025-08-22 21:33:03,685 - PerformanceProfiler - INFO - CPU profiling completed for cpu_intensive_test: 0.0843s, 26 total calls
+2025-08-22 21:33:03,686 - PerformanceProfiler - INFO - Starting memory profiling for: memory_intensive_test
+2025-08-22 21:33:04,354 - PerformanceProfiler - INFO - Memory profiling completed for memory_intensive_test: Delta 2.05MB, Peak 118.91MB
+2025-08-22 21:33:04,354 - PerformanceProfiler - WARNING - Slow operation detected: memory_intensive_test took 0.6680s
+2025-08-22 21:33:09,374 - PerformanceProfiler - WARNING - High network latency: 0.6000s for /api/slow
+2025-08-22 21:33:09,374 - PerformanceProfiler - INFO - Stopping system monitoring...
+2025-08-22 21:33:09,374 - PerformanceProfiler - INFO - System monitoring stopped
+2025-08-22 21:33:09,376 - PerformanceProfiler - INFO - Performance report saved: performance_data\performance_report_20250822_213309.json

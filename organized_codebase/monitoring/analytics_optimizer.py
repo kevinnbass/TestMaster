@@ -1,0 +1,378 @@
+"""
+Analytics Data Optimizer
+=========================
+
+Optimizes analytics data storage, retrieval, and processing for performance.
+Provides compression, indexing, and intelligent caching strategies.
+
+Author: TestMaster Team
+"""
+
+import logging
+import json
+import gzip
+import zlib
+import pickle
+from datetime import datetime, timedelta
+from typing import Dict, List, Any, Optional, Union
+import threading
+from collections import defaultdict, deque
+
+logger = logging.getLogger(__name__)
+
+class AnalyticsOptimizer:
+    """
+    Optimizes analytics data for storage, retrieval, and processing efficiency.
+    """
+    
+    def __init__(self, compression_threshold: int = 1024, cache_size: int = 1000):
+        """
+        Initialize the analytics optimizer.
+        
+        Args:
+            compression_threshold: Minimum data size (bytes) to trigger compression
+            cache_size: Maximum number of items to keep in optimization cache
+        """
+        self.compression_threshold = compression_threshold
+        self.cache_size = cache_size
+        
+        # Optimization caches
+        self.compressed_cache = {}
+        self.aggregation_cache = deque(maxlen=cache_size)
+        self.index_cache = defaultdict(list)
+        
+        # Performance statistics
+        self.stats = {
+            'compression_ratio': 0.0,
+            'cache_hit_rate': 0.0,
+            'avg_compression_time': 0.0,
+            'avg_decompression_time': 0.0,
+            'total_data_processed': 0,
+            'total_cache_hits': 0,
+            'total_cache_requests': 0
+        }
+        
+        self._lock = threading.Lock()
+        
+        logger.info("Analytics Optimizer initialized")
+    
+    def compress_analytics_data(self, data: Union[Dict, List], compression_type: str = 'gzip') -> Dict[str, Any]:
+        """
+        Compress analytics data for efficient storage.
+        
+        Args:
+            data: Data to compress
+            compression_type: Type of compression ('gzip', 'zlib', 'pickle')
+            
+        Returns:
+            Compressed data package with metadata
+        """
+        start_time = datetime.now()
+        
+        # Serialize data
+        if compression_type == 'pickle':
+            serialized = pickle.dumps(data)
+        else:
+            serialized = json.dumps(data, default=str).encode('utf-8')
+        
+        original_size = len(serialized)
+        
+        # Skip compression for small data
+        if original_size < self.compression_threshold:
+            return {
+                'data': data,
+                'compressed': False,
+                'original_size': original_size,
+                'compressed_size': original_size,
+                'compression_ratio': 1.0,
+                'compression_type': 'none'
+            }
+        
+        # Compress data
+        if compression_type == 'gzip':
+            compressed = gzip.compress(serialized)
+        elif compression_type == 'zlib':
+            compressed = zlib.compress(serialized)
+        elif compression_type == 'pickle':
+            compressed = gzip.compress(serialized)
+        else:
+            raise ValueError(f"Unsupported compression type: {compression_type}")
+        
+        compressed_size = len(compressed)
+        compression_ratio = original_size / compressed_size if compressed_size > 0 else 1.0
+        
+        # Update statistics
+        compression_time = (datetime.now() - start_time).total_seconds()
+        with self._lock:
+            self.stats['avg_compression_time'] = (
+                (self.stats['avg_compression_time'] * self.stats['total_data_processed'] + compression_time) /
+                (self.stats['total_data_processed'] + 1)
+            )
+            self.stats['compression_ratio'] = (
+                (self.stats['compression_ratio'] * self.stats['total_data_processed'] + compression_ratio) /
+                (self.stats['total_data_processed'] + 1)
+            )
+            self.stats['total_data_processed'] += 1
+        
+        return {
+            'data': compressed,
+            'compressed': True,
+            'original_size': original_size,
+            'compressed_size': compressed_size,
+            'compression_ratio': compression_ratio,
+            'compression_type': compression_type,
+            'timestamp': datetime.now().isoformat()
+        }
+    
+    def decompress_analytics_data(self, compressed_package: Dict[str, Any]) -> Any:
+        """
+        Decompress analytics data.
+        
+        Args:
+            compressed_package: Compressed data package
+            
+        Returns:
+            Decompressed data
+        """
+        start_time = datetime.now()
+        
+        if not compressed_package.get('compressed', False):
+            return compressed_package['data']
+        
+        compressed_data = compressed_package['data']
+        compression_type = compressed_package['compression_type']
+        
+        # Decompress data
+        if compression_type == 'gzip':
+            decompressed = gzip.decompress(compressed_data)
+        elif compression_type == 'zlib':
+            decompressed = zlib.decompress(compressed_data)
+        elif compression_type == 'pickle':
+            decompressed = gzip.decompress(compressed_data)
+            return SafePickleHandler.safe_load(decompressed)
+        else:
+            raise ValueError(f"Unsupported compression type: {compression_type}")
+        
+        # Deserialize
+        if compression_type == 'pickle':
+            return SafePickleHandler.safe_load(decompressed)
+        else:
+            return json.loads(decompressed.decode('utf-8'))
+    
+    def optimize_data_retriSafeCodeExecutor.safe_eval(self, query_params: Dict[str, Any]) -> Optional[Any]:
+        """
+        Optimize data retrieval using intelligent caching.
+        
+        Args:
+            query_params: Query parameters for data retrieval
+            
+        Returns:
+            Cached data if available, None otherwise
+        """
+        cache_key = self._generate_cache_key(query_params)
+        
+        with self._lock:
+            self.stats['total_cache_requests'] += 1
+            
+            # Check cache
+            if cache_key in self.compressed_cache:
+                self.stats['total_cache_hits'] += 1
+                cached_item = self.compressed_cache[cache_key]
+                
+                # Check if cache is still valid
+                if self._is_cache_valid(cached_item):
+                    return self.decompress_analytics_data(cached_item['data'])
+                else:
+                    # Remove expired cache
+                    del self.compressed_cache[cache_key]
+            
+            # Update cache hit rate
+            self.stats['cache_hit_rate'] = (
+                self.stats['total_cache_hits'] / self.stats['total_cache_requests']
+            )
+        
+        return None
+    
+    def cache_data(self, query_params: Dict[str, Any], data: Any, ttl_seconds: int = 300):
+        """
+        Cache data for optimized retrieval.
+        
+        Args:
+            query_params: Query parameters
+            data: Data to cache
+            ttl_seconds: Time to live for cache entry
+        """
+        cache_key = self._generate_cache_key(query_params)
+        compressed_data = self.compress_analytics_data(data)
+        
+        cache_entry = {
+            'data': compressed_data,
+            'timestamp': datetime.now(),
+            'ttl': ttl_seconds,
+            'access_count': 0
+        }
+        
+        with self._lock:
+            # Implement LRU eviction if cache is full
+            if len(self.compressed_cache) >= self.cache_size:
+                self._evict_lru_cache_entry()
+            
+            self.compressed_cache[cache_key] = cache_entry
+    
+    def aggregate_time_series_data(self, data_points: List[Dict[str, Any]], 
+                                  aggregation_window: str = '1min') -> List[Dict[str, Any]]:
+        """
+        Aggregate time series data for efficient storage and visualization.
+        
+        Args:
+            data_points: List of data points with timestamps
+            aggregation_window: Aggregation window ('1min', '5min', '1hour', etc.)
+            
+        Returns:
+            Aggregated data points
+        """
+        if not data_points:
+            return []
+        
+        # Parse aggregation window
+        window_seconds = self._parse_time_window(aggregation_window)
+        
+        # Group data points by time windows
+        aggregated = defaultdict(list)
+        
+        for point in data_points:
+            timestamp = datetime.fromisoformat(point['timestamp'].replace('Z', '+00:00'))
+            window_start = self._get_window_start(timestamp, window_seconds)
+            aggregated[window_start].append(point)
+        
+        # Aggregate each window
+        result = []
+        for window_start, points in aggregated.items():
+            aggregated_point = self._aggregate_data_points(points, window_start)
+            result.append(aggregated_point)
+        
+        return sorted(result, key=lambda x: x['timestamp'])
+    
+    def optimize_query_indexes(self, query_patterns: List[Dict[str, Any]]):
+        """
+        Build indexes for common query patterns.
+        
+        Args:
+            query_patterns: List of common query patterns
+        """
+        for pattern in query_patterns:
+            index_key = self._generate_index_key(pattern)
+            
+            # Build composite index
+            if index_key not in self.index_cache:
+                self.index_cache[index_key] = []
+            
+            # Add query optimization hints
+            pattern['_optimized'] = True
+            pattern['_index_key'] = index_key
+    
+    def get_optimization_stats(self) -> Dict[str, Any]:
+        """
+        Get optimization performance statistics.
+        
+        Returns:
+            Performance statistics
+        """
+        with self._lock:
+            return {
+                'compression': {
+                    'average_ratio': self.stats['compression_ratio'],
+                    'average_compression_time': self.stats['avg_compression_time'],
+                    'average_decompression_time': self.stats['avg_decompression_time'],
+                    'total_processed': self.stats['total_data_processed']
+                },
+                'caching': {
+                    'hit_rate': self.stats['cache_hit_rate'],
+                    'total_requests': self.stats['total_cache_requests'],
+                    'total_hits': self.stats['total_cache_hits'],
+                    'cache_size': len(self.compressed_cache),
+                    'max_cache_size': self.cache_size
+                },
+                'indexes': {
+                    'total_indexes': len(self.index_cache),
+                    'index_coverage': list(self.index_cache.keys())
+                }
+            }
+    
+    def _generate_cache_key(self, query_params: Dict[str, Any]) -> str:
+        """Generate a cache key from query parameters."""
+        # Sort parameters for consistent key generation
+        sorted_params = sorted(query_params.items())
+        return f"cache_{hash(str(sorted_params))}"
+    
+    def _generate_index_key(self, pattern: Dict[str, Any]) -> str:
+        """Generate an index key from query pattern."""
+        key_parts = []
+        for field in ['metric_type', 'time_range', 'aggregation']:
+            if field in pattern:
+                key_parts.append(f"{field}:{pattern[field]}")
+        return "_".join(key_parts)
+    
+    def _is_cache_valid(self, cache_entry: Dict[str, Any]) -> bool:
+        """Check if cache entry is still valid."""
+        age = (datetime.now() - cache_entry['timestamp']).total_seconds()
+        return age < cache_entry['ttl']
+    
+    def _evict_lru_cache_entry(self):
+        """Evict least recently used cache entry."""
+        if not self.compressed_cache:
+            return
+        
+        # Find LRU entry (oldest timestamp with lowest access count)
+        lru_key = min(self.compressed_cache.keys(), 
+                     key=lambda k: (self.compressed_cache[k]['access_count'], 
+                                  self.compressed_cache[k]['timestamp']))
+        del self.compressed_cache[lru_key]
+    
+    def _parse_time_window(self, window: str) -> int:
+        """Parse time window string to seconds."""
+        window_map = {
+            '1min': 60,
+            '5min': 300,
+            '15min': 900,
+            '1hour': 3600,
+            '1day': 86400
+        }
+        return window_map.get(window, 60)
+    
+    def _get_window_start(self, timestamp: datetime, window_seconds: int) -> datetime:
+        """Get the start of the time window for a timestamp."""
+        epoch = datetime(1970, 1, 1, tzinfo=timestamp.tzinfo)
+        seconds_since_epoch = (timestamp - epoch).total_seconds()
+        window_number = int(seconds_since_epoch // window_seconds)
+        return epoch + timedelta(seconds=window_number * window_seconds)
+    
+    def _aggregate_data_points(self, points: List[Dict[str, Any]], window_start: datetime) -> Dict[str, Any]:
+        """Aggregate a list of data points into a single point."""
+        if not points:
+            return {}
+        
+        # Calculate aggregations for numeric fields
+        numeric_fields = ['cpu_usage', 'memory_mb', 'network_kb_s', 'disk_usage', 'response_time_ms']
+        aggregated = {
+            'timestamp': window_start.isoformat(),
+            'count': len(points)
+        }
+        
+        for field in numeric_fields:
+            values = [p.get(field, 0) for p in points if field in p and isinstance(p[field], (int, float))]
+            if values:
+                aggregated[f'{field}_avg'] = sum(values) / len(values)
+                aggregated[f'{field}_min'] = min(values)
+                aggregated[f'{field}_max'] = max(values)
+                aggregated[f'{field}_sum'] = sum(values)
+        
+        return aggregated
+    
+    def clear_cache(self):
+        """Clear all optimization caches."""
+        with self._lock:
+            self.compressed_cache.clear()
+            self.aggregation_cache.clear()
+            self.index_cache.clear()
+        logger.info("Optimization caches cleared")

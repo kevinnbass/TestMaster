@@ -1,2 +1,2 @@
-import TextTyping from '../../../plugins/texttyping';
+import TextTyping from './behaviors/texttyping/TextTyping';
 export default TextTyping;

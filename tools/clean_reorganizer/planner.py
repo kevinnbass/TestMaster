@@ -48,6 +48,13 @@ class Planner:
         self.categorizer = Categorizer(self.root_dir, self.config_path)
         self.target_root_name: str = cfg.get("target_root", "organized_codebase")
         self.subcategories: Dict = cfg.get("subcategories", {})
+        ops = cfg.get("operations", {})
+        # Flatten clusters by default to avoid deep cc_* noise
+        self.flatten_clusters: bool = bool(ops.get("flatten_clusters", True))
+        # Vendor subtree preservation
+        self.vendor_roots: List[str] = [
+            s for s in cfg.get("exclusions", {}).get("directories", []) if s.lower() in {"node_modules", "vendor"}
+        ]
 
     def _match_subcategory(self, category: str, facts: FileFacts) -> str:
         rules = self.subcategories.get(category, [])
@@ -82,8 +89,8 @@ class Planner:
         sub = self._match_subcategory(decision.category, facts)
         if sub:
             tgt = tgt / sub
-        # optional cluster grouping
-        if cluster:
+        # optional cluster grouping (skip if flatten enabled)
+        if cluster and not self.flatten_clusters:
             tgt = tgt / cluster
         return tgt / facts.path.name
 
@@ -155,7 +162,7 @@ class Planner:
             comp = comp_id_by_rel.get(rel, -1)
             members = comp_members.get(comp, [])
             cluster_name = ""
-            if len(members) >= 3 and decision.confidence >= 0.6:
+            if len(members) >= 3 and decision.confidence >= 0.6 and not self.flatten_clusters:
                 cluster_name = f"cc_{comp}"
 
             target = self._target_path_for(facts, decision, cluster=cluster_name)

@@ -1,0 +1,6 @@
+system_cpu_usage_percent{service="analytics_aggregator"} 13.2
+system_memory_usage_percent{service="analytics_aggregator"} 58.1
+system_memory_used_bytes{service="analytics_aggregator"} 23601418240
+telemetry_events_collected{service="analytics_aggregator"} 0
+telemetry_spans_active{service="analytics_aggregator"} 0
+telemetry_events_buffer_size{service="analytics_aggregator"} 0

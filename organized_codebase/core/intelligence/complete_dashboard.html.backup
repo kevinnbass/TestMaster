@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster Hybrid Intelligence Platform - Complete Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container { max-width: 1600px; margin: 0 auto; padding: 20px; }
+        .header { 
+            text-align: center; 
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.9; }
+        
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            flex-wrap: wrap;
+        }
+        .tab-button {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 10px 10px 0 0;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        .tab-button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .tab-button.active {
+            background: rgba(255,255,255,0.25);
+            border-bottom: 3px solid #4CAF50;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        .dashboard { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+        }
+        .card { 
+            background: rgba(255,255,255,0.1); 
+            padding: 20px; 
+            border-radius: 10px; 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .card h3 { 
+            margin-bottom: 15px; 
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .metric { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .metric:last-child { border-bottom: none; }
+        .metric-value { font-weight: bold; font-size: 1.1em; }
+        
+        /* Test Status Styles */
+        .test-status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        .test-module {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        .status-light {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .status-green { background: #4CAF50; box-shadow: 0 0 10px #4CAF50; }
+        .status-yellow { background: #FFC107; box-shadow: 0 0 10px #FFC107; }
+        .status-red { background: #f44336; box-shadow: 0 0 10px #f44336; }
+        
+        /* Graph Styles */
+        .graph-container {
+            width: 100%;
+            height: 500px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            position: relative;
+        }
+        #dependency-graph {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Panel Layout */
+        .panel-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .panel-layout-quad {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            min-height: 800px;
+        }
+        
+        /* Todo List */
+        .todo-list {
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .todo-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
+            border-left: 3px solid #ff9800;
+        }
+        .todo-item.completed {
+            opacity: 0.6;
+            border-left-color: #4CAF50;
+            text-decoration: line-through;
+        }
+        
+        /* Loading and other common styles */
+        .loading { text-align: center; padding: 40px; }
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 4px solid #fff;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .status-indicator { 
+            width: 12px; 
+            height: 12px; 
+            border-radius: 50%; 
+            display: inline-block; 
+            margin-right: 8px;
+        }
+        .status-active { background: #4CAF50; }
+        .status-inactive { background: #f44336; }
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .component-item {
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .enhance-button {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        .enhance-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+        }
+        .enhance-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 TestMaster Hybrid Intelligence Platform</h1>
+            <p>Complete Monitoring Dashboard with Analytics</p>
+            <p id="last-update">Loading...</p>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('dashboard', event)">📊 System Dashboard</button>
+            <button class="tab-button" onclick="switchTab('analyzer', event)">🔬 Module Analyzer</button>
+            <button class="tab-button" onclick="switchTab('tests', event)">✅ Tests Status</button>
+            <button class="tab-button" onclick="switchTab('interconnection', event)">🕸️ Functional Interconnection</button>
+            <button class="tab-button" onclick="switchTab('refactor', event)">🔄 Refactor Opportunities</button>
+        </div>
+        
+        <!-- System Dashboard Tab (ORIGINAL) -->
+        <div id="dashboard-tab" class="tab-content active">
+            <div id="dashboard" class="dashboard">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Initializing monitoring systems...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Module Analyzer Tab -->
+        <div id="analyzer-tab" class="tab-content">
+            <div class="panel-layout">
+                <!-- Left: Automated Module Analysis -->
+                <div class="card">
+                    <h3>🤖 Automated Module Analysis</h3>
+                    <div id="module-list">
+                        <p style="opacity: 0.7; text-align: center; padding: 20px;">
+                            Loading available modules...
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Right: LLM-Enhanced Analysis -->
+                <div class="card">
+                    <h3>🧠 LLM Module Intelligence</h3>
+                    <div style="margin-bottom: 20px;">
+                        <label for="module-select">Select Module:</label>
+                        <select id="module-select" style="width: 100%; padding: 8px; margin-top: 10px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 5px;">
+                            <option value="">-- Select a module --</option>
+                        </select>
+                    </div>
+                    <button class="enhance-button" onclick="analyzeModule()">
+                        🔬 Analyze Module with LLM
+                    </button>
+                    <div id="module-analysis-result" style="margin-top: 20px;">
+                        <p style="opacity: 0.7; text-align: center;">
+                            Select a module and click analyze to get AI insights
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tests Status Tab -->
+        <div id="tests-tab" class="tab-content">
+            <div class="panel-layout-quad">
+                <!-- Top Left: Test Coverage Overview -->
+                <div class="card">
+                    <h3>📈 Test Coverage Overview</h3>
+                    <div class="metric">
+                        <span>Overall Coverage:</span>
+                        <span class="metric-value" id="overall-coverage">--%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Modules with Tests:</span>
+                        <span class="metric-value" id="modules-with-tests">0/0</span>
+                    </div>
+                    <div class="metric">
+                        <span>Passing Tests:</span>
+                        <span class="metric-value" id="passing-tests">0</span>
+                    </div>
+                    <div class="metric">
+                        <span>Failing Tests:</span>
+                        <span class="metric-value" id="failing-tests">0</span>
+                    </div>
+                    <button class="enhance-button" onclick="runTestAnalysis()">
+                        🔍 Run Deep Test Analysis
+                    </button>
+                </div>
+                
+                <!-- Top Right: Test Status Indicators -->
+                <div class="card">
+                    <h3>🚦 Module Test Status</h3>
+                    <div class="test-status-grid" id="test-status-grid">
+                        <div class="loading">
+                            <p>Loading test status...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Left: Test Insights -->
+                <div class="card">
+                    <h3>📝 Test Insights</h3>
+                    <div id="test-insights">
+                        <p style="opacity: 0.7; text-align: center; padding: 20px;">
+                            Run test analysis to generate insights
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Bottom Right: Test Fix Todo List -->
+                <div class="card">
+                    <h3>📋 Test Fix Todo List</h3>
+                    <div class="todo-list" id="test-todo-list">
+                        <p style="opacity: 0.7; text-align: center;">
+                            No test issues detected yet
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Functional Interconnection Tab -->
+        <div id="interconnection-tab" class="tab-content">
+            <div class="panel-layout-quad">
+                <!-- Top Left: Dependency Graph -->
+                <div class="card">
+                    <h3>🕸️ Module Dependency Graph</h3>
+                    <div class="graph-container">
+                        <svg id="dependency-graph"></svg>
+                    </div>
+                </div>
+                
+                <!-- Top Right: Module Metrics -->
+                <div class="card">
+                    <h3>📊 Module Metrics</h3>
+                    <div id="module-metrics">
+                        <div class="metric">
+                            <span>Total Modules:</span>
+                            <span class="metric-value" id="total-modules">0</span>
+                        </div>
+                        <div class="metric">
+                            <span>Total Dependencies:</span>
+                            <span class="metric-value" id="total-dependencies">0</span>
+                        </div>
+                        <div class="metric">
+                            <span>Circular Dependencies:</span>
+                            <span class="metric-value" id="circular-deps">0</span>
+                        </div>
+                        <div class="metric">
+                            <span>Isolated Modules:</span>
+                            <span class="metric-value" id="isolated-modules">0</span>
+                        </div>
+                    </div>
+                    <button class="enhance-button" onclick="enhanceInterconnectionAnalysis()">
+                        🧠 Enhance with LLM Analysis
+                    </button>
+                </div>
+                
+                <!-- Bottom Left: System Description -->
+                <div class="card">
+                    <h3>📖 System Architecture Description</h3>
+                    <div id="system-description">
+                        <p style="opacity: 0.7; text-align: center; padding: 20px;">
+                            Activate LLM analysis to generate comprehensive system description
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Bottom Right: Critical Paths -->
+                <div class="card">
+                    <h3>⚡ Critical Paths & Bottlenecks</h3>
+                    <div id="critical-paths">
+                        <p style="opacity: 0.7;">Analyzing module interconnections...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Refactor Opportunities Tab -->
+        <div id="refactor-tab" class="tab-content">
+            <div class="panel-layout">
+                <!-- Left: Automated Analysis -->
+                <div class="card">
+                    <h3>🤖 Automated Refactor Analysis</h3>
+                    <div id="auto-refactor">
+                        <div class="metric">
+                            <span>Code Duplication:</span>
+                            <span class="metric-value">Analyzing...</span>
+                        </div>
+                        <div class="metric">
+                            <span>Long Methods:</span>
+                            <span class="metric-value">0</span>
+                        </div>
+                        <div class="metric">
+                            <span>Complex Classes:</span>
+                            <span class="metric-value">0</span>
+                        </div>
+                        <div class="metric">
+                            <span>Unused Code:</span>
+                            <span class="metric-value">0</span>
+                        </div>
+                        <h4 style="margin-top: 20px;">Suggested Refactorings:</h4>
+                        <div id="refactor-suggestions" class="todo-list">
+                            <p style="opacity: 0.7;">Running analysis...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right: LLM-Enhanced Analysis -->
+                <div class="card">
+                    <h3>🧠 LLM-Enhanced Refactor Insights</h3>
+                    <div id="llm-refactor">
+                        <p style="opacity: 0.7; text-align: center; padding: 20px;">
+                            Click button below to get AI-powered refactor recommendations
+                        </p>
+                        <button class="enhance-button" onclick="getLLMRefactorInsights()">
+                            🔮 Get AI Refactor Insights
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName, event) {
+            // Handle both direct calls and button clicks
+            if (event && event.target) {
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.classList.add('active');
+            } else {
+                // Find and activate the right button
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent.toLowerCase().includes(tabName.toLowerCase())) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Load data for specific tabs
+            if (tabName === 'dashboard') {
+                updateDashboard();
+            } else if (tabName === 'analyzer') {
+                loadModuleList();
+            } else if (tabName === 'tests') {
+                loadTestsStatus();
+            } else if (tabName === 'interconnection') {
+                loadDependencyGraph();
+            } else if (tabName === 'refactor') {
+                loadRefactorAnalysis();
+            }
+        }
+        
+        // Dashboard functions (original)
+        async function fetchData(endpoint, options = {}) {
+            try {
+                const response = await fetch(`/api/${endpoint}`, options);
+                return await response.json();
+            } catch (error) {
+                console.error(`Error fetching ${endpoint}:`, error);
+                return null;
+            }
+        }
+        
+        async function updateDashboard() {
+            const metrics = await fetchData('metrics');
+            const llmMetrics = await fetchData('llm/metrics');
+            
+            if (!metrics) return;
+            
+            document.getElementById('last-update').textContent = 
+                `Last Update: ${new Date(metrics.timestamp).toLocaleString()}`;
+            
+            // Build dashboard HTML
+            const dashboardDiv = document.getElementById('dashboard');
+            if (!dashboardDiv) return;
+            
+            let html = `
+                <div class="card">
+                    <h3>📊 System Metrics</h3>
+                    <div class="metric">
+                        <span>CPU Usage:</span>
+                        <span class="metric-value">${metrics.system.cpu_usage.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Memory Usage:</span>
+                        <span class="metric-value">${metrics.system.memory_usage.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Active Agents:</span>
+                        <span class="metric-value">${metrics.components.active_agents}/16</span>
+                    </div>
+                    <div class="metric">
+                        <span>Active Bridges:</span>
+                        <span class="metric-value">${metrics.components.active_bridges}/5</span>
+                    </div>
+                </div>
+            `;
+            
+            // Add LLM metrics card if available
+            if (llmMetrics && !llmMetrics.error) {
+                html += `
+                    <div class="card">
+                        <h3>🤖 LLM Intelligence</h3>
+                        <div class="metric">
+                            <span>API Calls:</span>
+                            <span class="metric-value">${llmMetrics.api_calls.total_calls}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Tokens Used:</span>
+                            <span class="metric-value">${llmMetrics.token_usage.total_tokens.toLocaleString()}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Cost Estimate:</span>
+                            <span class="metric-value">$${llmMetrics.cost_tracking.total_cost_estimate.toFixed(3)}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Add component status card
+            html += `
+                <div class="card">
+                    <h3>🔧 Component Status</h3>
+                    <div class="component-grid">
+            `;
+            
+            Object.entries(metrics.components.component_status).forEach(([name, status]) => {
+                const statusClass = status === 'active' ? 'status-active' : 'status-inactive';
+                html += `
+                    <div class="component-item">
+                        <span class="status-indicator ${statusClass}"></span>
+                        <span>${name.replace(/_/g, ' ')}</span>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            // Add alerts card
+            if (metrics.alerts && metrics.alerts.recent_alerts && metrics.alerts.recent_alerts.length > 0) {
+                html += `
+                    <div class="card">
+                        <h3>🚨 Recent Alerts</h3>
+                `;
+                metrics.alerts.recent_alerts.slice(-5).forEach(alert => {
+                    html += `
+                        <div class="alert alert-${alert.severity}">
+                            <strong>${alert.severity.toUpperCase()}</strong> - ${alert.component}<br>
+                            ${alert.message}
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            }
+            
+            dashboardDiv.innerHTML = html;
+        }
+        
+        // Test Status Tab
+        async function loadTestsStatus() {
+            const data = await fetchData('tests/status');
+            if (!data) return;
+            
+            const grid = document.getElementById('test-status-grid');
+            let greenCount = 0, yellowCount = 0, redCount = 0;
+            
+            let html = '';
+            data.forEach(module => {
+                const statusClass = `status-${module.status}`;
+                html += `
+                    <div class="test-module" title="${module.module}">
+                        <div class="status-light ${statusClass}"></div>
+                        <span>${module.module.split('/').pop()}</span>
+                    </div>
+                `;
+                
+                if (module.status === 'green') greenCount++;
+                else if (module.status === 'yellow') yellowCount++;
+                else redCount++;
+            });
+            
+            grid.innerHTML = html;
+            
+            // Update metrics
+            document.getElementById('modules-with-tests').textContent = 
+                `${greenCount + yellowCount}/${data.length}`;
+            document.getElementById('passing-tests').textContent = greenCount;
+            document.getElementById('failing-tests').textContent = yellowCount;
+            
+            const coverage = ((greenCount + yellowCount) / data.length * 100).toFixed(1);
+            document.getElementById('overall-coverage').textContent = `${coverage}%`;
+            
+            // Generate todo list for red/yellow modules
+            const todoHtml = data
+                .filter(m => m.status !== 'green')
+                .slice(0, 10)
+                .map(m => `
+                    <div class="todo-item">
+                        ${m.status === 'red' ? 'Add tests for' : 'Fix tests for'}: ${m.module}
+                    </div>
+                `).join('');
+            
+            if (todoHtml) {
+                document.getElementById('test-todo-list').innerHTML = todoHtml;
+            }
+        }
+        
+        // Functional Interconnection Tab
+        async function loadDependencyGraph() {
+            const data = await fetchData('dependencies/graph');
+            if (!data || !data.nodes || !data.edges) return;
+            
+            // Update metrics
+            document.getElementById('total-modules').textContent = data.nodes.length;
+            document.getElementById('total-dependencies').textContent = data.edges.length;
+            
+            // Update additional metrics if available
+            if (data.metrics) {
+                document.getElementById('circular-deps').textContent = data.metrics.circular_dependencies || 0;
+                document.getElementById('isolated-modules').textContent = data.metrics.isolated_modules || 0;
+            }
+            
+            // Identify critical paths (nodes with most connections)
+            const connectionCounts = {};
+            data.edges.forEach(edge => {
+                connectionCounts[edge.source] = (connectionCounts[edge.source] || 0) + 1;
+                connectionCounts[edge.target] = (connectionCounts[edge.target] || 0) + 1;
+            });
+            
+            const criticalNodes = Object.entries(connectionCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+            
+            // Update critical paths section
+            const criticalPathsHtml = criticalNodes.map(([node, count]) => `
+                <div class="todo-item">
+                    ${node.split('/').pop()}: ${count} connections
+                </div>
+            `).join('');
+            
+            document.getElementById('critical-paths').innerHTML = 
+                criticalPathsHtml || '<p style="opacity: 0.7;">No critical bottlenecks identified</p>';
+            
+            // Draw D3 graph
+            drawDependencyGraph(data);
+        }
+        
+        function drawDependencyGraph(data) {
+            const width = 800;
+            const height = 500;
+            
+            // Clear existing
+            d3.select("#dependency-graph").selectAll("*").remove();
+            
+            const svg = d3.select("#dependency-graph")
+                .attr("viewBox", [0, 0, width, height]);
+            
+            // Create force simulation
+            const simulation = d3.forceSimulation(data.nodes)
+                .force("link", d3.forceLink(data.edges).id(d => d.id).distance(100))
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2));
+            
+            // Add links
+            const link = svg.append("g")
+                .selectAll("line")
+                .data(data.edges)
+                .join("line")
+                .attr("stroke", "#999")
+                .attr("stroke-opacity", 0.6);
+            
+            // Add nodes
+            const node = svg.append("g")
+                .selectAll("circle")
+                .data(data.nodes)
+                .join("circle")
+                .attr("r", 8)
+                .attr("fill", "#4CAF50")
+                .call(drag(simulation));
+            
+            // Add labels
+            const label = svg.append("g")
+                .selectAll("text")
+                .data(data.nodes)
+                .join("text")
+                .text(d => d.label)
+                .attr("font-size", 10)
+                .attr("fill", "#fff");
+            
+            simulation.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+                
+                node
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+                
+                label
+                    .attr("x", d => d.x + 10)
+                    .attr("y", d => d.y);
+            });
+            
+            function drag(simulation) {
+                function dragstarted(event) {
+                    if (!event.active) simulation.alphaTarget(0.3).restart();
+                    event.subject.fx = event.subject.x;
+                    event.subject.fy = event.subject.y;
+                }
+                
+                function dragged(event) {
+                    event.subject.fx = event.x;
+                    event.subject.fy = event.y;
+                }
+                
+                function dragended(event) {
+                    if (!event.active) simulation.alphaTarget(0);
+                    event.subject.fx = null;
+                    event.subject.fy = null;
+                }
+                
+                return d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended);
+            }
+        }
+        
+        // Refactor Analysis
+        async function loadRefactorAnalysis() {
+            const data = await fetchData('refactor/analysis');
+            if (!data) return;
+            
+            // Update metrics
+            const autoRefactor = document.getElementById('auto-refactor');
+            autoRefactor.innerHTML = `
+                <div class="metric">
+                    <span>Long Methods (>50 lines):</span>
+                    <span class="metric-value">${data.summary.long_methods || 0}</span>
+                </div>
+                <div class="metric">
+                    <span>Complex Classes (>10 methods):</span>
+                    <span class="metric-value">${data.summary.complex_classes || 0}</span>
+                </div>
+                <div class="metric">
+                    <span>Modules Missing Tests:</span>
+                    <span class="metric-value">${data.summary.missing_tests || 0}</span>
+                </div>
+                <h4 style="margin-top: 20px;">Suggested Refactorings:</h4>
+                <div id="refactor-suggestions" class="todo-list"></div>
+            `;
+            
+            // Build refactor suggestions
+            let suggestions = [];
+            
+            // Add long method suggestions
+            if (data.refactor_opportunities.long_methods) {
+                data.refactor_opportunities.long_methods.slice(0, 3).forEach(item => {
+                    suggestions.push(`
+                        <div class="todo-item">
+                            Extract method: ${item.method} in ${item.file} (${item.lines} lines)
+                        </div>
+                    `);
+                });
+            }
+            
+            // Add complex class suggestions
+            if (data.refactor_opportunities.complex_classes) {
+                data.refactor_opportunities.complex_classes.slice(0, 2).forEach(item => {
+                    suggestions.push(`
+                        <div class="todo-item">
+                            Split class: ${item.class} in ${item.file} (${item.methods} methods)
+                        </div>
+                    `);
+                });
+            }
+            
+            // Add missing test suggestions
+            if (data.refactor_opportunities.missing_tests) {
+                data.refactor_opportunities.missing_tests.slice(0, 2).forEach(item => {
+                    suggestions.push(`
+                        <div class="todo-item">
+                            Add tests for: ${item.module}
+                        </div>
+                    `);
+                });
+            }
+            
+            document.getElementById('refactor-suggestions').innerHTML = 
+                suggestions.length > 0 ? suggestions.join('') : 
+                '<p style="opacity: 0.7; text-align: center;">No immediate refactoring needed</p>';
+        }
+        
+        // Module Analyzer functions
+        async function loadModuleList() {
+            const modules = await fetchData('llm/list-modules');
+            if (!modules || modules.length === 0) {
+                console.error('No modules returned from API');
+                return;
+            }
+            
+            const select = document.getElementById('module-select');
+            const moduleListDiv = document.getElementById('module-list');
+            
+            if (!select) {
+                console.error('module-select element not found');
+                return;
+            }
+            
+            // Clear and populate select
+            select.innerHTML = `
+                <option value="">-- Select a module --</option>
+                <option value="__all__" style="font-weight: bold;">🌍 ALL MODULES (Analyze Everything)</option>
+                <option value="" disabled>──────────────────────</option>
+            `;
+            
+            let moduleListHtml = `
+                <h4>Available Modules (${modules.length} total):</h4>
+                <div style="max-height: 400px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px;">
+            `;
+            
+            // Group modules by directory
+            const rootModules = [];
+            const testmasterModules = [];
+            const otherModules = [];
+            
+            modules.forEach(module => {
+                // Add to select dropdown
+                select.innerHTML += `<option value="${module}">${module}</option>`;
+                
+                // Categorize for display
+                if (module.startsWith('testmaster/')) {
+                    testmasterModules.push(module);
+                } else if (module.includes('/')) {
+                    otherModules.push(module);
+                } else {
+                    rootModules.push(module);
+                }
+            });
+            
+            // Display categorized modules
+            if (rootModules.length > 0) {
+                moduleListHtml += '<div style="margin-bottom: 10px;"><strong>Root Modules:</strong></div>';
+                rootModules.forEach(m => {
+                    moduleListHtml += `<div style="padding: 3px 10px; opacity: 0.8;">• ${m}</div>`;
+                });
+            }
+            
+            if (testmasterModules.length > 0) {
+                moduleListHtml += '<div style="margin: 10px 0;"><strong>TestMaster Modules:</strong></div>';
+                testmasterModules.forEach(m => {
+                    moduleListHtml += `<div style="padding: 3px 10px; opacity: 0.8;">• ${m}</div>`;
+                });
+            }
+            
+            if (otherModules.length > 0) {
+                moduleListHtml += '<div style="margin: 10px 0;"><strong>Other Modules:</strong></div>';
+                otherModules.forEach(m => {
+                    moduleListHtml += `<div style="padding: 3px 10px; opacity: 0.8;">• ${m}</div>`;
+                });
+            }
+            
+            moduleListHtml += '</div>';
+            moduleListDiv.innerHTML = moduleListHtml;
+            
+            console.log(`Loaded ${modules.length} modules into dropdown`);
+        }
+        
+        async function analyzeModule() {
+            const select = document.getElementById('module-select');
+            const modulePath = select.value;
+            
+            if (!modulePath) {
+                alert('Please select a module first');
+                return;
+            }
+            
+            // Handle "All modules" case
+            if (modulePath === '__all__') {
+                // Get all modules for batch analysis
+                const modules = await fetchData('llm/list-modules');
+                if (!modules || modules.length === 0) {
+                    alert('No modules available for analysis');
+                    return;
+                }
+                
+                // Estimate total cost
+                let totalCost = 0;
+                for (const module of modules.slice(0, 5)) { // Sample first 5 for cost estimate
+                    const costData = await fetchData('llm/estimate-cost', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({module_path: module})
+                    });
+                    if (costData) {
+                        totalCost += costData.estimated_cost_usd;
+                    }
+                }
+                
+                // Extrapolate total cost
+                const estimatedTotalCost = (totalCost / 5) * modules.length;
+                
+                if (!confirm(`Analyzing ALL ${modules.length} modules will cost approximately $${estimatedTotalCost.toFixed(2)}. This is a large operation. Continue?`)) {
+                    return;
+                }
+                
+                // Queue all modules for analysis
+                document.getElementById('module-analysis-result').innerHTML = `
+                    <p style="color: #FFC107;">🔄 Queuing ${modules.length} modules for analysis...</p>
+                `;
+                
+                let queued = 0;
+                for (const module of modules) {
+                    await fetchData('llm/analyze', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({module_path: module})
+                    });
+                    queued++;
+                    
+                    // Update progress
+                    if (queued % 10 === 0) {
+                        document.getElementById('module-analysis-result').innerHTML = `
+                            <p style="color: #FFC107;">🔄 Queued ${queued}/${modules.length} modules...</p>
+                        `;
+                    }
+                }
+                
+                document.getElementById('module-analysis-result').innerHTML = `
+                    <p style="color: #4CAF50;">✅ All ${modules.length} modules queued for analysis!</p>
+                    <p>This will take several minutes. Check the LLM metrics for progress.</p>
+                `;
+            } else {
+                // Single module analysis
+                // Estimate cost first
+                const costData = await fetchData('llm/estimate-cost', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({module_path: modulePath})
+                });
+                
+                if (costData && !confirm(`This will cost approximately $${costData.estimated_cost_usd}. Continue?`)) {
+                    return;
+                }
+                
+                // Queue for analysis
+                const result = await fetchData('llm/analyze', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({module_path: modulePath})
+                });
+                
+                document.getElementById('module-analysis-result').innerHTML = `
+                    <p style="color: #4CAF50;">✅ Analysis queued for ${modulePath}</p>
+                    <p>Check back in a moment for results...</p>
+                `;
+            }
+        }
+        
+        // LLM Enhancement functions
+        async function enhanceInterconnectionAnalysis() {
+            if (!confirm('This will use LLM credits. Continue?')) return;
+            
+            // Call LLM analysis endpoint
+            alert('LLM analysis would be triggered here');
+        }
+        
+        async function getLLMRefactorInsights() {
+            if (!confirm('This will use LLM credits. Continue?')) return;
+            
+            // Call LLM refactor analysis
+            alert('LLM refactor analysis would be triggered here');
+        }
+        
+        async function runTestAnalysis() {
+            if (!confirm('This will use LLM credits for deep test analysis. Continue?')) return;
+            
+            // Call LLM test analysis
+            alert('Deep test analysis would be triggered here');
+        }
+        
+        // Initialize
+        updateDashboard();
+        setInterval(updateDashboard, 5000);
+        
+        // Load module list when page loads
+        setTimeout(() => {
+            loadModuleList();
+        }, 1000);  // Small delay to ensure DOM is ready
+    </script>
+</body>
+</html>

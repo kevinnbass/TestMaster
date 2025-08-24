@@ -1,0 +1,648 @@
+from SECURITY_PATCHES.fix_eval_exec_vulnerabilities import SafeCodeExecutor
+"""
+Taint Analysis Module
+====================
+
+Implements static taint analysis for Python data flow:
+- Source identification (user inputs, external data)
+- Sink detection (dangerous operations, sensitive outputs)
+- Data flow path tracking through code
+- Vulnerability identification in data paths
+- Sanitization detection and validation
+"""
+
+import ast
+import re
+from pathlib import Path
+from typing import Dict, List, Any, Set, Tuple, Optional
+from collections import defaultdict, deque
+from dataclasses import dataclass
+
+from .base_analyzer import BaseAnalyzer
+
+
+@dataclass
+class TaintSource:
+    """Represents a source of tainted data."""
+    name: str
+    location: Tuple[str, int]  # (file, line)
+    source_type: str  # 'user_input', 'network', 'file', 'database', etc.
+    confidence: float  # 0.0 to 1.0
+
+
+@dataclass
+class TaintSink:
+    """Represents a sink where tainted data can cause damage."""
+    name: str
+    location: Tuple[str, int]  # (file, line)
+    sink_type: str  # 'sql_query', 'command_exec', 'file_write', etc.
+    danger_level: str  # 'HIGH', 'MEDIUM', 'LOW'
+
+
+@dataclass
+class TaintPath:
+    """Represents a data flow path from source to sink."""
+    source: TaintSource
+    sink: TaintSink
+    path: List[Tuple[str, int]]  # Intermediate locations
+    sanitizers: List[str]  # Sanitization functions found in path
+    is_sanitized: bool
+    vulnerability_type: str
+    confidence: float
+
+
+class TaintAnalyzer(BaseAnalyzer):
+    """Analyzer for taint analysis and data flow tracking."""
+    
+    def __init__(self, base_path: Path):
+        super().__init__(base_path)
+        self._init_taint_patterns()
+        self.data_flow_graph = defaultdict(set)
+        self.variable_assignments = defaultdict(list)
+        
+    def _init_taint_patterns(self):
+        """Initialize taint analysis patterns for Python."""
+        # Taint sources - where untrusted data enters the system
+        self.taint_sources = {
+            'user_input': [
+                r'input\s*\(',
+                r'raw_input\s*\(',
+                r'sys\.argv',
+                r'request\.(args|form|json|data|files)\s*\[',
+                r'request\.(args|form|json|data|files)\.get\s*\(',
+                r'flask\.request\.',
+                r'django\.http\.HttpRequest\.',
+                r'os\.environ\.get\s*\(',
+                r'os\.getenv\s*\(',
+                r'click\.prompt\s*\(',
+                r'argparse\.',
+            ],
+            'network': [
+                r'requests\.(get|post|put|delete)\s*\(',
+                r'urllib\.request\.',
+                r'httpx\.',
+                r'aiohttp\.',
+                r'socket\.',
+                r'ssl\.',
+            ],
+            'file': [
+                r'open\s*\(',
+                r'file\s*\(',
+                r'codecs\.open\s*\(',
+                r'pathlib\.Path\.',
+                r'os\.path\.',
+                r'glob\.glob\s*\(',
+                r'pickle\.load\s*\(',
+                r'json\.load\s*\(',
+                r'yaml\.load\s*\(',
+                r'csv\.reader\s*\(',
+            ],
+            'database': [
+                r'cursor\.execute\s*\(',
+                r'cursor\.executemany\s*\(',
+                r'connection\.execute\s*\(',
+                r'session\.query\s*\(',
+                r'Model\.objects\.',
+                r'db\.session\.',
+                r'sqlite3\.',
+                r'psycopg2\.',
+                r'pymongo\.',
+            ]
+        }
+        
+        # Taint sinks - where tainted data can cause damage
+        self.taint_sinks = {
+            'sql_injection': [
+                r'cursor\.execute\s*\(',
+                r'cursor\.executemany\s*\(',
+                r'connection\.execute\s*\(',
+                r'session\.execute\s*\(',
+                r'db\.engine\.execute\s*\(',
+                r'raw\s*\(',  # Django raw SQL
+            ],
+            'command_injection': [
+                r'os\.system\s*\(',
+                r'subprocess\.(call|check_call|check_output|run|Popen)\s*\(',
+                r'os\.popen\s*\(',
+                r'commands\.(getoutput|getstatusoutput)\s*\(',
+                r'eval\s*\(',
+                r'exec\s*\(',
+                r'compile\s*\(',
+            ],
+            'path_traversal': [
+                r'open\s*\(',
+                r'file\s*\(',
+                r'codecs\.open\s*\(',
+                r'os\.remove\s*\(',
+                r'os\.unlink\s*\(',
+                r'shutil\.(copy|move|rmtree)\s*\(',
+                r'pathlib\.Path\s*\(',
+            ],
+            'xss': [
+                r'render_template_string\s*\(',
+                r'Markup\s*\(',
+                r'mark_safe\s*\(',
+                r'HttpResponse\s*\(',
+                r'JsonResponse\s*\(',
+                r'redirect\s*\(',
+            ],
+            'code_injection': [
+                r'eval\s*\(',
+                r'exec\s*\(',
+                r'compile\s*\(',
+                r'__import__\s*\(',
+                r'importlib\.import_module\s*\(',
+            ],
+            'deserialization': [
+                r'pickle\.loads?\s*\(',
+                r'yaml\.load\s*\(',
+                r'jsonpickle\.decode\s*\(',
+                r'dill\.loads?\s*\(',
+            ]
+        }
+        
+        # Sanitization functions that clean tainted data
+        self.sanitizers = {
+            'sql': [
+                r'escape\s*\(',
+                r'quote\s*\(',
+                r'quote_plus\s*\(',
+                r'parameterized',
+                r'prepare\s*\(',
+            ],
+            'html': [
+                r'escape\s*\(',
+                r'html\.escape\s*\(',
+                r'cgi\.escape\s*\(',
+                r'bleach\.clean\s*\(',
+                r'markupsafe\.escape\s*\(',
+            ],
+            'shell': [
+                r'shlex\.quote\s*\(',
+                r'pipes\.quote\s*\(',
+                r'shell_escape\s*\(',
+            ],
+            'path': [
+                r'os\.path\.abspath\s*\(',
+                r'os\.path\.realpath\s*\(',
+                r'os\.path\.normpath\s*\(',
+                r'pathlib\.Path\.resolve\s*\(',
+            ],
+            'general': [
+                r'validate\s*\(',
+                r'sanitize\s*\(',
+                r'clean\s*\(',
+                r'filter\s*\(',
+                r'strip\s*\(',
+                r're\.sub\s*\(',
+            ]
+        }
+    
+    def analyze(self) -> Dict[str, Any]:
+        """Perform comprehensive taint analysis."""
+        print("[INFO] Performing Taint Analysis...")
+        
+        # Step 1: Identify all sources and sinks
+        sources = self._identify_taint_sources()
+        sinks = self._identify_taint_sinks()
+        
+        # Step 2: Build data flow graph
+        self._build_data_flow_graph()
+        
+        # Step 3: Trace paths from sources to sinks
+        taint_paths = self._trace_taint_paths(sources, sinks)
+        
+        # Step 4: Analyze sanitization
+        analyzed_paths = self._analyze_sanitization(taint_paths)
+        
+        # Step 5: Generate vulnerability report
+        vulnerabilities = self._generate_vulnerability_report(analyzed_paths)
+        
+        results = {
+            "taint_sources": [self._source_to_dict(s) for s in sources],
+            "taint_sinks": [self._sink_to_dict(s) for s in sinks],
+            "taint_paths": [self._path_to_dict(p) for p in analyzed_paths],
+            "vulnerabilities": vulnerabilities,
+            "data_flow_summary": self._generate_flow_summary(analyzed_paths),
+            "sanitization_coverage": self._analyze_sanitization_coverage(analyzed_paths)
+        }
+        
+        print(f"  [OK] Found {len(sources)} sources, {len(sinks)} sinks, {len(analyzed_paths)} paths")
+        return results
+    
+    def _identify_taint_sources(self) -> List[TaintSource]:
+        """Identify all taint sources in the codebase."""
+        sources = []
+        source_id = 1
+        
+        for py_file in self._get_python_files():
+            try:
+                content = self._get_file_content(py_file)
+                lines = content.split('\n')
+                file_key = str(py_file.relative_to(self.base_path))
+                
+                for line_num, line in enumerate(lines, 1):
+                    for source_type, patterns in self.taint_sources.items():
+                        for pattern in patterns:
+                            if re.search(pattern, line, re.IGNORECASE):
+                                sources.append(TaintSource(
+                                    name=f"source_{source_id}",
+                                    location=(file_key, line_num),
+                                    source_type=source_type,
+                                    confidence=self._calculate_source_confidence(pattern, line)
+                                ))
+                                source_id += 1
+                                
+            except Exception:
+                continue
+        
+        return sources
+    
+    def _identify_taint_sinks(self) -> List[TaintSink]:
+        """Identify all taint sinks in the codebase."""
+        sinks = []
+        sink_id = 1
+        
+        for py_file in self._get_python_files():
+            try:
+                content = self._get_file_content(py_file)
+                lines = content.split('\n')
+                file_key = str(py_file.relative_to(self.base_path))
+                
+                for line_num, line in enumerate(lines, 1):
+                    for sink_type, patterns in self.taint_sinks.items():
+                        for pattern in patterns:
+                            if re.search(pattern, line, re.IGNORECASE):
+                                sinks.append(TaintSink(
+                                    name=f"sink_{sink_id}",
+                                    location=(file_key, line_num),
+                                    sink_type=sink_type,
+                                    danger_level=self._get_sink_danger_level(sink_type)
+                                ))
+                                sink_id += 1
+                                
+            except Exception:
+                continue
+        
+        return sinks
+    
+    def _build_data_flow_graph(self):
+        """Build a data flow graph for the codebase."""
+        for py_file in self._get_python_files():
+            try:
+                tree = self._get_ast(py_file)
+                file_key = str(py_file.relative_to(self.base_path))
+                
+                # Track variable assignments and usage
+                self._track_data_flow(tree, file_key)
+                
+            except Exception:
+                continue
+    
+    def _track_data_flow(self, tree: ast.AST, file_key: str):
+        """Track data flow within an AST."""
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                # Track assignments: a = b
+                for target in node.targets:
+                    if isinstance(target, ast.Name):
+                        self._add_data_flow(
+                            self._extract_names_from_node(node.value),
+                            [target.id],
+                            file_key,
+                            node.lineno
+                        )
+            
+            elif isinstance(node, ast.AugAssign):
+                # Track augmented assignments: a += b
+                if isinstance(node.target, ast.Name):
+                    self._add_data_flow(
+                        self._extract_names_from_node(node.value),
+                        [node.target.id],
+                        file_key,
+                        node.lineno
+                    )
+            
+            elif isinstance(node, ast.Call):
+                # Track function calls that might propagate taint
+                self._track_function_call_flow(node, file_key)
+    
+    def _extract_names_from_node(self, node: ast.AST) -> List[str]:
+        """Extract variable names from an AST node."""
+        names = []
+        for n in ast.walk(node):
+            if isinstance(n, ast.Name):
+                names.append(n.id)
+        return names
+    
+    def _add_data_flow(self, sources: List[str], targets: List[str], file_key: str, line_num: int):
+        """Add data flow edges to the graph."""
+        for source in sources:
+            for target in targets:
+                self.data_flow_graph[(source, file_key)].add((target, file_key, line_num))
+                self.variable_assignments[target].append((file_key, line_num, sources))
+    
+    def _track_function_call_flow(self, node: ast.Call, file_key: str):
+        """Track data flow through function calls."""
+        # Extract function name
+        func_name = ""
+        if isinstance(node.func, ast.Name):
+            func_name = node.func.id
+        elif isinstance(node.func, ast.Attribute):
+            func_name = node.func.attr
+        
+        # Track arguments flowing into function
+        arg_names = []
+        for arg in node.args:
+            arg_names.extend(self._extract_names_from_node(arg))
+        
+        # Some functions that propagate taint
+        taint_propagating_functions = [
+            'str', 'format', 'join', 'replace', 'split',
+            'decode', 'encode', 'strip', 'lower', 'upper'
+        ]
+        
+        if func_name in taint_propagating_functions:
+            # These functions pass taint from input to output
+            for arg_name in arg_names:
+                self.data_flow_graph[(arg_name, file_key)].add((f"result_{node.lineno}", file_key, node.lineno))
+    
+    def _trace_taint_paths(self, sources: List[TaintSource], sinks: List[TaintSink]) -> List[TaintPath]:
+        """Trace paths from sources to sinks using data flow graph."""
+        paths = []
+        
+        for source in sources:
+            source_file, source_line = source.location
+            
+            for sink in sinks:
+                sink_file, sink_line = sink.location
+                
+                # Find paths from source to sink
+                found_paths = self._find_paths_between(
+                    (f"source_{source.name}", source_file),
+                    (f"sink_{sink.name}", sink_file),
+                    max_depth=20
+                )
+                
+                for path in found_paths:
+                    paths.append(TaintPath(
+                        source=source,
+                        sink=sink,
+                        path=path,
+                        sanitizers=[],
+                        is_sanitized=False,
+                        vulnerability_type=self._determine_vulnerability_type(source, sink),
+                        confidence=min(source.confidence, 0.8)  # Path confidence
+                    ))
+        
+        return paths
+    
+    def _find_paths_between(self, start: Tuple[str, str], end: Tuple[str, str], max_depth: int) -> List[List[Tuple[str, int]]]:
+        """Find paths between two nodes in the data flow graph using BFS."""
+        paths = []
+        queue = deque([(start, [])])
+        visited = set()
+        
+        while queue and len(paths) < 100:  # Limit number of paths
+            (current_var, current_file), path = queue.popleft()
+            
+            if len(path) > max_depth:
+                continue
+                
+            if (current_var, current_file) in visited:
+                continue
+                
+            visited.add((current_var, current_file))
+            
+            # Check if we reached the target
+            if current_file == end[1] and any(end[0] in edge[0] for edge in self.data_flow_graph.get((current_var, current_file), [])):
+                paths.append(path)
+                continue
+            
+            # Explore neighbors
+            for next_var, next_file, line_num in self.data_flow_graph.get((current_var, current_file), []):
+                if (next_var, next_file) not in visited:
+                    queue.append(((next_var, next_file), path + [(next_file, line_num)]))
+        
+        return paths
+    
+    def _analyze_sanitization(self, taint_paths: List[TaintPath]) -> List[TaintPath]:
+        """Analyze sanitization in taint paths."""
+        analyzed_paths = []
+        
+        for path in taint_paths:
+            # Check for sanitizers along the path
+            sanitizers_found = []
+            
+            for file_path, line_num in path.path:
+                try:
+                    file_content = self._get_file_content(self.base_path / file_path)
+                    lines = file_content.split('\n')
+                    
+                    if 0 <= line_num - 1 < len(lines):
+                        line = lines[line_num - 1]
+                        
+                        for sanitizer_type, patterns in self.sanitizers.items():
+                            for pattern in patterns:
+                                if re.search(pattern, line, re.IGNORECASE):
+                                    sanitizers_found.append(f"{sanitizer_type}:{pattern}")
+                                    
+                except Exception:
+                    continue
+            
+            # Update path with sanitization info
+            path.sanitizers = sanitizers_found
+            path.is_sanitized = len(sanitizers_found) > 0
+            
+            # Adjust confidence based on sanitization
+            if path.is_sanitized:
+                path.confidence *= 0.3  # Reduce confidence if sanitized
+            
+            analyzed_paths.append(path)
+        
+        return analyzed_paths
+    
+    def _generate_vulnerability_report(self, paths: List[TaintPath]) -> List[Dict[str, Any]]:
+        """Generate vulnerability report from analyzed paths."""
+        vulnerabilities = []
+        vuln_id = 1
+        
+        for path in paths:
+            if not path.is_sanitized and path.confidence > 0.5:
+                vulnerabilities.append({
+                    'vuln_id': vuln_id,
+                    'type': path.vulnerability_type,
+                    'severity': self._get_vulnerability_severity(path),
+                    'source_type': path.source.source_type,
+                    'sink_type': path.sink.sink_type,
+                    'source_location': path.source.location,
+                    'sink_location': path.sink.location,
+                    'path_length': len(path.path),
+                    'confidence': path.confidence,
+                    'is_sanitized': path.is_sanitized,
+                    'sanitizers': path.sanitizers,
+                    'description': self._get_vulnerability_description(path),
+                    'recommendation': self._get_vulnerability_recommendation(path)
+                })
+                vuln_id += 1
+        
+        return vulnerabilities
+    
+    def _calculate_source_confidence(self, pattern: str, line: str) -> float:
+        """Calculate confidence for a taint source."""
+        # Higher confidence for more specific patterns
+        if 'request.' in pattern or 'input(' in pattern:
+            return 0.9
+        elif 'argv' in pattern or 'environ' in pattern:
+            return 0.8
+        elif 'file' in pattern or 'open(' in pattern:
+            return 0.7
+        else:
+            return 0.6
+    
+    def _get_sink_danger_level(self, sink_type: str) -> str:
+        """Get danger level for sink type."""
+        high_danger = ['sql_injection', 'command_injection', 'code_injection']
+        medium_danger = ['path_traversal', 'deserialization']
+        
+        if sink_type in high_danger:
+            return 'HIGH'
+        elif sink_type in medium_danger:
+            return 'MEDIUM'
+        else:
+            return 'LOW'
+    
+    def _determine_vulnerability_type(self, source: TaintSource, sink: TaintSink) -> str:
+        """Determine vulnerability type from source and sink."""
+        if sink.sink_type == 'sql_injection':
+            return 'SQL Injection'
+        elif sink.sink_type == 'command_injection':
+            return 'Command Injection'
+        elif sink.sink_type == 'path_traversal':
+            return 'Path Traversal'
+        elif sink.sink_type == 'xss':
+            return 'Cross-Site Scripting'
+        elif sink.sink_type == 'code_injection':
+            return 'Code Injection'
+        elif sink.sink_type == 'deserialization':
+            return 'Insecure Deserialization'
+        else:
+            return 'Data Flow Vulnerability'
+    
+    def _get_vulnerability_severity(self, path: TaintPath) -> str:
+        """Get vulnerability severity."""
+        if path.sink.danger_level == 'HIGH' and path.confidence > 0.8:
+            return 'CRITICAL'
+        elif path.sink.danger_level == 'HIGH':
+            return 'HIGH'
+        elif path.sink.danger_level == 'MEDIUM' and path.confidence > 0.7:
+            return 'HIGH'
+        elif path.sink.danger_level == 'MEDIUM':
+            return 'MEDIUM'
+        else:
+            return 'LOW'
+    
+    def _get_vulnerability_description(self, path: TaintPath) -> str:
+        """Get vulnerability description."""
+        return f"{path.vulnerability_type} vulnerability: {path.source.source_type} data flows to {path.sink.sink_type} without proper sanitization"
+    
+    def _get_vulnerability_recommendation(self, path: TaintPath) -> str:
+        """Get vulnerability recommendation."""
+        if path.vulnerability_type == 'SQL Injection':
+            return "Use parameterized queries or prepared statements instead of string concatenation"
+        elif path.vulnerability_type == 'Command Injection':
+            return "Use subprocess with shell=False and validate all inputs, avoid os.system()"
+        elif path.vulnerability_type == 'Path Traversal':
+            return "Validate file paths, use os.path.abspath() and check against allowed directories"
+        elif path.vulnerability_type == 'Cross-Site Scripting':
+            return "Use proper output encoding/escaping and Content Security Policy"
+        elif path.vulnerability_type == 'Code Injection':
+            return "Avoid SafeCodeExecutor.safe_SafeCodeExecutor.safe_eval() and SafeCodeExecutor.safe_exec(), use safe alternatives like ast.literal_SafeCodeExecutor.safe_SafeCodeExecutor.safe_eval()"
+        else:
+            return "Implement proper input validation and sanitization for this data flow"
+    
+    def _generate_flow_summary(self, paths: List[TaintPath]) -> Dict[str, Any]:
+        """Generate summary of data flows."""
+        source_types = defaultdict(int)
+        sink_types = defaultdict(int)
+        vulnerability_types = defaultdict(int)
+        
+        for path in paths:
+            source_types[path.source.source_type] += 1
+            sink_types[path.sink.sink_type] += 1
+            if not path.is_sanitized:
+                vulnerability_types[path.vulnerability_type] += 1
+        
+        return {
+            'total_paths': len(paths),
+            'vulnerable_paths': len([p for p in paths if not p.is_sanitized]),
+            'sanitized_paths': len([p for p in paths if p.is_sanitized]),
+            'source_distribution': dict(source_types),
+            'sink_distribution': dict(sink_types),
+            'vulnerability_distribution': dict(vulnerability_types),
+            'average_path_length': sum(len(p.path) for p in paths) / max(len(paths), 1),
+            'high_confidence_paths': len([p for p in paths if p.confidence > 0.7])
+        }
+    
+    def _analyze_sanitization_coverage(self, paths: List[TaintPath]) -> Dict[str, Any]:
+        """Analyze sanitization coverage."""
+        total_paths = len(paths)
+        sanitized_paths = len([p for p in paths if p.is_sanitized])
+        
+        sanitizer_usage = defaultdict(int)
+        for path in paths:
+            for sanitizer in path.sanitizers:
+                sanitizer_type = sanitizer.split(':')[0]
+                sanitizer_usage[sanitizer_type] += 1
+        
+        return {
+            'total_paths': total_paths,
+            'sanitized_paths': sanitized_paths,
+            'sanitization_rate': sanitized_paths / max(total_paths, 1),
+            'unsanitized_paths': total_paths - sanitized_paths,
+            'sanitizer_usage': dict(sanitizer_usage),
+            'coverage_grade': self._get_sanitization_grade(sanitized_paths / max(total_paths, 1))
+        }
+    
+    def _get_sanitization_grade(self, rate: float) -> str:
+        """Get sanitization coverage grade."""
+        if rate >= 0.9:
+            return 'A'
+        elif rate >= 0.8:
+            return 'B'
+        elif rate >= 0.7:
+            return 'C'
+        elif rate >= 0.5:
+            return 'D'
+        else:
+            return 'F'
+    
+    def _source_to_dict(self, source: TaintSource) -> Dict[str, Any]:
+        """Convert TaintSource to dictionary."""
+        return {
+            'name': source.name,
+            'location': source.location,
+            'source_type': source.source_type,
+            'confidence': source.confidence
+        }
+    
+    def _sink_to_dict(self, sink: TaintSink) -> Dict[str, Any]:
+        """Convert TaintSink to dictionary."""
+        return {
+            'name': sink.name,
+            'location': sink.location,
+            'sink_type': sink.sink_type,
+            'danger_level': sink.danger_level
+        }
+    
+    def _path_to_dict(self, path: TaintPath) -> Dict[str, Any]:
+        """Convert TaintPath to dictionary."""
+        return {
+            'source': self._source_to_dict(path.source),
+            'sink': self._sink_to_dict(path.sink),
+            'path': path.path,
+            'sanitizers': path.sanitizers,
+            'is_sanitized': path.is_sanitized,
+            'vulnerability_type': path.vulnerability_type,
+            'confidence': path.confidence
+        }

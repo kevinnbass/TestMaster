@@ -1,89 +1,45 @@
-var Methods = {
+var methods = {
     startReceiving() {
-        var query = this.getReceiverQuery(this.receiverID).orderBy('timestamp', 'desc').limit(1);
-        var self = this;
-        this.unsubscribe = query.onSnapshot(
-            {
-                includeMetadataChanges: true
-            },
-            function (querySnapshot) {
-                if (querySnapshot.size > 0) {  // Load data
-                    var doc = querySnapshot.docs[0];
-                    if (doc.metadata.hasPendingWrites) {  // Load local message                        
-                        if (self.skipFirst) { // Local doc dose not have timestamp
-                            self.skipFirst = false;
-                        }
-                        return;
-                    }
+        if (this.isReceiving && (this.receiverRef.key === this.receiverID)) {
+            return this;
+        }
 
-                    self.resetPageQuery(self.receiverID, doc);
+        this.stopReceiving();
 
-                    if (self.skipFirst) {  // Load previos data
-                        self.skipFirst = false;
-                    } else {
-                        var d = DocToMessage(doc);
-                        self.cacheMessages.push(d);
-                        self.emit('receive', d);
-                    }
-                } else {
-                    if (self.skipFirst) {  // Start from an empty collection
-                        self.skipFirst = false;
-                    }
-                }
-            },
-            function (error) {
-                debugger
-            }
-        )
-
+        this.isReceiving = true;
+        this.skipFirst = true;  // Skip previous message
+        this.receiverRef = this.database.ref(this.rootPath).child(this.receiverID);
+        this.receiverRef.on('value', OnReceive, this);
+        this.receiverRef.onDisconnect().remove();
         return this;
     },
 
     stopReceiving() {
-        if (this.unsubscribe) {
-            this.unsubscribe();
-        }
-
-        // Reset to initial state
-        this.resetQueryFlag = true;
-        this.cacheMessages.length = 0;
-        return this;
-    },
-
-    loadPreviousMessages() {
-        this.resetPageQuery(this.receiverID);
-
-        var self = this;
-        return this.page.loadNextPage()
-            .then(function (docs) {
-                var messages = [];
-                for (var i = 0, cnt = docs.length; i < cnt; i++) {
-                    messages.push(DocToMessage(docs[i]));
-                }
-
-                self.cacheMessages.splice(0, 0, ...messages);
-                return Promise.resolve(messages);
-            })
-    },
-
-    resetPageQuery(receiverID, baselineDoc) {
-        if (!this.resetQueryFlag) {
+        if (!this.isReceiving) {
             return this;
         }
 
-        this.resetQueryFlag = false;
-        var baselineMode = (this.skipFirst) ? 'startAt' : 'startAfter';
-        this.page
-            .setBaselineDoc(baselineDoc, baselineMode)
-            .setQuery(this.getPageQuery(receiverID));
+        this.isReceiving = false;
+        this.receiverRef.off('value', OnReceive, this);
+        this.receiverRef.remove();
+        this.receiverRef.onDisconnect().cancel();
         return this;
     }
 }
 
-var DocToMessage = function (doc) {
-    var message = doc.data();
-    message.timestamp = message.timestamp.seconds * 1000;
-    return message;
+var OnReceive = function (snapshot) {
+    if (this.skipFirst) {
+        this.skipFirst = false;
+        return;
+    }
+    var d = snapshot.val();
+    if (d == null) {
+        return;
+    }
+
+    delete d.stamp;
+    this.history.add(d);
+    this.emit(this.eventNameMap.receive, d);
 }
 
-export default Methods;
+export default methods;

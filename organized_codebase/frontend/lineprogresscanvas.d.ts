@@ -1,2 +1,2 @@
-import LineProgressCanvas from "../../../plugins/lineprogresscanvas";
+import LineProgressCanvas from './gameobjects/canvas/lineprogress/LineProgress';
 export default LineProgressCanvas;

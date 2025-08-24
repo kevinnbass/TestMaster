@@ -1,2 +1,2 @@
-import CanvasInput from '../../../plugins/canvasinput';
+import CanvasInput from './gameobjects/dynamictext/canvasinput/CanvasInput';
 export default CanvasInput;

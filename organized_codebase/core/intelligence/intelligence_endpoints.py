@@ -44,7 +44,7 @@ import time
 from typing import Dict, Any, List
 import traceback
 
-from ..orchestrator import IntelligenceOrchestrator, IntelligenceRequest
+from ..C:.Users.kbass.OneDrive.Documents.testmaster.organized_codebase.core.orchestration.orchestrator import IntelligenceOrchestrator, IntelligenceRequest
 
 # Create Flask blueprint
 intelligence_bp = Blueprint('intelligence', __name__, url_prefix='/api/intelligence')

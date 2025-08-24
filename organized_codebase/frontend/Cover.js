@@ -1,2 +1,2 @@
-import Cover from '../../../plugins/gameobjects/shape/cover/Cover.js';
+import Cover from './gameobjects/shape/cover/Cover.js';
 export default Cover;

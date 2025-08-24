@@ -1,14 +1,16 @@
-import Clone from '../../utils/object/Clone.js';
-import Shuffle from '../../utils/array/Shuffle.js';
+import Clone from '../../../utils/object/Clone.js';
+import Shuffle from '../../../utils/array/Shuffle.js';
 
 var MoveToRandomNeighbor = function () {
-    var board = this.chessData.board;
-    if (board === null) { // chess is not in a board
+    var miniBoard = this.parent;
+    var mainBoard = miniBoard.mainBoard;
+    // Not on a mainBoard
+    if (mainBoard == null) {
         this.lastMoveResult = false;
         return this;
     }
 
-    var directions = board.grid.allDirections;
+    var directions = mainBoard.grid.allDirections;
     if (globDirections.length !== directions.length) {
         Clone(directions, globDirections);
     }

@@ -96,6 +96,9 @@ class Executor:
             # Optional: remove duplicate sources that were skipped
             if cfg.get('operations', {}).get('remove_duplicate_sources', False):
                 self._duplicates_removed += self._remove_duplicate_sources(plan, seen_hashes)
+            # Optional: prune empty directories from original tree
+            if cfg.get('operations', {}).get('prune_empty_dirs', False):
+                self._prune_empty_dirs()
         except Exception:
             pass
 
@@ -242,5 +245,30 @@ class Executor:
                 continue
                 
         return removed
+
+    def _prune_empty_dirs(self) -> None:
+        """Remove empty directories in the repository except protected roots."""
+        protected = {
+            str((self.root_dir / 'organized_codebase').resolve()),
+            str((self.root_dir / 'tools').resolve()),
+            str((self.root_dir / '.git').resolve())
+        }
+        # Walk bottom-up to remove deepest empty dirs first
+        for root, dirs, files in os.walk(self.root_dir, topdown=False):
+            try:
+                p = Path(root)
+                if str(p.resolve()) in protected:
+                    continue
+                # Skip organized_codebase subtree entirely
+                if 'organized_codebase' in p.parts:
+                    continue
+                # Consider directory empty if no files and no non-empty subdirs
+                if not files and not dirs:
+                    try:
+                        p.rmdir()
+                    except Exception:
+                        pass
+            except Exception:
+                continue
 
 

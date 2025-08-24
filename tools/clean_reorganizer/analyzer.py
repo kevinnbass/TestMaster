@@ -59,6 +59,8 @@ class Analyzer:
         ops = self.config.get("operations", {})
         self.max_file_size_bytes: int = int(ops.get("max_file_size_bytes", 10 * 1024 * 1024))
         self.include_exts: Set[str] = set(self.config.get("include_extensions", [".py"]))
+        # Sweeper mode processes all extensions (within other safety bounds)
+        self.sweeper_mode: bool = bool(ops.get("sweeper_mode", False))
 
         ex = self.config.get("exclusions", {})
         self.ex_dirs: Set[str] = set(ex.get("directories", []))
@@ -102,7 +104,8 @@ class Analyzer:
     def _should_exclude_file(self, file_path: Path) -> bool:
         """Decide if a file should be excluded from analysis."""
         assert isinstance(file_path, Path), "file_path must be a Path"
-        if file_path.suffix.lower() not in self.include_exts:
+        # In sweeper mode, accept any extension (still subject to other bounds)
+        if (not self.sweeper_mode) and (file_path.suffix.lower() not in self.include_exts):
             return True
         try:
             size = file_path.stat().st_size

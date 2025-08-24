@@ -3,145 +3,130 @@
 import { CommonChart } from '@/components/charts/common-chart';
 import { ChartConfig } from '@/components/ui/chart';
 import { ProjectMetrics } from '@/lib/interfaces';
-import { firstLineShadowEffect } from '@/utils/common.utils';
-import { memo, useMemo, useState, useRef, useCallback } from 'react';
-import { Cell, Label, PieProps } from 'recharts';
+import {
+  firstLineShadowEffect,
+  secondLineShadowEffect,
+  thirdLineShadowEffect,
+} from '@/utils/common.utils';
+import { useMemo, useState, useCallback, useRef } from 'react';
+import { LineProps } from 'recharts';
 
-function InnerShadowFilter({ id = 'inner-shadow' }: { id?: string }) {
-  return (
-    <svg width="0" height="0">
-      <defs>
-        <filter id={id} x="-50%" y="-50%" width="200%" height="200%">
-          <feComponentTransfer in="SourceAlpha">
-            <feFuncA type="table" tableValues="1 0" />
-          </feComponentTransfer>
-          <feGaussianBlur stdDeviation="3" />
-          <feOffset dx="3" dy="3" result="offsetblur" />
-          <feFlood floodColor="rgba(0, 0, 0, 0.2)" result="color" />
-          <feComposite in2="offsetblur" operator="in" />
-          <feComposite in2="SourceAlpha" operator="in" />
-          <feMerge>
-            <feMergeNode in="SourceGraphic" />
-            <feMergeNode />
-          </feMerge>
-        </filter>
-      </defs>
-    </svg>
-  );
-}
-
-const chartConfig: ChartConfig = {
+const chartConfig = {
   Success: {
     label: 'Success',
     color: 'hsl(var(--chart-1))',
   },
   Indeterminate: {
     label: 'Indeterminate',
-    color: '#E1E2F2',
+    color: 'hsl(var(--chart-2))',
   },
   Fail: {
     label: 'Fail',
     color: 'hsl(var(--chart-error))',
   },
-};
+} satisfies ChartConfig;
 
-function TraceEndStatesPieChartComponent({ metrics }: { metrics: ProjectMetrics }) {
-  const [shadowsVisible, setShadowsVisible] = useState(false);
-  const animationEndedOnce = useRef(false);
+export function TraceEndChart({ metrics }: { metrics: ProjectMetrics }) {
+  const [shadowsApplied, setShadowsApplied] = useState(false);
+  const animationCompletedRef = useRef(false);
 
   const chartData = useMemo(() => {
-    const counts = {
-      Success: metrics.span_count.success,
-      Indeterminate: metrics.span_count.unknown,
-      Fail: metrics.span_count.fail,
-    };
+    const readableDates: {
+      [key: string]: { date: string; Success: number; Fail: number; Indeterminate: number };
+    } = {};
 
-    return Object.entries(counts).map(([state, count]) => ({
-      state,
-      count,
-    }));
+    // Initialize dates from all three arrays
+    const allDates = new Set<string>();
+
+    metrics.success_datetime?.forEach((dateStr) => {
+      const date = dateStr.split('T')[0];
+      allDates.add(date);
+    });
+
+    metrics.fail_datetime?.forEach((dateStr) => {
+      const date = dateStr.split('T')[0];
+      allDates.add(date);
+    });
+
+    metrics.indeterminate_datetime?.forEach((dateStr) => {
+      const date = dateStr.split('T')[0];
+      allDates.add(date);
+    });
+
+    // Initialize all dates with zero counts
+    allDates.forEach((date) => {
+      readableDates[date] = { date, Success: 0, Fail: 0, Indeterminate: 0 };
+    });
+
+    // Count occurrences for each date
+    metrics.success_datetime?.forEach((dateStr) => {
+      const date = dateStr.split('T')[0];
+      readableDates[date].Success++;
+    });
+
+    metrics.fail_datetime?.forEach((dateStr) => {
+      const date = dateStr.split('T')[0];
+      readableDates[date].Fail++;
+    });
+
+    metrics.indeterminate_datetime?.forEach((dateStr) => {
+      const date = dateStr.split('T')[0];
+      readableDates[date].Indeterminate++;
+    });
+
+    return Object.values(readableDates).sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
   }, [metrics]);
 
-  const totalSessions = useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.count, 0);
-  }, [chartData]);
-
   const handleAnimationEnd = useCallback(() => {
-    if (!animationEndedOnce.current) {
-      setShadowsVisible(true);
-      animationEndedOnce.current = true;
+    if (!animationCompletedRef.current) {
+      setShadowsApplied(true);
+      animationCompletedRef.current = true;
     }
   }, []);
 
-  const getFilter = useCallback(
-    (state: string) => {
-      if (!shadowsVisible) return undefined;
-      if (state === 'Indeterminate') return 'url(#inner-shadow)';
-      if (state === 'Fail') return firstLineShadowEffect;
-      return firstLineShadowEffect;
-    },
-    [shadowsVisible],
-  );
-
-  const pieSpecificConfig: PieProps[] = useMemo(
+  const lineConfig: LineProps[] = useMemo(
     () => [
       {
-        data: chartData,
-        dataKey: 'count',
-        key: 'count',
-        nameKey: 'state',
-        innerRadius: 85,
-        outerRadius: 100,
-        strokeWidth: 5,
-        paddingAngle: 4,
-        cornerRadius: 3,
+        dataKey: 'Success',
+        key: 'Success',
+        type: 'monotone',
+        stroke: 'var(--color-Success)',
+        strokeWidth: 1.3,
+        dot: false,
         onAnimationEnd: handleAnimationEnd,
-        children: (
-          <>
-            {chartData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={chartConfig[entry.state as keyof typeof chartConfig].color}
-                filter={getFilter(entry.state)}
-              />
-            ))}
-            <Label
-              content={({ viewBox }) => {
-                if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                  return (
-                    <text
-                      x={viewBox.cx}
-                      y={viewBox.cy}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                    >
-                      <tspan
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        className="fill-foreground text-3xl font-bold"
-                      >
-                        {totalSessions.toLocaleString()}
-                      </tspan>
-                      <tspan
-                        x={viewBox.cx}
-                        y={(viewBox.cy || 0) + 24}
-                        className="fill-muted-foreground"
-                      >
-                        Spans
-                      </tspan>
-                    </text>
-                  );
-                }
-              }}
-            />
-          </>
-        ),
+        style: shadowsApplied ? { filter: firstLineShadowEffect } : {},
+      },
+      {
+        dataKey: 'Indeterminate',
+        key: 'Indeterminate',
+        type: 'monotone',
+        stroke: 'var(--color-Indeterminate)',
+        strokeWidth: 1.3,
+        dot: false,
+        style: shadowsApplied ? { filter: secondLineShadowEffect } : {},
+      },
+      {
+        dataKey: 'Fail',
+        key: 'Fail',
+        type: 'monotone',
+        stroke: 'var(--color-Fail)',
+        strokeWidth: 1.3,
+        dot: false,
+        style: shadowsApplied ? { filter: thirdLineShadowEffect } : {},
       },
     ],
-    [chartData, getFilter, handleAnimationEnd, totalSessions],
+    [shadowsApplied, handleAnimationEnd],
   );
 
-  if (metrics.span_count.total === 0) {
+  const hasData = !!(
+    (metrics.success_datetime && metrics.success_datetime.length > 0) ||
+    (metrics.fail_datetime && metrics.fail_datetime.length > 0) ||
+    (metrics.indeterminate_datetime && metrics.indeterminate_datetime.length > 0)
+  );
+
+  if (!hasData) {
     return (
       <CommonChart
         chartData={[]}
@@ -149,25 +134,46 @@ function TraceEndStatesPieChartComponent({ metrics }: { metrics: ProjectMetrics 
         config={[]}
         chartConfig={{}}
         xAxisProps={{ height: 30 }}
+        horizontalEmptyState
       />
     );
   }
 
   return (
-    <div>
-      <InnerShadowFilter id="inner-shadow" />
+    <>
       <CommonChart
-        type="pie"
-        chartData={chartData}
+        type="line"
         chartConfig={chartConfig}
-        tooltipContentProps={{
-          indicator: 'dot',
+        chartData={chartData}
+        xAxisProps={{
+          dataKey: 'date',
+          height: 30,
+          minTickGap: 32,
+          tickCount: 10,
+          tickFormatter: (value) => {
+            const date = new Date(value);
+            return date.toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+            });
+          },
         }}
-        config={pieSpecificConfig}
-        chartContainerClassName="h-[300px]"
+        yAxisProps={{
+          domain: [0, 'dataMax'],
+          allowDecimals: false,
+        }}
+        tooltipContentProps={{
+          className: 'w-[50px]',
+          labelFormatter: (value) => {
+            return new Date(value).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+            });
+          },
+        }}
+        config={lineConfig}
       />
-    </div>
+    </>
   );
 }
-
-export const TraceEndStatesPieChart = memo(TraceEndStatesPieChartComponent);

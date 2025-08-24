@@ -1,2 +1,2 @@
-import RoundRectangleCanvas from "../../../plugins/roundrectanglecanvas";
-export default RoundRectangleCanvas;
+import RoundRecrangle from './gameobjects/canvas/roundrectangle/RoundRectangle.js';
+export default RoundRecrangle;

@@ -1,8 +1,5 @@
 var SetIgnoreWait = function (value) {
-    if (value === undefined) {
-        value = true;
-    }
-    this.ignoreWait = value;
+    this.typeWriter.setIgnoreWait(value);
     return this;
 }
 

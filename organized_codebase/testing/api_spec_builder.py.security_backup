@@ -1,0 +1,316 @@
+"""
+API Specification Builder
+
+Automatically generates OpenAPI/Swagger specifications from code analysis.
+"""
+
+import json
+import ast
+import re
+from pathlib import Path
+from typing import Dict, List, Any, Optional
+from dataclasses import dataclass, asdict
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+@dataclass
+class APIEndpoint:
+    """Represents an API endpoint."""
+    path: str
+    method: str
+    summary: str
+    description: str
+    parameters: List[Dict]
+    request_body: Optional[Dict]
+    responses: Dict[str, Dict]
+    tags: List[str]
+    
+
+@dataclass
+class APISpec:
+    """Complete API specification."""
+    title: str
+    version: str
+    description: str
+    base_url: str
+    endpoints: List[APIEndpoint]
+    components: Dict[str, Any]
+    
+
+class APISpecBuilder:
+    """
+    Builds OpenAPI specifications from Python code analysis.
+    Supports Flask, FastAPI, and Django REST framework patterns.
+    """
+    
+    def __init__(self):
+        """Initialize the API spec builder."""
+        self.endpoints = []
+        self.components = {}
+        self.spec_version = "3.0.0"
+        logger.info("API Spec Builder initialized")
+        
+    def analyze_flask_routes(self, file_path: str) -> List[APIEndpoint]:
+        """
+        Analyze Flask application for API routes.
+        
+        Args:
+            file_path: Path to Flask app file
+            
+        Returns:
+            List of discovered API endpoints
+        """
+        endpoints = []
+        
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                source = f.read()
+                
+            # Find Flask route decorators
+            route_pattern = r'@\w+\.route\([\'"]([^\'"]+)[\'"](?:,\s*methods=\[(.*?)\])?\)'
+            matches = re.findall(route_pattern, source)
+            
+            for path, methods in matches:
+                methods_list = eval(f'[{methods}]') if methods else ['GET']
+                
+                for method in methods_list:
+                    endpoint = APIEndpoint(
+                        path=path,
+                        method=method.strip('"\''),
+                        summary=f"{method} {path}",
+                        description=f"Endpoint for {path}",
+                        parameters=self._extract_parameters(path),
+                        request_body=None if method == 'GET' else {"type": "object"},
+                        responses={"200": {"description": "Success"}},
+                        tags=[Path(file_path).stem]
+                    )
+                    endpoints.append(endpoint)
+                    
+        except Exception as e:
+            logger.error(f"Error analyzing Flask routes: {e}")
+            
+        return endpoints
+        
+    def analyze_fastapi_routes(self, file_path: str) -> List[APIEndpoint]:
+        """
+        Analyze FastAPI application for API routes.
+        
+        Args:
+            file_path: Path to FastAPI app file
+            
+        Returns:
+            List of discovered API endpoints
+        """
+        endpoints = []
+        
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                tree = ast.parse(f.read())
+                
+            for node in ast.walk(tree):
+                if isinstance(node, ast.FunctionDef):
+                    # Check for FastAPI decorators
+                    for decorator in node.decorator_list:
+                        if hasattr(decorator, 'attr'):
+                            method = decorator.attr.upper()
+                            if method in ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']:
+                                path = self._extract_path_from_decorator(decorator)
+                                if path:
+                                    endpoint = APIEndpoint(
+                                        path=path,
+                                        method=method,
+                                        summary=node.name.replace('_', ' ').title(),
+                                        description=ast.get_docstring(node) or "",
+                                        parameters=self._extract_function_params(node),
+                                        request_body=self._extract_request_body(node),
+                                        responses=self._extract_responses(node),
+                                        tags=[Path(file_path).stem]
+                                    )
+                                    endpoints.append(endpoint)
+                                    
+        except Exception as e:
+            logger.error(f"Error analyzing FastAPI routes: {e}")
+            
+        return endpoints
+        
+    def build_openapi_spec(self, 
+                          title: str,
+                          version: str,
+                          base_url: str = "/",
+                          description: str = "") -> Dict[str, Any]:
+        """
+        Build complete OpenAPI specification.
+        
+        Args:
+            title: API title
+            version: API version
+            base_url: Base URL for API
+            description: API description
+            
+        Returns:
+            OpenAPI specification dictionary
+        """
+        spec = {
+            "openapi": self.spec_version,
+            "info": {
+                "title": title,
+                "version": version,
+                "description": description
+            },
+            "servers": [{"url": base_url}],
+            "paths": self._build_paths(),
+            "components": self.components
+        }
+        
+        return spec
+        
+    def scan_directory(self, directory: str, framework: str = "auto") -> List[APIEndpoint]:
+        """
+        Scan directory for API endpoints.
+        
+        Args:
+            directory: Directory to scan
+            framework: Framework type (flask, fastapi, django, auto)
+            
+        Returns:
+            List of discovered endpoints
+        """
+        endpoints = []
+        path = Path(directory)
+        
+        for file_path in path.rglob("*.py"):
+            if framework == "auto":
+                # Try to detect framework
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    if 'flask' in content.lower():
+                        endpoints.extend(self.analyze_flask_routes(str(file_path)))
+                    elif 'fastapi' in content.lower():
+                        endpoints.extend(self.analyze_fastapi_routes(str(file_path)))
+            elif framework == "flask":
+                endpoints.extend(self.analyze_flask_routes(str(file_path)))
+            elif framework == "fastapi":
+                endpoints.extend(self.analyze_fastapi_routes(str(file_path)))
+                
+        self.endpoints.extend(endpoints)
+        logger.info(f"Discovered {len(endpoints)} endpoints")
+        return endpoints
+        
+    def export_spec(self, output_path: str, format: str = "json") -> None:
+        """
+        Export API specification to file.
+        
+        Args:
+            output_path: Output file path
+            format: Output format (json, yaml)
+        """
+        spec = self.build_openapi_spec(
+            title="Generated API",
+            version="1.0.0",
+            description="Auto-generated API specification"
+        )
+        
+        with open(output_path, 'w') as f:
+            if format == "json":
+                json.dump(spec, f, indent=2)
+            elif format == "yaml":
+                # Would need PyYAML for this
+                json.dump(spec, f, indent=2)
+                
+        logger.info(f"Exported spec to {output_path}")
+        
+    def validate_spec(self) -> List[str]:
+        """
+        Validate the API specification.
+        
+        Returns:
+            List of validation issues
+        """
+        issues = []
+        
+        for endpoint in self.endpoints:
+            if not endpoint.path:
+                issues.append(f"Endpoint missing path")
+            if not endpoint.method:
+                issues.append(f"Endpoint {endpoint.path} missing method")
+            if not endpoint.responses:
+                issues.append(f"Endpoint {endpoint.path} missing responses")
+                
+        return issues
+        
+    # Helper methods
+    def _extract_parameters(self, path: str) -> List[Dict]:
+        """Extract parameters from path string."""
+        params = []
+        pattern = r'<(\w+):?(\w+)?>'
+        matches = re.findall(pattern, path)
+        
+        for name, type_hint in matches:
+            params.append({
+                "name": name,
+                "in": "path",
+                "required": True,
+                "schema": {"type": type_hint or "string"}
+            })
+            
+        return params
+        
+    def _extract_path_from_decorator(self, decorator: ast.AST) -> Optional[str]:
+        """Extract path from decorator node."""
+        if hasattr(decorator, 'args') and decorator.args:
+            if isinstance(decorator.args[0], ast.Constant):
+                return decorator.args[0].value
+        return None
+        
+    def _extract_function_params(self, node: ast.FunctionDef) -> List[Dict]:
+        """Extract function parameters."""
+        params = []
+        for arg in node.args.args[1:]:  # Skip 'self'
+            params.append({
+                "name": arg.arg,
+                "in": "query",
+                "required": False,
+                "schema": {"type": "string"}
+            })
+        return params
+        
+    def _extract_request_body(self, node: ast.FunctionDef) -> Optional[Dict]:
+        """Extract request body schema."""
+        # Simple implementation - would need more analysis for real schemas
+        for arg in node.args.args:
+            if 'request' in arg.arg.lower() or 'body' in arg.arg.lower():
+                return {"type": "object"}
+        return None
+        
+    def _extract_responses(self, node: ast.FunctionDef) -> Dict[str, Dict]:
+        """Extract response schemas."""
+        return {
+            "200": {"description": "Success"},
+            "400": {"description": "Bad Request"},
+            "500": {"description": "Internal Server Error"}
+        }
+        
+    def _build_paths(self) -> Dict[str, Dict]:
+        """Build paths section of OpenAPI spec."""
+        paths = {}
+        
+        for endpoint in self.endpoints:
+            if endpoint.path not in paths:
+                paths[endpoint.path] = {}
+                
+            paths[endpoint.path][endpoint.method.lower()] = {
+                "summary": endpoint.summary,
+                "description": endpoint.description,
+                "parameters": endpoint.parameters,
+                "responses": endpoint.responses,
+                "tags": endpoint.tags
+            }
+            
+            if endpoint.request_body:
+                paths[endpoint.path][endpoint.method.lower()]["requestBody"] = {
+                    "content": {"application/json": {"schema": endpoint.request_body}}
+                }
+                
+        return paths

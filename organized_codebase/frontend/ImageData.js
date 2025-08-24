@@ -1,106 +1,172 @@
-import RenderBase from '../renderbase/RenderBase.js';
+import RenderBase from '../RenderBase.js';
 import { ImageTypeName } from '../Types.js';
+import WebglRender from './WebglRender.js';
+import CanvasRender from './CanvasRender.js';
+
+const IsPlainObject = Phaser.Utils.Objects.IsPlainObject;
 
 class ImageData extends RenderBase {
-    constructor(
-        parent,
-        key, frame
-    ) {
+    constructor(parent, frame) {
         super(parent, ImageTypeName);
-        this.setTexture(key, frame);
-    }
 
-    get frameWidth() {
-        return (this.frameObj) ? this.frameObj.cutWidth : 0;
-    }
-
-    get frameHeight() {
-        return (this.frameObj) ? this.frameObj.cutHeight : 0;
-    }
-
-    get offsetY() {
-        return -this.height;
-    }
-
-    set offsetY(value) { }
-
-    get key() {
-        return this._key;
-    }
-
-    set key(value) {
-        this.setDirty(this._key != value);
-        this._key = value;
-    }
-
-    get frame() {
-        return this._frame;
-    }
-
-    set frame(value) {
-        this.setDirty(this._frame != value);
-        this._frame = value;
-    }
-
-    setTexture(key, frame) {
-        this.key = key;
-        this.frame = frame;
-
-        this.frameObj = this.scene.sys.textures.getFrame(key, frame);
-        return this;
+        this.setFrame(frame);
     }
 
     get width() {
-        return this.frameWidth * this.scaleX;
+        return this._width;
     }
 
     set width(value) {
-        this.setDirty(this.width !== value);
-        this.scaleX = value / this.frameWidth;
     }
 
     get height() {
-        return this.frameHeight * this.scaleY;
+        return this._height;
     }
 
     set height(value) {
-        this.setDirty(this.height !== value);
-        this.scaleY = value / this.frameHeight;
     }
 
-    setHeight(height, keepAspectRatio) {
-        if (keepAspectRatio === undefined) {
-            keepAspectRatio = false;
+    setFrame(frame) {
+        if (arguments.length > 0 && !IsPlainObject(frame)) {
+            frame = this.parent.texture.get(frame);
         }
-        this.height = height;
-
-        if (keepAspectRatio) {
-            this.scaleX = this.scaleY;
-        }
+        this.frame = frame;
+        this._width = (frame) ? frame.width : 0;
+        this._height = (frame) ? frame.height : 0;
         return this;
     }
 
-    renderContent() {
-        var context = this.context;
-        var frame = this.frameObj;
-
-        var width = this.frameWidth,
-            height = this.frameHeight;
-        context.drawImage(
-            frame.source.image,              // image
-            frame.cutX, frame.cutY, width, height,
-            0, 0, width, height,
-        );
+    setFlipX(flipX) {
+        if (flipX === undefined) {
+            flipX = true;
+        }
+        this.flipX = flipX;
+        return this;
     }
 
-    get drawTLX() { return -this.leftSpace; }
-    get drawTLY() { return 0; }
-    get drawBLX() { return -this.leftSpace; }
-    get drawBLY() { return this.frameHeight; }
-    get drawTRX() { return this.frameWidth + this.rightSpace; }
-    get drawTRY() { return 0; }
-    get drawBRX() { return this.frameWidth + this.rightSpace; }
-    get drawBRY() { return this.frameHeight; }
+    setFlipY(flipY) {
+        if (flipY === undefined) {
+            flipY = true;
+        }
+        this.flipY = flipY;
+        return this;
+    }
+
+    resetFlip() {
+        this.flipX = false;
+        this.flipY = false;
+        return this;
+    }
+
+    get tint() {
+        if (this._tint === undefined) {
+            return this.parent.tint;
+        } else {
+            return this._tint;
+        }
+    }
+
+    set tint(value) {
+        this._tint = value;
+    }
+
+
+    setTint(value) {
+        this.tint = value;
+        this.tintFill = false;
+        return this;
+    }
+
+    setTintFill(value) {
+        this.tint = value;
+        this.tintFill = true;
+        return this;
+    }
+
+    clearTint() {
+        this.setTint(0xffffff);
+        return this;
+    }
+
+    resetTint() {
+        this.tint = undefined;
+        this.tintFill = undefined;
+        return this;
+    }
+
+    get tintFill() {
+        if (this._tintFill === undefined) {
+            return this.parent.tintFill;
+        } else {
+            return this._tintFill;
+        }
+    }
+
+    set tintFill(value) {
+        this._tintFill = value;
+    }
+
+    reset() {
+        super.reset();
+
+        this
+            .resetFlip()
+            .resetTint()
+            .setFrame();
+
+        return this;
+    }
+
+    modifyPorperties(o) {
+        if (!o) {
+            return this;
+        }
+
+        // Size of Image is equal to frame size,
+        // Move width, height properties to displayWidth,displayHeight
+        if (o.hasOwnProperty('width')) {
+            o.displayWidth = o.width;
+            delete o.width;
+        }
+        if (o.hasOwnProperty('height')) {
+            o.displayHeight = o.height;
+            delete o.height;
+        }
+
+        if (o.hasOwnProperty('frame')) {
+            this.setFrame(o.frame);
+        }
+
+        super.modifyPorperties(o);
+
+        if (o.hasOwnProperty('flipX')) {
+            this.setFlipX(o.flipX);
+        }
+        if (o.hasOwnProperty('flipY')) {
+            this.setFlipY(o.flipY);
+        }
+
+        if (o.hasOwnProperty('tint')) {
+            this.setTint(o.tint);
+        }
+
+        if (o.hasOwnProperty('tintFill')) {
+            this.setTintFill(o.tintFill);
+        }
+
+        return this;
+    }
+
 }
+
+var methods = {
+    webglRender: WebglRender,
+    canvasRender: CanvasRender,
+}
+
+Object.assign(
+    ImageData.prototype,
+    methods
+);
 
 export default ImageData;

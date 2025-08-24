@@ -1,57 +1,52 @@
-import SetTableOY from './SetTableOY.js';
-import SetTableOX from './SetTableOX.js';
-import ChildrenMaskMethods from '../../../container/containerlite/mask/ChildrenMaskMethods.js';
+import Parent from './Parent.js';
+import AddChild from './AddChild.js';
+import RemoveChild from './RemoveChild.js';
+import ChildState from './ChildState.js';
+import Transform from './Transform.js';
+import Position from './Position.js';
+import Rotation from './Rotation.js';
+import Scale from './Scale.js';
+import Visible from './Visible.js';
+import Alpha from './Alpha.js';
+import Active from './Active.js';
+import ScrollFactor from './ScrollFactor.js';
+import Mask from './Mask.js';
+import Depth from './Depth.js';
+import Children from './Children.js';
+import Tween from './Tween.js';
+import P3Container from './P3Container.js';
+import Layer from './Layer.js';
+import RenderTexture from './RenderTexture.js';
 
-import ShowCells from './updatetable/ShowCells.js';
-import ShowCell from './updatetable/ShowCell.js';
-import GetCellTLX from './updatetable/GetCellTLX.js';
-import GetCellTLY from './updatetable/GetCellTLY.js';
-import HideCells from './updatetable/HideCells.js';
-import HideCell from './updatetable/HideCell.js';
-import UpdateTable from './updatetable/UpdateTable.js';
-
-import IsCellVisible from './IsCellVisible.js';
-import { PointToCellIndex, PointToCellContainer } from './PointToCell.js';
-import { EachVisibleCell, IterateVisibleCell, EachCell, IterateCell } from './EachCell.js';
-
-import SetCellsCount from './SetCellsCount.js';
-import InsertNewCells from './InsertNewCells.js';
-import RemoveCells from './RemoveCells.js';
-import SetColumnCount from './SetColumnCount.js';
-import SetGridSize from './SetGridSize.js';
-import UpdateVisibleCell from './UpdateVisibleCell';
+import DrawBounds from './DrawBounds.js';
+import ChangeOrigin from './ChangeOrigin.js';
 
 var methods = {
-    setTableOY: SetTableOY,
-    setTableOX: SetTableOX,
-
-    showCells: ShowCells,
-    showCell: ShowCell,
-    getCellTLX: GetCellTLX,
-    getCellTLY: GetCellTLY,
-    hideCells: HideCells,
-    hideCell: HideCell,
-    updateTable: UpdateTable,
-
-    isCellVisible: IsCellVisible,
-    pointToCellIndex: PointToCellIndex,
-    pointToCellContainer: PointToCellContainer,
-    eachVisibleCell: EachVisibleCell,
-    iterateVisibleCell: IterateVisibleCell,
-    eachCell: EachCell,
-    iterateCell: IterateCell,
-
-    setCellsCount: SetCellsCount,
-    insertNewCells: InsertNewCells,
-    removeCells: RemoveCells,
-    setColumnCount: SetColumnCount,
-    setGridSize: SetGridSize,
-    updateVisibleCell: UpdateVisibleCell
-}
+    changeOrigin: ChangeOrigin,
+    drawBounds: DrawBounds,
+};
 
 Object.assign(
     methods,
-    ChildrenMaskMethods
+    Parent,
+    AddChild,
+    RemoveChild,
+    ChildState,
+    Transform,
+    Position,
+    Rotation,
+    Scale,
+    Visible,
+    Alpha,
+    Active,
+    ScrollFactor,
+    Mask,
+    Depth,
+    Children,
+    Tween,
+    P3Container,
+    Layer,
+    RenderTexture,
 );
 
 export default methods;

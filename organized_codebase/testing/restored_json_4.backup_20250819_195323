@@ -1,0 +1,549 @@
+"""
+TestMaster AgentOps Observability Integration
+=============================================
+
+Comprehensive observability for test execution with session replay,
+cost tracking, and performance analytics using AgentOps patterns.
+
+Author: TestMaster Team
+"""
+
+import time
+import json
+import logging
+import threading
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional, Any, Callable
+from dataclasses import dataclass, field, asdict
+from collections import defaultdict, deque
+from contextlib import contextmanager
+from functools import wraps
+import uuid
+
+@dataclass
+class TestSession:
+    """Represents a tracked test execution session"""
+    session_id: str
+    name: str
+    start_time: float
+    end_time: Optional[float] = None
+    status: str = "active"
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    tags: List[str] = field(default_factory=list)
+    actions: List[Dict[str, Any]] = field(default_factory=list)
+    llm_calls: List[Dict[str, Any]] = field(default_factory=list)
+    performance_data: Dict[str, Any] = field(default_factory=dict)
+    cost_data: Dict[str, Any] = field(default_factory=dict)
+    
+    @property
+    def duration(self) -> Optional[float]:
+        """Get session duration if completed"""
+        if self.end_time:
+            return self.end_time - self.start_time
+        return None
+
+@dataclass
+class AgentAction:
+    """Represents an action performed by an agent"""
+    action_id: str
+    agent_name: str
+    action_type: str
+    timestamp: float
+    parameters: Dict[str, Any]
+    result: Optional[Any] = None
+    error: Optional[str] = None
+    duration: float = 0.0
+    llm_calls: List[str] = field(default_factory=list)
+    cost: float = 0.0
+
+@dataclass
+class LLMCall:
+    """Represents an LLM API call with cost tracking"""
+    call_id: str
+    model: str
+    provider: str
+    timestamp: float
+    prompt_tokens: int
+    completion_tokens: int
+    total_tokens: int
+    cost: float
+    latency: float
+    success: bool
+    error: Optional[str] = None
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+class CostTracker:
+    """Advanced cost tracking for LLM usage in testing"""
+    
+    def __init__(self):
+        self.session_costs: Dict[str, float] = defaultdict(float)
+        self.model_pricing = {
+            "gpt-4": {"input": 0.03, "output": 0.06},
+            "gpt-4-turbo": {"input": 0.01, "output": 0.03},
+            "gpt-3.5-turbo": {"input": 0.001, "output": 0.002},
+            "gemini-pro": {"input": 0.00025, "output": 0.0005},
+            "gemini-1.5-pro": {"input": 0.00125, "output": 0.00375},
+            "claude-3-sonnet": {"input": 0.003, "output": 0.015},
+            "claude-3-haiku": {"input": 0.00025, "output": 0.00125}
+        }
+        self.daily_limits = {
+            "total_cost": 100.0,  # $100 daily limit
+            "tokens": 1000000,    # 1M tokens daily limit
+            "calls": 10000        # 10K calls daily limit
+        }
+        self.current_usage = {
+            "total_cost": 0.0,
+            "tokens": 0,
+            "calls": 0,
+            "reset_time": datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        }
+        self.lock = threading.Lock()
+        
+    def calculate_cost(self, model: str, input_tokens: int, output_tokens: int) -> float:
+        """Calculate cost for an LLM call"""
+        pricing = self.model_pricing.get(model.lower(), {"input": 0.001, "output": 0.002})
+        
+        input_cost = (input_tokens / 1000) * pricing["input"]
+        output_cost = (output_tokens / 1000) * pricing["output"] 
+        
+        return input_cost + output_cost
+    
+    def track_llm_call(self, session_id: str, llm_call: LLMCall) -> bool:
+        """Track an LLM call and check against limits"""
+        with self.lock:
+            # Reset daily usage if needed
+            now = datetime.now()
+            if now.date() > self.current_usage["reset_time"].date():
+                self.current_usage = {
+                    "total_cost": 0.0,
+                    "tokens": 0, 
+                    "calls": 0,
+                    "reset_time": now.replace(hour=0, minute=0, second=0, microsecond=0)
+                }
+            
+            # Check limits
+            if (self.current_usage["total_cost"] + llm_call.cost > self.daily_limits["total_cost"] or
+                self.current_usage["tokens"] + llm_call.total_tokens > self.daily_limits["tokens"] or
+                self.current_usage["calls"] + 1 > self.daily_limits["calls"]):
+                return False
+            
+            # Track usage
+            self.session_costs[session_id] += llm_call.cost
+            self.current_usage["total_cost"] += llm_call.cost
+            self.current_usage["tokens"] += llm_call.total_tokens
+            self.current_usage["calls"] += 1
+            
+            return True
+    
+    def get_session_costs(self, session_id: str) -> Dict[str, float]:
+        """Get cost breakdown for a session"""
+        return {
+            "total_cost": self.session_costs.get(session_id, 0.0),
+            "daily_usage": self.current_usage["total_cost"],
+            "daily_limit": self.daily_limits["total_cost"],
+            "remaining_budget": self.daily_limits["total_cost"] - self.current_usage["total_cost"]
+        }
+
+class TestMasterObservability:
+    """
+    Comprehensive observability system for test execution tracking.
+    Provides session replay, cost tracking, and performance analytics.
+    """
+    
+    def __init__(self):
+        self.sessions: Dict[str, TestSession] = {}
+        self.actions: Dict[str, AgentAction] = {}
+        self.llm_calls: Dict[str, LLMCall] = {}
+        self.cost_tracker = CostTracker()
+        
+        # Performance tracking
+        self.performance_history = deque(maxlen=1000)
+        self.active_operations = 0
+        
+        # Session analytics
+        self.session_analytics = {
+            "total_sessions": 0,
+            "completed_sessions": 0,
+            "failed_sessions": 0,
+            "average_duration": 0.0,
+            "total_cost": 0.0,
+            "total_tokens": 0,
+            "total_llm_calls": 0
+        }
+        
+        self.lock = threading.Lock()
+        self.logger = logging.getLogger('TestMasterObservability')
+        self.logger.info("TestMaster Observability system initialized")
+    
+    def start_test_session(
+        self, 
+        session_name: str,
+        metadata: Dict[str, Any] = None,
+        tags: List[str] = None
+    ) -> str:
+        """Start a tracked test session with comprehensive logging"""
+        session_id = f"session_{uuid.uuid4().hex[:12]}"
+        
+        session = TestSession(
+            session_id=session_id,
+            name=session_name,
+            start_time=time.time(),
+            metadata=metadata or {},
+            tags=tags or ["testmaster", "test_execution"]
+        )
+        
+        with self.lock:
+            self.sessions[session_id] = session
+            self.session_analytics["total_sessions"] += 1
+            self.active_operations += 1
+        
+        self.logger.info(f"Started test session: {session_name} ({session_id})")
+        return session_id
+    
+    def end_test_session(self, session_id: str, status: str = "completed") -> TestSession:
+        """End a test session and calculate final metrics"""
+        with self.lock:
+            session = self.sessions.get(session_id)
+            if not session:
+                raise ValueError(f"Session {session_id} not found")
+            
+            session.end_time = time.time()
+            session.status = status
+            
+            # Update analytics
+            if status == "completed":
+                self.session_analytics["completed_sessions"] += 1
+            else:
+                self.session_analytics["failed_sessions"] += 1
+            
+            # Update average duration
+            total_completed = self.session_analytics["completed_sessions"]
+            if total_completed > 0:
+                current_avg = self.session_analytics["average_duration"]
+                session_duration = session.duration or 0
+                self.session_analytics["average_duration"] = (
+                    (current_avg * (total_completed - 1) + session_duration) / total_completed
+                )
+            
+            self.active_operations = max(0, self.active_operations - 1)
+        
+        # Update session performance data
+        self._calculate_session_performance(session)
+        
+        self.logger.info(f"Ended test session: {session.name} ({session_id}) - {status}")
+        return session
+    
+    def track_agent_action(
+        self,
+        session_id: str,
+        agent_name: str,
+        action_type: str,
+        parameters: Dict[str, Any] = None
+    ) -> str:
+        """Track an agent action within a session"""
+        action_id = f"action_{uuid.uuid4().hex[:8]}"
+        
+        action = AgentAction(
+            action_id=action_id,
+            agent_name=agent_name,
+            action_type=action_type,
+            timestamp=time.time(),
+            parameters=parameters or {}
+        )
+        
+        with self.lock:
+            self.actions[action_id] = action
+            
+            # Add to session
+            session = self.sessions.get(session_id)
+            if session:
+                session.actions.append({
+                    "action_id": action_id,
+                    "agent_name": agent_name,
+                    "action_type": action_type,
+                    "timestamp": action.timestamp
+                })
+        
+        return action_id
+    
+    def complete_agent_action(
+        self,
+        action_id: str,
+        result: Any = None,
+        error: str = None,
+        llm_calls: List[str] = None
+    ):
+        """Complete an agent action with results"""
+        with self.lock:
+            action = self.actions.get(action_id)
+            if not action:
+                return
+            
+            action.result = result
+            action.error = error
+            action.duration = time.time() - action.timestamp
+            action.llm_calls = llm_calls or []
+            
+            # Calculate cost for this action
+            action.cost = sum(
+                self.llm_calls[call_id].cost 
+                for call_id in action.llm_calls
+                if call_id in self.llm_calls
+            )
+    
+    def track_llm_call(
+        self,
+        session_id: str,
+        model: str,
+        provider: str,
+        prompt_tokens: int,
+        completion_tokens: int,
+        latency: float,
+        success: bool = True,
+        error: str = None,
+        metadata: Dict[str, Any] = None
+    ) -> str:
+        """Track an LLM API call with cost calculation"""
+        call_id = f"llm_{uuid.uuid4().hex[:8]}"
+        cost = self.cost_tracker.calculate_cost(model, prompt_tokens, completion_tokens)
+        
+        llm_call = LLMCall(
+            call_id=call_id,
+            model=model,
+            provider=provider,
+            timestamp=time.time(),
+            prompt_tokens=prompt_tokens,
+            completion_tokens=completion_tokens,
+            total_tokens=prompt_tokens + completion_tokens,
+            cost=cost,
+            latency=latency,
+            success=success,
+            error=error,
+            metadata=metadata or {}
+        )
+        
+        # Check if call is within limits
+        if not self.cost_tracker.track_llm_call(session_id, llm_call):
+            self.logger.warning(f"LLM call {call_id} exceeded daily limits")
+            return ""
+        
+        with self.lock:
+            self.llm_calls[call_id] = llm_call
+            
+            # Add to session
+            session = self.sessions.get(session_id)
+            if session:
+                session.llm_calls.append({
+                    "call_id": call_id,
+                    "model": model,
+                    "cost": cost,
+                    "tokens": llm_call.total_tokens,
+                    "timestamp": llm_call.timestamp
+                })
+            
+            # Update global analytics
+            self.session_analytics["total_cost"] += cost
+            self.session_analytics["total_tokens"] += llm_call.total_tokens
+            self.session_analytics["total_llm_calls"] += 1
+        
+        return call_id
+    
+    def generate_session_replay(self, session_id: str) -> Dict[str, Any]:
+        """Generate detailed session replay data for frontend visualization"""
+        session = self.sessions.get(session_id)
+        if not session:
+            return {"error": "Session not found"}
+        
+        # Get all actions for this session
+        session_actions = [
+            asdict(self.actions[action["action_id"]])
+            for action in session.actions
+            if action["action_id"] in self.actions
+        ]
+        
+        # Get all LLM calls for this session
+        session_llm_calls = [
+            asdict(self.llm_calls[call["call_id"]])
+            for call in session.llm_calls
+            if call["call_id"] in self.llm_calls
+        ]
+        
+        # Generate timeline
+        timeline = self._generate_session_timeline(session, session_actions, session_llm_calls)
+        
+        return {
+            "session": asdict(session),
+            "actions": session_actions,
+            "llm_calls": session_llm_calls,
+            "timeline": timeline,
+            "costs": self.cost_tracker.get_session_costs(session_id),
+            "performance_metrics": session.performance_data,
+            "analytics": self._generate_session_analytics(session)
+        }
+    
+    def _generate_session_timeline(
+        self,
+        session: TestSession,
+        actions: List[Dict[str, Any]],
+        llm_calls: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """Generate a chronological timeline of session events"""
+        events = []
+        
+        # Add session start
+        events.append({
+            "type": "session_start",
+            "timestamp": session.start_time,
+            "data": {"session_name": session.name}
+        })
+        
+        # Add actions
+        for action in actions:
+            events.append({
+                "type": "action",
+                "timestamp": action["timestamp"],
+                "data": action
+            })
+        
+        # Add LLM calls
+        for call in llm_calls:
+            events.append({
+                "type": "llm_call",
+                "timestamp": call["timestamp"],
+                "data": call
+            })
+        
+        # Add session end
+        if session.end_time:
+            events.append({
+                "type": "session_end",
+                "timestamp": session.end_time,
+                "data": {"status": session.status}
+            })
+        
+        # Sort by timestamp
+        events.sort(key=lambda x: x["timestamp"])
+        
+        return events
+    
+    def _calculate_session_performance(self, session: TestSession):
+        """Calculate performance metrics for a session"""
+        if not session.actions:
+            return
+        
+        action_durations = [
+            self.actions[action["action_id"]].duration
+            for action in session.actions
+            if action["action_id"] in self.actions and self.actions[action["action_id"]].duration > 0
+        ]
+        
+        if action_durations:
+            session.performance_data = {
+                "total_actions": len(session.actions),
+                "average_action_duration": sum(action_durations) / len(action_durations),
+                "min_action_duration": min(action_durations),
+                "max_action_duration": max(action_durations),
+                "total_llm_calls": len(session.llm_calls),
+                "total_cost": sum(call["cost"] for call in session.llm_calls),
+                "total_tokens": sum(call["tokens"] for call in session.llm_calls)
+            }
+    
+    def _generate_session_analytics(self, session: TestSession) -> Dict[str, Any]:
+        """Generate analytics summary for a session"""
+        return {
+            "session_duration": session.duration,
+            "actions_per_minute": len(session.actions) / (session.duration / 60) if session.duration else 0,
+            "llm_calls_per_minute": len(session.llm_calls) / (session.duration / 60) if session.duration else 0,
+            "cost_per_minute": session.performance_data.get("total_cost", 0) / (session.duration / 60) if session.duration else 0,
+            "efficiency_score": self._calculate_efficiency_score(session)
+        }
+    
+    def _calculate_efficiency_score(self, session: TestSession) -> float:
+        """Calculate efficiency score for a session (0-100)"""
+        if not session.duration or not session.actions:
+            return 0.0
+        
+        # Factors for efficiency scoring
+        action_frequency = len(session.actions) / session.duration
+        success_rate = sum(
+            1 for action in session.actions
+            if action["action_id"] in self.actions and not self.actions[action["action_id"]].error
+        ) / len(session.actions)
+        
+        cost_efficiency = 1.0 - min(session.performance_data.get("total_cost", 0) / 10.0, 1.0)
+        
+        # Weighted efficiency score
+        efficiency = (action_frequency * 0.3 + success_rate * 0.5 + cost_efficiency * 0.2) * 100
+        return min(efficiency, 100.0)
+    
+    def get_observability_status(self) -> Dict[str, Any]:
+        """Get current observability system status"""
+        return {
+            "active_sessions": self.active_operations,
+            "total_sessions": len(self.sessions),
+            "analytics": self.session_analytics,
+            "cost_tracking": {
+                "daily_usage": self.cost_tracker.current_usage,
+                "daily_limits": self.cost_tracker.daily_limits
+            },
+            "system_health": "healthy" if self.active_operations < 100 else "high_load"
+        }
+
+# Decorator for automatic test execution tracking
+def track_test_execution(session_name: str = None, observability_system: TestMasterObservability = None):
+    """
+    Decorator for tracking test execution with full observability.
+    
+    Args:
+        session_name: Name for the test session (defaults to function name)
+        observability_system: Observability system to use (defaults to global)
+    """
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            obs_system = observability_system or global_observability
+            session_name_final = session_name or func.__name__
+            
+            # Start session
+            session_id = obs_system.start_test_session(
+                session_name_final,
+                metadata={"function": func.__name__, "args": len(args), "kwargs": len(kwargs)}
+            )
+            
+            try:
+                # Track main execution
+                action_id = obs_system.track_agent_action(
+                    session_id,
+                    "test_executor",
+                    "function_execution",
+                    {"function": func.__name__}
+                )
+                
+                result = func(*args, **kwargs)
+                
+                obs_system.complete_agent_action(action_id, result=result)
+                obs_system.end_test_session(session_id, "completed")
+                
+                return result
+                
+            except Exception as e:
+                obs_system.complete_agent_action(action_id, error=str(e))
+                obs_system.end_test_session(session_id, "failed")
+                raise
+                
+        return wrapper
+    return decorator
+
+# Global observability instance
+global_observability = TestMasterObservability()
+
+# Export key components
+__all__ = [
+    'TestMasterObservability',
+    'TestSession',
+    'AgentAction', 
+    'LLMCall',
+    'CostTracker',
+    'track_test_execution',
+    'global_observability'
+]

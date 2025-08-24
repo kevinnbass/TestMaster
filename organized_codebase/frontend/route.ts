@@ -1,59 +1,73 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { captureException } from '@sentry/nextjs';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ sessionId: string }> }, // Wrap params type in Promise
-) {
-  const { sessionId } = await params;
-  if (!sessionId) {
-    return new Response('Session ID is required', { status: 400 });
-  }
+export async function POST(request: NextRequest) {
+    try {
+        const body = await request.json();
 
-  try {
-    // Get the session_id cookie from the incoming request
-    const sessionCookie = request.cookies.get('session_id');
-    const token = sessionCookie?.value;
+        // Submit to external form service
+        const externalFormPromise = fetch('https://submit-form.com/RQiLChq6c', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        }).catch(error => {
+            console.error('External form submission error:', error);
+            return { ok: false, error: error.message };
+        });
 
-    if (!token) {
-      // No session cookie found, user is not authenticated
-      return new Response('Authentication required', { status: 401 });
+        // Submit to HubSpot
+        const hubspotData = new URLSearchParams();
+        hubspotData.append('email', body.email || '');
+        hubspotData.append('welcome_survey_usage_type', body.usage_type);
+        hubspotData.append('welcome_survey_company_name', body.company_name);
+        hubspotData.append('welcome_survey_company_size', body.company_size);
+        hubspotData.append('welcome_survey_build_purpose', body.build_purpose);
+        hubspotData.append('welcome_survey_stage', body.stage);
+        hubspotData.append('welcome_survey_referral_source', body.referral_source);
+        hubspotData.append('welcome_survey_other_referral', body.other_referral || '');
+        hubspotData.append('welcome_survey_technologies', body.technologies?.join('; ') || '');
+        hubspotData.append('welcome_survey_tools_used', body.tools_used || '');
+        hubspotData.append('welcome_survey_help_needed', body.help_needed?.join('; ') || '');
+
+        const hubspotPromise = fetch(
+            'https://forms.hubspot.com/uploads/form/v2/48840765/8f7d568b-4504-45ac-87a8-9914947316f7',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: hubspotData.toString(),
+            }
+        ).catch(error => {
+            console.error('HubSpot submission error:', error);
+            return { ok: false, error: error.message };
+        });
+
+        // Wait for both submissions to complete
+        const [externalFormResult, hubspotResult] = await Promise.allSettled([
+            externalFormPromise,
+            hubspotPromise,
+        ]);
+
+        // Log any errors but don't fail the request
+        const errors = [];
+        if (externalFormResult.status === 'rejected' || (externalFormResult.status === 'fulfilled' && !externalFormResult.value.ok)) {
+            errors.push('External form submission failed');
+        }
+        if (hubspotResult.status === 'rejected' || (hubspotResult.status === 'fulfilled' && !hubspotResult.value.ok)) {
+            errors.push('HubSpot submission failed');
+        }
+
+        return NextResponse.json({
+            success: true,
+            errors: errors.length > 0 ? errors : undefined
+        });
+    } catch (error: any) {
+        console.error('[API Route /api/survey-submission] Error:', error);
+        return new NextResponse(JSON.stringify({ error: 'Internal Server Error', details: error.message }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' },
+        });
     }
-
-    // Construct the internal API URL
-    // TODO: Use environment variable for API base URL
-    const internalApiBaseUrl = process.env.INTERNAL_API_URL || request.nextUrl.origin; // Fallback to origin
-    const logsApiUrl = `${internalApiBaseUrl}/api/logs/${sessionId}`; // Assuming backend route is /api/logs/:sessionId
-
-    // Fetch logs from the internal API, forwarding the session_id cookie value as Bearer token
-    const logsResponse = await fetch(logsApiUrl, {
-      method: 'GET',
-      headers: {
-        // Send the session_id as the Bearer token
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        // Forward other necessary headers from the original request if needed
-      },
-      // IMPORTANT: Since this is a server-to-server request, we usually don't forward browser cookies
-      // unless the internal API specifically relies on them (unlikely if using Bearer token).
-    });
-
-    if (!logsResponse.ok) {
-      const errorText = await logsResponse.text();
-      console.error(`Error fetching from internal logs API (${logsResponse.status}): ${errorText}`);
-      captureException(new Error(`Logs API fetch failed: ${logsResponse.status}`), {
-        extra: { errorText },
-      });
-      return new Response(`Failed to fetch logs: ${logsResponse.statusText}`, {
-        status: logsResponse.status,
-      });
-    }
-
-    const logsData = await logsResponse.json();
-    return NextResponse.json(logsData);
-  } catch (error: any) {
-    console.error('Error in logs route handler:', error);
-    captureException(error);
-    return new Response('Internal Server Error', { status: 500 });
-  }
-}
+} 

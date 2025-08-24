@@ -1,74 +1,48 @@
 var CanMoveToTile = function (tileX, tileY, direction) {
-    var board = this.chessData.board;
-    // Chess is not in a board
-    if (board == null) {
+    var miniBoard = this.parent;
+    var mainBoard = miniBoard.mainBoard;
+    // Not on a mainBoard
+    if (mainBoard == null) {
         return false;
     }
-    var myTileXYZ = this.chessData.tileXYZ;
-    var myTileX = myTileXYZ.x,
-        myTileY = myTileXYZ.y,
-        myTileZ = myTileXYZ.z;
 
+    myTileXYZ.x = miniBoard.tileX;
+    myTileXYZ.y = miniBoard.tileY;
+    targetTileXYZ.x = tileX;
+    targetTileXYZ.y = tileY;
     // Move to current position
-    if ((tileX === myTileX) && (tileY === myTileY)) {
+    if ((targetTileXYZ.x === myTileXYZ.x) && (targetTileXYZ.y === myTileXYZ.y)) {
         return true;
     }
 
-    // Target position is not in board
-    if (!board.contains(tileX, tileY)) {
+    miniBoard.pullOutFromMainBoard();
+    // Can not put on main board
+    if (!miniBoard.canPutOnMainBoard(mainBoard, targetTileXYZ.x, targetTileXYZ.y)) {
+        miniBoard.putBack();
         return false;
-    }
-
-    // Blocker test
-    if (this.blockerTest) {
-        if (board.hasBlocker(tileX, tileY)) {
-            return false;
-        }
-    }
-
-    // Edge-blocker test
-    if (this.edgeBlockerTest) {
-        // // TODO
     }
 
     // Custom moveable test
     if (this.moveableTestCallback) {
         if (direction === undefined) {
-            direction = this.chessData.getTileDirection(tileX, tileY);
+            direction = mainBoard.getNeighborTileDirection(myTileXYZ, targetTileXYZ);
         }
-        targetTileXY.x = tileX;
-        targetTileXY.y = tileY;
-        targetTileXY.z = myTileZ;
         if (this.moveableTestScope) {
-            var moveable = this.moveableTestCallback.call(this.moveableTestScope, myTileXYZ, targetTileXY, direction, board);
+            var moveable = this.moveableTestCallback.call(this.moveableTestScope, myTileXYZ, targetTileXYZ, direction, mainBoard);
         } else {
-            var moveable = this.moveableTestCallback(myTileXYZ, targetTileXY, direction, board);
+            var moveable = this.moveableTestCallback(myTileXYZ, targetTileXYZ, direction, mainBoard);
         }
         if (!moveable) {
+            miniBoard.putBack();
             return false;
         }
     }
 
-    // Sneak mode, change tileZ in MoveToTile method
-    // if (this.sneakMode) {
-    // }
-
-    // Occupied test
-    if (this.occupiedTest && !this.sneakMode) {
-        var occupiedChess = board.tileXYZToChess(tileX, tileY, myTileZ);
-        if (occupiedChess) {
-            this.emit('occupy', occupiedChess, this.parent, this);
-            // Try to move occupiedChess away in this event
-            // Still ooccupied?
-            if (board.contains(tileX, tileY, myTileZ)) {
-                return false;
-            }
-        }
-    }
-
+    miniBoard.putBack();
     return true;
 }
 
-var targetTileXY = { x: 0, y: 0, z: 0, };
+var myTileXYZ = { x: 0, y: 0, z: 0 };
+var targetTileXYZ = { x: 0, y: 0, z: 0 };
 
 export default CanMoveToTile;

@@ -2,164 +2,146 @@ import React from "react";
 import { Button, Tooltip, Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import {
-  Code2,
-  Grid,
   Maximize2,
   Minimize2,
-  Redo2,
-  Save,
-  Undo2,
-  LayoutGrid,
-  Cable,
-  Map,
+  ArrowDown,
+  ArrowRight,
+  MessageSquareIcon,
+  MessageSquareOffIcon,
   MoreHorizontal,
+  Grid,
+  Hash,
+  MessageSquare,
+  LayoutGrid,
+  RotateCcw,
+  MapIcon,
 } from "lucide-react";
+import { useConfigStore } from "../../../../../hooks/store";
 
-interface TeamBuilderToolbarProps {
-  isJsonMode: boolean;
+interface AgentFlowToolbarProps {
   isFullscreen: boolean;
-  showGrid: boolean;
-  canUndo: boolean;
-  canRedo: boolean;
-  isDirty: boolean;
-  onToggleView: () => void;
-  onUndo: () => void;
-  onRedo: () => void;
-  onSave: () => void;
-  onToggleGrid: () => void;
   onToggleFullscreen: () => void;
-  onAutoLayout: () => void;
-  onToggleMiniMap: () => void;
+  onResetView?: () => void;
 }
 
-export const TeamBuilderToolbar: React.FC<TeamBuilderToolbarProps> = ({
-  isJsonMode,
+export const AgentFlowToolbar: React.FC<AgentFlowToolbarProps> = ({
   isFullscreen,
-  showGrid,
-  canUndo,
-  canRedo,
-  isDirty,
-  onToggleView,
-  onUndo,
-  onRedo,
-  onSave,
-  onToggleGrid,
   onToggleFullscreen,
-  onAutoLayout,
-  onToggleMiniMap,
+  onResetView,
 }) => {
+  const { agentFlow: settings, setAgentFlowSettings } = useConfigStore();
+
+  const toggleSetting = (setting: keyof typeof settings) => () => {
+    setAgentFlowSettings({
+      [setting]: !settings[setting],
+    });
+  };
+
   const menuItems: MenuProps["items"] = [
-    {
-      key: "autoLayout",
-      label: "Auto Layout",
-      icon: <LayoutGrid size={16} />,
-      onClick: onAutoLayout,
-    },
     {
       key: "grid",
       label: "Show Grid",
       icon: <Grid size={16} />,
-      onClick: onToggleGrid,
+      onClick: toggleSetting("showGrid"),
     },
     {
-      key: "minimap",
-      label: "Show Mini Map",
-      icon: <Map size={16} />,
-      onClick: onToggleMiniMap,
+      key: "tokens",
+      label: "Show Tokens",
+      icon: <Hash size={16} />,
+      onClick: toggleSetting("showTokens"),
+    },
+    // {
+    //   key: "messages",
+    //   label: "Show Messages",
+    //   icon: <MessageSquare size={16} />,
+    //   onClick: toggleSetting("showMessages"),
+    // },
+    {
+      key: "miniMap",
+      label: "Mini Map",
+      icon: <MapIcon size={16} />,
+      onClick: toggleSetting("showMiniMap"),
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "reset",
+      label: "Reset View",
+      icon: <RotateCcw size={16} />,
+      onClick: onResetView,
+      disabled: !onResetView,
     },
   ];
 
   return (
-    <div
-      className={`${
-        isFullscreen ? "fixed top-6 right-6" : "absolute top-2 right-2"
-      } bg-secondary hover:bg-secondary rounded shadow-sm min-w-[200px] z-[60]`}
-    >
+    <div className="absolute top-2 right-2 bg-secondary bg-opacity-70 hover:bg-secondary rounded backdrop-blur-sm z-50">
       <div className="p-1 flex items-center gap-1">
-        {!isJsonMode && (
-          <>
-            <Tooltip title="Undo">
-              <Button
-                type="text"
-                icon={<Undo2 size={18} />}
-                className="p-1.5 hover:bg-primary/10 rounded-md text-primary/75 hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed"
-                onClick={onUndo}
-                disabled={!canUndo}
-              />
-            </Tooltip>
-
-            <Tooltip title="Redo">
-              <Button
-                type="text"
-                icon={<Redo2 size={18} />}
-                className="p-1.5 hover:bg-primary/10 rounded-md text-primary/75 hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed"
-                onClick={onRedo}
-                disabled={!canRedo}
-              />
-            </Tooltip>
-            <Tooltip
-              title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
-            >
-              <Button
-                type="text"
-                icon={
-                  isFullscreen ? (
-                    <Minimize2 size={18} />
-                  ) : (
-                    <Maximize2 size={18} />
-                  )
-                }
-                className="p-1.5 hover:bg-primary/10 rounded-md text-primary/75 hover:text-primary"
-                onClick={onToggleFullscreen}
-              />
-            </Tooltip>
-          </>
-        )}
-
-        <Tooltip title="Save Changes">
+        <Tooltip title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}>
           <Button
             type="text"
             icon={
-              <div className="relative">
-                <Save size={18} />
-                {isDirty && (
-                  <div className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></div>
-                )}
-              </div>
+              isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />
             }
-            className="p-1.5 hover:bg-primary/10 rounded-md text-primary/75 hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={onSave}
-            // disabled={!isDirty}
+            className="p-1.5 hover:bg-primary/10 rounded-md text-primary/75 hover:text-primary"
+            onClick={onToggleFullscreen}
           />
         </Tooltip>
 
-        <Tooltip title={isJsonMode ? "Switch to Visual" : "Switch to JSON"}>
+        <Tooltip
+          title={`Switch to ${
+            settings.direction === "TB" ? "Horizontal" : "Vertical"
+          } Layout`}
+        >
           <Button
             type="text"
-            icon={isJsonMode ? <Cable size={18} /> : <Code2 size={18} />}
+            icon={
+              settings.direction === "TB" ? (
+                <ArrowDown size={18} />
+              ) : (
+                <ArrowRight size={18} />
+              )
+            }
             className="p-1.5 hover:bg-primary/10 rounded-md text-primary/75 hover:text-primary"
-            onClick={onToggleView}
+            onClick={() =>
+              setAgentFlowSettings({
+                direction: settings.direction === "TB" ? "LR" : "TB",
+              })
+            }
           />
         </Tooltip>
 
-        {!isJsonMode && (
-          <Dropdown
-            menu={{ items: menuItems }}
-            trigger={["click"]}
-            overlayStyle={{ zIndex: 1001 }}
-            placement="bottomRight"
-          >
-            <Button
-              type="text"
-              icon={<MoreHorizontal size={18} />}
-              className="p-1.5 hover:bg-primary/10 rounded-md text-primary/75 hover:text-primary"
-              title="More Options"
-            />
-          </Dropdown>
-        )}
+        <Tooltip title={settings.showLabels ? "Hide Labels" : "Show Labels"}>
+          <Button
+            type="text"
+            icon={
+              settings.showLabels ? (
+                <MessageSquareIcon size={18} />
+              ) : (
+                <MessageSquareOffIcon size={18} />
+              )
+            }
+            className="p-1.5 hover:bg-primary/10 rounded-md text-primary/75 hover:text-primary"
+            onClick={toggleSetting("showLabels")}
+          />
+        </Tooltip>
+
+        <Dropdown
+          menu={{ items: menuItems }}
+          trigger={["click"]}
+          getPopupContainer={(triggerNode) =>
+            triggerNode.parentNode as HTMLElement
+          }
+          overlayStyle={{ zIndex: 1000 }}
+        >
+          <Button
+            type="text"
+            icon={<MoreHorizontal size={18} />}
+            className="p-1.5 hover:bg-primary/10 rounded-md text-primary/75 hover:text-primary"
+            title="More Options" // Use native title instead of Tooltip
+          />
+        </Dropdown>
       </div>
     </div>
   );
 };
-
-export default TeamBuilderToolbar;

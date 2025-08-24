@@ -1,0 +1,767 @@
+from SECURITY_PATCHES.fix_eval_exec_vulnerabilities import SafeCodeExecutor
+#!/usr/bin/env python3
+"""
+Configuration & Setup Documentation Framework - Agent D Hour 5
+Comprehensive configuration analysis, documentation, and automation system
+"""
+
+import json
+import yaml
+import configparser
+import os
+import re
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Union, Set, Tuple
+from dataclasses import dataclass, field
+from datetime import datetime
+import toml
+import ast
+from collections import defaultdict
+
+@dataclass
+class ConfigurationFile:
+    """Represents a configuration file with metadata"""
+    path: Path
+    file_type: str  # json, yaml, ini, toml, env, py
+    size: int
+    variables: Dict[str, Any] = field(default_factory=dict)
+    dependencies: List[str] = field(default_factory=list)
+    documentation: str = ""
+    validation_rules: Dict[str, str] = field(default_factory=dict)
+    last_modified: Optional[datetime] = None
+    environment: str = "development"  # development, staging, production
+    sensitive_data: bool = False
+    
+@dataclass
+class EnvironmentVariable:
+    """Represents an environment variable with documentation"""
+    name: str
+    value: Optional[str]
+    default_value: Optional[str]
+    description: str
+    required: bool
+    data_type: str
+    validation_pattern: Optional[str] = None
+    used_in_files: List[str] = field(default_factory=list)
+    category: str = "general"
+    sensitive: bool = False
+    
+@dataclass
+class ConfigurationProfile:
+    """Represents a configuration profile for different environments"""
+    name: str
+    environment: str
+    config_files: List[ConfigurationFile]
+    env_variables: List[EnvironmentVariable]
+    dependencies: List[str]
+    setup_commands: List[str]
+    validation_status: bool = False
+    documentation: str = ""
+
+class ConfigurationDocumentationFramework:
+    """Comprehensive configuration documentation and automation framework"""
+    
+    def __init__(self, base_path: Union[str, Path] = "."):
+        self.base_path = Path(base_path)
+        self.config_files: Dict[str, ConfigurationFile] = {}
+        self.env_variables: Dict[str, EnvironmentVariable] = {}
+        self.profiles: Dict[str, ConfigurationProfile] = {}
+        self.config_patterns = {
+            'json': r'\.json$',
+            'yaml': r'\.(yml|yaml)$',
+            'ini': r'\.(ini|cfg|conf)$',
+            'toml': r'\.toml$',
+            'env': r'\.env(\.\w+)?$',
+            'python': r'(config|settings)\.py$'
+        }
+        
+    def analyze_configuration_files(self) -> Dict[str, Any]:
+        """Analyze all configuration files in the project"""
+        print("Analyzing configuration files...")
+        
+        config_analysis = {
+            'json_configs': [],
+            'yaml_configs': [],
+            'ini_configs': [],
+            'toml_configs': [],
+            'env_configs': [],
+            'python_configs': [],
+            'total_files': 0,
+            'total_variables': 0,
+            'environments': set(),
+            'sensitive_files': []
+        }
+        
+        # Find all configuration files
+        for pattern_name, pattern in self.config_patterns.items():
+            files = self._find_files_by_pattern(pattern)
+            
+            for file_path in files:
+                config_file = self._analyze_single_config_file(file_path, pattern_name)
+                if config_file:
+                    self.config_files[str(file_path)] = config_file
+                    
+                    # Categorize by type
+                    if pattern_name == 'json':
+                        config_analysis['json_configs'].append(str(file_path))
+                    elif pattern_name == 'yaml':
+                        config_analysis['yaml_configs'].append(str(file_path))
+                    elif pattern_name == 'ini':
+                        config_analysis['ini_configs'].append(str(file_path))
+                    elif pattern_name == 'toml':
+                        config_analysis['toml_configs'].append(str(file_path))
+                    elif pattern_name == 'env':
+                        config_analysis['env_configs'].append(str(file_path))
+                    elif pattern_name == 'python':
+                        config_analysis['python_configs'].append(str(file_path))
+                    
+                    config_analysis['total_files'] += 1
+                    config_analysis['total_variables'] += len(config_file.variables)
+                    
+                    if config_file.environment:
+                        config_analysis['environments'].add(config_file.environment)
+                    
+                    if config_file.sensitive_data:
+                        config_analysis['sensitive_files'].append(str(file_path))
+        
+        # Convert set to list for JSON serialization
+        config_analysis['environments'] = list(config_analysis['environments'])
+        
+        print(f"Found {config_analysis['total_files']} configuration files")
+        print(f"Total configuration variables: {config_analysis['total_variables']}")
+        
+        return config_analysis
+    
+    def _find_files_by_pattern(self, pattern: str) -> List[Path]:
+        """Find all files matching a pattern"""
+        files = []
+        for file_path in self.base_path.rglob("*"):
+            if file_path.is_file() and re.search(pattern, str(file_path)):
+                # Skip node_modules, venv, and other common ignore directories
+                if not any(part in file_path.parts for part in 
+                          ['node_modules', 'venv', '.git', '__pycache__', '.pytest_cache']):
+                    files.append(file_path)
+        return files
+    
+    def _analyze_single_config_file(self, file_path: Path, file_type: str) -> Optional[ConfigurationFile]:
+        """Analyze a single configuration file"""
+        try:
+            config_file = ConfigurationFile(
+                path=file_path,
+                file_type=file_type,
+                size=file_path.stat().st_size,
+                last_modified=datetime.fromtimestamp(file_path.stat().st_mtime)
+            )
+            
+            # Parse based on file type
+            if file_type == 'json':
+                self._parse_json_config(file_path, config_file)
+            elif file_type == 'yaml':
+                self._parse_yaml_config(file_path, config_file)
+            elif file_type == 'ini':
+                self._parse_ini_config(file_path, config_file)
+            elif file_type == 'toml':
+                self._parse_toml_config(file_path, config_file)
+            elif file_type == 'env':
+                self._parse_env_config(file_path, config_file)
+            elif file_type == 'python':
+                self._parse_python_config(file_path, config_file)
+            
+            # Check for sensitive data
+            config_file.sensitive_data = self._check_sensitive_data(config_file.variables)
+            
+            # Detect environment from filename
+            config_file.environment = self._detect_environment(file_path)
+            
+            return config_file
+            
+        except Exception as e:
+            print(f"Error analyzing {file_path}: {e}")
+            return None
+    
+    def _parse_json_config(self, file_path: Path, config_file: ConfigurationFile):
+        """Parse JSON configuration file"""
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            config_file.variables = self._flatten_dict(data)
+    
+    def _parse_yaml_config(self, file_path: Path, config_file: ConfigurationFile):
+        """Parse YAML configuration file"""
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+            if data:
+                config_file.variables = self._flatten_dict(data)
+    
+    def _parse_ini_config(self, file_path: Path, config_file: ConfigurationFile):
+        """Parse INI configuration file"""
+        parser = configparser.ConfigParser()
+        parser.read(file_path)
+        
+        for section in parser.sections():
+            for key, value in parser.items(section):
+                config_file.variables[f"{section}.{key}"] = value
+    
+    def _parse_toml_config(self, file_path: Path, config_file: ConfigurationFile):
+        """Parse TOML configuration file"""
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = toml.load(f)
+            config_file.variables = self._flatten_dict(data)
+    
+    def _parse_env_config(self, file_path: Path, config_file: ConfigurationFile):
+        """Parse .env configuration file"""
+        with open(file_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    if '=' in line:
+                        key, value = line.split('=', 1)
+                        config_file.variables[key.strip()] = value.strip()
+    
+    def _parse_python_config(self, file_path: Path, config_file: ConfigurationFile):
+        """Parse Python configuration file"""
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+            
+        # Use AST to safely parse Python configuration
+        try:
+            tree = ast.parse(content)
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Assign):
+                    for target in node.targets:
+                        if isinstance(target, ast.Name):
+                            # Only get simple assignments
+                            if isinstance(node.value, (ast.Constant, ast.Str, ast.Num)):
+                                value = ast.literal_SafeCodeExecutor.safe_SafeCodeExecutor.safe_eval(node.value)
+                                config_file.variables[target.id] = value
+        except:
+            # Fallback to regex for simpler parsing
+            pattern = r'^([A-Z_]+)\s*=\s*(.+)$'
+            for line in content.split('\n'):
+                match = re.match(pattern, line)
+                if match:
+                    config_file.variables[match.group(1)] = match.group(2).strip('"\'')
+    
+    def _flatten_dict(self, d: Dict, parent_key: str = '', sep: str = '.') -> Dict:
+        """Flatten nested dictionary"""
+        items = []
+        for k, v in d.items():
+            new_key = f"{parent_key}{sep}{k}" if parent_key else k
+            if isinstance(v, dict):
+                items.extend(self._flatten_dict(v, new_key, sep=sep).items())
+            else:
+                items.append((new_key, v))
+        return dict(items)
+    
+    def _check_sensitive_data(self, variables: Dict[str, Any]) -> bool:
+        """Check if configuration contains sensitive data"""
+        sensitive_patterns = [
+            r'password', r'secret', r'key', r'token', r'api_key',
+            r'private', r'credential', r'auth', r'pwd', r'passwd'
+        ]
+        
+        for key in variables.keys():
+            for pattern in sensitive_patterns:
+                if re.search(pattern, key.lower()):
+                    return True
+        return False
+    
+    def _detect_environment(self, file_path: Path) -> str:
+        """Detect environment from filename"""
+        filename = file_path.name.lower()
+        
+        if 'prod' in filename:
+            return 'production'
+        elif 'stag' in filename:
+            return 'staging'
+        elif 'test' in filename:
+            return 'testing'
+        elif 'dev' in filename:
+            return 'development'
+        elif 'local' in filename:
+            return 'local'
+        else:
+            return 'development'
+    
+    def analyze_environment_variables(self) -> Dict[str, Any]:
+        """Analyze environment variables used in the project"""
+        print("Analyzing environment variables...")
+        
+        env_analysis = {
+            'variables': [],
+            'total_count': 0,
+            'required_variables': [],
+            'optional_variables': [],
+            'categories': defaultdict(list),
+            'usage_locations': defaultdict(list)
+        }
+        
+        # Search for environment variable usage in code
+        env_pattern = r'os\.(?:environ|getenv)\[?[\'"]([A-Z_]+)[\'"]\]?'
+        
+        for py_file in self.base_path.rglob("*.py"):
+            if any(part in py_file.parts for part in 
+                  ['node_modules', 'venv', '.git', '__pycache__']):
+                continue
+                
+            try:
+                with open(py_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    
+                matches = re.findall(env_pattern, content)
+                for var_name in matches:
+                    if var_name not in self.env_variables:
+                        env_var = EnvironmentVariable(
+                            name=var_name,
+                            value=os.environ.get(var_name),
+                            default_value=None,
+                            description=f"Environment variable used in {py_file.name}",
+                            required=True,
+                            data_type="string",
+                            category=self._categorize_env_var(var_name)
+                        )
+                        self.env_variables[var_name] = env_var
+                    
+                    self.env_variables[var_name].used_in_files.append(str(py_file))
+                    
+            except Exception as e:
+                continue
+        
+        # Compile analysis results
+        for var_name, env_var in self.env_variables.items():
+            env_analysis['variables'].append({
+                'name': var_name,
+                'value': env_var.value,
+                'required': env_var.required,
+                'category': env_var.category,
+                'used_in': len(env_var.used_in_files),
+                'sensitive': self._is_sensitive_env_var(var_name)
+            })
+            
+            if env_var.required:
+                env_analysis['required_variables'].append(var_name)
+            else:
+                env_analysis['optional_variables'].append(var_name)
+            
+            env_analysis['categories'][env_var.category].append(var_name)
+        
+        env_analysis['total_count'] = len(self.env_variables)
+        
+        # Convert defaultdict to dict for JSON serialization
+        env_analysis['categories'] = dict(env_analysis['categories'])
+        
+        print(f"Found {env_analysis['total_count']} environment variables")
+        
+        return env_analysis
+    
+    def _categorize_env_var(self, var_name: str) -> str:
+        """Categorize environment variable based on name"""
+        var_lower = var_name.lower()
+        
+        if any(word in var_lower for word in ['db', 'database', 'sql']):
+            return 'database'
+        elif any(word in var_lower for word in ['api', 'key', 'token']):
+            return 'api'
+        elif any(word in var_lower for word in ['path', 'dir', 'folder']):
+            return 'filesystem'
+        elif any(word in var_lower for word in ['url', 'host', 'port']):
+            return 'network'
+        elif any(word in var_lower for word in ['log', 'debug']):
+            return 'logging'
+        elif any(word in var_lower for word in ['secret', 'password', 'auth']):
+            return 'security'
+        else:
+            return 'general'
+    
+    def _is_sensitive_env_var(self, var_name: str) -> bool:
+        """Check if environment variable is sensitive"""
+        sensitive_words = ['password', 'secret', 'key', 'token', 'api', 'auth', 'credential']
+        return any(word in var_name.lower() for word in sensitive_words)
+    
+    def create_configuration_profiles(self) -> Dict[str, ConfigurationProfile]:
+        """Create configuration profiles for different environments"""
+        print("Creating configuration profiles...")
+        
+        environments = ['development', 'staging', 'production', 'testing']
+        
+        for env in environments:
+            profile = ConfigurationProfile(
+                name=f"{env}_profile",
+                environment=env,
+                config_files=[],
+                env_variables=[],
+                dependencies=[],
+                setup_commands=[]
+            )
+            
+            # Add relevant config files
+            for config_path, config_file in self.config_files.items():
+                if config_file.environment == env or config_file.environment == 'development':
+                    profile.config_files.append(config_file)
+            
+            # Add all environment variables (they apply to all environments)
+            profile.env_variables = list(self.env_variables.values())
+            
+            # Generate setup commands
+            profile.setup_commands = self._generate_setup_commands(env)
+            
+            # Generate documentation
+            profile.documentation = self._generate_profile_documentation(profile)
+            
+            self.profiles[env] = profile
+        
+        return self.profiles
+    
+    def _generate_setup_commands(self, environment: str) -> List[str]:
+        """Generate setup commands for an environment"""
+        commands = []
+        
+        # Python environment setup
+        commands.append(f"# Setup for {environment} environment")
+        commands.append("python -m venv venv")
+        
+        if os.name == 'nt':  # Windows
+            commands.append("venv\\Scripts\\activate")
+        else:  # Unix/Linux
+            commands.append("source venv/bin/activate")
+        
+        commands.append("pip install -r requirements.txt")
+        
+        # Environment-specific commands
+        if environment == 'development':
+            commands.append("pip install -r requirements-dev.txt")
+            commands.append("pre-commit install")
+        elif environment == 'production':
+            commands.append("pip install -r requirements-prod.txt")
+            commands.append("python manage.py collectstatic --noinput")
+            commands.append("python manage.py migrate")
+        
+        # Environment variable setup
+        commands.append(f"cp .env.{environment} .env")
+        
+        return commands
+    
+    def _generate_profile_documentation(self, profile: ConfigurationProfile) -> str:
+        """Generate documentation for a configuration profile"""
+        doc = f"# Configuration Profile: {profile.environment.upper()}\n\n"
+        
+        doc += f"## Overview\n"
+        doc += f"Configuration profile for {profile.environment} environment.\n\n"
+        
+        doc += f"## Configuration Files ({len(profile.config_files)})\n"
+        for config_file in profile.config_files[:5]:  # Show first 5
+            doc += f"- {config_file.path.name} ({config_file.file_type})\n"
+        
+        if len(profile.config_files) > 5:
+            doc += f"- ... and {len(profile.config_files) - 5} more\n"
+        
+        doc += f"\n## Environment Variables ({len(profile.env_variables)})\n"
+        
+        # Group by category
+        categories = defaultdict(list)
+        for env_var in profile.env_variables:
+            categories[env_var.category].append(env_var)
+        
+        for category, vars in categories.items():
+            doc += f"\n### {category.title()} Variables\n"
+            for var in vars[:3]:  # Show first 3 per category
+                doc += f"- **{var.name}**: {var.description[:50]}...\n"
+        
+        doc += f"\n## Setup Commands\n```bash\n"
+        for cmd in profile.setup_commands:
+            doc += f"{cmd}\n"
+        doc += "```\n"
+        
+        return doc
+    
+    def generate_configuration_documentation(self) -> str:
+        """Generate comprehensive configuration documentation"""
+        print("Generating configuration documentation...")
+        
+        doc = "# Configuration Documentation\n\n"
+        doc += f"Generated: {datetime.now().isoformat()}\n\n"
+        
+        # Summary
+        doc += "## Summary\n"
+        doc += f"- Total configuration files: {len(self.config_files)}\n"
+        doc += f"- Environment variables: {len(self.env_variables)}\n"
+        doc += f"- Configuration profiles: {len(self.profiles)}\n\n"
+        
+        # Configuration Files
+        doc += "## Configuration Files\n\n"
+        
+        # Group by type
+        by_type = defaultdict(list)
+        for config_path, config_file in self.config_files.items():
+            by_type[config_file.file_type].append(config_file)
+        
+        for file_type, files in by_type.items():
+            doc += f"### {file_type.upper()} Files ({len(files)})\n"
+            for file in files[:5]:  # Show first 5
+                doc += f"- `{file.path.relative_to(self.base_path)}` "
+                doc += f"({len(file.variables)} variables"
+                if file.sensitive_data:
+                    doc += ", **contains sensitive data**"
+                doc += ")\n"
+            
+            if len(files) > 5:
+                doc += f"- ... and {len(files) - 5} more\n"
+            doc += "\n"
+        
+        # Environment Variables
+        doc += "## Environment Variables\n\n"
+        
+        required_vars = [v for v in self.env_variables.values() if v.required]
+        optional_vars = [v for v in self.env_variables.values() if not v.required]
+        
+        doc += f"### Required Variables ({len(required_vars)})\n"
+        for var in required_vars[:10]:
+            doc += f"- **{var.name}**: {var.description}\n"
+            doc += f"  - Type: {var.data_type}\n"
+            doc += f"  - Used in: {len(var.used_in_files)} files\n"
+        
+        if len(required_vars) > 10:
+            doc += f"\n... and {len(required_vars) - 10} more required variables\n"
+        
+        doc += f"\n### Optional Variables ({len(optional_vars)})\n"
+        for var in optional_vars[:5]:
+            doc += f"- **{var.name}**: {var.description}\n"
+        
+        # Configuration Profiles
+        doc += "\n## Configuration Profiles\n\n"
+        for env, profile in self.profiles.items():
+            doc += f"### {env.title()} Profile\n"
+            doc += f"- Config files: {len(profile.config_files)}\n"
+            doc += f"- Environment variables: {len(profile.env_variables)}\n"
+            doc += f"- Setup commands: {len(profile.setup_commands)}\n\n"
+        
+        # Security Considerations
+        doc += "## Security Considerations\n\n"
+        
+        sensitive_files = [f for f in self.config_files.values() if f.sensitive_data]
+        doc += f"- Sensitive configuration files: {len(sensitive_files)}\n"
+        
+        sensitive_vars = [v for v in self.env_variables.values() 
+                         if self._is_sensitive_env_var(v.name)]
+        doc += f"- Sensitive environment variables: {len(sensitive_vars)}\n\n"
+        
+        doc += "### Security Recommendations\n"
+        doc += "1. Never commit sensitive configuration files to version control\n"
+        doc += "2. Use environment variables for sensitive data\n"
+        doc += "3. Implement proper secret management (e.g., AWS Secrets Manager, HashiCorp Vault)\n"
+        doc += "4. Use different configuration files for each environment\n"
+        doc += "5. Implement configuration validation before deployment\n"
+        
+        return doc
+    
+    def generate_automation_scripts(self) -> Dict[str, str]:
+        """Generate automation scripts for configuration management"""
+        print("Generating automation scripts...")
+        
+        scripts = {}
+        
+        # Configuration validator script
+        scripts['validate_config.py'] = self._generate_validation_script()
+        
+        # Environment setup script
+        scripts['setup_environment.sh'] = self._generate_setup_script()
+        
+        # Configuration backup script
+        scripts['backup_config.py'] = self._generate_backup_script()
+        
+        # Secret scanner script
+        scripts['scan_secrets.py'] = self._generate_secret_scanner_script()
+        
+        return scripts
+    
+    def _generate_validation_script(self) -> str:
+        """Generate configuration validation script"""
+        return '''#!/usr/bin/env python3
+"""Configuration validation script"""
+
+import os
+import sys
+import json
+from pathlib import Path
+
+def validate_required_env_vars():
+    """Validate required environment variables"""
+    required_vars = [
+        # Add your required variables here
+    ]
+    
+    missing = []
+    for var in required_vars:
+        if not os.environ.get(var):
+            missing.append(var)
+    
+    if missing:
+        print(f"Missing required environment variables: {missing}")
+        return False
+    return True
+
+def validate_config_files():
+    """Validate configuration files"""
+    config_files = [
+        # Add your config files here
+    ]
+    
+    for config_file in config_files:
+        if not Path(config_file).exists():
+            print(f"Missing configuration file: {config_file}")
+            return False
+    return True
+
+if __name__ == "__main__":
+    if validate_required_env_vars() and validate_config_files():
+        print("Configuration validation successful!")
+        sys.exit(0)
+    else:
+        print("Configuration validation failed!")
+        sys.exit(1)
+'''
+    
+    def _generate_setup_script(self) -> str:
+        """Generate environment setup script"""
+        return '''#!/bin/bash
+# Environment setup script
+
+echo "Setting up environment..."
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Copy environment template
+if [ ! -f .env ]; then
+    cp .env.template .env
+    echo "Created .env file from template"
+fi
+
+echo "Environment setup complete!"
+'''
+    
+    def _generate_backup_script(self) -> str:
+        """Generate configuration backup script"""
+        return '''#!/usr/bin/env python3
+"""Configuration backup script"""
+
+import shutil
+import datetime
+from pathlib import Path
+
+def backup_configurations():
+    """Backup all configuration files"""
+    backup_dir = Path(f"config_backup_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}")
+    backup_dir.mkdir(exist_ok=True)
+    
+    config_patterns = ['*.json', '*.yaml', '*.yml', '*.ini', '.env*']
+    
+    for pattern in config_patterns:
+        for config_file in Path('.').glob(pattern):
+            if config_file.is_file():
+                shutil.copy2(config_file, backup_dir / config_file.name)
+                print(f"Backed up: {config_file}")
+    
+    print(f"Configuration backup complete: {backup_dir}")
+
+if __name__ == "__main__":
+    backup_configurations()
+'''
+    
+    def _generate_secret_scanner_script(self) -> str:
+        """Generate secret scanner script"""
+        return '''#!/usr/bin/env python3
+"""Secret scanner script"""
+
+import re
+from pathlib import Path
+
+def scan_for_secrets():
+    """Scan for potential secrets in configuration files"""
+    secret_patterns = [
+        r'password\s*=\s*["\'].*["\']',
+        r'api_key\s*=\s*["\'].*["\']',
+        r'secret\s*=\s*["\'].*["\']',
+        r'token\s*=\s*["\'].*["\']'
+    ]
+    
+    findings = []
+    
+    for config_file in Path('.').rglob('*'):
+        if config_file.is_file() and config_file.suffix in ['.json', '.yaml', '.yml', '.ini', '.env']:
+            try:
+                content = config_file.read_text()
+                for pattern in secret_patterns:
+                    if re.search(pattern, content, re.IGNORECASE):
+                        findings.append(str(config_file))
+                        break
+            except:
+                pass
+    
+    if findings:
+        print("Potential secrets found in:")
+        for file in findings:
+            print(f"  - {file}")
+    else:
+        print("No potential secrets found")
+
+if __name__ == "__main__":
+    scan_for_secrets()
+'''
+    
+    def save_configuration_inventory(self, output_path: Optional[Path] = None) -> Path:
+        """Save configuration inventory to JSON file"""
+        if not output_path:
+            output_path = self.base_path / "TestMaster/docs/configuration/configuration_inventory.json"
+        
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        inventory = {
+            'timestamp': datetime.now().isoformat(),
+            'base_path': str(self.base_path),
+            'summary': {
+                'total_config_files': len(self.config_files),
+                'total_env_variables': len(self.env_variables),
+                'total_profiles': len(self.profiles)
+            },
+            'config_files': [
+                {
+                    'path': str(cf.path.relative_to(self.base_path)),
+                    'type': cf.file_type,
+                    'size': cf.size,
+                    'variables_count': len(cf.variables),
+                    'environment': cf.environment,
+                    'sensitive': cf.sensitive_data
+                }
+                for cf in self.config_files.values()
+            ],
+            'environment_variables': [
+                {
+                    'name': ev.name,
+                    'required': ev.required,
+                    'category': ev.category,
+                    'used_in_count': len(ev.used_in_files),
+                    'sensitive': self._is_sensitive_env_var(ev.name)
+                }
+                for ev in self.env_variables.values()
+            ],
+            'profiles': {
+                env: {
+                    'config_files_count': len(profile.config_files),
+                    'env_variables_count': len(profile.env_variables),
+                    'setup_commands_count': len(profile.setup_commands)
+                }
+                for env, profile in self.profiles.items()
+            }
+        }
+        
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(inventory, f, indent=2)
+        
+        print(f"Configuration inventory saved to: {output_path}")
+        return output_path

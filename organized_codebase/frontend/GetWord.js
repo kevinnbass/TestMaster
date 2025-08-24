@@ -1,36 +1,25 @@
-import { CharTypeName } from '../../../bob/Types.js';
-
-var GetWord = function (children, startIndex, charMode, result) {
+var GetWord = function (pens, startIndex, charMode, result) {
     if (result === undefined) {
         result = { word: [], width: 0 };
     }
 
     result.word.length = 0;
 
-    var endIndex = children.length;
+    var endIndex = pens.length;
     var currentIndex = startIndex;
     var word = result.word, wordWidth = 0;
     while (currentIndex < endIndex) {
-        var child = children[currentIndex];
-        // Can't render (command child), put into output directly
-        if (!child.renderable) {
-            word.push(child);
-            currentIndex++;
-            continue;
-        }
-
-        var text = (child.type === CharTypeName) ? child.text : null;
-        if ((text !== null) &&
-            (text !== ' ') && (text !== '\n') && (text !== '\f')
-        ) {
-            word.push(child);
-            wordWidth += child.outerWidth;
+        var pen = pens[currentIndex];
+        var char = pen.char;
+        if ((char !== undefined) && (char !== ' ') && (char !== '\n')) {
+            word.push(pen);
+            wordWidth += pen.outerWidth;
             currentIndex++;
             // Continue
-        } else {  // Get image child, a space, a new-line, or page-break
-            if (currentIndex === startIndex) { // Single child
-                word.push(child);
-                wordWidth += child.outerWidth;
+        } else {  // Get non-text pen, a space, or a new-line
+            if (currentIndex === startIndex) { // Single pen
+                word.push(pen);
+                wordWidth += pen.outerWidth;
             }
             break;
         }

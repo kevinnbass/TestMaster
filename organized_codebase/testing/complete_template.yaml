@@ -1,0 +1,96 @@
+# Complete YAML Configuration Template
+# Contains all configuration types in one file
+# Generated: 2025-08-19T19:59:59.743624
+
+teams:
+- team_id: example_team
+  roles:
+  - architect
+  - engineer
+  - qa_agent
+  supervisor_mode: guided
+  workflow_type: standard
+  max_parallel_tasks: 3
+  quality_threshold: 80.0
+  timeout_minutes: 30
+deployments:
+- deployment_id: example_deployment
+  name: Example Deployment
+  mode: development
+  services:
+  - service_id: test_executor_1
+    service_type: test_executor
+    name: Test Executor Service
+    version: 1.0.0
+    config:
+      workers: 4
+      timeout: 300
+    dependencies: []
+    resources:
+      cpu: 1000m
+      memory: 512Mi
+    health_check:
+      path: /health
+      interval: 30
+  network_config:
+    cluster_ip: auto
+    load_balancer: false
+  security_config:
+    authentication: bearer_token
+    encryption: true
+  monitoring_config:
+    metrics_enabled: true
+    log_level: INFO
+  scaling_config:
+    auto_scale: true
+    min_replicas: 1
+    max_replicas: 10
+graphs:
+- graph_id: example_graph
+  name: Example Graph
+  execution_mode: sequential
+  timeout_seconds: 3600
+  auto_retry: true
+  checkpoint_enabled: true
+  nodes:
+  - node_id: architect_node
+    agent_type: test_architect
+    config:
+      analysis_depth: comprehensive
+    dependencies: []
+    outputs:
+    - test_plan
+    max_retries: 3
+  - node_id: engineer_node
+    agent_type: test_engineer
+    config:
+      implementation_style: modular
+    dependencies:
+    - architect_node
+    outputs:
+    - test_code
+    max_retries: 3
+workflows:
+- workflow_id: example_workflow
+  name: Example Workflow
+  phases:
+  - phase_id: planning
+    name: Test Planning
+    agents:
+    - architect
+    duration_estimate: 30
+    deliverables:
+    - test_plan
+  - phase_id: implementation
+    name: Test Implementation
+    agents:
+    - engineer
+    duration_estimate: 60
+    deliverables:
+    - test_code
+  dependencies:
+    implementation:
+    - planning
+  success_criteria:
+    quality_threshold: 85.0
+    coverage_threshold: 90.0

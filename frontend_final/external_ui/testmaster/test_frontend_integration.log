@@ -1,0 +1,26 @@
+2025-08-18 21:31:22,863 - __main__ - INFO - Frontend-Backend Integration Tester initialized
+2025-08-18 21:31:22,864 - __main__ - INFO - ================================================================================
+2025-08-18 21:31:22,864 - __main__ - INFO - Starting Frontend-Backend Integration Test Suite
+2025-08-18 21:31:22,864 - __main__ - INFO - ================================================================================
+2025-08-18 21:31:24,939 - __main__ - INFO - 
+==================================================
+2025-08-18 21:31:24,939 - __main__ - INFO - Testing API endpoints...
+2025-08-18 21:32:27,195 - __main__ - INFO - API Endpoints: 16/28 successful (57.1%)
+2025-08-18 21:32:27,195 - __main__ - INFO - 
+==================================================
+2025-08-18 21:32:27,195 - __main__ - INFO - Testing WebSocket connections...
+2025-08-18 21:32:27,297 - __main__ - INFO - WebSocket Connections: 0/2 successful
+2025-08-18 21:32:27,298 - __main__ - INFO - 
+==================================================
+2025-08-18 21:32:27,298 - __main__ - INFO - Testing data flow integration...
+2025-08-18 21:32:27,298 - __main__ - INFO - Testing analytics data flow...
+2025-08-18 21:32:36,292 - __main__ - INFO - Testing performance metrics data flow...
+2025-08-18 21:32:38,308 - __main__ - INFO - Testing health monitoring data flow...
+2025-08-18 21:32:43,019 - __main__ - INFO - Data Flow Integration: 1/2 successful
+2025-08-18 21:32:43,019 - __main__ - INFO - 
+==================================================
+2025-08-18 21:32:43,019 - __main__ - INFO - Testing ultra-reliability feature integration...
+2025-08-18 21:33:03,966 - __main__ - INFO - Ultra-Reliability Features: 8/9 available (88.9%)
+2025-08-18 21:33:03,967 - __main__ - INFO - 
+==================================================
+2025-08-18 21:33:03,967 - __main__ - INFO - Testing performance characteristics...

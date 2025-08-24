@@ -1,0 +1,656 @@
+{
+  "test_suite_info": {
+    "start_time": "2025-08-22T01:29:06.419083",
+    "end_time": "2025-08-22T01:29:06.662122",
+    "duration": "0:00:00.243039",
+    "total_tests": 7,
+    "successful_tests": 7,
+    "success_rate": 1.0
+  },
+  "individual_test_results": [
+    {
+      "test_type": "codebase_analysis",
+      "status": "success",
+      "results": {
+        "system_status": {
+          "system_overview": {
+            "total_components": 7,
+            "critical_components": 0,
+            "components_needing_evolution": 0,
+            "average_health_score": 90.62235714285714
+          },
+          "evolution_metrics": {
+            "evolution_cycles": 1,
+            "successful_evolutions": 1,
+            "failed_evolutions": 0,
+            "avg_health_improvement": 0.0,
+            "avg_evolution_time": 0.0
+          },
+          "baselines": {
+            "average_health_score": 90.62235714285714,
+            "average_complexity": 13.469999999999999,
+            "average_coupling": 0.8571428571428571,
+            "total_components": 7,
+            "critical_components": 0,
+            "baseline_timestamp": "2025-08-22T01:29:06.654000"
+          },
+          "configuration": {
+            "evolution_interval_hours": 1,
+            "health_threshold": 70.0,
+            "max_concurrent_evolutions": 5,
+            "auto_evolution_enabled": true,
+            "backup_before_evolution": true,
+            "rollback_on_failure": true,
+            "evolution_effort_limit_hours": 100.0,
+            "intelligence_integration": true,
+            "invalid_setting": "invalid_value"
+          },
+          "intelligence_enabled": false,
+          "last_evolution": null
+        },
+        "total_components": 7,
+        "component_analyses": [
+          {
+            "component_id": "5f3386a8-f530-414a-b583-4f01a232fdf9",
+            "health_score": 93.11149999999999,
+            "anti_patterns": [],
+            "improvement_opportunities": [
+              {
+                "type": "increase_test_coverage",
+                "current": 70.0,
+                "target": 90,
+                "priority": "medium"
+              },
+              {
+                "type": "improve_documentation",
+                "current": 60.0,
+                "target": 85,
+                "priority": "low"
+              }
+            ],
+            "evolution_recommendations": []
+          },
+          {
+            "component_id": "09df4710-87a0-4903-b5c3-b9e5d9deb8de",
+            "health_score": 93.0125,
+            "anti_patterns": [],
+            "improvement_opportunities": [
+              {
+                "type": "increase_test_coverage",
+                "current": 70.0,
+                "target": 90,
+                "priority": "medium"
+              },
+              {
+                "type": "improve_documentation",
+                "current": 60.0,
+                "target": 85,
+                "priority": "low"
+              }
+            ],
+            "evolution_recommendations": []
+          },
+          {
+            "component_id": "555809c2-06e2-4a8a-9dee-8d81c82878eb",
+            "health_score": 81.43999999999998,
+            "anti_patterns": [
+              {
+                "type": "tight_coupling",
+                "severity": "medium",
+                "description": "Component has high coupling degree of 6"
+              }
+            ],
+            "improvement_opportunities": [
+              {
+                "type": "increase_test_coverage",
+                "current": 70.0,
+                "target": 90,
+                "priority": "medium"
+              },
+              {
+                "type": "improve_documentation",
+                "current": 60.0,
+                "target": 85,
+                "priority": "low"
+              }
+            ],
+            "evolution_recommendations": []
+          },
+          {
+            "component_id": "09d23bb2-7fc5-40ca-a73b-760069509ed7",
+            "health_score": 89.375,
+            "anti_patterns": [],
+            "improvement_opportunities": [
+              {
+                "type": "increase_test_coverage",
+                "current": 70.0,
+                "target": 90,
+                "priority": "medium"
+              },
+              {
+                "type": "improve_documentation",
+                "current": 60.0,
+                "target": 85,
+                "priority": "low"
+              }
+            ],
+            "evolution_recommendations": []
+          },
+          {
+            "component_id": "23e7e50d-1211-4ccf-9851-433e1cb2689b",
+            "health_score": 92.612,
+            "anti_patterns": [],
+            "improvement_opportunities": [
+              {
+                "type": "increase_test_coverage",
+                "current": 70.0,
+                "target": 90,
+                "priority": "medium"
+              },
+              {
+                "type": "improve_documentation",
+                "current": 60.0,
+                "target": 85,
+                "priority": "low"
+              }
+            ],
+            "evolution_recommendations": []
+          }
+        ],
+        "system_analysis": {
+          "system_overview": {
+            "total_components": 7,
+            "critical_components": 0,
+            "components_needing_evolution": 0,
+            "evolution_percentage": 0.0
+          },
+          "system_metrics": {
+            "average_health_score": 90.62235714285714,
+            "average_complexity": 13.469999999999999,
+            "average_coupling": 0.8571428571428571,
+            "circular_dependencies": 0
+          },
+          "architectural_patterns": {
+            "detected_patterns": [],
+            "anti_patterns": [],
+            "pattern_recommendations": []
+          },
+          "system_hotspots": [],
+          "evolution_priorities": [],
+          "dependency_analysis": {
+            "total_dependencies": 0,
+            "circular_dependencies": [],
+            "dependency_depth": {
+              "5f3386a8-f530-414a-b583-4f01a232fdf9": 0,
+              "09df4710-87a0-4903-b5c3-b9e5d9deb8de": 0,
+              "555809c2-06e2-4a8a-9dee-8d81c82878eb": 0,
+              "09d23bb2-7fc5-40ca-a73b-760069509ed7": 0,
+              "23e7e50d-1211-4ccf-9851-433e1cb2689b": 0,
+              "2b5e6b40-19e2-4518-8603-17086c0c4428": 0,
+              "ee3a5391-8b22-4a47-a758-2c8531ee7bbd": 0
+            }
+          }
+        },
+        "average_health_score": 90.62235714285714,
+        "components_needing_evolution": 0
+      }
+    },
+    {
+      "test_type": "evolution_planning",
+      "status": "success",
+      "results": {
+        "plan_created": true,
+        "plan_valid": true,
+        "plan_id": "03eab697-90bd-43a9-8b3f-436a87423e7a",
+        "total_actions": 0,
+        "total_effort_hours": 0,
+        "estimated_duration_weeks": 1,
+        "timeline_phases": 0,
+        "action_types": [],
+        "priority_distribution": {}
+      },
+      "full_plan": {
+        "plan_id": "03eab697-90bd-43a9-8b3f-436a87423e7a",
+        "created_at": "2025-08-22T01:29:06.658003",
+        "system_analysis": {
+          "system_overview": {
+            "total_components": 7,
+            "critical_components": 0,
+            "components_needing_evolution": 0,
+            "evolution_percentage": 0.0
+          },
+          "system_metrics": {
+            "average_health_score": 90.62235714285714,
+            "average_complexity": 13.469999999999999,
+            "average_coupling": 0.8571428571428571,
+            "circular_dependencies": 0
+          },
+          "architectural_patterns": {
+            "detected_patterns": [],
+            "anti_patterns": [],
+            "pattern_recommendations": []
+          },
+          "system_hotspots": [],
+          "evolution_priorities": [],
+          "dependency_analysis": {
+            "total_dependencies": 0,
+            "circular_dependencies": [],
+            "dependency_depth": {
+              "5f3386a8-f530-414a-b583-4f01a232fdf9": 0,
+              "09df4710-87a0-4903-b5c3-b9e5d9deb8de": 0,
+              "555809c2-06e2-4a8a-9dee-8d81c82878eb": 0,
+              "09d23bb2-7fc5-40ca-a73b-760069509ed7": 0,
+              "23e7e50d-1211-4ccf-9851-433e1cb2689b": 0,
+              "2b5e6b40-19e2-4518-8603-17086c0c4428": 0,
+              "ee3a5391-8b22-4a47-a758-2c8531ee7bbd": 0
+            }
+          }
+        },
+        "evolution_actions": [],
+        "execution_timeline": {
+          "total_duration_days": 0,
+          "total_effort_hours": 0,
+          "phases": []
+        },
+        "resource_requirements": {
+          "total_effort_hours": 0,
+          "estimated_developers": 1,
+          "estimated_duration_weeks": 1,
+          "skill_requirements": [
+            "Software Architecture",
+            "Refactoring",
+            "Testing",
+            "Code Analysis",
+            "Performance Optimization"
+          ],
+          "tool_requirements": [
+            "Static analysis tools",
+            "Refactoring tools",
+            "Testing frameworks",
+            "Performance monitoring",
+            "Documentation tools"
+          ]
+        },
+        "success_metrics": {
+          "architectural_health": {
+            "target_improvement": "25%",
+            "measurement": "Overall system health score"
+          },
+          "complexity_reduction": {
+            "target_improvement": "30%",
+            "measurement": "Average complexity score"
+          },
+          "coupling_reduction": {
+            "target_improvement": "40%",
+            "measurement": "Average coupling degree"
+          },
+          "technical_debt": {
+            "target_improvement": "50%",
+            "measurement": "Technical debt ratio"
+          },
+          "test_coverage": {
+            "target_improvement": "15%",
+            "measurement": "Overall test coverage"
+          }
+        },
+        "risk_mitigation": {
+          "identified_risks": [
+            "Performance regression during refactoring",
+            "Integration issues after decoupling",
+            "Test failures due to architectural changes",
+            "Deadline pressure leading to shortcuts"
+          ],
+          "mitigation_strategies": [
+            "Comprehensive performance testing",
+            "Gradual rollout with feature flags",
+            "Extensive integration testing",
+            "Regular progress reviews and adjustments"
+          ],
+          "contingency_plans": [
+            "Rollback to previous version if critical issues",
+            "Prioritize critical components first",
+            "Maintain parallel systems during transition",
+            "Emergency support team on standby"
+          ]
+        },
+        "rollback_strategy": {
+          "rollback_triggers": [
+            "Performance degradation > 10%",
+            "Test failure rate > 5%",
+            "Critical system instability",
+            "User-facing functionality broken"
+          ],
+          "rollback_procedures": [
+            "Immediate: Stop evolution deployment",
+            "Short-term: Revert to last known good state",
+            "Medium-term: Analyze failure and adjust plan",
+            "Long-term: Implement lessons learned"
+          ],
+          "recovery_time_objectives": {
+            "detection_time": "< 5 minutes",
+            "decision_time": "< 10 minutes",
+            "rollback_execution": "< 30 minutes",
+            "full_recovery": "< 2 hours"
+          }
+        }
+      }
+    },
+    {
+      "test_type": "autonomous_evolution",
+      "status": "success",
+      "results": {
+        "evolution_executed": true,
+        "evolution_status": "success",
+        "cycle_id": "e6f9fa34-0117-49c4-b20e-48cd59ba71e1",
+        "execution_result": {
+          "status": "success",
+          "execution_time_seconds": 0.0,
+          "executed_actions": 0,
+          "failed_actions": 0,
+          "backup_id": "fd9b6e35-d405-4cf4-8d88-1b168355d9ae",
+          "details": {
+            "successful": [],
+            "failed": []
+          }
+        },
+        "post_evolution_health": 90.62235714285714,
+        "evolution_metrics": {
+          "evolution_cycles": 1,
+          "successful_evolutions": 1,
+          "failed_evolutions": 0,
+          "avg_health_improvement": 0.0,
+          "avg_evolution_time": 0.0
+        },
+        "evolution_cycles_completed": 1,
+        "successful_evolutions": 1
+      }
+    },
+    {
+      "test_type": "pattern_detection",
+      "status": "success",
+      "results": {
+        "patterns_detected": 0,
+        "anti_patterns_found": 0,
+        "pattern_recommendations": 0,
+        "problematic_components": 1,
+        "well_structured_components": 7,
+        "detected_patterns": [],
+        "system_hotspots": 0,
+        "circular_dependencies": []
+      },
+      "details": {
+        "problematic_components": [
+          {
+            "component": "complex_module",
+            "anti_patterns": [
+              {
+                "type": "tight_coupling",
+                "severity": "medium",
+                "description": "Component has high coupling degree of 6"
+              }
+            ],
+            "health_score": 81.43999999999998
+          }
+        ],
+        "well_structured_components": [
+          {
+            "component": "circular_a",
+            "health_score": 93.11149999999999
+          },
+          {
+            "component": "circular_b",
+            "health_score": 93.0125
+          },
+          {
+            "component": "complex_module",
+            "health_score": 81.43999999999998
+          },
+          {
+            "component": "legacy_code",
+            "health_score": 89.375
+          },
+          {
+            "component": "module_a",
+            "health_score": 92.612
+          },
+          {
+            "component": "module_b",
+            "health_score": 93.11
+          },
+          {
+            "component": "well_structured_module",
+            "health_score": 91.6955
+          }
+        ]
+      }
+    },
+    {
+      "test_type": "predictive_evolution",
+      "status": "success",
+      "results": {
+        "prediction_system_available": false,
+        "predictions": {
+          "7_days": {
+            "prediction_available": false
+          },
+          "30_days": {
+            "prediction_available": false
+          },
+          "90_days": {
+            "prediction_available": false
+          }
+        },
+        "intelligence_integration": false,
+        "prediction_confidence": 0.0
+      }
+    },
+    {
+      "test_type": "system_resilience",
+      "status": "success",
+      "results": {
+        "handles_invalid_input": true,
+        "handles_constraints": true,
+        "constrained_actions": 0,
+        "error_recovery": true
+      },
+      "success_rate": 0.0
+    },
+    {
+      "test_type": "integration_capabilities",
+      "status": "success",
+      "results": {
+        "intelligence_integration": false,
+        "decision_engine_available": false,
+        "pattern_engine_available": false,
+        "external_analytics": true,
+        "evolution_planner": true
+      },
+      "integration_score": 0.0
+    }
+  ],
+  "final_system_status": {
+    "system_overview": {
+      "total_components": 7,
+      "critical_components": 0,
+      "components_needing_evolution": 0,
+      "average_health_score": 90.62235714285714
+    },
+    "evolution_metrics": {
+      "evolution_cycles": 1,
+      "successful_evolutions": 1,
+      "failed_evolutions": 0,
+      "avg_health_improvement": 0.0,
+      "avg_evolution_time": 0.0
+    },
+    "baselines": {
+      "average_health_score": 90.62235714285714,
+      "average_complexity": 13.469999999999999,
+      "average_coupling": 0.8571428571428571,
+      "total_components": 7,
+      "critical_components": 0,
+      "baseline_timestamp": "2025-08-22T01:29:06.654000"
+    },
+    "configuration": {
+      "evolution_interval_hours": 1,
+      "health_threshold": 70.0,
+      "max_concurrent_evolutions": 5,
+      "auto_evolution_enabled": true,
+      "backup_before_evolution": true,
+      "rollback_on_failure": true,
+      "evolution_effort_limit_hours": 100.0,
+      "intelligence_integration": true
+    },
+    "intelligence_enabled": false,
+    "last_evolution": {
+      "cycle_id": "e6f9fa34-0117-49c4-b20e-48cd59ba71e1",
+      "timestamp": "2025-08-22T01:29:06.659000",
+      "plan": {
+        "plan_id": "fd468be7-6a82-4a65-9b1c-b115efbb6617",
+        "created_at": "2025-08-22T01:29:06.659000",
+        "system_analysis": {
+          "system_overview": {
+            "total_components": 7,
+            "critical_components": 0,
+            "components_needing_evolution": 0,
+            "evolution_percentage": 0.0
+          },
+          "system_metrics": {
+            "average_health_score": 90.62235714285714,
+            "average_complexity": 13.469999999999999,
+            "average_coupling": 0.8571428571428571,
+            "circular_dependencies": 0
+          },
+          "architectural_patterns": {
+            "detected_patterns": [],
+            "anti_patterns": [],
+            "pattern_recommendations": []
+          },
+          "system_hotspots": [],
+          "evolution_priorities": [],
+          "dependency_analysis": {
+            "total_dependencies": 0,
+            "circular_dependencies": [],
+            "dependency_depth": {
+              "5f3386a8-f530-414a-b583-4f01a232fdf9": 0,
+              "09df4710-87a0-4903-b5c3-b9e5d9deb8de": 0,
+              "555809c2-06e2-4a8a-9dee-8d81c82878eb": 0,
+              "09d23bb2-7fc5-40ca-a73b-760069509ed7": 0,
+              "23e7e50d-1211-4ccf-9851-433e1cb2689b": 0,
+              "2b5e6b40-19e2-4518-8603-17086c0c4428": 0,
+              "ee3a5391-8b22-4a47-a758-2c8531ee7bbd": 0
+            }
+          }
+        },
+        "evolution_actions": [],
+        "execution_timeline": {
+          "total_duration_days": 0,
+          "total_effort_hours": 0,
+          "phases": []
+        },
+        "resource_requirements": {
+          "total_effort_hours": 0,
+          "estimated_developers": 1,
+          "estimated_duration_weeks": 1,
+          "skill_requirements": [
+            "Software Architecture",
+            "Refactoring",
+            "Testing",
+            "Code Analysis",
+            "Performance Optimization"
+          ],
+          "tool_requirements": [
+            "Static analysis tools",
+            "Refactoring tools",
+            "Testing frameworks",
+            "Performance monitoring",
+            "Documentation tools"
+          ]
+        },
+        "success_metrics": {
+          "architectural_health": {
+            "target_improvement": "25%",
+            "measurement": "Overall system health score"
+          },
+          "complexity_reduction": {
+            "target_improvement": "30%",
+            "measurement": "Average complexity score"
+          },
+          "coupling_reduction": {
+            "target_improvement": "40%",
+            "measurement": "Average coupling degree"
+          },
+          "technical_debt": {
+            "target_improvement": "50%",
+            "measurement": "Technical debt ratio"
+          },
+          "test_coverage": {
+            "target_improvement": "15%",
+            "measurement": "Overall test coverage"
+          }
+        },
+        "risk_mitigation": {
+          "identified_risks": [
+            "Performance regression during refactoring",
+            "Integration issues after decoupling",
+            "Test failures due to architectural changes",
+            "Deadline pressure leading to shortcuts"
+          ],
+          "mitigation_strategies": [
+            "Comprehensive performance testing",
+            "Gradual rollout with feature flags",
+            "Extensive integration testing",
+            "Regular progress reviews and adjustments"
+          ],
+          "contingency_plans": [
+            "Rollback to previous version if critical issues",
+            "Prioritize critical components first",
+            "Maintain parallel systems during transition",
+            "Emergency support team on standby"
+          ]
+        },
+        "rollback_strategy": {
+          "rollback_triggers": [
+            "Performance degradation > 10%",
+            "Test failure rate > 5%",
+            "Critical system instability",
+            "User-facing functionality broken"
+          ],
+          "rollback_procedures": [
+            "Immediate: Stop evolution deployment",
+            "Short-term: Revert to last known good state",
+            "Medium-term: Analyze failure and adjust plan",
+            "Long-term: Implement lessons learned"
+          ],
+          "recovery_time_objectives": {
+            "detection_time": "< 5 minutes",
+            "decision_time": "< 10 minutes",
+            "rollback_execution": "< 30 minutes",
+            "full_recovery": "< 2 hours"
+          }
+        }
+      },
+      "execution_result": {
+        "status": "success",
+        "execution_time_seconds": 0.0,
+        "executed_actions": 0,
+        "failed_actions": 0,
+        "backup_id": "fd9b6e35-d405-4cf4-8d88-1b168355d9ae",
+        "details": {
+          "successful": [],
+          "failed": []
+        }
+      },
+      "status": "success"
+    }
+  },
+  "test_environment": {
+    "codebase_path": "C:\\Users\\kbass\\AppData\\Local\\Temp\\test_architecture_stw8ptp2",
+    "components_analyzed": 7,
+    "intelligence_enabled": false
+  },
+  "performance_summary": {
+    "average_system_health": 90.62235714285714,
+    "evolution_cycles_completed": 1,
+    "successful_evolutions": 1
+  }
+}

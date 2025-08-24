@@ -1,0 +1,692 @@
+"""
+Documentation Validator
+
+Comprehensive validation system for generated documentation including
+style compliance, technical accuracy, and cross-reference validation.
+"""
+
+import re
+import ast
+import json
+import logging
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Set, Tuple
+from dataclasses import dataclass
+from enum import Enum
+
+logger = logging.getLogger(__name__)
+
+
+class ValidationSeverity(Enum):
+    """Validation issue severity levels."""
+    INFO = "info"
+    WARNING = "warning" 
+    ERROR = "error"
+    CRITICAL = "critical"
+
+
+@dataclass
+class ValidationIssue:
+    """Represents a documentation validation issue."""
+    severity: ValidationSeverity
+    category: str
+    message: str
+    location: str
+    suggestion: str
+    line_number: Optional[int] = None
+
+
+@dataclass
+class ValidationResult:
+    """Result of documentation validation."""
+    is_valid: bool
+    overall_score: float
+    issues: List[ValidationIssue]
+    issues_by_category: Dict[str, List[ValidationIssue]]
+    summary: Dict[str, int]
+
+
+class DocumentationValidator:
+    """
+    Comprehensive documentation validator.
+    
+    Validates documentation for:
+    - Style guide compliance
+    - Technical accuracy
+    - Cross-references and links
+    - Code example validity
+    - Spelling and grammar
+    - Completeness
+    """
+    
+    def __init__(self):
+        """Initialize the documentation validator."""
+        self.style_rules = self._load_style_rules()
+        self.technical_patterns = self._load_technical_patterns()
+        self.common_typos = self._load_common_typos()
+        
+    def validate_docstring(self, docstring: str, 
+                         function_name: str,
+                         style: str = "google") -> ValidationResult:
+        """
+        Validate a function or class docstring.
+        
+        Args:
+            docstring: The docstring to validate
+            function_name: Name of the function/class
+            style: Expected docstring style
+            
+        Returns:
+            ValidationResult: Validation results with issues
+        """
+        logger.debug(f"Validating docstring for {function_name}")
+        
+        issues = []
+        
+        # Style compliance validation
+        style_issues = self._validate_docstring_style(docstring, style)
+        issues.extend(style_issues)
+        
+        # Content validation
+        content_issues = self._validate_docstring_content(docstring, function_name)
+        issues.extend(content_issues)
+        
+        # Technical accuracy
+        technical_issues = self._validate_technical_accuracy(docstring)
+        issues.extend(technical_issues)
+        
+        # Code examples validation
+        example_issues = self._validate_code_examples(docstring)
+        issues.extend(example_issues)
+        
+        # Spelling and grammar
+        language_issues = self._validate_language(docstring)
+        issues.extend(language_issues)
+        
+        return self._build_validation_result(issues)
+        
+    def validate_readme(self, readme_content: str, 
+                       project_path: Optional[str] = None) -> ValidationResult:
+        """
+        Validate README.md content.
+        
+        Args:
+            readme_content: README content to validate
+            project_path: Path to project (for link validation)
+            
+        Returns:
+            ValidationResult: Validation results
+        """
+        logger.debug("Validating README content")
+        
+        issues = []
+        
+        # Structure validation
+        structure_issues = self._validate_readme_structure(readme_content)
+        issues.extend(structure_issues)
+        
+        # Link validation
+        if project_path:
+            link_issues = self._validate_links(readme_content, project_path)
+            issues.extend(link_issues)
+        
+        # Content validation
+        content_issues = self._validate_readme_content(readme_content)
+        issues.extend(content_issues)
+        
+        # Markdown syntax validation
+        markdown_issues = self._validate_markdown_syntax(readme_content)
+        issues.extend(markdown_issues)
+        
+        # Language validation
+        language_issues = self._validate_language(readme_content)
+        issues.extend(language_issues)
+        
+        return self._build_validation_result(issues)
+        
+    def validate_api_documentation(self, api_doc_content: str,
+                                 source_files: Optional[List[str]] = None) -> ValidationResult:
+        """
+        Validate API documentation.
+        
+        Args:
+            api_doc_content: API documentation content
+            source_files: Source code files for cross-reference validation
+            
+        Returns:
+            ValidationResult: Validation results
+        """
+        logger.debug("Validating API documentation")
+        
+        issues = []
+        
+        # Structure validation
+        structure_issues = self._validate_api_structure(api_doc_content)
+        issues.extend(structure_issues)
+        
+        # Cross-reference validation
+        if source_files:
+            ref_issues = self._validate_api_references(api_doc_content, source_files)
+            issues.extend(ref_issues)
+        
+        # Code examples validation
+        example_issues = self._validate_code_examples(api_doc_content)
+        issues.extend(example_issues)
+        
+        # Technical accuracy
+        technical_issues = self._validate_technical_accuracy(api_doc_content)
+        issues.extend(technical_issues)
+        
+        # Language validation
+        language_issues = self._validate_language(api_doc_content)
+        issues.extend(language_issues)
+        
+        return self._build_validation_result(issues)
+        
+    def _validate_docstring_style(self, docstring: str, style: str) -> List[ValidationIssue]:
+        """Validate docstring style compliance."""
+        issues = []
+        
+        if style not in self.style_rules:
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.WARNING,
+                category="style",
+                message=f"Unknown docstring style: {style}",
+                location="docstring",
+                suggestion="Use a recognized style (google, numpy, sphinx)"
+            ))
+            return issues
+        
+        rules = self.style_rules[style]
+        
+        # Check section headers
+        for section, pattern in rules.get("sections", {}).items():
+            if section in ["args", "parameters", "returns", "raises"]:
+                if not re.search(pattern, docstring, re.IGNORECASE):
+                    # Check if this section should exist
+                    if section in ["args", "parameters"] and "(" in docstring:
+                        issues.append(ValidationIssue(
+                            severity=ValidationSeverity.ERROR,
+                            category="style",
+                            message=f"Missing {section} section",
+                            location="docstring",
+                            suggestion=f"Add {section} section following {style} style"
+                        ))
+        
+        # Check parameter formatting
+        if "param_format" in rules:
+            param_pattern = rules["param_format"]
+            # This would check parameter formatting consistency
+            
+        return issues
+        
+    def _validate_docstring_content(self, docstring: str, function_name: str) -> List[ValidationIssue]:
+        """Validate docstring content quality and completeness."""
+        issues = []
+        
+        # Check minimum length
+        if len(docstring.strip()) < 10:
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.ERROR,
+                category="content",
+                message="Docstring too brief",
+                location=function_name,
+                suggestion="Expand docstring with meaningful description"
+            ))
+        
+        # Check for placeholder text
+        placeholders = ["TODO", "FIXME", "TBD", "PLACEHOLDER"]
+        for placeholder in placeholders:
+            if placeholder in docstring.upper():
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.WARNING,
+                    category="content",
+                    message=f"Contains placeholder: {placeholder}",
+                    location=function_name,
+                    suggestion="Replace placeholder with actual content"
+                ))
+        
+        # Check for first person language
+        first_person_patterns = [r'\bI\b', r'\bwe\b', r'\bour\b', r'\bmy\b']
+        for pattern in first_person_patterns:
+            if re.search(pattern, docstring, re.IGNORECASE):
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.INFO,
+                    category="style",
+                    message="Uses first person language",
+                    location=function_name,
+                    suggestion="Use third person or imperative mood"
+                ))
+                break
+        
+        return issues
+        
+    def _validate_technical_accuracy(self, content: str) -> List[ValidationIssue]:
+        """Validate technical accuracy of documentation."""
+        issues = []
+        
+        # Check for common technical inaccuracies
+        inaccuracies = {
+            r"python 2": "Python 2 is deprecated",
+            r"import \*": "Wildcard imports are discouraged",
+            r"eval\(": "eval() is generally unsafe",
+            r"exec\(": "exec() should be used with caution"
+        }
+        
+        for pattern, message in inaccuracies.items():
+            if re.search(pattern, content, re.IGNORECASE):
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.WARNING,
+                    category="technical",
+                    message=f"Potential technical issue: {message}",
+                    location="content",
+                    suggestion="Review and correct if necessary"
+                ))
+        
+        # Check for outdated information
+        outdated_patterns = [
+            r"python [12]\.",
+            r"version [12]\.",
+            r"deprecated",
+            r"legacy"
+        ]
+        
+        for pattern in outdated_patterns:
+            if re.search(pattern, content, re.IGNORECASE):
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.INFO,
+                    category="technical",
+                    message="May contain outdated information",
+                    location="content",
+                    suggestion="Verify information is current"
+                ))
+                break
+        
+        return issues
+        
+    def _validate_code_examples(self, content: str) -> List[ValidationIssue]:
+        """Validate code examples in documentation."""
+        issues = []
+        
+        # Find code blocks
+        code_blocks = re.findall(r'```(?:python)?\n(.*?)\n```', content, re.DOTALL)
+        
+        for i, code_block in enumerate(code_blocks):
+            # Basic syntax validation
+            try:
+                ast.parse(code_block)
+            except SyntaxError as e:
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.ERROR,
+                    category="code_example",
+                    message=f"Syntax error in code example {i+1}: {e.msg}",
+                    location=f"code_block_{i+1}",
+                    suggestion="Fix syntax error in code example",
+                    line_number=e.lineno
+                ))
+            
+            # Check for common issues
+            if "import os" in code_block and "os.system" in code_block:
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.WARNING,
+                    category="code_example",
+                    message="Code example uses potentially unsafe os.system",
+                    location=f"code_block_{i+1}",
+                    suggestion="Consider using subprocess instead"
+                ))
+        
+        # Check inline code
+        inline_code = re.findall(r'`([^`]+)`', content)
+        for code in inline_code:
+            if len(code) > 50:  # Likely a code block, not inline
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.INFO,
+                    category="formatting",
+                    message="Long inline code should be in code block",
+                    location="inline_code",
+                    suggestion="Use code block instead of inline code"
+                ))
+        
+        return issues
+        
+    def _validate_language(self, content: str) -> List[ValidationIssue]:
+        """Validate language quality (spelling, grammar)."""
+        issues = []
+        
+        # Check for common typos
+        for typo, correction in self.common_typos.items():
+            if re.search(r'\b' + re.escape(typo) + r'\b', content, re.IGNORECASE):
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.INFO,
+                    category="spelling",
+                    message=f"Possible typo: '{typo}'",
+                    location="content",
+                    suggestion=f"Did you mean '{correction}'?"
+                ))
+        
+        # Check for repeated words
+        repeated_words = re.findall(r'\b(\w+)\s+\1\b', content, re.IGNORECASE)
+        if repeated_words:
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.INFO,
+                category="grammar",
+                message="Contains repeated words",
+                location="content",
+                suggestion="Remove duplicate words"
+            ))
+        
+        # Check sentence length
+        sentences = re.split(r'[.!?]+', content)
+        for sentence in sentences:
+            words = sentence.split()
+            if len(words) > 40:
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.INFO,
+                    category="readability",
+                    message="Very long sentence detected",
+                    location="content",
+                    suggestion="Consider breaking into shorter sentences"
+                ))
+        
+        return issues
+        
+    def _validate_readme_structure(self, readme_content: str) -> List[ValidationIssue]:
+        """Validate README structure and required sections."""
+        issues = []
+        
+        # Required sections
+        required_sections = ["installation", "usage", "license"]
+        optional_sections = ["features", "contributing", "api", "examples"]
+        
+        content_lower = readme_content.lower()
+        
+        for section in required_sections:
+            if section not in content_lower:
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.ERROR,
+                    category="structure",
+                    message=f"Missing required section: {section}",
+                    location="readme",
+                    suggestion=f"Add {section} section to README"
+                ))
+        
+        # Check for title
+        if not re.match(r'^# ', readme_content):
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.ERROR,
+                category="structure",
+                message="README missing main title",
+                location="readme",
+                suggestion="Add main title with # at the beginning"
+            ))
+        
+        return issues
+        
+    def _validate_links(self, content: str, project_path: str) -> List[ValidationIssue]:
+        """Validate links in documentation."""
+        issues = []
+        
+        # Find markdown links
+        links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', content)
+        
+        for link_text, link_url in links:
+            # Check internal links
+            if not link_url.startswith(('http://', 'https://', 'mailto:')):
+                # Local file link
+                full_path = Path(project_path) / link_url
+                if not full_path.exists():
+                    issues.append(ValidationIssue(
+                        severity=ValidationSeverity.ERROR,
+                        category="links",
+                        message=f"Broken internal link: {link_url}",
+                        location="content",
+                        suggestion="Fix or remove broken link"
+                    ))
+        
+        # Check for link text quality
+        for link_text, link_url in links:
+            if link_text.lower() in ["here", "click here", "link"]:
+                issues.append(ValidationIssue(
+                    severity=ValidationSeverity.INFO,
+                    category="links",
+                    message="Non-descriptive link text",
+                    location="content",
+                    suggestion="Use descriptive link text"
+                ))
+        
+        return issues
+        
+    def _validate_readme_content(self, readme_content: str) -> List[ValidationIssue]:
+        """Validate README content quality."""
+        issues = []
+        
+        # Check for description
+        lines = readme_content.split('\n')
+        if len(lines) < 5:
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.WARNING,
+                category="content",
+                message="README too brief",
+                location="readme",
+                suggestion="Expand README with more details"
+            ))
+        
+        # Check for badges (optional but recommended)
+        if not re.search(r'!\[.*\]\(.*\)', readme_content):
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.INFO,
+                category="content",
+                message="No badges found",
+                location="readme",
+                suggestion="Consider adding status badges"
+            ))
+        
+        return issues
+        
+    def _validate_markdown_syntax(self, content: str) -> List[ValidationIssue]:
+        """Validate markdown syntax."""
+        issues = []
+        
+        # Check for unmatched code blocks
+        code_block_count = content.count('```')
+        if code_block_count % 2 != 0:
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.ERROR,
+                category="syntax",
+                message="Unmatched code block markers",
+                location="markdown",
+                suggestion="Ensure all code blocks are properly closed"
+            ))
+        
+        # Check for malformed links
+        malformed_links = re.findall(r'\[([^\]]+)\]\([^)]*$', content, re.MULTILINE)
+        if malformed_links:
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.ERROR,
+                category="syntax",
+                message="Malformed markdown links",
+                location="markdown",
+                suggestion="Fix incomplete link syntax"
+            ))
+        
+        return issues
+        
+    def _validate_api_structure(self, api_doc_content: str) -> List[ValidationIssue]:
+        """Validate API documentation structure."""
+        issues = []
+        
+        # Check for function/class sections
+        if not re.search(r'^#+.*(?:function|class|method)', api_doc_content, re.MULTILINE | re.IGNORECASE):
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.WARNING,
+                category="structure",
+                message="No clear function/class sections found",
+                location="api_doc",
+                suggestion="Organize API docs with clear section headers"
+            ))
+        
+        # Check for parameter documentation
+        if re.search(r'def \w+\([^)]+\)', api_doc_content) and "param" not in api_doc_content.lower():
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.WARNING,
+                category="content",
+                message="Functions found but no parameter documentation",
+                location="api_doc",
+                suggestion="Document function parameters"
+            ))
+        
+        return issues
+        
+    def _validate_api_references(self, api_doc_content: str, source_files: List[str]) -> List[ValidationIssue]:
+        """Validate API references against source code."""
+        issues = []
+        
+        # Extract function/class names from documentation
+        doc_functions = set(re.findall(r'`(\w+)\(`', api_doc_content))
+        doc_classes = set(re.findall(r'`(\w+)`(?:\s*class)', api_doc_content, re.IGNORECASE))
+        
+        # Extract actual functions/classes from source files
+        actual_functions = set()
+        actual_classes = set()
+        
+        for source_file in source_files:
+            if source_file.endswith('.py'):
+                try:
+                    with open(source_file, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    
+                    tree = ast.parse(content)
+                    
+                    for node in ast.walk(tree):
+                        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                            if not node.name.startswith('_'):
+                                actual_functions.add(node.name)
+                        elif isinstance(node, ast.ClassDef):
+                            if not node.name.startswith('_'):
+                                actual_classes.add(node.name)
+                                
+                except Exception as e:
+                    logger.debug(f"Could not parse {source_file}: {e}")
+        
+        # Check for documented but non-existent functions
+        missing_functions = doc_functions - actual_functions
+        for func in missing_functions:
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.ERROR,
+                category="references",
+                message=f"Documented function not found in source: {func}",
+                location="api_doc",
+                suggestion="Remove or fix function reference"
+            ))
+        
+        # Check for documented but non-existent classes
+        missing_classes = doc_classes - actual_classes
+        for cls in missing_classes:
+            issues.append(ValidationIssue(
+                severity=ValidationSeverity.ERROR,
+                category="references",
+                message=f"Documented class not found in source: {cls}",
+                location="api_doc",
+                suggestion="Remove or fix class reference"
+            ))
+        
+        return issues
+        
+    def _build_validation_result(self, issues: List[ValidationIssue]) -> ValidationResult:
+        """Build validation result from issues."""
+        # Group issues by category
+        issues_by_category = {}
+        for issue in issues:
+            if issue.category not in issues_by_category:
+                issues_by_category[issue.category] = []
+            issues_by_category[issue.category].append(issue)
+        
+        # Count issues by severity
+        summary = {
+            "critical": sum(1 for issue in issues if issue.severity == ValidationSeverity.CRITICAL),
+            "error": sum(1 for issue in issues if issue.severity == ValidationSeverity.ERROR),
+            "warning": sum(1 for issue in issues if issue.severity == ValidationSeverity.WARNING),
+            "info": sum(1 for issue in issues if issue.severity == ValidationSeverity.INFO)
+        }
+        
+        # Calculate overall score
+        total_issues = len(issues)
+        if total_issues == 0:
+            overall_score = 1.0
+        else:
+            # Weight by severity
+            weighted_issues = (
+                summary["critical"] * 4 +
+                summary["error"] * 3 +
+                summary["warning"] * 2 +
+                summary["info"] * 1
+            )
+            max_score = total_issues * 4  # If all were critical
+            overall_score = max(0.0, 1.0 - (weighted_issues / max_score))
+        
+        # Determine if valid (no critical or error issues)
+        is_valid = summary["critical"] == 0 and summary["error"] == 0
+        
+        return ValidationResult(
+            is_valid=is_valid,
+            overall_score=overall_score,
+            issues=issues,
+            issues_by_category=issues_by_category,
+            summary=summary
+        )
+        
+    def _load_style_rules(self) -> Dict[str, Dict[str, str]]:
+        """Load style rules for different documentation styles."""
+        return {
+            "google": {
+                "sections": {
+                    "args": r"Args?\s*:",
+                    "returns": r"Returns?\s*:",
+                    "raises": r"Raises?\s*:",
+                    "examples": r"Examples?\s*:"
+                },
+                "param_format": r"\s*(\w+)\s*\([^)]+\)\s*:"
+            },
+            "numpy": {
+                "sections": {
+                    "parameters": r"Parameters\s*\n\s*-+",
+                    "returns": r"Returns\s*\n\s*-+",
+                    "raises": r"Raises\s*\n\s*-+",
+                    "examples": r"Examples?\s*\n\s*-+"
+                },
+                "param_format": r"^\s*(\w+)\s*:\s*\w+"
+            },
+            "sphinx": {
+                "sections": {
+                    "param": r":param\s+\w+:",
+                    "returns": r":returns?:",
+                    "raises": r":raises?\s+\w+:",
+                    "examples": r"Example[s]?\s*:"
+                },
+                "param_format": r":param\s+(\w+):"
+            }
+        }
+        
+    def _load_technical_patterns(self) -> Dict[str, str]:
+        """Load patterns for technical validation."""
+        return {
+            "deprecated_python": r"python [12]\.",
+            "unsafe_eval": r"eval\s*\(",
+            "unsafe_exec": r"exec\s*\(",
+            "wildcard_import": r"from .* import \*"
+        }
+        
+    def _load_common_typos(self) -> Dict[str, str]:
+        """Load common typos and their corrections."""
+        return {
+            "recieve": "receive",
+            "seperate": "separate",
+            "definately": "definitely",
+            "occured": "occurred",
+            "neccessary": "necessary",
+            "priviledge": "privilege",
+            "accomodate": "accommodate",
+            "begining": "beginning",
+            "developement": "development",
+            "enviroment": "environment"
+        }

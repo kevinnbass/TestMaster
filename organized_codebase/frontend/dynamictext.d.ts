@@ -1,2 +1,2 @@
-import DynamicText from '../../../plugins/dynamictext';
+import DynamicText from './gameobjects/dynamictext/dynamictext/DynamicText';
 export default DynamicText;

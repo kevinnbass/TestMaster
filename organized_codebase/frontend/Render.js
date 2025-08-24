@@ -1,14 +1,8 @@
-import Compile from './Complile.js';
+import WebGLRenderer from './WebGLRenderer.js';
+import CanvasRenderer from './CanvasRenderer.js';
 
-var Render = function (content, view, config) {
-    var f;
-    if (typeof (content) === 'string') {
-        f = Compile(content, config);
-    } else {
-        f = content;
-    }
+export default {
+    renderWebGL: WebGLRenderer,
+    renderCanvas: CanvasRenderer
 
-    return f(view);
-}
-
-export default Render;
+};

@@ -1,63 +1,53 @@
-export default ShatterImage;
+// import * as Phaser from 'phaser';
 
-declare namespace ShatterImage {
-    type GetRingRadiusListCallback = (width: number, height: number) => number[];
+export default Image;
+
+declare namespace Image {
 
     interface IConfig {
-        x?: number,
-        y?: number,
-        key: string,
+        x: number, y: number,
+        key?: string,
         frame?: string,
 
-        ringRadiusList?: number[] | GetRingRadiusListCallback,
-        samplesPerRing?: number,
-        variation?: number,
+        ninePointMode?: boolean,
+        rtl?: boolean,
+    }
+
+    class ControlPoint {
+        setWorldXY(x: number, y: number): this;
+        setPosition(x: number, y: number): this;
+        getWorldXY(): { x: number, y: number };
+
+        x: number;
+        y: number;
 
     }
 
-    interface ShatterIConfig {
-        centerX?: number,
-        centerY?: number,
-        ringRadiusList?: number[] | GetRingRadiusListCallback,
-        samplesPerRing?: number,
-        variation?: number,
-    }
 }
 
-declare class ShatterImage extends Phaser.GameObjects.Mesh {
+declare class Image extends Phaser.GameObjects.Mesh {
     constructor(
         scene: Phaser.Scene,
-        x?: number, y?: number,
-        key?: string, frame?: string,
-        config?: ShatterImage.IConfig
-    );
+        x?: number,
+        y?: number,
+        key?: string,
+        frame?: string | null,
+        config?: Image.IConfig
+    )
 
     constructor(
         scene: Phaser.Scene,
-        config?: ShatterImage.IConfig
-    );
+        config?: Image.IConfig
+    )
 
-    shatter(
-        centerX?: number,
-        centerY?: number,
-        config?: ShatterImage.ShatterIConfig
-    ): this;
-    shatter(
-        config?: ShatterImage.ShatterIConfig
-    ): this;
-    readonly shatterCenter: { x: number, y: number };
-
-    ringRadiusList: number[] | ShatterImage.GetRingRadiusListCallback;
-    setRingRadiusList(ringRadiusList: number[] | ShatterImage.GetRingRadiusListCallback): this;
-
-    samplesPerRing: number;
-    setSamplesPerRing(samplesPerRing: number): this;
-
-    variation: number;
-    setVariation(variation: number): this;
-
-    startUpdate(): this;
-    stopUpdate(): this;
-
-    resetImage(): this;
+    readonly controlPoints: Image.ControlPoint[];
+    readonly topLeft: Image.ControlPoint;
+    readonly topCenter: Image.ControlPoint;
+    readonly topRight: Image.ControlPoint;
+    readonly centerLeft: Image.ControlPoint;
+    readonly center: Image.ControlPoint;
+    readonly centerRight: Image.ControlPoint;
+    readonly bottomLeft: Image.ControlPoint;
+    readonly bottomCenter: Image.ControlPoint;
+    readonly bottomRight: Image.ControlPoint;
 }

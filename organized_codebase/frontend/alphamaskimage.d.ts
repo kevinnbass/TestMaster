@@ -1,2 +1,2 @@
-import AlphaMaskImage from '../../../plugins/alphamaskimage';
+import AlphaMaskImage from './gameobjects/canvas/alphamaskimage/AlphaMaskImage';
 export default AlphaMaskImage;

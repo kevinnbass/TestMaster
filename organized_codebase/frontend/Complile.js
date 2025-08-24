@@ -1,8 +1,8 @@
-import StringTemplate from '../StringTemplate.js';
+import ExpressionParser from '../ExpressionParser.js';
 
-var stringTemplate = new StringTemplate();
-var Compile = function (content, config) {
-    return stringTemplate.compile(content, config);
+var parser = new ExpressionParser();
+var Compile = function(expression) {
+    return parser.compile(expression);
 }
 
 export default Compile;

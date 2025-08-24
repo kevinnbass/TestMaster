@@ -1,0 +1,480 @@
+================================================================================
+LEGACY CODE ANALYSIS REPORT
+================================================================================
+Generated: 2025-08-16T18:02:23.564202
+Files analyzed: 75
+
+SUMMARY STATISTICS:
+  Total functions: 144
+  Total classes: 76
+  Total lines of code: 23426
+  Average file size: 312.3 lines
+
+FUNCTION ANALYSIS BY FILE:
+
+accelerated_converter.py (4 functions, 256 lines):
+  - get_remaining_modules() [PUBLIC] (complexity: 9)
+    Calls: set, replace, exists, str, Path ... and 5 more
+  - generate_test() [PUBLIC] (complexity: 12)
+    Calls: open, write, split, parse, replace ... and 11 more
+  - convert_module_with_delay() [PUBLIC] (complexity: 2)
+    Calls: generate_test, sleep, str
+  - main() [PUBLIC] (complexity: 8)
+    Calls: convert_module_with_delay, open, print, now, len ... and 8 more
+
+achieve_100_percent.py (1 functions, 262 lines):
+  - main() [PUBLIC] (complexity: 3)
+    Calls: CoverageMaximizer, print, measure_coverage, fix_all_tests, achieve_100_percent
+
+achieve_100_percent_coverage.py (1 functions, 439 lines):
+  - load_env() [PUBLIC] (complexity: 6)
+    Calls: open, split, exists, Path, startswith ... and 1 more
+
+ai_test_generator.py (1 functions, 511 lines):
+  - main() [PUBLIC] (complexity: 3)
+    Calls: measure_coverage_improvement, print, Path, len, AITestGenerator ... and 3 more
+
+automated_test_generation.py (0 functions, 949 lines):
+
+batch_convert_broken_tests.py (5 functions, 191 lines):
+  - get_broken_test_files() [PUBLIC] (complexity: 3)
+    Calls: glob, append, categorize_test, print
+  - batch_convert() [PUBLIC] (complexity: 5)
+    Calls: print, str, len, convert_broken_test, BrokenTestConverter ... and 2 more
+  - print_summary() [PUBLIC] (complexity: 10)
+    Calls: len, print
+  - validate_conversions() [PUBLIC] (complexity: 6)
+    Calls: run, split, print
+  - main() [PUBLIC] (complexity: 4)
+    Calls: min, get_broken_test_files, print, print_summary, len ... and 3 more
+
+batch_gemini_generator.py (2 functions, 148 lines):
+  - process_batch() [PUBLIC] (complexity: 4)
+    Calls: print, str, Path, analyze_module, len ... and 5 more
+  - main() [PUBLIC] (complexity: 10)
+    Calls: GeminiTestGenerator, print, str, Path, getenv ... and 8 more
+
+branch_coverage_analyzer.py (1 functions, 462 lines):
+  - main() [PUBLIC] (complexity: 2)
+    Calls: measure_branch_coverage, BranchCoverageAnalyzer, generate_branch_coverage_tests, print
+
+check_what_needs_tests.py (1 functions, 58 lines):
+  - check_modules() [PUBLIC] (complexity: 11)
+    Calls: set, split, print, replace, exists ... and 9 more
+
+comprehensive_test_framework.py (0 functions, 697 lines):
+
+convert_batch_small.py (2 functions, 150 lines):
+  - build_test_for_module() [PUBLIC] (complexity: 9)
+    Calls: print, endswith, exists, generate_content, Path ... and 10 more
+  - main() [PUBLIC] (complexity: 7)
+    Calls: sleep, print, Client, exists, Path ... and 5 more
+
+convert_with_genai_sdk.py (2 functions, 182 lines):
+  - build_test_for_module() [PUBLIC] (complexity: 9)
+    Calls: print, endswith, exists, generate_content, Path ... and 10 more
+  - main() [PUBLIC] (complexity: 12)
+    Calls: split, print, Client, strftime, replace ... and 10 more
+
+convert_with_generativeai.py (2 functions, 161 lines):
+  - build_test_for_module() [PUBLIC] (complexity: 9)
+    Calls: parse, print, endswith, exists, GenerativeModel ... and 13 more
+  - main() [PUBLIC] (complexity: 11)
+    Calls: split, print, replace, exists, Path ... and 5 more
+
+coverage_analysis.py (0 functions, 669 lines):
+
+coverage_baseline.py (1 functions, 244 lines):
+  - main() [PUBLIC] (complexity: 1)
+    Calls: generate_report, CoverageBaseline, print
+
+coverage_improver.py (1 functions, 484 lines):
+  - main() [PUBLIC] (complexity: 5)
+    Calls: generate_edge_case_tests, identify_missing_tests, print, isinstance, generate_missing_tests ... and 6 more
+
+data_flow_tests.py (0 functions, 797 lines):
+
+diagnose_final_five.py (2 functions, 201 lines):
+  - diagnose_module() [PUBLIC] (complexity: 26)
+    Calls: open, GenerationConfig, lower, split, print ... and 8 more
+  - main() [PUBLIC] (complexity: 2)
+    Calls: diagnose_module, Path, print
+
+enhance_auto_generated_tests.py (1 functions, 349 lines):
+  - main() [PUBLIC] (complexity: 5)
+    Calls: enhance_all_tests, print, run, TestEnhancer
+
+enhanced_context_aware_test_generator.py (0 functions, 428 lines):
+
+enhanced_self_healing_verifier.py (7 functions, 512 lines):
+  - get_remaining_modules() [PUBLIC] (complexity: 9)
+    Calls: sort, set, print, replace, exists ... and 8 more
+  - make_llm_call() [PUBLIC] (complexity: 2)
+    Calls: print, wait_if_needed, GenerativeModel, generate_content, GenerationConfig
+  - fix_syntax_error() [PUBLIC] (complexity: 4)
+    Calls: make_llm_call, split, print
+  - verify_test_exhaustiveness() [PUBLIC] (complexity: 16)
+    Calls: filter, split, print, startswith, strip ... and 4 more
+  - generate_enhanced_test() [PUBLIC] (complexity: 28)
+    Calls: open, write, split, print, replace ... and 13 more
+  - process_modules_enhanced() [PUBLIC] (complexity: 6)
+    Calls: as_completed, print, str, Path, len ... and 6 more
+  - main() [PUBLIC] (complexity: 4)
+    Calls: list, min, open, lower, print ... and 10 more
+
+fast_converter.py (2 functions, 136 lines):
+  - generate_test_for_module() [PUBLIC] (complexity: 6)
+    Calls: split, print, replace, with_suffix, GenerateContentConfig ... and 10 more
+  - main() [PUBLIC] (complexity: 5)
+    Calls: print, Client, exists, generate_test_for_module, getenv ... and 2 more
+
+final_five_converter.py (2 functions, 154 lines):
+  - generate_test_for_module() [PUBLIC] (complexity: 10)
+    Calls: open, write, split, print, replace ... and 7 more
+  - main() [PUBLIC] (complexity: 4)
+    Calls: sleep, generate_test_for_module, Path, print
+
+find_truly_missing.py (1 functions, 74 lines):
+  - find_truly_missing() [PUBLIC] (complexity: 14)
+    Calls: items, sort, set, split, print ... and 12 more
+
+fix_all_imports.py (2 functions, 91 lines):
+  - fix_test_imports() [PUBLIC] (complexity: 9)
+    Calls: print, startswith, strip, join, enumerate ... and 3 more
+  - main() [PUBLIC] (complexity: 4)
+    Calls: print, Path, fix_test_imports, len, glob ... and 1 more
+
+fix_enhanced_test_imports.py (1 functions, 230 lines):
+  - main() [PUBLIC] (complexity: 6)
+    Calls: fix_all_tests, run, EnhancedTestImportFixer, print
+
+fix_failing_tests.py (1 functions, 225 lines):
+  - main() [PUBLIC] (complexity: 5)
+    Calls: split, print, run, TestFixer, fix_all_tests
+
+fix_import_paths.py (3 functions, 166 lines):
+  - fix_import_path() [PUBLIC] (complexity: 6)
+    Calls: replace, append, get
+  - process_test_files() [PUBLIC] (complexity: 4)
+    Calls: list, print, Path, len, glob ... and 3 more
+  - verify_imports() [PUBLIC] (complexity: 4)
+    Calls: list, compile, print, Path, glob ... and 1 more
+
+fix_remaining_issues.py (1 functions, 398 lines):
+  - main() [PUBLIC] (complexity: 1)
+    Calls: TestIssueFixer, apply_all_fixes, print
+
+fix_test_infrastructure.py (1 functions, 338 lines):
+  - main() [PUBLIC] (complexity: 1)
+    Calls: TestInfrastructureFixer, apply_all_fixes, analyze_api_mismatches, print
+
+fix_tests_for_real_modules.py (1 functions, 348 lines):
+  - main() [PUBLIC] (complexity: 5)
+    Calls: print, RealModuleTestFixer, run, fix_all_available_modules, count
+
+fix_week2_test_imports.py (1 functions, 125 lines):
+  - main() [PUBLIC] (complexity: 6)
+    Calls: run, Week2ImportFixer, fix_all_tests, print
+
+gemini_powered_test_generator.py (0 functions, 365 lines):
+
+gemini_test_generator.py (1 functions, 490 lines):
+  - main() [PUBLIC] (complexity: 7)
+    Calls: generate_tests_for_directory, GeminiTestGenerator, print, getenv, Path ... and 3 more
+
+generate_coverage_sequential.py (2 functions, 268 lines):
+  - load_env() [PUBLIC] (complexity: 6)
+    Calls: open, split, exists, Path, startswith ... and 1 more
+  - main() [PUBLIC] (complexity: 1)
+    Calls: add_argument, ArgumentParser, parse_args, run, SequentialTestGenerator
+
+implement_test_stubs.py (7 functions, 507 lines):
+  - analyze_module() [PUBLIC] (complexity: 12)
+    Calls: open, isinstance, append, parse, walk ... and 1 more
+  - generate_test_implementation() [PUBLIC] (complexity: 3)
+    Calls: startswith
+  - generate_function_tests() [PUBLIC] (complexity: 3)
+  - implement_test_stub() [PUBLIC] (complexity: 5)
+    Calls: open, write, print, exists, analyze_module ... and 5 more
+  - batch_implement_stubs() [PUBLIC] (complexity: 8)
+    Calls: open, implement_test_stub, print, replace, exists ... and 3 more
+  - create_test_template() [PUBLIC] (complexity: 1)
+    Calls: open, write, print
+  - main() [PUBLIC] (complexity: 5)
+    Calls: add_argument, ArgumentParser, create_test_template, parse_args, print ... and 5 more
+
+independent_test_verifier.py (3 functions, 215 lines):
+  - analyze_test_coverage() [PUBLIC] (complexity: 9)
+    Calls: min, max, open, lower, isinstance ... and 6 more
+  - verify_with_llm() [PUBLIC] (complexity: 2)
+    Calls: open, GenerativeModel, generate_content, read
+  - verify_test_suite() [PUBLIC] (complexity: 5)
+    Calls: analyze_test_coverage, open, print, replace, str ... and 12 more
+
+integration_test_generator.py (0 functions, 572 lines):
+
+integration_test_matrix.py (0 functions, 1159 lines):
+
+intelligent_converter.py (1 functions, 335 lines):
+  - main() [PUBLIC] (complexity: 2)
+    Calls: run_to_100_percent, IntelligentTestConverter, print
+
+intelligent_test_builder.py (2 functions, 359 lines):
+  - test_gemini_connection() [PUBLIC] (complexity: 7)
+    Calls: lower, IntelligentTestBuilder, isinstance, print, str ... and 1 more
+  - main() [PUBLIC] (complexity: 4)
+    Calls: IntelligentTestBuilder, print, exists, Path, build_test_for_module ... and 1 more
+
+intelligent_test_builder_offline.py (1 functions, 356 lines):
+  - main() [PUBLIC] (complexity: 3)
+    Calls: OfflineIntelligentTestBuilder, print, exists, Path, build_test_for_module
+
+intelligent_test_builder_v2.py (1 functions, 273 lines):
+  - main() [PUBLIC] (complexity: 4)
+    Calls: print, exists, getenv, Path, build_test_for_module ... and 1 more
+
+measure_final_coverage.py (3 functions, 124 lines):
+  - count_test_files() [PUBLIC] (complexity: 2)
+    Calls: glob, set, list, Path
+  - count_source_modules() [PUBLIC] (complexity: 5)
+    Calls: str, Path, startswith, append, rglob
+  - main() [PUBLIC] (complexity: 12)
+    Calls: items, set, split, print, replace ... and 8 more
+
+monitor_progress.py (1 functions, 30 lines):
+  - monitor() [PUBLIC] (complexity: 3)
+    Calls: sleep, print, strftime, Path, len ... and 3 more
+
+monitor_to_100.py (1 functions, 38 lines):
+  - monitor() [PUBLIC] (complexity: 4)
+    Calls: sleep, print, strftime, exists, now ... and 4 more
+
+parallel_converter.py (4 functions, 311 lines):
+  - get_remaining_modules() [PUBLIC] (complexity: 9)
+    Calls: sort, set, print, replace, exists ... and 8 more
+  - generate_test() [PUBLIC] (complexity: 12)
+    Calls: open, write, split, parse, replace ... and 12 more
+  - process_modules_parallel() [PUBLIC] (complexity: 5)
+    Calls: as_completed, print, str, Path, len ... and 6 more
+  - main() [PUBLIC] (complexity: 8)
+    Calls: list, open, lower, print, Path ... and 9 more
+
+parallel_converter_fixed.py (5 functions, 352 lines):
+  - get_remaining_modules() [PUBLIC] (complexity: 9)
+    Calls: sort, set, print, replace, exists ... and 8 more
+  - generate_test() [PUBLIC] (complexity: 12)
+    Calls: open, write, split, parse, replace ... and 12 more
+  - save_incremental_results() [PUBLIC] (complexity: 2)
+    Calls: open, print, dump
+  - process_modules_parallel() [PUBLIC] (complexity: 7)
+    Calls: save_incremental_results, as_completed, print, str, Path ... and 10 more
+  - main() [PUBLIC] (complexity: 10)
+    Calls: open, lower, print, now, len ... and 10 more
+
+parallel_converter_working.py (4 functions, 297 lines):
+  - get_remaining_modules() [PUBLIC] (complexity: 11)
+    Calls: sort, set, split, print, replace ... and 9 more
+  - generate_test() [PUBLIC] (complexity: 12)
+    Calls: open, write, split, parse, replace ... and 11 more
+  - process_modules_parallel() [PUBLIC] (complexity: 5)
+    Calls: as_completed, print, str, Path, len ... and 6 more
+  - main() [PUBLIC] (complexity: 4)
+    Calls: list, open, lower, print, Path ... and 9 more
+
+parallel_coverage_converter.py (7 functions, 434 lines):
+  - get_remaining_modules() [PUBLIC] (complexity: 12)
+    Calls: sort, set, print, replace, get_coverage_data ... and 10 more
+  - get_coverage_data() [PUBLIC] (complexity: 3)
+    Calls: open, exists, Path, run, load
+  - get_module_coverage() [PUBLIC] (complexity: 5)
+    Calls: items, get, Path, len
+  - generate_test() [PUBLIC] (complexity: 15)
+    Calls: write, generate_content, Path, len, parse ... and 14 more
+  - process_modules_parallel() [PUBLIC] (complexity: 5)
+    Calls: as_completed, print, str, measure_current_coverage, len ... and 4 more
+  - measure_current_coverage() [PUBLIC] (complexity: 6)
+    Calls: split, rstrip, float, len, run
+  - main() [PUBLIC] (complexity: 10)
+    Calls: open, lower, print, measure_current_coverage, len ... and 7 more
+
+parallel_coverage_converter_fixed.py (8 functions, 491 lines):
+  - get_coverage_data() [PUBLIC] (complexity: 3)
+    Calls: open, print, exists, Path, run ... and 1 more
+  - get_module_coverage() [PUBLIC] (complexity: 5)
+    Calls: items, get, Path, len
+  - get_remaining_modules() [PUBLIC] (complexity: 11)
+    Calls: sort, set, print, replace, get_coverage_data ... and 10 more
+  - generate_test() [PUBLIC] (complexity: 17)
+    Calls: write, generate_content, Path, len, glob ... and 17 more
+  - save_incremental_results() [PUBLIC] (complexity: 2)
+    Calls: open, print, dump
+  - measure_current_coverage() [PUBLIC] (complexity: 7)
+    Calls: split, print, rstrip, float, len ... and 1 more
+  - process_modules_parallel() [PUBLIC] (complexity: 7)
+    Calls: save_incremental_results, as_completed, print, str, measure_current_coverage ... and 8 more
+  - main() [PUBLIC] (complexity: 12)
+    Calls: min, open, lower, print, measure_current_coverage ... and 9 more
+
+quick_coverage_boost.py (1 functions, 339 lines):
+  - main() [PUBLIC] (complexity: 1)
+    Calls: QuickCoverageBooster, print, boost_coverage
+
+quick_test_generator.py (1 functions, 112 lines):
+  - main() [PUBLIC] (complexity: 9)
+    Calls: GeminiTestGenerator, print, exists, str, getenv ... and 9 more
+
+quick_test_summary.py (2 functions, 60 lines):
+  - test_file() [PUBLIC] (complexity: 8)
+    Calls: run, str
+  - main() [PUBLIC] (complexity: 4)
+    Calls: print, test_file, Path, len, glob ... and 3 more
+
+run_intelligent_tests.py (3 functions, 273 lines):
+  - run_single_test() [PUBLIC] (complexity: 21)
+    Calls: open, search, split, print, exists ... and 11 more
+  - run_all_intelligent_tests() [PUBLIC] (complexity: 10)
+    Calls: open, sleep, print, Path, len ... and 9 more
+  - generate_markdown_report() [PUBLIC] (complexity: 4)
+    Calls: Path, write_text, print
+
+run_limited_coverage.py (0 functions, 49 lines):
+
+self_healing_converter.py (5 functions, 384 lines):
+  - get_remaining_modules() [PUBLIC] (complexity: 11)
+    Calls: sort, set, split, print, replace ... and 9 more
+  - fix_syntax_error() [PUBLIC] (complexity: 4)
+    Calls: split, print, wait_if_needed, GenerativeModel, generate_content ... and 1 more
+  - generate_test_with_healing() [PUBLIC] (complexity: 17)
+    Calls: write, generate_content, Path, len, parse ... and 14 more
+  - process_modules_with_healing() [PUBLIC] (complexity: 6)
+    Calls: as_completed, print, str, Path, len ... and 6 more
+  - main() [PUBLIC] (complexity: 5)
+    Calls: list, min, process_modules_with_healing, open, lower ... and 10 more
+
+simple_100_percent.py (1 functions, 146 lines):
+  - test_all_modules() [PUBLIC] (complexity: 1)
+    Calls: UseCaseResponse, success_response, len, run, OptimizePatternsResponse ... and 14 more
+
+simple_test_generator.py (3 functions, 182 lines):
+  - get_modules_to_test() [PUBLIC] (complexity: 10)
+    Calls: set, split, replace, exists, str ... and 6 more
+  - generate_test() [PUBLIC] (complexity: 9)
+    Calls: open, write, split, print, replace ... and 7 more
+  - main() [PUBLIC] (complexity: 5)
+    Calls: sleep, print, len, get_modules_to_test, enumerate ... and 1 more
+
+simple_test_runner.py (1 functions, 86 lines):
+  - main() [PUBLIC] (complexity: 11)
+    Calls: print, str, Path, len, glob ... and 4 more
+
+smart_test_generator.py (1 functions, 452 lines):
+  - main() [PUBLIC] (complexity: 1)
+    Calls: print, generate_all_tests, SmartTestGenerator
+
+specialized_test_generators.py (0 functions, 816 lines):
+
+systematic_coverage.py (1 functions, 387 lines):
+  - main() [PUBLIC] (complexity: 2)
+    Calls: run_and_measure_improvement, generate_module_tests, print, SystematicCoverageAnalyzer
+
+test_gemini_api.py (0 functions, 88 lines):
+
+test_gemini_config.py (1 functions, 148 lines):
+  - load_env() [PUBLIC] (complexity: 6)
+    Calls: open, split, print, exists, Path ... and 2 more
+
+test_gemini_correct.py (0 functions, 115 lines):
+
+test_single_api_call.py (2 functions, 174 lines):
+  - test_single_generation() [PUBLIC] (complexity: 11)
+    Calls: write, type, generate_content, Path, len ... and 14 more
+  - main() [PUBLIC] (complexity: 2)
+    Calls: test_single_generation, print
+
+test_single_generation.py (1 functions, 134 lines):
+  - load_env() [PUBLIC] (complexity: 6)
+    Calls: open, split, exists, Path, startswith ... and 1 more
+
+test_updated_prompt.py (1 functions, 174 lines):
+  - test_with_correct_imports() [PUBLIC] (complexity: 12)
+    Calls: open, lower, write, split, parse ... and 11 more
+
+testmaster_orchestrator.py (1 functions, 567 lines):
+  - main() [PUBLIC] (complexity: 5)
+    Calls: add_argument, ArgumentParser, parse_args, create_test_generation_workflow, execute_workflow ... and 8 more
+
+turbo_converter.py (4 functions, 264 lines):
+  - get_remaining_modules() [PUBLIC] (complexity: 9)
+    Calls: set, replace, exists, str, Path ... and 5 more
+  - generate_test() [PUBLIC] (complexity: 12)
+    Calls: open, write, split, parse, replace ... and 11 more
+  - process_batch() [PUBLIC] (complexity: 3)
+    Calls: as_completed, str, append, ThreadPoolExecutor, submit ... and 1 more
+  - main() [PUBLIC] (complexity: 8)
+    Calls: extend, min, open, sleep, print ... and 11 more
+
+week_5_8_batch_converter.py (7 functions, 331 lines):
+  - read_module_content() [PUBLIC] (complexity: 3)
+    Calls: open, print, read, len
+  - generate_intelligent_test() [PUBLIC] (complexity: 5)
+    Calls: split, parse, print, GenerativeModel, generate_content ... and 1 more
+  - fix_import_paths() [PUBLIC] (complexity: 5)
+    Calls: replace, relative_to, str
+  - save_test_file() [PUBLIC] (complexity: 1)
+    Calls: open, write, mkdir, Path
+  - convert_batch() [PUBLIC] (complexity: 5)
+    Calls: open, sleep, print, fix_import_paths, save_test_file ... and 11 more
+  - get_priority_modules() [PUBLIC] (complexity: 11)
+    Calls: exists, Path, startswith, glob, append
+  - main() [PUBLIC] (complexity: 6)
+    Calls: open, min, write, sleep, print ... and 7 more
+
+week_7_8_converter.py (4 functions, 350 lines):
+  - get_remaining_modules() [PUBLIC] (complexity: 16)
+    Calls: set, print, replace, exists, str ... and 7 more
+  - generate_test() [PUBLIC] (complexity: 12)
+    Calls: open, write, split, parse, replace ... and 11 more
+  - convert_batch() [PUBLIC] (complexity: 6)
+    Calls: open, min, sleep, print, str ... and 8 more
+  - main() [PUBLIC] (complexity: 5)
+    Calls: min, open, sleep, print, now ... and 10 more
+
+working_test_generator.py (2 functions, 136 lines):
+  - get_first_module() [PUBLIC] (complexity: 6)
+    Calls: glob, rglob, str, Path
+  - generate_single_test() [PUBLIC] (complexity: 6)
+    Calls: get_first_module, open, write, print, GenerativeModel ... and 6 more
+
+write_real_tests.py (1 functions, 248 lines):
+  - main() [PUBLIC] (complexity: 4)
+    Calls: RealTestWriter, items, write_real_test_for_module, print
+
+DEPENDENCY ANALYSIS:
+  Unique dependencies: 42
+  Dependencies: achieve_100_percent_coverage, anthropic, ast, asyncio, collections, concurrent, coverage, dataclasses, datetime, dotenv, enum, google, hashlib, importlib, inspect, json, logging, matplotlib, multi_coder_analysis, networkx, numpy, os, pandas, pathlib, pickle, pytest, queue, random, re, scripts, shutil, src, subprocess, sys, tempfile, textwrap, threading, time, traceback, typing, unittest, xml
+
+CONSOLIDATION CANDIDATES:
+  Generator scripts: 11
+  Converter scripts: 17
+  Verification scripts: 2
+  Coverage scripts: 12
+  Fix/maintenance scripts: 10
+
+DUPLICATE FUNCTION NAMES (potential consolidation targets):
+  build_test_for_module: 3 occurrences in convert_batch_small.py, convert_with_genai_sdk.py, convert_with_generativeai.py
+  convert_batch: 2 occurrences in week_5_8_batch_converter.py, week_7_8_converter.py
+  fix_syntax_error: 2 occurrences in enhanced_self_healing_verifier.py, self_healing_converter.py
+  generate_test: 9 occurrences in accelerated_converter.py, parallel_converter.py, parallel_converter_fixed.py, parallel_converter_working.py, parallel_coverage_converter.py, parallel_coverage_converter_fixed.py, simple_test_generator.py, turbo_converter.py, week_7_8_converter.py
+  generate_test_for_module: 2 occurrences in fast_converter.py, final_five_converter.py
+  get_coverage_data: 2 occurrences in parallel_coverage_converter.py, parallel_coverage_converter_fixed.py
+  get_module_coverage: 2 occurrences in parallel_coverage_converter.py, parallel_coverage_converter_fixed.py
+  get_remaining_modules: 10 occurrences in accelerated_converter.py, enhanced_self_healing_verifier.py, parallel_converter.py, parallel_converter_fixed.py, parallel_converter_working.py, parallel_coverage_converter.py, parallel_coverage_converter_fixed.py, self_healing_converter.py, turbo_converter.py, week_7_8_converter.py
+  load_env: 4 occurrences in achieve_100_percent_coverage.py, generate_coverage_sequential.py, test_gemini_config.py, test_single_generation.py
+  main: 50 occurrences in accelerated_converter.py, achieve_100_percent.py, ai_test_generator.py, batch_convert_broken_tests.py, batch_gemini_generator.py, branch_coverage_analyzer.py, convert_batch_small.py, convert_with_genai_sdk.py, convert_with_generativeai.py, coverage_baseline.py, coverage_improver.py, diagnose_final_five.py, enhanced_self_healing_verifier.py, enhance_auto_generated_tests.py, fast_converter.py, final_five_converter.py, fix_all_imports.py, fix_enhanced_test_imports.py, fix_failing_tests.py, fix_remaining_issues.py, fix_tests_for_real_modules.py, fix_test_infrastructure.py, fix_week2_test_imports.py, gemini_test_generator.py, generate_coverage_sequential.py, implement_test_stubs.py, intelligent_converter.py, intelligent_test_builder.py, intelligent_test_builder_offline.py, intelligent_test_builder_v2.py, measure_final_coverage.py, parallel_converter.py, parallel_converter_fixed.py, parallel_converter_working.py, parallel_coverage_converter.py, parallel_coverage_converter_fixed.py, quick_coverage_boost.py, quick_test_generator.py, quick_test_summary.py, self_healing_converter.py, simple_test_generator.py, simple_test_runner.py, smart_test_generator.py, systematic_coverage.py, testmaster_orchestrator.py, test_single_api_call.py, turbo_converter.py, week_5_8_batch_converter.py, week_7_8_converter.py, write_real_tests.py
+  measure_current_coverage: 2 occurrences in parallel_coverage_converter.py, parallel_coverage_converter_fixed.py
+  monitor: 2 occurrences in monitor_progress.py, monitor_to_100.py
+  process_batch: 2 occurrences in batch_gemini_generator.py, turbo_converter.py
+  process_modules_parallel: 5 occurrences in parallel_converter.py, parallel_converter_fixed.py, parallel_converter_working.py, parallel_coverage_converter.py, parallel_coverage_converter_fixed.py
+  save_incremental_results: 2 occurrences in parallel_converter_fixed.py, parallel_coverage_converter_fixed.py
+
+================================================================================

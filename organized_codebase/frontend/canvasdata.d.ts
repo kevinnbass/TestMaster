@@ -1,37 +1,10 @@
-export default CanvasData;
+import CanvasObjectToBitmap from './data/canvasdata/CanvasObjectToBitmap';
+import TextureTColorMap from './data/canvasdata/TextureToColormap';
 
-declare namespace CanvasData {
-    type ForEachCallbackType = (
-        value: number,
-        x: number, y: number,
-        canvasData: CanvasData
-    ) => void;
-
+declare var Methods: {
+    textObjectToBitmap: typeof CanvasObjectToBitmap,
+    canvasObjectToBitmap: typeof CanvasObjectToBitmap,
+    textureTColorMap: typeof TextureTColorMap,
 }
 
-declare class CanvasData {
-
-    readonly width: number;
-    readonly height: number;
-
-    destroy(): void;
-
-    color32ToColorInt(value: number): number;
-
-    color32ToAlpha(value: number): number;
-
-    forEach(
-        callback: CanvasData.ForEachCallbackType,
-        scope?: object
-    ): this;
-
-    forEachNonZero(
-        callback: CanvasData.ForEachCallbackType,
-        scope?: object
-    ): this;
-
-    get(
-        x: number, y: number
-    ): boolean | number;
-
-}
+export default Methods;

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster Hybrid Intelligence Platform - Enhanced Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { 
+            text-align: center; 
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.9; }
+        
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .tab-button {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 10px 10px 0 0;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        .tab-button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .tab-button.active {
+            background: rgba(255,255,255,0.25);
+            border-bottom: 3px solid #4CAF50;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        .dashboard { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+        }
+        .card { 
+            background: rgba(255,255,255,0.1); 
+            padding: 20px; 
+            border-radius: 10px; 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .card h3 { 
+            margin-bottom: 15px; 
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .metric { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .metric:last-child { border-bottom: none; }
+        .metric-value { font-weight: bold; font-size: 1.1em; }
+        
+        /* Module Analyzer Styles */
+        .analyzer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .file-selector {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .file-selector select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .file-selector option {
+            background: #2a5298;
+        }
+        .cost-preview {
+            background: rgba(255,152,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ff9800;
+        }
+        .analyze-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .analyze-button:hover {
+            background: #45a049;
+        }
+        .analyze-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        .analysis-result {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .analysis-metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .security-issue {
+            background: rgba(244,67,54,0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            border-left: 3px solid #f44336;
+        }
+        .optimization-suggestion {
+            background: rgba(33,150,243,0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            border-left: 3px solid #2196F3;
+        }
+        .history-item {
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 4px solid #fff;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .status-indicator { 
+            width: 12px; 
+            height: 12px; 
+            border-radius: 50%; 
+            display: inline-block; 
+            margin-right: 8px;
+        }
+        .status-active { background: #4CAF50; }
+        .status-inactive { background: #f44336; }
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .component-item {
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 TestMaster Hybrid Intelligence Platform</h1>
+            <p>Enhanced Monitoring Dashboard with Module Analyzer</p>
+            <p id="last-update">Loading...</p>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('dashboard')">📊 Dashboard</button>
+            <button class="tab-button" onclick="switchTab('analyzer')">🔬 Module Analyzer</button>
+            <button class="tab-button" onclick="switchTab('history')">📜 Analysis History</button>
+        </div>
+        
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab" class="tab-content active">
+            <div id="dashboard" class="dashboard">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Initializing monitoring systems...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Module Analyzer Tab -->
+        <div id="analyzer-tab" class="tab-content">
+            <div class="analyzer-container">
+                <div class="card">
+                    <h3>🔬 Module Analyzer - Gemini 2.5 Pro</h3>
+                    <p style="margin-bottom: 20px;">Analyze Python modules for quality, complexity, security issues, and optimization opportunities.</p>
+                    
+                    <div class="file-selector">
+                        <label for="module-select" style="display: block; margin-bottom: 10px;">Select a module to analyze:</label>
+                        <select id="module-select" onchange="updateCostEstimate()">
+                            <option value="">-- Select a module --</option>
+                        </select>
+                    </div>
+                    
+                    <div id="cost-preview" class="cost-preview" style="display: none;">
+                        <h4>⚠️ Cost Estimate</h4>
+                        <div class="analysis-metric">
+                            <span>File Size:</span>
+                            <span id="file-size">-</span>
+                        </div>
+                        <div class="analysis-metric">
+                            <span>Estimated Tokens:</span>
+                            <span id="estimated-tokens">-</span>
+                        </div>
+                        <div class="analysis-metric">
+                            <span>Estimated Cost:</span>
+                            <span id="estimated-cost" style="color: #ff9800; font-weight: bold;">-</span>
+                        </div>
+                        <div class="analysis-metric">
+                            <span>Model:</span>
+                            <span>Gemini 2.5 Pro</span>
+                        </div>
+                    </div>
+                    
+                    <button id="analyze-button" class="analyze-button" onclick="analyzeModule()" disabled>
+                        Analyze Module
+                    </button>
+                    
+                    <div id="analysis-status" style="margin-top: 20px; display: none;">
+                        <div class="spinner"></div>
+                        <p style="text-align: center;">Analyzing module with Gemini 2.5 Pro...</p>
+                    </div>
+                    
+                    <div id="analysis-result" class="analysis-result" style="display: none;">
+                        <!-- Results will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Total Cost Tracker -->
+                <div class="card" style="margin-top: 20px;">
+                    <h3>💰 API Usage & Costs</h3>
+                    <div class="metric">
+                        <span>Total API Calls:</span>
+                        <span class="metric-value" id="total-api-calls">0</span>
+                    </div>
+                    <div class="metric">
+                        <span>Total Tokens Used:</span>
+                        <span class="metric-value" id="total-tokens">0</span>
+                    </div>
+                    <div class="metric">
+                        <span>Total Cost:</span>
+                        <span class="metric-value" id="total-cost" style="color: #ff9800;">$0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Tab -->
+        <div id="history-tab" class="tab-content">
+            <div class="card">
+                <h3>📜 Analysis History</h3>
+                <div id="history-list">
+                    <p style="text-align: center; opacity: 0.7; padding: 20px;">No analyses performed yet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let analysisHistory = [];
+        let currentModules = [];
+        
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Load data for the tab
+            if (tabName === 'dashboard') {
+                updateDashboard();
+            } else if (tabName === 'analyzer') {
+                loadModules();
+                updateApiMetrics();
+            } else if (tabName === 'history') {
+                updateHistory();
+            }
+        }
+        
+        // Load available modules
+        async function loadModules() {
+            try {
+                const response = await fetch('/api/llm/list-modules');
+                const modules = await response.json();
+                
+                const select = document.getElementById('module-select');
+                select.innerHTML = '<option value="">-- Select a module --</option>';
+                
+                modules.forEach(module => {
+                    const option = document.createElement('option');
+                    option.value = module;
+                    option.textContent = module;
+                    select.appendChild(option);
+                });
+                
+                currentModules = modules;
+            } catch (error) {
+                console.error('Error loading modules:', error);
+            }
+        }
+        
+        // Update cost estimate
+        async function updateCostEstimate() {
+            const moduleSelect = document.getElementById('module-select');
+            const modulePath = moduleSelect.value;
+            
+            if (!modulePath) {
+                document.getElementById('cost-preview').style.display = 'none';
+                document.getElementById('analyze-button').disabled = true;
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/llm/estimate-cost', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ module_path: modulePath })
+                });
+                
+                const estimate = await response.json();
+                
+                if (estimate.error) {
+                    alert('Error estimating cost: ' + estimate.error);
+                    return;
+                }
+                
+                document.getElementById('file-size').textContent = `${(estimate.file_size_bytes / 1024).toFixed(1)} KB`;
+                document.getElementById('estimated-tokens').textContent = estimate.estimated_tokens.toLocaleString();
+                document.getElementById('estimated-cost').textContent = `$${estimate.estimated_cost_usd.toFixed(4)}`;
+                
+                document.getElementById('cost-preview').style.display = 'block';
+                document.getElementById('analyze-button').disabled = false;
+            } catch (error) {
+                console.error('Error estimating cost:', error);
+            }
+        }
+        
+        // Analyze module
+        async function analyzeModule() {
+            const moduleSelect = document.getElementById('module-select');
+            const modulePath = moduleSelect.value;
+            
+            if (!modulePath) return;
+            
+            // Confirm with user
+            const costText = document.getElementById('estimated-cost').textContent;
+            if (!confirm(`This will cost approximately ${costText}. Proceed with analysis?`)) {
+                return;
+            }
+            
+            // Show loading state
+            document.getElementById('analyze-button').disabled = true;
+            document.getElementById('analysis-status').style.display = 'block';
+            document.getElementById('analysis-result').style.display = 'none';
+            
+            try {
+                // Queue the analysis
+                const queueResponse = await fetch('/api/llm/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ module_path: modulePath })
+                });
+                
+                if (!queueResponse.ok) {
+                    throw new Error('Failed to queue analysis');
+                }
+                
+                // Wait a bit then check for results
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                // Poll for results
+                let attempts = 0;
+                while (attempts < 30) { // Max 30 attempts (90 seconds)
+                    const resultResponse = await fetch(`/api/llm/analysis/${encodeURIComponent(modulePath)}`);
+                    
+                    if (resultResponse.ok) {
+                        const analysis = await resultResponse.json();
+                        displayAnalysisResult(analysis);
+                        
+                        // Add to history
+                        analysisHistory.unshift({
+                            module_path: modulePath,
+                            timestamp: new Date().toISOString(),
+                            cost: document.getElementById('estimated-cost').textContent,
+                            quality_score: analysis.quality_score
+                        });
+                        
+                        // Update metrics
+                        updateApiMetrics();
+                        break;
+                    }
+                    
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                    attempts++;
+                }
+                
+                if (attempts >= 30) {
+                    throw new Error('Analysis timeout - please check the console logs');
+                }
+                
+            } catch (error) {
+                alert('Analysis failed: ' + error.message);
+                console.error('Analysis error:', error);
+            } finally {
+                document.getElementById('analyze-button').disabled = false;
+                document.getElementById('analysis-status').style.display = 'none';
+            }
+        }
+        
+        // Display analysis result
+        function displayAnalysisResult(analysis) {
+            const resultDiv = document.getElementById('analysis-result');
+            
+            let securityHtml = '<h4>🔒 Security Issues</h4>';
+            if (analysis.security_issues && analysis.security_issues.length > 0) {
+                analysis.security_issues.forEach(issue => {
+                    securityHtml += `<div class="security-issue">${issue}</div>`;
+                });
+            } else {
+                securityHtml += '<p style="opacity: 0.7;">No security issues detected</p>';
+            }
+            
+            let optimizationHtml = '<h4>⚡ Optimization Suggestions</h4>';
+            if (analysis.optimization_suggestions && analysis.optimization_suggestions.length > 0) {
+                analysis.optimization_suggestions.forEach(suggestion => {
+                    optimizationHtml += `<div class="optimization-suggestion">${suggestion}</div>`;
+                });
+            } else {
+                optimizationHtml += '<p style="opacity: 0.7;">No optimization suggestions</p>';
+            }
+            
+            resultDiv.innerHTML = `
+                <h3>📊 Analysis Results</h3>
+                <div class="analysis-metric">
+                    <span>Module:</span>
+                    <span>${analysis.module_path}</span>
+                </div>
+                <div class="analysis-metric">
+                    <span>Quality Score:</span>
+                    <span style="color: ${analysis.quality_score >= 70 ? '#4CAF50' : '#ff9800'};">
+                        ${analysis.quality_score}/100
+                    </span>
+                </div>
+                <div class="analysis-metric">
+                    <span>Complexity:</span>
+                    <span>${analysis.complexity_score}/10</span>
+                </div>
+                <div class="analysis-metric">
+                    <span>Test Coverage Estimate:</span>
+                    <span>${analysis.test_coverage_estimate}%</span>
+                </div>
+                <div style="margin-top: 20px;">
+                    <h4>📝 Summary</h4>
+                    <p style="padding: 10px; background: rgba(255,255,255,0.05); border-radius: 5px;">
+                        ${analysis.analysis_summary}
+                    </p>
+                </div>
+                <div style="margin-top: 20px;">
+                    ${securityHtml}
+                </div>
+                <div style="margin-top: 20px;">
+                    ${optimizationHtml}
+                </div>
+            `;
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // Update API metrics
+        async function updateApiMetrics() {
+            try {
+                const response = await fetch('/api/llm/metrics');
+                const metrics = await response.json();
+                
+                if (!metrics.error) {
+                    document.getElementById('total-api-calls').textContent = metrics.api_calls.total_calls;
+                    document.getElementById('total-tokens').textContent = metrics.token_usage.total_tokens.toLocaleString();
+                    document.getElementById('total-cost').textContent = `$${metrics.cost_tracking.total_cost_estimate.toFixed(4)}`;
+                }
+            } catch (error) {
+                console.error('Error updating API metrics:', error);
+            }
+        }
+        
+        // Update history
+        function updateHistory() {
+            const historyDiv = document.getElementById('history-list');
+            
+            if (analysisHistory.length === 0) {
+                historyDiv.innerHTML = '<p style="text-align: center; opacity: 0.7; padding: 20px;">No analyses performed yet</p>';
+                return;
+            }
+            
+            let historyHtml = '';
+            analysisHistory.forEach(item => {
+                historyHtml += `
+                    <div class="history-item">
+                        <div>
+                            <strong>${item.module_path}</strong><br>
+                            <small>${new Date(item.timestamp).toLocaleString()}</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="color: #4CAF50;">Quality: ${item.quality_score}/100</span><br>
+                            <span style="color: #ff9800;">Cost: ${item.cost}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            historyDiv.innerHTML = historyHtml;
+        }
+        
+        // Dashboard functions (simplified)
+        async function fetchData(endpoint) {
+            try {
+                const response = await fetch(`/api/${endpoint}`);
+                return await response.json();
+            } catch (error) {
+                console.error(`Error fetching ${endpoint}:`, error);
+                return null;
+            }
+        }
+        
+        async function updateDashboard() {
+            const metrics = await fetchData('metrics');
+            const llmMetrics = await fetchData('llm/metrics');
+            
+            if (!metrics) return;
+            
+            document.getElementById('last-update').textContent = `Last Update: ${new Date(metrics.timestamp).toLocaleString()}`;
+            
+            let dashboardHTML = `
+                <div class="card">
+                    <h3>📊 System Metrics</h3>
+                    <div class="metric">
+                        <span>CPU Usage:</span>
+                        <span class="metric-value">${metrics.system.cpu_usage.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Memory Usage:</span>
+                        <span class="metric-value">${metrics.system.memory_usage.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Active Agents:</span>
+                        <span class="metric-value">${metrics.components.active_agents}/16</span>
+                    </div>
+                    <div class="metric">
+                        <span>Active Bridges:</span>
+                        <span class="metric-value">${metrics.components.active_bridges}/5</span>
+                    </div>
+                </div>
+            `;
+            
+            if (llmMetrics && !llmMetrics.error) {
+                dashboardHTML += `
+                    <div class="card">
+                        <h3>🤖 LLM Intelligence Status</h3>
+                        <div class="metric">
+                            <span>Gemini 2.5 Pro:</span>
+                            <span class="metric-value">${llmMetrics.analysis_status.gemini_available ? 'Available' : 'Not Available'}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Total Analyses:</span>
+                            <span class="metric-value">${llmMetrics.analysis_status.completed_analyses}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Active Analyses:</span>
+                            <span class="metric-value">${llmMetrics.analysis_status.active_analyses}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Queue Size:</span>
+                            <span class="metric-value">${llmMetrics.analysis_status.queue_size}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('dashboard').innerHTML = dashboardHTML;
+        }
+        
+        // Initialize
+        updateDashboard();
+        setInterval(updateDashboard, 5000);
+    </script>
+</body>
+</html>

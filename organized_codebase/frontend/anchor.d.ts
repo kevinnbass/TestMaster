@@ -1,2 +1,2 @@
-import Anchor from '../../../plugins/behaviors/anchor/Anchor';
+import Anchor from './behaviors/anchor/Anchor';
 export default Anchor;

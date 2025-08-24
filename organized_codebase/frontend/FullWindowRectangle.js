@@ -1,2 +1,2 @@
-import FullWindowRectangle from '../../../plugins/fullwindowrectangle.js';
+import FullWindowRectangle from './gameobjects/shape/fullwindowrectangle/FullWindowRectangle.js';
 export default FullWindowRectangle;

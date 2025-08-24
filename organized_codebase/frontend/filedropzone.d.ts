@@ -1,2 +1,2 @@
-import FileDropZone from '../../../plugins/filedropzone';
+import FileDropZone from './gameobjects/dom/filedropzone/FileDropZone';
 export default FileDropZone;

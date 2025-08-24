@@ -1,416 +1,209 @@
-import React, { useState } from "react";
-import {
-  Modal,
-  Form,
-  Input,
-  Select,
-  Button,
-  Space,
-  Collapse,
-  Alert,
-} from "antd";
-import { Plus, Trash2, Server, PlusCircle, MinusCircle } from "lucide-react";
-import type { McpServer } from "./types";
-import type {
-  McpServerParams,
-  StdioServerParams,
-  SseServerParams,
-  StreamableHttpServerParams,
-} from "../../types/datamodel";
+import React, { useState, useRef } from "react";
+import { Modal, Tabs, Input, Button, Alert, Upload } from "antd";
+import { Globe, Upload as UploadIcon, Code } from "lucide-react";
+import { MonacoEditor } from "../monaco";
+import type { InputRef, UploadFile, UploadProps } from "antd";
+import { defaultGallery } from "./utils";
+import { Gallery, GalleryConfig } from "../../types/datamodel";
 
-const { TextArea } = Input;
-const { Option } = Select;
-const { Panel } = Collapse;
-
-interface McpServerCreateModalProps {
+interface GalleryCreateModalProps {
   open: boolean;
   onCancel: () => void;
-  onCreateServer: (server: Omit<McpServer, "id">) => void;
+  onCreateGallery: (gallery: Gallery) => void;
 }
 
-export const McpServerCreateModal: React.FC<McpServerCreateModalProps> = ({
+export const GalleryCreateModal: React.FC<GalleryCreateModalProps> = ({
   open,
   onCancel,
-  onCreateServer,
+  onCreateGallery,
 }) => {
-  const [form] = Form.useForm();
-  const [serverType, setServerType] = useState<
-    "StdioServerParams" | "SseServerParams" | "StreamableHttpServerParams"
-  >("StdioServerParams");
-  const [args, setArgs] = useState<string[]>([]);
-  const [envVars, setEnvVars] = useState<Array<{ key: string; value: string }>>(
-    []
+  const [activeTab, setActiveTab] = useState("url");
+  const [url, setUrl] = useState("");
+  const [jsonContent, setJsonContent] = useState(
+    JSON.stringify(defaultGallery, null, 2)
   );
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const editorRef = useRef(null);
 
-  const handleSubmit = async () => {
+  const handleUrlImport = async () => {
+    setIsLoading(true);
+    setError("");
     try {
-      const values = await form.validateFields();
-
-      let serverParams: McpServerParams;
-
-      switch (serverType) {
-        case "StdioServerParams":
-          serverParams = {
-            type: "StdioServerParams",
-            command: values.command,
-            args: args.length > 0 ? args : undefined,
-            env:
-              envVars.length > 0
-                ? Object.fromEntries(envVars.map((env) => [env.key, env.value]))
-                : undefined,
-            read_timeout_seconds: values.read_timeout_seconds || 5,
-          } as StdioServerParams;
-          break;
-
-        case "SseServerParams":
-          serverParams = {
-            type: "SseServerParams",
-            url: values.url,
-            timeout: values.timeout || 30,
-            sse_read_timeout: values.sse_read_timeout || 300,
-            headers: values.headers ? JSON.parse(values.headers) : undefined,
-          } as SseServerParams;
-          break;
-
-        case "StreamableHttpServerParams":
-          serverParams = {
-            type: "StreamableHttpServerParams",
-            url: values.url,
-            timeout: values.timeout || 30,
-            sse_read_timeout: values.sse_read_timeout || 300,
-            headers: values.headers ? JSON.parse(values.headers) : undefined,
-            terminate_on_close: values.terminate_on_close || false,
-          } as StreamableHttpServerParams;
-          break;
-
-        default:
-          throw new Error("Invalid server type");
-      }
-
-      const newServer: Omit<McpServer, "id"> = {
-        name: values.name,
-        description: values.description,
-        serverParams,
-        isConnected: false,
-      };
-
-      onCreateServer(newServer);
-      handleReset();
-    } catch (error) {
-      console.error("Validation failed:", error);
+      const response = await fetch(url);
+      const data = (await response.json()) as GalleryConfig;
+      // TODO: Validate against Gallery schema
+      onCreateGallery({
+        config: data,
+      });
+      onCancel();
+    } catch (err) {
+      setError("Failed to fetch or parse gallery from URL");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleReset = () => {
-    form.resetFields();
-    setArgs([]);
-    setEnvVars([]);
-    setServerType("StdioServerParams");
+  const handleFileUpload = (info: { file: UploadFile }) => {
+    const { status, originFileObj } = info.file;
+    if (status === "done" && originFileObj instanceof File) {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        try {
+          const content = JSON.parse(
+            e.target?.result as string
+          ) as GalleryConfig;
+
+          // TODO: Validate against Gallery schema
+          onCreateGallery({
+            config: content,
+          });
+          onCancel();
+        } catch (err) {
+          setError("Invalid JSON file");
+        }
+      };
+      reader.readAsText(originFileObj);
+    } else if (status === "error") {
+      setError("File upload failed");
+    }
   };
 
-  const handleCancel = () => {
-    handleReset();
-    onCancel();
+  const handlePasteImport = () => {
+    try {
+      const content = JSON.parse(jsonContent) as GalleryConfig;
+      // TODO: Validate against Gallery schema
+      onCreateGallery({
+        config: content,
+      });
+      onCancel();
+    } catch (err) {
+      setError("Invalid JSON format");
+    }
   };
 
-  const addArg = () => {
-    setArgs([...args, ""]);
+  const uploadProps: UploadProps = {
+    accept: ".json",
+    showUploadList: false,
+    customRequest: ({ file, onSuccess }) => {
+      setTimeout(() => {
+        onSuccess && onSuccess("ok");
+      }, 0);
+    },
+    onChange: handleFileUpload,
   };
 
-  const removeArg = (index: number) => {
-    setArgs(args.filter((_, i) => i !== index));
-  };
+  const inputRef = useRef<InputRef>(null);
 
-  const updateArg = (index: number, value: string) => {
-    const newArgs = [...args];
-    newArgs[index] = value;
-    setArgs(newArgs);
-  };
-
-  const addEnvVar = () => {
-    setEnvVars([...envVars, { key: "", value: "" }]);
-  };
-
-  const removeEnvVar = (index: number) => {
-    setEnvVars(envVars.filter((_, i) => i !== index));
-  };
-
-  const updateEnvVar = (
-    index: number,
-    field: "key" | "value",
-    value: string
-  ) => {
-    const newEnvVars = [...envVars];
-    newEnvVars[index] = { ...newEnvVars[index], [field]: value };
-    setEnvVars(newEnvVars);
-  };
+  const items = [
+    {
+      key: "url",
+      label: (
+        <span className="flex items-center gap-2">
+          <Globe className="w-4 h-4" /> URL Import
+        </span>
+      ),
+      children: (
+        <div className="space-y-4">
+          <Input
+            ref={inputRef}
+            placeholder="Enter gallery URL..."
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+          />
+          <div className="text-xs">
+            Sample
+            <a
+              role="button"
+              onClick={(e) => {
+                setUrl(
+                  "https://raw.githubusercontent.com/victordibia/multiagent-systems-with-autogen/refs/heads/main/research/components/gallery/base.json"
+                );
+                e.preventDefault();
+              }}
+              href="https://raw.githubusercontent.com/victordibia/multiagent-systems-with-autogen/refs/heads/main/research/components/gallery/base.json"
+              target="_blank"
+              rel="noreferrer"
+              className="text-accent"
+            >
+              {" "}
+              gallery.json{" "}
+            </a>
+          </div>
+          <Button
+            type="primary"
+            onClick={handleUrlImport}
+            disabled={!url || isLoading}
+            block
+          >
+            Import from URL
+          </Button>
+        </div>
+      ),
+    },
+    {
+      key: "file",
+      label: (
+        <span className="flex items-center gap-2">
+          <UploadIcon className="w-4 h-4" /> File Upload
+        </span>
+      ),
+      children: (
+        <div className="border-2 border-dashed rounded-lg p-8 text-center space-y-4">
+          <Upload.Dragger {...uploadProps}>
+            <p className="ant-upload-drag-icon">
+              <UploadIcon className="w-8 h-8 mx-auto text-secondary" />
+            </p>
+            <p className="ant-upload-text">
+              Click or drag JSON file to this area
+            </p>
+          </Upload.Dragger>
+        </div>
+      ),
+    },
+    {
+      key: "paste",
+      label: (
+        <span className="flex items-center gap-2">
+          <Code className="w-4 h-4" /> Paste JSON
+        </span>
+      ),
+      children: (
+        <div className="space-y-4">
+          <div className="h-64">
+            <MonacoEditor
+              value={jsonContent}
+              onChange={setJsonContent}
+              editorRef={editorRef}
+              language="json"
+              minimap={false}
+            />
+          </div>
+          <Button type="primary" onClick={handlePasteImport} block>
+            Import JSON
+          </Button>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <Modal
-      title={
-        <div className="flex items-center gap-2">
-          <Server className="w-5 h-5 text-accent" />
-          <span>Add MCP Server</span>
-        </div>
-      }
+      title="Create New Gallery"
       open={open}
-      onCancel={handleCancel}
-      footer={[
-        <Button key="cancel" onClick={handleCancel}>
-          Cancel
-        </Button>,
-        <Button key="submit" type="primary" onClick={handleSubmit}>
-          Add Server
-        </Button>,
-      ]}
-      width={600}
-      destroyOnClose
+      onCancel={onCancel}
+      footer={null}
+      width={800}
     >
-      <Form
-        form={form}
-        layout="vertical"
-        initialValues={{
-          read_timeout_seconds: 5,
-          timeout: 30,
-          sse_read_timeout: 300,
-          terminate_on_close: false,
-        }}
-      >
-        {/* Basic Information */}
-        <Collapse defaultActiveKey={["basic"]} ghost>
-          <Panel header="Basic Information" key="basic">
-            <Form.Item
-              label="Server Name"
-              name="name"
-              rules={[
-                { required: true, message: "Please enter a server name" },
-              ]}
-            >
-              <Input placeholder="e.g., My MCP Server" />
-            </Form.Item>
+      <div className="mt-4">
+        <Tabs activeKey={activeTab} onChange={setActiveTab} items={items} />
 
-            <Form.Item label="Description" name="description">
-              <TextArea
-                rows={2}
-                placeholder="Optional description of the server"
-              />
-            </Form.Item>
-
-            <Form.Item
-              label="Server Type"
-              name="type"
-              rules={[
-                { required: true, message: "Please select a server type" },
-              ]}
-            >
-              <Select
-                value={serverType}
-                onChange={setServerType}
-                placeholder="Select server type"
-              >
-                <Option value="StdioServerParams">
-                  <div className="flex items-center gap-2">
-                    <span>Standard I/O</span>
-                    <small className="text-gray-500">
-                      (Local command execution)
-                    </small>
-                  </div>
-                </Option>
-                <Option value="SseServerParams">
-                  <div className="flex items-center gap-2">
-                    <span>Server-Sent Events</span>
-                    <small className="text-gray-500">(HTTP SSE)</small>
-                  </div>
-                </Option>
-                <Option value="StreamableHttpServerParams">
-                  <div className="flex items-center gap-2">
-                    <span>Streamable HTTP</span>
-                    <small className="text-gray-500">(HTTP streaming)</small>
-                  </div>
-                </Option>
-              </Select>
-            </Form.Item>
-          </Panel>
-        </Collapse>
-
-        {/* Server Configuration */}
-        <Collapse className="mt-4" ghost>
-          <Panel header="Server Configuration" key="config">
-            {serverType === "StdioServerParams" && (
-              <div className="space-y-4">
-                <Form.Item
-                  label="Command"
-                  name="command"
-                  rules={[
-                    { required: true, message: "Please enter a command" },
-                  ]}
-                >
-                  <Input placeholder="e.g., uvx, python, node" />
-                </Form.Item>
-
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="block text-sm font-medium">
-                      Arguments
-                    </label>
-                    <Button
-                      type="dashed"
-                      size="small"
-                      icon={<PlusCircle className="w-4 h-4" />}
-                      onClick={addArg}
-                    >
-                      Add Argument
-                    </Button>
-                  </div>
-
-                  {args.length === 0 ? (
-                    <div className="text-sm text-gray-500 italic p-3 border border-dashed rounded">
-                      No arguments. Click "Add Argument" to add command line
-                      arguments.
-                    </div>
-                  ) : (
-                    <div className="space-y-2">
-                      {args.map((arg, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <span className="text-xs text-gray-500 w-8">
-                            {index}
-                          </span>
-                          <Input
-                            value={arg}
-                            onChange={(e) => updateArg(index, e.target.value)}
-                            placeholder={`Argument ${index}`}
-                            className="flex-1"
-                          />
-                          <Button
-                            type="text"
-                            size="small"
-                            icon={<Trash2 className="w-4 h-4" />}
-                            onClick={() => removeArg(index)}
-                            className="text-red-500 hover:text-red-700"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="block text-sm font-medium">
-                      Environment Variables
-                    </label>
-                    <Button
-                      type="dashed"
-                      size="small"
-                      icon={<PlusCircle className="w-4 h-4" />}
-                      onClick={addEnvVar}
-                    >
-                      Add Variable
-                    </Button>
-                  </div>
-
-                  {envVars.length === 0 ? (
-                    <div className="text-sm text-gray-500 italic p-3 border border-dashed rounded">
-                      No environment variables. Click "Add Variable" to add
-                      environment variables.
-                    </div>
-                  ) : (
-                    <div className="space-y-2">
-                      {envVars.map((env, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <Input
-                            value={env.key}
-                            onChange={(e) =>
-                              updateEnvVar(index, "key", e.target.value)
-                            }
-                            placeholder="Variable name"
-                            className="flex-1"
-                          />
-                          <span>=</span>
-                          <Input
-                            value={env.value}
-                            onChange={(e) =>
-                              updateEnvVar(index, "value", e.target.value)
-                            }
-                            placeholder="Variable value"
-                            className="flex-1"
-                          />
-                          <Button
-                            type="text"
-                            size="small"
-                            icon={<MinusCircle className="w-4 h-4" />}
-                            onClick={() => removeEnvVar(index)}
-                            className="text-red-500 hover:text-red-700"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <Form.Item
-                  label="Read Timeout (seconds)"
-                  name="read_timeout_seconds"
-                >
-                  <Input type="number" min={1} />
-                </Form.Item>
-              </div>
-            )}
-
-            {(serverType === "SseServerParams" ||
-              serverType === "StreamableHttpServerParams") && (
-              <div className="space-y-4">
-                <Form.Item
-                  label="Server URL"
-                  name="url"
-                  rules={[
-                    { required: true, message: "Please enter a server URL" },
-                    { type: "url", message: "Please enter a valid URL" },
-                  ]}
-                >
-                  <Input placeholder="https://your-mcp-server.com" />
-                </Form.Item>
-
-                <Form.Item label="Timeout (seconds)" name="timeout">
-                  <Input type="number" min={1} />
-                </Form.Item>
-
-                <Form.Item
-                  label="SSE Read Timeout (seconds)"
-                  name="sse_read_timeout"
-                >
-                  <Input type="number" min={1} />
-                </Form.Item>
-
-                <Form.Item label="Headers (JSON)" name="headers">
-                  <TextArea
-                    rows={3}
-                    placeholder='{"Authorization": "Bearer token", "Content-Type": "application/json"}'
-                  />
-                </Form.Item>
-
-                {serverType === "StreamableHttpServerParams" && (
-                  <Form.Item
-                    label="Terminate on Close"
-                    name="terminate_on_close"
-                    valuePropName="checked"
-                  >
-                    <Input type="checkbox" />
-                  </Form.Item>
-                )}
-              </div>
-            )}
-          </Panel>
-        </Collapse>
-
-        <Alert
-          className="mt-4"
-          message="Server Configuration"
-          description="Configure your MCP server connection parameters. For StdIO servers, specify the command and arguments. For HTTP-based servers, provide the server URL and connection settings."
-          type="info"
-          showIcon
-        />
-      </Form>
+        {error && (
+          <Alert message={error} type="error" showIcon className="mt-4" />
+        )}
+      </div>
     </Modal>
   );
 };
+
+export default GalleryCreateModal;

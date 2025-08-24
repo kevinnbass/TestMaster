@@ -1,48 +1,27 @@
-import EaseValueTaskBase from "../../utils/componentbase/tweentask/EaseValueTaskBase";
+import EaseMove from './behaviors/easemove/EaseMove';
+import EaseMoveTo from './behaviors/easemove/EaseMoveTo';
+import EaseMoveFrom from './behaviors/easemove/EaseMoveFrom';
 
-export default EaseMove;
+declare function EaseMoveToDestroy(
+    gameObject: Phaser.GameObjects.GameObject,
+    duration: number,
+    endX: number | string | undefined,
+    endY: number | string | undefined,
+    ease?: string,
+    easeMove?: EaseMove
+): EaseMove;
 
-declare namespace EaseMove {
-    type ModeType = 0 | 1 | 2 | 'stop' | 'destroy' | 'yoyo';
+declare function EaseMoveFromDestroy(
+    gameObject: Phaser.GameObjects.GameObject,
+    duration: number,
+    startX: number | string | undefined,
+    startY: number | string | undefined,
+    ease?: string,
+    easeMove?: EaseMove
+): EaseMove;
 
-    interface IConfig {
-        mode?: ModeType,
-
-        x?: number, y?: number,
-        startX?: number, startY?: number,
-        endX?: number, endY?: number,
-
-        duration?: number,
-        delay?: number,
-        ease?: string
-    }
-
-    namespace Events {
-        type CompleteCallbackType = (
-            gameObject: Phaser.GameObjects.GameObject,
-            easeMove: EaseMove
-        ) => void;
-    }
-}
-
-declare class EaseMove extends EaseValueTaskBase {
-    constructor(
-        gameObject: Phaser.GameObjects.GameObject,
-        config?: EaseMove.IConfig
-    )
-
-    setMode(mode: EaseMove.ModeType): this;
-    mode: number;
-
-    setTargetPosition(x: number, y: number): this;
-    setTargetPosition(
-        config?: {
-            startX?: number, startY?: number,
-            endX?: number, endY?: number,
-        }
-    ): this;
-    startX: number;
-    startY: number;
-    endX: number;
-    endY: number;
+export {
+    EaseMove,
+    EaseMoveTo, EaseMoveToDestroy,
+    EaseMoveFrom, EaseMoveFromDestroy
 }

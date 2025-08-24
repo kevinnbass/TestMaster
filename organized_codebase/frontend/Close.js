@@ -1,28 +1,33 @@
 import { CloseLastOpenEditor } from './LastOpenedEditor.js';
+import RemoveElement from './RemoveElement.js';
 
 var Close = function () {
+    // Already closed
+    if (!this.isOpened) {
+        return this;
+    }
+
     CloseLastOpenEditor(this);
 
-    this.parent.setVisible(true); // Set parent text visible
+    this.setBlur();
 
-    if (this.inputText) {
-        this.inputText.destroy();
-        this.inputText = undefined;
+    this.isOpened = false;
+
+    this.updateText();
+
+    this.scene.sys.events.off('postupdate', this.updateText, this);
+
+    this.scene.input.off('pointerdown', this.onClickOutside, this);
+
+    if (this.onCloseCallback) {
+        this.onCloseCallback(this.parent, this);
     }
 
-    if (this.delayCall) {
-        this.delayCall.remove();
-        this.delayCall = undefined;
-    }
+    // Remove input text element when closing editor
+    RemoveElement(this.node);
+    this.node = undefined;
 
-    // Remove close event
-    this.scene.input.keyboard.off('keydown-ENTER', this.close, this);
-    this.scene.input.off('pointerdown', this.close, this);
-
-    if (this.onClose) {
-        this.onClose(this.parent);
-    }
-    this.emit('close', this.parent);
+    this.emit('close', this);
 
     return this;
 }

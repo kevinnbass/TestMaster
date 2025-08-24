@@ -1,0 +1,1108 @@
+#!/usr/bin/env python3
+"""
+Enhanced Real-Time Security Monitoring System
+============================================
+Advanced real-time security monitoring with integration to metrics collection,
+quality monitoring, and performance profiling systems.
+"""
+
+import ast
+import os
+import time
+import json
+import hashlib
+import threading
+import asyncio
+import logging
+import psutil
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Set, Callable, Union, Tuple
+from dataclasses import dataclass, field, asdict
+from collections import defaultdict, deque
+from concurrent.futures import ThreadPoolExecutor
+from queue import Queue, PriorityQueue
+from enum import Enum
+import weakref
+import sqlite3
+from datetime import datetime, timedelta
+import statistics
+
+# Import existing components
+from analysis.comprehensive_analysis.security_monitoring.continuous_security_monitor import (
+    ContinuousSecurityMonitor, SecurityAlert, ThreatLevel, AlertType, SecurityMetrics,
+    SecurityRuleEngine, AlertManager
+)
+
+# Import new components we built
+from realtime_metrics_collector import RealtimeMetricsCollector, MetricPoint
+from live_code_quality_monitor import LiveCodeQualityMonitor, QualitySnapshot
+from performance_profiler import PerformanceProfiler, ProfileData
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+@dataclass
+class SecurityEvent:
+    """Enhanced security event with context and metrics."""
+    event_id: str
+    event_type: str  # 'vulnerability', 'anomaly', 'quality_degradation', 'performance_impact'
+    severity: str  # 'critical', 'high', 'medium', 'low'
+    timestamp: float
+    file_path: str
+    line_number: Optional[int]
+    description: str
+    context: Dict[str, Any]
+    metrics: Dict[str, float]
+    related_alerts: List[str] = field(default_factory=list)
+    performance_impact: Optional[float] = None
+    quality_impact: Optional[float] = None
+
+@dataclass
+class SecurityTrend:
+    """Security trend analysis data."""
+    metric_name: str
+    current_value: float
+    trend_direction: str  # 'improving', 'degrading', 'stable'
+    change_rate: float
+    confidence: float
+    time_window: int  # seconds
+    historical_values: List[Tuple[float, float]] = field(default_factory=list)  # (timestamp, value)
+
+@dataclass
+class RiskProfile:
+    """Comprehensive risk profile for files/modules."""
+    file_path: str
+    overall_risk_score: float
+    vulnerability_score: float
+    quality_score: float
+    performance_score: float
+    complexity_score: float
+    change_frequency: float
+    last_updated: float
+    risk_factors: List[str] = field(default_factory=list)
+    mitigation_suggestions: List[str] = field(default_factory=list)
+
+class SecurityMetricsIntegrator:
+    """Integrates security monitoring with metrics collection and quality monitoring."""
+    
+    def __init__(self):
+        self.security_metrics = deque(maxlen=1000)
+        self.vulnerability_trends = {}
+        self.quality_correlations = {}
+        self.performance_correlations = {}
+        self.risk_profiles = {}
+        self.lock = threading.RLock()
+    
+    def add_security_metric(self, metric: MetricPoint):
+        """Add security-related metric."""
+        with self.lock:
+            self.security_metrics.append(metric)
+    
+    def correlate_quality_security(self, file_path: str, quality_snapshot: QualitySnapshot, 
+                                 security_alerts: List[SecurityAlert]) -> Dict[str, Any]:
+        """Correlate quality metrics with security findings."""
+        correlation = {
+            'file_path': file_path,
+            'timestamp': time.time(),
+            'quality_score': quality_snapshot.overall_score,
+            'security_alert_count': len(security_alerts),
+            'correlations': []
+        }
+        
+        # Analyze correlations
+        if quality_snapshot.overall_score < 50 and len(security_alerts) > 0:
+            correlation['correlations'].append({
+                'type': 'low_quality_high_security_risk',
+                'description': 'Low code quality correlates with security vulnerabilities',
+                'strength': self._calculate_correlation_strength(quality_snapshot.overall_score, len(security_alerts))
+            })
+        
+        # Check specific quality issues that relate to security
+        security_quality_issues = [
+            m for m in quality_snapshot.metrics 
+            if m.category in ['security', 'reliability'] and m.severity in ['error', 'critical']
+        ]
+        
+        if security_quality_issues:
+            correlation['correlations'].append({
+                'type': 'security_quality_issues',
+                'description': f'Found {len(security_quality_issues)} security-related quality issues',
+                'issues': [issue.description for issue in security_quality_issues]
+            })
+        
+        with self.lock:
+            self.quality_correlations[file_path] = correlation
+        
+        return correlation
+    
+    def correlate_performance_security(self, file_path: str, profile_data: ProfileData,
+                                     security_alerts: List[SecurityAlert]) -> Dict[str, Any]:
+        """Correlate performance data with security findings."""
+        correlation = {
+            'file_path': file_path,
+            'timestamp': time.time(),
+            'performance_metrics': {
+                'execution_time': profile_data.duration,
+                'memory_usage': profile_data.memory_usage.get('delta_mb', 0),
+                'hotspots_count': len(profile_data.hotspots)
+            },
+            'security_alert_count': len(security_alerts),
+            'correlations': []
+        }
+        
+        # Analyze performance-security correlations
+        high_risk_alerts = [a for a in security_alerts if a.threat_level in [ThreatLevel.CRITICAL, ThreatLevel.HIGH]]
+        
+        if profile_data.duration > 5.0 and len(high_risk_alerts) > 0:
+            correlation['correlations'].append({
+                'type': 'slow_execution_security_risk',
+                'description': 'Slow execution time may indicate security vulnerabilities being exploited',
+                'performance_impact': profile_data.duration,
+                'security_impact': len(high_risk_alerts)
+            })
+        
+        # Check for memory-related security issues
+        memory_delta = profile_data.memory_usage.get('delta_mb', 0)
+        if memory_delta > 100:  # More than 100MB memory increase
+            memory_alerts = [a for a in security_alerts if 'memory' in a.description.lower()]
+            if memory_alerts:
+                correlation['correlations'].append({
+                    'type': 'memory_security_issue',
+                    'description': 'High memory usage correlates with memory-related security vulnerabilities',
+                    'memory_delta_mb': memory_delta,
+                    'related_alerts': [a.id for a in memory_alerts]
+                })
+        
+        with self.lock:
+            self.performance_correlations[file_path] = correlation
+        
+        return correlation
+    
+    def calculate_integrated_risk_score(self, file_path: str, security_alerts: List[SecurityAlert],
+                                      quality_score: float, performance_metrics: Dict[str, float]) -> float:
+        """Calculate integrated risk score combining security, quality, and performance."""
+        # Base security score
+        security_score = self._calculate_security_score(security_alerts)
+        
+        # Quality factor (inverted - lower quality = higher risk)
+        quality_factor = max(0, (100 - quality_score) / 100)
+        
+        # Performance factor
+        performance_factor = self._calculate_performance_risk_factor(performance_metrics)
+        
+        # Weighted combination
+        integrated_score = (
+            security_score * 0.5 +      # 50% security
+            quality_factor * 100 * 0.3 + # 30% quality
+            performance_factor * 100 * 0.2  # 20% performance
+        )
+        
+        return min(integrated_score, 100.0)
+    
+    def _calculate_security_score(self, alerts: List[SecurityAlert]) -> float:
+        """Calculate security risk score from alerts."""
+        if not alerts:
+            return 0.0
+        
+        threat_weights = {
+            ThreatLevel.CRITICAL: 10.0,
+            ThreatLevel.HIGH: 7.0,
+            ThreatLevel.MEDIUM: 4.0,
+            ThreatLevel.LOW: 2.0,
+            ThreatLevel.INFO: 1.0
+        }
+        
+        total_score = sum(threat_weights.get(alert.threat_level, 1.0) for alert in alerts)
+        return min(total_score, 100.0)
+    
+    def _calculate_performance_risk_factor(self, metrics: Dict[str, float]) -> float:
+        """Calculate performance risk factor."""
+        risk_factor = 0.0
+        
+        # Execution time risk
+        exec_time = metrics.get('execution_time_ms', 0)
+        if exec_time > 1000:  # > 1 second
+            risk_factor += min(exec_time / 10000, 0.5)  # Max 0.5 for execution time
+        
+        # Memory usage risk
+        memory_mb = metrics.get('memory_delta_mb', 0)
+        if memory_mb > 50:  # > 50MB
+            risk_factor += min(memory_mb / 1000, 0.3)  # Max 0.3 for memory
+        
+        # CPU usage risk
+        cpu_percent = metrics.get('cpu_percent', 0)
+        if cpu_percent > 80:
+            risk_factor += min((cpu_percent - 80) / 100, 0.2)  # Max 0.2 for CPU
+        
+        return min(risk_factor, 1.0)
+    
+    def _calculate_correlation_strength(self, quality_score: float, security_alert_count: int) -> float:
+        """Calculate correlation strength between quality and security."""
+        # Inverse relationship: lower quality + more alerts = stronger correlation
+        quality_factor = (100 - quality_score) / 100
+        alert_factor = min(security_alert_count / 10, 1.0)
+        
+        return (quality_factor + alert_factor) / 2
+
+class EnhancedSecurityAnalyzer:
+    """Enhanced security analyzer with advanced pattern detection."""
+    
+    def __init__(self):
+        self.ml_patterns = self._initialize_ml_patterns()
+        self.behavioral_patterns = {}
+        self.anomaly_threshold = 0.7
+    
+    def _initialize_ml_patterns(self) -> Dict[str, Any]:
+        """Initialize machine learning-based security patterns."""
+        return {
+            'injection_patterns': [
+                r'(exec|eval|compile)\s*\(\s*[^)]*input',
+                r'subprocess\.(call|run|Popen)\s*\([^)]*shell\s*=\s*True',
+                r'os\.system\s*\([^)]*\+',
+            ],
+            'crypto_misuse_patterns': [
+                r'random\.(random|choice|randint)\s*\(',
+                r'(MD5|SHA1|DES|RC4)\s*\(',
+                r'ssl\..*PROTOCOL_(SSLv|TLSv1_)[^2]',
+            ],
+            'data_exposure_patterns': [
+                r'(password|secret|token|key)\s*=\s*["\'][^"\']{8,}["\']',
+                r'print\s*\([^)]*(?:password|secret|token)',
+                r'logger?\.(info|debug|warning)\s*\([^)]*(?:password|secret)',
+            ],
+            'deserialization_patterns': [
+                r'pickle\.(loads?|load)\s*\(',
+                r'yaml\.(load|safe_load)\s*\([^)]*Loader',
+                r'json\.loads?\s*\([^)]*user',
+            ]
+        }
+    
+    def detect_advanced_vulnerabilities(self, file_path: str, content: str, 
+                                      tree: ast.AST) -> List[SecurityAlert]:
+        """Detect advanced security vulnerabilities using ML patterns."""
+        alerts = []
+        
+        # Analyze behavioral patterns
+        behavior_alerts = self._analyze_behavioral_patterns(file_path, content, tree)
+        alerts.extend(behavior_alerts)
+        
+        # Detect code injection vectors
+        injection_alerts = self._detect_injection_vectors(file_path, content, tree)
+        alerts.extend(injection_alerts)
+        
+        # Analyze data flow security
+        dataflow_alerts = self._analyze_dataflow_security(file_path, content, tree)
+        alerts.extend(dataflow_alerts)
+        
+        # Detect timing attack vulnerabilities
+        timing_alerts = self._detect_timing_attacks(file_path, content, tree)
+        alerts.extend(timing_alerts)
+        
+        return alerts
+    
+    def _analyze_behavioral_patterns(self, file_path: str, content: str, 
+                                   tree: ast.AST) -> List[SecurityAlert]:
+        """Analyze behavioral patterns for anomalies."""
+        alerts = []
+        
+        # Analyze function call patterns
+        call_patterns = self._extract_call_patterns(tree)
+        
+        # Check for suspicious call sequences
+        if self._is_suspicious_call_sequence(call_patterns):
+            alerts.append(SecurityAlert(
+                id=f"BEHAV001_{hash(file_path)}",
+                alert_type=AlertType.ANOMALY,
+                threat_level=ThreatLevel.MEDIUM,
+                title="Suspicious Function Call Sequence",
+                description="Detected potentially malicious function call sequence",
+                file_path=file_path,
+                timestamp=time.time(),
+                evidence=[f"Call pattern: {call_patterns[:5]}"],
+                recommendations=[
+                    "Review function call sequence for malicious intent",
+                    "Implement proper input validation",
+                    "Add logging for security monitoring"
+                ],
+                tags={'behavioral-analysis', 'anomaly-detection'}
+            ))
+        
+        return alerts
+    
+    def _detect_injection_vectors(self, file_path: str, content: str, 
+                                tree: ast.AST) -> List[SecurityAlert]:
+        """Detect potential injection vectors."""
+        alerts = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                # Check for dynamic code execution with user input
+                if self._is_dynamic_execution_with_input(node):
+                    alerts.append(SecurityAlert(
+                        id=f"INJ001_{node.lineno}",
+                        alert_type=AlertType.VULNERABILITY,
+                        threat_level=ThreatLevel.CRITICAL,
+                        title="Dynamic Code Execution with User Input",
+                        description="Potential code injection vulnerability detected",
+                        file_path=file_path,
+                        line_number=node.lineno,
+                        timestamp=time.time(),
+                        cwe_id="CWE-94",
+                        cvss_score=9.3,
+                        evidence=[f"Function call at line {node.lineno}"],
+                        recommendations=[
+                            "Never execute user-provided code dynamically",
+                            "Use safe alternatives like ast.literal_eval()",
+                            "Implement strict input validation"
+                        ],
+                        tags={'code-injection', 'dynamic-execution'}
+                    ))
+        
+        return alerts
+    
+    def _analyze_dataflow_security(self, file_path: str, content: str, 
+                                 tree: ast.AST) -> List[SecurityAlert]:
+        """Analyze data flow for security issues."""
+        alerts = []
+        
+        # Track sensitive data flow
+        sensitive_vars = self._track_sensitive_variables(tree)
+        
+        for var_name, locations in sensitive_vars.items():
+            # Check if sensitive data is logged or exposed
+            if self._is_sensitive_data_exposed(tree, var_name):
+                alerts.append(SecurityAlert(
+                    id=f"DATA001_{var_name}",
+                    alert_type=AlertType.VULNERABILITY,
+                    threat_level=ThreatLevel.HIGH,
+                    title="Sensitive Data Exposure",
+                    description=f"Sensitive variable '{var_name}' may be exposed",
+                    file_path=file_path,
+                    line_number=locations[0] if locations else None,
+                    timestamp=time.time(),
+                    cwe_id="CWE-200",
+                    cvss_score=7.5,
+                    evidence=[f"Variable: {var_name}"],
+                    recommendations=[
+                        "Avoid logging sensitive data",
+                        "Use secure storage for sensitive information",
+                        "Implement data masking for logs"
+                    ],
+                    tags={'data-exposure', 'information-disclosure'}
+                ))
+        
+        return alerts
+    
+    def _detect_timing_attacks(self, file_path: str, content: str, 
+                             tree: ast.AST) -> List[SecurityAlert]:
+        """Detect potential timing attack vulnerabilities."""
+        alerts = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Compare):
+                # Check for string comparison in security contexts
+                if self._is_security_sensitive_comparison(node):
+                    alerts.append(SecurityAlert(
+                        id=f"TIMING001_{node.lineno}",
+                        alert_type=AlertType.VULNERABILITY,
+                        threat_level=ThreatLevel.MEDIUM,
+                        title="Potential Timing Attack Vulnerability",
+                        description="String comparison in security context may be vulnerable to timing attacks",
+                        file_path=file_path,
+                        line_number=node.lineno,
+                        timestamp=time.time(),
+                        cwe_id="CWE-208",
+                        cvss_score=5.3,
+                        evidence=[f"Comparison at line {node.lineno}"],
+                        recommendations=[
+                            "Use constant-time comparison functions",
+                            "Implement hmac.compare_digest() for secure comparisons",
+                            "Avoid direct string comparison for security tokens"
+                        ],
+                        tags={'timing-attack', 'cryptography'}
+                    ))
+        
+        return alerts
+    
+    def _extract_call_patterns(self, tree: ast.AST) -> List[str]:
+        """Extract function call patterns from AST."""
+        patterns = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name):
+                    patterns.append(node.func.id)
+                elif isinstance(node.func, ast.Attribute):
+                    if isinstance(node.func.value, ast.Name):
+                        patterns.append(f"{node.func.value.id}.{node.func.attr}")
+        
+        return patterns
+    
+    def _is_suspicious_call_sequence(self, patterns: List[str]) -> bool:
+        """Check if call sequence is suspicious."""
+        suspicious_sequences = [
+            ['subprocess.call', 'os.system'],
+            ['eval', 'exec'],
+            ['pickle.loads', 'exec'],
+            ['input', 'eval']
+        ]
+        
+        pattern_str = ' '.join(patterns)
+        
+        for sequence in suspicious_sequences:
+            if all(func in pattern_str for func in sequence):
+                return True
+        
+        return False
+    
+    def _is_dynamic_execution_with_input(self, node: ast.Call) -> bool:
+        """Check if node represents dynamic execution with user input."""
+        dynamic_funcs = ['eval', 'exec', 'compile']
+        
+        if isinstance(node.func, ast.Name) and node.func.id in dynamic_funcs:
+            # Check if any argument comes from input functions
+            for arg in node.args:
+                if isinstance(arg, ast.Call) and isinstance(arg.func, ast.Name):
+                    if arg.func.id in ['input', 'raw_input']:
+                        return True
+        
+        return False
+    
+    def _track_sensitive_variables(self, tree: ast.AST) -> Dict[str, List[int]]:
+        """Track variables that may contain sensitive data."""
+        sensitive_vars = defaultdict(list)
+        sensitive_patterns = ['password', 'secret', 'token', 'key', 'auth']
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name):
+                        var_name = target.id.lower()
+                        if any(pattern in var_name for pattern in sensitive_patterns):
+                            sensitive_vars[target.id].append(node.lineno)
+        
+        return dict(sensitive_vars)
+    
+    def _is_sensitive_data_exposed(self, tree: ast.AST, var_name: str) -> bool:
+        """Check if sensitive variable is exposed through logging or printing."""
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name) and node.func.id == 'print':
+                    # Check if variable is in print arguments
+                    for arg in node.args:
+                        if isinstance(arg, ast.Name) and arg.id == var_name:
+                            return True
+                elif isinstance(node.func, ast.Attribute):
+                    # Check for logger calls
+                    if node.func.attr in ['info', 'debug', 'warning', 'error']:
+                        for arg in node.args:
+                            if isinstance(arg, ast.Name) and arg.id == var_name:
+                                return True
+        
+        return False
+    
+    def _is_security_sensitive_comparison(self, node: ast.Compare) -> bool:
+        """Check if comparison is in a security-sensitive context."""
+        # Simple heuristic: check if any operand looks like a password/token
+        sensitive_patterns = ['password', 'secret', 'token', 'auth', 'key']
+        
+        for operand in [node.left] + node.comparators:
+            if isinstance(operand, ast.Name):
+                var_name = operand.id.lower()
+                if any(pattern in var_name for pattern in sensitive_patterns):
+                    return True
+        
+        return False
+
+class EnhancedRealtimeSecurityMonitor(ContinuousSecurityMonitor):
+    """Enhanced real-time security monitor with integrated metrics and quality monitoring."""
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        super().__init__(config)
+        
+        # Enhanced components
+        self.metrics_collector = RealtimeMetricsCollector(collection_interval_ms=100)
+        self.quality_monitor = LiveCodeQualityMonitor()
+        self.performance_profiler = PerformanceProfiler()
+        self.metrics_integrator = SecurityMetricsIntegrator()
+        self.enhanced_analyzer = EnhancedSecurityAnalyzer()
+        
+        # Real-time monitoring state
+        self.security_events = deque(maxlen=1000)
+        self.security_trends = {}
+        self.risk_profiles = {}
+        self.correlation_analysis = {}
+        
+        # Configuration
+        self.enable_correlation_analysis = self.config.get('enable_correlation_analysis', True)
+        self.enable_advanced_detection = self.config.get('enable_advanced_detection', True)
+        self.risk_score_threshold = self.config.get('risk_score_threshold', 70.0)
+        
+        # Setup callbacks
+        self.quality_monitor.add_quality_callback(self._on_quality_update)
+        self.metrics_collector.register_custom_collector('security', self._collect_security_metrics)
+        
+        # Security event callbacks
+        self.security_event_callbacks = []
+        
+        self.logger = logging.getLogger(__name__)
+    
+    def start(self) -> None:
+        """Start enhanced real-time security monitoring."""
+        super().start()
+        
+        # Start integrated components
+        self.metrics_collector.start_collection()
+        self.quality_monitor.start_monitoring(self.watch_paths)
+        
+        self.logger.info("Enhanced real-time security monitoring started with integrated metrics")
+    
+    def stop(self) -> None:
+        """Stop enhanced real-time security monitoring."""
+        super().stop()
+        
+        # Stop integrated components
+        self.metrics_collector.stop_collection()
+        self.quality_monitor.stop_monitoring()
+        
+        self.logger.info("Enhanced real-time security monitoring stopped")
+    
+    def analyze_with_correlation(self, file_path: str) -> Dict[str, Any]:
+        """Perform security analysis with correlation to quality and performance."""
+        # Perform base security analysis
+        security_analysis = self.analyze(file_path)
+        
+        if 'error' in security_analysis:
+            return security_analysis
+        
+        # Get quality analysis
+        quality_snapshot = self.quality_monitor.analyze_file_quality(file_path)
+        
+        # Profile performance if enabled
+        profile_data = None
+        if self.enable_correlation_analysis:
+            session_id = self.performance_profiler.start_profiling(f"security_analysis_{int(time.time())}")
+            # Simulate some work for profiling
+            time.sleep(0.1)
+            profile_data = self.performance_profiler.stop_profiling(session_id)
+        
+        # Get security alerts for the file
+        security_alerts = self.alert_manager.get_alerts_by_file(file_path)
+        
+        # Perform correlation analysis
+        correlations = {}
+        if quality_snapshot and self.enable_correlation_analysis:
+            correlations['quality'] = self.metrics_integrator.correlate_quality_security(
+                file_path, quality_snapshot, security_alerts
+            )
+        
+        if profile_data and self.enable_correlation_analysis:
+            correlations['performance'] = self.metrics_integrator.correlate_performance_security(
+                file_path, profile_data, security_alerts
+            )
+        
+        # Calculate integrated risk score
+        integrated_risk = 0.0
+        if quality_snapshot:
+            performance_metrics = {
+                'execution_time_ms': profile_data.duration * 1000 if profile_data else 0,
+                'memory_delta_mb': profile_data.memory_usage.get('delta_mb', 0) if profile_data else 0,
+                'cpu_percent': psutil.cpu_percent()
+            }
+            
+            integrated_risk = self.metrics_integrator.calculate_integrated_risk_score(
+                file_path, security_alerts, quality_snapshot.overall_score, performance_metrics
+            )
+        
+        # Generate risk profile
+        risk_profile = self._generate_risk_profile(file_path, security_alerts, quality_snapshot, 
+                                                  profile_data, integrated_risk)
+        
+        # Create security event
+        security_event = SecurityEvent(
+            event_id=f"SEC_ANALYSIS_{int(time.time())}_{hash(file_path)}",
+            event_type='comprehensive_analysis',
+            severity=self._determine_event_severity(integrated_risk),
+            timestamp=time.time(),
+            file_path=file_path,
+            line_number=None,
+            description=f"Comprehensive security analysis for {file_path}",
+            context={
+                'security_alerts': len(security_alerts),
+                'quality_score': quality_snapshot.overall_score if quality_snapshot else 0,
+                'performance_impact': profile_data.duration if profile_data else 0
+            },
+            metrics={
+                'integrated_risk_score': integrated_risk,
+                'security_score': self.metrics_integrator._calculate_security_score(security_alerts),
+                'quality_score': quality_snapshot.overall_score if quality_snapshot else 0
+            },
+            performance_impact=profile_data.duration if profile_data else None,
+            quality_impact=100 - quality_snapshot.overall_score if quality_snapshot else None
+        )
+        
+        self.security_events.append(security_event)
+        self._notify_security_event(security_event)
+        
+        return {
+            **security_analysis,
+            'enhanced_analysis': {
+                'integrated_risk_score': integrated_risk,
+                'correlations': correlations,
+                'risk_profile': asdict(risk_profile),
+                'security_event': asdict(security_event),
+                'quality_analysis': asdict(quality_snapshot) if quality_snapshot else None,
+                'performance_analysis': asdict(profile_data) if profile_data else None
+            }
+        }
+    
+    def detect_security_anomalies(self, file_path: str) -> List[SecurityAlert]:
+        """Detect security anomalies using advanced analysis."""
+        if not self.enable_advanced_detection:
+            return []
+        
+        try:
+            # Read file content
+            content = Path(file_path).read_text(encoding='utf-8')
+            tree = ast.parse(content)
+            
+            # Use enhanced analyzer
+            return self.enhanced_analyzer.detect_advanced_vulnerabilities(file_path, content, tree)
+            
+        except Exception as e:
+            self.logger.error(f"Error detecting anomalies in {file_path}: {e}")
+            return []
+    
+    def get_security_trends(self, time_window: int = 3600) -> Dict[str, SecurityTrend]:
+        """Get security trends over specified time window."""
+        cutoff_time = time.time() - time_window
+        
+        # Filter recent events
+        recent_events = [
+            event for event in self.security_events
+            if event.timestamp >= cutoff_time
+        ]
+        
+        trends = {}
+        
+        # Analyze vulnerability trends
+        vuln_scores = [event.metrics.get('security_score', 0) for event in recent_events]
+        if vuln_scores:
+            trends['vulnerability_trend'] = self._calculate_trend(
+                'vulnerability_score', vuln_scores, time_window
+            )
+        
+        # Analyze quality trends
+        quality_scores = [event.metrics.get('quality_score', 0) for event in recent_events]
+        if quality_scores:
+            trends['quality_trend'] = self._calculate_trend(
+                'quality_score', quality_scores, time_window
+            )
+        
+        # Analyze integrated risk trends
+        risk_scores = [event.metrics.get('integrated_risk_score', 0) for event in recent_events]
+        if risk_scores:
+            trends['integrated_risk_trend'] = self._calculate_trend(
+                'integrated_risk_score', risk_scores, time_window
+            )
+        
+        return trends
+    
+    def get_risk_dashboard(self) -> Dict[str, Any]:
+        """Get comprehensive risk dashboard data."""
+        active_alerts = self.alert_manager.get_active_alerts()
+        
+        # Calculate overall risk metrics
+        total_risk_score = sum(
+            profile.overall_risk_score for profile in self.risk_profiles.values()
+        ) / max(len(self.risk_profiles), 1)
+        
+        # Get recent high-risk events
+        high_risk_events = [
+            event for event in self.security_events
+            if event.metrics.get('integrated_risk_score', 0) > self.risk_score_threshold
+        ]
+        
+        # Get correlation insights
+        correlation_insights = self._generate_correlation_insights()
+        
+        return {
+            'dashboard_timestamp': time.time(),
+            'overall_metrics': {
+                'total_active_alerts': len(active_alerts),
+                'average_risk_score': total_risk_score,
+                'high_risk_files': len([p for p in self.risk_profiles.values() 
+                                      if p.overall_risk_score > self.risk_score_threshold]),
+                'recent_events': len(self.security_events),
+                'monitoring_systems_active': {
+                    'security': self.running,
+                    'quality': self.quality_monitor.monitoring,
+                    'metrics': self.metrics_collector.running
+                }
+            },
+            'risk_distribution': self._calculate_risk_distribution(),
+            'trend_analysis': self.get_security_trends(3600),  # Last hour
+            'correlation_insights': correlation_insights,
+            'high_risk_events': [asdict(event) for event in high_risk_events[-10:]],
+            'top_risk_files': sorted(
+                [asdict(profile) for profile in self.risk_profiles.values()],
+                key=lambda x: x['overall_risk_score'],
+                reverse=True
+            )[:10]
+        }
+    
+    def add_security_event_callback(self, callback: Callable[[SecurityEvent], None]):
+        """Add callback for security events."""
+        self.security_event_callbacks.append(callback)
+    
+    def _on_quality_update(self, quality_snapshot: QualitySnapshot):
+        """Handle quality monitor updates."""
+        if not self.enable_correlation_analysis:
+            return
+        
+        # Get security alerts for the file
+        security_alerts = self.alert_manager.get_alerts_by_file(quality_snapshot.file_path)
+        
+        # Perform correlation analysis
+        correlation = self.metrics_integrator.correlate_quality_security(
+            quality_snapshot.file_path, quality_snapshot, security_alerts
+        )
+        
+        # Check for concerning correlations
+        if any(corr['type'] == 'low_quality_high_security_risk' for corr in correlation['correlations']):
+            # Create security event
+            event = SecurityEvent(
+                event_id=f"QUALITY_SEC_{int(time.time())}_{hash(quality_snapshot.file_path)}",
+                event_type='quality_degradation',
+                severity='high' if quality_snapshot.overall_score < 30 else 'medium',
+                timestamp=time.time(),
+                file_path=quality_snapshot.file_path,
+                line_number=None,
+                description="Low code quality correlates with security vulnerabilities",
+                context={'correlation': correlation},
+                metrics={
+                    'quality_score': quality_snapshot.overall_score,
+                    'security_alert_count': len(security_alerts)
+                },
+                quality_impact=100 - quality_snapshot.overall_score
+            )
+            
+            self.security_events.append(event)
+            self._notify_security_event(event)
+    
+    def _collect_security_metrics(self) -> Dict[str, float]:
+        """Collect security metrics for real-time monitoring."""
+        active_alerts = self.alert_manager.get_active_alerts()
+        
+        return {
+            'total_alerts': len(active_alerts),
+            'critical_alerts': len([a for a in active_alerts if a.threat_level == ThreatLevel.CRITICAL]),
+            'high_alerts': len([a for a in active_alerts if a.threat_level == ThreatLevel.HIGH]),
+            'risk_score': self._calculate_risk_score(active_alerts),
+            'events_per_minute': len([e for e in self.security_events 
+                                    if e.timestamp > time.time() - 60])
+        }
+    
+    def _generate_risk_profile(self, file_path: str, security_alerts: List[SecurityAlert],
+                             quality_snapshot: Optional[QualitySnapshot], 
+                             profile_data: Optional[ProfileData], 
+                             integrated_risk: float) -> RiskProfile:
+        """Generate comprehensive risk profile for a file."""
+        # Calculate component scores
+        vulnerability_score = self.metrics_integrator._calculate_security_score(security_alerts)
+        quality_score = quality_snapshot.overall_score if quality_snapshot else 50.0
+        
+        performance_score = 100.0
+        if profile_data:
+            # Lower score for worse performance
+            if profile_data.duration > 1.0:
+                performance_score -= min(profile_data.duration * 10, 50)
+            memory_delta = profile_data.memory_usage.get('delta_mb', 0)
+            if memory_delta > 50:
+                performance_score -= min(memory_delta / 10, 30)
+        
+        # Calculate complexity score from quality data
+        complexity_score = 50.0
+        if quality_snapshot:
+            complexity_metrics = [m for m in quality_snapshot.metrics if 'complexity' in m.name]
+            if complexity_metrics:
+                avg_complexity = sum(m.value for m in complexity_metrics) / len(complexity_metrics)
+                complexity_score = max(0, 100 - avg_complexity * 10)
+        
+        # Calculate change frequency (simplified)
+        change_frequency = 1.0  # Would need historical data for real calculation
+        
+        # Identify risk factors
+        risk_factors = []
+        if vulnerability_score > 50:
+            risk_factors.append(f"High vulnerability score: {vulnerability_score:.1f}")
+        if quality_score < 50:
+            risk_factors.append(f"Low code quality: {quality_score:.1f}")
+        if performance_score < 70:
+            risk_factors.append(f"Performance issues detected")
+        if complexity_score < 50:
+            risk_factors.append(f"High code complexity")
+        
+        # Generate mitigation suggestions
+        mitigation_suggestions = []
+        if vulnerability_score > 50:
+            mitigation_suggestions.append("Address security vulnerabilities immediately")
+        if quality_score < 50:
+            mitigation_suggestions.append("Improve code quality through refactoring")
+        if performance_score < 70:
+            mitigation_suggestions.append("Optimize performance bottlenecks")
+        if complexity_score < 50:
+            mitigation_suggestions.append("Reduce code complexity through decomposition")
+        
+        risk_profile = RiskProfile(
+            file_path=file_path,
+            overall_risk_score=integrated_risk,
+            vulnerability_score=vulnerability_score,
+            quality_score=quality_score,
+            performance_score=performance_score,
+            complexity_score=complexity_score,
+            change_frequency=change_frequency,
+            last_updated=time.time(),
+            risk_factors=risk_factors,
+            mitigation_suggestions=mitigation_suggestions
+        )
+        
+        self.risk_profiles[file_path] = risk_profile
+        return risk_profile
+    
+    def _calculate_trend(self, metric_name: str, values: List[float], 
+                        time_window: int) -> SecurityTrend:
+        """Calculate trend for a metric."""
+        if len(values) < 2:
+            return SecurityTrend(
+                metric_name=metric_name,
+                current_value=values[0] if values else 0,
+                trend_direction='stable',
+                change_rate=0.0,
+                confidence=0.0,
+                time_window=time_window
+            )
+        
+        # Simple linear trend calculation
+        current_value = values[-1]
+        previous_value = values[0]
+        change_rate = (current_value - previous_value) / max(previous_value, 1)
+        
+        # Determine trend direction
+        if abs(change_rate) < 0.05:  # 5% threshold
+            trend_direction = 'stable'
+        elif change_rate > 0:
+            trend_direction = 'degrading' if metric_name in ['vulnerability_score', 'integrated_risk_score'] else 'improving'
+        else:
+            trend_direction = 'improving' if metric_name in ['vulnerability_score', 'integrated_risk_score'] else 'degrading'
+        
+        # Calculate confidence based on data points
+        confidence = min(len(values) / 10, 1.0)
+        
+        return SecurityTrend(
+            metric_name=metric_name,
+            current_value=current_value,
+            trend_direction=trend_direction,
+            change_rate=change_rate,
+            confidence=confidence,
+            time_window=time_window,
+            historical_values=[(time.time() - i * 60, val) for i, val in enumerate(reversed(values))]
+        )
+    
+    def _determine_event_severity(self, risk_score: float) -> str:
+        """Determine event severity based on risk score."""
+        if risk_score >= 80:
+            return 'critical'
+        elif risk_score >= 60:
+            return 'high'
+        elif risk_score >= 40:
+            return 'medium'
+        else:
+            return 'low'
+    
+    def _notify_security_event(self, event: SecurityEvent):
+        """Notify callbacks about security events."""
+        for callback in self.security_event_callbacks:
+            try:
+                callback(event)
+            except Exception as e:
+                self.logger.error(f"Error in security event callback: {e}")
+    
+    def _generate_correlation_insights(self) -> List[Dict[str, Any]]:
+        """Generate insights from correlation analysis."""
+        insights = []
+        
+        # Analyze quality-security correlations
+        quality_correlations = list(self.metrics_integrator.quality_correlations.values())
+        
+        if quality_correlations:
+            files_with_quality_security_issues = len([
+                corr for corr in quality_correlations
+                if any(c['type'] == 'low_quality_high_security_risk' for c in corr['correlations'])
+            ])
+            
+            if files_with_quality_security_issues > 0:
+                insights.append({
+                    'type': 'quality_security_correlation',
+                    'severity': 'high' if files_with_quality_security_issues > 5 else 'medium',
+                    'description': f'{files_with_quality_security_issues} files show correlation between low quality and security issues',
+                    'recommendation': 'Focus on improving code quality to reduce security vulnerabilities'
+                })
+        
+        # Analyze performance-security correlations
+        performance_correlations = list(self.metrics_integrator.performance_correlations.values())
+        
+        if performance_correlations:
+            files_with_performance_security_issues = len([
+                corr for corr in performance_correlations
+                if any(c['type'] == 'slow_execution_security_risk' for c in corr['correlations'])
+            ])
+            
+            if files_with_performance_security_issues > 0:
+                insights.append({
+                    'type': 'performance_security_correlation',
+                    'severity': 'medium',
+                    'description': f'{files_with_performance_security_issues} files show correlation between performance issues and security risks',
+                    'recommendation': 'Investigate performance bottlenecks that may indicate security vulnerabilities'
+                })
+        
+        return insights
+    
+    def _calculate_risk_distribution(self) -> Dict[str, int]:
+        """Calculate distribution of risk scores."""
+        distribution = {'low': 0, 'medium': 0, 'high': 0, 'critical': 0}
+        
+        for profile in self.risk_profiles.values():
+            risk_score = profile.overall_risk_score
+            
+            if risk_score >= 80:
+                distribution['critical'] += 1
+            elif risk_score >= 60:
+                distribution['high'] += 1
+            elif risk_score >= 40:
+                distribution['medium'] += 1
+            else:
+                distribution['low'] += 1
+        
+        return distribution
+
+
+def main():
+    """Demo and testing of enhanced real-time security monitor."""
+    # Configuration
+    config = {
+        'watch_paths': ['.'],
+        'scan_interval': 30,
+        'enable_correlation_analysis': True,
+        'enable_advanced_detection': True,
+        'risk_score_threshold': 70.0
+    }
+    
+    # Create enhanced monitor
+    monitor = EnhancedRealtimeSecurityMonitor(config)
+    
+    # Add callbacks
+    def security_event_callback(event: SecurityEvent):
+        logger.info(f"Security Event: {event.event_type} - {event.severity} - {event.description}")
+    
+    def alert_callback(alert: SecurityAlert):
+        logger.warning(f"Security Alert: {alert.title} - {alert.threat_level.value}")
+    
+    monitor.add_security_event_callback(security_event_callback)
+    monitor.add_alert_callback(alert_callback)
+    
+    # Create test file with security issues
+    test_file = 'security_test.py'
+    test_content = '''
+import os
+import subprocess
+import pickle
+
+def vulnerable_function(user_input):
+    # Multiple security issues
+    password = "hardcoded_secret_123"  # Hardcoded credential
+    
+    # Command injection vulnerability
+    command = "ls " + user_input
+    os.system(command)
+    
+    # Code injection vulnerability
+    eval(user_input)
+    
+    # Insecure deserialization
+    data = pickle.loads(user_input)
+    
+    # Timing attack vulnerability
+    if password == user_input:
+        return True
+    
+    return False
+
+class UnsafeClass:
+    def __init__(self):
+        self.secret = "another_hardcoded_secret"
+    
+    def unsafe_method(self, data):
+        # SQL injection risk
+        query = "SELECT * FROM users WHERE id = %s" % data
+        
+        # Weak cryptography
+        import hashlib
+        hash_value = hashlib.md5(data.encode()).hexdigest()
+        
+        return query, hash_value
+'''
+    
+    try:
+        # Write test file
+        with open(test_file, 'w') as f:
+            f.write(test_content)
+        
+        # Start monitoring
+        monitor.start()
+        
+        # Let it initialize
+        time.sleep(2)
+        
+        # Perform comprehensive analysis
+        logger.info("Performing comprehensive security analysis...")
+        analysis_result = monitor.analyze_with_correlation(test_file)
+        
+        logger.info("Analysis Results:")
+        enhanced = analysis_result.get('enhanced_analysis', {})
+        logger.info(f"  Integrated Risk Score: {enhanced.get('integrated_risk_score', 0):.1f}")
+        logger.info(f"  Security Alerts: {len(analysis_result.get('alerts', []))}")
+        
+        # Show correlations
+        correlations = enhanced.get('correlations', {})
+        if correlations:
+            logger.info("  Correlations found:")
+            for corr_type, corr_data in correlations.items():
+                logger.info(f"    {corr_type}: {len(corr_data.get('correlations', []))} insights")
+        
+        # Get security trends
+        trends = monitor.get_security_trends(300)  # 5 minutes
+        logger.info(f"Security Trends: {len(trends)} trends identified")
+        
+        # Get risk dashboard
+        dashboard = monitor.get_risk_dashboard()
+        logger.info("Risk Dashboard:")
+        logger.info(f"  Overall Risk Score: {dashboard['overall_metrics']['average_risk_score']:.1f}")
+        logger.info(f"  High Risk Files: {dashboard['overall_metrics']['high_risk_files']}")
+        logger.info(f"  Active Alerts: {dashboard['overall_metrics']['total_active_alerts']}")
+        
+        # Test anomaly detection
+        anomalies = monitor.detect_security_anomalies(test_file)
+        logger.info(f"Advanced Anomalies Detected: {len(anomalies)}")
+        
+        # Clean up
+        os.remove(test_file)
+        
+    finally:
+        monitor.stop()
+        logger.info("Enhanced real-time security monitor demo completed")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,76 +1,74 @@
+import AreTileXYEqual from '../../utils/AreTileXYEqual.js';
+import EmitChessEvent from './EmitChessEvent.js';
+
 var OnPointerMove = function (pointer) {
-    if (!this.input.enable) {
+    if (!this.enable) {
         return;
     }
 
-    OnTouchTileMove.call(this, pointer);
-    OnDrag.call(this, pointer);
-}
-
-var OnTouchTileMove = function (pointer) {
+    var board = this.board;
     // Get touched tileX, tileY
-    var grid = this.grid;
-    grid.saveOrigin();
-    grid.setOriginPosition(this.x, this.y);
-    var out = this.board.worldXYToTileXY(pointer.x, pointer.y, true);
-    var tileX = out.x,
-        tileY = out.y;
-    grid.restoreOrigin();
-
-    if ((this.input.tilePosition.x === tileX) && (this.input.tilePosition.y === tileY)) {
+    var out = board.worldXYToTileXY(pointer.worldX, pointer.worldY, true);
+    if (AreTileXYEqual(this.tilePosition, out)) {
         // Tile position dose not change
         return;
     }
-    this.input.tilePosition.x = tileX;
-    this.input.tilePosition.y = tileY;
 
-    // Get touched chess
-    var gameObjects = this.board.tileXYToChessArray(tileX, tileY, globChessArray);
-    var hitChess = (gameObjects.length > 0);
-    if (hitChess) {
-        // Fire events
-        var gameObject;
-        for (var i = 0, cnt = gameObjects.length; i < cnt; i++) {
-            gameObject = gameObjects[i];
-            if (gameObject.emit) {
-                gameObject.emit('miniboard.pointermove', pointer);
-            }
-            this.emit('gameobjectmove', pointer, gameObject);
-        }
-        this.emit('pointermove', pointer, this);
-    } else {
+    this.prevTilePosition.x = this.tilePosition.x;
+    this.prevTilePosition.y = this.tilePosition.y;
+    // prevTilePosition might be undefined at beginning
+    if ((this.prevTilePosition.x != null) && (this.prevTilePosition.y != null)) {
+        board.emit('tileout', pointer, this.prevTilePosition);
+    }
+
+    var tileX = out.x,
+        tileY = out.y;
+    this.tilePosition.x = tileX;
+    this.tilePosition.y = tileY;
+    if (!board.contains(tileX, tileY)) {
         // Move outside
-        if (this.input.pointer === pointer) { // Release touch pointer
-            this.input.pointer = null;
-        }
-    }
-    globChessArray.length = 0;
+        EmitChessEvent(
+            'gameobjectout',
+            'board.pointerout',
+            board, this.prevTilePosition.x, this.prevTilePosition.y,
+            pointer
+        );
 
-    // Not dragging
-    if (this.input.drag.state === 0) {
-        if (this.input.pointer === pointer) {
-            if (!hitChess) {
-                this.input.pointer = null; // Release touch pointer
-            }
-        } else if (this.input.pointer === null) {
-            this.input.pointer = pointer; // Catch new touch pointer
+        if (this.pointer === pointer) { // Release touch pointer
+            this.pointer = null;
         }
-    }
-}
-
-var OnDrag = function (pointer) {
-    var dragData = this.input.drag;
-    // Not dragging
-    if (dragData.state === 0) {
         return;
     }
 
-    var dragPosition = dragData.position;
-    var dragX = pointer.x - dragPosition.x;
-    var dragY = pointer.y - dragPosition.y;
-    this.emit('drag', pointer, dragX, dragY);
-}
+    if (this.pointer === null) { // Catch new touch pointer
+        this.pointer = pointer;
+    }
 
-var globChessArray = [];
+    board.emit('tilemove', pointer, this.tilePosition);
+    board.emit('tileover', pointer, this.tilePosition);
+
+    EmitChessEvent(
+        'gameobjectout',
+        'board.pointerout',
+        board, this.prevTilePosition.x, this.prevTilePosition.y,
+        pointer
+    );
+
+    var boardEventCallback = function (gameObject) {
+        board.emit('gameobjectmove', pointer, gameObject);
+        board.emit('gameobjectover', pointer, gameObject);
+    }
+    var chessEventCallback = function (gameObject) {
+        gameObject.emit('board.pointermove', pointer);
+        gameObject.emit('board.pointerover', pointer);
+    }
+
+    EmitChessEvent(
+        boardEventCallback,
+        chessEventCallback,
+        board, tileX, tileY,
+        pointer
+    );
+};
 
 export default OnPointerMove;

@@ -1,25 +1,21 @@
-# TestMaster Enhanced API Server Requirements
-# Core web framework
+# TestMaster Dashboard Production Requirements
+# Core Flask dependencies
 Flask==2.3.3
+Flask-CORS==4.0.0
 Werkzeug==2.3.7
 
-# API enhancement dependencies
-requests==2.31.0
-urllib3==2.0.4
+# Environment variables
+python-dotenv==1.0.0
 
-# Security dependencies  
-PyJWT==2.8.0
-bcrypt==4.0.1
+# Production WSGI server
+gunicorn==21.2.0
 
 # Performance monitoring
 psutil==5.9.5
 
 # Data handling
-sqlite3  # Built-in to Python
+requests==2.31.0
 
-# Development and testing (optional)
+# Development dependencies (optional)
 pytest==7.4.2
-pytest-flask==1.2.0
-
-# Production server (optional)
-gunicorn==21.2.0
+pytest-cov==4.1.0

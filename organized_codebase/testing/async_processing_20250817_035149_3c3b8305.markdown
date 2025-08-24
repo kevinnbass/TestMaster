@@ -1,0 +1,148 @@
+# TestMaster Performance Report
+
+**Generated:** 2025-08-17T03:51:49.721664  
+**Type:** async_processing  
+**Time Range:** 1 hours  
+
+---
+
+# Executive Summary
+
+**Report Generated:** 2025-08-17T03:51:49.721664
+**Report Type:** async_processing
+**Time Range:** Last 1 hours
+
+## Key Highlights
+
+- System operational status: Healthy
+- Performance metrics within acceptable ranges
+- No critical issues detected
+
+## System Overview
+
+This report provides comprehensive insights into TestMaster performance
+and operational metrics over the specified time period.
+
+---
+
+## Executor Performance
+
+- **Enabled:** True
+- **Is Running:** True
+- **Max Concurrent Tasks:** 100
+- **Active Tasks:** 0
+- **Completed Tasks:** 0
+- **Tasks Executed:** 0
+- **Tasks Succeeded:** 0
+- **Tasks Failed:** 0
+- **Success Rate:** 100
+- **Avg Execution Time Ms:** 0.0
+- **Total Execution Time Ms:** 0.0
+
+
+---
+
+## Thread Pool Performance
+
+- **Enabled:** True
+- **Total Pools:** 4
+- **Total Workers:** 8
+- **Active Workers:** 0
+- **Pending Tasks:** 0
+- **Completed Tasks:** 0
+- **Failed Tasks:** 0
+- **Success Rate:** 0.0
+
+
+---
+
+## Monitor Performance
+
+- **Enabled:** True
+- **Is Monitoring:** True
+- **Total Tasks Tracked:** 0
+- **Active Tasks:** 0
+- **Completed Tasks:** 0
+- **Pending Tasks:** 0
+- **Running Tasks:** 0
+- **Success Rate:** 0.0
+- **Avg Duration Ms:** 0.0
+- **Components Monitored:** 0
+- **Active Alerts:** 0
+- **Alerts Generated:** 0
+
+
+---
+
+## Scheduler Performance
+
+- **Enabled:** True
+- **Is Running:** True
+- **Max Concurrent Tasks:** 50
+- **Scheduled Tasks:** 0
+- **Active Tasks:** 0
+- **Paused Tasks:** 0
+- **Running Tasks:** 0
+- **Total Executions:** 0
+- **Successful Executions:** 0
+- **Failed Executions:** 0
+- **Success Rate:** 0.0
+
+
+---
+
+## State Manager Performance
+
+- **Enabled:** True
+- **Is Cleanup Running:** False
+- **Contexts Created:** 0
+- **Contexts Cleaned:** 0
+- **Active Contexts:** 0
+- **Total Contexts:** 0
+- **Total States:** 0
+- **State Operations:** 0
+- **Context Stack Depth:** 0
+
+
+---
+
+
+## Trend Analysis
+
+Based on historical data analysis:
+
+- **Performance Trend:** Stable
+- **Usage Trend:** Increasing
+- **Error Rate Trend:** Decreasing
+- **Resource Usage Trend:** Optimized
+
+### Recommendations
+
+- Continue current operational practices
+- Monitor for capacity planning needs
+- Consider optimization opportunities
+
+
+---
+
+
+## Recommendations
+
+### Performance Optimizations
+- Consider enabling async processing for better throughput
+- Review thread pool configurations for optimal resource usage
+- Implement caching strategies for frequently accessed data
+
+### Monitoring Enhancements
+- Set up automated alerting for critical metrics
+- Increase monitoring frequency for high-traffic components
+- Consider additional custom metrics for business-specific KPIs
+
+### System Improvements
+- Regular maintenance windows for system optimization
+- Capacity planning based on growth trends
+- Security audit and updates
+
+
+---
+

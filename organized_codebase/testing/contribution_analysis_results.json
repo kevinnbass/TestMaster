@@ -1,0 +1,474 @@
+{
+  "analysis_metadata": {
+    "analyzer": "Agent B - Module Contribution Analysis",
+    "phase": "Hours 46-50",
+    "modules_analyzed": 10,
+    "total_contribution_score": 582.8520833333333
+  },
+  "module_contributions": {
+    "core/intelligence/__init__.py": {
+      "contribution_score": 66.24374999999999,
+      "contribution_rank": 1,
+      "value_category": "high",
+      "investment_priority": 6,
+      "business_value_summary": {
+        "automation_value": 0.7,
+        "innovation_factor": 1.0,
+        "market_differentiation": 0.9,
+        "cost_savings_potential": 1.0
+      },
+      "technical_value_summary": {
+        "architectural_importance": 1.0,
+        "performance_impact": 1.0,
+        "technology_advancement": 1.0,
+        "infrastructure_value": 0.8
+      },
+      "strategic_importance_summary": {
+        "competitive_advantage": 0.95,
+        "innovation_enablement": 1.0,
+        "platform_value": 0.9,
+        "long_term_viability": 1.0
+      },
+      "module_metrics": {
+        "lines_of_code": 557,
+        "complexity_score": 18.557422969187677,
+        "maintainability_index": 100,
+        "api_surface_area": 4
+      },
+      "recommendations": [
+        "Refactor to reduce complexity and improve maintainability",
+        "Increase test coverage for better reliability",
+        "Leverage AI/ML capabilities for competitive advantage"
+      ]
+    },
+    "core/intelligence/testing/__init__.py": {
+      "contribution_score": 63.575,
+      "contribution_rank": 4,
+      "value_category": "medium",
+      "investment_priority": 7,
+      "business_value_summary": {
+        "automation_value": 0.0,
+        "innovation_factor": 1.0,
+        "market_differentiation": 0.9,
+        "cost_savings_potential": 1.0
+      },
+      "technical_value_summary": {
+        "architectural_importance": 0.8,
+        "performance_impact": 1.0,
+        "technology_advancement": 1.0,
+        "infrastructure_value": 0.8
+      },
+      "strategic_importance_summary": {
+        "competitive_advantage": 0.95,
+        "innovation_enablement": 1.0,
+        "platform_value": 0.9,
+        "long_term_viability": 1.0
+      },
+      "module_metrics": {
+        "lines_of_code": 465,
+        "complexity_score": 8.986928104575163,
+        "maintainability_index": 100,
+        "api_surface_area": 12
+      },
+      "recommendations": [
+        "Enhance automation capabilities to increase business value",
+        "Leverage AI/ML capabilities for competitive advantage"
+      ]
+    },
+    "core/intelligence/api/__init__.py": {
+      "contribution_score": 64.33541666666667,
+      "contribution_rank": 3,
+      "value_category": "medium",
+      "investment_priority": 7,
+      "business_value_summary": {
+        "automation_value": 0.0,
+        "innovation_factor": 1.0,
+        "market_differentiation": 0.9,
+        "cost_savings_potential": 1.0
+      },
+      "technical_value_summary": {
+        "architectural_importance": 0.8,
+        "performance_impact": 1.0,
+        "technology_advancement": 0.8666666666666667,
+        "infrastructure_value": 0.8
+      },
+      "strategic_importance_summary": {
+        "competitive_advantage": 0.95,
+        "innovation_enablement": 1.0,
+        "platform_value": 0.9,
+        "long_term_viability": 1.0
+      },
+      "module_metrics": {
+        "lines_of_code": 254,
+        "complexity_score": 8.19935691318328,
+        "maintainability_index": 100,
+        "api_surface_area": 1
+      },
+      "recommendations": [
+        "Increase test coverage for better reliability",
+        "Enhance automation capabilities to increase business value",
+        "Leverage AI/ML capabilities for competitive advantage",
+        "Enhance API design and documentation for better developer experience"
+      ]
+    },
+    "core/intelligence/analytics/__init__.py": {
+      "contribution_score": 65.14999999999999,
+      "contribution_rank": 2,
+      "value_category": "high",
+      "investment_priority": 7,
+      "business_value_summary": {
+        "automation_value": 0.7,
+        "innovation_factor": 1.0,
+        "market_differentiation": 0.9,
+        "cost_savings_potential": 1.0
+      },
+      "technical_value_summary": {
+        "architectural_importance": 0.75,
+        "performance_impact": 1.0,
+        "technology_advancement": 1.0,
+        "infrastructure_value": 0.8
+      },
+      "strategic_importance_summary": {
+        "competitive_advantage": 0.95,
+        "innovation_enablement": 1.0,
+        "platform_value": 0.9,
+        "long_term_viability": 1.0
+      },
+      "module_metrics": {
+        "lines_of_code": 597,
+        "complexity_score": 14.705882352941178,
+        "maintainability_index": 100,
+        "api_surface_area": 0
+      },
+      "recommendations": [
+        "Increase test coverage for better reliability",
+        "Leverage AI/ML capabilities for competitive advantage"
+      ]
+    },
+    "testmaster_orchestrator.py": {
+      "contribution_score": 62.912499999999994,
+      "contribution_rank": 5,
+      "value_category": "medium",
+      "investment_priority": 7,
+      "business_value_summary": {
+        "automation_value": 1.0,
+        "innovation_factor": 1.0,
+        "market_differentiation": 0.7,
+        "cost_savings_potential": 1.0
+      },
+      "technical_value_summary": {
+        "architectural_importance": 0.85,
+        "performance_impact": 1.0,
+        "technology_advancement": 1.0,
+        "infrastructure_value": 0.75
+      },
+      "strategic_importance_summary": {
+        "competitive_advantage": 0.7,
+        "innovation_enablement": 1.0,
+        "platform_value": 0.75,
+        "long_term_viability": 1.0
+      },
+      "module_metrics": {
+        "lines_of_code": 703,
+        "complexity_score": 12.726244343891402,
+        "maintainability_index": 100,
+        "api_surface_area": 0
+      },
+      "recommendations": []
+    },
+    "intelligent_test_builder.py": {
+      "contribution_score": 50.735416666666666,
+      "contribution_rank": 8,
+      "value_category": "medium",
+      "investment_priority": 5,
+      "business_value_summary": {
+        "automation_value": 0.9,
+        "innovation_factor": 1.0,
+        "market_differentiation": 0.4,
+        "cost_savings_potential": 1.0
+      },
+      "technical_value_summary": {
+        "architectural_importance": 0.5,
+        "performance_impact": 0.4,
+        "technology_advancement": 1.0,
+        "infrastructure_value": 0.3
+      },
+      "strategic_importance_summary": {
+        "competitive_advantage": 0.3,
+        "innovation_enablement": 1.0,
+        "platform_value": 0.3,
+        "long_term_viability": 1.0
+      },
+      "module_metrics": {
+        "lines_of_code": 378,
+        "complexity_score": 16.056910569105693,
+        "maintainability_index": 100,
+        "api_surface_area": 5
+      },
+      "recommendations": [
+        "Refactor to reduce complexity and improve maintainability",
+        "Optimize performance to increase technical value"
+      ]
+    },
+    "enhanced_self_healing_verifier.py": {
+      "contribution_score": 53.256249999999994,
+      "contribution_rank": 7,
+      "value_category": "medium",
+      "investment_priority": 5,
+      "business_value_summary": {
+        "automation_value": 1.0,
+        "innovation_factor": 1.0,
+        "market_differentiation": 0.8,
+        "cost_savings_potential": 1.0
+      },
+      "technical_value_summary": {
+        "architectural_importance": 0.5,
+        "performance_impact": 1.0,
+        "technology_advancement": 1.0,
+        "infrastructure_value": 0.3
+      },
+      "strategic_importance_summary": {
+        "competitive_advantage": 0.85,
+        "innovation_enablement": 1.0,
+        "platform_value": 0.3,
+        "long_term_viability": 1.0
+      },
+      "module_metrics": {
+        "lines_of_code": 500,
+        "complexity_score": 18.39258114374034,
+        "maintainability_index": 100,
+        "api_surface_area": 11
+      },
+      "recommendations": [
+        "Refactor to reduce complexity and improve maintainability",
+        "Improve extensibility for future enhancements"
+      ]
+    },
+    "agentic_test_monitor.py": {
+      "contribution_score": 48.36874999999999,
+      "contribution_rank": 10,
+      "value_category": "medium",
+      "investment_priority": 4,
+      "business_value_summary": {
+        "automation_value": 0.6,
+        "innovation_factor": 1.0,
+        "market_differentiation": 0.85,
+        "cost_savings_potential": 1.0
+      },
+      "technical_value_summary": {
+        "architectural_importance": 0.5,
+        "performance_impact": 0.26666666666666666,
+        "technology_advancement": 1.0,
+        "infrastructure_value": 0.6
+      },
+      "strategic_importance_summary": {
+        "competitive_advantage": 0.9,
+        "innovation_enablement": 1.0,
+        "platform_value": 0.3,
+        "long_term_viability": 1.0
+      },
+      "module_metrics": {
+        "lines_of_code": 385,
+        "complexity_score": 18.4,
+        "maintainability_index": 100,
+        "api_surface_area": 18
+      },
+      "recommendations": [
+        "Refactor to reduce complexity and improve maintainability",
+        "Optimize performance to increase technical value",
+        "Improve extensibility for future enhancements"
+      ]
+    },
+    "parallel_converter.py": {
+      "contribution_score": 49.0625,
+      "contribution_rank": 9,
+      "value_category": "medium",
+      "investment_priority": 4,
+      "business_value_summary": {
+        "automation_value": 0.7,
+        "innovation_factor": 1.0,
+        "market_differentiation": 0.6,
+        "cost_savings_potential": 1.0
+      },
+      "technical_value_summary": {
+        "architectural_importance": 0.5,
+        "performance_impact": 1.0,
+        "technology_advancement": 1.0,
+        "infrastructure_value": 0.3
+      },
+      "strategic_importance_summary": {
+        "competitive_advantage": 0.3,
+        "innovation_enablement": 1.0,
+        "platform_value": 0.3,
+        "long_term_viability": 1.0
+      },
+      "module_metrics": {
+        "lines_of_code": 301,
+        "complexity_score": 19.727047146401986,
+        "maintainability_index": 100,
+        "api_surface_area": 5
+      },
+      "recommendations": [
+        "Refactor to reduce complexity and improve maintainability",
+        "Improve extensibility for future enhancements"
+      ]
+    },
+    "config/__init__.py": {
+      "contribution_score": 59.2125,
+      "contribution_rank": 6,
+      "value_category": "medium",
+      "investment_priority": 5,
+      "business_value_summary": {
+        "automation_value": 0.5,
+        "innovation_factor": 1.0,
+        "market_differentiation": 0.4,
+        "cost_savings_potential": 1.0
+      },
+      "technical_value_summary": {
+        "architectural_importance": 0.9,
+        "performance_impact": 1.0,
+        "technology_advancement": 1.0,
+        "infrastructure_value": 0.9
+      },
+      "strategic_importance_summary": {
+        "competitive_advantage": 0.3,
+        "innovation_enablement": 1.0,
+        "platform_value": 0.7,
+        "long_term_viability": 1.0
+      },
+      "module_metrics": {
+        "lines_of_code": 294,
+        "complexity_score": 4.819277108433735,
+        "maintainability_index": 96.21071012724205,
+        "api_surface_area": 14
+      },
+      "recommendations": [
+        "Improve documentation coverage with comprehensive docstrings",
+        "Increase test coverage for better reliability",
+        "Enhance automation capabilities to increase business value",
+        "Implement configuration validation and better error handling"
+      ]
+    }
+  },
+  "contribution_clusters": [
+    {
+      "name": "Intelligence Framework Core",
+      "modules": [
+        "core/intelligence/__init__.py",
+        "core/intelligence/testing/__init__.py",
+        "core/intelligence/api/__init__.py",
+        "core/intelligence/analytics/__init__.py"
+      ],
+      "collective_value": 64.82604166666667,
+      "synergy_factor": 0.85,
+      "business_impact": 0.675,
+      "technical_impact": 0.9020833333333333,
+      "strategic_impact": 0.975,
+      "optimization_opportunities": [
+        "Enhance cross-intelligence module integration",
+        "Standardize intelligence interfaces",
+        "Implement shared intelligence capabilities"
+      ]
+    },
+    {
+      "name": "Application Processing Layer",
+      "modules": [
+        "testmaster_orchestrator.py",
+        "intelligent_test_builder.py",
+        "enhanced_self_healing_verifier.py",
+        "agentic_test_monitor.py",
+        "parallel_converter.py"
+      ],
+      "collective_value": 52.867083333333326,
+      "synergy_factor": 0.75,
+      "business_impact": 0.7,
+      "technical_impact": 0.6,
+      "strategic_impact": 0.65,
+      "optimization_opportunities": [
+        "Improve inter-application coordination",
+        "Standardize processing interfaces",
+        "Enhanced error handling and recovery"
+      ]
+    },
+    {
+      "name": "Infrastructure Foundation",
+      "modules": [
+        "core/intelligence/api/__init__.py",
+        "config/__init__.py"
+      ],
+      "collective_value": 61.77395833333334,
+      "synergy_factor": 0.8,
+      "business_impact": 0.5,
+      "technical_impact": 0.85,
+      "strategic_impact": 0.7,
+      "optimization_opportunities": [
+        "Enhance infrastructure reliability",
+        "Improve configuration management",
+        "Strengthen API design and documentation"
+      ]
+    }
+  ],
+  "contribution_metrics": {
+    "total_modules_analyzed": 10,
+    "critical_modules": 0,
+    "high_value_modules": 2,
+    "medium_value_modules": 8,
+    "low_value_modules": 0,
+    "average_contribution_score": 58.28520833333333,
+    "business_value_distribution": {
+      "mean": 0.7816666666666666,
+      "min": 0.6333333333333333,
+      "max": 0.9333333333333332,
+      "std": 0.11505500563203522
+    },
+    "technical_value_distribution": {
+      "mean": 0.8544444444444445,
+      "min": 0.5888888888888889,
+      "max": 1.0,
+      "std": 0.13924152763393774
+    },
+    "strategic_importance_distribution": {
+      "mean": 0.78,
+      "min": 0.5333333333333333,
+      "max": 0.9500000000000001,
+      "std": 0.16920292441216742
+    }
+  },
+  "investment_recommendations": [
+    {
+      "category": "high_value_investment",
+      "priority": "high",
+      "description": "Invest in 1 high-value modules",
+      "modules": [
+        "core/intelligence/analytics/__init__.py"
+      ],
+      "actions": [
+        "Enhance documentation and testing",
+        "Optimize performance and scalability",
+        "Strengthen competitive advantages"
+      ]
+    },
+    {
+      "category": "innovation_investment",
+      "priority": "medium",
+      "description": "Leverage 10 modules for innovation",
+      "modules": [
+        "core/intelligence/__init__.py",
+        "core/intelligence/testing/__init__.py",
+        "core/intelligence/api/__init__.py",
+        "core/intelligence/analytics/__init__.py",
+        "testmaster_orchestrator.py",
+        "intelligent_test_builder.py",
+        "enhanced_self_healing_verifier.py",
+        "agentic_test_monitor.py",
+        "parallel_converter.py",
+        "config/__init__.py"
+      ],
+      "actions": [
+        "Expand AI/ML capabilities",
+        "Implement cutting-edge features",
+        "Enhance automation capabilities"
+      ]
+    }
+  ]
+}

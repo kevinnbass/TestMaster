@@ -1,97 +1,53 @@
 """
-Predictive Code Intelligence Package
-===================================
+ML Intelligence Features Module Registry  
+Pluggable ML modules extracted for Agent X's Epsilon base integration
 
-Revolutionary predictive code intelligence system with natural language integration.
-Extracted from predictive_code_intelligence.py for enterprise modular architecture.
-
-Agent D Implementation - Hour 15-16: Predictive Intelligence Modularization
-
-Architecture:
-- data_models.py: Core predictive intelligence data structures and enums
-- evolution_predictor.py: Code evolution prediction and growth analysis
-- language_bridge.py: Natural language code translation and explanation
-- documentation_generator.py: AI-powered documentation generation
-- security_analyzer.py: Predictive security vulnerability analysis
-- intelligence_core.py: Master predictive intelligence coordination
-
-Key Features:
-- Predictive Code Evolution Analysis with mathematical modeling
-- Natural Language Code Translation with bidirectional support
-- AI-Powered Documentation Generation with quality metrics
-- Security Vulnerability Prediction with proactive threat detection
-- Maintenance Hotspot Identification with burden projection
-- Performance Degradation Forecasting with complexity analysis
-- Feature Addition Likelihood with pattern recognition
-- Refactoring Need Prediction with pressure analysis
-
-This is the FIRST AND ONLY predictive code intelligence system that can forecast
-code evolution, generate natural language explanations, and create documentation
-automatically - representing a breakthrough in AI-powered code analysis.
+All modules comply with STEELCLAD protocol (< 200 lines each)
+Ready for integration into unified dashboard architecture
 """
 
-from .C:.Users.kbass.OneDrive.Documents.testmaster.organized_codebase.testing.data_models import (
-    PredictionType,
-    LanguageBridgeDirection,
-    DocumentationType,
-    PredictionConfidence,
-    CodePrediction,
-    NaturalLanguageTranslation,
-    GeneratedDocumentation,
-    CodeEvolutionAnalysis
-)
+from .semantic_intent_classifier import SemanticIntentClassifier, create_intent_classifier_plugin
+from .ml_performance_predictions import MLPerformancePredictions, create_performance_predictions_plugin
+from .ast_code_understanding import ASTCodeUnderstanding, create_ast_analyzer_plugin
 
-from .evolution_predictor import (
-    CodeEvolutionPredictor,
-    create_evolution_predictor
-)
+# ML Intelligence module registry for Agent X integration
+ML_INTELLIGENCE_MODULES = {
+    'semantic_intent': {
+        'class': SemanticIntentClassifier,
+        'factory': create_intent_classifier_plugin,
+        'description': 'ML-powered code intent classification with 15+ semantic categories',
+        'features': ['intent_classification', 'confidence_scoring', 'pattern_analysis']
+    },
+    'performance_predictions': {
+        'class': MLPerformancePredictions,
+        'factory': create_performance_predictions_plugin,
+        'description': 'ML-based performance prediction and trend forecasting',
+        'features': ['health_prediction', 'service_forecasting', 'resource_modeling']
+    },
+    'ast_analyzer': {
+        'class': ASTCodeUnderstanding,
+        'factory': create_ast_analyzer_plugin,
+        'description': 'AST-based code structure analysis and architectural pattern detection',
+        'features': ['structure_analysis', 'complexity_assessment', 'pattern_detection']
+    }
+}
 
-from .language_bridge import (
-    NaturalLanguageBridge,
-    create_language_bridge
-)
+def create_ml_intelligence_suite(config=None):
+    """Create complete ML intelligence feature suite for dashboard integration"""
+    suite = {}
+    for module_name, module_info in ML_INTELLIGENCE_MODULES.items():
+        suite[module_name] = module_info['factory'](config)
+    return suite
 
-from .documentation_generator import (
-    DocumentationGenerator,
-    create_documentation_generator
-)
-
-from .security_analyzer import (
-    SecurityAnalyzer,
-    create_security_analyzer
-)
-
-from .intelligence_core import (
-    PredictiveCodeIntelligence,
-    create_predictive_code_intelligence
-)
+def get_ml_intelligence_features():
+    """Get list of all available ML intelligence features"""
+    features = []
+    for module_name, module_info in ML_INTELLIGENCE_MODULES.items():
+        features.extend([f"{module_name}_{feature}" for feature in module_info['features']])
+    return features
 
 __all__ = [
-    # Data Models
-    'PredictionType',
-    'LanguageBridgeDirection',
-    'DocumentationType',
-    'PredictionConfidence',
-    'CodePrediction',
-    'NaturalLanguageTranslation',
-    'GeneratedDocumentation',
-    'CodeEvolutionAnalysis',
-    
-    # Components
-    'CodeEvolutionPredictor',
-    'NaturalLanguageBridge',
-    'DocumentationGenerator',
-    'SecurityAnalyzer',
-    'PredictiveCodeIntelligence',
-    
-    # Factory Functions
-    'create_evolution_predictor',
-    'create_language_bridge',
-    'create_documentation_generator',
-    'create_security_analyzer',
-    'create_predictive_code_intelligence'
+    'SemanticIntentClassifier', 'MLPerformancePredictions', 'ASTCodeUnderstanding',
+    'create_intent_classifier_plugin', 'create_performance_predictions_plugin', 'create_ast_analyzer_plugin',
+    'ML_INTELLIGENCE_MODULES', 'create_ml_intelligence_suite', 'get_ml_intelligence_features'
 ]
-
-__version__ = "1.0.0"
-__author__ = "Agent D - Analysis & Resource Management Specialist"
-__description__ = "Revolutionary Predictive Code Intelligence - First AI system that predicts code evolution"

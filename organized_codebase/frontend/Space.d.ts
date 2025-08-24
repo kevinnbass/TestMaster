@@ -1,6 +1,8 @@
-export default Space;
+import RenderBase from '../renderbase/RenderBase';
 
-declare class Space {
-    constructor(scene: Phaser.Scene);
-    isRexSpace: true;
+export default class Space extends RenderBase {
+    readonly type: 'space';
+
+    setSpaceWidth(width: number): this;
+    spaceWidth: number;
 }
