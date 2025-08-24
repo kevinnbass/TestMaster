@@ -164,6 +164,10 @@
     "max_file_size_bytes": 10485760,
     "use_symlinks": false
   },
+  "performance": {
+    "max_workers": 4,
+    "chunk_size": 1000
+  },
   "bounds": {
     "max_directories": 20000,
     "max_files": 50000,
