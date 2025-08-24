@@ -1,0 +1,10 @@
+﻿Full migration run: 20250823_213009
+Base: C:\Users\kbass\OneDrive\Documents\testmaster
+Destination: C:\Users\kbass\OneDrive\Documents\testmaster\frontend_final
+Reports: C:\Users\kbass\OneDrive\Documents\testmaster\_migration_reports\full_migration_20250823_213009
+Conflicts archived to: C:\Users\kbass\OneDrive\Documents\testmaster\frontend_final\_conflicts\full_migration_20250823_213009
+Copied: 4772
+Skipped identical: 4460
+Conflicts archived: 1
+Errors: 0
+Missing coverage: 20

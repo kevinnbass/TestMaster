@@ -21,7 +21,7 @@ function Get-RelativePath {
 function Ensure-ParentDirectory {
     param([Parameter(Mandatory=$true)][string]$TargetPath)
     $parent = Split-Path -Path $TargetPath -Parent
-    if (-not [string]::IsNullOrWhiteSpace($parent) -and -not (Test-Path $parent)) {
+    if (-not [string]::IsNullOrWhiteSpace($parent) -and -not (Test-Path -LiteralPath $parent)) {
         New-Item -ItemType Directory -Path $parent -Force | Out-Null
     }
 }
@@ -29,7 +29,7 @@ function Ensure-ParentDirectory {
 function Safe-GetFileHash {
     param([Parameter(Mandatory=$true)][string]$Path)
     try {
-        return (Get-FileHash -Algorithm SHA256 -Path $Path -ErrorAction Stop).Hash
+        return (Get-FileHash -Algorithm SHA256 -LiteralPath $Path -ErrorAction Stop).Hash
     } catch {
         return $null
     }
@@ -48,7 +48,7 @@ $conflictRoot = Join-Path $destRoot ("_conflicts\full_migration_" + $timestamp)
 New-Item -ItemType Directory -Path $reportRoot -Force | Out-Null
 New-Item -ItemType Directory -Path $conflictRoot -Force | Out-Null
 
-if (-not (Test-Path $destRoot)) { throw "Destination root does not exist: $destRoot" }
+if (-not (Test-Path -LiteralPath $destRoot)) { throw "Destination root does not exist: $destRoot" }
 
 $logCopied       = New-Object System.Collections.Generic.List[object]
 $logSkippedSame  = New-Object System.Collections.Generic.List[object]
@@ -57,7 +57,7 @@ $logErrors       = New-Object System.Collections.Generic.List[object]
 $allEnumerated   = New-Object System.Collections.Generic.List[object]
 
 foreach ($src in $srcs) {
-    if (-not (Test-Path $src.Path)) { continue }
+    if (-not (Test-Path -LiteralPath $src.Path)) { continue }
     $files = Get-ChildItem -Path $src.Path -Recurse -File -Force -ErrorAction SilentlyContinue
     foreach ($f in $files) {
         $rel = Get-RelativePath -Path $f.FullName -Root $src.Path
@@ -67,7 +67,7 @@ foreach ($src in $srcs) {
 }
 
 foreach ($src in $srcs) {
-    if (-not (Test-Path $src.Path)) { continue }
+    if (-not (Test-Path -LiteralPath $src.Path)) { continue }
     $files = Get-ChildItem -Path $src.Path -Recurse -File -Force -ErrorAction SilentlyContinue
     foreach ($f in $files) {
         try {
@@ -75,9 +75,9 @@ foreach ($src in $srcs) {
             if ([string]::IsNullOrWhiteSpace($rel)) { continue }
             $destPath = Join-Path $destRoot $rel
 
-            if (-not (Test-Path $destPath)) {
+            if (-not (Test-Path -LiteralPath $destPath)) {
                 Ensure-ParentDirectory -TargetPath $destPath
-                Copy-Item -Path $f.FullName -Destination $destPath -Force
+                Copy-Item -LiteralPath $f.FullName -Destination $destPath -Force
                 $dstHash = Safe-GetFileHash -Path $destPath
                 $srcHash = Safe-GetFileHash -Path $f.FullName
                 $logCopied.Add([PSCustomObject]@{
@@ -96,12 +96,12 @@ foreach ($src in $srcs) {
                 # Conflict: archive both versions to ensure unique content is preserved inside frontend_final
                 $archiveSrc  = Join-Path $conflictRoot (Join-Path $src.Name $rel)
                 Ensure-ParentDirectory -TargetPath $archiveSrc
-                Copy-Item -Path $f.FullName -Destination $archiveSrc -Force
+                Copy-Item -LiteralPath $f.FullName -Destination $archiveSrc -Force
 
                 $archiveDest = Join-Path $conflictRoot (Join-Path 'dest_existing' $rel)
-                if (-not (Test-Path $archiveDest)) {
+                if (-not (Test-Path -LiteralPath $archiveDest)) {
                     Ensure-ParentDirectory -TargetPath $archiveDest
-                    Copy-Item -Path $destPath -Destination $archiveDest -Force
+                    Copy-Item -LiteralPath $destPath -Destination $archiveDest -Force
                 }
 
                 $logConflicts.Add([PSCustomObject]@{
@@ -121,7 +121,7 @@ $missing = New-Object System.Collections.Generic.List[object]
 foreach ($item in $allEnumerated) {
     $destPath = Join-Path $destRoot $item.RelativePath
     $archSrc  = Join-Path $conflictRoot (Join-Path $item.Source $item.RelativePath)
-    if (-not (Test-Path $destPath) -and -not (Test-Path $archSrc)) {
+    if (-not (Test-Path -LiteralPath $destPath) -and -not (Test-Path -LiteralPath $archSrc)) {
         $missing.Add([PSCustomObject]@{ Source=$item.Source; SourcePath=$item.SourcePath; RelativePath=$item.RelativePath; DestPath=$destPath }) | Out-Null
     }
 }
