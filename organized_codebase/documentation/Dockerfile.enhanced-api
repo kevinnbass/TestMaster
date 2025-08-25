@@ -1,0 +1,44 @@
+# TestMaster Enhanced API Server Dockerfile
+FROM python:3.11-slim
+
+LABEL maintainer="Agent Delta <delta@testmaster.ai>"
+LABEL description="TestMaster Enhanced API Server with all enhancement patterns"
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV FLASK_ENV=production
+ENV API_PORT=5025
+
+# Create application directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Create necessary directories
+RUN mkdir -p /app/cache /app/logs /app/generated_api_docs
+
+# Set permissions
+RUN chmod +x test_enhanced_server.py
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:${API_PORT}/api/health || exit 1
+
+# Expose port
+EXPOSE ${API_PORT}
+
+# Run the application
+CMD ["python", "test_enhanced_server.py"]
