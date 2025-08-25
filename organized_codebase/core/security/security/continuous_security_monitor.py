@@ -1,0 +1,1039 @@
+from SECURITY_PATCHES.fix_eval_exec_vulnerabilities import SafeCodeExecutor
+"""
+Continuous Security Monitoring System
+
+This module provides real-time, continuous security monitoring for Python codebases,
+leveraging the real-time AST engine and security analysis components to detect
+security vulnerabilities, threats, and compliance violations as code changes.
+"""
+
+import ast
+import os
+import time
+import json
+import hashlib
+import threading
+import asyncio
+import logging
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Set, Callable, Union, Tuple
+from dataclasses import dataclass, field
+from collections import defaultdict, deque
+from concurrent.futures import ThreadPoolExecutor
+from queue import Queue, PriorityQueue
+from enum import Enum
+import weakref
+import sqlite3
+from datetime import datetime, timedelta
+
+from .base import BaseAnalyzer
+from .realtime_ast_engine import RealtimeASTEngine, FileChange, ChangeType, Priority
+
+
+class ThreatLevel(Enum):
+    """Security threat levels"""
+    CRITICAL = "critical"
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
+    INFO = "info"
+
+
+class AlertType(Enum):
+    """Types of security alerts"""
+    VULNERABILITY = "vulnerability"
+    COMPLIANCE = "compliance"
+    ANOMALY = "anomaly"
+    POLICY_VIOLATION = "policy_violation"
+    SUSPICIOUS_ACTIVITY = "suspicious_activity"
+
+
+@dataclass
+class SecurityAlert:
+    """Represents a security alert"""
+    id: str
+    alert_type: AlertType
+    threat_level: ThreatLevel
+    title: str
+    description: str
+    file_path: str
+    line_number: Optional[int]
+    timestamp: float
+    cwe_id: Optional[str] = None
+    cvss_score: Optional[float] = None
+    evidence: List[str] = field(default_factory=list)
+    recommendations: List[str] = field(default_factory=list)
+    tags: Set[str] = field(default_factory=set)
+    suppressed: bool = False
+    false_positive: bool = False
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary for serialization"""
+        return {
+            'id': self.id,
+            'alert_type': self.alert_type.value,
+            'threat_level': self.threat_level.value,
+            'title': self.title,
+            'description': self.description,
+            'file_path': self.file_path,
+            'line_number': self.line_number,
+            'timestamp': self.timestamp,
+            'cwe_id': self.cwe_id,
+            'cvss_score': self.cvss_score,
+            'evidence': self.evidence,
+            'recommendations': self.recommendations,
+            'tags': list(self.tags),
+            'suppressed': self.suppressed,
+            'false_positive': self.false_positive
+        }
+
+
+@dataclass
+class SecurityMetrics:
+    """Security metrics for monitoring"""
+    total_alerts: int = 0
+    alerts_by_level: Dict[str, int] = field(default_factory=dict)
+    alerts_by_type: Dict[str, int] = field(default_factory=dict)
+    files_scanned: int = 0
+    vulnerabilities_found: int = 0
+    compliance_violations: int = 0
+    risk_score: float = 0.0
+    last_scan_time: float = 0.0
+
+
+class SecurityRuleEngine:
+    """Engine for security rule evaluation"""
+    
+    def __init__(self):
+        self.rules = self._initialize_security_rules()
+        self.custom_rules = []
+        
+    def _initialize_security_rules(self) -> List[Dict[str, Any]]:
+        """Initialize built-in security rules"""
+        return [
+            {
+                'id': 'SEC001',
+                'name': 'Dangerous Function Usage',
+                'description': 'Detects usage of dangerous functions like SafeCodeExecutor.safe_SafeCodeExecutor.safe_eval() and SafeCodeExecutor.safe_exec()',
+                'pattern': r'\b(eval|exec)\s*\(',
+                'threat_level': ThreatLevel.HIGH,
+                'cwe_id': 'CWE-95',
+                'cvss_score': 7.5,
+                'check_function': self._check_dangerous_functions
+            },
+            {
+                'id': 'SEC002',
+                'name': 'SQL Injection Risk',
+                'description': 'Detects potential SQL injection vulnerabilities',
+                'pattern': r'(SELECT|INSERT|UPDATE|DELETE).*%[s|d]',
+                'threat_level': ThreatLevel.CRITICAL,
+                'cwe_id': 'CWE-89',
+                'cvss_score': 9.3,
+                'check_function': self._check_sql_injection
+            },
+            {
+                'id': 'SEC003',
+                'name': 'Command Injection Risk',
+                'description': 'Detects potential command injection vulnerabilities',
+                'pattern': r'(os\.system|subprocess\.call|subprocess\.run).*\+',
+                'threat_level': ThreatLevel.HIGH,
+                'cwe_id': 'CWE-78',
+                'cvss_score': 8.1,
+                'check_function': self._check_command_injection
+            },
+            {
+                'id': 'SEC004',
+                'name': 'Hardcoded Credentials',
+                'description': 'Detects hardcoded passwords and API keys',
+                'pattern': r'(password|api_key|secret|token)\s*=\s*["\'][^"\']+["\']',
+                'threat_level': ThreatLevel.HIGH,
+                'cwe_id': 'CWE-798',
+                'cvss_score': 7.5,
+                'check_function': self._check_hardcoded_credentials
+            },
+            {
+                'id': 'SEC005',
+                'name': 'Insecure Random',
+                'description': 'Detects usage of insecure random number generators',
+                'pattern': r'random\.(random|choice|randint)',
+                'threat_level': ThreatLevel.MEDIUM,
+                'cwe_id': 'CWE-338',
+                'cvss_score': 5.3,
+                'check_function': self._check_insecure_random
+            },
+            {
+                'id': 'SEC006',
+                'name': 'Pickle Deserialization',
+                'description': 'Detects unsafe pickle deserialization',
+                'pattern': r'pickle\.loads?\(',
+                'threat_level': ThreatLevel.HIGH,
+                'cwe_id': 'CWE-502',
+                'cvss_score': 8.1,
+                'check_function': self._check_pickle_usage
+            },
+            {
+                'id': 'SEC007',
+                'name': 'XML External Entity',
+                'description': 'Detects potential XXE vulnerabilities',
+                'pattern': r'xml\.etree|lxml|xmltodict',
+                'threat_level': ThreatLevel.MEDIUM,
+                'cwe_id': 'CWE-611',
+                'cvss_score': 6.5,
+                'check_function': self._check_xml_parsing
+            },
+            {
+                'id': 'SEC008',
+                'name': 'Weak Cryptography',
+                'description': 'Detects usage of weak cryptographic algorithms',
+                'pattern': r'(MD5|SHA1|DES|RC4)',
+                'threat_level': ThreatLevel.MEDIUM,
+                'cwe_id': 'CWE-327',
+                'cvss_score': 5.9,
+                'check_function': self._check_weak_crypto
+            },
+            {
+                'id': 'SEC009',
+                'name': 'Path Traversal Risk',
+                'description': 'Detects potential path traversal vulnerabilities',
+                'pattern': r'(open|file)\([^)]*\.\.[/\\]',
+                'threat_level': ThreatLevel.HIGH,
+                'cwe_id': 'CWE-22',
+                'cvss_score': 7.5,
+                'check_function': self._check_path_traversal
+            },
+            {
+                'id': 'SEC010',
+                'name': 'Debug Mode Enabled',
+                'description': 'Detects debug mode enabled in production',
+                'pattern': r'DEBUG\s*=\s*True',
+                'threat_level': ThreatLevel.MEDIUM,
+                'cwe_id': 'CWE-489',
+                'cvss_score': 5.3,
+                'check_function': self._check_debug_mode
+            }
+        ]
+    
+    def evaluate_rules(self, file_path: str, content: str, tree: ast.AST) -> List[SecurityAlert]:
+        """Evaluate all security rules against code"""
+        alerts = []
+        
+        for rule in self.rules + self.custom_rules:
+            try:
+                rule_alerts = rule['check_function'](file_path, content, tree, rule)
+                alerts.extend(rule_alerts)
+            except Exception as e:
+                logging.error(f"Error evaluating rule {rule['id']}: {e}")
+        
+        return alerts
+    
+    def _check_dangerous_functions(self, file_path: str, content: str, tree: ast.AST, rule: Dict[str, Any]) -> List[SecurityAlert]:
+        """Check for dangerous function usage"""
+        alerts = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name):
+                    if node.func.id in ['eval', 'exec']:
+                        alert = SecurityAlert(
+                            id=f"{rule['id']}_{node.lineno}",
+                            alert_type=AlertType.VULNERABILITY,
+                            threat_level=rule['threat_level'],
+                            title=f"Dangerous function: {node.func.id}()",
+                            description=f"Use of {node.func.id}() function detected at line {node.lineno}",
+                            file_path=file_path,
+                            line_number=node.lineno,
+                            timestamp=time.time(),
+                            cwe_id=rule['cwe_id'],
+                            cvss_score=rule['cvss_score'],
+                            evidence=[f"Function call: {node.func.id}()"],
+                            recommendations=[
+                                f"Replace {node.func.id}() with safer alternatives",
+                                "Use ast.literal_SafeCodeExecutor.safe_SafeCodeExecutor.safe_eval() for safe evaluation",
+                                "Implement proper input validation"
+                            ],
+                            tags={'dangerous-function', 'code-injection'}
+                        )
+                        alerts.append(alert)
+        
+        return alerts
+    
+    def _check_sql_injection(self, file_path: str, content: str, tree: ast.AST, rule: Dict[str, Any]) -> List[SecurityAlert]:
+        """Check for SQL injection vulnerabilities"""
+        alerts = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mod):
+                # Check for string formatting in SQL contexts
+                if isinstance(node.left, (ast.Str, ast.Constant)):
+                    sql_value = getattr(node.left, 'value', getattr(node.left, 's', ''))
+                    if any(keyword in sql_value.upper() for keyword in ['SELECT', 'INSERT', 'UPDATE', 'DELETE']):
+                        alert = SecurityAlert(
+                            id=f"{rule['id']}_{node.lineno}",
+                            alert_type=AlertType.VULNERABILITY,
+                            threat_level=rule['threat_level'],
+                            title="Potential SQL Injection",
+                            description=f"SQL query with string formatting detected at line {node.lineno}",
+                            file_path=file_path,
+                            line_number=node.lineno,
+                            timestamp=time.time(),
+                            cwe_id=rule['cwe_id'],
+                            cvss_score=rule['cvss_score'],
+                            evidence=[f"SQL query: {sql_value[:100]}..."],
+                            recommendations=[
+                                "Use parameterized queries instead of string formatting",
+                                "Implement proper input validation and sanitization",
+                                "Use ORM frameworks for database operations"
+                            ],
+                            tags={'sql-injection', 'database-security'}
+                        )
+                        alerts.append(alert)
+        
+        return alerts
+    
+    def _check_command_injection(self, file_path: str, content: str, tree: ast.AST, rule: Dict[str, Any]) -> List[SecurityAlert]:
+        """Check for command injection vulnerabilities"""
+        alerts = []
+        
+        dangerous_functions = ['os.system', 'subprocess.call', 'subprocess.run', 'subprocess.Popen']
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                func_name = None
+                if isinstance(node.func, ast.Attribute):
+                    if isinstance(node.func.value, ast.Name):
+                        func_name = f"{node.func.value.id}.{node.func.attr}"
+                
+                if func_name in dangerous_functions:
+                    # Check if command is built using string concatenation
+                    for arg in node.args:
+                        if isinstance(arg, ast.BinOp) and isinstance(arg.op, ast.Add):
+                            alert = SecurityAlert(
+                                id=f"{rule['id']}_{node.lineno}",
+                                alert_type=AlertType.VULNERABILITY,
+                                threat_level=rule['threat_level'],
+                                title="Potential Command Injection",
+                                description=f"Command execution with string concatenation at line {node.lineno}",
+                                file_path=file_path,
+                                line_number=node.lineno,
+                                timestamp=time.time(),
+                                cwe_id=rule['cwe_id'],
+                                cvss_score=rule['cvss_score'],
+                                evidence=[f"Function: {func_name}"],
+                                recommendations=[
+                                    "Use subprocess with shell=False and argument lists",
+                                    "Validate and sanitize all user inputs",
+                                    "Use shlex.quote() for shell command arguments"
+                                ],
+                                tags={'command-injection', 'subprocess-security'}
+                            )
+                            alerts.append(alert)
+        
+        return alerts
+    
+    def _check_hardcoded_credentials(self, file_path: str, content: str, tree: ast.AST, rule: Dict[str, Any]) -> List[SecurityAlert]:
+        """Check for hardcoded credentials"""
+        alerts = []
+        
+        credential_patterns = ['password', 'api_key', 'secret', 'token', 'private_key']
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name):
+                        var_name = target.id.lower()
+                        if any(pattern in var_name for pattern in credential_patterns):
+                            if isinstance(node.value, (ast.Str, ast.Constant)):
+                                value = getattr(node.value, 'value', getattr(node.value, 's', ''))
+                                if len(value) > 3:  # Avoid false positives on empty strings
+                                    alert = SecurityAlert(
+                                        id=f"{rule['id']}_{node.lineno}",
+                                        alert_type=AlertType.VULNERABILITY,
+                                        threat_level=rule['threat_level'],
+                                        title="Hardcoded Credential",
+                                        description=f"Hardcoded credential detected: {target.id}",
+                                        file_path=file_path,
+                                        line_number=node.lineno,
+                                        timestamp=time.time(),
+                                        cwe_id=rule['cwe_id'],
+                                        cvss_score=rule['cvss_score'],
+                                        evidence=[f"Variable: {target.id}"],
+                                        recommendations=[
+                                            "Use environment variables for sensitive data",
+                                            "Implement secure credential management",
+                                            "Use key management services (AWS KMS, Azure Key Vault)"
+                                        ],
+                                        tags={'hardcoded-credentials', 'secrets-management'}
+                                    )
+                                    alerts.append(alert)
+        
+        return alerts
+    
+    def _check_insecure_random(self, file_path: str, content: str, tree: ast.AST, rule: Dict[str, Any]) -> List[SecurityAlert]:
+        """Check for insecure random number generation"""
+        alerts = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Attribute):
+                    if isinstance(node.func.value, ast.Name):
+                        if (node.func.value.id == 'random' and 
+                            node.func.attr in ['random', 'choice', 'randint']):
+                            alert = SecurityAlert(
+                                id=f"{rule['id']}_{node.lineno}",
+                                alert_type=AlertType.VULNERABILITY,
+                                threat_level=rule['threat_level'],
+                                title="Insecure Random Number Generation",
+                                description=f"Use of insecure random.{node.func.attr}() at line {node.lineno}",
+                                file_path=file_path,
+                                line_number=node.lineno,
+                                timestamp=time.time(),
+                                cwe_id=rule['cwe_id'],
+                                cvss_score=rule['cvss_score'],
+                                evidence=[f"Function: random.{node.func.attr}()"],
+                                recommendations=[
+                                    "Use secrets module for cryptographic purposes",
+                                    "Use os.urandom() for secure random bytes",
+                                    "Avoid random module for security-sensitive operations"
+                                ],
+                                tags={'insecure-random', 'cryptography'}
+                            )
+                            alerts.append(alert)
+        
+        return alerts
+    
+    def _check_pickle_usage(self, file_path: str, content: str, tree: ast.AST, rule: Dict[str, Any]) -> List[SecurityAlert]:
+        """Check for unsafe pickle usage"""
+        alerts = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Attribute):
+                    if isinstance(node.func.value, ast.Name):
+                        if (node.func.value.id == 'pickle' and 
+                            node.func.attr in ['load', 'loads']):
+                            alert = SecurityAlert(
+                                id=f"{rule['id']}_{node.lineno}",
+                                alert_type=AlertType.VULNERABILITY,
+                                threat_level=rule['threat_level'],
+                                title="Unsafe Pickle Deserialization",
+                                description=f"Unsafe pickle.{node.func.attr}() usage at line {node.lineno}",
+                                file_path=file_path,
+                                line_number=node.lineno,
+                                timestamp=time.time(),
+                                cwe_id=rule['cwe_id'],
+                                cvss_score=rule['cvss_score'],
+                                evidence=[f"Function: pickle.{node.func.attr}()"],
+                                recommendations=[
+                                    "Use safer serialization formats (JSON, msgpack)",
+                                    "Validate data sources before deserialization",
+                                    "Consider using restricted pickle alternatives"
+                                ],
+                                tags={'deserialization', 'pickle-security'}
+                            )
+                            alerts.append(alert)
+        
+        return alerts
+    
+    def _check_xml_parsing(self, file_path: str, content: str, tree: ast.AST, rule: Dict[str, Any]) -> List[SecurityAlert]:
+        """Check for XML parsing vulnerabilities"""
+        alerts = []
+        
+        xml_modules = ['xml.etree', 'lxml', 'xmltodict']
+        
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.Import, ast.ImportFrom)):
+                if isinstance(node, ast.Import):
+                    for alias in node.names:
+                        if any(module in alias.name for module in xml_modules):
+                            alert = SecurityAlert(
+                                id=f"{rule['id']}_{node.lineno}",
+                                alert_type=AlertType.VULNERABILITY,
+                                threat_level=rule['threat_level'],
+                                title="Potential XXE Vulnerability",
+                                description=f"XML parsing library imported: {alias.name}",
+                                file_path=file_path,
+                                line_number=node.lineno,
+                                timestamp=time.time(),
+                                cwe_id=rule['cwe_id'],
+                                cvss_score=rule['cvss_score'],
+                                evidence=[f"Import: {alias.name}"],
+                                recommendations=[
+                                    "Disable external entity processing",
+                                    "Use defusedxml library for safer XML parsing",
+                                    "Validate XML input against strict schemas"
+                                ],
+                                tags={'xxe', 'xml-security'}
+                            )
+                            alerts.append(alert)
+        
+        return alerts
+    
+    def _check_weak_crypto(self, file_path: str, content: str, tree: ast.AST, rule: Dict[str, Any]) -> List[SecurityAlert]:
+        """Check for weak cryptographic algorithms"""
+        alerts = []
+        
+        weak_algorithms = ['MD5', 'SHA1', 'DES', 'RC4']
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Attribute):
+                    if node.func.attr.upper() in weak_algorithms:
+                        alert = SecurityAlert(
+                            id=f"{rule['id']}_{node.lineno}",
+                            alert_type=AlertType.VULNERABILITY,
+                            threat_level=rule['threat_level'],
+                            title="Weak Cryptographic Algorithm",
+                            description=f"Weak algorithm {node.func.attr} used at line {node.lineno}",
+                            file_path=file_path,
+                            line_number=node.lineno,
+                            timestamp=time.time(),
+                            cwe_id=rule['cwe_id'],
+                            cvss_score=rule['cvss_score'],
+                            evidence=[f"Algorithm: {node.func.attr}"],
+                            recommendations=[
+                                "Use SHA-256 or SHA-3 instead of MD5/SHA1",
+                                "Use AES instead of DES/RC4",
+                                "Implement proper key management"
+                            ],
+                            tags={'weak-crypto', 'cryptography'}
+                        )
+                        alerts.append(alert)
+        
+        return alerts
+    
+    def _check_path_traversal(self, file_path: str, content: str, tree: ast.AST, rule: Dict[str, Any]) -> List[SecurityAlert]:
+        """Check for path traversal vulnerabilities"""
+        alerts = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name) and node.func.id in ['open', 'file']:
+                    for arg in node.args:
+                        if isinstance(arg, (ast.Str, ast.Constant)):
+                            path_value = getattr(arg, 'value', getattr(arg, 's', ''))
+                            if '..' in path_value:
+                                alert = SecurityAlert(
+                                    id=f"{rule['id']}_{node.lineno}",
+                                    alert_type=AlertType.VULNERABILITY,
+                                    threat_level=rule['threat_level'],
+                                    title="Potential Path Traversal",
+                                    description=f"Path traversal pattern detected at line {node.lineno}",
+                                    file_path=file_path,
+                                    line_number=node.lineno,
+                                    timestamp=time.time(),
+                                    cwe_id=rule['cwe_id'],
+                                    cvss_score=rule['cvss_score'],
+                                    evidence=[f"Path: {path_value}"],
+                                    recommendations=[
+                                        "Validate and sanitize file paths",
+                                        "Use os.path.abspath() and check against allowed directories",
+                                        "Implement proper access controls"
+                                    ],
+                                    tags={'path-traversal', 'file-security'}
+                                )
+                                alerts.append(alert)
+        
+        return alerts
+    
+    def _check_debug_mode(self, file_path: str, content: str, tree: ast.AST, rule: Dict[str, Any]) -> List[SecurityAlert]:
+        """Check for debug mode enabled"""
+        alerts = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name) and target.id == 'DEBUG':
+                        if isinstance(node.value, ast.Constant) and node.value.value is True:
+                            alert = SecurityAlert(
+                                id=f"{rule['id']}_{node.lineno}",
+                                alert_type=AlertType.COMPLIANCE,
+                                threat_level=rule['threat_level'],
+                                title="Debug Mode Enabled",
+                                description="DEBUG = True detected in production code",
+                                file_path=file_path,
+                                line_number=node.lineno,
+                                timestamp=time.time(),
+                                cwe_id=rule['cwe_id'],
+                                cvss_score=rule['cvss_score'],
+                                evidence=["DEBUG = True"],
+                                recommendations=[
+                                    "Set DEBUG = False in production",
+                                    "Use environment variables for configuration",
+                                    "Implement proper logging instead of debug mode"
+                                ],
+                                tags={'debug-mode', 'configuration'}
+                            )
+                            alerts.append(alert)
+        
+        return alerts
+
+
+class AlertManager:
+    """Manages security alerts and notifications"""
+    
+    def __init__(self, db_path: str = "security_alerts.db"):
+        self.db_path = db_path
+        self.alerts = {}  # alert_id -> SecurityAlert
+        self.alert_history = deque(maxlen=10000)  # Recent alerts
+        self.notification_callbacks = []
+        self.lock = threading.RLock()
+        self._init_database()
+    
+    def _init_database(self):
+        """Initialize SQLite database for alert storage"""
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS alerts (
+                    id TEXT PRIMARY KEY,
+                    alert_type TEXT,
+                    threat_level TEXT,
+                    title TEXT,
+                    description TEXT,
+                    file_path TEXT,
+                    line_number INTEGER,
+                    timestamp REAL,
+                    cwe_id TEXT,
+                    cvss_score REAL,
+                    evidence TEXT,
+                    recommendations TEXT,
+                    tags TEXT,
+                    suppressed BOOLEAN,
+                    false_positive BOOLEAN
+                )
+            ''')
+            conn.commit()
+    
+    def add_alert(self, alert: SecurityAlert) -> None:
+        """Add a new security alert"""
+        with self.lock:
+            self.alerts[alert.id] = alert
+            self.alert_history.append(alert)
+            self._save_alert_to_db(alert)
+            self._notify_alert(alert)
+    
+    def suppress_alert(self, alert_id: str) -> bool:
+        """Suppress an alert"""
+        with self.lock:
+            if alert_id in self.alerts:
+                self.alerts[alert_id].suppressed = True
+                self._update_alert_in_db(self.alerts[alert_id])
+                return True
+            return False
+    
+    def mark_false_positive(self, alert_id: str) -> bool:
+        """Mark an alert as false positive"""
+        with self.lock:
+            if alert_id in self.alerts:
+                self.alerts[alert_id].false_positive = True
+                self._update_alert_in_db(self.alerts[alert_id])
+                return True
+            return False
+    
+    def get_active_alerts(self) -> List[SecurityAlert]:
+        """Get all active (non-suppressed) alerts"""
+        with self.lock:
+            return [alert for alert in self.alerts.values() 
+                   if not alert.suppressed and not alert.false_positive]
+    
+    def get_alerts_by_level(self, threat_level: ThreatLevel) -> List[SecurityAlert]:
+        """Get alerts by threat level"""
+        with self.lock:
+            return [alert for alert in self.alerts.values() 
+                   if alert.threat_level == threat_level and not alert.suppressed]
+    
+    def get_alerts_by_file(self, file_path: str) -> List[SecurityAlert]:
+        """Get alerts for a specific file"""
+        with self.lock:
+            return [alert for alert in self.alerts.values() 
+                   if alert.file_path == file_path and not alert.suppressed]
+    
+    def clear_alerts_for_file(self, file_path: str) -> None:
+        """Clear all alerts for a specific file"""
+        with self.lock:
+            to_remove = [alert_id for alert_id, alert in self.alerts.items() 
+                        if alert.file_path == file_path]
+            for alert_id in to_remove:
+                del self.alerts[alert_id]
+            
+            # Remove from database
+            with sqlite3.connect(self.db_path) as conn:
+                conn.execute("DELETE FROM alerts WHERE file_path = ?", (file_path,))
+                conn.commit()
+    
+    def add_notification_callback(self, callback: Callable[[SecurityAlert], None]) -> None:
+        """Add callback for alert notifications"""
+        self.notification_callbacks.append(callback)
+    
+    def _save_alert_to_db(self, alert: SecurityAlert) -> None:
+        """Save alert to database"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                conn.execute('''
+                    INSERT OR REPLACE INTO alerts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (
+                    alert.id,
+                    alert.alert_type.value,
+                    alert.threat_level.value,
+                    alert.title,
+                    alert.description,
+                    alert.file_path,
+                    alert.line_number,
+                    alert.timestamp,
+                    alert.cwe_id,
+                    alert.cvss_score,
+                    json.dumps(alert.evidence),
+                    json.dumps(alert.recommendations),
+                    json.dumps(list(alert.tags)),
+                    alert.suppressed,
+                    alert.false_positive
+                ))
+                conn.commit()
+        except Exception as e:
+            logging.error(f"Error saving alert to database: {e}")
+    
+    def _update_alert_in_db(self, alert: SecurityAlert) -> None:
+        """Update alert in database"""
+        self._save_alert_to_db(alert)
+    
+    def _notify_alert(self, alert: SecurityAlert) -> None:
+        """Notify callbacks about new alert"""
+        for callback in self.notification_callbacks:
+            try:
+                callback(alert)
+            except Exception as e:
+                logging.error(f"Error in alert notification callback: {e}")
+
+
+class ContinuousSecurityMonitor(BaseAnalyzer):
+    """
+    Continuous Security Monitoring System
+    
+    Provides real-time security monitoring for Python codebases using
+    the real-time AST engine and comprehensive security rule evaluation.
+    """
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        super().__init__(config)
+        
+        # Configuration
+        self.config = config or {}
+        self.watch_paths = self.config.get('watch_paths', [])
+        self.scan_interval = self.config.get('scan_interval', 60)  # seconds
+        self.alert_db_path = self.config.get('alert_db_path', 'security_alerts.db')
+        
+        # Core components
+        self.ast_engine = RealtimeASTEngine(config)
+        self.rule_engine = SecurityRuleEngine()
+        self.alert_manager = AlertManager(self.alert_db_path)
+        
+        # Monitoring state
+        self.running = False
+        self.monitor_thread = None
+        self.last_scan_time = 0
+        
+        # Metrics
+        self.metrics = SecurityMetrics()
+        
+        # Setup callbacks
+        self.ast_engine.add_result_callback(self._on_analysis_result)
+        self.ast_engine.add_change_callback(self._on_file_change)
+        
+        self.logger = logging.getLogger(__name__)
+    
+    def start(self) -> None:
+        """Start continuous security monitoring"""
+        if self.running:
+            return
+        
+        self.running = True
+        
+        # Start AST engine
+        self.ast_engine.start()
+        
+        # Start monitoring thread
+        self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
+        self.monitor_thread.start()
+        
+        self.logger.info("Continuous security monitoring started")
+    
+    def stop(self) -> None:
+        """Stop continuous security monitoring"""
+        if not self.running:
+            return
+        
+        self.running = False
+        
+        # Stop AST engine
+        self.ast_engine.stop()
+        
+        # Wait for monitor thread
+        if self.monitor_thread:
+            self.monitor_thread.join(timeout=5.0)
+        
+        self.logger.info("Continuous security monitoring stopped")
+    
+    def analyze(self, file_path: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Perform security analysis
+        
+        If file_path is provided, analyzes that specific file.
+        Otherwise, returns current security status.
+        """
+        if file_path:
+            return self._analyze_file_security(file_path)
+        else:
+            return self._get_security_status()
+    
+    def scan_all_files(self) -> Dict[str, Any]:
+        """Perform full security scan of all monitored files"""
+        self.logger.info("Starting full security scan...")
+        
+        start_time = time.time()
+        files_scanned = 0
+        total_alerts = 0
+        
+        # Get all results from AST engine
+        results = self.ast_engine.get_all_results()
+        
+        for file_path, result in results.items():
+            try:
+                # Clear existing alerts for this file
+                self.alert_manager.clear_alerts_for_file(file_path)
+                
+                # Read current content
+                content = Path(file_path).read_text(encoding='utf-8')
+                
+                # Evaluate security rules
+                alerts = self.rule_engine.evaluate_rules(file_path, content, result.ast_tree)
+                
+                # Add alerts
+                for alert in alerts:
+                    self.alert_manager.add_alert(alert)
+                    total_alerts += 1
+                
+                files_scanned += 1
+                
+            except Exception as e:
+                self.logger.error(f"Error scanning {file_path}: {e}")
+        
+        # Update metrics
+        scan_time = time.time() - start_time
+        self.metrics.files_scanned = files_scanned
+        self.metrics.last_scan_time = time.time()
+        self._update_metrics()
+        
+        self.logger.info(f"Security scan completed: {files_scanned} files, {total_alerts} alerts, {scan_time:.2f}s")
+        
+        return {
+            'scan_summary': {
+                'files_scanned': files_scanned,
+                'total_alerts': total_alerts,
+                'scan_time': scan_time,
+                'timestamp': self.metrics.last_scan_time
+            },
+            'metrics': self.get_security_metrics(),
+            'active_alerts': len(self.alert_manager.get_active_alerts())
+        }
+    
+    def get_security_alerts(self, threat_level: Optional[ThreatLevel] = None) -> List[Dict[str, Any]]:
+        """Get security alerts, optionally filtered by threat level"""
+        if threat_level:
+            alerts = self.alert_manager.get_alerts_by_level(threat_level)
+        else:
+            alerts = self.alert_manager.get_active_alerts()
+        
+        return [alert.to_dict() for alert in alerts]
+    
+    def get_security_metrics(self) -> Dict[str, Any]:
+        """Get current security metrics"""
+        active_alerts = self.alert_manager.get_active_alerts()
+        
+        # Count alerts by level and type
+        alerts_by_level = defaultdict(int)
+        alerts_by_type = defaultdict(int)
+        
+        for alert in active_alerts:
+            alerts_by_level[alert.threat_level.value] += 1
+            alerts_by_type[alert.alert_type.value] += 1
+        
+        # Calculate risk score
+        risk_score = self._calculate_risk_score(active_alerts)
+        
+        return {
+            'total_alerts': len(active_alerts),
+            'alerts_by_level': dict(alerts_by_level),
+            'alerts_by_type': dict(alerts_by_type),
+            'files_scanned': self.metrics.files_scanned,
+            'vulnerabilities_found': alerts_by_type.get('vulnerability', 0),
+            'compliance_violations': alerts_by_type.get('compliance', 0),
+            'risk_score': risk_score,
+            'last_scan_time': self.metrics.last_scan_time,
+            'monitoring_active': self.running
+        }
+    
+    def suppress_alert(self, alert_id: str) -> bool:
+        """Suppress a specific alert"""
+        return self.alert_manager.suppress_alert(alert_id)
+    
+    def mark_false_positive(self, alert_id: str) -> bool:
+        """Mark an alert as false positive"""
+        return self.alert_manager.mark_false_positive(alert_id)
+    
+    def add_alert_callback(self, callback: Callable[[SecurityAlert], None]) -> None:
+        """Add callback for new security alerts"""
+        self.alert_manager.add_notification_callback(callback)
+    
+    def _monitor_loop(self) -> None:
+        """Main monitoring loop"""
+        self.logger.info("Security monitoring loop started")
+        
+        while self.running:
+            try:
+                current_time = time.time()
+                
+                # Periodic full scan
+                if current_time - self.last_scan_time > self.scan_interval:
+                    self.scan_all_files()
+                    self.last_scan_time = current_time
+                
+                # Sleep for a short interval
+                time.sleep(1.0)
+                
+            except Exception as e:
+                self.logger.error(f"Error in monitoring loop: {e}")
+    
+    def _on_analysis_result(self, result) -> None:
+        """Handle new analysis result from AST engine"""
+        try:
+            # Read file content
+            content = Path(result.file_path).read_text(encoding='utf-8')
+            
+            # Clear existing alerts for this file
+            self.alert_manager.clear_alerts_for_file(result.file_path)
+            
+            # Evaluate security rules
+            alerts = self.rule_engine.evaluate_rules(result.file_path, content, result.ast_tree)
+            
+            # Add new alerts
+            for alert in alerts:
+                self.alert_manager.add_alert(alert)
+            
+            # Update metrics
+            self._update_metrics()
+            
+        except Exception as e:
+            self.logger.error(f"Error processing analysis result for {result.file_path}: {e}")
+    
+    def _on_file_change(self, change: FileChange) -> None:
+        """Handle file change event"""
+        self.logger.debug(f"File change detected: {change.file_path} ({change.change_type.value})")
+        
+        if change.change_type == ChangeType.DELETED:
+            # Clear alerts for deleted file
+            self.alert_manager.clear_alerts_for_file(change.file_path)
+    
+    def _analyze_file_security(self, file_path: str) -> Dict[str, Any]:
+        """Analyze security of a specific file"""
+        try:
+            # Get or trigger analysis
+            result = self.ast_engine.get_result(file_path)
+            if not result:
+                # Trigger immediate analysis
+                analysis = self.ast_engine.analyze(file_path)
+                if 'error' in analysis:
+                    return analysis
+                result = self.ast_engine.get_result(file_path)
+            
+            if not result:
+                return {'error': f'Failed to analyze {file_path}'}
+            
+            # Read content
+            content = Path(file_path).read_text(encoding='utf-8')
+            
+            # Evaluate security rules
+            alerts = self.rule_engine.evaluate_rules(file_path, content, result.ast_tree)
+            
+            return {
+                'file_path': file_path,
+                'alerts': [alert.to_dict() for alert in alerts],
+                'alert_count': len(alerts),
+                'risk_score': self._calculate_risk_score(alerts),
+                'analysis_timestamp': result.timestamp
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Error analyzing file security {file_path}: {e}")
+            return {'error': str(e)}
+    
+    def _get_security_status(self) -> Dict[str, Any]:
+        """Get overall security status"""
+        active_alerts = self.alert_manager.get_active_alerts()
+        
+        # Get recent high-priority alerts
+        high_priority_alerts = [
+            alert for alert in active_alerts 
+            if alert.threat_level in [ThreatLevel.CRITICAL, ThreatLevel.HIGH]
+        ]
+        
+        # Sort by timestamp (most recent first)
+        high_priority_alerts.sort(key=lambda a: a.timestamp, reverse=True)
+        
+        return {
+            'security_status': {
+                'total_active_alerts': len(active_alerts),
+                'critical_alerts': len([a for a in active_alerts if a.threat_level == ThreatLevel.CRITICAL]),
+                'high_alerts': len([a for a in active_alerts if a.threat_level == ThreatLevel.HIGH]),
+                'monitoring_active': self.running,
+                'last_scan': self.metrics.last_scan_time,
+                'overall_risk_score': self._calculate_risk_score(active_alerts)
+            },
+            'recent_high_priority_alerts': [
+                alert.to_dict() for alert in high_priority_alerts[:10]
+            ],
+            'metrics': self.get_security_metrics(),
+            'engine_stats': self.ast_engine.get_statistics()
+        }
+    
+    def _update_metrics(self) -> None:
+        """Update security metrics"""
+        active_alerts = self.alert_manager.get_active_alerts()
+        
+        self.metrics.total_alerts = len(active_alerts)
+        self.metrics.alerts_by_level = defaultdict(int)
+        self.metrics.alerts_by_type = defaultdict(int)
+        
+        for alert in active_alerts:
+            self.metrics.alerts_by_level[alert.threat_level.value] += 1
+            self.metrics.alerts_by_type[alert.alert_type.value] += 1
+        
+        self.metrics.vulnerabilities_found = self.metrics.alerts_by_type.get('vulnerability', 0)
+        self.metrics.compliance_violations = self.metrics.alerts_by_type.get('compliance', 0)
+        self.metrics.risk_score = self._calculate_risk_score(active_alerts)
+    
+    def _calculate_risk_score(self, alerts: List[SecurityAlert]) -> float:
+        """Calculate overall risk score based on alerts"""
+        if not alerts:
+            return 0.0
+        
+        # Weight alerts by threat level and CVSS score
+        total_score = 0.0
+        
+        threat_weights = {
+            ThreatLevel.CRITICAL: 10.0,
+            ThreatLevel.HIGH: 7.0,
+            ThreatLevel.MEDIUM: 4.0,
+            ThreatLevel.LOW: 2.0,
+            ThreatLevel.INFO: 1.0
+        }
+        
+        for alert in alerts:
+            base_score = threat_weights.get(alert.threat_level, 1.0)
+            
+            # Multiply by CVSS score if available
+            if alert.cvss_score:
+                base_score *= (alert.cvss_score / 10.0)
+            
+            total_score += base_score
+        
+        # Normalize to 0-100 scale
+        return min(total_score / len(alerts) * 10, 100.0)
