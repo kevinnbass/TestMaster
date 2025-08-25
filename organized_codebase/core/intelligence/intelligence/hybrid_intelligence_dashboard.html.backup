@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster Hybrid Intelligence Command Center</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+            padding: 15px 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        
+        /* Tab System */
+        .tab-container {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .tabs {
+            display: flex;
+            padding: 0 20px;
+            min-width: max-content;
+        }
+        .tab-button {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+        .tab-button:hover {
+            color: #e2e8f0;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .tab-button.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        /* Content */
+        .tab-content {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.3s;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        /* Cards */
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #334155;
+        }
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Agent Cards */
+        .agent-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .agent-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+        .agent-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            margin-top: 8px;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        .status-active { background: #10b981; }
+        .status-idle { background: #f59e0b; }
+        .status-inactive { background: #6b7280; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Metrics */
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .metric:last-child {
+            border-bottom: none;
+        }
+        .metric-label {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .metric-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .metric-value.good { color: #10b981; }
+        .metric-value.warning { color: #f59e0b; }
+        .metric-value.danger { color: #ef4444; }
+        
+        /* Buttons */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .btn-secondary {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        /* Progress Bars */
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: white;
+        }
+        
+        /* Lists */
+        .list-item {
+            padding: 10px;
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .list-item:hover {
+            background: rgba(51, 65, 85, 0.5);
+        }
+        
+        /* Workflow Visualization */
+        .workflow-container {
+            background: #0f172a;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 400px;
+            position: relative;
+        }
+        .workflow-node {
+            position: absolute;
+            background: #1e293b;
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            padding: 10px;
+            min-width: 120px;
+            text-align: center;
+            cursor: move;
+        }
+        .workflow-edge {
+            stroke: #3b82f6;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arrowhead);
+        }
+        
+        /* Console */
+        .console {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .console-line {
+            margin-bottom: 4px;
+            display: flex;
+            gap: 8px;
+        }
+        .console-timestamp {
+            color: #6b7280;
+        }
+        .console-level-info { color: #3b82f6; }
+        .console-level-success { color: #10b981; }
+        .console-level-warning { color: #f59e0b; }
+        .console-level-error { color: #ef4444; }
+        
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-blue { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .badge-green { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .badge-purple { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+        .badge-orange { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .badge-red { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>🧠 TestMaster Hybrid Intelligence Command Center</h1>
+        <div class="header-subtitle">Complete Control & Monitoring of 16 Intelligent Agents, 5 Bridge Systems, and Orchestration Framework</div>
+    </div>
+
+    <div class="tab-container">
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('overview')">📊 System Overview</button>
+            <button class="tab-button" onclick="switchTab('agents')">🤖 Intelligence Agents (16)</button>
+            <button class="tab-button" onclick="switchTab('bridges')">🌉 Bridge Systems (5)</button>
+            <button class="tab-button" onclick="switchTab('orchestration')">🎭 Orchestration Control</button>
+            <button class="tab-button" onclick="switchTab('workflow')">⚙️ Workflow Management</button>
+            <button class="tab-button" onclick="switchTab('planning')">📋 Hierarchical Planning</button>
+            <button class="tab-button" onclick="switchTab('consensus')">🗳️ Consensus Engine</button>
+            <button class="tab-button" onclick="switchTab('optimization')">📈 Multi-Objective Optimization</button>
+            <button class="tab-button" onclick="switchTab('security')">🔒 Security Intelligence</button>
+            <button class="tab-button" onclick="switchTab('monitoring')">📡 Performance Monitoring</button>
+            <button class="tab-button" onclick="switchTab('llm')">🤖 LLM Provider Management</button>
+            <button class="tab-button" onclick="switchTab('analytics')">📊 Deep Analytics</button>
+        </div>
+    </div>
+
+    <!-- System Overview Tab -->
+    <div id="overview-tab" class="tab-content active">
+        <div class="grid-4">
+            <!-- Active Agents Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Active Agents</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Agents</span>
+                    <span class="metric-value">16</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active</span>
+                    <span class="metric-value good">12</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Idle</span>
+                    <span class="metric-value warning">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Inactive</span>
+                    <span class="metric-value">1</span>
+                </div>
+            </div>
+
+            <!-- Bridge Status Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌉 Bridge Systems</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Protocol Bridge</span>
+                    <span class="metric-value good">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Event Bridge</span>
+                    <span class="metric-value good">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Session Bridge</span>
+                    <span class="metric-value good">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">SOP Bridge</span>
+                    <span class="metric-value warning">Idle</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Context Bridge</span>
+                    <span class="metric-value good">Active</span>
+                </div>
+            </div>
+
+            <!-- Orchestration Status -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎭 Orchestration</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Mode</span>
+                    <span class="metric-value">COMPREHENSIVE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Workflows</span>
+                    <span class="metric-value">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Queue Size</span>
+                    <span class="metric-value">7</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Throughput</span>
+                    <span class="metric-value">24/min</span>
+                </div>
+            </div>
+
+            <!-- System Health -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💚 System Health</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">CPU Usage</span>
+                    <span class="metric-value">42%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Memory</span>
+                    <span class="metric-value">3.2 GB</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls/Hour</span>
+                    <span class="metric-value">127</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Uptime</span>
+                    <span class="metric-value good">99.9%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intelligence Overview -->
+        <div class="grid-2" style="margin-top: 20px;">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🧠 Intelligence Capabilities</div>
+                </div>
+                <div class="grid-2" style="gap: 10px;">
+                    <div class="list-item">
+                        <span>Tree-of-Thought Reasoning</span>
+                        <span class="badge badge-green">Active</span>
+                    </div>
+                    <div class="list-item">
+                        <span>Hierarchical Planning</span>
+                        <span class="badge badge-green">Active</span>
+                    </div>
+                    <div class="list-item">
+                        <span>Multi-Agent Consensus</span>
+                        <span class="badge badge-green">Active</span>
+                    </div>
+                    <div class="list-item">
+                        <span>NSGA-II Optimization</span>
+                        <span class="badge badge-blue">Ready</span>
+                    </div>
+                    <div class="list-item">
+                        <span>Security Scanning</span>
+                        <span class="badge badge-green">Active</span>
+                    </div>
+                    <div class="list-item">
+                        <span>LLM Management</span>
+                        <span class="badge badge-purple">Enhanced</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📜 Recent Activity</div>
+                </div>
+                <div class="console">
+                    <div class="console-line">
+                        <span class="console-timestamp">10:23:45</span>
+                        <span class="console-level-success">[SUCCESS]</span>
+                        <span>HierarchicalPlanner completed test strategy for auth_module.py</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="console-timestamp">10:23:41</span>
+                        <span class="console-level-info">[INFO]</span>
+                        <span>ConsensusEngine: 5 agents voted on refactor priority</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="console-timestamp">10:23:38</span>
+                        <span class="console-level-warning">[WARNING]</span>
+                        <span>BottleneckDetector identified slowdown in workflow_3</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="console-timestamp">10:23:35</span>
+                        <span class="console-level-success">[SUCCESS]</span>
+                        <span>SecurityIntelligenceAgent completed OWASP compliance check</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="console-timestamp">10:23:30</span>
+                        <span class="console-level-info">[INFO]</span>
+                        <span>MultiObjectiveOptimizer found 3 Pareto-optimal solutions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Intelligence Agents Tab -->
+    <div id="agents-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">16 Intelligent Agents - Phase Distribution</h2>
+        
+        <!-- Phase 1A: Configuration Intelligence (3 agents) -->
+        <div class="card" style="margin-bottom: 20px;">
+            <div class="card-header">
+                <div class="card-title">📦 Phase 1A: Configuration Intelligence (3 Agents)</div>
+                <span class="badge badge-green">OPERATIONAL</span>
+            </div>
+            <div class="grid-3">
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Configuration Intelligence Agent</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Dynamic environment adaptation with 4 smart profiles</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Managing development profile</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Environment Context Agent</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Detects and adapts to runtime environment</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Monitoring environment</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Profile Manager Agent</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Manages configuration profiles and transitions</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-idle"></span>
+                        <span>Idle - No profile changes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2: Intelligence Layer (3 agents) -->
+        <div class="card" style="margin-bottom: 20px;">
+            <div class="card-header">
+                <div class="card-title">🧠 Phase 2: Intelligence Layer (3 Agents)</div>
+                <span class="badge badge-green">OPERATIONAL</span>
+            </div>
+            <div class="grid-3">
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Hierarchical Test Planner</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Multi-strategy reasoning with 5 planning modes</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Planning test strategy</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Multi-Agent Consensus System</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Democratic decision-making with 6 voting methods</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Coordinating 5 agents</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Security Intelligence Agent</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">OWASP vulnerability scanning and compliance</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Security analysis running</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 3: Flow Optimization (3 agents) -->
+        <div class="card" style="margin-bottom: 20px;">
+            <div class="card-header">
+                <div class="card-title">⚡ Phase 3: Flow Optimization & Monitoring (3 Agents)</div>
+                <span class="badge badge-green">OPERATIONAL</span>
+            </div>
+            <div class="grid-3">
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Multi-Objective Optimization Agent</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">NSGA-II algorithm for coverage, quality, performance</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Optimizing 3 objectives</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Workflow Performance Monitor</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Real-time bottleneck detection and alerts</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Monitoring 3 workflows</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Adaptive Resource Manager</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Dynamic resource allocation and scaling</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-idle"></span>
+                        <span>Idle - Resources optimal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 4: Supporting Agents (7 agents) -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">🔧 Phase 4: Supporting Intelligence Agents (7 Agents)</div>
+                <span class="badge badge-green">OPERATIONAL</span>
+            </div>
+            <div class="grid-3">
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Tree-of-Thought Reasoner</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Multi-path reasoning for complex problems</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Exploring 8 paths</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Bottleneck Detection Agent</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Identifies and resolves performance issues</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Found 2 bottlenecks</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">LLM Provider Manager</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Manages multiple LLM providers with fallback</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Using Gemini 2.5</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Test Plan Generator</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Creates comprehensive test strategies</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-idle"></span>
+                        <span>Idle - Awaiting request</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Coverage Optimizer</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Maximizes test coverage efficiency</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - 87% coverage</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Quality Scorer</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Evaluates test quality and completeness</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-active"></span>
+                        <span>Active - Scoring tests</span>
+                    </div>
+                </div>
+                <div class="agent-card">
+                    <div style="font-weight: 600;">Framework Adapter</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin: 4px 0;">Adapts to any test framework universally</div>
+                    <div class="agent-status">
+                        <span class="status-dot status-inactive"></span>
+                        <span>Inactive - Not needed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bridge Systems Tab -->
+    <div id="bridges-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">5 Bridge Systems - Cross-Component Communication</h2>
+        
+        <div class="grid-2" style="gap: 20px;">
+            <!-- Protocol Communication Bridge -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📡 Protocol Communication Bridge</div>
+                    <span class="badge badge-green">ACTIVE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Message Protocol</span>
+                    <span class="metric-value">JSON-RPC 2.0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Routing Strategy</span>
+                    <span class="metric-value">ROUND_ROBIN</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Channels</span>
+                    <span class="metric-value">8</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Messages/sec</span>
+                    <span class="metric-value">142</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Queue Size</span>
+                    <span class="metric-value">23</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px;">View Message Flow</button>
+            </div>
+
+            <!-- Event Monitoring Bridge -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Event Monitoring Bridge</div>
+                    <span class="badge badge-green">ACTIVE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Event Bus Status</span>
+                    <span class="metric-value good">Operational</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Subscribers</span>
+                    <span class="metric-value">14</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Events/min</span>
+                    <span class="metric-value">328</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Correlation Engine</span>
+                    <span class="metric-value good">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Persistence</span>
+                    <span class="metric-value">SQLite</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px;">View Event Stream</button>
+            </div>
+
+            <!-- Session Tracking Bridge -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💾 Session Tracking Bridge</div>
+                    <span class="badge badge-green">ACTIVE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Sessions</span>
+                    <span class="metric-value">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Session Type</span>
+                    <span class="metric-value">PERSISTENT</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">State Scope</span>
+                    <span class="metric-value">GLOBAL</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Checkpoints</span>
+                    <span class="metric-value">12</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Recovery Available</span>
+                    <span class="metric-value good">Yes</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px;">Manage Sessions</button>
+            </div>
+
+            <!-- SOP Workflow Bridge -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📋 SOP Workflow Bridge</div>
+                    <span class="badge badge-orange">IDLE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active SOPs</span>
+                    <span class="metric-value">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Templates Loaded</span>
+                    <span class="metric-value">15</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Patterns Available</span>
+                    <span class="metric-value">8</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Execution Status</span>
+                    <span class="metric-value warning">Standby</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Compliance Level</span>
+                    <span class="metric-value">ISO 9001</span>
+                </div>
+                <button class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Load SOP Template</button>
+            </div>
+
+            <!-- Context Variables Bridge -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔗 Context Variables Bridge</div>
+                    <span class="badge badge-green">ACTIVE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Namespaces</span>
+                    <span class="metric-value">7</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Variables</span>
+                    <span class="metric-value">124</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Context Scope</span>
+                    <span class="metric-value">HIERARCHICAL</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Access Type</span>
+                    <span class="metric-value">READ_WRITE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Inheritance</span>
+                    <span class="metric-value good">Enabled</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px;">Inspect Context</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orchestration Control Tab -->
+    <div id="orchestration-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">Universal Orchestration Control Panel</h2>
+        
+        <div class="grid-2">
+            <!-- Orchestration Mode Control -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎭 Orchestration Mode</div>
+                </div>
+                <select style="width: 100%; padding: 8px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 4px;">
+                    <option>STANDARD - Basic test generation</option>
+                    <option>INTELLIGENT - With ToT reasoning</option>
+                    <option>SECURITY_FOCUSED - Security emphasis</option>
+                    <option>COMPLIANCE - Compliance requirements</option>
+                    <option selected>COMPREHENSIVE - Full intelligence</option>
+                    <option>RAPID - Fast generation</option>
+                    <option>ENTERPRISE - Full enterprise features</option>
+                </select>
+                
+                <div style="margin-top: 15px;">
+                    <h4 style="margin-bottom: 10px;">Enabled Features:</h4>
+                    <div class="grid-2" style="gap: 8px;">
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked> ToT Reasoning
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked> Optimization
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked> LLM Providers
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked> Security Scanning
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked> Compliance
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked> Self-Healing
+                        </label>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">Apply Configuration</button>
+            </div>
+
+            <!-- Active Orchestration Status -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Orchestration Metrics</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Workflows</span>
+                    <span class="metric-value">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Queued Tasks</span>
+                    <span class="metric-value">7</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Completed Today</span>
+                    <span class="metric-value good">142</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Failed Tasks</span>
+                    <span class="metric-value danger">2</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Avg Completion Time</span>
+                    <span class="metric-value">3.7s</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Parallel Workers</span>
+                    <span class="metric-value">4</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Quality Score Avg</span>
+                    <span class="metric-value good">92.3%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Coverage Target</span>
+                    <span class="metric-value">85%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow Queue -->
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <div class="card-title">📋 Orchestration Queue</div>
+                <button class="btn btn-primary">Add Task</button>
+            </div>
+            <div style="max-height: 300px; overflow-y: auto;">
+                <div class="list-item">
+                    <div>
+                        <div style="font-weight: 600;">Generate tests for auth_module.py</div>
+                        <div style="font-size: 11px; color: #94a3b8;">Mode: COMPREHENSIVE | Priority: HIGH</div>
+                    </div>
+                    <span class="badge badge-blue">Processing</span>
+                </div>
+                <div class="list-item">
+                    <div>
+                        <div style="font-weight: 600;">Security scan for payment_processor.py</div>
+                        <div style="font-size: 11px; color: #94a3b8;">Mode: SECURITY_FOCUSED | Priority: CRITICAL</div>
+                    </div>
+                    <span class="badge badge-blue">Processing</span>
+                </div>
+                <div class="list-item">
+                    <div>
+                        <div style="font-weight: 600;">Compliance check for data_handler.py</div>
+                        <div style="font-size: 11px; color: #94a3b8;">Mode: COMPLIANCE | Priority: HIGH</div>
+                    </div>
+                    <span class="badge badge-blue">Processing</span>
+                </div>
+                <div class="list-item">
+                    <div>
+                        <div style="font-weight: 600;">Optimize tests for api_endpoints.py</div>
+                        <div style="font-size: 11px; color: #94a3b8;">Mode: INTELLIGENT | Priority: MEDIUM</div>
+                    </div>
+                    <span class="badge badge-orange">Queued</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workflow Management Tab -->
+    <div id="workflow-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">DAG-Based Workflow Management</h2>
+        
+        <div class="grid-2">
+            <!-- Workflow Graph -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">⚙️ Active Workflow Graph</div>
+                    <button class="btn btn-primary">New Workflow</button>
+                </div>
+                <div class="workflow-container">
+                    <svg id="workflow-svg" width="100%" height="400">
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6" />
+                            </marker>
+                        </defs>
+                        <!-- Workflow nodes will be rendered here -->
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Workflow Control -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎮 Workflow Control</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Current State</span>
+                    <span class="metric-value good">RUNNING</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Current Node</span>
+                    <span class="metric-value">test_generation_3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Execution Path</span>
+                    <span class="metric-value">7 nodes</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Parallel Branches</span>
+                    <span class="metric-value">2</span>
+                </div>
+                <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                    <button class="btn btn-primary">▶️ Resume</button>
+                    <button class="btn btn-secondary">⏸️ Pause</button>
+                    <button class="btn btn-danger">⏹️ Stop</button>
+                </div>
+                
+                <h4 style="margin-top: 20px; margin-bottom: 10px;">Execution Log:</h4>
+                <div class="console" style="max-height: 200px;">
+                    <div class="console-line">
+                        <span class="console-timestamp">10:24:01</span>
+                        <span>[Node: start] Workflow initiated</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="console-timestamp">10:24:02</span>
+                        <span>[Node: analyze] Code analysis completed</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="console-timestamp">10:24:03</span>
+                        <span>[Node: plan] Test strategy planned</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="console-timestamp">10:24:04</span>
+                        <span>[Node: generate] Generating tests...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hierarchical Planning Tab -->
+    <div id="planning-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">Hierarchical Test Planning System</h2>
+        
+        <div class="grid-2">
+            <!-- Planning Strategy -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📋 Planning Configuration</div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Planning Strategy:</label>
+                    <select style="width: 100%; padding: 8px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 4px;">
+                        <option>COMPREHENSIVE - Full analysis</option>
+                        <option>QUICK - Rapid planning</option>
+                        <option>FOCUSED - Target specific areas</option>
+                        <option>EXPLORATORY - Discover edge cases</option>
+                        <option>BALANCED - Mix of strategies</option>
+                    </select>
+                </div>
+                
+                <div class="metric">
+                    <span class="metric-label">Planning Depth</span>
+                    <span class="metric-value">5 levels</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Evaluation Criteria</span>
+                    <span class="metric-value">Coverage + Quality</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">LLM Enhancement</span>
+                    <span class="metric-value good">Enabled</span>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">Generate Test Plan</button>
+            </div>
+
+            <!-- Current Plan Tree -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌳 Current Planning Tree</div>
+                </div>
+                <div style="font-family: monospace; font-size: 12px; line-height: 1.4;">
+                    <div>📦 Root: Complete Test Strategy</div>
+                    <div style="margin-left: 20px;">├─ 📋 Unit Tests</div>
+                    <div style="margin-left: 40px;">│  ├─ Function Tests</div>
+                    <div style="margin-left: 40px;">│  ├─ Class Tests</div>
+                    <div style="margin-left: 40px;">│  └─ Edge Cases</div>
+                    <div style="margin-left: 20px;">├─ 🔗 Integration Tests</div>
+                    <div style="margin-left: 40px;">│  ├─ API Tests</div>
+                    <div style="margin-left: 40px;">│  ├─ Database Tests</div>
+                    <div style="margin-left: 40px;">│  └─ Service Tests</div>
+                    <div style="margin-left: 20px;">├─ 🔒 Security Tests</div>
+                    <div style="margin-left: 40px;">│  ├─ OWASP Compliance</div>
+                    <div style="margin-left: 40px;">│  ├─ Vulnerability Scan</div>
+                    <div style="margin-left: 40px;">│  └─ Penetration Tests</div>
+                    <div style="margin-left: 20px;">└─ 🎭 Performance Tests</div>
+                    <div style="margin-left: 40px;">   ├─ Load Testing</div>
+                    <div style="margin-left: 40px;">   ├─ Stress Testing</div>
+                    <div style="margin-left: 40px;">   └─ Benchmark Tests</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consensus Engine Tab -->
+    <div id="consensus-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">Multi-Agent Consensus System</h2>
+        
+        <div class="grid-2">
+            <!-- Voting Configuration -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🗳️ Consensus Configuration</div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Voting Method:</label>
+                    <select style="width: 100%; padding: 8px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 4px;">
+                        <option>MAJORITY - Simple majority</option>
+                        <option>WEIGHTED - Weighted by expertise</option>
+                        <option>BORDA_COUNT - Ranked voting</option>
+                        <option>APPROVAL - Multi-approval</option>
+                        <option>RANGE - Score-based</option>
+                        <option>CONSENSUS - Full agreement</option>
+                    </select>
+                </div>
+                
+                <div class="metric">
+                    <span class="metric-label">Active Voters</span>
+                    <span class="metric-value">5 agents</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Quorum Required</span>
+                    <span class="metric-value">60%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Timeout</span>
+                    <span class="metric-value">30s</span>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">Call Vote</button>
+            </div>
+
+            <!-- Recent Votes -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Recent Consensus Decisions</div>
+                </div>
+                <div class="list-item">
+                    <div>
+                        <div style="font-weight: 600;">Refactor Priority</div>
+                        <div style="font-size: 11px; color: #94a3b8;">5 agents | WEIGHTED voting</div>
+                    </div>
+                    <span class="badge badge-green">Approved 4-1</span>
+                </div>
+                <div class="list-item">
+                    <div>
+                        <div style="font-weight: 600;">Test Strategy Selection</div>
+                        <div style="font-size: 11px; color: #94a3b8;">3 agents | MAJORITY voting</div>
+                    </div>
+                    <span class="badge badge-green">Approved 3-0</span>
+                </div>
+                <div class="list-item">
+                    <div>
+                        <div style="font-weight: 600;">Resource Allocation</div>
+                        <div style="font-size: 11px; color: #94a3b8;">7 agents | BORDA_COUNT voting</div>
+                    </div>
+                    <span class="badge badge-green">Approved</span>
+                </div>
+                <div class="list-item">
+                    <div>
+                        <div style="font-weight: 600;">Security Fix Priority</div>
+                        <div style="font-size: 11px; color: #94a3b8;">4 agents | CONSENSUS voting</div>
+                    </div>
+                    <span class="badge badge-red">Rejected 2-2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Multi-Objective Optimization Tab -->
+    <div id="optimization-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">NSGA-II Multi-Objective Optimization</h2>
+        
+        <div class="grid-2">
+            <!-- Optimization Objectives -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎯 Active Objectives</div>
+                </div>
+                <div class="list-item">
+                    <span>Test Coverage</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 87%;">87%</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <span>Code Quality</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 92%;">92%</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <span>Performance</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%;">78%</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <span>Security Score</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 95%;">95%</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <span>Maintainability</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 84%;">84%</div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">Run Optimization</button>
+            </div>
+
+            <!-- Pareto Front -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📈 Pareto-Optimal Solutions</div>
+                </div>
+                <canvas id="pareto-chart" width="100%" height="300"></canvas>
+                <div style="margin-top: 15px;">
+                    <div class="metric">
+                        <span class="metric-label">Solutions Found</span>
+                        <span class="metric-value">12</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Generations</span>
+                        <span class="metric-value">50</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Population Size</span>
+                        <span class="metric-value">100</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Intelligence Tab -->
+    <div id="security-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">Security Intelligence System</h2>
+        
+        <div class="grid-3">
+            <!-- Vulnerability Scanner -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔍 Vulnerability Scanner</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Files Scanned</span>
+                    <span class="metric-value">247</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Critical Issues</span>
+                    <span class="metric-value danger">2</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">High Risk</span>
+                    <span class="metric-value warning">5</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Medium Risk</span>
+                    <span class="metric-value">12</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Low Risk</span>
+                    <span class="metric-value">23</span>
+                </div>
+                <button class="btn btn-danger" style="width: 100%; margin-top: 10px;">Full Security Scan</button>
+            </div>
+
+            <!-- OWASP Compliance -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🛡️ OWASP Compliance</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">ASVS Level</span>
+                    <span class="metric-value">Level 2</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Compliance Score</span>
+                    <span class="metric-value good">94%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Top 10 Coverage</span>
+                    <span class="metric-value good">10/10</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Last Check</span>
+                    <span class="metric-value">2 hours ago</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Next Audit</span>
+                    <span class="metric-value">In 5 days</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px;">Run Compliance Check</button>
+            </div>
+
+            <!-- Security Tests -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔐 Security Test Generation</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Test Strategy</span>
+                    <span class="metric-value">THREAT_MODEL</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tests Generated</span>
+                    <span class="metric-value">142</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Penetration Tests</span>
+                    <span class="metric-value">38</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Fuzzing Tests</span>
+                    <span class="metric-value">27</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Input Validation</span>
+                    <span class="metric-value">45</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px;">Generate Security Tests</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Monitoring Tab -->
+    <div id="monitoring-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">Advanced Performance Monitoring</h2>
+        
+        <div class="grid-3">
+            <!-- Workflow Performance -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">⚡ Workflow Performance</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Avg Latency</span>
+                    <span class="metric-value">124ms</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Throughput</span>
+                    <span class="metric-value">42 ops/s</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Error Rate</span>
+                    <span class="metric-value good">0.3%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Queue Depth</span>
+                    <span class="metric-value">7</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Workers</span>
+                    <span class="metric-value">4/8</span>
+                </div>
+            </div>
+
+            <!-- Bottleneck Detection -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🚨 Bottleneck Detection</div>
+                </div>
+                <div class="list-item">
+                    <span>LLM API Calls</span>
+                    <span class="badge badge-orange">Slow</span>
+                </div>
+                <div class="list-item">
+                    <span>Database Queries</span>
+                    <span class="badge badge-green">Normal</span>
+                </div>
+                <div class="list-item">
+                    <span>File I/O</span>
+                    <span class="badge badge-green">Normal</span>
+                </div>
+                <div class="list-item">
+                    <span>Network Requests</span>
+                    <span class="badge badge-orange">Degraded</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px;">Resolve Bottlenecks</button>
+            </div>
+
+            <!-- Resource Management -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔧 Adaptive Resources</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">CPU Target</span>
+                    <span class="metric-value">60%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Memory Limit</span>
+                    <span class="metric-value">4GB</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Scale Strategy</span>
+                    <span class="metric-value">PREDICTIVE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Next Scale</span>
+                    <span class="metric-value">In 5 min</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Efficiency</span>
+                    <span class="metric-value good">94%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Chart -->
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <div class="card-title">📈 Performance Metrics (Last Hour)</div>
+            </div>
+            <canvas id="performance-chart" width="100%" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- LLM Provider Management Tab -->
+    <div id="llm-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">Universal LLM Provider Management</h2>
+        
+        <div class="grid-3">
+            <!-- Gemini Provider -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💎 Gemini 2.5 Pro</div>
+                    <span class="badge badge-green">PRIMARY</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Status</span>
+                    <span class="metric-value good">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls Today</span>
+                    <span class="metric-value">1,247</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tokens Used</span>
+                    <span class="metric-value">523K</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Cost Today</span>
+                    <span class="metric-value">$2.47</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Avg Latency</span>
+                    <span class="metric-value">342ms</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Success Rate</span>
+                    <span class="metric-value good">99.7%</span>
+                </div>
+            </div>
+
+            <!-- OpenAI Provider -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 GPT-4 Turbo</div>
+                    <span class="badge badge-blue">FALLBACK</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Status</span>
+                    <span class="metric-value warning">Standby</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls Today</span>
+                    <span class="metric-value">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tokens Used</span>
+                    <span class="metric-value">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Cost Today</span>
+                    <span class="metric-value">$0.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Avg Latency</span>
+                    <span class="metric-value">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Success Rate</span>
+                    <span class="metric-value">-</span>
+                </div>
+            </div>
+
+            <!-- Local LLM -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🏠 Local LLaMA</div>
+                    <span class="badge badge-orange">OFFLINE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Status</span>
+                    <span class="metric-value">Inactive</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Model</span>
+                    <span class="metric-value">LLaMA 70B</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">VRAM Required</span>
+                    <span class="metric-value">40GB</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Inference Speed</span>
+                    <span class="metric-value">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Cost</span>
+                    <span class="metric-value good">Free</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Privacy</span>
+                    <span class="metric-value good">100%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Provider Optimization -->
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <div class="card-title">⚡ Provider Optimization</div>
+            </div>
+            <div class="grid-2">
+                <div>
+                    <h4 style="margin-bottom: 10px;">Routing Strategy</h4>
+                    <select style="width: 100%; padding: 8px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 4px;">
+                        <option>Cost Optimized</option>
+                        <option>Performance First</option>
+                        <option>Balanced</option>
+                        <option>Privacy Focused</option>
+                    </select>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 10px;">Fallback Chain</h4>
+                    <div style="font-size: 12px; line-height: 1.6;">
+                        1. Gemini 2.5 Pro<br>
+                        2. GPT-4 Turbo<br>
+                        3. Claude 3 Opus<br>
+                        4. Local LLaMA
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Analytics Tab -->
+    <div id="analytics-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">Comprehensive Deep Analytics</h2>
+        
+        <div class="grid-2">
+            <!-- Module Analysis -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📦 Module Deep Analysis</div>
+                </div>
+                <select style="width: 100%; padding: 8px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 4px; margin-bottom: 15px;">
+                    <option>Select module for analysis...</option>
+                    <option>ALL MODULES</option>
+                    <option>auth_module.py</option>
+                    <option>payment_processor.py</option>
+                    <option>data_handler.py</option>
+                </select>
+                
+                <div class="metric">
+                    <span class="metric-label">Complexity Score</span>
+                    <span class="metric-value">7.3/10</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Test Coverage</span>
+                    <span class="metric-value">87%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Security Issues</span>
+                    <span class="metric-value warning">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Quality Score</span>
+                    <span class="metric-value good">92/100</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Dependencies</span>
+                    <span class="metric-value">12</span>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">🧠 Run Hybrid Intelligence Analysis</button>
+            </div>
+
+            <!-- Analysis Results -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Analysis Results</div>
+                </div>
+                <div style="padding: 10px; background: #0f172a; border-radius: 4px;">
+                    <h4 style="margin-bottom: 10px;">Intelligence Applied:</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>✓ Hierarchical Planning: 5-level strategy</li>
+                        <li>✓ Tree-of-Thought: 8 reasoning paths</li>
+                        <li>✓ Multi-Agent Consensus: 5 agents voted</li>
+                        <li>✓ NSGA-II Optimization: 12 solutions</li>
+                        <li>✓ Security Intelligence: OWASP checked</li>
+                        <li>✓ LLM Analysis: Gemini 2.5 Pro</li>
+                    </ul>
+                    
+                    <h4 style="margin: 15px 0 10px;">Key Findings:</h4>
+                    <ul style="list-style: none; padding: 0; font-size: 12px;">
+                        <li>• Authentication logic needs input validation</li>
+                        <li>• Performance bottleneck in data processing</li>
+                        <li>• Missing error handling in 3 functions</li>
+                        <li>• Opportunity to extract 2 helper methods</li>
+                        <li>• Security: SQL injection risk in query builder</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- System-Wide Analytics -->
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <div class="card-title">🌍 System-Wide Intelligence Metrics</div>
+            </div>
+            <div class="grid-4">
+                <div class="metric">
+                    <span class="metric-label">Total Analyses</span>
+                    <span class="metric-value">1,247</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Avg Quality</span>
+                    <span class="metric-value good">89.3%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Issues Found</span>
+                    <span class="metric-value">342</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Issues Fixed</span>
+                    <span class="metric-value good">297</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Time Saved</span>
+                    <span class="metric-value">47.3 hrs</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Cost Saved</span>
+                    <span class="metric-value good">$4,230</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">ROI</span>
+                    <span class="metric-value good">342%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Efficiency</span>
+                    <span class="metric-value good">96%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            // Update button states
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update content visibility
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Initialize tab-specific content
+            if (tabName === 'workflow') {
+                initWorkflowGraph();
+            } else if (tabName === 'optimization') {
+                initParetoChart();
+            } else if (tabName === 'monitoring') {
+                initPerformanceChart();
+            }
+        }
+        
+        // Initialize workflow graph
+        function initWorkflowGraph() {
+            // Would connect to D3.js workflow visualization
+            console.log('Initializing workflow graph...');
+        }
+        
+        // Initialize Pareto chart
+        function initParetoChart() {
+            const ctx = document.getElementById('pareto-chart');
+            if (ctx && ctx.getContext) {
+                // Would create Chart.js Pareto front visualization
+                console.log('Initializing Pareto chart...');
+            }
+        }
+        
+        // Initialize performance chart
+        function initPerformanceChart() {
+            const ctx = document.getElementById('performance-chart');
+            if (ctx && ctx.getContext) {
+                // Would create Chart.js performance metrics
+                console.log('Initializing performance chart...');
+            }
+        }
+        
+        // Auto-update metrics
+        setInterval(() => {
+            // Would fetch real metrics from API
+            console.log('Updating metrics...');
+        }, 5000);
+    </script>
+</body>
+</html>
