@@ -20,7 +20,7 @@ var CreateTable = function (config) {
     var key = config.key;
     var table = new ItemTable({
         eventEmitter: this.getEventEmitter(),
-        root: this.getItemTablePath(key),
+        root: this.getItemTablePath(this.roomID, key),
 
         type: GetValue(config, 'type', 1),
         eventNames: {
