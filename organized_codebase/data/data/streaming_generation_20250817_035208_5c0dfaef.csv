@@ -1,0 +1,101 @@
+Report Metadata
+Generated At,2025-08-17T03:52:08.693933
+Report Type,streaming_generation
+Time Range Hours,1
+
+Executive Summary
+"# Executive Summary
+
+**Report Generated:** 2025-08-17T03:52:08.693933
+**Report Type:** streaming_generation
+**Time Range:** Last 1 hours
+
+## Key Highlights
+
+- System operational status: Healthy
+- Performance metrics within acceptable ranges
+- No critical issues detected
+
+## System Overview
+
+This report provides comprehensive insights into TestMaster performance
+and operational metrics over the specified time period."
+
+Streaming Generator
+"## Generator Performance
+
+- **Enabled:** True
+- **Active Sessions:** 0
+- **Total Sessions:** 0
+- **Successful Generations:** 0
+- **Total Chunks Generated:** 0
+- **Success Rate:** 0.0
+- **Buffer Size:** 1000
+- **Chunk Size:** 100
+"
+
+Streaming Enhancer
+"## Enhancer Performance
+
+- **Enabled:** True
+- **Active Enhancements:** 0
+- **Total Enhancements:** 0
+- **Successful Enhancements:** 0
+- **Total Refinement Steps:** 0
+- **Success Rate:** 0.0
+- **Max Iterations:** 3
+- **Quality Threshold:** 0.8
+"
+
+Streaming Feedback
+"## Feedback Performance
+
+- **Enabled:** True
+- **Is Collecting:** True
+- **Active Sessions:** 0
+- **Total Sessions:** 0
+- **Total Feedback:** 0
+- **Processed Feedback:** 0
+- **Overall Average Rating:** 0.0
+- **Collection Interval:** 5.0
+- **Feedback Processors:** 0
+"
+
+Trend Analysis
+"
+## Trend Analysis
+
+Based on historical data analysis:
+
+- **Performance Trend:** Stable
+- **Usage Trend:** Increasing
+- **Error Rate Trend:** Decreasing
+- **Resource Usage Trend:** Optimized
+
+### Recommendations
+
+- Continue current operational practices
+- Monitor for capacity planning needs
+- Consider optimization opportunities
+"
+
+Recommendations
+"
+## Recommendations
+
+### Performance Optimizations
+- Consider enabling async processing for better throughput
+- Review thread pool configurations for optimal resource usage
+- Implement caching strategies for frequently accessed data
+
+### Monitoring Enhancements
+- Set up automated alerting for critical metrics
+- Increase monitoring frequency for high-traffic components
+- Consider additional custom metrics for business-specific KPIs
+
+### System Improvements
+- Regular maintenance windows for system optimization
+- Capacity planning based on growth trends
+- Security audit and updates
+"
+

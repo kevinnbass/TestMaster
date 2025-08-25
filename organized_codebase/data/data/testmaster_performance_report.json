@@ -1,0 +1,197 @@
+{
+  "report_timestamp": "2025-08-22T14:15:13.268896",
+  "dashboard_data": {
+    "timestamp": "2025-08-22T14:15:13.268896",
+    "system_load": {
+      "cpu_percent": 26.6,
+      "memory_percent": 90.8,
+      "disk_io": {
+        "read_count": 15334335,
+        "write_count": 51117703,
+        "read_bytes": 314441678848,
+        "write_bytes": 715863297536,
+        "read_time": 3624,
+        "write_time": 3647
+      },
+      "active_threads": 1,
+      "cache_size": 0,
+      "timestamp": "2025-08-22 14:15:14.319010"
+    },
+    "cache_performance": {
+      "hits": 0,
+      "misses": 0,
+      "evictions": 0,
+      "invalidations": 0,
+      "hit_rate": 0,
+      "cache_size": 0,
+      "hot_keys": []
+    },
+    "recent_operations": 7,
+    "operation_averages": {
+      "core_intelligence_optimization": 0.0020034313201904297,
+      "dashboard_systems_optimization": 0.0020058155059814453,
+      "analytics_pipeline_optimization": 0.0010013580322265625,
+      "monitoring_systems_optimization": 0.0,
+      "security_components_optimization": 0.0,
+      "testing_framework_optimization": 0.0010101795196533203,
+      "data_processing_optimization": 0.0010066032409667969
+    },
+    "optimization_suggestions": {},
+    "performance_thresholds": {
+      "cpu_critical": 90.0,
+      "memory_critical": 85.0,
+      "response_time_max": 5.0,
+      "cache_hit_rate_min": 0.75
+    },
+    "thread_pool_size": 32,
+    "memory_usage_mb": 27.12109375,
+    "top_slow_operations": [
+      {
+        "operation": "dashboard_systems_optimization",
+        "duration": 0.0020058155059814453,
+        "memory_used": 4096,
+        "timestamp": "2025-08-22T14:15:11.409088",
+        "files_processed": 0
+      },
+      {
+        "operation": "core_intelligence_optimization",
+        "duration": 0.0020034313201904297,
+        "memory_used": 8192,
+        "timestamp": "2025-08-22T14:15:11.407082",
+        "files_processed": 0
+      },
+      {
+        "operation": "testing_framework_optimization",
+        "duration": 0.0010101795196533203,
+        "memory_used": 0,
+        "timestamp": "2025-08-22T14:15:11.413134",
+        "files_processed": 0
+      },
+      {
+        "operation": "data_processing_optimization",
+        "duration": 0.0010066032409667969,
+        "memory_used": 0,
+        "timestamp": "2025-08-22T14:15:11.415136",
+        "files_processed": 0
+      },
+      {
+        "operation": "analytics_pipeline_optimization",
+        "duration": 0.0010013580322265625,
+        "memory_used": 0,
+        "timestamp": "2025-08-22T14:15:11.410089",
+        "files_processed": 0
+      },
+      {
+        "operation": "monitoring_systems_optimization",
+        "duration": 0.0,
+        "memory_used": 0,
+        "timestamp": "2025-08-22T14:15:11.411081",
+        "files_processed": 0
+      },
+      {
+        "operation": "security_components_optimization",
+        "duration": 0.0,
+        "memory_used": 0,
+        "timestamp": "2025-08-22T14:15:11.412124",
+        "files_processed": 0
+      }
+    ],
+    "performance_trends": {
+      "overall": "insufficient_data"
+    }
+  },
+  "historical_metrics": [
+    {
+      "operation": "core_intelligence_optimization",
+      "duration": 0.0020034313201904297,
+      "memory_before": 27381760,
+      "memory_after": 27389952,
+      "cpu_percent": 82.15,
+      "timestamp": "2025-08-22 14:15:11.407082",
+      "cache_hit": false,
+      "files_processed": 0,
+      "optimization_level": "standard"
+    },
+    {
+      "operation": "dashboard_systems_optimization",
+      "duration": 0.0020058155059814453,
+      "memory_before": 27389952,
+      "memory_after": 27394048,
+      "cpu_percent": 0.0,
+      "timestamp": "2025-08-22 14:15:11.409088",
+      "cache_hit": false,
+      "files_processed": 0,
+      "optimization_level": "standard"
+    },
+    {
+      "operation": "analytics_pipeline_optimization",
+      "duration": 0.0010013580322265625,
+      "memory_before": 27394048,
+      "memory_after": 27394048,
+      "cpu_percent": 0.0,
+      "timestamp": "2025-08-22 14:15:11.410089",
+      "cache_hit": false,
+      "files_processed": 0,
+      "optimization_level": "standard"
+    },
+    {
+      "operation": "monitoring_systems_optimization",
+      "duration": 0.0,
+      "memory_before": 27394048,
+      "memory_after": 27394048,
+      "cpu_percent": 0.0,
+      "timestamp": "2025-08-22 14:15:11.411081",
+      "cache_hit": false,
+      "files_processed": 0,
+      "optimization_level": "standard"
+    },
+    {
+      "operation": "security_components_optimization",
+      "duration": 0.0,
+      "memory_before": 27394048,
+      "memory_after": 27394048,
+      "cpu_percent": 0.0,
+      "timestamp": "2025-08-22 14:15:11.412124",
+      "cache_hit": false,
+      "files_processed": 0,
+      "optimization_level": "standard"
+    },
+    {
+      "operation": "testing_framework_optimization",
+      "duration": 0.0010101795196533203,
+      "memory_before": 27394048,
+      "memory_after": 27394048,
+      "cpu_percent": 20.0,
+      "timestamp": "2025-08-22 14:15:11.413134",
+      "cache_hit": false,
+      "files_processed": 0,
+      "optimization_level": "standard"
+    },
+    {
+      "operation": "data_processing_optimization",
+      "duration": 0.0010066032409667969,
+      "memory_before": 27394048,
+      "memory_after": 27394048,
+      "cpu_percent": 0.0,
+      "timestamp": "2025-08-22 14:15:11.415136",
+      "cache_hit": false,
+      "files_processed": 0,
+      "optimization_level": "standard"
+    }
+  ],
+  "system_configuration": {
+    "cpu_count": 16,
+    "total_memory_gb": 37.84117889404297,
+    "thread_pool_max": 32,
+    "cache_max_size": 50000,
+    "cache_ttl": 7200
+  },
+  "optimization_opportunities": [
+    {
+      "type": "cache_optimization",
+      "severity": "medium",
+      "description": "Cache hit rate is 0.00%, consider cache size increase",
+      "suggested_action": "Increase cache size or improve cache key strategy"
+    }
+  ]
+}

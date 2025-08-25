@@ -1,0 +1,452 @@
+[
+  {
+    "timestamp": 1755857237.4337616,
+    "metric_name": "cpu_usage",
+    "value": 0.632,
+    "component": "system",
+    "metadata": {
+      "cycle": 0
+    }
+  },
+  {
+    "timestamp": 1755857237.4337616,
+    "metric_name": "memory_usage",
+    "value": 0.745,
+    "component": "system",
+    "metadata": {
+      "cycle": 0
+    }
+  },
+  {
+    "timestamp": 1755857237.4337616,
+    "metric_name": "response_time",
+    "value": 0.122,
+    "component": "system",
+    "metadata": {
+      "cycle": 0
+    }
+  },
+  {
+    "timestamp": 1755857237.4337616,
+    "metric_name": "throughput",
+    "value": 0.915,
+    "component": "system",
+    "metadata": {
+      "cycle": 0
+    }
+  },
+  {
+    "timestamp": 1755857237.4337616,
+    "metric_name": "error_rate",
+    "value": 0.1,
+    "component": "system",
+    "metadata": {
+      "cycle": 0
+    }
+  },
+  {
+    "timestamp": 1755857237.9353073,
+    "metric_name": "cpu_usage",
+    "value": 0.647,
+    "component": "system",
+    "metadata": {
+      "cycle": 1
+    }
+  },
+  {
+    "timestamp": 1755857237.9353073,
+    "metric_name": "memory_usage",
+    "value": 0.6769999999999999,
+    "component": "system",
+    "metadata": {
+      "cycle": 1
+    }
+  },
+  {
+    "timestamp": 1755857237.9353073,
+    "metric_name": "response_time",
+    "value": 0.149,
+    "component": "system",
+    "metadata": {
+      "cycle": 1
+    }
+  },
+  {
+    "timestamp": 1755857237.9353073,
+    "metric_name": "throughput",
+    "value": 0.924,
+    "component": "system",
+    "metadata": {
+      "cycle": 1
+    }
+  },
+  {
+    "timestamp": 1755857237.9353073,
+    "metric_name": "error_rate",
+    "value": 0.1,
+    "component": "system",
+    "metadata": {
+      "cycle": 1
+    }
+  },
+  {
+    "timestamp": 1755857238.4348342,
+    "metric_name": "cpu_usage",
+    "value": 0.661,
+    "component": "system",
+    "metadata": {
+      "cycle": 2
+    }
+  },
+  {
+    "timestamp": 1755857238.4348342,
+    "metric_name": "memory_usage",
+    "value": 0.734,
+    "component": "system",
+    "metadata": {
+      "cycle": 2
+    }
+  },
+  {
+    "timestamp": 1755857238.4348342,
+    "metric_name": "response_time",
+    "value": 0.16899999999999998,
+    "component": "system",
+    "metadata": {
+      "cycle": 2
+    }
+  },
+  {
+    "timestamp": 1755857238.4348342,
+    "metric_name": "throughput",
+    "value": 0.89,
+    "component": "system",
+    "metadata": {
+      "cycle": 2
+    }
+  },
+  {
+    "timestamp": 1755857238.4348342,
+    "metric_name": "error_rate",
+    "value": 0.1,
+    "component": "system",
+    "metadata": {
+      "cycle": 2
+    }
+  },
+  {
+    "timestamp": 1755857238.9349852,
+    "metric_name": "cpu_usage",
+    "value": 0.677,
+    "component": "system",
+    "metadata": {
+      "cycle": 3
+    }
+  },
+  {
+    "timestamp": 1755857238.9349852,
+    "metric_name": "memory_usage",
+    "value": 0.721,
+    "component": "system",
+    "metadata": {
+      "cycle": 3
+    }
+  },
+  {
+    "timestamp": 1755857238.9349852,
+    "metric_name": "response_time",
+    "value": 0.178,
+    "component": "system",
+    "metadata": {
+      "cycle": 3
+    }
+  },
+  {
+    "timestamp": 1755857238.9349852,
+    "metric_name": "throughput",
+    "value": 0.86,
+    "component": "system",
+    "metadata": {
+      "cycle": 3
+    }
+  },
+  {
+    "timestamp": 1755857238.9349852,
+    "metric_name": "error_rate",
+    "value": 0.1,
+    "component": "system",
+    "metadata": {
+      "cycle": 3
+    }
+  },
+  {
+    "timestamp": 1755857239.4352021,
+    "metric_name": "cpu_usage",
+    "value": 0.644,
+    "component": "system",
+    "metadata": {
+      "cycle": 4
+    }
+  },
+  {
+    "timestamp": 1755857239.4352021,
+    "metric_name": "memory_usage",
+    "value": 0.768,
+    "component": "system",
+    "metadata": {
+      "cycle": 4
+    }
+  },
+  {
+    "timestamp": 1755857239.4352021,
+    "metric_name": "response_time",
+    "value": 0.16,
+    "component": "system",
+    "metadata": {
+      "cycle": 4
+    }
+  },
+  {
+    "timestamp": 1755857239.4352021,
+    "metric_name": "throughput",
+    "value": 0.87,
+    "component": "system",
+    "metadata": {
+      "cycle": 4
+    }
+  },
+  {
+    "timestamp": 1755857239.4352021,
+    "metric_name": "error_rate",
+    "value": 0.1,
+    "component": "system",
+    "metadata": {
+      "cycle": 4
+    }
+  },
+  {
+    "timestamp": 1755857239.932325,
+    "metric_name": "cpu_usage",
+    "value": 0.639,
+    "component": "system",
+    "metadata": {
+      "cycle": 5
+    }
+  },
+  {
+    "timestamp": 1755857239.932325,
+    "metric_name": "memory_usage",
+    "value": 0.75,
+    "component": "system",
+    "metadata": {
+      "cycle": 5
+    }
+  },
+  {
+    "timestamp": 1755857239.932325,
+    "metric_name": "response_time",
+    "value": 0.168,
+    "component": "system",
+    "metadata": {
+      "cycle": 5
+    }
+  },
+  {
+    "timestamp": 1755857239.932325,
+    "metric_name": "throughput",
+    "value": 0.918,
+    "component": "system",
+    "metadata": {
+      "cycle": 5
+    }
+  },
+  {
+    "timestamp": 1755857239.932325,
+    "metric_name": "error_rate",
+    "value": 0.1,
+    "component": "system",
+    "metadata": {
+      "cycle": 5
+    }
+  },
+  {
+    "timestamp": 1755857240.4295802,
+    "metric_name": "cpu_usage",
+    "value": 0.644,
+    "component": "system",
+    "metadata": {
+      "cycle": 6
+    }
+  },
+  {
+    "timestamp": 1755857240.4295802,
+    "metric_name": "memory_usage",
+    "value": 0.721,
+    "component": "system",
+    "metadata": {
+      "cycle": 6
+    }
+  },
+  {
+    "timestamp": 1755857240.4295802,
+    "metric_name": "response_time",
+    "value": 0.19,
+    "component": "system",
+    "metadata": {
+      "cycle": 6
+    }
+  },
+  {
+    "timestamp": 1755857240.4295802,
+    "metric_name": "throughput",
+    "value": 0.881,
+    "component": "system",
+    "metadata": {
+      "cycle": 6
+    }
+  },
+  {
+    "timestamp": 1755857240.4295802,
+    "metric_name": "error_rate",
+    "value": 0.1,
+    "component": "system",
+    "metadata": {
+      "cycle": 6
+    }
+  },
+  {
+    "timestamp": 1755857240.930511,
+    "metric_name": "cpu_usage",
+    "value": 0.6950000000000001,
+    "component": "system",
+    "metadata": {
+      "cycle": 7
+    }
+  },
+  {
+    "timestamp": 1755857240.930511,
+    "metric_name": "memory_usage",
+    "value": 0.728,
+    "component": "system",
+    "metadata": {
+      "cycle": 7
+    }
+  },
+  {
+    "timestamp": 1755857240.930511,
+    "metric_name": "response_time",
+    "value": 0.167,
+    "component": "system",
+    "metadata": {
+      "cycle": 7
+    }
+  },
+  {
+    "timestamp": 1755857240.930511,
+    "metric_name": "throughput",
+    "value": 0.87,
+    "component": "system",
+    "metadata": {
+      "cycle": 7
+    }
+  },
+  {
+    "timestamp": 1755857240.930511,
+    "metric_name": "error_rate",
+    "value": 0.1,
+    "component": "system",
+    "metadata": {
+      "cycle": 7
+    }
+  },
+  {
+    "timestamp": 1755857241.4345791,
+    "metric_name": "cpu_usage",
+    "value": 0.664,
+    "component": "system",
+    "metadata": {
+      "cycle": 8
+    }
+  },
+  {
+    "timestamp": 1755857241.4345791,
+    "metric_name": "memory_usage",
+    "value": 0.748,
+    "component": "system",
+    "metadata": {
+      "cycle": 8
+    }
+  },
+  {
+    "timestamp": 1755857241.4345791,
+    "metric_name": "response_time",
+    "value": 0.193,
+    "component": "system",
+    "metadata": {
+      "cycle": 8
+    }
+  },
+  {
+    "timestamp": 1755857241.4345791,
+    "metric_name": "throughput",
+    "value": 0.903,
+    "component": "system",
+    "metadata": {
+      "cycle": 8
+    }
+  },
+  {
+    "timestamp": 1755857241.4345791,
+    "metric_name": "error_rate",
+    "value": 0.1,
+    "component": "system",
+    "metadata": {
+      "cycle": 8
+    }
+  },
+  {
+    "timestamp": 1755857241.9333394,
+    "metric_name": "cpu_usage",
+    "value": 0.613,
+    "component": "system",
+    "metadata": {
+      "cycle": 9
+    }
+  },
+  {
+    "timestamp": 1755857241.9333394,
+    "metric_name": "memory_usage",
+    "value": 0.703,
+    "component": "system",
+    "metadata": {
+      "cycle": 9
+    }
+  },
+  {
+    "timestamp": 1755857241.9333394,
+    "metric_name": "response_time",
+    "value": 0.10499999999999998,
+    "component": "system",
+    "metadata": {
+      "cycle": 9
+    }
+  },
+  {
+    "timestamp": 1755857241.9333394,
+    "metric_name": "throughput",
+    "value": 0.916,
+    "component": "system",
+    "metadata": {
+      "cycle": 9
+    }
+  },
+  {
+    "timestamp": 1755857241.9333394,
+    "metric_name": "error_rate",
+    "value": 0.1,
+    "component": "system",
+    "metadata": {
+      "cycle": 9
+    }
+  }
+]

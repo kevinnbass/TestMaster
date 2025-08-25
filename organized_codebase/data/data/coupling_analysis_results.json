@@ -1,0 +1,317 @@
+{
+  "analysis_metadata": {
+    "analyzer": "Agent B - Detailed Coupling Analysis",
+    "phase": "Hours 31-35",
+    "modules_analyzed": 10,
+    "intelligence_modules": 10
+  },
+  "coupling_metrics": {
+    "core/intelligence/__init__.py": "CouplingMetrics(module_id='core/intelligence/__init__.py', afferent_coupling=100, efferent_coupling=14, instability=0.12280701754385964, abstractness=0.0, distance=0.8771929824561404, cohesion_score=0.8976608187134503, complexity_factor=0.0784313725490196, interface_quality=0.7592307692307693)",
+    "core/intelligence/testing/__init__.py": "CouplingMetrics(module_id='core/intelligence/testing/__init__.py', afferent_coupling=102, efferent_coupling=12, instability=0.10526315789473684, abstractness=0.0, distance=0.8947368421052632, cohesion_score=0.8304093567251462, complexity_factor=0.0196078431372549, interface_quality=0.7236363636363636)",
+    "core/intelligence/api/__init__.py": "CouplingMetrics(module_id='core/intelligence/api/__init__.py', afferent_coupling=111, efferent_coupling=3, instability=0.02631578947368421, abstractness=0.0, distance=0.9736842105263158, cohesion_score=1.0, complexity_factor=0.0035587188612099642, interface_quality=0.6)",
+    "core/intelligence/analytics/__init__.py": "CouplingMetrics(module_id='core/intelligence/analytics/__init__.py', afferent_coupling=85, efferent_coupling=29, instability=0.2543859649122807, abstractness=0.0, distance=0.7456140350877193, cohesion_score=0.4538461538461539, complexity_factor=0.08886107634543179, interface_quality=0.6759756097560976)",
+    "testmaster_orchestrator.py": "CouplingMetrics(module_id='testmaster_orchestrator.py', afferent_coupling=3, efferent_coupling=18, instability=0.8571428571428571, abstractness=0.0, distance=0.1428571428571429, cohesion_score=0.9869281045751634, complexity_factor=0.05429864253393665, interface_quality=0.5353571428571429)",
+    "intelligent_test_builder.py": "CouplingMetrics(module_id='intelligent_test_builder.py', afferent_coupling=1, efferent_coupling=9, instability=0.9, abstractness=0.0, distance=0.09999999999999998, cohesion_score=1.0, complexity_factor=0.07723577235772358, interface_quality=0.64)",
+    "enhanced_self_healing_verifier.py": "CouplingMetrics(module_id='enhanced_self_healing_verifier.py', afferent_coupling=0, efferent_coupling=11, instability=1.0, abstractness=0.0, distance=0.0, cohesion_score=1.0, complexity_factor=0.11746522411128284, interface_quality=0.5650000000000001)",
+    "agentic_test_monitor.py": "CouplingMetrics(module_id='agentic_test_monitor.py', afferent_coupling=0, efferent_coupling=0, instability=0, abstractness=0.0, distance=1.0, cohesion_score=0.5, complexity_factor=0.002, interface_quality=0.3)",
+    "parallel_converter.py": "CouplingMetrics(module_id='parallel_converter.py', afferent_coupling=0, efferent_coupling=12, instability=1.0, abstractness=0.0, distance=0.0, cohesion_score=1.0, complexity_factor=0.10918114143920596, interface_quality=0.5528571428571428)",
+    "config/__init__.py": "CouplingMetrics(module_id='config/__init__.py', afferent_coupling=108, efferent_coupling=6, instability=0.05263157894736842, abstractness=0.0, distance=0.9473684210526316, cohesion_score=1.0, complexity_factor=0.0024096385542168677, interface_quality=0.4471428571428572)"
+  },
+  "interface_analyses": {
+    "core/intelligence/__init__.py": "InterfaceAnalysis(module_id='core\\\\intelligence\\\\__init__.py', public_functions=['get_intelligence_hub', 'get_intelligence_capabilities', 'initialize_intelligence_hub', 'analytics', 'testing', 'integration', 'get_legacy_component', 'migrate_to_unified_interface', 'rollback_migration', 'get_comprehensive_intelligence', 'get_hub_status', 'shutdown'], public_classes=['IntelligenceHubConfig', 'IntelligenceHub'], interface_complexity=14, parameter_consistency=0.0, return_type_consistency=0.0, documentation_coverage=0.9230769230769231, stability_score=1.0)",
+    "core/intelligence/testing/__init__.py": "InterfaceAnalysis(module_id='core\\\\intelligence\\\\testing\\\\__init__.py', public_functions=['analyze_coverage', 'generate_coverage_report', 'optimize_test_suite', 'predict_test_failures', 'generate_integration_tests', 'validate_integration_coverage', 'execute_test', 'execute_test_suite', 'execute_unified_test_analysis', 'get_testing_intelligence', 'shutdown', 'initialize', 'get_capabilities', 'get_status', 'shutdown'], public_classes=['ConsolidatedTestingHub'], interface_complexity=16, parameter_consistency=0.0, return_type_consistency=0.0, documentation_coverage=0.9090909090909091, stability_score=1.0)",
+    "core/intelligence/api/__init__.py": "InterfaceAnalysis(module_id='core\\\\intelligence\\\\api\\\\__init__.py', public_functions=[], public_classes=[], interface_complexity=0, parameter_consistency=0.0, return_type_consistency=0.0, documentation_coverage=0.0, stability_score=1.0)",
+    "core/intelligence/analytics/__init__.py": "InterfaceAnalysis(module_id='core\\\\intelligence\\\\analytics\\\\__init__.py', public_functions=['initialize', 'analyze_metrics', 'get_cross_system_analytics', 'get_predictive_analytics', 'get_dashboard_analytics', 'get_analytics_intelligence', 'get_capabilities', 'get_status', 'shutdown', 'analyze', 'analyze_correlations', 'generate_insights', 'process_real_time'], public_classes=['AnalyticsHubConfig', 'ConsolidatedAnalyticsHub', 'EnhancedUnifiedAnalyticsEngine', 'CrossSystemCorrelationEngine', 'MLModelManager', 'RealTimeAnalyticsProcessor'], interface_complexity=19, parameter_consistency=0.0, return_type_consistency=0.0, documentation_coverage=0.9024390243902439, stability_score=1.0)",
+    "testmaster_orchestrator.py": "InterfaceAnalysis(module_id='testmaster_orchestrator.py', public_functions=['main', 'add_task', 'get_ready_tasks', 'has_cycles', 'create_test_generation_workflow', 'load_progress', 'get_status', 'visit'], public_classes=['TaskStatus', 'TaskType', 'Task', 'WorkflowDAG', 'PipelineOrchestrator'], interface_complexity=13, parameter_consistency=0.0, return_type_consistency=0.0, documentation_coverage=0.96875, stability_score=0.1428571428571429)",
+    "intelligent_test_builder.py": "InterfaceAnalysis(module_id='intelligent_test_builder.py', public_functions=['test_gemini_connection', 'main', 'analyze_module', 'generate_intelligent_test', 'build_test_for_module'], public_classes=['IntelligentTestBuilder'], interface_complexity=6, parameter_consistency=0.0, return_type_consistency=0.0, documentation_coverage=1.0, stability_score=0.09999999999999998)",
+    "enhanced_self_healing_verifier.py": "InterfaceAnalysis(module_id='enhanced_self_healing_verifier.py', public_functions=['get_remaining_modules', 'make_llm_call', 'fix_syntax_error', 'verify_test_exhaustiveness', 'generate_enhanced_test', 'process_modules_enhanced', 'main', 'wait_if_needed'], public_classes=['RateLimiter'], interface_complexity=9, parameter_consistency=0.0, return_type_consistency=0.0, documentation_coverage=1.0, stability_score=0.0)",
+    "agentic_test_monitor.py": "InterfaceAnalysis(module_id='agentic_test_monitor.py', public_functions=[], public_classes=[], interface_complexity=0.0, parameter_consistency=0.0, return_type_consistency=0.0, documentation_coverage=0.0, stability_score=0.0)",
+    "parallel_converter.py": "InterfaceAnalysis(module_id='parallel_converter.py', public_functions=['get_remaining_modules', 'generate_test', 'process_modules_parallel', 'main', 'wait_if_needed'], public_classes=['RateLimiter'], interface_complexity=6, parameter_consistency=0.0, return_type_consistency=0.0, documentation_coverage=0.8571428571428571, stability_score=0.0)",
+    "config/__init__.py": "InterfaceAnalysis(module_id='config\\\\__init__.py', public_functions=['api', 'generation', 'security', 'monitoring', 'caching', 'execution', 'reporting', 'quality', 'optimization', 'testing', 'ml', 'infrastructure', 'integration'], public_classes=['EnhancedConfigBridge'], interface_complexity=14, parameter_consistency=0.0, return_type_consistency=0.0, documentation_coverage=0.14285714285714285, stability_score=1.0)"
+  },
+  "dependency_matrix": {
+    "core/intelligence/__init__.py": [
+      "typing",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "json",
+      "logging",
+      "analytics",
+      "testing",
+      "integration",
+      "compatibility",
+      "base",
+      "sklearn",
+      "scipy",
+      "networkx"
+    ],
+    "core/intelligence/testing/__init__.py": [
+      "typing",
+      "dataclasses",
+      "datetime",
+      "logging",
+      "base",
+      "base",
+      "components.coverage_analyzer",
+      "components.ml_optimizer",
+      "components.integration_generator",
+      "components.execution_engine",
+      "base",
+      "statistics"
+    ],
+    "core/intelligence/api/__init__.py": [
+      "endpoints",
+      "serializers",
+      "validators"
+    ],
+    "core/intelligence/analytics/__init__.py": [
+      "asyncio",
+      "time",
+      "logging",
+      "typing",
+      "datetime",
+      "dataclasses",
+      "pathlib",
+      "json",
+      "threading",
+      "concurrent.futures",
+      "base",
+      "advanced_anomaly_detector",
+      "predictive_analytics_engine",
+      "analytics_deduplication",
+      "analytics_anomaly_detector",
+      "analytics_hub",
+      "numpy",
+      "pandas",
+      "scipy",
+      "sklearn.ensemble",
+      "sklearn.linear_model",
+      "sklearn.preprocessing",
+      "sklearn.metrics",
+      "sklearn.model_selection",
+      "integration.cross_system_analytics",
+      "integration.predictive_analytics_engine",
+      "psutil",
+      "psutil",
+      "statistics"
+    ],
+    "testmaster_orchestrator.py": [
+      "os",
+      "sys",
+      "json",
+      "time",
+      "asyncio",
+      "logging",
+      "pathlib",
+      "datetime",
+      "typing",
+      "dataclasses",
+      "enum",
+      "concurrent.futures",
+      "threading",
+      "queue",
+      "hashlib",
+      "pickle",
+      "argparse",
+      "intelligent_test_builder"
+    ],
+    "intelligent_test_builder.py": [
+      "os",
+      "sys",
+      "json",
+      "time",
+      "pathlib",
+      "typing",
+      "multi_coder_analysis.llm_providers.gemini_provider",
+      "dotenv",
+      "ast"
+    ],
+    "enhanced_self_healing_verifier.py": [
+      "os",
+      "time",
+      "ast",
+      "pathlib",
+      "datetime",
+      "json",
+      "sys",
+      "concurrent.futures",
+      "threading",
+      "traceback",
+      "google.generativeai"
+    ],
+    "agentic_test_monitor.py": [],
+    "parallel_converter.py": [
+      "os",
+      "time",
+      "ast",
+      "pathlib",
+      "datetime",
+      "json",
+      "sys",
+      "concurrent.futures",
+      "threading",
+      "queue",
+      "asyncio",
+      "google.generativeai"
+    ],
+    "config/__init__.py": [
+      "hierarchical_config_coordinator",
+      "core.foundation.configuration.base.config_base",
+      "core.orchestration.configuration.orchestration_config",
+      "enhanced_unified_config",
+      "testmaster_config",
+      "enhanced_unified_config"
+    ]
+  },
+  "coupling_issues": [
+    {
+      "module": "core/intelligence/__init__.py",
+      "type": "high_distance",
+      "severity": "high",
+      "value": 0.8771929824561404,
+      "description": "Module is far from main sequence (0.88)"
+    },
+    {
+      "module": "core/intelligence/testing/__init__.py",
+      "type": "high_distance",
+      "severity": "high",
+      "value": 0.8947368421052632,
+      "description": "Module is far from main sequence (0.89)"
+    },
+    {
+      "module": "core/intelligence/api/__init__.py",
+      "type": "high_distance",
+      "severity": "high",
+      "value": 0.9736842105263158,
+      "description": "Module is far from main sequence (0.97)"
+    },
+    {
+      "module": "core/intelligence/analytics/__init__.py",
+      "type": "high_distance",
+      "severity": "high",
+      "value": 0.7456140350877193,
+      "description": "Module is far from main sequence (0.75)"
+    },
+    {
+      "module": "testmaster_orchestrator.py",
+      "type": "high_instability",
+      "severity": "medium",
+      "value": 0.8571428571428571,
+      "description": "Module has high instability (0.86)"
+    },
+    {
+      "module": "intelligent_test_builder.py",
+      "type": "high_instability",
+      "severity": "medium",
+      "value": 0.9,
+      "description": "Module has high instability (0.90)"
+    },
+    {
+      "module": "enhanced_self_healing_verifier.py",
+      "type": "high_instability",
+      "severity": "medium",
+      "value": 1.0,
+      "description": "Module has high instability (1.00)"
+    },
+    {
+      "module": "enhanced_self_healing_verifier.py",
+      "type": "high_complexity",
+      "severity": "low",
+      "value": 0.11746522411128284,
+      "description": "Module has high complexity factor (0.12)"
+    },
+    {
+      "module": "agentic_test_monitor.py",
+      "type": "high_distance",
+      "severity": "high",
+      "value": 1.0,
+      "description": "Module is far from main sequence (1.00)"
+    },
+    {
+      "module": "parallel_converter.py",
+      "type": "high_instability",
+      "severity": "medium",
+      "value": 1.0,
+      "description": "Module has high instability (1.00)"
+    },
+    {
+      "module": "parallel_converter.py",
+      "type": "high_complexity",
+      "severity": "low",
+      "value": 0.10918114143920596,
+      "description": "Module has high complexity factor (0.11)"
+    },
+    {
+      "module": "config/__init__.py",
+      "type": "high_distance",
+      "severity": "high",
+      "value": 0.9473684210526316,
+      "description": "Module is far from main sequence (0.95)"
+    }
+  ],
+  "recommendations": [
+    {
+      "category": "coupling_optimization",
+      "priority": "high",
+      "modules": [
+        "core/intelligence/__init__.py",
+        "core/intelligence/testing/__init__.py",
+        "core/intelligence/api/__init__.py",
+        "core/intelligence/analytics/__init__.py",
+        "testmaster_orchestrator.py",
+        "intelligent_test_builder.py",
+        "enhanced_self_healing_verifier.py",
+        "agentic_test_monitor.py",
+        "parallel_converter.py",
+        "config/__init__.py"
+      ],
+      "description": "Reduce coupling in high-instability modules",
+      "actions": [
+        "Extract interfaces to reduce dependencies",
+        "Apply dependency inversion principle",
+        "Consider facade pattern for complex interfaces"
+      ]
+    },
+    {
+      "category": "interface_improvement",
+      "priority": "medium",
+      "modules": [
+        "agentic_test_monitor.py",
+        "config/__init__.py"
+      ],
+      "description": "Improve interface design and documentation",
+      "actions": [
+        "Add comprehensive docstrings to public methods",
+        "Simplify complex interfaces",
+        "Improve parameter consistency"
+      ]
+    }
+  ],
+  "summary_statistics": {
+    "instability": {
+      "mean": 0.4318546365914786,
+      "min": 0,
+      "max": 1.0,
+      "std": 0.4439777678475325
+    },
+    "distance": {
+      "mean": 0.5681453634085214,
+      "min": 0.0,
+      "max": 1.0,
+      "std": 0.4439777678475326
+    },
+    "cohesion": {
+      "mean": 0.8668844433859914,
+      "min": 0.4538461538461539,
+      "max": 1.0,
+      "std": 0.21356541498640633
+    },
+    "interface_quality": {
+      "mean": 0.5799199885480374,
+      "min": 0.3,
+      "max": 0.7592307692307693,
+      "std": 0.13538917856123742
+    }
+  }
+}

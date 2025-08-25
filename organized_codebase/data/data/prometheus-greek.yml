@@ -1,0 +1,148 @@
+# Prometheus Configuration for Greek Swarm - Agent Delta Hour 7
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'greek-swarm'
+    environment: 'production'
+
+rule_files:
+  - "/etc/prometheus/rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # Add alertmanager if needed
+
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # ADAMANTIUMCLAD Dashboard (Agent Delta)
+  - job_name: 'adamantiumclad-dashboard'
+    static_configs:
+      - targets: ['adamantiumclad-dashboard:5002']
+    metrics_path: '/api/metrics'
+    scrape_interval: 15s
+    scrape_timeout: 10s
+
+  # Unified Greek Dashboard
+  - job_name: 'unified-dashboard'
+    static_configs:
+      - targets: ['unified-dashboard:5003']
+    metrics_path: '/api/metrics'
+    scrape_interval: 15s
+
+  # Enterprise API Gateway
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['api-gateway:5004']
+    metrics_path: '/api/gateway/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # Greek Swarm Coordinator
+  - job_name: 'swarm-coordinator'
+    static_configs:
+      - targets: ['swarm-coordinator:5005']
+    metrics_path: '/metrics'
+    scrape_interval: 20s
+
+  # Agent Alpha (if available)
+  - job_name: 'agent-alpha'
+    static_configs:
+      - targets: ['localhost:5010', 'localhost:5011']
+    metrics_path: '/api/metrics'
+    scrape_interval: 15s
+    scrape_timeout: 10s
+
+  # Agent Beta (if available)
+  - job_name: 'agent-beta'
+    static_configs:
+      - targets: ['localhost:5020', 'localhost:5021']
+    metrics_path: '/api/metrics'
+    scrape_interval: 15s
+
+  # Agent Gamma (if available)
+  - job_name: 'agent-gamma'
+    static_configs:
+      - targets: ['localhost:5030', 'localhost:5031']
+    metrics_path: '/api/metrics'
+    scrape_interval: 15s
+
+  # Agent Epsilon (if available)
+  - job_name: 'agent-epsilon'
+    static_configs:
+      - targets: ['localhost:5001', 'localhost:5051']
+    metrics_path: '/api/metrics'
+    scrape_interval: 15s
+
+  # Redis Exporter
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # PostgreSQL Exporter (if configured)
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # RabbitMQ Management
+  - job_name: 'rabbitmq'
+    static_configs:
+      - targets: ['rabbitmq:15672']
+    metrics_path: '/api/metrics'
+    scrape_interval: 30s
+
+  # Elasticsearch
+  - job_name: 'elasticsearch'
+    static_configs:
+      - targets: ['elasticsearch:9200']
+    metrics_path: '/_prometheus/metrics'
+    scrape_interval: 30s
+
+  # NGINX Load Balancer
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx-lb:80']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+# Recording rules for Greek Swarm metrics
+recording_rules:
+  - name: greek_swarm_rules
+    rules:
+      # Agent health aggregation
+      - record: greek_swarm:agent_health_score
+        expr: avg(up{job=~"agent-.*"}) by (job)
+        
+      # API Gateway request rate
+      - record: greek_swarm:api_gateway_request_rate
+        expr: rate(api_gateway_requests_total[5m])
+        
+      # Overall swarm health
+      - record: greek_swarm:overall_health
+        expr: avg(up{job=~"(agent-.*|.*-dashboard|api-gateway|swarm-coordinator)"})
+        
+      # Agent response time percentiles
+      - record: greek_swarm:agent_response_time_p95
+        expr: histogram_quantile(0.95, rate(api_gateway_request_duration_seconds_bucket[5m]))
+        
+      # Error rate by agent
+      - record: greek_swarm:agent_error_rate
+        expr: rate(api_gateway_requests_total{status=~"5.*"}[5m]) / rate(api_gateway_requests_total[5m])
+
+# Storage configuration
+storage:
+  tsdb:
+    retention.time: 30d
+    retention.size: 10GB

@@ -1,0 +1,218 @@
+{
+  "cpu_usage": {
+    "value": 0.7164297426825682,
+    "trend": "stable",
+    "timestamp": 1755857857.8375814,
+    "confidence": 0.931
+  },
+  "memory_usage": {
+    "value": 0.8194297426825682,
+    "trend": "stable",
+    "timestamp": 1755857857.8375814,
+    "confidence": 0.945
+  },
+  "disk_io": {
+    "value": 0.5189297426825682,
+    "trend": "decreasing",
+    "timestamp": 1755857857.8375814,
+    "confidence": 0.943
+  },
+  "network_io": {
+    "value": 0.4524297426825682,
+    "trend": "stable",
+    "timestamp": 1755857857.8375814,
+    "confidence": 0.9329999999999999
+  },
+  "response_time": {
+    "value": 0.23392974268256816,
+    "trend": "stable",
+    "timestamp": 1755857857.8375814,
+    "confidence": 0.856
+  },
+  "throughput": {
+    "value": 850.0819297426825,
+    "trend": "stable",
+    "timestamp": 1755857857.8375814,
+    "confidence": 0.9159999999999999
+  },
+  "error_rate": {
+    "value": 0.11992974268256819,
+    "trend": "stable",
+    "timestamp": 1755857857.8375814,
+    "confidence": 0.858
+  },
+  "availability": {
+    "value": 1.0884297426825682,
+    "trend": "stable",
+    "timestamp": 1755857857.8375814,
+    "confidence": 0.897
+  },
+  "active_users": {
+    "value": 1140.3413553875268,
+    "trend": "stable",
+    "timestamp": 1755857857.796462,
+    "confidence": 0.8675
+  },
+  "api_calls": {
+    "value": 41457.28879395097,
+    "trend": "decreasing",
+    "timestamp": 1755857857.796462,
+    "confidence": 0.8675
+  },
+  "feature_usage": {
+    "value": 0.7326330057618168,
+    "trend": "decreasing",
+    "timestamp": 1755857857.796462,
+    "confidence": 0.9410000000000001
+  },
+  "session_duration": {
+    "value": 367.194695410209,
+    "trend": "decreasing",
+    "timestamp": 1755857857.796462,
+    "confidence": 0.914
+  },
+  "page_views": {
+    "value": 11890.913553875269,
+    "trend": "increasing",
+    "timestamp": 1755857857.796462,
+    "confidence": 0.8255
+  },
+  "conversion_rate": {
+    "value": 0.11679277011720257,
+    "trend": "stable",
+    "timestamp": 1755857857.796462,
+    "confidence": 0.926
+  },
+  "user_engagement": {
+    "value": 0.6264656973308146,
+    "trend": "decreasing",
+    "timestamp": 1755857857.796462,
+    "confidence": 0.8015
+  },
+  "retention_rate": {
+    "value": 0.8272821216635182,
+    "trend": "stable",
+    "timestamp": 1755857857.796462,
+    "confidence": 0.8300000000000001
+  },
+  "code_quality_score": {
+    "value": 0.8734999999999999,
+    "trend": "stable",
+    "timestamp": 1755857857.594766,
+    "confidence": 0.9
+  },
+  "test_coverage": {
+    "value": 0.8284999999999999,
+    "trend": "stable",
+    "timestamp": 1755857857.594766,
+    "confidence": 0.9
+  },
+  "bug_density": {
+    "value": 0.041499999999999995,
+    "trend": "stable",
+    "timestamp": 1755857857.594766,
+    "confidence": 0.9
+  },
+  "technical_debt": {
+    "value": 0.13949999999999999,
+    "trend": "stable",
+    "timestamp": 1755857857.594766,
+    "confidence": 0.9
+  },
+  "maintainability_index": {
+    "value": 0.886,
+    "trend": "stable",
+    "timestamp": 1755857857.594766,
+    "confidence": 0.9
+  },
+  "complexity_score": {
+    "value": 0.248,
+    "trend": "stable",
+    "timestamp": 1755857857.594766,
+    "confidence": 0.9
+  },
+  "documentation_coverage": {
+    "value": 0.889,
+    "trend": "stable",
+    "timestamp": 1755857857.594766,
+    "confidence": 0.9
+  },
+  "security_score": {
+    "value": 0.9224,
+    "trend": "stable",
+    "timestamp": 1755857857.818774,
+    "confidence": 0.95
+  },
+  "vulnerability_count": {
+    "value": 3,
+    "trend": "stable",
+    "timestamp": 1755857857.818774,
+    "confidence": 0.95
+  },
+  "threat_level": {
+    "value": 0.1485,
+    "trend": "stable",
+    "timestamp": 1755857857.818774,
+    "confidence": 0.95
+  },
+  "compliance_status": {
+    "value": 0.9512999999999999,
+    "trend": "stable",
+    "timestamp": 1755857857.818774,
+    "confidence": 0.95
+  },
+  "security_incidents": {
+    "value": 0,
+    "trend": "stable",
+    "timestamp": 1755857857.818774,
+    "confidence": 0.95
+  },
+  "patch_coverage": {
+    "value": 0.9547,
+    "trend": "stable",
+    "timestamp": 1755857857.818774,
+    "confidence": 0.95
+  },
+  "revenue_impact": {
+    "value": 0.1512,
+    "trend": "increasing",
+    "timestamp": 1755857858.0367715,
+    "confidence": 0.82
+  },
+  "cost_savings": {
+    "value": 0.2116,
+    "trend": "increasing",
+    "timestamp": 1755857858.0367715,
+    "confidence": 0.82
+  },
+  "productivity_gain": {
+    "value": 0.3088,
+    "trend": "increasing",
+    "timestamp": 1755857858.0367715,
+    "confidence": 0.82
+  },
+  "customer_satisfaction": {
+    "value": 0.898,
+    "trend": "increasing",
+    "timestamp": 1755857858.0367715,
+    "confidence": 0.82
+  },
+  "market_share": {
+    "value": 0.1356,
+    "trend": "increasing",
+    "timestamp": 1755857858.0367715,
+    "confidence": 0.82
+  },
+  "competitive_advantage": {
+    "value": 0.8112,
+    "trend": "increasing",
+    "timestamp": 1755857858.0367715,
+    "confidence": 0.82
+  },
+  "roi_percentage": {
+    "value": 0.4348,
+    "trend": "increasing",
+    "timestamp": 1755857858.0367715,
+    "confidence": 0.82
+  }
+}

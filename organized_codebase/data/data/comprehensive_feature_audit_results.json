@@ -1,0 +1,1797 @@
+{
+  "audit_timestamp": "2025-08-19T21:00:00",
+  "analysis_type": "COMPREHENSIVE_VERIFICATION",
+  "phases_analyzed": {
+    "C4": {
+      "phase_id": "C4",
+      "archive_files_analyzed": 0,
+      "consolidated_files_analyzed": 0,
+      "total_archived_features": 75,
+      "missing_features": [],
+      "renamed_features": [
+        {
+          "original": "MonitoringAgent",
+          "new": "MonitoringMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "ConversationalMonitor",
+          "new": "MultiModalMonitor",
+          "confidence": 0.8
+        },
+        {
+          "original": "MultiModalAnalyzer",
+          "new": "MonitoringMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "EnhancedTestMonitor",
+          "new": "MultiModalMonitor",
+          "confidence": 0.8
+        },
+        {
+          "original": "_get_system_status",
+          "new": "track_test_session",
+          "confidence": 0.8
+        },
+        {
+          "original": "_get_help_message",
+          "new": "_reset_daily_usage",
+          "confidence": 0.8
+        },
+        {
+          "original": "_calculate_dict_depth",
+          "new": "get_session_analytics",
+          "confidence": 0.8
+        },
+        {
+          "original": "add_monitoring_agent",
+          "new": "UnifiedObservabilitySystem",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_monitoring_status",
+          "new": "UnifiedObservabilitySystem",
+          "confidence": 0.8
+        }
+      ],
+      "consolidated_features": [
+        {
+          "original": "add_agent",
+          "consolidated_into": "create_unified_observability",
+          "confidence": 0.6
+        }
+      ],
+      "enhanced_features": [],
+      "mapping_confidence_avg": 0.927333333333334
+    },
+    "C5": {
+      "phase_id": "C5",
+      "archive_files_analyzed": 0,
+      "consolidated_files_analyzed": 0,
+      "total_archived_features": 80,
+      "missing_features": [],
+      "renamed_features": [
+        {
+          "original": "AgentStatus",
+          "new": "update_node_status",
+          "confidence": 0.7
+        },
+        {
+          "original": "OrchestrationMode",
+          "new": "DeploymentStatus",
+          "confidence": 0.8
+        },
+        {
+          "original": "TestAgent",
+          "new": "NodeState",
+          "confidence": 0.8
+        },
+        {
+          "original": "OrchestrationTask",
+          "new": "GraphExecutionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "TestOrchestrationEngine",
+          "new": "ServiceConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "__post_init__",
+          "new": "TEST_REPORTER",
+          "confidence": 0.8
+        },
+        {
+          "original": "register_agent",
+          "new": "TeamConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "create_test_crew",
+          "new": "TeamConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "create_orchestration_task",
+          "new": "create_unified_state_manager",
+          "confidence": 0.8
+        },
+        {
+          "original": "_create_task_from_config",
+          "new": "ServiceConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_update_agent_metrics",
+          "new": "ServiceConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_update_session_metrics",
+          "new": "ServiceConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_orchestration_status",
+          "new": "ServiceConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_calculate_system_health",
+          "new": "export_all_configurations",
+          "confidence": 0.8
+        },
+        {
+          "original": "cleanup_completed_sessions",
+          "new": "DeploymentConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "ServiceInstance",
+          "new": "TeamConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "EnterpriseTestDeployment",
+          "new": "DeploymentConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "LoadBalancer",
+          "new": "COORDINATOR",
+          "confidence": 0.8
+        },
+        {
+          "original": "SCALING",
+          "new": "STAGING",
+          "confidence": 0.8
+        },
+        {
+          "original": "UPDATING",
+          "new": "STAGING",
+          "confidence": 0.8
+        },
+        {
+          "original": "DEGRADED",
+          "new": "GraphNode",
+          "confidence": 0.8
+        },
+        {
+          "original": "TERMINATING",
+          "new": "ENGINEER",
+          "confidence": 0.8
+        },
+        {
+          "original": "_get_deployment_config",
+          "new": "DeploymentConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_initialize_core_services",
+          "new": "create_unified_state_manager",
+          "confidence": 0.8
+        },
+        {
+          "original": "deploy_service",
+          "new": "SupervisorMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "enable_auto_scaling",
+          "new": "TeamConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "enable_disaster_recovery",
+          "new": "ServiceConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_deployment_status",
+          "new": "DeploymentStatus",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_next_instance",
+          "new": "GraphExecutionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "TestingTeam",
+          "new": "TEST_MONITOR",
+          "confidence": 0.8
+        },
+        {
+          "original": "STANDARD_TESTING_WORKFLOW",
+          "new": "DeploymentConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_initialize_team",
+          "new": "TeamConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_setup_collaborations",
+          "new": "ServiceConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_update_team_metrics",
+          "new": "UnifiedStateManager",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_team_status",
+          "new": "DeploymentStatus",
+          "confidence": 0.8
+        },
+        {
+          "original": "create_standard_team",
+          "new": "ServiceConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "create_minimal_team",
+          "new": "DeploymentConfiguration",
+          "confidence": 0.8
+        }
+      ],
+      "consolidated_features": [
+        {
+          "original": "IDLE",
+          "consolidated_into": "ARCHITECT",
+          "confidence": 0.6
+        },
+        {
+          "original": "WORKFLOW",
+          "consolidated_into": "ARCHITECT",
+          "confidence": 0.6
+        },
+        {
+          "original": "ServiceConfig",
+          "consolidated_into": "TeamRole",
+          "confidence": 0.6
+        }
+      ],
+      "enhanced_features": [],
+      "mapping_confidence_avg": 0.8662500000000002
+    },
+    "C6": {
+      "phase_id": "C6",
+      "archive_files_analyzed": 0,
+      "consolidated_files_analyzed": 0,
+      "total_archived_features": 112,
+      "missing_features": [],
+      "renamed_features": [
+        {
+          "original": "AgentStatus",
+          "new": "SwarmRouter",
+          "confidence": 0.8
+        },
+        {
+          "original": "OrchestrationMode",
+          "new": "GraphExecutionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "TestAgent",
+          "new": "NodeState",
+          "confidence": 0.8
+        },
+        {
+          "original": "OrchestrationTask",
+          "new": "GraphExecutionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "TestOrchestrationEngine",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "__post_init__",
+          "new": "MIXTURE_OF_AGENTS",
+          "confidence": 0.8
+        },
+        {
+          "original": "create_test_crew",
+          "new": "SwarmTaskStatus",
+          "confidence": 0.8
+        },
+        {
+          "original": "create_orchestration_task",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "_create_task_from_config",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "_update_agent_metrics",
+          "new": "SwarmArchitecture",
+          "confidence": 0.8
+        },
+        {
+          "original": "_update_session_metrics",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_orchestration_status",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "_calculate_system_health",
+          "new": "create_unified_orchestrator",
+          "confidence": 0.8
+        },
+        {
+          "original": "cleanup_completed_sessions",
+          "new": "create_unified_orchestrator",
+          "confidence": 0.8
+        },
+        {
+          "original": "UniversalSwarmOrchestrator",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "list_swarms",
+          "new": "SwarmTask",
+          "confidence": 0.8
+        },
+        {
+          "original": "create_swarm",
+          "new": "SwarmRouter",
+          "confidence": 0.8
+        },
+        {
+          "original": "execute_swarm_task",
+          "new": "SwarmTaskStatus",
+          "confidence": 0.8
+        },
+        {
+          "original": "list_architectures",
+          "new": "GraphExecutionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "list_swarm_agents",
+          "new": "SwarmTaskStatus",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_swarm_analytics",
+          "new": "SwarmAgentState",
+          "confidence": 0.8
+        },
+        {
+          "original": "MAJORITY_VOTING",
+          "new": "MIXTURE_OF_AGENTS",
+          "confidence": 0.8
+        },
+        {
+          "original": "DEEP_RESEARCH_SWARM",
+          "new": "UnifiedOrchestrator",
+          "confidence": 0.8
+        },
+        {
+          "original": "HEAVY_SWARM",
+          "new": "SWARM_BASED",
+          "confidence": 0.8
+        },
+        {
+          "original": "COUNCIL_SWARM",
+          "new": "SWARM_ROUTER",
+          "confidence": 0.8
+        },
+        {
+          "original": "ADAPTIVE_SWARM",
+          "new": "SWARM_ROUTER",
+          "confidence": 0.8
+        },
+        {
+          "original": "_initialize_swarm_agents",
+          "new": "GraphOrchestrationEngine",
+          "confidence": 0.8
+        },
+        {
+          "original": "create_swarm",
+          "new": "SwarmRouter",
+          "confidence": 0.8
+        },
+        {
+          "original": "execute_swarm_task",
+          "new": "SwarmTaskStatus",
+          "confidence": 0.8
+        },
+        {
+          "original": "_execute_sequential_workflow",
+          "new": "OrchestrationConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_execute_concurrent_workflow",
+          "new": "create_unified_orchestrator",
+          "confidence": 0.8
+        },
+        {
+          "original": "_execute_hierarchical_swarm",
+          "new": "create_unified_orchestrator",
+          "confidence": 0.8
+        },
+        {
+          "original": "_execute_mixture_of_agents",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "_execute_majority_voting",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "_execute_deep_research_swarm",
+          "new": "create_unified_orchestrator",
+          "confidence": 0.8
+        },
+        {
+          "original": "_execute_adaptive_swarm",
+          "new": "get_execution_status",
+          "confidence": 0.8
+        },
+        {
+          "original": "_execute_agent_step",
+          "new": "SEQUENTIAL_WORKFLOW",
+          "confidence": 0.8
+        },
+        {
+          "original": "_generate_security_output",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "_generate_test_output",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "_generate_quality_output",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "_generate_consensus_output",
+          "new": "OrchestrationConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_aggregate_concurrent_outputs",
+          "new": "OrchestrationConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_aggregate_expert_mixture",
+          "new": "register_routing_strategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "_calculate_majority_vote",
+          "new": "_performance_based_routing",
+          "confidence": 0.8
+        },
+        {
+          "original": "_synthesize_research",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "_analyze_task_for_architecture",
+          "new": "OrchestrationConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "_update_performance_metrics",
+          "new": "OrchestrationConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "enhanced_api_endpoint",
+          "new": "OrchestrationStrategy",
+          "confidence": 0.8
+        },
+        {
+          "original": "handle_api_error",
+          "new": "GraphExecutionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_real_data_extractor",
+          "new": "GraphOrchestrationEngine",
+          "confidence": 0.8
+        },
+        {
+          "original": "decorator",
+          "new": "GraphNode",
+          "confidence": 0.8
+        },
+        {
+          "original": "SwarmConfig",
+          "new": "SwarmAgent",
+          "confidence": 0.8
+        },
+        {
+          "original": "SwarmOrchestrator",
+          "new": "GraphExecutionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "is_timeout",
+          "new": "submit_task",
+          "confidence": 0.8
+        },
+        {
+          "original": "can_accept_task",
+          "new": "start_execution",
+          "confidence": 0.8
+        },
+        {
+          "original": "add_agent",
+          "new": "NodeState",
+          "confidence": 0.8
+        },
+        {
+          "original": "remove_agent",
+          "new": "MAINTENANCE",
+          "confidence": 0.8
+        },
+        {
+          "original": "submit_batch",
+          "new": "submit_task",
+          "confidence": 0.8
+        },
+        {
+          "original": "_select_agent",
+          "new": "start_execution",
+          "confidence": 0.8
+        },
+        {
+          "original": "_update_collective_knowledge",
+          "new": "OrchestrationConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_agent_details",
+          "new": "GraphExecutionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_task_details",
+          "new": "SEQUENTIAL_WORKFLOW",
+          "confidence": 0.8
+        }
+      ],
+      "consolidated_features": [
+        {
+          "original": "PAUSED",
+          "consolidated_into": "SEQUENTIAL",
+          "confidence": 0.6
+        },
+        {
+          "original": "WORKFLOW",
+          "consolidated_into": "SEQUENTIAL",
+          "confidence": 0.6
+        },
+        {
+          "original": "TaskPriority",
+          "consolidated_into": "GraphExecutionMode",
+          "confidence": 0.6
+        },
+        {
+          "original": "CRITICAL",
+          "consolidated_into": "SEQUENTIAL",
+          "confidence": 0.6
+        },
+        {
+          "original": "HIGH",
+          "consolidated_into": "SEQUENTIAL",
+          "confidence": 0.6
+        },
+        {
+          "original": "MEDIUM",
+          "consolidated_into": "SEQUENTIAL",
+          "confidence": 0.6
+        },
+        {
+          "original": "LOW",
+          "consolidated_into": "SEQUENTIAL",
+          "confidence": 0.6
+        },
+        {
+          "original": "_consolidate_research_findings",
+          "consolidated_into": "OrchestrationConfiguration",
+          "confidence": 0.8
+        },
+        {
+          "original": "is_ready",
+          "consolidated_into": "create_unified_orchestrator",
+          "confidence": 0.6
+        }
+      ],
+      "enhanced_features": [],
+      "mapping_confidence_avg": 0.8406249999999996
+    },
+    "C7": {
+      "phase_id": "C7",
+      "archive_files_analyzed": 0,
+      "consolidated_files_analyzed": 0,
+      "total_archived_features": 96,
+      "missing_features": [],
+      "renamed_features": [
+        {
+          "original": "MonitoringMode",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "MonitoringEvent",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "MonitoringAgent",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "ConversationalMonitor",
+          "new": "UnifiedDashboard",
+          "confidence": 0.8
+        },
+        {
+          "original": "MultiModalAnalyzer",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "EnhancedTestMonitor",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "PROACTIVE",
+          "new": "ADAPTIVE",
+          "confidence": 0.8
+        },
+        {
+          "original": "CONVERSATIONAL",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "add_agent",
+          "new": "get_trend",
+          "confidence": 0.8
+        },
+        {
+          "original": "_get_system_status",
+          "new": "register_data_stream",
+          "confidence": 0.8
+        },
+        {
+          "original": "_get_help_message",
+          "new": "register_calculator",
+          "confidence": 0.8
+        },
+        {
+          "original": "_calculate_dict_depth",
+          "new": "create_unified_dashboard",
+          "confidence": 0.8
+        },
+        {
+          "original": "add_monitoring_agent",
+          "new": "UnifiedDashboard",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_monitoring_status",
+          "new": "UnifiedDashboard",
+          "confidence": 0.8
+        },
+        {
+          "original": "RealtimeChart",
+          "new": "WidgetType",
+          "confidence": 0.8
+        },
+        {
+          "original": "MetricsPanel",
+          "new": "WidgetType",
+          "confidence": 0.8
+        },
+        {
+          "original": "ControlPanel",
+          "new": "WidgetType",
+          "confidence": 0.8
+        },
+        {
+          "original": "InteractiveDashboard",
+          "new": "UnifiedDashboard",
+          "confidence": 0.8
+        },
+        {
+          "original": "update_data",
+          "new": "ChartWidget",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_age_seconds",
+          "new": "DashboardWidget",
+          "confidence": 0.8
+        },
+        {
+          "original": "add_point",
+          "new": "__init__",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_chart_data",
+          "new": "DashboardTheme",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_metric_status",
+          "new": "MetricsManager",
+          "confidence": 0.8
+        },
+        {
+          "original": "trigger_control",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_control_state",
+          "new": "trigger_action",
+          "confidence": 0.8
+        },
+        {
+          "original": "_create_default_widgets",
+          "new": "create_unified_dashboard",
+          "confidence": 0.8
+        },
+        {
+          "original": "update_widget_position",
+          "new": "create_unified_dashboard",
+          "confidence": 0.8
+        },
+        {
+          "original": "update_widget_size",
+          "new": "update_chart_data",
+          "confidence": 0.8
+        },
+        {
+          "original": "add_data_source",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "add_alert",
+          "new": "update_row",
+          "confidence": 0.8
+        },
+        {
+          "original": "acknowledge_alert",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_active_alerts",
+          "new": "trigger_action",
+          "confidence": 0.8
+        },
+        {
+          "original": "set_theme",
+          "new": "EDIT_MODE",
+          "confidence": 0.8
+        },
+        {
+          "original": "export_layout",
+          "new": "update_value",
+          "confidence": 0.8
+        },
+        {
+          "original": "import_layout",
+          "new": "LayoutMode",
+          "confidence": 0.7
+        },
+        {
+          "original": "get_dashboard_data",
+          "new": "DashboardTheme",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_widget_data",
+          "new": "DashboardWidget",
+          "confidence": 0.8
+        },
+        {
+          "original": "get_dashboard_status",
+          "new": "UnifiedDashboard",
+          "confidence": 0.8
+        },
+        {
+          "original": "TeamStatusCard",
+          "new": "DashboardTheme",
+          "confidence": 0.8
+        },
+        {
+          "original": "MonitorStatusCard",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "ChatDialog",
+          "new": "ChartWidget",
+          "confidence": 0.8
+        },
+        {
+          "original": "CreateTeamDialog",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "Phase2Dashboard",
+          "new": "DashboardTheme",
+          "confidence": 0.8
+        },
+        {
+          "original": "TeamsTab",
+          "new": "AgentsTab",
+          "confidence": 0.8
+        },
+        {
+          "original": "MonitoringTab",
+          "new": "InteractionMode",
+          "confidence": 0.8
+        },
+        {
+          "original": "usePhase2API",
+          "new": "AgentStatusChip",
+          "confidence": 0.8
+        },
+        {
+          "original": "getAlertIcon",
+          "new": "AlertLevel",
+          "confidence": 0.8
+        },
+        {
+          "original": "handleCreate",
+          "new": "AlertLevel",
+          "confidence": 0.8
+        },
+        {
+          "original": "handleOpenChat",
+          "new": "AgentStatusChip",
+          "confidence": 0.8
+        }
+      ],
+      "consolidated_features": [
+        {
+          "original": "PASSIVE",
+          "consolidated_into": "CHART",
+          "confidence": 0.6
+        },
+        {
+          "original": "add_control",
+          "consolidated_into": "create_unified_dashboard",
+          "confidence": 0.6
+        }
+      ],
+      "enhanced_features": [],
+      "mapping_confidence_avg": 0.8651041666666665
+    }
+  },
+  "truly_missing_features": [],
+  "renamed_features": [
+    {
+      "original": "MonitoringAgent",
+      "new": "MonitoringMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "ConversationalMonitor",
+      "new": "MultiModalMonitor",
+      "confidence": 0.8
+    },
+    {
+      "original": "MultiModalAnalyzer",
+      "new": "MonitoringMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "EnhancedTestMonitor",
+      "new": "MultiModalMonitor",
+      "confidence": 0.8
+    },
+    {
+      "original": "_get_system_status",
+      "new": "track_test_session",
+      "confidence": 0.8
+    },
+    {
+      "original": "_get_help_message",
+      "new": "_reset_daily_usage",
+      "confidence": 0.8
+    },
+    {
+      "original": "_calculate_dict_depth",
+      "new": "get_session_analytics",
+      "confidence": 0.8
+    },
+    {
+      "original": "add_monitoring_agent",
+      "new": "UnifiedObservabilitySystem",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_monitoring_status",
+      "new": "UnifiedObservabilitySystem",
+      "confidence": 0.8
+    },
+    {
+      "original": "AgentStatus",
+      "new": "update_node_status",
+      "confidence": 0.7
+    },
+    {
+      "original": "OrchestrationMode",
+      "new": "DeploymentStatus",
+      "confidence": 0.8
+    },
+    {
+      "original": "TestAgent",
+      "new": "NodeState",
+      "confidence": 0.8
+    },
+    {
+      "original": "OrchestrationTask",
+      "new": "GraphExecutionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "TestOrchestrationEngine",
+      "new": "ServiceConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "__post_init__",
+      "new": "TEST_REPORTER",
+      "confidence": 0.8
+    },
+    {
+      "original": "register_agent",
+      "new": "TeamConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "create_test_crew",
+      "new": "TeamConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "create_orchestration_task",
+      "new": "create_unified_state_manager",
+      "confidence": 0.8
+    },
+    {
+      "original": "_create_task_from_config",
+      "new": "ServiceConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_update_agent_metrics",
+      "new": "ServiceConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_update_session_metrics",
+      "new": "ServiceConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_orchestration_status",
+      "new": "ServiceConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_calculate_system_health",
+      "new": "export_all_configurations",
+      "confidence": 0.8
+    },
+    {
+      "original": "cleanup_completed_sessions",
+      "new": "DeploymentConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "ServiceInstance",
+      "new": "TeamConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "EnterpriseTestDeployment",
+      "new": "DeploymentConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "LoadBalancer",
+      "new": "COORDINATOR",
+      "confidence": 0.8
+    },
+    {
+      "original": "SCALING",
+      "new": "STAGING",
+      "confidence": 0.8
+    },
+    {
+      "original": "UPDATING",
+      "new": "STAGING",
+      "confidence": 0.8
+    },
+    {
+      "original": "DEGRADED",
+      "new": "GraphNode",
+      "confidence": 0.8
+    },
+    {
+      "original": "TERMINATING",
+      "new": "ENGINEER",
+      "confidence": 0.8
+    },
+    {
+      "original": "_get_deployment_config",
+      "new": "DeploymentConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_initialize_core_services",
+      "new": "create_unified_state_manager",
+      "confidence": 0.8
+    },
+    {
+      "original": "deploy_service",
+      "new": "SupervisorMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "enable_auto_scaling",
+      "new": "TeamConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "enable_disaster_recovery",
+      "new": "ServiceConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_deployment_status",
+      "new": "DeploymentStatus",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_next_instance",
+      "new": "GraphExecutionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "TestingTeam",
+      "new": "TEST_MONITOR",
+      "confidence": 0.8
+    },
+    {
+      "original": "STANDARD_TESTING_WORKFLOW",
+      "new": "DeploymentConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_initialize_team",
+      "new": "TeamConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_setup_collaborations",
+      "new": "ServiceConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_update_team_metrics",
+      "new": "UnifiedStateManager",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_team_status",
+      "new": "DeploymentStatus",
+      "confidence": 0.8
+    },
+    {
+      "original": "create_standard_team",
+      "new": "ServiceConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "create_minimal_team",
+      "new": "DeploymentConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "AgentStatus",
+      "new": "SwarmRouter",
+      "confidence": 0.8
+    },
+    {
+      "original": "OrchestrationMode",
+      "new": "GraphExecutionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "TestAgent",
+      "new": "NodeState",
+      "confidence": 0.8
+    },
+    {
+      "original": "OrchestrationTask",
+      "new": "GraphExecutionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "TestOrchestrationEngine",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "__post_init__",
+      "new": "MIXTURE_OF_AGENTS",
+      "confidence": 0.8
+    },
+    {
+      "original": "create_test_crew",
+      "new": "SwarmTaskStatus",
+      "confidence": 0.8
+    },
+    {
+      "original": "create_orchestration_task",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "_create_task_from_config",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "_update_agent_metrics",
+      "new": "SwarmArchitecture",
+      "confidence": 0.8
+    },
+    {
+      "original": "_update_session_metrics",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_orchestration_status",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "_calculate_system_health",
+      "new": "create_unified_orchestrator",
+      "confidence": 0.8
+    },
+    {
+      "original": "cleanup_completed_sessions",
+      "new": "create_unified_orchestrator",
+      "confidence": 0.8
+    },
+    {
+      "original": "UniversalSwarmOrchestrator",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "list_swarms",
+      "new": "SwarmTask",
+      "confidence": 0.8
+    },
+    {
+      "original": "create_swarm",
+      "new": "SwarmRouter",
+      "confidence": 0.8
+    },
+    {
+      "original": "execute_swarm_task",
+      "new": "SwarmTaskStatus",
+      "confidence": 0.8
+    },
+    {
+      "original": "list_architectures",
+      "new": "GraphExecutionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "list_swarm_agents",
+      "new": "SwarmTaskStatus",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_swarm_analytics",
+      "new": "SwarmAgentState",
+      "confidence": 0.8
+    },
+    {
+      "original": "MAJORITY_VOTING",
+      "new": "MIXTURE_OF_AGENTS",
+      "confidence": 0.8
+    },
+    {
+      "original": "DEEP_RESEARCH_SWARM",
+      "new": "UnifiedOrchestrator",
+      "confidence": 0.8
+    },
+    {
+      "original": "HEAVY_SWARM",
+      "new": "SWARM_BASED",
+      "confidence": 0.8
+    },
+    {
+      "original": "COUNCIL_SWARM",
+      "new": "SWARM_ROUTER",
+      "confidence": 0.8
+    },
+    {
+      "original": "ADAPTIVE_SWARM",
+      "new": "SWARM_ROUTER",
+      "confidence": 0.8
+    },
+    {
+      "original": "_initialize_swarm_agents",
+      "new": "GraphOrchestrationEngine",
+      "confidence": 0.8
+    },
+    {
+      "original": "create_swarm",
+      "new": "SwarmRouter",
+      "confidence": 0.8
+    },
+    {
+      "original": "execute_swarm_task",
+      "new": "SwarmTaskStatus",
+      "confidence": 0.8
+    },
+    {
+      "original": "_execute_sequential_workflow",
+      "new": "OrchestrationConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_execute_concurrent_workflow",
+      "new": "create_unified_orchestrator",
+      "confidence": 0.8
+    },
+    {
+      "original": "_execute_hierarchical_swarm",
+      "new": "create_unified_orchestrator",
+      "confidence": 0.8
+    },
+    {
+      "original": "_execute_mixture_of_agents",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "_execute_majority_voting",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "_execute_deep_research_swarm",
+      "new": "create_unified_orchestrator",
+      "confidence": 0.8
+    },
+    {
+      "original": "_execute_adaptive_swarm",
+      "new": "get_execution_status",
+      "confidence": 0.8
+    },
+    {
+      "original": "_execute_agent_step",
+      "new": "SEQUENTIAL_WORKFLOW",
+      "confidence": 0.8
+    },
+    {
+      "original": "_generate_security_output",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "_generate_test_output",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "_generate_quality_output",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "_generate_consensus_output",
+      "new": "OrchestrationConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_aggregate_concurrent_outputs",
+      "new": "OrchestrationConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_aggregate_expert_mixture",
+      "new": "register_routing_strategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "_calculate_majority_vote",
+      "new": "_performance_based_routing",
+      "confidence": 0.8
+    },
+    {
+      "original": "_synthesize_research",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "_analyze_task_for_architecture",
+      "new": "OrchestrationConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "_update_performance_metrics",
+      "new": "OrchestrationConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "enhanced_api_endpoint",
+      "new": "OrchestrationStrategy",
+      "confidence": 0.8
+    },
+    {
+      "original": "handle_api_error",
+      "new": "GraphExecutionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_real_data_extractor",
+      "new": "GraphOrchestrationEngine",
+      "confidence": 0.8
+    },
+    {
+      "original": "decorator",
+      "new": "GraphNode",
+      "confidence": 0.8
+    },
+    {
+      "original": "SwarmConfig",
+      "new": "SwarmAgent",
+      "confidence": 0.8
+    },
+    {
+      "original": "SwarmOrchestrator",
+      "new": "GraphExecutionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "is_timeout",
+      "new": "submit_task",
+      "confidence": 0.8
+    },
+    {
+      "original": "can_accept_task",
+      "new": "start_execution",
+      "confidence": 0.8
+    },
+    {
+      "original": "add_agent",
+      "new": "NodeState",
+      "confidence": 0.8
+    },
+    {
+      "original": "remove_agent",
+      "new": "MAINTENANCE",
+      "confidence": 0.8
+    },
+    {
+      "original": "submit_batch",
+      "new": "submit_task",
+      "confidence": 0.8
+    },
+    {
+      "original": "_select_agent",
+      "new": "start_execution",
+      "confidence": 0.8
+    },
+    {
+      "original": "_update_collective_knowledge",
+      "new": "OrchestrationConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_agent_details",
+      "new": "GraphExecutionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_task_details",
+      "new": "SEQUENTIAL_WORKFLOW",
+      "confidence": 0.8
+    },
+    {
+      "original": "MonitoringMode",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "MonitoringEvent",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "MonitoringAgent",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "ConversationalMonitor",
+      "new": "UnifiedDashboard",
+      "confidence": 0.8
+    },
+    {
+      "original": "MultiModalAnalyzer",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "EnhancedTestMonitor",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "PROACTIVE",
+      "new": "ADAPTIVE",
+      "confidence": 0.8
+    },
+    {
+      "original": "CONVERSATIONAL",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "add_agent",
+      "new": "get_trend",
+      "confidence": 0.8
+    },
+    {
+      "original": "_get_system_status",
+      "new": "register_data_stream",
+      "confidence": 0.8
+    },
+    {
+      "original": "_get_help_message",
+      "new": "register_calculator",
+      "confidence": 0.8
+    },
+    {
+      "original": "_calculate_dict_depth",
+      "new": "create_unified_dashboard",
+      "confidence": 0.8
+    },
+    {
+      "original": "add_monitoring_agent",
+      "new": "UnifiedDashboard",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_monitoring_status",
+      "new": "UnifiedDashboard",
+      "confidence": 0.8
+    },
+    {
+      "original": "RealtimeChart",
+      "new": "WidgetType",
+      "confidence": 0.8
+    },
+    {
+      "original": "MetricsPanel",
+      "new": "WidgetType",
+      "confidence": 0.8
+    },
+    {
+      "original": "ControlPanel",
+      "new": "WidgetType",
+      "confidence": 0.8
+    },
+    {
+      "original": "InteractiveDashboard",
+      "new": "UnifiedDashboard",
+      "confidence": 0.8
+    },
+    {
+      "original": "update_data",
+      "new": "ChartWidget",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_age_seconds",
+      "new": "DashboardWidget",
+      "confidence": 0.8
+    },
+    {
+      "original": "add_point",
+      "new": "__init__",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_chart_data",
+      "new": "DashboardTheme",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_metric_status",
+      "new": "MetricsManager",
+      "confidence": 0.8
+    },
+    {
+      "original": "trigger_control",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_control_state",
+      "new": "trigger_action",
+      "confidence": 0.8
+    },
+    {
+      "original": "_create_default_widgets",
+      "new": "create_unified_dashboard",
+      "confidence": 0.8
+    },
+    {
+      "original": "update_widget_position",
+      "new": "create_unified_dashboard",
+      "confidence": 0.8
+    },
+    {
+      "original": "update_widget_size",
+      "new": "update_chart_data",
+      "confidence": 0.8
+    },
+    {
+      "original": "add_data_source",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "add_alert",
+      "new": "update_row",
+      "confidence": 0.8
+    },
+    {
+      "original": "acknowledge_alert",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_active_alerts",
+      "new": "trigger_action",
+      "confidence": 0.8
+    },
+    {
+      "original": "set_theme",
+      "new": "EDIT_MODE",
+      "confidence": 0.8
+    },
+    {
+      "original": "export_layout",
+      "new": "update_value",
+      "confidence": 0.8
+    },
+    {
+      "original": "import_layout",
+      "new": "LayoutMode",
+      "confidence": 0.7
+    },
+    {
+      "original": "get_dashboard_data",
+      "new": "DashboardTheme",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_widget_data",
+      "new": "DashboardWidget",
+      "confidence": 0.8
+    },
+    {
+      "original": "get_dashboard_status",
+      "new": "UnifiedDashboard",
+      "confidence": 0.8
+    },
+    {
+      "original": "TeamStatusCard",
+      "new": "DashboardTheme",
+      "confidence": 0.8
+    },
+    {
+      "original": "MonitorStatusCard",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "ChatDialog",
+      "new": "ChartWidget",
+      "confidence": 0.8
+    },
+    {
+      "original": "CreateTeamDialog",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "Phase2Dashboard",
+      "new": "DashboardTheme",
+      "confidence": 0.8
+    },
+    {
+      "original": "TeamsTab",
+      "new": "AgentsTab",
+      "confidence": 0.8
+    },
+    {
+      "original": "MonitoringTab",
+      "new": "InteractionMode",
+      "confidence": 0.8
+    },
+    {
+      "original": "usePhase2API",
+      "new": "AgentStatusChip",
+      "confidence": 0.8
+    },
+    {
+      "original": "getAlertIcon",
+      "new": "AlertLevel",
+      "confidence": 0.8
+    },
+    {
+      "original": "handleCreate",
+      "new": "AlertLevel",
+      "confidence": 0.8
+    },
+    {
+      "original": "handleOpenChat",
+      "new": "AgentStatusChip",
+      "confidence": 0.8
+    }
+  ],
+  "consolidated_features": [
+    {
+      "original": "add_agent",
+      "consolidated_into": "create_unified_observability",
+      "confidence": 0.6
+    },
+    {
+      "original": "IDLE",
+      "consolidated_into": "ARCHITECT",
+      "confidence": 0.6
+    },
+    {
+      "original": "WORKFLOW",
+      "consolidated_into": "ARCHITECT",
+      "confidence": 0.6
+    },
+    {
+      "original": "ServiceConfig",
+      "consolidated_into": "TeamRole",
+      "confidence": 0.6
+    },
+    {
+      "original": "PAUSED",
+      "consolidated_into": "SEQUENTIAL",
+      "confidence": 0.6
+    },
+    {
+      "original": "WORKFLOW",
+      "consolidated_into": "SEQUENTIAL",
+      "confidence": 0.6
+    },
+    {
+      "original": "TaskPriority",
+      "consolidated_into": "GraphExecutionMode",
+      "confidence": 0.6
+    },
+    {
+      "original": "CRITICAL",
+      "consolidated_into": "SEQUENTIAL",
+      "confidence": 0.6
+    },
+    {
+      "original": "HIGH",
+      "consolidated_into": "SEQUENTIAL",
+      "confidence": 0.6
+    },
+    {
+      "original": "MEDIUM",
+      "consolidated_into": "SEQUENTIAL",
+      "confidence": 0.6
+    },
+    {
+      "original": "LOW",
+      "consolidated_into": "SEQUENTIAL",
+      "confidence": 0.6
+    },
+    {
+      "original": "_consolidate_research_findings",
+      "consolidated_into": "OrchestrationConfiguration",
+      "confidence": 0.8
+    },
+    {
+      "original": "is_ready",
+      "consolidated_into": "create_unified_orchestrator",
+      "confidence": 0.6
+    },
+    {
+      "original": "PASSIVE",
+      "consolidated_into": "CHART",
+      "confidence": 0.6
+    },
+    {
+      "original": "add_control",
+      "consolidated_into": "create_unified_dashboard",
+      "confidence": 0.6
+    }
+  ],
+  "enhanced_features": [],
+  "restoration_recommendations": [],
+  "overall_assessment": {
+    "status": "PERFECT_PRESERVATION",
+    "total_features_analyzed": 363,
+    "total_missing_features": 0,
+    "critical_missing_features": 0,
+    "preservation_rate": 100.0
+  },
+  "summary": {
+    "action_required": false,
+    "priority_actions": 0,
+    "confidence_level": "HIGH"
+  }
+}

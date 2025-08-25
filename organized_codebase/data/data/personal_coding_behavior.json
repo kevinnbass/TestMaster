@@ -1,0 +1,108 @@
+{
+  "analysis_period": {
+    "start": "2025-07-24T05:46:14.747729",
+    "end": "2025-08-23T05:46:14.747729"
+  },
+  "summary": {
+    "total_sessions": 1,
+    "total_lines_written": 0,
+    "average_session_duration": 60,
+    "productivity_rate": 0.0
+  },
+  "coding_sessions": [
+    {
+      "start_time": "2025-08-23T04:46:13.563851",
+      "end_time": "2025-08-23T05:46:13.563851",
+      "duration_minutes": 60,
+      "files_modified": [],
+      "lines_added": 0,
+      "lines_deleted": 0,
+      "commit_count": 0,
+      "is_productive": false
+    }
+  ],
+  "preferences": [
+    {
+      "preference_type": "pattern",
+      "preference_name": "async_programming",
+      "frequency": 0.15294117647058825,
+      "consistency_score": 0.6,
+      "examples": [
+        "Async/await patterns used"
+      ],
+      "confidence": 0.7
+    }
+  ],
+  "workflow_patterns": [],
+  "productivity_metrics": [
+    {
+      "metric_name": "lines_per_hour",
+      "value": 0.0,
+      "unit": "lines/hour",
+      "trend": "stable",
+      "percentile": 0
+    },
+    {
+      "metric_name": "commits_per_session",
+      "value": 0,
+      "unit": "commits",
+      "trend": "stable",
+      "percentile": 0
+    },
+    {
+      "metric_name": "average_session_duration",
+      "value": 60,
+      "unit": "minutes",
+      "trend": "stable",
+      "percentile": 50
+    },
+    {
+      "metric_name": "productivity_rate",
+      "value": 0.0,
+      "unit": "%",
+      "trend": "stable",
+      "percentile": 0.0
+    }
+  ],
+  "behavioral_insights": [
+    {
+      "insight_type": "productivity_timing",
+      "title": "Peak Productivity Hours Identified",
+      "description": "Most productive during 4:00-5:00",
+      "impact_level": "high",
+      "evidence": [
+        "Based on 1 coding sessions"
+      ],
+      "recommendation": "Schedule complex tasks during peak hours",
+      "potential_improvement": "15-25% productivity gain"
+    },
+    {
+      "insight_type": "productivity_improvement",
+      "title": "Productivity Enhancement Opportunity",
+      "description": "Current productivity rate: 0.0%",
+      "impact_level": "high",
+      "evidence": [
+        "Many sessions with low output"
+      ],
+      "recommendation": "Focus on completing tasks within sessions",
+      "potential_improvement": "30-50% productivity increase possible"
+    }
+  ],
+  "peak_productivity_times": [
+    [
+      4,
+      5
+    ]
+  ],
+  "workflow_recommendations": [
+    "Consider using code generation tools or snippets for boilerplate",
+    "Make more frequent commits to track progress better",
+    "Schedule complex tasks during peak hours",
+    "Focus on completing tasks within sessions"
+  ],
+  "metadata": {
+    "analyzer": "PersonalCodingBehaviorAnalyzer",
+    "version": "1.0",
+    "generated_at": "2025-08-23T05:46:14.747729"
+  }
+}

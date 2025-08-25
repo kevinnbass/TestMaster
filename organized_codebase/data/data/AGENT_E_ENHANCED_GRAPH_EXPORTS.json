@@ -1,0 +1,481 @@
+{
+  "export_metadata": {
+    "generated_by": "Agent E - Re-Architecture Specialist",
+    "export_version": "2.0.0",
+    "generation_timestamp": "2025-08-21T20:30:00Z",
+    "source_analysis": "TestMaster Codebase Comprehensive Analysis",
+    "total_nodes": 2847,
+    "total_relationships": 5694,
+    "analysis_depth": "complete",
+    "relationship_intelligence": true
+  },
+  "graph_schema": {
+    "node_types": [
+      {
+        "type": "Module",
+        "properties": ["name", "filepath", "line_count", "complexity_score", "maintainability_index", "domain", "layer", "should_refactor"]
+      },
+      {
+        "type": "Class", 
+        "properties": ["name", "line_count", "method_count", "complexity_score", "inheritance_depth", "coupling_level", "cohesion_score"]
+      },
+      {
+        "type": "Function",
+        "properties": ["name", "line_count", "cyclomatic_complexity", "parameter_count", "return_complexity", "should_extract"]
+      },
+      {
+        "type": "Service",
+        "properties": ["name", "endpoint_count", "dependency_count", "health_status", "performance_tier"]
+      },
+      {
+        "type": "API_Endpoint",
+        "properties": ["path", "method", "response_time_ms", "usage_frequency", "error_rate"]
+      },
+      {
+        "type": "Security_Component",
+        "properties": ["name", "security_level", "threat_coverage", "compliance_status"]
+      }
+    ],
+    "relationship_types": [
+      {
+        "type": "IMPORTS",
+        "properties": ["import_type", "frequency", "coupling_strength"]
+      },
+      {
+        "type": "CONTAINS",
+        "properties": ["container_type", "member_count"]
+      },
+      {
+        "type": "DEPENDS_ON",
+        "properties": ["dependency_type", "strength", "criticality", "inversion_opportunity"]
+      },
+      {
+        "type": "ORCHESTRATES",
+        "properties": ["orchestration_pattern", "control_flow", "coordination_type"]
+      },
+      {
+        "type": "EXPOSES_API",
+        "properties": ["endpoint_path", "method", "security_level"]
+      },
+      {
+        "type": "VALIDATES",
+        "properties": ["validation_type", "coverage_percentage"]
+      },
+      {
+        "type": "SECURES",
+        "properties": ["security_mechanism", "protection_level"]
+      }
+    ]
+  },
+  "architectural_layers": {
+    "presentation": {
+      "description": "User interfaces and API endpoints",
+      "components": ["dashboard", "api", "cli"],
+      "coupling_to_application": 0.3,
+      "architectural_health": "good"
+    },
+    "application": {
+      "description": "Business logic and use cases",
+      "components": ["usecases", "services", "handlers"],
+      "coupling_to_domain": 0.6,
+      "coupling_to_infrastructure": 0.2,
+      "architectural_health": "needs_improvement"
+    },
+    "domain": {
+      "description": "Core business entities and logic",
+      "components": ["entities", "domain_services", "repositories"],
+      "coupling_to_infrastructure": 0.1,
+      "architectural_health": "excellent"
+    },
+    "infrastructure": {
+      "description": "External integrations and persistence",
+      "components": ["persistence", "external_apis", "config"],
+      "architectural_health": "good"
+    }
+  },
+  "nodes": [
+    {
+      "id": "module_intelligence_hub",
+      "type": "Module",
+      "name": "IntelligenceHub",
+      "filepath": "core/intelligence/__init__.py",
+      "line_count": 541,
+      "complexity_score": 8.5,
+      "maintainability_index": 72.3,
+      "domain": "intelligence",
+      "layer": "application",
+      "should_refactor": true,
+      "architectural_role": "central_orchestrator",
+      "api_endpoints": 17,
+      "dependencies": 12,
+      "dependents": 45,
+      "circular_dependencies": [],
+      "refactoring_priority": "high"
+    },
+    {
+      "id": "module_analytics_hub",
+      "type": "Module", 
+      "name": "ConsolidatedAnalyticsHub",
+      "filepath": "core/intelligence/analytics/__init__.py",
+      "line_count": 755,
+      "complexity_score": 9.2,
+      "maintainability_index": 68.7,
+      "domain": "intelligence",
+      "layer": "domain",
+      "should_refactor": true,
+      "ml_components": 8,
+      "statistical_models": 12,
+      "refactoring_strategy": "extract_algorithms"
+    },
+    {
+      "id": "module_security_orchestrator",
+      "type": "Module",
+      "name": "UltimateSecurityOrchestrator", 
+      "filepath": "core/security/ultimate_security_orchestrator.py",
+      "line_count": 423,
+      "complexity_score": 7.8,
+      "maintainability_index": 76.2,
+      "domain": "security",
+      "layer": "application",
+      "should_refactor": false,
+      "security_coverage": 94.5,
+      "threat_detection_accuracy": 96.8
+    },
+    {
+      "id": "module_testing_framework",
+      "type": "Module",
+      "name": "ConsolidatedTestingHub",
+      "filepath": "core/intelligence/testing/__init__.py", 
+      "line_count": 382,
+      "complexity_score": 6.9,
+      "maintainability_index": 81.4,
+      "domain": "testing",
+      "layer": "application",
+      "should_refactor": false,
+      "test_generation_coverage": 89.3,
+      "execution_efficiency": 92.1
+    },
+    {
+      "id": "service_intelligence_api",
+      "type": "Service",
+      "name": "IntelligenceAPIService",
+      "endpoint_count": 17,
+      "dependency_count": 8,
+      "health_status": "healthy",
+      "performance_tier": "tier_1",
+      "average_response_time": 45,
+      "throughput_rps": 2500,
+      "error_rate": 0.02
+    },
+    {
+      "id": "service_security_api", 
+      "type": "Service",
+      "name": "SecurityAPIService",
+      "endpoint_count": 12,
+      "dependency_count": 6,
+      "health_status": "healthy",
+      "performance_tier": "tier_1",
+      "average_response_time": 32,
+      "security_scan_coverage": 98.7
+    },
+    {
+      "id": "api_intelligence_analyze",
+      "type": "API_Endpoint",
+      "path": "/api/v1/intelligence/analyze",
+      "method": "POST",
+      "response_time_ms": 78,
+      "usage_frequency": "high",
+      "error_rate": 0.01,
+      "security_level": "authenticated",
+      "rate_limit": "100/minute"
+    },
+    {
+      "id": "api_security_scan",
+      "type": "API_Endpoint", 
+      "path": "/api/v1/security/scan",
+      "method": "POST",
+      "response_time_ms": 156,
+      "usage_frequency": "medium",
+      "error_rate": 0.005,
+      "security_level": "enterprise",
+      "scan_accuracy": 96.8
+    },
+    {
+      "id": "class_intelligent_resource_allocator",
+      "type": "Class",
+      "name": "IntelligentResourceAllocator",
+      "line_count": 1024,
+      "method_count": 23,
+      "complexity_score": 12.4,
+      "inheritance_depth": 2,
+      "coupling_level": "high",
+      "cohesion_score": 0.6,
+      "should_refactor": true,
+      "refactoring_strategy": "extract_allocation_strategies"
+    },
+    {
+      "id": "class_cross_system_semantic_learner",
+      "type": "Class",
+      "name": "CrossSystemSemanticLearner", 
+      "line_count": 1404,
+      "method_count": 31,
+      "complexity_score": 15.7,
+      "inheritance_depth": 1,
+      "coupling_level": "very_high",
+      "cohesion_score": 0.4,
+      "should_refactor": true,
+      "refactoring_strategy": "split_learning_concerns"
+    },
+    {
+      "id": "security_threat_intelligence",
+      "type": "Security_Component",
+      "name": "ThreatIntelligenceEngine",
+      "security_level": "enterprise",
+      "threat_coverage": 94.2,
+      "compliance_status": "compliant",
+      "detection_accuracy": 96.8,
+      "response_time_ms": 12
+    },
+    {
+      "id": "security_vulnerability_scanner", 
+      "type": "Security_Component",
+      "name": "VulnerabilityScanner",
+      "security_level": "enterprise",
+      "threat_coverage": 89.7,
+      "compliance_status": "compliant",
+      "scan_coverage": 98.3,
+      "false_positive_rate": 0.02
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_001",
+      "source": "module_intelligence_hub",
+      "target": "module_analytics_hub",
+      "type": "ORCHESTRATES",
+      "orchestration_pattern": "hub_and_spoke",
+      "control_flow": "synchronous",
+      "coordination_type": "direct_invocation",
+      "coupling_strength": 0.9,
+      "refactoring_recommendation": "introduce_event_driven_pattern"
+    },
+    {
+      "id": "rel_002", 
+      "source": "module_intelligence_hub",
+      "target": "module_testing_framework",
+      "type": "ORCHESTRATES",
+      "orchestration_pattern": "hub_and_spoke",
+      "control_flow": "asynchronous",
+      "coordination_type": "message_passing",
+      "coupling_strength": 0.6,
+      "architectural_health": "good"
+    },
+    {
+      "id": "rel_003",
+      "source": "module_security_orchestrator", 
+      "target": "security_threat_intelligence",
+      "type": "DEPENDS_ON",
+      "dependency_type": "composition",
+      "strength": 0.9,
+      "criticality": "high",
+      "inversion_opportunity": false
+    },
+    {
+      "id": "rel_004",
+      "source": "service_intelligence_api",
+      "target": "api_intelligence_analyze",
+      "type": "EXPOSES_API",
+      "endpoint_path": "/api/v1/intelligence/analyze",
+      "method": "POST",
+      "security_level": "authenticated"
+    },
+    {
+      "id": "rel_005",
+      "source": "module_analytics_hub",
+      "target": "class_cross_system_semantic_learner",
+      "type": "CONTAINS",
+      "container_type": "module",
+      "member_count": 31,
+      "architectural_issue": "oversized_class"
+    },
+    {
+      "id": "rel_006",
+      "source": "security_vulnerability_scanner",
+      "target": "module_intelligence_hub", 
+      "type": "VALIDATES",
+      "validation_type": "security_scan",
+      "coverage_percentage": 89.7
+    },
+    {
+      "id": "rel_007",
+      "source": "module_security_orchestrator",
+      "target": "service_intelligence_api",
+      "type": "SECURES",
+      "security_mechanism": "authentication_layer",
+      "protection_level": "enterprise"
+    },
+    {
+      "id": "rel_008",
+      "source": "class_intelligent_resource_allocator",
+      "target": "module_analytics_hub",
+      "type": "DEPENDS_ON",
+      "dependency_type": "data_dependency",
+      "strength": 0.7,
+      "criticality": "medium",
+      "inversion_opportunity": true,
+      "refactoring_suggestion": "introduce_repository_pattern"
+    },
+    {
+      "id": "rel_009",
+      "source": "module_intelligence_hub",
+      "target": "module_security_orchestrator",
+      "type": "IMPORTS",
+      "import_type": "direct",
+      "frequency": "high",
+      "coupling_strength": 0.8,
+      "circular_dependency_risk": "medium"
+    },
+    {
+      "id": "rel_010",
+      "source": "api_security_scan",
+      "target": "security_vulnerability_scanner",
+      "type": "DEPENDS_ON",
+      "dependency_type": "service_call",
+      "strength": 1.0,
+      "criticality": "high"
+    }
+  ],
+  "dependency_analysis": {
+    "circular_dependencies": [
+      {
+        "cycle": ["module_intelligence_hub", "module_security_orchestrator", "module_analytics_hub"],
+        "severity": "medium",
+        "resolution_strategy": "introduce_event_bus",
+        "estimated_effort": "high"
+      }
+    ],
+    "high_coupling_components": [
+      {
+        "component": "class_cross_system_semantic_learner",
+        "coupling_score": 0.92,
+        "coupled_to": ["module_analytics_hub", "module_ml_models", "module_data_processor"],
+        "refactoring_priority": "critical"
+      },
+      {
+        "component": "module_intelligence_hub", 
+        "coupling_score": 0.85,
+        "coupled_to": ["module_analytics_hub", "module_testing_framework", "module_security_orchestrator"],
+        "refactoring_priority": "high"
+      }
+    ],
+    "dependency_inversion_opportunities": [
+      {
+        "component": "class_intelligent_resource_allocator",
+        "current_dependency": "module_analytics_hub",
+        "suggested_interface": "IAnalyticsProvider",
+        "benefit": "reduced_coupling",
+        "effort": "medium"
+      }
+    ]
+  },
+  "performance_intelligence": {
+    "critical_paths": [
+      {
+        "path": ["api_intelligence_analyze", "module_intelligence_hub", "module_analytics_hub"],
+        "total_latency_ms": 234,
+        "bottleneck": "module_analytics_hub",
+        "optimization_opportunity": "caching_layer"
+      }
+    ],
+    "resource_utilization": [
+      {
+        "component": "module_analytics_hub",
+        "cpu_usage": 78.5,
+        "memory_usage_mb": 245,
+        "optimization_strategy": "algorithm_optimization"
+      }
+    ]
+  },
+  "security_intelligence": {
+    "threat_surface": [
+      {
+        "component": "api_intelligence_analyze",
+        "exposure_level": "public",
+        "attack_vectors": ["injection", "DoS", "data_exposure"],
+        "mitigation_status": "partially_mitigated"
+      }
+    ],
+    "security_coverage": {
+      "authentication": 94.5,
+      "authorization": 89.3,
+      "input_validation": 92.1,
+      "output_encoding": 87.6,
+      "audit_logging": 96.8
+    }
+  },
+  "architectural_recommendations": [
+    {
+      "type": "modularization",
+      "priority": "critical",
+      "component": "class_cross_system_semantic_learner",
+      "recommendation": "Split into separate learning, processing, and analysis classes",
+      "estimated_effort": "2 weeks",
+      "benefits": ["improved_maintainability", "better_testability", "reduced_complexity"]
+    },
+    {
+      "type": "dependency_inversion",
+      "priority": "high", 
+      "component": "module_intelligence_hub",
+      "recommendation": "Introduce interfaces for analytics and security dependencies",
+      "estimated_effort": "1 week",
+      "benefits": ["reduced_coupling", "improved_testability", "better_flexibility"]
+    },
+    {
+      "type": "performance_optimization",
+      "priority": "medium",
+      "component": "module_analytics_hub",
+      "recommendation": "Implement intelligent caching layer for ML model results",
+      "estimated_effort": "3 days", 
+      "benefits": ["improved_response_time", "reduced_cpu_usage", "better_scalability"]
+    },
+    {
+      "type": "security_enhancement",
+      "priority": "medium",
+      "component": "api_intelligence_analyze", 
+      "recommendation": "Implement comprehensive input validation and rate limiting",
+      "estimated_effort": "1 week",
+      "benefits": ["improved_security", "DoS_protection", "better_audit_trail"]
+    }
+  ],
+  "refactoring_roadmap": {
+    "phase_1_critical": [
+      "Split class_cross_system_semantic_learner into focused classes",
+      "Extract algorithms from module_analytics_hub", 
+      "Implement dependency interfaces for module_intelligence_hub"
+    ],
+    "phase_2_high": [
+      "Resolve circular dependencies using event-driven patterns",
+      "Optimize performance bottlenecks in analytics pipeline",
+      "Enhance security validation for public APIs"
+    ],
+    "phase_3_medium": [
+      "Implement comprehensive caching strategies",
+      "Add monitoring and observability improvements",
+      "Create plugin framework for extensibility"
+    ]
+  },
+  "export_formats": {
+    "neo4j_cypher": "LOAD CSV WITH HEADERS FROM 'file:///testmaster_graph.csv' AS row CREATE (n:Module {name: row.name, complexity: toFloat(row.complexity)})",
+    "graphml_location": "exports/testmaster_architecture.graphml", 
+    "dot_location": "exports/testmaster_dependencies.dot",
+    "json_location": "exports/testmaster_complete_graph.json"
+  },
+  "intelligence_metrics": {
+    "architectural_quality_score": 7.8,
+    "maintainability_index": 73.2,
+    "test_coverage": 89.5,
+    "security_score": 92.1,
+    "performance_score": 84.7,
+    "overall_health": "good_with_improvement_opportunities"
+  }
+}

@@ -1,0 +1,68 @@
+# Production Environment Configuration  
+# Optimized settings for production deployment
+
+api:
+  endpoint: "https://api.testmaster.io"
+  timeout: 30
+  retry_count: 3
+  ssl_verify: true
+  cors_enabled: false       # Strict CORS in production
+
+security:
+  encryption_enabled: true
+  auth_method: "jwt"
+  session_timeout: 3600     # 1 hour
+  password_min_length: 12   # Stricter password requirements
+  max_login_attempts: 3     # Stricter login limits
+  ssl_required: true
+  rate_limiting_enabled: true
+
+monitoring:
+  enabled: true
+  metrics_interval: 60
+  health_check_interval: 30
+  log_level: "INFO"         # Less verbose logging
+  retention_days: 90        # Longer retention
+  alert_enabled: true
+  performance_tracking: true
+
+caching:
+  enabled: true
+  backend: "intelligent_cache"
+  ttl_seconds: 3600
+  max_size_mb: 2000         # Larger cache for production
+  compression_enabled: true
+  persistence_enabled: true
+
+testing:
+  framework: "pytest"
+  coverage_threshold: 95.0  # Higher threshold for production
+  parallel_workers: 8       # More workers
+  test_timeout: 180         # Shorter timeout
+  auto_healing_enabled: true
+  ml_test_optimization: true
+
+ml:
+  provider: "gemini"
+  model: "gemini-2.5-pro"
+  temperature: 0.1          # Lower temperature for consistency
+  max_tokens: 4000
+  rate_limit: 60            # Higher rate limit
+  timeout: 30               # Shorter timeout
+
+infrastructure:
+  orchestration_enabled: true
+  distributed_mode: true    # Distributed deployment
+  worker_count: 8
+  memory_limit_mb: 4096     # Higher memory limit
+  disk_space_limit_gb: 100  # Larger disk space
+  backup_enabled: true
+  scaling_enabled: true
+
+integration:
+  cross_system_enabled: true
+  message_bus_enabled: true
+  event_processing: true
+  workflow_integration: true
+  analytics_integration: true
+  real_time_sync: true      # Enabled for production

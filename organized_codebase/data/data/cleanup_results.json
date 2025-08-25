@@ -1,0 +1,42 @@
+{
+  "files_moved": [],
+  "validation": {
+    "ml_code_analysis": {
+      "wrapper_exists": false,
+      "modular_dir_exists": false,
+      "components": [],
+      "complete": false
+    },
+    "business_rule_analysis": {
+      "wrapper_exists": false,
+      "modular_dir_exists": false,
+      "components": [],
+      "complete": false
+    },
+    "semantic_analysis": {
+      "wrapper_exists": false,
+      "modular_dir_exists": false,
+      "components": [],
+      "complete": false
+    },
+    "technical_debt_analysis": {
+      "wrapper_exists": false,
+      "modular_dir_exists": false,
+      "components": [],
+      "complete": false
+    },
+    "metaprogramming_analysis": {
+      "wrapper_exists": false,
+      "modular_dir_exists": false,
+      "components": [],
+      "complete": false
+    },
+    "energy_consumption_analysis": {
+      "wrapper_exists": false,
+      "modular_dir_exists": false,
+      "components": [],
+      "complete": false
+    }
+  },
+  "errors": []
+}

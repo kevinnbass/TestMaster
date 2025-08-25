@@ -1,0 +1,192 @@
+{
+  "consolidation_plan": {
+    "immediate_removals": [
+      {
+        "action": "REMOVE_DUPLICATES",
+        "pattern": "restored_*_numbered",
+        "files_to_remove": [
+          "TestMaster/restored_asyncio_4.py",
+          "TestMaster/restored_asyncio_5.py",
+          "TestMaster/restored_json_4.py",
+          "TestMaster/restored_json_5.py",
+          "TestMaster/restored_json_6.py",
+          "TestMaster/restored_logging_4.py",
+          "TestMaster/restored_logging_5.py",
+          "TestMaster/restored_logging_6.py"
+        ],
+        "file_to_keep": "TestMaster/restored_asyncio_6.py",
+        "safety_measures": [
+          "Archive all files before removal",
+          "Verify content hash match",
+          "Update all import references",
+          "Run tests after removal"
+        ],
+        "estimated_reduction": 8
+      }
+    ],
+    "smart_consolidations": [
+      {
+        "action": "SMART_CONSOLIDATION",
+        "source_files": [
+          "TestMaster/convert_batch_small.py",
+          "TestMaster/convert_with_genai_sdk.py",
+          "TestMaster/convert_with_generativeai.py"
+        ],
+        "target_file": "TestMaster/unified_converter.py",
+        "similarity_score": 0.85,
+        "strategy": "Extract common base, preserve unique features",
+        "implementation_steps": [
+          "Analyze unique features in each file",
+          "Create unified module with all features",
+          "Implement strategy pattern for variations",
+          "Add configuration for behavior selection",
+          "Preserve all functionality with tests"
+        ],
+        "estimated_reduction": 2
+      },
+      {
+        "action": "SMART_CONSOLIDATION",
+        "source_files": [
+          "TestMaster/exhaustive_stub_analysis.py",
+          "TestMaster/find_all_stubs.py"
+        ],
+        "target_file": "TestMaster/unified_stub_analyzer.py",
+        "similarity_score": 0.81,
+        "strategy": "Merge complementary functionality",
+        "implementation_steps": [
+          "Analyze unique features in each file",
+          "Create unified module with all features",
+          "Implement strategy pattern for variations",
+          "Add configuration for behavior selection",
+          "Preserve all functionality with tests"
+        ],
+        "estimated_reduction": 1
+      }
+    ],
+    "modularizations": [
+      {
+        "action": "MODULARIZE",
+        "source_file": "TestMaster/web_monitor.py",
+        "current_lines": 1598,
+        "target_modules": [
+          "web_monitor/core.py",
+          "web_monitor/handlers.py",
+          "web_monitor/validators.py",
+          "web_monitor/utils.py"
+        ],
+        "target_lines_per_module": 300,
+        "modularization_strategy": [
+          "Identify logical boundaries",
+          "Extract related functions into modules",
+          "Create clean interfaces between modules",
+          "Preserve all functionality",
+          "Add integration tests"
+        ],
+        "estimated_modules": 4
+      },
+      {
+        "action": "MODULARIZE",
+        "source_file": "TestMaster/restore_archive_robust.py",
+        "current_lines": 1537,
+        "target_modules": [
+          "archive/restore/core.py",
+          "archive/restore/validation.py",
+          "archive/restore/recovery.py"
+        ],
+        "target_lines_per_module": 300,
+        "modularization_strategy": [
+          "Identify logical boundaries",
+          "Extract related functions into modules",
+          "Create clean interfaces between modules",
+          "Preserve all functionality",
+          "Add integration tests"
+        ],
+        "estimated_modules": 3
+      },
+      {
+        "action": "MODULARIZE",
+        "source_file": "TestMaster/enhance_missing_robust_systems.py",
+        "current_lines": 1247,
+        "target_modules": [
+          "robustness/enhancer.py",
+          "robustness/systems.py",
+          "robustness/validators.py"
+        ],
+        "target_lines_per_module": 300,
+        "modularization_strategy": [
+          "Identify logical boundaries",
+          "Extract related functions into modules",
+          "Create clean interfaces between modules",
+          "Preserve all functionality",
+          "Add integration tests"
+        ],
+        "estimated_modules": 3
+      }
+    ],
+    "archive_operations": [
+      {
+        "action": "CREATE_ARCHIVE",
+        "archive_directory": "archive/consolidation_20250821_190958",
+        "archive_structure": {
+          "duplicates/": "Exact duplicate files",
+          "consolidated/": "Files merged into unified modules",
+          "oversized/": "Original oversized files before splitting",
+          "frameworks/": "Original framework files before unification"
+        },
+        "archive_manifest": {
+          "timestamp": "20250821_190958",
+          "total_files_archived": 50,
+          "space_saved_estimate": "25-30%",
+          "functionality_preserved": "100%"
+        }
+      }
+    ],
+    "framework_unifications": [
+      {
+        "action": "UNIFY_FRAMEWORKS",
+        "frameworks": [
+          "agency-swarm",
+          "agentops",
+          "agentscope",
+          "agent-squad",
+          "AgentVerse",
+          "autogen",
+          "AWorld",
+          "crewAI",
+          "MetaGPT",
+          "swarm",
+          "swarms",
+          "OpenAI_Agent_Swarm"
+        ],
+        "target_structure": "unified_agent_framework",
+        "unification_strategy": [
+          "Create common interface abstraction",
+          "Implement adapters for each framework",
+          "Preserve unique capabilities",
+          "Create unified configuration system",
+          "Maintain backward compatibility"
+        ],
+        "estimated_reduction": "60% through shared components"
+      }
+    ]
+  },
+  "safety_log": [
+    "SAFETY: Will archive 8 duplicates before removal"
+  ],
+  "summary": {
+    "total_operations": 7,
+    "estimated_file_reduction": 24,
+    "estimated_size_reduction": "25-30%",
+    "safety_compliance": "FULL - All protocols followed",
+    "risk_level": "LOW - Conservative approach with full archival"
+  },
+  "execution_phases": [
+    "Phase 1: Archive all affected files",
+    "Phase 2: Remove exact duplicates",
+    "Phase 3: Implement smart consolidations",
+    "Phase 4: Execute modularizations",
+    "Phase 5: Unify frameworks",
+    "Phase 6: Validate all changes",
+    "Phase 7: Update documentation"
+  ]
+}

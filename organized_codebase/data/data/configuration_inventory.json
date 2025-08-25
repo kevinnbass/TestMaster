@@ -1,0 +1,2451 @@
+{
+  "timestamp": "2025-08-21T08:32:53.966645",
+  "analyzer": "Agent D - Configuration Documentation",
+  "summary": {
+    "total_config_files": 218,
+    "json_configs": 199,
+    "yaml_configs": 9,
+    "python_configs": 4,
+    "env_configs": 1,
+    "templates": 5
+  },
+  "environment_variables": {
+    "required": 21,
+    "defined": 2,
+    "undefined": 19
+  },
+  "configuration_files": {
+    "json_configs": [
+      {
+        "path": "TestMaster\\analytics_export.json",
+        "name": "analytics_export.json",
+        "size": 8016,
+        "keys": [
+          "export_time",
+          "real_time_data",
+          "test_analytics",
+          "system_events",
+          "configuration"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\backend_health_report.json",
+        "name": "backend_health_report.json",
+        "size": 1989,
+        "keys": [
+          "timestamp",
+          "components",
+          "api_endpoints",
+          "integration_systems",
+          "state_managers",
+          "monitoring",
+          "summary",
+          "intelligence_agents"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\cleanup_results.json",
+        "name": "cleanup_results.json",
+        "size": 1017,
+        "keys": [
+          "files_moved",
+          "validation",
+          "errors"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\comprehensive_analysis_20250821_045021.json",
+        "name": "comprehensive_analysis_20250821_045021.json",
+        "size": 2615739,
+        "keys": [
+          "summary",
+          "redundancy_analysis",
+          "architecture_analysis",
+          "file_distribution",
+          "size_distribution"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\comprehensive_analysis_20250821_054005.json",
+        "name": "comprehensive_analysis_20250821_054005.json",
+        "size": 2706918,
+        "keys": [
+          "summary",
+          "redundancy_analysis",
+          "architecture_analysis",
+          "file_distribution",
+          "size_distribution"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\comprehensive_analysis_20250821_054151.json",
+        "name": "comprehensive_analysis_20250821_054151.json",
+        "size": 2708695,
+        "keys": [
+          "summary",
+          "redundancy_analysis",
+          "architecture_analysis",
+          "file_distribution",
+          "size_distribution"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\comprehensive_analysis_20250821_080659.json",
+        "name": "comprehensive_analysis_20250821_080659.json",
+        "size": 2717353,
+        "keys": [
+          "summary",
+          "redundancy_analysis",
+          "architecture_analysis",
+          "file_distribution",
+          "size_distribution"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\comprehensive_cleanup_data.json",
+        "name": "comprehensive_cleanup_data.json",
+        "size": 11994,
+        "keys": [
+          "analysis",
+          "cleanup_report",
+          "validation_report",
+          "timestamp"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\comprehensive_feature_audit_results.json",
+        "name": "comprehensive_feature_audit_results.json",
+        "size": 45348,
+        "keys": [
+          "audit_timestamp",
+          "analysis_type",
+          "phases_analyzed",
+          "truly_missing_features",
+          "renamed_features",
+          "consolidated_features",
+          "enhanced_features",
+          "restoration_recommendations",
+          "overall_assessment",
+          "summary"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\exhaustive_stub_analysis_results.json",
+        "name": "exhaustive_stub_analysis_results.json",
+        "size": 266136,
+        "keys": [
+          "categorized",
+          "archive_matches",
+          "restorable",
+          "de_novo_needed"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\final_archive_sweep_report.json",
+        "name": "final_archive_sweep_report.json",
+        "size": 2533,
+        "keys": [
+          "sweep_timestamp",
+          "total_phases",
+          "phases_validated",
+          "overall_status",
+          "summary",
+          "recommendations"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\IMPLEMENTATION_STATUS_REPORT.json",
+        "name": "IMPLEMENTATION_STATUS_REPORT.json",
+        "size": 66486,
+        "keys": [
+          "timestamp",
+          "summary",
+          "details",
+          "recommendations"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\integration_systems_report.json",
+        "name": "integration_systems_report.json",
+        "size": 3202,
+        "keys": [
+          "timestamp",
+          "systems",
+          "cross_system_tests",
+          "performance_metrics",
+          "load_tests",
+          "fault_tolerance",
+          "summary"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\metrics_test.json",
+        "name": "metrics_test.json",
+        "size": 1049,
+        "keys": [
+          "timestamp",
+          "system",
+          "components",
+          "workflow",
+          "security",
+          "alerts"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\phase1_api_documentation.json",
+        "name": "phase1_api_documentation.json",
+        "size": 5022683,
+        "keys": [
+          "analysis_metadata",
+          "api_statistics",
+          "consolidation_guide",
+          "detailed_api_docs"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\phase1_component_analysis.json",
+        "name": "phase1_component_analysis.json",
+        "size": 2977073,
+        "keys": [
+          "analysis_metadata",
+          "summary_statistics",
+          "consolidation_priorities",
+          "components"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\phase1_dependency_analysis.json",
+        "name": "phase1_dependency_analysis.json",
+        "size": 3244354,
+        "keys": [
+          "analysis_metadata",
+          "dependency_statistics",
+          "consolidation_impact_analysis",
+          "detailed_dependencies"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\phase7_validation_report.json",
+        "name": "phase7_validation_report.json",
+        "size": 8918,
+        "keys": [
+          "phase",
+          "status",
+          "features_preserved",
+          "missing_features",
+          "consolidated_systems",
+          "validation_summary"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\utility_analysis_detailed_report.json",
+        "name": "utility_analysis_detailed_report.json",
+        "size": 10223,
+        "keys": [
+          "framework_capabilities",
+          "utility_capabilities",
+          "identified_gaps",
+          "priorities",
+          "integration_recommendations",
+          "summary"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\archive\\archive_manifest.json",
+        "name": "archive_manifest.json",
+        "size": 62004,
+        "keys": [
+          "created",
+          "total_archives",
+          "phases",
+          "archives"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\archive\\phase4_archive\\phase_c4_report.json",
+        "name": "phase_c4_report.json",
+        "size": 669,
+        "keys": [
+          "phase",
+          "phase_name",
+          "timestamp",
+          "result",
+          "workflow_version",
+          "consolidation_approach"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\archive\\phase4_archive\\validation_report.json",
+        "name": "validation_report.json",
+        "size": 20256,
+        "keys": [
+          "phase",
+          "timestamp",
+          "total_archived_features",
+          "found_features",
+          "missing_features",
+          "relocated_features",
+          "restored_features",
+          "validation_status",
+          "feature_details",
+          "summary"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\archive\\phase5_archive\\validation_report.json",
+        "name": "validation_report.json",
+        "size": 21979,
+        "keys": [
+          "phase",
+          "timestamp",
+          "total_archived_features",
+          "found_features",
+          "missing_features",
+          "relocated_features",
+          "restored_features",
+          "validation_status",
+          "feature_details",
+          "summary"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\archive\\phase6_archive\\validation_report.json",
+        "name": "validation_report.json",
+        "size": 35847,
+        "keys": [
+          "phase",
+          "timestamp",
+          "total_archived_features",
+          "found_features",
+          "missing_features",
+          "relocated_features",
+          "restored_features",
+          "validation_status",
+          "feature_details",
+          "summary"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\config\\default.json",
+        "name": "default.json",
+        "size": 3439,
+        "keys": [
+          "api",
+          "generation",
+          "monitoring",
+          "caching",
+          "execution",
+          "reporting",
+          "quality",
+          "optimization"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\consolidation\\discovery_report.json",
+        "name": "discovery_report.json",
+        "size": 501036,
+        "keys": [
+          "discovery_timestamp",
+          "total_groups",
+          "duplicate_groups",
+          "consolidation_plan",
+          "functional_duplicates",
+          "summary"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\backend_features.json",
+        "name": "backend_features.json",
+        "size": 92013,
+        "keys": [
+          "apis",
+          "intelligence_agents",
+          "test_generators",
+          "security_features",
+          "monitoring_systems",
+          "data_processors",
+          "visualization_candidates"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\final_enhancements_test_results.json",
+        "name": "final_enhancements_test_results.json",
+        "size": 2228,
+        "keys": [
+          "timestamp",
+          "total_time_seconds",
+          "overall_success",
+          "success_rate",
+          "test_results"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\frontend_integration_validation.json",
+        "name": "frontend_integration_validation.json",
+        "size": 14123,
+        "keys": [
+          "timestamp",
+          "ultra_reliability_features",
+          "analytics_integration",
+          "monitoring_dashboards",
+          "performance_metrics",
+          "real_time_features",
+          "data_completeness",
+          "frontend_readiness",
+          "overall_score",
+          "recommendations"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\frontend_simulation_results.json",
+        "name": "frontend_simulation_results.json",
+        "size": 4103,
+        "keys": null,
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\backups\\backup_metadata.json",
+        "name": "backup_metadata.json",
+        "size": 603,
+        "keys": [
+          "auto_backup_20250821_034239"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172218.json",
+        "name": "events_20250818_172218.json",
+        "size": 848,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172316.json",
+        "name": "events_20250818_172316.json",
+        "size": 1525,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172335.json",
+        "name": "events_20250818_172335.json",
+        "size": 2105,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172416.json",
+        "name": "events_20250818_172416.json",
+        "size": 2105,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172516.json",
+        "name": "events_20250818_172516.json",
+        "size": 3265,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172603.json",
+        "name": "events_20250818_172603.json",
+        "size": 1524,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172616.json",
+        "name": "events_20250818_172616.json",
+        "size": 3845,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172716.json",
+        "name": "events_20250818_172716.json",
+        "size": 5585,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172726.json",
+        "name": "events_20250818_172726.json",
+        "size": 2105,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172816.json",
+        "name": "events_20250818_172816.json",
+        "size": 6165,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172826.json",
+        "name": "events_20250818_172826.json",
+        "size": 3361,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172916.json",
+        "name": "events_20250818_172916.json",
+        "size": 7905,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_172926.json",
+        "name": "events_20250818_172926.json",
+        "size": 3941,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173016.json",
+        "name": "events_20250818_173016.json",
+        "size": 8485,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173026.json",
+        "name": "events_20250818_173026.json",
+        "size": 5101,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173116.json",
+        "name": "events_20250818_173116.json",
+        "size": 10225,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173126.json",
+        "name": "events_20250818_173126.json",
+        "size": 5681,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173216.json",
+        "name": "events_20250818_173216.json",
+        "size": 10805,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173226.json",
+        "name": "events_20250818_173226.json",
+        "size": 7421,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173316.json",
+        "name": "events_20250818_173316.json",
+        "size": 12545,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173326.json",
+        "name": "events_20250818_173326.json",
+        "size": 8001,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173416.json",
+        "name": "events_20250818_173416.json",
+        "size": 13125,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173426.json",
+        "name": "events_20250818_173426.json",
+        "size": 9741,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173516.json",
+        "name": "events_20250818_173516.json",
+        "size": 14865,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173526.json",
+        "name": "events_20250818_173526.json",
+        "size": 10321,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173616.json",
+        "name": "events_20250818_173616.json",
+        "size": 14865,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173626.json",
+        "name": "events_20250818_173626.json",
+        "size": 12061,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173716.json",
+        "name": "events_20250818_173716.json",
+        "size": 16605,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173726.json",
+        "name": "events_20250818_173726.json",
+        "size": 12641,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173816.json",
+        "name": "events_20250818_173816.json",
+        "size": 17185,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173826.json",
+        "name": "events_20250818_173826.json",
+        "size": 14381,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_173916.json",
+        "name": "events_20250818_173916.json",
+        "size": 18925,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174016.json",
+        "name": "events_20250818_174016.json",
+        "size": 19505,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174116.json",
+        "name": "events_20250818_174116.json",
+        "size": 21245,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174125.json",
+        "name": "events_20250818_174125.json",
+        "size": 1525,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174216.json",
+        "name": "events_20250818_174216.json",
+        "size": 21825,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174225.json",
+        "name": "events_20250818_174225.json",
+        "size": 2105,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174316.json",
+        "name": "events_20250818_174316.json",
+        "size": 23565,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174325.json",
+        "name": "events_20250818_174325.json",
+        "size": 3265,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174416.json",
+        "name": "events_20250818_174416.json",
+        "size": 24145,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174425.json",
+        "name": "events_20250818_174425.json",
+        "size": 3845,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174516.json",
+        "name": "events_20250818_174516.json",
+        "size": 25885,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174525.json",
+        "name": "events_20250818_174525.json",
+        "size": 5585,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174616.json",
+        "name": "events_20250818_174616.json",
+        "size": 26465,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174625.json",
+        "name": "events_20250818_174625.json",
+        "size": 6165,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174716.json",
+        "name": "events_20250818_174716.json",
+        "size": 28205,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174725.json",
+        "name": "events_20250818_174725.json",
+        "size": 7905,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174816.json",
+        "name": "events_20250818_174816.json",
+        "size": 28785,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174825.json",
+        "name": "events_20250818_174825.json",
+        "size": 8485,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174916.json",
+        "name": "events_20250818_174916.json",
+        "size": 30525,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_174925.json",
+        "name": "events_20250818_174925.json",
+        "size": 10225,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_175016.json",
+        "name": "events_20250818_175016.json",
+        "size": 31105,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_175025.json",
+        "name": "events_20250818_175025.json",
+        "size": 10805,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_175116.json",
+        "name": "events_20250818_175116.json",
+        "size": 32845,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_175125.json",
+        "name": "events_20250818_175125.json",
+        "size": 12545,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_175216.json",
+        "name": "events_20250818_175216.json",
+        "size": 33425,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_175225.json",
+        "name": "events_20250818_175225.json",
+        "size": 13125,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_175316.json",
+        "name": "events_20250818_175316.json",
+        "size": 35165,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_175325.json",
+        "name": "events_20250818_175325.json",
+        "size": 14865,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_175416.json",
+        "name": "events_20250818_175416.json",
+        "size": 35745,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\events_20250818_175517.json",
+        "name": "events_20250818_175517.json",
+        "size": 37485,
+        "keys": [
+          "service_metadata",
+          "events"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165124.json",
+        "name": "spans_20250818_165124.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165125.json",
+        "name": "spans_20250818_165125.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165224.json",
+        "name": "spans_20250818_165224.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165252.json",
+        "name": "spans_20250818_165252.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165324.json",
+        "name": "spans_20250818_165324.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165424.json",
+        "name": "spans_20250818_165424.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165449.json",
+        "name": "spans_20250818_165449.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165524.json",
+        "name": "spans_20250818_165524.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165549.json",
+        "name": "spans_20250818_165549.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165624.json",
+        "name": "spans_20250818_165624.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165649.json",
+        "name": "spans_20250818_165649.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165724.json",
+        "name": "spans_20250818_165724.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165749.json",
+        "name": "spans_20250818_165749.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165824.json",
+        "name": "spans_20250818_165824.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165849.json",
+        "name": "spans_20250818_165849.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165924.json",
+        "name": "spans_20250818_165924.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_165949.json",
+        "name": "spans_20250818_165949.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170024.json",
+        "name": "spans_20250818_170024.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170124.json",
+        "name": "spans_20250818_170124.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170224.json",
+        "name": "spans_20250818_170224.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170324.json",
+        "name": "spans_20250818_170324.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170348.json",
+        "name": "spans_20250818_170348.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170424.json",
+        "name": "spans_20250818_170424.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170524.json",
+        "name": "spans_20250818_170524.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170624.json",
+        "name": "spans_20250818_170624.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170724.json",
+        "name": "spans_20250818_170724.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170824.json",
+        "name": "spans_20250818_170824.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_170924.json",
+        "name": "spans_20250818_170924.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_171024.json",
+        "name": "spans_20250818_171024.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_171124.json",
+        "name": "spans_20250818_171124.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_171224.json",
+        "name": "spans_20250818_171224.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_171324.json",
+        "name": "spans_20250818_171324.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_171424.json",
+        "name": "spans_20250818_171424.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_171524.json",
+        "name": "spans_20250818_171524.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_171624.json",
+        "name": "spans_20250818_171624.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172316.json",
+        "name": "spans_20250818_172316.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172335.json",
+        "name": "spans_20250818_172335.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172416.json",
+        "name": "spans_20250818_172416.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172516.json",
+        "name": "spans_20250818_172516.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172603.json",
+        "name": "spans_20250818_172603.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172616.json",
+        "name": "spans_20250818_172616.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172716.json",
+        "name": "spans_20250818_172716.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172726.json",
+        "name": "spans_20250818_172726.json",
+        "size": 1257,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172816.json",
+        "name": "spans_20250818_172816.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172826.json",
+        "name": "spans_20250818_172826.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172916.json",
+        "name": "spans_20250818_172916.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_172926.json",
+        "name": "spans_20250818_172926.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173016.json",
+        "name": "spans_20250818_173016.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173026.json",
+        "name": "spans_20250818_173026.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173116.json",
+        "name": "spans_20250818_173116.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173126.json",
+        "name": "spans_20250818_173126.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173216.json",
+        "name": "spans_20250818_173216.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173226.json",
+        "name": "spans_20250818_173226.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173316.json",
+        "name": "spans_20250818_173316.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173326.json",
+        "name": "spans_20250818_173326.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173416.json",
+        "name": "spans_20250818_173416.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173426.json",
+        "name": "spans_20250818_173426.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173516.json",
+        "name": "spans_20250818_173516.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173526.json",
+        "name": "spans_20250818_173526.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173616.json",
+        "name": "spans_20250818_173616.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173626.json",
+        "name": "spans_20250818_173626.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173716.json",
+        "name": "spans_20250818_173716.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173726.json",
+        "name": "spans_20250818_173726.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173816.json",
+        "name": "spans_20250818_173816.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173826.json",
+        "name": "spans_20250818_173826.json",
+        "size": 2247,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_173916.json",
+        "name": "spans_20250818_173916.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174016.json",
+        "name": "spans_20250818_174016.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174116.json",
+        "name": "spans_20250818_174116.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174125.json",
+        "name": "spans_20250818_174125.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174216.json",
+        "name": "spans_20250818_174216.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174225.json",
+        "name": "spans_20250818_174225.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174316.json",
+        "name": "spans_20250818_174316.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174325.json",
+        "name": "spans_20250818_174325.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174416.json",
+        "name": "spans_20250818_174416.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174425.json",
+        "name": "spans_20250818_174425.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174516.json",
+        "name": "spans_20250818_174516.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174525.json",
+        "name": "spans_20250818_174525.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174616.json",
+        "name": "spans_20250818_174616.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174625.json",
+        "name": "spans_20250818_174625.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174716.json",
+        "name": "spans_20250818_174716.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174725.json",
+        "name": "spans_20250818_174725.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174816.json",
+        "name": "spans_20250818_174816.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174825.json",
+        "name": "spans_20250818_174825.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174916.json",
+        "name": "spans_20250818_174916.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_174925.json",
+        "name": "spans_20250818_174925.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_175016.json",
+        "name": "spans_20250818_175016.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_175025.json",
+        "name": "spans_20250818_175025.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_175116.json",
+        "name": "spans_20250818_175116.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_175125.json",
+        "name": "spans_20250818_175125.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_175216.json",
+        "name": "spans_20250818_175216.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_175225.json",
+        "name": "spans_20250818_175225.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_175316.json",
+        "name": "spans_20250818_175316.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_175325.json",
+        "name": "spans_20250818_175325.json",
+        "size": 1266,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_175417.json",
+        "name": "spans_20250818_175417.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\dashboard\\data\\telemetry\\spans_20250818_175517.json",
+        "name": "spans_20250818_175517.json",
+        "size": 1256,
+        "keys": [
+          "service_metadata",
+          "spans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\docs\\api\\api_summary.json",
+        "name": "api_summary.json",
+        "size": 532,
+        "keys": [
+          "api_name",
+          "version",
+          "total_endpoints",
+          "endpoint_breakdown",
+          "authentication_methods",
+          "base_url",
+          "documentation_generated",
+          "generated_by"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\docs\\api\\openapi_specification.json",
+        "name": "openapi_specification.json",
+        "size": 8841,
+        "keys": [
+          "openapi",
+          "info",
+          "servers",
+          "paths",
+          "components",
+          "tags"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\docs\\knowledge\\knowledge_catalog.json",
+        "name": "knowledge_catalog.json",
+        "size": 1740,
+        "keys": [
+          "timestamp",
+          "analyzer",
+          "statistics",
+          "sample_items",
+          "relationships_found",
+          "search_tests_performed"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\docs\\legacy\\compatibility_matrix.json",
+        "name": "compatibility_matrix.json",
+        "size": 125,
+        "keys": [
+          "archive_components",
+          "legacy_scripts",
+          "migration_plans",
+          "compatibility"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\docs\\legacy\\integration_report.json",
+        "name": "integration_report.json",
+        "size": 682,
+        "keys": [
+          "timestamp",
+          "analyzer",
+          "archive_analysis",
+          "legacy_components",
+          "oversized_modules",
+          "legacy_scripts",
+          "migration_plans"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\phase_1_7_validation_results\\phase_1_7_summary.json",
+        "name": "phase_1_7_summary.json",
+        "size": 1490,
+        "keys": [
+          "phase",
+          "name",
+          "status",
+          "is_final_phase_1",
+          "modules_implemented",
+          "swarms_patterns_captured",
+          "key_achievements",
+          "phase_2_readiness"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\phase_1_7_validation_results\\validation_results.json",
+        "name": "validation_results.json",
+        "size": 154,
+        "keys": [
+          "module_1_extractor",
+          "module_2_generator",
+          "module_3_navigator",
+          "module_4_healer",
+          "all_modules_valid"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\test_reports\\component_performance_20250817_035149_f5c472ee.json",
+        "name": "component_performance_20250817_035149_f5c472ee.json",
+        "size": 8095,
+        "keys": [
+          "metadata",
+          "sections",
+          "raw_data"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\test_reports\\component_performance_20250817_035208_8c19d9b4.json",
+        "name": "component_performance_20250817_035208_8c19d9b4.json",
+        "size": 8095,
+        "keys": [
+          "metadata",
+          "sections",
+          "raw_data"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\test_sessions\\archives\\background_task_1755475344_cf67972c\\metadata.json",
+        "name": "metadata.json",
+        "size": 400,
+        "keys": [
+          "session_id",
+          "session_type",
+          "user_id",
+          "workflow_id",
+          "parent_session_id",
+          "tags",
+          "priority",
+          "created_at",
+          "last_accessed",
+          "expires_at",
+          "max_duration",
+          "description"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\test_sops\\test_generation_1755475557_ddcecdff.json",
+        "name": "test_generation_1755475557_ddcecdff.json",
+        "size": 1820,
+        "keys": [
+          "sop_id",
+          "name",
+          "description",
+          "sop_type",
+          "complexity",
+          "version",
+          "steps",
+          "metadata",
+          "tags",
+          "prerequisites",
+          "estimated_duration",
+          "success_rate",
+          "usage_count",
+          "created_at",
+          "updated_at",
+          "created_by",
+          "approved_by"
+        ],
+        "type": "json"
+      },
+      {
+        "path": "TestMaster\\tools\\migration\\legacy_analysis.json",
+        "name": "legacy_analysis.json",
+        "size": 383419,
+        "keys": [
+          "archive\\legacy_scripts\\accelerated_converter.py",
+          "archive\\legacy_scripts\\achieve_100_percent.py",
+          "archive\\legacy_scripts\\achieve_100_percent_coverage.py",
+          "archive\\legacy_scripts\\ai_test_generator.py",
+          "archive\\legacy_scripts\\automated_test_generation.py",
+          "archive\\legacy_scripts\\batch_convert_broken_tests.py",
+          "archive\\legacy_scripts\\batch_gemini_generator.py",
+          "archive\\legacy_scripts\\branch_coverage_analyzer.py",
+          "archive\\legacy_scripts\\check_what_needs_tests.py",
+          "archive\\legacy_scripts\\comprehensive_test_framework.py",
+          "archive\\legacy_scripts\\convert_batch_small.py",
+          "archive\\legacy_scripts\\convert_with_genai_sdk.py",
+          "archive\\legacy_scripts\\convert_with_generativeai.py",
+          "archive\\legacy_scripts\\coverage_analysis.py",
+          "archive\\legacy_scripts\\coverage_baseline.py",
+          "archive\\legacy_scripts\\coverage_improver.py",
+          "archive\\legacy_scripts\\data_flow_tests.py",
+          "archive\\legacy_scripts\\diagnose_final_five.py",
+          "archive\\legacy_scripts\\enhanced_context_aware_test_generator.py",
+          "archive\\legacy_scripts\\enhanced_self_healing_verifier.py",
+          "archive\\legacy_scripts\\enhance_auto_generated_tests.py",
+          "archive\\legacy_scripts\\fast_converter.py",
+          "archive\\legacy_scripts\\final_five_converter.py",
+          "archive\\legacy_scripts\\find_truly_missing.py",
+          "archive\\legacy_scripts\\fix_all_imports.py",
+          "archive\\legacy_scripts\\fix_enhanced_test_imports.py",
+          "archive\\legacy_scripts\\fix_failing_tests.py",
+          "archive\\legacy_scripts\\fix_import_paths.py",
+          "archive\\legacy_scripts\\fix_remaining_issues.py",
+          "archive\\legacy_scripts\\fix_tests_for_real_modules.py",
+          "archive\\legacy_scripts\\fix_test_infrastructure.py",
+          "archive\\legacy_scripts\\fix_week2_test_imports.py",
+          "archive\\legacy_scripts\\gemini_powered_test_generator.py",
+          "archive\\legacy_scripts\\gemini_test_generator.py",
+          "archive\\legacy_scripts\\generate_coverage_sequential.py",
+          "archive\\legacy_scripts\\implement_test_stubs.py",
+          "archive\\legacy_scripts\\independent_test_verifier.py",
+          "archive\\legacy_scripts\\integration_test_generator.py",
+          "archive\\legacy_scripts\\integration_test_matrix.py",
+          "archive\\legacy_scripts\\intelligent_converter.py",
+          "archive\\legacy_scripts\\intelligent_test_builder.py",
+          "archive\\legacy_scripts\\intelligent_test_builder_offline.py",
+          "archive\\legacy_scripts\\intelligent_test_builder_v2.py",
+          "archive\\legacy_scripts\\measure_final_coverage.py",
+          "archive\\legacy_scripts\\monitor_progress.py",
+          "archive\\legacy_scripts\\monitor_to_100.py",
+          "archive\\legacy_scripts\\parallel_converter.py",
+          "archive\\legacy_scripts\\parallel_converter_fixed.py",
+          "archive\\legacy_scripts\\parallel_converter_working.py",
+          "archive\\legacy_scripts\\parallel_coverage_converter.py",
+          "archive\\legacy_scripts\\parallel_coverage_converter_fixed.py",
+          "archive\\legacy_scripts\\quick_coverage_boost.py",
+          "archive\\legacy_scripts\\quick_test_generator.py",
+          "archive\\legacy_scripts\\quick_test_summary.py",
+          "archive\\legacy_scripts\\run_intelligent_tests.py",
+          "archive\\legacy_scripts\\run_limited_coverage.py",
+          "archive\\legacy_scripts\\self_healing_converter.py",
+          "archive\\legacy_scripts\\simple_100_percent.py",
+          "archive\\legacy_scripts\\simple_test_generator.py",
+          "archive\\legacy_scripts\\simple_test_runner.py",
+          "archive\\legacy_scripts\\smart_test_generator.py",
+          "archive\\legacy_scripts\\specialized_test_generators.py",
+          "archive\\legacy_scripts\\systematic_coverage.py",
+          "archive\\legacy_scripts\\testmaster_orchestrator.py",
+          "archive\\legacy_scripts\\test_gemini_api.py",
+          "archive\\legacy_scripts\\test_gemini_config.py",
+          "archive\\legacy_scripts\\test_gemini_correct.py",
+          "archive\\legacy_scripts\\test_single_api_call.py",
+          "archive\\legacy_scripts\\test_single_generation.py",
+          "archive\\legacy_scripts\\test_updated_prompt.py",
+          "archive\\legacy_scripts\\turbo_converter.py",
+          "archive\\legacy_scripts\\week_5_8_batch_converter.py",
+          "archive\\legacy_scripts\\week_7_8_converter.py",
+          "archive\\legacy_scripts\\working_test_generator.py",
+          "archive\\legacy_scripts\\write_real_tests.py"
+        ],
+        "type": "json"
+      }
+    ],
+    "yaml_configs": [
+      {
+        "path": "TestMaster\\testmaster_config.yaml",
+        "name": "testmaster_config.yaml",
+        "size": 2142,
+        "keys": [
+          "layers"
+        ],
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\TestMaster_Intelligence_API.yaml",
+        "name": "TestMaster_Intelligence_API.yaml",
+        "size": 24587,
+        "keys": [
+          "openapi",
+          "info",
+          "servers",
+          "paths",
+          "components",
+          "tags"
+        ],
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\unified_testmaster_config.yaml",
+        "name": "unified_testmaster_config.yaml",
+        "size": 12261,
+        "keys": [
+          "core",
+          "intelligence_layers",
+          "llm_providers",
+          "security",
+          "performance",
+          "output",
+          "monitoring",
+          "integrations",
+          "experimental",
+          "development"
+        ],
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\config\\templates\\complete_template.yaml",
+        "name": "complete_template.yaml",
+        "size": 2131,
+        "keys": [
+          "teams",
+          "deployments",
+          "graphs",
+          "workflows"
+        ],
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\config\\templates\\deployment_template.yaml",
+        "name": "deployment_template.yaml",
+        "size": 776,
+        "keys": [
+          "deployment_id",
+          "name",
+          "mode",
+          "services",
+          "network_config",
+          "security_config",
+          "monitoring_config",
+          "scaling_config"
+        ],
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\config\\templates\\graph_template.yaml",
+        "name": "graph_template.yaml",
+        "size": 630,
+        "keys": [
+          "graph_id",
+          "name",
+          "execution_mode",
+          "timeout_seconds",
+          "auto_retry",
+          "checkpoint_enabled",
+          "nodes"
+        ],
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\config\\templates\\team_template.yaml",
+        "name": "team_template.yaml",
+        "size": 316,
+        "keys": [
+          "team_id",
+          "roles",
+          "supervisor_mode",
+          "workflow_type",
+          "max_parallel_tasks",
+          "quality_threshold",
+          "timeout_minutes"
+        ],
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\config\\templates\\workflow_template.yaml",
+        "name": "workflow_template.yaml",
+        "size": 586,
+        "keys": [
+          "workflow_id",
+          "name",
+          "phases",
+          "dependencies",
+          "success_criteria"
+        ],
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\docs\\api\\openapi_specification.yaml",
+        "name": "openapi_specification.yaml",
+        "size": 5987,
+        "keys": [
+          "openapi",
+          "info",
+          "servers",
+          "paths",
+          "components",
+          "tags"
+        ],
+        "type": "yaml"
+      }
+    ],
+    "python_configs": [
+      {
+        "path": "TestMaster\\config\\testmaster_config.py",
+        "name": "testmaster_config.py",
+        "size": 20308,
+        "type": "python"
+      },
+      {
+        "path": "TestMaster\\config\\yaml_config_enhancer.py",
+        "name": "yaml_config_enhancer.py",
+        "size": 26905,
+        "type": "python"
+      },
+      {
+        "path": "TestMaster\\archive\\original_backup\\config\\testmaster_config.py",
+        "name": "testmaster_config.py",
+        "size": 20308,
+        "type": "python"
+      },
+      {
+        "path": "TestMaster\\core\\intelligence\\config\\enterprise_config_manager.py",
+        "name": "enterprise_config_manager.py",
+        "size": 33501,
+        "type": "python"
+      }
+    ],
+    "env_configs": [
+      {
+        "path": "TestMaster\\.env",
+        "name": ".env",
+        "size": 110,
+        "type": "env"
+      }
+    ],
+    "ini_configs": [],
+    "templates": [
+      {
+        "path": "TestMaster\\config\\templates\\complete_template.yaml",
+        "name": "complete_template.yaml",
+        "size": 2131,
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\config\\templates\\deployment_template.yaml",
+        "name": "deployment_template.yaml",
+        "size": 776,
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\config\\templates\\graph_template.yaml",
+        "name": "graph_template.yaml",
+        "size": 630,
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\config\\templates\\team_template.yaml",
+        "name": "team_template.yaml",
+        "size": 316,
+        "type": "yaml"
+      },
+      {
+        "path": "TestMaster\\config\\templates\\workflow_template.yaml",
+        "name": "workflow_template.yaml",
+        "size": 586,
+        "type": "yaml"
+      }
+    ]
+  }
+}

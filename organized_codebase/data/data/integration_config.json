@@ -1,0 +1,21 @@
+{
+  "monitoring": {
+    "interval_seconds": 30,
+    "timeout_seconds": 10,
+    "retry_count": 3,
+    "health_check_enabled": true
+  },
+  "alerts": {
+    "enabled": true,
+    "email_notifications": false,
+    "slack_notifications": false,
+    "threshold_response_time_ms": 5000,
+    "threshold_error_rate": 0.05
+  },
+  "integration": {
+    "max_concurrent_checks": 10,
+    "circuit_breaker_enabled": true,
+    "rate_limiting_enabled": true,
+    "retry_backoff_factor": 2.0
+  }
+}

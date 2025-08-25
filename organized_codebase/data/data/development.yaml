@@ -1,0 +1,53 @@
+# Development Environment Configuration
+# Override settings for local development
+
+api:
+  endpoint: "http://localhost:5000"
+  timeout: 60
+  retry_count: 5
+  ssl_verify: false
+  cors_enabled: true
+
+security:
+  encryption_enabled: false  # Disabled for easier debugging
+  auth_method: "jwt"
+  session_timeout: 7200     # 2 hours for development
+  ssl_required: false
+  rate_limiting_enabled: false
+
+monitoring:
+  enabled: true
+  metrics_interval: 30      # More frequent for development
+  log_level: "DEBUG"        # Detailed logging
+  retention_days: 7         # Shorter retention
+
+caching:
+  enabled: true
+  backend: "intelligent_cache"
+  ttl_seconds: 1800         # Shorter TTL for development
+  max_size_mb: 500          # Smaller cache
+
+testing:
+  framework: "pytest"
+  coverage_threshold: 70.0  # Lower threshold for development
+  parallel_workers: 2       # Fewer workers for development
+  auto_healing_enabled: true
+
+ml:
+  provider: "gemini"
+  model: "gemini-2.5-pro"
+  temperature: 0.2          # Higher temperature for experimentation
+  rate_limit: 30
+  timeout: 120              # Longer timeout for development
+
+infrastructure:
+  orchestration_enabled: true
+  distributed_mode: false   # Single node for development
+  worker_count: 2
+  memory_limit_mb: 1024     # Lower memory limit
+  scaling_enabled: false    # Disabled for development
+
+integration:
+  cross_system_enabled: true
+  message_bus_enabled: true
+  real_time_sync: false     # Disabled for development

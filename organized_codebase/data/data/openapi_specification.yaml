@@ -1,0 +1,237 @@
+openapi: 3.0.3
+info:
+  title: TestMaster Intelligence Hub API
+  version: 1.0.0
+  description: Comprehensive API for TestMaster intelligence capabilities
+  contact:
+    name: Agent D - Documentation & Validation
+    email: agent-d@testmaster.ai
+servers:
+- url: http://localhost:5000
+  description: Local development server
+paths:
+  /api/intelligence/status:
+    get:
+      summary: Get overall intelligence system status
+      tags:
+      - status
+      - health
+      responses:
+        '200':
+          description: System status information
+  /api/intelligence/analyze:
+    post:
+      summary: Perform unified intelligence analysis
+      tags:
+      - analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                analysis_type:
+                  type: string
+                target:
+                  type: string
+                options:
+                  type: object
+              required:
+              - analysis_type
+              - target
+      responses:
+        '200':
+          description: Analysis results
+  /api/intelligence/analytics/analyze:
+    post:
+      summary: Analyze metrics and generate insights
+      tags:
+      - analytics
+      responses:
+        '200':
+          description: Analytics insights
+  /api/intelligence/analytics/correlations:
+    post:
+      summary: Find correlations in data
+      tags:
+      - analytics
+      - correlations
+      responses:
+        '200':
+          description: Correlation analysis
+  /api/intelligence/analytics/predict:
+    post:
+      summary: Predict trends based on historical data
+      tags:
+      - analytics
+      - prediction
+      responses:
+        '200':
+          description: Trend predictions
+  /api/intelligence/testing/coverage:
+    post:
+      summary: Analyze test coverage metrics
+      tags:
+      - testing
+      - coverage
+      responses:
+        '200':
+          description: Coverage analysis
+  /api/intelligence/testing/optimize:
+    post:
+      summary: Optimize test execution and selection
+      tags:
+      - testing
+      - optimization
+      responses:
+        '200':
+          description: Optimization recommendations
+  /api/intelligence/testing/predict-failures:
+    post:
+      summary: Predict potential test failures
+      tags:
+      - testing
+      - prediction
+      responses:
+        '200':
+          description: Failure predictions
+  /api/intelligence/testing/generate:
+    post:
+      summary: Generate integration tests
+      tags:
+      - testing
+      - generation
+      responses:
+        '200':
+          description: Generated tests
+  /api/intelligence/integration/systems/analyze:
+    post:
+      summary: Analyze system integration patterns
+      tags:
+      - integration
+      - analysis
+      responses:
+        '200':
+          description: Integration analysis
+  /api/intelligence/integration/endpoints:
+    get:
+      summary: Get all registered endpoints
+      tags:
+      - integration
+      - discovery
+      responses:
+        '200':
+          description: List of endpoints
+  /api/intelligence/integration/events/publish:
+    post:
+      summary: Publish integration event
+      tags:
+      - integration
+      - events
+      responses:
+        '200':
+          description: Event published
+  /api/intelligence/integration/performance:
+    get:
+      summary: Get integration performance metrics
+      tags:
+      - integration
+      - performance
+      responses:
+        '200':
+          description: Performance metrics
+  /api/intelligence/monitoring/realtime:
+    get:
+      summary: Get real-time monitoring metrics
+      tags:
+      - monitoring
+      - realtime
+      responses:
+        '200':
+          description: Real-time metrics
+  /api/intelligence/batch/analyze:
+    post:
+      summary: Perform batch analysis operations
+      tags:
+      - batch
+      - analysis
+      responses:
+        '200':
+          description: Batch analysis results
+  /api/intelligence/health:
+    get:
+      summary: Comprehensive health check of all intelligence systems
+      tags:
+      - health
+      - status
+      responses:
+        '200':
+          description: Health status
+  /api/v1/intelligence/health:
+    get:
+      summary: Dashboard health check
+      tags:
+      - dashboard
+      - health
+      responses:
+        '200':
+          description: Dashboard health
+  /api/v1/intelligence/debt/analyze:
+    post:
+      summary: Technical debt analysis
+      tags:
+      - analysis
+      - debt
+      responses:
+        '200':
+          description: Debt analysis
+  /api/v1/intelligence/ml/analyze:
+    post:
+      summary: ML/AI code analysis
+      tags:
+      - analysis
+      - ml
+      responses:
+        '200':
+          description: ML analysis
+  /api/v1/intelligence/comprehensive:
+    post:
+      summary: Complete analysis suite
+      tags:
+      - analysis
+      - comprehensive
+      responses:
+        '200':
+          description: Comprehensive analysis
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+tags:
+- name: status
+  description: System status operations
+- name: health
+  description: Health check operations
+- name: analysis
+  description: Analysis operations
+- name: analytics
+  description: Analytics operations
+- name: testing
+  description: Testing operations
+- name: integration
+  description: Integration operations
+- name: monitoring
+  description: Monitoring operations
+- name: batch
+  description: Batch operations
+- name: dashboard
+  description: Dashboard operations
+- name: ml
+  description: Machine learning operations

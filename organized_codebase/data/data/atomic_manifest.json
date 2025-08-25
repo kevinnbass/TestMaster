@@ -1,0 +1,70 @@
+{
+  "version": "1.0.0",
+  "created_by": "AGENT_X_STEELCLAD",
+  "atomic_components": {
+    "css": [
+      "charts_styles.css",
+      "dashboard_styles.css",
+      "unified_gamma_styles.css",
+      "unified_template_styles.css"
+    ],
+    "js": [
+      "charts_scripts.js",
+      "dashboard_scripts.js",
+      "unified_gamma_scripts.js",
+      "unified_template_scripts.js"
+    ],
+    "html_cores": [
+      "charts_core.html",
+      "dashboard_core.html",
+      "unified_gamma_core.html",
+      "unified_template_core.html"
+    ],
+    "python": [
+      "advanced_charts.py",
+      "agent_communication_ui.py",
+      "agent_status_panels.py",
+      "agent_synthesis_display.py",
+      "api_response_formatter.py",
+      "atomic_registry.py",
+      "coordination_controls.py",
+      "coordination_dashboard_core.py",
+      "cross_agent_ui.py",
+      "dashboard_analytics.py",
+      "dashboard_api_routes.py",
+      "dashboard_broadcast.py",
+      "dashboard_data_display.py",
+      "dashboard_enhancements.py",
+      "dashboard_metrics_stream.py",
+      "dashboard_server_core.py",
+      "dashboard_service_integration.py",
+      "enhanced_ui_components.py",
+      "frontend_api_handlers.py",
+      "frontend_data_integration.py",
+      "frontend_event_handlers.py",
+      "frontend_server_handlers.py",
+      "gamma_viz_components.py",
+      "greek_coordination_ui.py",
+      "linkage_ui_controls.py",
+      "linkage_visualizer.py",
+      "multi_agent_dashboard.py",
+      "performance_charts.py",
+      "realtime_dashboard_updates.py",
+      "realtime_frontend_monitor.py",
+      "security_dashboard_ui.py",
+      "security_visualizations.py",
+      "service_frontend_bridge.py",
+      "swarm_status_display.py",
+      "viz_engine.py",
+      "websocket_frontend_stream.py",
+      "websocket_visualizer_connector.py"
+    ]
+  },
+  "stats": {
+    "total_css": 4,
+    "total_js": 4,
+    "total_html": 4,
+    "total_python": 37,
+    "total_components": 49
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "api_name": "TestMaster Intelligence Hub API",
+  "version": "1.0.0",
+  "total_endpoints": 20,
+  "endpoint_breakdown": {
+    "intelligence": 17,
+    "dashboard": 4,
+    "analytics": 5,
+    "testing": 4,
+    "integration": 4,
+    "monitoring": 1,
+    "health": 2
+  },
+  "authentication_methods": [
+    "Bearer Token (JWT)",
+    "API Key"
+  ],
+  "base_url": "http://localhost:5000",
+  "documentation_generated": "2025-08-21T08:13:52.296176",
+  "generated_by": "Agent D - Documentation & Validation Excellence"
+}

@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-08-21T11:00:00",
+  "components_analyzed": 1590,
+  "integration_points_found": 380,
+  "integration_patterns": {
+    "api_integrations": 31,
+    "database_integrations": 112,
+    "file_integrations": 197,
+    "service_integrations": 40
+  },
+  "api_endpoints": 15,
+  "endpoint_files": 5,
+  "config_files": 250,
+  "health_score": 100.0,
+  "summary": "Analyzed 1590 components with 380 integration points"
+}
