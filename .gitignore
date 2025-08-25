@@ -1,0 +1,5 @@
+# Research repositories (cloned external repos - exclude entirely)
+research_repos/
+
+# Large binary files and executables
+*.exe
