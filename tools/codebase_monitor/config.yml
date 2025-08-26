@@ -1,0 +1,44 @@
+# tools\codebase_monitor\config.yml
+repo_root: "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster"
+reports_dir: "tools\\codebase_monitor\\reports"
+latest_symlink_dir: "tools\\codebase_monitor\\reports\\latest"
+outputs_dir: "tools\\codebase_monitor\\outputs"
+artifacts_dir: "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster_artifacts"
+
+thresholds:
+  max_file_bytes: 5242880     # 5MB
+  large_file_lines: 1000
+  high_branch_nodes_py: 50
+  long_avg_function_lines_py: 60
+  ts_any_max_per_file: 20
+  eslint_disable_max_per_file: 10
+  secrets_allow_false_positives: []
+
+ignore_patterns_seed:
+  - "PRODUCTION_PACKAGES/"
+  - "organized_codebase/monitoring/"
+  - "**/telemetry/*.json"
+  - "*.gz"
+  - "*.db"
+  - "*.log"
+  - "logs/"
+  - "tools/codebase_monitor/reports/"
+allow_source_dirs:
+  - "core/"
+  - "services/"
+  - "frontend_final/"
+  - "TestMaster/"
+
+ownership:
+  "core/": "owner_core@example.local"
+  "frontend_final/": "owner_frontend@example.local"
+  "services/": "owner_services@example.local"
+
+auth:
+  api_key: "gamma-hardened-api-key-2025-08-25-secure"
+
+quality_gate:
+  block_new_large_binaries_outside_artifacts: true
+  block_ts_any_increase: true
+  block_eslint_disable_increase: true
+  block_py_complexity_increase: true
