@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster Hybrid Intelligence Platform - Enhanced Monitoring Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { 
+            text-align: center; 
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.9; }
+        
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .tab-button {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 10px 10px 0 0;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        .tab-button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .tab-button.active {
+            background: rgba(255,255,255,0.25);
+            border-bottom: 3px solid #4CAF50;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        .dashboard { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+        }
+        .card { 
+            background: rgba(255,255,255,0.1); 
+            padding: 20px; 
+            border-radius: 10px; 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .card h3 { 
+            margin-bottom: 15px; 
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .metric { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .metric:last-child { border-bottom: none; }
+        .metric-value { font-weight: bold; font-size: 1.1em; }
+        .status-indicator { 
+            width: 12px; 
+            height: 12px; 
+            border-radius: 50%; 
+            display: inline-block; 
+            margin-right: 8px;
+        }
+        .status-active { background: #4CAF50; }
+        .status-inactive { background: #f44336; }
+        .status-warning { background: #ff9800; }
+        .alert { 
+            padding: 10px; 
+            margin-bottom: 10px; 
+            border-radius: 5px; 
+            border-left: 4px solid;
+        }
+        .alert-warning { 
+            background: rgba(255, 152, 0, 0.2); 
+            border-left-color: #ff9800; 
+        }
+        .alert-critical { 
+            background: rgba(244, 67, 54, 0.2); 
+            border-left-color: #f44336; 
+        }
+        .alert-info { 
+            background: rgba(33, 150, 243, 0.2); 
+            border-left-color: #2196F3; 
+        }
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .component-item {
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Module Analyzer Specific Styles */
+        .analyzer-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .analyzer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .module-info-panel {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .file-selector {
+            margin-bottom: 20px;
+        }
+        .file-selector select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .file-selector option {
+            background: #2a5298;
+        }
+        .module-stats {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .enhance-button {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .enhance-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+        }
+        .enhance-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .cost-warning {
+            background: rgba(255,152,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #ff9800;
+        }
+        .analysis-result {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .security-issue {
+            background: rgba(244,67,54,0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            border-left: 3px solid #f44336;
+        }
+        .optimization-suggestion {
+            background: rgba(33,150,243,0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            border-left: 3px solid #2196F3;
+        }
+        .loading { text-align: center; padding: 40px; }
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 4px solid #fff;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .refresh-info { 
+            text-align: center; 
+            margin-top: 20px; 
+            opacity: 0.7; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 TestMaster Hybrid Intelligence Platform</h1>
+            <p>Real-Time Monitoring Dashboard with Module Analyzer</p>
+            <p id="last-update">Loading...</p>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('dashboard')">📊 System Dashboard</button>
+            <button class="tab-button" onclick="switchTab('analyzer')">🔬 Module Analyzer</button>
+        </div>
+        
+        <!-- System Dashboard Tab (ALL ORIGINAL CONTENT) -->
+        <div id="dashboard-tab" class="tab-content active">
+            <div id="dashboard" class="dashboard">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Initializing monitoring systems...</p>
+                </div>
+            </div>
+            <div class="refresh-info">
+                <p>Dashboard refreshes every 5 seconds | Data collected every 2 seconds</p>
+            </div>
+        </div>
+        
+        <!-- Module Analyzer Tab -->
+        <div id="analyzer-tab" class="tab-content">
+            <div class="analyzer-container">
+                <!-- Left Panel: Automated Non-LLM Information -->
+                <div class="card">
+                    <h3>📁 Module Information (Automated)</h3>
+                    
+                    <div class="file-selector">
+                        <label for="module-select" style="display: block; margin-bottom: 10px;">Select a module to analyze:</label>
+                        <select id="module-select" onchange="updateModuleInfo()">
+                            <option value="">-- Select a module --</option>
+                        </select>
+                    </div>
+                    
+                    <div id="module-basic-info" style="display: none;">
+                        <h4>📊 Basic Statistics (No API Cost)</h4>
+                        <div class="module-stats">
+                            <div class="metric">
+                                <span>File Path:</span>
+                                <span class="metric-value" id="file-path">-</span>
+                            </div>
+                            <div class="metric">
+                                <span>File Size:</span>
+                                <span class="metric-value" id="file-size">-</span>
+                            </div>
+                            <div class="metric">
+                                <span>Lines of Code:</span>
+                                <span class="metric-value" id="line-count">-</span>
+                            </div>
+                            <div class="metric">
+                                <span>Functions/Classes:</span>
+                                <span class="metric-value" id="function-count">-</span>
+                            </div>
+                            <div class="metric">
+                                <span>Imports:</span>
+                                <span class="metric-value" id="import-count">-</span>
+                            </div>
+                            <div class="metric">
+                                <span>Last Modified:</span>
+                                <span class="metric-value" id="last-modified">-</span>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 20px;">🔍 Quick Analysis (Local)</h4>
+                        <div class="module-stats">
+                            <div class="metric">
+                                <span>Has Tests:</span>
+                                <span class="metric-value" id="has-tests">-</span>
+                            </div>
+                            <div class="metric">
+                                <span>Docstring Coverage:</span>
+                                <span class="metric-value" id="docstring-coverage">-</span>
+                            </div>
+                            <div class="metric">
+                                <span>Complexity Estimate:</span>
+                                <span class="metric-value" id="complexity-estimate">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Panel: LLM Enhancement -->
+                <div class="card">
+                    <h3>🤖 LLM Intelligence Enhancement</h3>
+                    
+                    <div id="llm-panel">
+                        <p style="margin-bottom: 20px;">
+                            Enhance analysis with Gemini 2.5 Pro for deep insights including security issues, 
+                            optimization suggestions, and comprehensive quality scoring.
+                        </p>
+                        
+                        <div id="llm-status">
+                            <div class="metric">
+                                <span>LLM Provider:</span>
+                                <span class="metric-value">Gemini 2.5 Pro</span>
+                            </div>
+                            <div class="metric">
+                                <span>Status:</span>
+                                <span class="metric-value" id="llm-availability">Checking...</span>
+                            </div>
+                        </div>
+                        
+                        <div id="cost-preview" class="cost-warning" style="display: none;">
+                            <h4>⚠️ Cost Estimate</h4>
+                            <div class="metric">
+                                <span>Estimated Tokens:</span>
+                                <span class="metric-value" id="estimated-tokens">-</span>
+                            </div>
+                            <div class="metric">
+                                <span>Estimated Cost:</span>
+                                <span class="metric-value" id="estimated-cost" style="color: #ff9800; font-weight: bold;">-</span>
+                            </div>
+                        </div>
+                        
+                        <button id="enhance-button" class="enhance-button" onclick="enhanceWithLLM()" disabled>
+                            🧠 Enhance with LLM Intelligence
+                        </button>
+                        
+                        <div id="analysis-status" style="margin-top: 20px; display: none;">
+                            <div class="spinner"></div>
+                            <p style="text-align: center;">Analyzing with Gemini 2.5 Pro...</p>
+                        </div>
+                        
+                        <div id="llm-analysis-result" class="analysis-result" style="display: none;">
+                            <!-- LLM results will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Usage Tracker -->
+            <div class="card" style="margin-top: 20px;">
+                <h3>💰 LLM API Usage & Costs</h3>
+                <div class="metric">
+                    <span>Total API Calls Today:</span>
+                    <span class="metric-value" id="total-api-calls">0</span>
+                </div>
+                <div class="metric">
+                    <span>Total Tokens Used:</span>
+                    <span class="metric-value" id="total-tokens">0</span>
+                </div>
+                <div class="metric">
+                    <span>Total Cost Today:</span>
+                    <span class="metric-value" id="total-cost" style="color: #ff9800;">$0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentModule = null;
+        let moduleList = [];
+        
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Load data for the tab
+            if (tabName === 'dashboard') {
+                updateDashboard();
+            } else if (tabName === 'analyzer') {
+                loadModules();
+                checkLLMStatus();
+                updateApiMetrics();
+            }
+        }
+        
+        // Dashboard functions (keep ALL original functionality)
+        async function fetchData(endpoint) {
+            try {
+                const response = await fetch(`/api/${endpoint}`);
+                return await response.json();
+            } catch (error) {
+                console.error(`Error fetching ${endpoint}:`, error);
+                return null;
+            }
+        }
+        
+        function formatTimestamp(timestamp) {
+            return new Date(timestamp).toLocaleString();
+        }
+        
+        function getStatusIndicator(status) {
+            if (status === 'active') return '<span class="status-indicator status-active"></span>';
+            if (status === 'inactive') return '<span class="status-indicator status-inactive"></span>';
+            return '<span class="status-indicator status-warning"></span>';
+        }
+        
+        function createMetricsCard(metrics) {
+            return `
+                <div class="card">
+                    <h3>📊 System Metrics</h3>
+                    <div class="metric">
+                        <span>CPU Usage:</span>
+                        <span class="metric-value">${metrics.system.cpu_usage.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Memory Usage:</span>
+                        <span class="metric-value">${metrics.system.memory_usage.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Active Agents:</span>
+                        <span class="metric-value">${metrics.components.active_agents}/16</span>
+                    </div>
+                    <div class="metric">
+                        <span>Active Bridges:</span>
+                        <span class="metric-value">${metrics.components.active_bridges}/5</span>
+                    </div>
+                    <div class="metric">
+                        <span>Queue Size:</span>
+                        <span class="metric-value">${metrics.workflow.queue_size}</span>
+                    </div>
+                    <div class="metric">
+                        <span>Events/Second:</span>
+                        <span class="metric-value">${metrics.workflow.events_per_second.toFixed(1)}</span>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createLLMMetricsCard(llmMetrics) {
+            if (!llmMetrics || llmMetrics.error) {
+                return `
+                    <div class="card">
+                        <h3>🤖 LLM Intelligence Status</h3>
+                        <p style="text-align: center; opacity: 0.7; padding: 20px;">
+                            ${llmMetrics ? llmMetrics.error : 'LLM monitoring not available'}
+                        </p>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="card">
+                    <h3>🤖 LLM Intelligence Status</h3>
+                    <div class="metric">
+                        <span>API Calls:</span>
+                        <span class="metric-value">${llmMetrics.api_calls.total_calls}</span>
+                    </div>
+                    <div class="metric">
+                        <span>Success Rate:</span>
+                        <span class="metric-value">${llmMetrics.api_calls.success_rate.toFixed(1)}%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Active Analyses:</span>
+                        <span class="metric-value">${llmMetrics.analysis_status.active_analyses}</span>
+                    </div>
+                    <div class="metric">
+                        <span>Completed Analyses:</span>
+                        <span class="metric-value">${llmMetrics.analysis_status.completed_analyses}</span>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createComponentsCard(components) {
+            const componentItems = Object.entries(components)
+                .map(([name, status]) => `
+                    <div class="component-item">
+                        ${getStatusIndicator(status)}
+                        <span>${name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                    </div>
+                `).join('');
+            
+            return `
+                <div class="card">
+                    <h3>🔧 Component Status</h3>
+                    <div class="component-grid">
+                        ${componentItems}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createAlertsCard(alerts) {
+            if (!alerts.recent_alerts || alerts.recent_alerts.length === 0) {
+                return `
+                    <div class="card">
+                        <h3>🚨 Recent Alerts</h3>
+                        <p style="text-align: center; opacity: 0.7; padding: 20px;">No recent alerts</p>
+                    </div>
+                `;
+            }
+            
+            const alertItems = alerts.recent_alerts
+                .slice(-5)
+                .map(alert => `
+                    <div class="alert alert-${alert.severity}">
+                        <strong>${alert.severity.toUpperCase()}</strong> - ${alert.component}<br>
+                        ${alert.message}<br>
+                        <small>${formatTimestamp(alert.timestamp)}</small>
+                    </div>
+                `).join('');
+            
+            return `
+                <div class="card">
+                    <h3>🚨 Recent Alerts (${alerts.total_alerts} total, ${alerts.active_alerts} active)</h3>
+                    ${alertItems}
+                </div>
+            `;
+        }
+        
+        function createHealthCard(metrics) {
+            return `
+                <div class="card">
+                    <h3>💚 System Health</h3>
+                    <div class="metric">
+                        <span>Total Agents:</span>
+                        <span class="metric-value">16</span>
+                    </div>
+                    <div class="metric">
+                        <span>Total Bridges:</span>
+                        <span class="metric-value">5</span>
+                    </div>
+                    <div class="metric">
+                        <span>Consensus Decisions:</span>
+                        <span class="metric-value">${metrics.workflow.consensus_decisions}</span>
+                    </div>
+                    <div class="metric">
+                        <span>Security Alerts:</span>
+                        <span class="metric-value">${metrics.security.security_alerts}</span>
+                    </div>
+                </div>
+            `;
+        }
+        
+        async function updateDashboard() {
+            const [metrics, components, llmMetrics] = await Promise.all([
+                fetchData('metrics'),
+                fetchData('components'),
+                fetchData('llm/metrics')
+            ]);
+            
+            if (!metrics) {
+                document.getElementById('dashboard').innerHTML = '<div class="card"><h3>❌ Error</h3><p>Failed to load metrics</p></div>';
+                return;
+            }
+            
+            // Update last update time
+            document.getElementById('last-update').textContent = `Last Update: ${formatTimestamp(metrics.timestamp)}`;
+            
+            // Create dashboard content with ALL cards
+            const dashboardHTML = `
+                ${createMetricsCard(metrics)}
+                ${createLLMMetricsCard(llmMetrics)}
+                ${createComponentsCard(metrics.components.component_status)}
+                ${createHealthCard(metrics)}
+                ${createAlertsCard(metrics.alerts)}
+            `;
+            
+            document.getElementById('dashboard').innerHTML = dashboardHTML;
+        }
+        
+        // Module Analyzer functions
+        async function loadModules() {
+            try {
+                const response = await fetch('/api/llm/list-modules');
+                if (response.ok) {
+                    moduleList = await response.json();
+                    
+                    const select = document.getElementById('module-select');
+                    select.innerHTML = '<option value="">-- Select a module --</option>';
+                    
+                    moduleList.forEach(module => {
+                        const option = document.createElement('option');
+                        option.value = module;
+                        option.textContent = module;
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading modules:', error);
+            }
+        }
+        
+        async function updateModuleInfo() {
+            const moduleSelect = document.getElementById('module-select');
+            currentModule = moduleSelect.value;
+            
+            if (!currentModule) {
+                document.getElementById('module-basic-info').style.display = 'none';
+                document.getElementById('enhance-button').disabled = true;
+                document.getElementById('cost-preview').style.display = 'none';
+                return;
+            }
+            
+            // Show basic info panel
+            document.getElementById('module-basic-info').style.display = 'block';
+            
+            // Simulate getting basic file info (this would be a real API call)
+            document.getElementById('file-path').textContent = currentModule;
+            document.getElementById('file-size').textContent = 'Calculating...';
+            document.getElementById('line-count').textContent = 'Calculating...';
+            
+            // Get cost estimate
+            try {
+                const response = await fetch('/api/llm/estimate-cost', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ module_path: currentModule })
+                });
+                
+                if (response.ok) {
+                    const estimate = await response.json();
+                    
+                    // Update basic info
+                    document.getElementById('file-size').textContent = `${(estimate.file_size_bytes / 1024).toFixed(1)} KB`;
+                    document.getElementById('line-count').textContent = Math.round(estimate.file_size_bytes / 50); // Rough estimate
+                    
+                    // Update cost preview
+                    document.getElementById('estimated-tokens').textContent = estimate.estimated_tokens.toLocaleString();
+                    document.getElementById('estimated-cost').textContent = `$${estimate.estimated_cost_usd.toFixed(4)}`;
+                    document.getElementById('cost-preview').style.display = 'block';
+                    
+                    // Enable enhance button
+                    document.getElementById('enhance-button').disabled = false;
+                }
+            } catch (error) {
+                console.error('Error getting cost estimate:', error);
+            }
+            
+            // Fill in other automated info
+            document.getElementById('function-count').textContent = 'N/A (local scan needed)';
+            document.getElementById('import-count').textContent = 'N/A (local scan needed)';
+            document.getElementById('last-modified').textContent = 'N/A';
+            document.getElementById('has-tests').textContent = currentModule.includes('test') ? 'Yes' : 'Unknown';
+            document.getElementById('docstring-coverage').textContent = 'N/A (local scan needed)';
+            document.getElementById('complexity-estimate').textContent = 'Low-Medium (estimated)';
+        }
+        
+        async function checkLLMStatus() {
+            try {
+                const response = await fetch('/api/llm/metrics');
+                const metrics = await response.json();
+                
+                if (metrics && !metrics.error && metrics.analysis_status.gemini_available) {
+                    document.getElementById('llm-availability').textContent = 'Available';
+                    document.getElementById('llm-availability').style.color = '#4CAF50';
+                } else {
+                    document.getElementById('llm-availability').textContent = 'Not Available';
+                    document.getElementById('llm-availability').style.color = '#f44336';
+                }
+            } catch (error) {
+                document.getElementById('llm-availability').textContent = 'Error';
+                document.getElementById('llm-availability').style.color = '#ff9800';
+            }
+        }
+        
+        async function enhanceWithLLM() {
+            if (!currentModule) return;
+            
+            // Confirm with user
+            const costText = document.getElementById('estimated-cost').textContent;
+            if (!confirm(`This will cost approximately ${costText} in API usage. Proceed with LLM analysis?`)) {
+                return;
+            }
+            
+            // Show loading state
+            document.getElementById('enhance-button').disabled = true;
+            document.getElementById('analysis-status').style.display = 'block';
+            document.getElementById('llm-analysis-result').style.display = 'none';
+            
+            try {
+                // Queue the analysis
+                const queueResponse = await fetch('/api/llm/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ module_path: currentModule })
+                });
+                
+                if (!queueResponse.ok) {
+                    throw new Error('Failed to queue analysis');
+                }
+                
+                // Wait and poll for results
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                let attempts = 0;
+                while (attempts < 30) {
+                    const resultResponse = await fetch(`/api/llm/analysis/${encodeURIComponent(currentModule)}`);
+                    
+                    if (resultResponse.ok) {
+                        const analysis = await resultResponse.json();
+                        displayLLMAnalysis(analysis);
+                        updateApiMetrics();
+                        break;
+                    }
+                    
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                    attempts++;
+                }
+                
+                if (attempts >= 30) {
+                    throw new Error('Analysis timeout');
+                }
+                
+            } catch (error) {
+                alert('LLM analysis failed: ' + error.message);
+            } finally {
+                document.getElementById('enhance-button').disabled = false;
+                document.getElementById('analysis-status').style.display = 'none';
+            }
+        }
+        
+        function displayLLMAnalysis(analysis) {
+            const resultDiv = document.getElementById('llm-analysis-result');
+            
+            let securityHtml = '<h4>🔒 Security Issues</h4>';
+            if (analysis.security_issues && analysis.security_issues.length > 0) {
+                analysis.security_issues.forEach(issue => {
+                    securityHtml += `<div class="security-issue">${issue}</div>`;
+                });
+            } else {
+                securityHtml += '<p style="opacity: 0.7;">No security issues detected</p>';
+            }
+            
+            let optimizationHtml = '<h4>⚡ Optimization Suggestions</h4>';
+            if (analysis.optimization_suggestions && analysis.optimization_suggestions.length > 0) {
+                analysis.optimization_suggestions.forEach(suggestion => {
+                    optimizationHtml += `<div class="optimization-suggestion">${suggestion}</div>`;
+                });
+            } else {
+                optimizationHtml += '<p style="opacity: 0.7;">No optimization suggestions</p>';
+            }
+            
+            resultDiv.innerHTML = `
+                <h3>📊 LLM Analysis Results</h3>
+                <div class="metric">
+                    <span>Quality Score:</span>
+                    <span class="metric-value" style="color: ${analysis.quality_score >= 70 ? '#4CAF50' : '#ff9800'};">
+                        ${analysis.quality_score}/100
+                    </span>
+                </div>
+                <div class="metric">
+                    <span>Complexity:</span>
+                    <span class="metric-value">${analysis.complexity_score}/10</span>
+                </div>
+                <div class="metric">
+                    <span>Test Coverage Estimate:</span>
+                    <span class="metric-value">${analysis.test_coverage_estimate}%</span>
+                </div>
+                <div style="margin-top: 20px;">
+                    <h4>📝 Summary</h4>
+                    <p style="padding: 10px; background: rgba(255,255,255,0.05); border-radius: 5px;">
+                        ${analysis.analysis_summary}
+                    </p>
+                </div>
+                <div style="margin-top: 20px;">
+                    ${securityHtml}
+                </div>
+                <div style="margin-top: 20px;">
+                    ${optimizationHtml}
+                </div>
+            `;
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        async function updateApiMetrics() {
+            try {
+                const response = await fetch('/api/llm/metrics');
+                const metrics = await response.json();
+                
+                if (!metrics.error) {
+                    document.getElementById('total-api-calls').textContent = metrics.api_calls.total_calls;
+                    document.getElementById('total-tokens').textContent = metrics.token_usage.total_tokens.toLocaleString();
+                    document.getElementById('total-cost').textContent = `$${metrics.cost_tracking.total_cost_estimate.toFixed(4)}`;
+                }
+            } catch (error) {
+                console.error('Error updating API metrics:', error);
+            }
+        }
+        
+        // Initialize dashboard
+        updateDashboard();
+        setInterval(updateDashboard, 5000);
+    </script>
+</body>
+</html>

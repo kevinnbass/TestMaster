@@ -1,0 +1,39 @@
+{
+  "clients": {
+    "dev_client_001": {
+      "permissions": [
+        "intelligence.analyze",
+        "monitoring.read",
+        "performance.read"
+      ],
+      "rate_limit_multiplier": 1.0,
+      "created_at": 1755857733.5316892
+    },
+    "enterprise_client_001": {
+      "permissions": [
+        "intelligence.analyze",
+        "monitoring.read",
+        "learning.read",
+        "performance.read",
+        "performance.optimize"
+      ],
+      "rate_limit_multiplier": 2.0,
+      "created_at": 1755857733.5316892
+    },
+    "admin_client_001": {
+      "permissions": [
+        "admin.access",
+        "config.read",
+        "system.restart",
+        "intelligence.analyze",
+        "monitoring.read",
+        "learning.read",
+        "learning.write",
+        "performance.read",
+        "performance.optimize"
+      ],
+      "rate_limit_multiplier": 5.0,
+      "created_at": 1755857733.5316892
+    }
+  }
+}

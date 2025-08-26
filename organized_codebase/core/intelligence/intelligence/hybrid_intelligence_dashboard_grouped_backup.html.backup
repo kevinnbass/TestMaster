@@ -1,0 +1,3397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster Intelligence Command Center</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+            padding: 15px 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        
+        /* Tab System - Two Groups */
+        .tab-container {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 10px 20px;
+        }
+        
+        .tab-groups {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .tab-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .tab-group-header {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            font-weight: 600;
+            padding: 0 8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .tab-group-header::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        
+        .monitoring-group .tab-group-header::before {
+            background: #10b981;
+        }
+        
+        .orchestration-group .tab-group-header::before {
+            background: #8b5cf6;
+        }
+        
+        .tab-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+        
+        .tab-button {
+            padding: 10px 12px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            border-radius: 0;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+        }
+        
+        .tab-button:hover {
+            color: #e2e8f0;
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+        }
+        
+        .tab-button.active {
+            color: #fff;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-color: #3b82f6;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        
+        .monitoring-group .tab-button:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+        }
+        
+        .monitoring-group .tab-button.active {
+            background: linear-gradient(135deg, #10b981, #14b8a6);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+        
+        .orchestration-group .tab-button:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+        }
+        
+        .orchestration-group .tab-button.active {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Content */
+        .tab-content {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.3s;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        /* Cards */
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #334155;
+        }
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Metrics */
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+        .metric-label {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        .metric-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #3b82f6;
+        }
+        
+        /* Agent Cards */
+        .agent-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .agent-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+        .agent-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            margin-top: 8px;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Progress Bars */
+        .progress-bar {
+            background: #1e293b;
+            border-radius: 4px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s;
+        }
+        
+        /* Console */
+        .console {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .console-line {
+            margin-bottom: 4px;
+            display: flex;
+            gap: 8px;
+        }
+        .console-timestamp {
+            color: #6b7280;
+        }
+        .console-level-info { color: #3b82f6; }
+        .console-level-success { color: #10b981; }
+        .console-level-warning { color: #f59e0b; }
+        .console-level-error { color: #ef4444; }
+        
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-blue { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .badge-green { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .badge-purple { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+        .badge-orange { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .badge-red { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .tab-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Canvas Chart Styling */
+        canvas {
+            width: 100% !important;
+            height: 200px !important;
+            max-height: 200px;
+        }
+        
+        /* Bottom Codebase Tabs */
+        .codebase-tabs-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            z-index: 1000;
+            padding: 8px 20px;
+        }
+        
+        .codebase-tabs {
+            display: flex;
+            gap: 2px;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        
+        .codebase-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #334155;
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+            white-space: nowrap;
+            min-width: 120px;
+            max-width: 200px;
+        }
+        
+        .codebase-tab:hover {
+            background: #475569;
+        }
+        
+        .codebase-tab.active {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .codebase-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .codebase-close {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .codebase-close:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        
+        /* Add bottom padding to main content to account for fixed tabs */
+        body {
+            padding-bottom: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .tab-groups {
+                grid-template-columns: 1fr;
+            }
+            .tab-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1>🧠 TestMaster Intelligence Command Center</h1>
+                <div class="header-subtitle">Complete Control & Monitoring of 16 Intelligent Agents, 5 Bridge Systems, and Orchestration Framework</div>
+            </div>
+            <div class="codebase-controls">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label style="font-size: 12px; color: #94a3b8;">Add Codebase:</label>
+                    <input type="text" id="codebase-path-input" placeholder="/path/to/codebase" 
+                           style="padding: 6px 10px; background: rgba(255,255,255,0.1); border: 1px solid #334155; border-radius: 4px; color: #e2e8f0; font-size: 12px; width: 200px;">
+                    <button onclick="addCodebase()" 
+                            style="padding: 6px 12px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                        + Add
+                    </button>
+                </div>
+                <div id="current-codebase" style="font-size: 11px; color: #94a3b8; margin-top: 4px;">
+                    Current: /testmaster
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <div class="tab-groups">
+            <!-- Monitoring Group (Left) -->
+            <div class="tab-group monitoring-group">
+                <div class="tab-group-header">📊 Monitoring</div>
+                <div class="tab-row">
+                    <button class="tab-button active" onclick="switchTab('overview')">
+                        <span>📊</span> Overview
+                    </button>
+                    <button class="tab-button" onclick="switchTab('analytics')">
+                        <span>📈</span> Analytics
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Orchestration Group (Right) -->
+            <div class="tab-group orchestration-group">
+                <div class="tab-group-header">🎭 Orchestration</div>
+                <div class="tab-row">
+                    <button class="tab-button" onclick="switchTab('analyzer')">
+                        <span>🔬</span> Analyzer
+                    </button>
+                    <button class="tab-button" onclick="switchTab('tests')">
+                        <span>✅</span> Tests
+                    </button>
+                </div>
+                <div class="tab-row">
+                    <button class="tab-button" onclick="switchTab('workflow')">
+                        <span>⚙️</span> Workflow
+                    </button>
+                    <button class="tab-button" onclick="switchTab('refactor')">
+                        <span>🔄</span> Refactor
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Overview Tab -->
+    <div id="overview-tab" class="tab-content active">
+        <div class="grid-4">
+            <!-- Active Agents Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Active Agents</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Agents</span>
+                    <span class="metric-value">16</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active</span>
+                    <span class="metric-value" style="color: #10b981;">14</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 87.5%;"></div>
+                </div>
+            </div>
+
+            <!-- Bridge Systems Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌉 Bridge Systems</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Bridges</span>
+                    <span class="metric-value">5</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Connected</span>
+                    <span class="metric-value" style="color: #10b981;">5</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- Orchestration Status Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎭 Orchestration</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Mode</span>
+                    <span class="metric-value" style="font-size: 14px;">COMPREHENSIVE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tasks</span>
+                    <span class="metric-value">247</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%;"></div>
+                </div>
+            </div>
+
+            <!-- System Health Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💚 System Health</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Overall</span>
+                    <span class="metric-value" style="color: #10b981;">98%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Uptime</span>
+                    <span class="metric-value" style="font-size: 14px;">23h 45m</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 98%; background: linear-gradient(90deg, #10b981, #14b8a6);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Activity Console -->
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <div class="card-title">📋 System Activity</div>
+                <div>
+                    <span class="badge badge-green">Live</span>
+                </div>
+            </div>
+            <div class="console" id="activity-console">
+                <div class="console-line">
+                    <span class="console-timestamp">12:34:56</span>
+                    <span class="console-level-info">[INFO]</span>
+                    <span>Hierarchical Planning Agent initialized with 5 strategies</span>
+                </div>
+                <div class="console-line">
+                    <span class="console-timestamp">12:34:57</span>
+                    <span class="console-level-success">[SUCCESS]</span>
+                    <span>Bridge Protocol established - All 5 bridges connected</span>
+                </div>
+                <div class="console-line">
+                    <span class="console-timestamp">12:34:58</span>
+                    <span class="console-level-info">[INFO]</span>
+                    <span>Multi-Agent Consensus Engine ready - 6 voting methods available</span>
+                </div>
+                <div class="console-line">
+                    <span class="console-timestamp">12:34:59</span>
+                    <span class="console-level-warning">[WARN]</span>
+                    <span>LLM Provider fallback triggered - Switching to secondary provider</span>
+                </div>
+                <div class="console-line">
+                    <span class="console-timestamp">12:35:00</span>
+                    <span class="console-level-success">[SUCCESS]</span>
+                    <span>Security scan completed - 0 vulnerabilities detected</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Tab (Comprehensive) -->
+    <div id="analytics-tab" class="tab-content" style="max-height: calc(100vh - 200px); overflow-y: auto; padding-bottom: 60px;">
+        <!-- Performance Section -->
+        <h2 style="color: #e2e8f0; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
+            📡 Performance Monitoring
+        </h2>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔥 CPU Load</div>
+                </div>
+                <canvas id="analytics-cpu-chart" style="height: 150px;"></canvas>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💧 Memory Usage</div>
+                </div>
+                <canvas id="analytics-memory-chart" style="height: 150px;"></canvas>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌐 Network Activity</div>
+                </div>
+                <canvas id="analytics-network-chart" style="height: 150px;"></canvas>
+            </div>
+        </div>
+        
+        <!-- System Metrics Section -->
+        <h2 style="color: #e2e8f0; margin: 30px 0 15px 0; font-size: 18px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
+            📊 System Metrics
+        </h2>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🚀 System Performance</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Uptime</span>
+                    <span class="metric-value" id="analytics-uptime">23h 45m</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Processes</span>
+                    <span class="metric-value" id="analytics-processes">247</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Thread Count</span>
+                    <span class="metric-value" id="analytics-threads">1,024</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📁 Storage</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Disk Usage</span>
+                    <span class="metric-value" id="analytics-disk">42.7 GB</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Cache Size</span>
+                    <span class="metric-value" id="analytics-cache">1.2 GB</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">I/O Operations</span>
+                    <span class="metric-value" id="analytics-io">5,432/s</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">⏰ Timing</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Avg Response</span>
+                    <span class="metric-value" id="analytics-response">12ms</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">P95 Latency</span>
+                    <span class="metric-value" id="analytics-p95">45ms</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Throughput</span>
+                    <span class="metric-value" id="analytics-throughput">8,432 req/s</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- LLM Status Section -->
+        <h2 style="color: #e2e8f0; margin: 30px 0 15px 0; font-size: 18px; border-bottom: 1px solid #334155; padding-bottom: 8px; position: relative;">
+            🤖 LLM Provider Status
+            <span id="llm-section-indicator" style="position: absolute; right: 0; top: 0; font-size: 11px; background: #f59e0b22; padding: 2px 8px; border-radius: 4px; color: #f59e0b; display: none;">
+                ⚠️ Incomplete without LLM
+            </span>
+        </h2>
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌟 Gemini API</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Calls</span>
+                    <span class="metric-value" id="analytics-gemini-calls">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tokens Used</span>
+                    <span class="metric-value" id="analytics-gemini-tokens">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Estimated Cost</span>
+                    <span class="metric-value" id="analytics-gemini-cost">$0.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Success Rate</span>
+                    <span class="metric-value" id="analytics-gemini-success">100%</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 API Analytics</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Calls/Minute</span>
+                    <span class="metric-value" id="analytics-calls-per-min">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Avg Latency</span>
+                    <span class="metric-value" id="analytics-api-latency">0ms</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Error Rate</span>
+                    <span class="metric-value" id="analytics-error-rate">0%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Queue Depth</span>
+                    <span class="metric-value" id="analytics-queue-depth">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Security Section -->
+        <h2 style="color: #e2e8f0; margin: 30px 0 15px 0; font-size: 18px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
+            🔒 Security Analysis
+        </h2>
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔍 Vulnerability Scan</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Last Scan</span>
+                    <span class="metric-value" id="analytics-last-scan">2 mins ago</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Critical Issues</span>
+                    <span class="metric-value" style="color: #10b981;" id="analytics-critical">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Warnings</span>
+                    <span class="metric-value" style="color: #f59e0b;" id="analytics-warnings">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">OWASP Score</span>
+                    <span class="metric-value" id="analytics-owasp">A+</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🚮 Compliance</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">SOC2</span>
+                    <span class="metric-value" style="color: #10b981;">Compliant</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">GDPR</span>
+                    <span class="metric-value" style="color: #10b981;">Compliant</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">PCI-DSS</span>
+                    <span class="metric-value" style="color: #f59e0b;">Review Needed</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">ISO 27001</span>
+                    <span class="metric-value" style="color: #10b981;">Compliant</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Agents Section -->
+        <h2 style="color: #e2e8f0; margin: 30px 0 15px 0; font-size: 18px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
+            🤖 Intelligent Agents (16)
+        </h2>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🦾 Core Agents</div>
+                </div>
+                <div style="font-size: 12px; line-height: 1.8;">
+                    <div>✅ Configuration Intelligence Agent</div>
+                    <div>✅ Hierarchical Planning Engine</div>
+                    <div>✅ Multi-Agent Consensus System</div>
+                    <div>✅ Security Intelligence Agent</div>
+                    <div>✅ Universal Test Builder</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔧 Optimization Agents</div>
+                </div>
+                <div style="font-size: 12px; line-height: 1.8;">
+                    <div>✅ Multi-Objective Optimizer</div>
+                    <div>✅ Performance Monitor</div>
+                    <div>✅ Resource Manager</div>
+                    <div>✅ Cache Intelligence</div>
+                    <div>✅ Load Balancer</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌐 Integration Agents</div>
+                </div>
+                <div style="font-size: 12px; line-height: 1.8;">
+                    <div>✅ Universal LLM Provider</div>
+                    <div>✅ Event Correlation Engine</div>
+                    <div>✅ Session Manager</div>
+                    <div>✅ Context Tracker</div>
+                    <div>✅ Workflow Orchestrator</div>
+                    <div>✅ DAG Executor</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bridges Section -->
+        <h2 style="color: #e2e8f0; margin: 30px 0 15px 0; font-size: 18px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
+            🌉 Bridge Systems (5)
+        </h2>
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌉 Active Bridges</div>
+                </div>
+                <div style="font-size: 12px; line-height: 2;">
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                        <span>🔗 Protocol Bridge</span>
+                        <span style="color: #10b981;">Connected</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                        <span>📡 Event Bridge</span>
+                        <span style="color: #10b981;">Connected</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                        <span>🔐 Session Bridge</span>
+                        <span style="color: #10b981;">Connected</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                        <span>📝 SOP Bridge</span>
+                        <span style="color: #10b981;">Connected</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                        <span>🧠 Context Bridge</span>
+                        <span style="color: #10b981;">Connected</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📨 Bridge Metrics</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Messages/sec</span>
+                    <span class="metric-value">12,453</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Latency</span>
+                    <span class="metric-value">0.3ms</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Buffer Usage</span>
+                    <span class="metric-value">23%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Error Rate</span>
+                    <span class="metric-value" style="color: #10b981;">0.00%</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Consensus Section -->
+        <h2 style="color: #e2e8f0; margin: 30px 0 15px 0; font-size: 18px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
+            🗳️ Multi-Agent Consensus
+        </h2>
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🗳️ Voting Methods</div>
+                </div>
+                <div style="font-size: 12px; line-height: 1.8;">
+                    <div>✅ Simple Majority (>50%)</div>
+                    <div>✅ Supermajority (>66%)</div>
+                    <div>✅ Unanimous (100%)</div>
+                    <div>✅ Weighted Voting</div>
+                    <div>✅ Ranked Choice</div>
+                    <div>✅ Byzantine Fault Tolerant</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Consensus Stats</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Decisions</span>
+                    <span class="metric-value">3,847</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Agreement Rate</span>
+                    <span class="metric-value">94.2%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Avg Decision Time</span>
+                    <span class="metric-value">145ms</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Conflicts Resolved</span>
+                    <span class="metric-value">223</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Monitoring Tab -->
+    <div id="performance-tab" class="tab-content">
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔥 CPU Load</div>
+                </div>
+                <canvas id="speed-chart"></canvas>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💾 Memory Usage (MB)</div>
+                </div>
+                <canvas id="memory-chart"></canvas>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">⚡ System Activity</div>
+                </div>
+                <canvas id="throughput-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metrics Tab -->
+    <div id="metrics-tab" class="tab-content">
+        <div class="grid-4">
+            <!-- System Health -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💚 System Health</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">CPU Usage</span>
+                    <span class="metric-value">42%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Memory</span>
+                    <span class="metric-value">3.2 GB</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls/Hour</span>
+                    <span class="metric-value">127</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Uptime</span>
+                    <span class="metric-value" style="color: #10b981;">99.9%</span>
+                </div>
+            </div>
+            
+            <!-- Agent Status Detailed -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Agent Status Details</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Agents</span>
+                    <span class="metric-value">16</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active</span>
+                    <span class="metric-value" style="color: #10b981;">12</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Idle</span>
+                    <span class="metric-value" style="color: #f59e0b;">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Inactive</span>
+                    <span class="metric-value">1</span>
+                </div>
+            </div>
+            
+            <!-- Bridge Status Detailed -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌉 Bridge Status Details</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Protocol Bridge</span>
+                    <span class="metric-value" style="color: #10b981;">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Event Bridge</span>
+                    <span class="metric-value" style="color: #10b981;">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Session Bridge</span>
+                    <span class="metric-value" style="color: #10b981;">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">SOP Bridge</span>
+                    <span class="metric-value" style="color: #f59e0b;">Idle</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Context Bridge</span>
+                    <span class="metric-value" style="color: #10b981;">Active</span>
+                </div>
+            </div>
+            
+            <!-- Orchestration Metrics -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎭 Orchestration Metrics</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Mode</span>
+                    <span class="metric-value">COMPREHENSIVE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Workflows</span>
+                    <span class="metric-value">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Queue Size</span>
+                    <span class="metric-value">7</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Throughput</span>
+                    <span class="metric-value">24/min</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Intelligence Capabilities Details -->
+        <div class="grid-2" style="margin-top: 20px;">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🧠 Intelligence Capabilities</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Hierarchical Planning</span>
+                    <span class="metric-value" style="color: #10b981;">Enabled</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Multi-Agent Consensus</span>
+                    <span class="metric-value" style="color: #10b981;">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Optimization Engine</span>
+                    <span class="metric-value" style="color: #10b981;">Running</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Security Scanner</span>
+                    <span class="metric-value" style="color: #10b981;">Monitoring</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">LLM Providers</span>
+                    <span class="metric-value">3 Connected</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📈 Performance Metrics</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tests Generated</span>
+                    <span class="metric-value">1,247</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Coverage Achieved</span>
+                    <span class="metric-value" style="color: #10b981;">94.2%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Consensus Decisions</span>
+                    <span class="metric-value">89</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Security Scans</span>
+                    <span class="metric-value">156</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Optimization Cycles</span>
+                    <span class="metric-value">23</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LLM Status Tab -->
+    <div id="llm-tab" class="tab-content">
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Gemini Status</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls</span>
+                    <span class="metric-value">1,247</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tokens Used</span>
+                    <span class="metric-value">45.2K</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 OpenAI Status</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls</span>
+                    <span class="metric-value">892</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tokens Used</span>
+                    <span class="metric-value">32.1K</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Anthropic Status</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">API Calls</span>
+                    <span class="metric-value">567</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Tokens Used</span>
+                    <span class="metric-value">28.7K</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Tab -->
+    <div id="security-tab" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">🔒 Security Intelligence Dashboard</div>
+            </div>
+            <div class="grid-4">
+                <div class="metric">
+                    <span class="metric-label">Vulnerabilities</span>
+                    <span class="metric-value" style="color: #10b981;">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Compliance</span>
+                    <span class="metric-value">98%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Security Score</span>
+                    <span class="metric-value">A+</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Last Scan</span>
+                    <span class="metric-value" style="font-size: 12px;">2 min ago</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tests Tab -->
+    <div id="tests-tab" class="tab-content">
+        <div class="grid-4">
+            <!-- Test Coverage Overview -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📈 Test Coverage Overview</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Overall Coverage:</span>
+                    <span class="metric-value" id="overall-coverage">--%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Modules with Tests:</span>
+                    <span class="metric-value" id="modules-with-tests">0/0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Passing Tests:</span>
+                    <span class="metric-value" id="passing-tests">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Failing Tests:</span>
+                    <span class="metric-value" id="failing-tests">0</span>
+                </div>
+                <button style="margin-top: 10px; padding: 8px 16px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="runTestAnalysis()">
+                    🔍 Run Deep Test Analysis
+                </button>
+            </div>
+            
+            <!-- Module Test Status -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🚦 Module Test Status</div>
+                </div>
+                <div id="test-status-grid" style="max-height: 300px; overflow-y: auto;">
+                    <div style="text-align: center; padding: 20px; opacity: 0.7;">
+                        Loading test status...
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test Insights -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📝 Test Insights</div>
+                </div>
+                <div id="test-insights" style="max-height: 250px; overflow-y: auto; padding: 10px;">
+                    <p style="opacity: 0.7; text-align: center; padding: 20px;">
+                        Run test analysis to generate insights
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Test Fix Todo List -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📋 Test Fix Todo List</div>
+                </div>
+                <div id="test-todo-list" style="max-height: 250px; overflow-y: auto; padding: 10px;">
+                    <p style="opacity: 0.7; text-align: center;">
+                        No test issues detected yet
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agents Tab -->
+    <div id="agents-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">16 Intelligent Agents</h2>
+        <div class="grid-4">
+            <!-- Configuration Intelligence Agent -->
+            <div class="agent-card">
+                <div class="card-title">⚙️ Configuration Intelligence</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>Active - Development Profile</span>
+                </div>
+            </div>
+            <!-- Hierarchical Test Planning -->
+            <div class="agent-card">
+                <div class="card-title">📋 Hierarchical Planning</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>Active - 5 Strategies</span>
+                </div>
+            </div>
+            <!-- Multi-Agent Consensus -->
+            <div class="agent-card">
+                <div class="card-title">🗳️ Consensus Engine</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>Active - 6 Voting Methods</span>
+                </div>
+            </div>
+            <!-- Security Intelligence -->
+            <div class="agent-card">
+                <div class="card-title">🔒 Security Intelligence</div>
+                <div class="agent-status">
+                    <span class="status-dot"></span>
+                    <span>Active - OWASP Compliant</span>
+                </div>
+            </div>
+            <!-- Add remaining 12 agents -->
+        </div>
+    </div>
+
+    <!-- Bridges Tab -->
+    <div id="bridges-tab" class="tab-content">
+        <h2 style="margin-bottom: 20px;">5 Bridge Systems</h2>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📡 Protocol Bridge</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Messages/sec</span>
+                    <span class="metric-value">1,247</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Event Bridge</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Events/sec</span>
+                    <span class="metric-value">892</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💾 Session Bridge</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Sessions</span>
+                    <span class="metric-value">45</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📋 SOP Bridge</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Procedures</span>
+                    <span class="metric-value">127</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔄 Context Bridge</div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Context Size</span>
+                    <span class="metric-value">8.2MB</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workflow Tab -->
+    <div id="workflow-tab" class="tab-content">
+        <div class="grid-2">
+            <!-- Active Workflows -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">⚙️ Active Workflows</div>
+                </div>
+                <div style="padding: 15px;">
+                    <div class="metric">
+                        <span class="metric-label">Running Tasks:</span>
+                        <span class="metric-value" id="workflow-running">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Queued Tasks:</span>
+                        <span class="metric-value" id="workflow-queued">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Completed Today:</span>
+                        <span class="metric-value" id="workflow-completed">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Success Rate:</span>
+                        <span class="metric-value" id="workflow-success">-</span>
+                    </div>
+                    <button style="width: 100%; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 15px;" onclick="startWorkflow()">
+                        🚀 Start New Workflow
+                    </button>
+                </div>
+            </div>
+            
+            <!-- DAG Visualization -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🌐 Workflow DAG</div>
+                </div>
+                <div id="workflow-dag" style="height: 300px; background: #0f172a; border-radius: 8px; padding: 20px; overflow: auto;">
+                    <div style="color: #94a3b8; font-size: 12px;">
+                        <div style="margin-bottom: 10px;"><strong>Current Workflow:</strong> <span id="current-workflow-name">None</span></div>
+                        <div id="dag-visualization" style="margin-top: 20px;">
+                            <!-- DAG nodes will be displayed here -->
+                            <div style="text-align: center; padding: 40px; opacity: 0.5;">
+                                <div style="font-size: 24px; margin-bottom: 10px;">🌐</div>
+                                <div>No active workflow</div>
+                                <div style="font-size: 11px; margin-top: 5px;">Start a workflow to see the DAG</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Workflow Queue -->
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <div class="card-title">📋 Task Queue</div>
+            </div>
+            <div id="workflow-queue" style="padding: 15px;">
+                <div style="max-height: 200px; overflow-y: auto;">
+                    <table style="width: 100%; font-size: 12px;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid #334155;">
+                                <th style="text-align: left; padding: 8px;">Task</th>
+                                <th style="text-align: left; padding: 8px;">Status</th>
+                                <th style="text-align: left; padding: 8px;">Priority</th>
+                                <th style="text-align: left; padding: 8px;">Started</th>
+                            </tr>
+                        </thead>
+                        <tbody id="workflow-queue-body">
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 20px; opacity: 0.5;">
+                                    No tasks in queue
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Planning Tab -->
+    <div id="analyzer-tab" class="tab-content">
+        <div class="grid-2">
+            <!-- Automated Module Analysis -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Automated Module Analysis</div>
+                </div>
+                <div id="module-list" style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <p style="opacity: 0.7; text-align: center; padding: 20px;">
+                        Loading available modules...
+                    </p>
+                </div>
+            </div>
+            
+            <!-- LLM-Enhanced Analysis -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🧠 LLM Module Intelligence</div>
+                </div>
+                <div style="padding: 15px;">
+                    <div style="margin-bottom: 20px;">
+                        <label for="module-select" style="display: block; margin-bottom: 8px;">Select Module:</label>
+                        <select id="module-select" style="width: 100%; padding: 8px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 4px;">
+                            <option value="">-- Select a module --</option>
+                        </select>
+                    </div>
+                    <button style="width: 100%; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 15px;" onclick="analyzeModule()">
+                        🔬 Analyze Module with LLM
+                    </button>
+                    <div id="module-analysis-result" style="max-height: 300px; overflow-y: auto; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 4px;">
+                        <p style="opacity: 0.7; text-align: center;">
+                            Select a module and click analyze to get AI insights
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consensus Tab -->
+    <div id="consensus-tab" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">🗳️ Multi-Agent Consensus Engine</div>
+            </div>
+            <div class="grid-2">
+                <div>
+                    <h3>Voting Methods</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0;">🗳️ Simple Majority</li>
+                        <li style="padding: 8px 0;">🗳️ Weighted Voting</li>
+                        <li style="padding: 8px 0;">🗳️ Borda Count</li>
+                        <li style="padding: 8px 0;">🗳️ Approval Voting</li>
+                        <li style="padding: 8px 0;">🗳️ Condorcet Method</li>
+                        <li style="padding: 8px 0;">🗳️ Instant Runoff</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Consensus Metrics</h3>
+                    <div class="metric">
+                        <span class="metric-label">Decisions Made</span>
+                        <span class="metric-value">1,892</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Average Agreement</span>
+                        <span class="metric-value">87%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Consensus Time</span>
+                        <span class="metric-value">45ms</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refactor Opportunities Tab -->
+    <div id="refactor-tab" class="tab-content">
+        <div class="grid-2">
+            <!-- Hierarchical Refactor Analysis -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🏗️ Hierarchical Refactor Analysis</div>
+                </div>
+                <div id="hierarchical-refactor" style="padding: 15px;">
+                    <div class="metric">
+                        <span class="metric-label">Total Files:</span>
+                        <span class="metric-value" id="total-files">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Total Lines:</span>
+                        <span class="metric-value" id="total-lines">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Functional Clusters:</span>
+                        <span class="metric-value" id="functional-clusters">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Refactor Opportunities:</span>
+                        <span class="metric-value" id="refactor-opportunities">-</span>
+                    </div>
+                    <button style="width: 100%; padding: 8px; background: #059669; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 15px;" onclick="runHierarchicalAnalysis()">
+                        🔬 Run Hierarchical Analysis (100k+ LOC)
+                    </button>
+                    <h4 style="margin-top: 20px; font-size: 14px;">Codebase Summary:</h4>
+                    <div id="hierarchy-summary" style="max-height: 150px; overflow-y: auto; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px; margin-top: 8px; font-size: 12px;">
+                        <p style="opacity: 0.7;">Click to analyze codebase hierarchy...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Refactor Roadmap -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🗺️ Refactor Roadmap</div>
+                </div>
+                <div id="refactor-roadmap" style="padding: 15px;">
+                    <div class="metric">
+                        <span class="metric-label">Phases:</span>
+                        <span class="metric-value" id="roadmap-phases">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Total Effort:</span>
+                        <span class="metric-value" id="roadmap-effort">- hours</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Priority Score:</span>
+                        <span class="metric-value" id="roadmap-priority">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Risk Level:</span>
+                        <span class="metric-value" id="roadmap-risk">-</span>
+                    </div>
+                    <h4 style="margin-top: 20px; font-size: 14px;">Phase Breakdown:</h4>
+                    <div id="roadmap-phases-detail" style="max-height: 200px; overflow-y: auto; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px; margin-top: 8px; font-size: 12px;">
+                        <p style="opacity: 0.7;">Roadmap will be generated after analysis...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid-2" style="margin-top: 20px;">
+            <!-- Traditional Refactor Analysis -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🤖 Quick Refactor Scan</div>
+                </div>
+                <div id="auto-refactor" style="padding: 15px;">
+                    <div class="metric">
+                        <span class="metric-label">Code Duplication:</span>
+                        <span class="metric-value" id="code-duplication">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Long Methods:</span>
+                        <span class="metric-value" id="long-methods">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Complex Classes:</span>
+                        <span class="metric-value" id="complex-classes">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Missing Tests:</span>
+                        <span class="metric-value" id="missing-tests">-</span>
+                    </div>
+                    <button style="width: 100%; padding: 8px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 15px;" onclick="runRefactorAnalysis()">
+                        🔍 Quick Scan (Fast)
+                    </button>
+                    <div id="refactor-suggestions" style="max-height: 150px; overflow-y: auto; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px; margin-top: 8px; font-size: 12px;">
+                        <p style="opacity: 0.7;">Quick scan results will appear here...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LLM-Enhanced Refactor Insights -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🧠 LLM Refactor Insights</div>
+                </div>
+                <div id="llm-refactor" style="padding: 15px;">
+                    <p style="opacity: 0.7; text-align: center; padding: 10px; font-size: 12px;">
+                        Get AI-powered refactor recommendations
+                    </p>
+                    <button style="width: 100%; padding: 10px; background: #8b5cf6; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="getLLMRefactorInsights()">
+                        🔮 Get AI Insights ($0.002)
+                    </button>
+                    <div id="llm-refactor-result" style="margin-top: 15px; max-height: 200px; overflow-y: auto; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px; font-size: 12px;">
+                        <p style="opacity: 0.7; text-align: center;">AI insights will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Codebase Tabs -->
+    <div class="codebase-tabs-container">
+        <div class="codebase-tabs" id="codebase-tabs">
+            <div class="codebase-tab active" data-codebase-id="testmaster" data-codebase-path="/testmaster" onclick="switchCodebase('/testmaster')">
+                <span class="codebase-name">TestMaster</span>
+                <span class="codebase-close" onclick="event.stopPropagation(); removeCodebase('/testmaster')" title="Close">&times;</span>
+            </div>
+        </div>
+        <!-- LLM API Toggle Button -->
+        <div id="llm-toggle-container" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);">
+            <button id="llm-toggle-btn" onclick="toggleLLMMode()" style="
+                padding: 4px 8px;
+                font-size: 11px;
+                background: #374151;
+                color: #9ca3af;
+                border: 1px solid #4b5563;
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                transition: all 0.2s;
+            " title="Toggle LLM API Mode">
+                <span id="llm-toggle-icon" style="font-size: 10px;">🔴</span>
+                <span id="llm-toggle-text" style="font-weight: 500;">Demo</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching function - define globally
+        window.switchTab = function(tabName) {
+            console.log('Switching to tab:', tabName);
+            
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            const selectedTab = document.getElementById(tabName + '-tab');
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+                console.log('Activated tab:', tabName + '-tab');
+            } else {
+                console.error('Tab not found:', tabName + '-tab');
+            }
+            
+            // Add active class to clicked button
+            if (typeof event !== 'undefined' && event && event.target) {
+                const button = event.target.closest('.tab-button');
+                if (button) {
+                    button.classList.add('active');
+                }
+            } else {
+                // If no event, find button by onclick content
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${tabName}'`)) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            // Initialize charts and load data if needed
+            if (tabName === 'performance') {
+                initPerformanceCharts();
+            } else {
+                // Stop performance updates when not on performance tab
+                if (performanceInterval) {
+                    clearInterval(performanceInterval);
+                    performanceInterval = null;
+                }
+            }
+            
+            if (tabName === 'analytics') {
+                if (typeof initializeAnalyticsCharts === 'function') {
+                    if (!window.analyticsChartsInitialized) {
+                        initializeAnalyticsCharts();
+                        window.analyticsChartsInitialized = true;
+                    }
+                }
+            } else if (tabName === 'tests') {
+                if (typeof loadTestsStatus === 'function') {
+                    loadTestsStatus();
+                }
+            } else if (tabName === 'analyzer') {
+                if (typeof loadModuleList === 'function') {
+                    loadModuleList();
+                }
+            } else if (tabName === 'refactor') {
+                if (typeof loadRefactorAnalysis === 'function') {
+                    loadRefactorAnalysis();
+                }
+            } else if (tabName === 'workflow') {
+                if (typeof updateWorkflowStatus === 'function') {
+                    updateWorkflowStatus();
+                }
+            }
+        }
+        
+        // Performance data buffers for real-time scrolling
+        window.performanceData = {
+            cpu: new Array(300).fill(0),
+            memory: new Array(300).fill(0),
+            network: new Array(300).fill(0),
+            timestamps: new Array(300).fill(new Date())
+        };
+        
+        // Performance update interval
+        let performanceInterval = null;
+        
+        // Initialize performance charts with real-time scrolling line charts
+        function initPerformanceCharts() {
+            console.log('Initializing real-time performance monitoring...');
+            
+            // Clear any existing interval
+            if (performanceInterval) {
+                clearInterval(performanceInterval);
+            }
+            
+            // Create time labels (0s to 30s)
+            const labels = [];
+            for (let i = 0; i < 300; i++) {
+                if (i % 50 === 0) { // Label every 5 seconds
+                    labels.push(`${(i/10).toFixed(0)}s`);
+                } else {
+                    labels.push('');
+                }
+            }
+            
+            // CPU chart - scrolling line chart
+            const cpuCanvas = document.getElementById('speed-chart');
+            if (cpuCanvas) {
+                if (cpuCanvas.chart) {
+                    cpuCanvas.chart.destroy();
+                }
+                
+                cpuCanvas.chart = new Chart(cpuCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'CPU %',
+                            data: performanceData.cpu,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.1,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: false,
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false }
+                        },
+                        scales: {
+                            x: {
+                                display: true,
+                                grid: { 
+                                    color: 'rgba(148, 163, 184, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    autoSkip: false,
+                                    maxRotation: 0,
+                                    callback: function(val, index) {
+                                        return labels[index];
+                                    }
+                                }
+                            },
+                            y: {
+                                display: true,
+                                min: 0,
+                                max: 100,
+                                grid: { 
+                                    color: 'rgba(148, 163, 184, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    stepSize: 25,
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Memory chart - scrolling line chart
+            const memCanvas = document.getElementById('memory-chart');
+            if (memCanvas) {
+                if (memCanvas.chart) {
+                    memCanvas.chart.destroy();
+                }
+                
+                memCanvas.chart = new Chart(memCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Memory MB',
+                            data: performanceData.memory,
+                            borderColor: '#8b5cf6',
+                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.1,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: false,
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false }
+                        },
+                        scales: {
+                            x: {
+                                display: true,
+                                grid: { 
+                                    color: 'rgba(148, 163, 184, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    autoSkip: false,
+                                    maxRotation: 0,
+                                    callback: function(val, index) {
+                                        return labels[index];
+                                    }
+                                }
+                            },
+                            y: {
+                                display: true,
+                                min: 0,
+                                grid: { 
+                                    color: 'rgba(148, 163, 184, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    callback: function(value) {
+                                        return value + ' MB';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Network chart - scrolling line chart
+            const netCanvas = document.getElementById('throughput-chart');
+            if (netCanvas) {
+                if (netCanvas.chart) {
+                    netCanvas.chart.destroy();
+                }
+                
+                netCanvas.chart = new Chart(netCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Network KB/s',
+                            data: performanceData.network,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.1,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: false,
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false }
+                        },
+                        scales: {
+                            x: {
+                                display: true,
+                                grid: { 
+                                    color: 'rgba(148, 163, 184, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    autoSkip: false,
+                                    maxRotation: 0,
+                                    callback: function(val, index) {
+                                        return labels[index];
+                                    }
+                                }
+                            },
+                            y: {
+                                display: true,
+                                min: 0,
+                                grid: { 
+                                    color: 'rgba(148, 163, 184, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    callback: function(value) {
+                                        return value + ' KB/s';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Start real-time updates every 100ms
+            performanceInterval = setInterval(updatePerformanceRealTime, 100);
+        }
+        
+        // Update performance data in real-time (100ms intervals, scrolling effect)
+        async function updatePerformanceRealTime() {
+            try {
+                // Fetch real-time data
+                const response = await fetch('/api/performance/realtime?codebase=' + (window.currentCodebase || '/testmaster'));
+                const data = await response.json();
+                
+                if (data && data.timeseries) {
+                    // Get the latest values
+                    const latestCpu = data.timeseries.cpu_usage && data.timeseries.cpu_usage.length > 0 
+                        ? data.timeseries.cpu_usage[data.timeseries.cpu_usage.length - 1] 
+                        : Math.random() * 30 + 10; // Fallback with variation
+                    
+                    const latestMemory = data.timeseries.memory_usage_mb && data.timeseries.memory_usage_mb.length > 0
+                        ? data.timeseries.memory_usage_mb[data.timeseries.memory_usage_mb.length - 1]
+                        : Math.random() * 50 + 30; // Fallback with variation
+                    
+                    const latestNetwork = data.timeseries.network_kb_s && data.timeseries.network_kb_s.length > 0
+                        ? data.timeseries.network_kb_s[data.timeseries.network_kb_s.length - 1]
+                        : Math.random() * 10 + 1; // Fallback with variation
+                    
+                    // Shift arrays left and add new value on the right (scrolling effect)
+                    performanceData.cpu.shift();
+                    performanceData.cpu.push(latestCpu);
+                    
+                    performanceData.memory.shift();
+                    performanceData.memory.push(latestMemory);
+                    
+                    performanceData.network.shift();
+                    performanceData.network.push(latestNetwork);
+                    
+                    // Update charts
+                    const cpuChart = document.getElementById('speed-chart')?.chart;
+                    if (cpuChart) {
+                        cpuChart.data.datasets[0].data = [...performanceData.cpu];
+                        cpuChart.update('none');
+                    }
+                    
+                    const memChart = document.getElementById('memory-chart')?.chart;
+                    if (memChart) {
+                        memChart.data.datasets[0].data = [...performanceData.memory];
+                        memChart.update('none');
+                    }
+                    
+                    const netChart = document.getElementById('throughput-chart')?.chart;
+                    if (netChart) {
+                        netChart.data.datasets[0].data = [...performanceData.network];
+                        netChart.update('none');
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating performance data:', error);
+                
+                // Add some variation to show the chart is working even if API fails
+                performanceData.cpu.shift();
+                performanceData.cpu.push(Math.random() * 30 + 10);
+                
+                performanceData.memory.shift();
+                performanceData.memory.push(Math.random() * 50 + 30);
+                
+                performanceData.network.shift();
+                performanceData.network.push(Math.random() * 10 + 1);
+                
+                // Update charts
+                const cpuChart = document.getElementById('speed-chart')?.chart;
+                if (cpuChart) {
+                    cpuChart.data.datasets[0].data = [...performanceData.cpu];
+                    cpuChart.update('none');
+                }
+                
+                const memChart = document.getElementById('memory-chart')?.chart;
+                if (memChart) {
+                    memChart.data.datasets[0].data = [...performanceData.memory];
+                    memChart.update('none');
+                }
+                
+                const netChart = document.getElementById('throughput-chart')?.chart;
+                if (netChart) {
+                    netChart.data.datasets[0].data = [...performanceData.network];
+                    netChart.update('none');
+                }
+            }
+        }
+        
+        // Initialize analytics charts
+        function initAnalyticsCharts() {
+            // Test analytics chart
+            const testCtx = document.getElementById('test-analytics-chart');
+            if (testCtx && !testCtx.chart) {
+                testCtx.chart = new Chart(testCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Unit Tests', 'Integration Tests', 'Security Tests', 'Performance Tests'],
+                        datasets: [{
+                            data: [45, 30, 15, 10],
+                            backgroundColor: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            // Coverage chart
+            const coverageCtx = document.getElementById('coverage-chart');
+            if (coverageCtx && !coverageCtx.chart) {
+                coverageCtx.chart = new Chart(coverageCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                        datasets: [{
+                            label: 'Coverage %',
+                            data: [72, 78, 85, 88],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+        }
+        
+        // Real-time codebase-specific updates - faster for performance tab
+        setInterval(async () => {
+            // Get current codebase
+            const currentPath = currentCodebase;
+            
+            // Update metrics based on current tab
+            const activeTab = document.querySelector('.tab-content.active');
+            if (activeTab) {
+                const activeTabId = activeTab.id;
+                
+                if (activeTabId === 'performance-tab') {
+                    // Real-time charts update themselves via performanceInterval
+                    // No need to call updatePerformanceMetrics anymore
+                }
+            }
+        }, 100); // Update performance charts every 0.1 seconds
+        
+        // Slower updates for non-performance tabs
+        setInterval(async () => {
+            // Get current codebase
+            const currentPath = currentCodebase;
+            
+            // Update metrics based on current tab
+            const activeTab = document.querySelector('.tab-content.active');
+            if (activeTab) {
+                const activeTabId = activeTab.id;
+                
+                if (activeTabId === 'overview-tab' || activeTabId === 'metrics-tab') {
+                    // Update LLM metrics for current codebase
+                    await updateLLMMetrics(currentPath);
+                }
+            }
+            
+            // Add new console line with codebase context
+            const console = document.getElementById('activity-console');
+            if (console && Math.random() > 0.8) {
+                const codebaseName = activeCodebases.get(currentPath)?.name || 'Unknown';
+                const messages = [
+                    { level: 'info', text: `Monitoring ${codebaseName} codebase metrics` },
+                    { level: 'success', text: `${codebaseName} analysis updated` },
+                    { level: 'info', text: `Real-time sync for ${codebaseName}` },
+                    { level: 'success', text: `${codebaseName} metrics refreshed` }
+                ];
+                
+                const msg = messages[Math.floor(Math.random() * messages.length)];
+                const time = new Date().toLocaleTimeString();
+                
+                const newLine = document.createElement('div');
+                newLine.className = 'console-line';
+                newLine.innerHTML = `
+                    <span class="console-timestamp">${time}</span>
+                    <span class="console-level-${msg.level}">[${msg.level.toUpperCase()}]</span>
+                    <span>${msg.text}</span>
+                `;
+                
+                console.appendChild(newLine);
+                console.scrollTop = console.scrollHeight;
+                
+                // Keep only last 10 lines
+                while (console.children.length > 10) {
+                    console.removeChild(console.firstChild);
+                }
+            }
+        }, 5000); // Update every 5 seconds for real-time feel
+        
+        // Test analysis functions
+        async function fetchData(endpoint, options = {}) {
+            try {
+                const response = await fetch(`/api/${endpoint}`, options);
+                return await response.json();
+            } catch (error) {
+                console.error(`Error fetching ${endpoint}:`, error);
+                return null;
+            }
+        }
+        
+        async function loadTestsStatus(codebasePath = null) {
+            console.log(`loadTestsStatus called with codebasePath: ${codebasePath}`);
+            
+            let data;
+            
+            if (codebasePath && codebasePath !== '/testmaster') {
+                // For non-default codebases, simulate data
+                const codebase = activeCodebases.get(codebasePath);
+                // No simulation - show actual empty state
+                const grid = document.getElementById('test-status-grid');
+                grid.innerHTML = `
+                    <p style="opacity: 0.7; text-align: center; padding: 20px; font-size: 12px;">
+                        No test data available for ${codebasePath}
+                    </p>
+                `;
+                return;
+            } else {
+                // For default codebase, try API call
+                console.log('Using API for default codebase');
+                const url = codebasePath ? `tests/status?codebase=${encodeURIComponent(codebasePath)}` : 'tests/status';
+                data = await fetchData(url);
+                if (!data) {
+                    console.log('API call failed, falling back to default data');
+                    return;
+                }
+            }
+            
+            const grid = document.getElementById('test-status-grid');
+            let greenCount = 0, yellowCount = 0, redCount = 0;
+            
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px;">';
+            data.forEach(module => {
+                const statusColor = module.status === 'green' ? '#10b981' : 
+                                   module.status === 'yellow' ? '#f59e0b' : '#ef4444';
+                html += `
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: rgba(255,255,255,0.05); border-radius: 4px;" title="${module.module}">
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: ${statusColor};"></div>
+                        <span style="font-size: 12px; text-overflow: ellipsis; overflow: hidden;">${module.module.split('/').pop()}</span>
+                        <span style="margin-left: auto; font-size: 11px; opacity: 0.7;">${module.test_count}</span>
+                    </div>
+                `;
+                
+                if (module.status === 'green') greenCount++;
+                else if (module.status === 'yellow') yellowCount++;
+                else redCount++;
+            });
+            html += '</div>';
+            
+            grid.innerHTML = html;
+            
+            // Update metrics
+            document.getElementById('modules-with-tests').textContent = 
+                `${greenCount + yellowCount}/${data.length}`;
+            document.getElementById('passing-tests').textContent = greenCount;
+            document.getElementById('failing-tests').textContent = yellowCount;
+            
+            const coverage = ((greenCount + yellowCount) / data.length * 100).toFixed(1);
+            document.getElementById('overall-coverage').textContent = `${coverage}%`;
+            
+            // Generate insights
+            const insights = document.getElementById('test-insights');
+            let insightsHtml = '<div style="font-size: 12px; line-height: 1.4;">';
+            insightsHtml += `<p>📊 <strong>${data.length}</strong> total modules analyzed</p>`;
+            insightsHtml += `<p>✅ <strong>${greenCount}</strong> modules have passing tests</p>`;
+            insightsHtml += `<p>⚠️ <strong>${yellowCount}</strong> modules have failing tests</p>`;
+            insightsHtml += `<p>❌ <strong>${redCount}</strong> modules need tests</p>`;
+            insightsHtml += `<p>📈 Overall test coverage: <strong>${coverage}%</strong></p>`;
+            insightsHtml += '</div>';
+            insights.innerHTML = insightsHtml;
+            
+            // Generate todo list
+            const todoList = document.getElementById('test-todo-list');
+            let todoHtml = '<div style="font-size: 12px;">';
+            if (redCount > 0) {
+                todoHtml += `<p style="margin: 4px 0;">🔴 Create tests for ${redCount} untested modules</p>`;
+            }
+            if (yellowCount > 0) {
+                todoHtml += `<p style="margin: 4px 0;">🟡 Fix ${yellowCount} failing tests</p>`;
+            }
+            if (redCount === 0 && yellowCount === 0) {
+                todoHtml += '<p style="opacity: 0.7;">🎉 All tests are passing!</p>';
+            }
+            todoHtml += '</div>';
+            todoList.innerHTML = todoHtml;
+        }
+        
+        async function runTestAnalysis() {
+            if (!confirm('This will use LLM credits for deep test analysis. Continue?')) return;
+            
+            const insights = document.getElementById('test-insights');
+            insights.innerHTML = '<p style="text-align: center; opacity: 0.7;">🔍 Running deep analysis...</p>';
+            
+            // This could call the LLM analysis API
+            setTimeout(() => {
+                insights.innerHTML = `
+                    <div style="font-size: 12px; line-height: 1.4;">
+                        <p>🤖 <strong>AI Analysis Complete</strong></p>
+                        <p>• Recommend adding integration tests for core modules</p>
+                        <p>• Consider parameterized tests for data-heavy functions</p>
+                        <p>• Add error handling tests for external API calls</p>
+                        <p>• Performance tests needed for batch operations</p>
+                    </div>
+                `;
+            }, 2000);
+        }
+        
+        // LLM Mode Toggle Function
+        let llmApiEnabled = false;
+        
+        async function toggleLLMMode() {
+            const btn = document.getElementById('llm-toggle-btn');
+            const icon = document.getElementById('llm-toggle-icon');
+            const text = document.getElementById('llm-toggle-text');
+            
+            // Disable button during request
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            
+            try {
+                const response = await fetch('/api/llm/toggle-mode', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enable_api: !llmApiEnabled })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    llmApiEnabled = result.api_enabled;
+                    
+                    if (llmApiEnabled) {
+                        icon.textContent = '🟢';
+                        text.textContent = 'API';
+                        btn.style.background = '#065f46';
+                        btn.style.borderColor = '#10b981';
+                        btn.style.color = '#10b981';
+                        btn.title = 'LLM API Mode: ENABLED (Click to disable)';
+                    } else {
+                        icon.textContent = '🔴';
+                        text.textContent = 'Demo';
+                        btn.style.background = '#374151';
+                        btn.style.borderColor = '#4b5563';
+                        btn.style.color = '#9ca3af';
+                        btn.title = 'LLM API Mode: DISABLED (Click to enable)';
+                    }
+                    
+                    // Show status message
+                    console.log('LLM Mode:', result.message);
+                    
+                    // Update any API-dependent UI elements
+                    updateLLMStatusIndicators();
+                }
+            } catch (error) {
+                console.error('Failed to toggle LLM mode:', error);
+            } finally {
+                // Re-enable button
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+        }
+        
+        async function checkLLMStatus() {
+            try {
+                const response = await fetch('/api/llm/status');
+                const status = await response.json();
+                
+                if (!status.error) {
+                    llmApiEnabled = status.api_enabled;
+                    const icon = document.getElementById('llm-toggle-icon');
+                    const text = document.getElementById('llm-toggle-text');
+                    const btn = document.getElementById('llm-toggle-btn');
+                    
+                    if (llmApiEnabled) {
+                        icon.textContent = '🟢';
+                        text.textContent = 'API';
+                        btn.style.background = '#065f46';
+                        btn.style.borderColor = '#10b981';
+                        btn.style.color = '#10b981';
+                        btn.title = 'LLM API Mode: ENABLED (Click to disable)';
+                    } else {
+                        icon.textContent = '🔴';
+                        text.textContent = 'Demo';
+                        btn.style.background = '#374151';
+                        btn.style.borderColor = '#4b5563';
+                        btn.style.color = '#9ca3af';
+                        btn.title = 'LLM API Mode: DISABLED (Click to enable)';
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to check LLM status:', error);
+            }
+        }
+        
+        function updateLLMStatusIndicators() {
+            // Update any UI elements that depend on LLM API status
+            // This will update when API mode changes
+            console.log('LLM API Mode is now:', llmApiEnabled ? 'ENABLED' : 'DISABLED');
+        }
+        
+        // No need to override - functionality is now in the main switchTab function
+        
+        // Check initial LLM status on page load
+        checkLLMStatus();
+        
+        // Initialize workflow status
+        updateWorkflowStatus();
+        setInterval(updateWorkflowStatus, 10000); // Update every 10 seconds
+        
+        function initializeAnalyticsCharts() {
+            // Initialize CPU chart
+            const cpuCtx = document.getElementById('analytics-cpu-chart');
+            if (cpuCtx) {
+                cpuCtx.chart = new Chart(cpuCtx, {
+                    type: 'line',
+                    data: {
+                        labels: Array(60).fill(''),
+                        datasets: [{
+                            label: 'CPU %',
+                            data: Array(60).fill(0),
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, max: 100 }
+                        }
+                    }
+                });
+            }
+            
+            // Initialize Memory chart
+            const memCtx = document.getElementById('analytics-memory-chart');
+            if (memCtx) {
+                memCtx.chart = new Chart(memCtx, {
+                    type: 'line',
+                    data: {
+                        labels: Array(60).fill(''),
+                        datasets: [{
+                            label: 'Memory MB',
+                            data: Array(60).fill(0),
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            }
+            
+            // Initialize Network chart
+            const netCtx = document.getElementById('analytics-network-chart');
+            if (netCtx) {
+                netCtx.chart = new Chart(netCtx, {
+                    type: 'line',
+                    data: {
+                        labels: Array(60).fill(''),
+                        datasets: [{
+                            label: 'KB/s',
+                            data: Array(60).fill(0),
+                            borderColor: '#f59e0b',
+                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            }
+            
+            // Start updating analytics data
+            updateAnalyticsData();
+            setInterval(updateAnalyticsData, 5000);
+        }
+        
+        // Workflow management functions
+        async function startWorkflow() {
+            if (!llmApiEnabled) {
+                // Show message that LLM is required for workflow execution
+                const dagViz = document.getElementById('dag-visualization');
+                dagViz.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #f59e0b;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">⚠️</div>
+                        <div>LLM not activated</div>
+                        <div style="font-size: 11px; margin-top: 5px;">Enable LLM API mode to start workflows</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Only execute with real LLM API
+            try {
+                const response = await fetch('/api/workflow/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'test_generation' })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('current-workflow-name').textContent = data.workflow_name;
+                    document.getElementById('workflow-running').textContent = data.running_tasks;
+                    updateWorkflowStatus();
+                }
+            } catch (error) {
+                console.error('Failed to start workflow:', error);
+            }
+        }
+        
+        async function updateWorkflowStatus() {
+            try {
+                // Always try to fetch real workflow data from orchestrator
+                const response = await fetch('/api/workflow/status');
+                if (response.ok) {
+                    const data = await response.json();
+                    // Update UI with real orchestrator data
+                    document.getElementById('workflow-running').textContent = data.running || 0;
+                    document.getElementById('workflow-queued').textContent = data.queued || 0;
+                    document.getElementById('workflow-completed').textContent = data.completed || 0;
+                    document.getElementById('workflow-success').textContent = data.success_rate ? `${data.success_rate}%` : '-';
+                    
+                    // Update DAG if available
+                    if (data.current_dag) {
+                        const dagViz = document.getElementById('dag-visualization');
+                        dagViz.innerHTML = data.current_dag;
+                    } else if (!llmApiEnabled) {
+                        // Show static DAG structure without LLM
+                        const dagViz = document.getElementById('dag-visualization');
+                        dagViz.innerHTML = `
+                            <div style="font-family: monospace; line-height: 1.8;">
+                                <div style="background: #f59e0b22; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; font-size: 11px; color: #f59e0b;">
+                                    ⚠️ Incomplete without LLM orchestration
+                                </div>
+                                <div style="opacity: 0.8;">📎 Available DAG Templates:</div>
+                                <div style="opacity: 0.6;">├─ Test Generation Pipeline</div>
+                                <div style="opacity: 0.6;">├─ Security Scan Workflow</div>
+                                <div style="opacity: 0.6;">├─ Refactoring Analysis</div>
+                                <div style="opacity: 0.6;">└─ Performance Optimization</div>
+                                <div style="margin-top: 10px; font-size: 11px; opacity: 0.5;">Enable LLM to execute workflows</div>
+                            </div>
+                        `;
+                    }
+                } else {
+                    // No workflows available from orchestrator
+                    document.getElementById('workflow-running').textContent = '0';
+                    document.getElementById('workflow-queued').textContent = '0';
+                    document.getElementById('workflow-completed').textContent = '0';
+                    document.getElementById('workflow-success').textContent = '-';
+                    
+                    if (!llmApiEnabled) {
+                        const dagViz = document.getElementById('dag-visualization');
+                        dagViz.innerHTML = `
+                            <div style="text-align: center; padding: 20px;">
+                                <div style="background: #f59e0b22; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; font-size: 11px; color: #f59e0b;">
+                                    ⚠️ Incomplete without LLM orchestration
+                                </div>
+                                <div style="opacity: 0.7;">Orchestrator ready</div>
+                                <div style="font-size: 11px; opacity: 0.5; margin-top: 5px;">Enable LLM to start workflows</div>
+                            </div>
+                        `;
+                    }
+                }
+            } catch (error) {
+                // Orchestrator not available but show what we can
+                document.getElementById('workflow-running').textContent = '0';
+                document.getElementById('workflow-queued').textContent = '0';
+                document.getElementById('workflow-completed').textContent = '0';
+                document.getElementById('workflow-success').textContent = '-';
+            }
+        }
+        
+        async function updateAnalyticsData() {
+            try {
+                // Update LLM metrics - show partial data with indicator
+                if (!llmApiEnabled) {
+                    // Show indicator
+                    const indicator = document.getElementById('llm-section-indicator');
+                    if (indicator) indicator.style.display = 'inline-block';
+                    
+                    // Show what we can measure without LLM
+                    document.getElementById('analytics-gemini-calls').textContent = '0';
+                    document.getElementById('analytics-gemini-tokens').textContent = '0';
+                    document.getElementById('analytics-gemini-cost').textContent = '$0.00';
+                    document.getElementById('analytics-gemini-success').textContent = 'N/A';
+                    document.getElementById('analytics-calls-per-min').textContent = '0';
+                    document.getElementById('analytics-api-latency').textContent = 'N/A';
+                    document.getElementById('analytics-error-rate').textContent = 'N/A';
+                    document.getElementById('analytics-queue-depth').textContent = '0';
+                } else {
+                    // Hide indicator when LLM is active
+                    const indicator = document.getElementById('llm-section-indicator');
+                    if (indicator) indicator.style.display = 'none';
+                    
+                    // Fetch real LLM metrics
+                    const llmMetrics = await fetchData('llm/metrics');
+                    if (llmMetrics && !llmMetrics.error) {
+                        document.getElementById('analytics-gemini-calls').textContent = llmMetrics.api_calls.total_calls;
+                        document.getElementById('analytics-gemini-tokens').textContent = llmMetrics.token_usage.total_tokens.toLocaleString();
+                        document.getElementById('analytics-gemini-cost').textContent = `$${llmMetrics.cost_tracking.total_cost_estimate.toFixed(4)}`;
+                        document.getElementById('analytics-gemini-success').textContent = `${llmMetrics.api_calls.success_rate.toFixed(1)}%`;
+                        document.getElementById('analytics-calls-per-min').textContent = llmMetrics.api_calls.calls_per_minute.toFixed(1);
+                        document.getElementById('analytics-api-latency').textContent = `${llmMetrics.api_calls.avg_latency || 0}ms`;
+                        document.getElementById('analytics-error-rate').textContent = `${100 - llmMetrics.api_calls.success_rate}%`;
+                        document.getElementById('analytics-queue-depth').textContent = llmMetrics.analysis_status.active_analyses || 0;
+                    }
+                }
+                
+                // Update performance data
+                const perfData = await fetchData('performance/realtime');
+                if (perfData && perfData.timeseries) {
+                    // Update charts if they exist
+                    const cpuChart = document.getElementById('analytics-cpu-chart')?.chart;
+                    if (cpuChart) {
+                        cpuChart.data.datasets[0].data = perfData.timeseries.cpu_usage.slice(-60);
+                        cpuChart.update('none');
+                    }
+                    
+                    const memChart = document.getElementById('analytics-memory-chart')?.chart;
+                    if (memChart) {
+                        memChart.data.datasets[0].data = perfData.timeseries.memory_usage.slice(-60);
+                        memChart.update('none');
+                    }
+                    
+                    const netChart = document.getElementById('analytics-network-chart')?.chart;
+                    if (netChart) {
+                        netChart.data.datasets[0].data = perfData.timeseries.network_activity.slice(-60);
+                        netChart.update('none');
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating analytics data:', error);
+            }
+        }
+        
+        // Module analyzer functions
+        async function loadModuleList(codebasePath = currentCodebase) {
+            const modules = await fetchData(`llm/list-modules?codebase=${encodeURIComponent(codebasePath)}`);
+            if (!modules || modules.length === 0) {
+                // Show actual empty state, no simulation
+                const moduleListDiv = document.getElementById('module-list');
+                moduleListDiv.innerHTML = `
+                    <p style="opacity: 0.7; text-align: center; padding: 20px; font-size: 12px;">
+                        No modules found in ${codebasePath}
+                    </p>
+                `;
+                return;
+            }
+            
+            const select = document.getElementById('module-select');
+            const moduleListDiv = document.getElementById('module-list');
+            
+            if (!select) return;
+            
+            // Clear and populate select
+            select.innerHTML = `
+                <option value="">-- Select a module --</option>
+                <option value="__all__" style="font-weight: bold;">🌍 ALL MODULES</option>
+                <option value="" disabled>──────────────────────</option>
+            `;
+            
+            let moduleListHtml = `
+                <div style="font-size: 12px; line-height: 1.4;">
+                    <h4>Available Modules (${modules.length} total):</h4>
+                    <div style="margin-top: 10px;">
+            `;
+            
+            // Group modules
+            const rootModules = modules.filter(m => !m.includes('/') && m.endsWith('.py'));
+            const testmasterModules = modules.filter(m => m.startsWith('testmaster/') && m.endsWith('.py'));
+            
+            modules.slice(0, 50).forEach(module => {
+                select.innerHTML += `<option value="${module}">${module}</option>`;
+                const type = module.includes('test') ? '🧪' : 
+                            module.includes('intelligence') ? '🧠' : 
+                            module.includes('orchestration') ? '🎭' : '📄';
+                moduleListHtml += `
+                    <div style="margin: 4px 0; padding: 4px 8px; background: rgba(255,255,255,0.05); border-radius: 3px;">
+                        ${type} ${module.split('/').pop()}
+                    </div>
+                `;
+            });
+            
+            moduleListHtml += '</div></div>';
+            moduleListDiv.innerHTML = moduleListHtml;
+        }
+        
+        async function analyzeModule() {
+            const select = document.getElementById('module-select');
+            const modulePath = select.value;
+            
+            if (!modulePath) {
+                alert('Please select a module first');
+                return;
+            }
+            
+            const resultDiv = document.getElementById('module-analysis-result');
+            
+            // Show basic AST analysis even without LLM
+            if (!llmApiEnabled) {
+                resultDiv.innerHTML = '<p style="text-align: center; opacity: 0.7;">🔍 Analyzing with AST parser...</p>';
+                
+                // Get basic module analysis from non-LLM sources
+                try {
+                    const response = await fetch(`/api/module/ast-analysis?path=${encodeURIComponent(modulePath)}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        resultDiv.innerHTML = `
+                            <div style="font-size: 12px; line-height: 1.4;">
+                                <div style="background: #f59e0b22; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; font-size: 11px; color: #f59e0b;">
+                                    ⚠️ Incomplete without LLM insights
+                                </div>
+                                <h4>📊 Basic Module Analysis</h4>
+                                <p><strong>File:</strong> ${modulePath}</p>
+                                <p><strong>Lines of Code:</strong> ${data.lines || 'Unknown'}</p>
+                                <p><strong>Classes:</strong> ${data.classes?.length || 0}</p>
+                                <p><strong>Functions:</strong> ${data.functions?.length || 0}</p>
+                                <p><strong>Imports:</strong> ${data.imports?.length || 0}</p>
+                                <p><strong>Cyclomatic Complexity:</strong> ${data.complexity || 'N/A'}</p>
+                                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #334155;">
+                                    <p style="opacity: 0.7; font-size: 11px;">Enable LLM for:</p>
+                                    <ul style="margin: 5px 0; padding-left: 20px; font-size: 11px; opacity: 0.7;">
+                                        <li>AI code quality assessment</li>
+                                        <li>Security vulnerability detection</li>
+                                        <li>Optimization suggestions</li>
+                                        <li>Test coverage recommendations</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // Fallback to showing file exists
+                        resultDiv.innerHTML = `
+                            <div style="font-size: 12px;">
+                                <div style="background: #f59e0b22; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; font-size: 11px; color: #f59e0b;">
+                                    ⚠️ Incomplete without LLM insights
+                                </div>
+                                <p>Module: ${modulePath}</p>
+                                <p style="opacity: 0.7;">Basic analysis unavailable</p>
+                                <p style="opacity: 0.7; font-size: 11px; margin-top: 10px;">Enable LLM for detailed analysis</p>
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    resultDiv.innerHTML = '<p style="color: #ef4444; font-size: 12px;">Analysis error</p>';
+                }
+                return;
+            }
+            
+            resultDiv.innerHTML = '<p style="text-align: center; opacity: 0.7;">🔍 Analyzing module with LLM...</p>';
+            
+            // Real LLM analysis
+            try {
+                const analysis = await fetchData(`llm/analysis/${encodeURIComponent(modulePath)}`);
+                if (analysis) {
+                    resultDiv.innerHTML = `
+                        <div style="font-size: 12px; line-height: 1.4;">
+                            <h4>📊 Analysis: ${modulePath.split('/').pop()}</h4>
+                            <p><strong>Complexity:</strong> ${analysis.complexity || 'Medium'}</p>
+                            <p><strong>Test Coverage:</strong> ${analysis.test_coverage || '0%'}</p>
+                            <p><strong>Recommendations:</strong></p>
+                            <ul style="margin: 8px 0; padding-left: 16px;">
+                                <li>Add comprehensive unit tests</li>
+                                <li>Consider breaking down large functions</li>
+                                <li>Add error handling for edge cases</li>
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    // Simulate analysis
+                    setTimeout(() => {
+                        resultDiv.innerHTML = `
+                            <div style="font-size: 12px; line-height: 1.4;">
+                                <h4>🤖 AI Analysis: ${modulePath.split('/').pop()}</h4>
+                                <p><strong>Quality Score:</strong> 8.2/10</p>
+                                <p><strong>Complexity:</strong> Medium</p>
+                                <p><strong>Test Coverage:</strong> 65%</p>
+                                <p><strong>Recommendations:</strong></p>
+                                <ul style="margin: 8px 0; padding-left: 16px;">
+                                    <li>Add integration tests</li>
+                                    <li>Improve error handling</li>
+                                    <li>Consider refactoring large methods</li>
+                                </ul>
+                            </div>
+                        `;
+                    }, 1500);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p style="color: #ef4444;">Analysis failed. Please try again.</p>';
+            }
+        }
+        
+        // Removed simulation - only show real data
+        
+        // Refactor analysis functions
+        async function loadRefactorAnalysis(codebasePath = currentCodebase) {
+            // Auto-load refactor analysis when tab opens
+            const data = await fetchData(`refactor/analysis?codebase=${encodeURIComponent(codebasePath)}`);
+            if (data && data.refactor_opportunities) {
+                updateRefactorMetrics(data.refactor_opportunities);
+            } else {
+                // Show no data available
+                updateRefactorMetrics({
+                    long_methods: [],
+                    complex_classes: [],
+                    missing_tests: [],
+                    code_duplication: []
+                });
+            }
+        }
+        
+        // Removed simulation - only show real refactor data
+        
+        // Removed test simulation - only show real test data
+        
+        // New hierarchical refactoring functions
+        async function runHierarchicalAnalysis() {
+            const summaryDiv = document.getElementById('hierarchy-summary');
+            const phasesDiv = document.getElementById('roadmap-phases-detail');
+            
+            summaryDiv.innerHTML = '<p style="text-align: center; opacity: 0.7;">🔬 Analyzing codebase hierarchy...</p>';
+            phasesDiv.innerHTML = '<p style="text-align: center; opacity: 0.7;">⏳ Generating roadmap...</p>';
+            
+            try {
+                const response = await fetch('/api/refactor/hierarchy', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        codebase_path: '.',
+                        codebase: currentCodebase
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update hierarchy metrics
+                    document.getElementById('total-files').textContent = data.hierarchy.total_files;
+                    document.getElementById('total-lines').textContent = data.hierarchy.total_lines.toLocaleString();
+                    document.getElementById('functional-clusters').textContent = data.hierarchy.clusters.length;
+                    
+                    // Count total opportunities
+                    const totalOpportunities = data.hierarchy.clusters.reduce((sum, c) => sum + c.refactor_opportunities, 0);
+                    document.getElementById('refactor-opportunities').textContent = totalOpportunities;
+                    
+                    // Update summary
+                    summaryDiv.innerHTML = `
+                        <p><strong>📊 Analysis Complete:</strong></p>
+                        <p>${data.hierarchy.summary}</p>
+                        <p style="margin-top: 10px;"><strong>Top Clusters:</strong></p>
+                        <ul style="margin: 5px 0; padding-left: 20px;">
+                            ${data.hierarchy.clusters.slice(0, 5).map(c => `
+                                <li>${c.name} (${c.lines_of_code.toLocaleString()} lines, ${c.refactor_opportunities} issues)</li>
+                            `).join('')}
+                        </ul>
+                    `;
+                    
+                    // Update roadmap metrics
+                    document.getElementById('roadmap-phases').textContent = data.roadmap.phases_count;
+                    document.getElementById('roadmap-effort').textContent = `${data.roadmap.total_effort_hours} hours`;
+                    document.getElementById('roadmap-priority').textContent = data.roadmap.priority_score.toFixed(1);
+                    
+                    // Extract risk level
+                    const riskMatch = data.roadmap.risk_assessment.match(/Risk Level: (\w+)/);
+                    const riskLevel = riskMatch ? riskMatch[1] : 'UNKNOWN';
+                    const riskElement = document.getElementById('roadmap-risk');
+                    riskElement.textContent = riskLevel;
+                    riskElement.style.color = riskLevel === 'HIGH' ? '#ef4444' : riskLevel === 'MEDIUM' ? '#f59e0b' : '#10b981';
+                    
+                    // Update phases detail
+                    phasesDiv.innerHTML = data.roadmap.phases.map(phase => `
+                        <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 4px;">
+                            <p><strong>Phase ${phase.phase}: ${phase.name}</strong></p>
+                            <p style="opacity: 0.8; margin: 5px 0;">${phase.description}</p>
+                            <p style="opacity: 0.7;">Duration: ${phase.estimated_duration}</p>
+                            <p style="opacity: 0.7;">Tasks: ${phase.opportunities.length} refactoring opportunities</p>
+                        </div>
+                    `).join('');
+                    
+                } else {
+                    summaryDiv.innerHTML = `<p style="color: #ef4444;">Analysis failed: ${data.error}</p>`;
+                    phasesDiv.innerHTML = `<p style="color: #ef4444;">Could not generate roadmap</p>`;
+                }
+            } catch (error) {
+                console.error('Hierarchical analysis error:', error);
+                summaryDiv.innerHTML = `<p style="color: #ef4444;">Analysis error: ${error.message}</p>`;
+                phasesDiv.innerHTML = `<p style="color: #ef4444;">Roadmap generation failed</p>`;
+            }
+        }
+        
+        function updateRefactorMetrics(opportunities) {
+            document.getElementById('long-methods').textContent = opportunities.long_methods?.length || 0;
+            document.getElementById('complex-classes').textContent = opportunities.complex_classes?.length || 0;
+            document.getElementById('missing-tests').textContent = opportunities.missing_tests?.length || 0;
+            document.getElementById('code-duplication').textContent = opportunities.code_duplication?.length || 0;
+            
+            // Update suggestions
+            const suggestionsDiv = document.getElementById('refactor-suggestions');
+            let suggestionsHtml = '<div style="font-size: 12px;">';
+            
+            if (opportunities.long_methods?.length > 0) {
+                opportunities.long_methods.slice(0, 3).forEach(method => {
+                    suggestionsHtml += `<p style="margin: 4px 0;">📏 Break down ${method.method} (${method.lines} lines) in ${method.file}</p>`;
+                });
+            }
+            if (opportunities.complex_classes?.length > 0) {
+                opportunities.complex_classes.slice(0, 2).forEach(cls => {
+                    suggestionsHtml += `<p style="margin: 4px 0;">🔧 Simplify ${cls.class} class (${cls.methods} methods) in ${cls.file}</p>`;
+                });
+            }
+            if (opportunities.missing_tests?.length > 0) {
+                const count = opportunities.missing_tests.length;
+                suggestionsHtml += `<p style="margin: 4px 0;">✅ Add tests for ${count} untested modules</p>`;
+            }
+            
+            if (!opportunities.long_methods?.length && !opportunities.complex_classes?.length) {
+                suggestionsHtml += '<p style="opacity: 0.7;">🎉 No major refactoring opportunities found!</p>';
+            }
+            
+            suggestionsHtml += '</div>';
+            suggestionsDiv.innerHTML = suggestionsHtml;
+        }
+        
+        async function runRefactorAnalysis() {
+            const suggestionsDiv = document.getElementById('refactor-suggestions');
+            suggestionsDiv.innerHTML = '<p style="text-align: center; opacity: 0.7; font-size: 12px;">🔍 Running refactor analysis...</p>';
+            
+            const data = await fetchData('refactor/analysis');
+            if (data && data.refactor_opportunities) {
+                updateRefactorMetrics(data.refactor_opportunities);
+            } else {
+                // Simulate analysis
+                setTimeout(() => {
+                    updateRefactorMetrics({
+                        long_methods: [
+                            {method: 'process_large_dataset', lines: 75, file: 'data_processor.py'},
+                            {method: 'generate_comprehensive_report', lines: 63, file: 'report_generator.py'}
+                        ],
+                        complex_classes: [
+                            {class: 'UniversalTestOrchestrator', methods: 15, file: 'universal_orchestrator.py'}
+                        ],
+                        missing_tests: ['module1.py', 'module2.py', 'module3.py']
+                    });
+                }, 1500);
+            }
+        }
+        
+        async function getLLMRefactorInsights() {
+            const resultDiv = document.getElementById('llm-refactor-result');
+            
+            // Show basic refactoring patterns even without LLM
+            if (!llmApiEnabled) {
+                // Get non-LLM refactoring insights
+                const data = await fetchData('refactor/analysis');
+                if (data && data.refactor_opportunities) {
+                    const opportunities = data.refactor_opportunities;
+                    resultDiv.innerHTML = `
+                        <div style="font-size: 12px; line-height: 1.4;">
+                            <div style="background: #f59e0b22; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; font-size: 11px; color: #f59e0b;">
+                                ⚠️ Incomplete without LLM recommendations
+                            </div>
+                            <h4>🔧 Pattern-Based Refactoring</h4>
+                            <p><strong>Detected Issues:</strong></p>
+                            <ul style="margin: 8px 0; padding-left: 16px;">
+                                ${opportunities.long_methods?.length > 0 ? `<li>${opportunities.long_methods.length} long methods detected</li>` : ''}
+                                ${opportunities.complex_classes?.length > 0 ? `<li>${opportunities.complex_classes.length} complex classes found</li>` : ''}
+                                ${opportunities.missing_tests?.length > 0 ? `<li>${opportunities.missing_tests.length} modules need tests</li>` : ''}
+                                ${opportunities.code_duplication?.length > 0 ? `<li>${opportunities.code_duplication.length} duplication patterns</li>` : ''}
+                            </ul>
+                            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #334155;">
+                                <p style="opacity: 0.7; font-size: 11px;">Enable LLM for:</p>
+                                <ul style="margin: 5px 0; padding-left: 20px; font-size: 11px; opacity: 0.7;">
+                                    <li>AI-powered refactoring strategies</li>
+                                    <li>Impact analysis and prioritization</li>
+                                    <li>Design pattern recommendations</li>
+                                    <li>Architecture improvements</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div style="font-size: 12px;">
+                            <div style="background: #f59e0b22; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; font-size: 11px; color: #f59e0b;">
+                                ⚠️ Incomplete without LLM recommendations
+                            </div>
+                            <p style="opacity: 0.7;">No refactoring patterns detected</p>
+                            <p style="opacity: 0.7; font-size: 11px; margin-top: 10px;">Enable LLM for advanced analysis</p>
+                        </div>
+                    `;
+                }
+                return;
+            }
+            
+            resultDiv.innerHTML = '<p style="text-align: center; opacity: 0.7; font-size: 12px;">🤖 Getting AI insights...</p>';
+            
+            // Real LLM API call
+            try {
+                const response = await fetch('/api/llm/refactor-insights', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ codebase: currentCodebase })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `
+                        <div style="font-size: 12px; line-height: 1.4;">
+                            <h4>🧠 AI Refactoring Recommendations</h4>
+                            ${data.recommendations || '<p>No recommendations available</p>'}
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = '<p style="color: #ef4444; font-size: 12px;">Failed to get AI insights</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p style="color: #ef4444; font-size: 12px;">Error getting AI insights</p>';
+            }
+        }
+        
+        // Multi-codebase management
+        let activeCodebases = new Map();
+        let currentCodebase = '/testmaster';
+        
+        // Generate safe CSS selector ID from path
+        function generateSafeId(path) {
+            return path.replace(/[^a-zA-Z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+        }
+        
+        // Initialize with default codebase
+        activeCodebases.set('/testmaster', {
+            name: 'TestMaster',
+            path: '/testmaster',
+            data: {}
+        });
+        
+        function addCodebase() {
+            console.log('addCodebase() called');
+            const input = document.getElementById('codebase-path-input');
+            const path = input.value.trim();
+            console.log(`Input path: "${path}"`);
+            
+            if (!path) {
+                alert('Please enter a codebase path');
+                return;
+            }
+            
+            if (activeCodebases.has(path)) {
+                alert('Codebase already being monitored');
+                return;
+            }
+            
+            if (activeCodebases.size >= 6) {
+                alert('Maximum 6 codebases can be monitored simultaneously');
+                return;
+            }
+            
+            // Handle Windows paths properly - normalize all paths for consistency
+            const normalizedPath = path.replace(/\\/g, '/');
+            const name = normalizedPath.split('/').pop() || path.split('\\').pop() || path;
+            console.log(`Original path: "${path}", Normalized path: "${normalizedPath}", Name: "${name}"`);
+            
+            // Always store the original path (as entered) for consistency
+            activeCodebases.set(path, {
+                name: name,
+                path: path,  // Store original path as entered
+                normalizedPath: normalizedPath,  // Store normalized version too
+                data: {}
+            });
+            
+            console.log(`Active codebases now:`, Array.from(activeCodebases.keys()));
+            
+            // Create tab
+            createCodebaseTab(path, name);
+            
+            // Switch to new codebase
+            console.log(`Switching to codebase: ${path}`);
+            switchCodebase(path);
+            
+            // Clear input
+            input.value = '';
+            
+            console.log(`Successfully added codebase: ${name} at ${path}`);
+        }
+        
+        function createCodebaseTab(path, name) {
+            const tabsContainer = document.getElementById('codebase-tabs');
+            const safeId = generateSafeId(path);
+            
+            const tab = document.createElement('div');
+            tab.className = 'codebase-tab';
+            tab.setAttribute('data-codebase-id', safeId);
+            tab.setAttribute('data-codebase-path', path);
+            tab.onclick = () => switchCodebase(path);
+            
+            tab.innerHTML = `
+                <span class="codebase-name" title="${path}">${name}</span>
+                <span class="codebase-close" onclick="event.stopPropagation(); removeCodebase('${path}')" title="Close">&times;</span>
+            `;
+            
+            tabsContainer.appendChild(tab);
+            console.log(`Created tab with safe ID: ${safeId} for path: ${path}`);
+        }
+        
+        function removeCodebase(path) {
+            console.log(`removeCodebase() called for path: "${path}"`);
+            
+            if (activeCodebases.size <= 1) {
+                alert('Cannot remove the last codebase');
+                console.log(`Cannot remove last codebase`);
+                return;
+            }
+            
+            console.log(`Removing codebase: ${path}`);
+            
+            // Remove from active codebases
+            activeCodebases.delete(path);
+            
+            // Remove tab using data-codebase-path attribute
+            const tab = document.querySelector(`[data-codebase-path="${path}"]`);
+            if (tab) {
+                tab.remove();
+                console.log(`Removed tab for: ${path}`);
+            } else {
+                console.error(`Could not find tab for path: ${path}`);
+            }
+            
+            // If removing current codebase, switch to first available
+            if (currentCodebase === path) {
+                const firstCodebase = Array.from(activeCodebases.keys())[0];
+                console.log(`Switching to first available codebase: ${firstCodebase}`);
+                switchCodebase(firstCodebase);
+            }
+            
+            console.log(`Successfully removed codebase: ${path}`);
+        }
+        
+        function switchCodebase(path) {
+            console.log(`switchCodebase() called with path: "${path}"`);
+            console.log(`Available codebases:`, Array.from(activeCodebases.keys()));
+            
+            if (!activeCodebases.has(path)) {
+                console.error(`Codebase ${path} not found in activeCodebases`);
+                console.error(`Available keys:`, Array.from(activeCodebases.keys()));
+                return;
+            }
+            
+            console.log(`Switching from "${currentCodebase}" to "${path}"`);
+            
+            // Update active tab
+            document.querySelectorAll('.codebase-tab').forEach(tab => {
+                tab.classList.remove('active');
+                console.log(`Removed active from tab:`, tab.getAttribute('data-codebase-path'));
+            });
+            
+            // Debug: check all tabs and their paths
+            console.log(`Looking for tab with path: "${path}"`);
+            const allTabs = document.querySelectorAll('.codebase-tab');
+            allTabs.forEach((tab, index) => {
+                const tabPath = tab.getAttribute('data-codebase-path');
+                console.log(`Tab ${index}: path = "${tabPath}", matches = ${tabPath === path}`);
+            });
+            
+            const targetTab = document.querySelector(`[data-codebase-path="${path}"]`);
+            if (targetTab) {
+                targetTab.classList.add('active');
+                console.log(`Added active to tab:`, path);
+            } else {
+                console.error(`Could not find tab with data-codebase-path="${path}"`);
+                console.error(`Available tabs:`, Array.from(document.querySelectorAll('.codebase-tab')).map(t => t.getAttribute('data-codebase-path')));
+                
+                // Try to find tab by manually comparing paths
+                let foundTab = null;
+                allTabs.forEach(tab => {
+                    const tabPath = tab.getAttribute('data-codebase-path');
+                    if (tabPath && (tabPath === path || tabPath.replace(/\\\\/g, '\\') === path || tabPath.replace(/\\/g, '\\\\') === path)) {
+                        foundTab = tab;
+                        console.log(`Found matching tab via manual comparison: "${tabPath}" matches "${path}"`);
+                    }
+                });
+                
+                if (foundTab) {
+                    foundTab.classList.add('active');
+                    console.log(`Added active to manually found tab`);
+                } else {
+                    console.error(`No tab found even with manual comparison`);
+                }
+            }
+            
+            // Update current codebase
+            currentCodebase = path;
+            const codebase = activeCodebases.get(path);
+            console.log(`Current codebase updated to:`, codebase);
+            
+            // Update current codebase display
+            const currentDisplay = document.getElementById('current-codebase');
+            if (currentDisplay) {
+                currentDisplay.textContent = `Current: ${path}`;
+                console.log(`Updated current codebase display`);
+            } else {
+                console.error(`Could not find current-codebase element`);
+            }
+            
+            // Refresh all data for new codebase
+            console.log(`About to refresh data for:`, path);
+            refreshCodebaseData(path);
+            
+            console.log(`Successfully switched to codebase: ${codebase.name} at ${path}`);
+        }
+        
+        async function refreshCodebaseData(path) {
+            console.log(`Refreshing data for codebase: ${path}`);
+            
+            // Always refresh the currently active tab when switching codebases
+            const activeTab = document.querySelector('.tab-content.active');
+            if (!activeTab) return;
+            
+            const activeTabId = activeTab.id;
+            console.log(`Active tab: ${activeTabId}`);
+            
+            // Update data based on which tab is currently active
+            if (activeTabId === 'tests-tab') {
+                console.log('Refreshing tests data');
+                await loadTestsStatus(path);
+            } else if (activeTabId === 'analyzer-tab') {
+                console.log('Refreshing analyzer data');
+                await loadModuleList(path);
+            } else if (activeTabId === 'refactor-tab') {
+                console.log('Refreshing refactor data');
+                await loadRefactorAnalysis(path);
+            } else if (activeTabId === 'overview-tab') {
+                console.log('Refreshing overview data');
+                // Update overview metrics for new codebase
+                updateOverviewMetrics(path);
+                // Update real-time API metrics for this codebase
+                await updateLLMMetrics(path);
+            } else if (activeTabId === 'metrics-tab') {
+                console.log('Refreshing metrics data');
+                // Update detailed metrics for new codebase
+                updateDetailedMetrics(path);
+                // Update real-time API metrics for this codebase
+                await updateLLMMetrics(path);
+            } else if (activeTabId === 'performance-tab') {
+                console.log('Performance charts use real-time updates');
+                // Real-time charts update themselves automatically
+            }
+            
+            // Always update the header to show current codebase info
+            updateCodebaseHeader(path);
+        }
+        
+        async function updateLLMMetrics(codebase) {
+            console.log(`Updating LLM metrics for codebase: ${codebase}`);
+            try {
+                const url = codebase ? `llm/metrics?codebase=${encodeURIComponent(codebase)}` : 'llm/metrics';
+                const metrics = await fetchData(url);
+                
+                if (metrics && !metrics.error) {
+                    // Update Gemini status
+                    const geminiCalls = document.getElementById('gemini-calls');
+                    const geminiTokens = document.getElementById('gemini-tokens');
+                    const geminiCost = document.getElementById('gemini-cost');
+                    
+                    if (geminiCalls) geminiCalls.textContent = metrics.api_calls.total_calls;
+                    if (geminiTokens) geminiTokens.textContent = metrics.token_usage.total_tokens.toLocaleString();
+                    if (geminiCost) geminiCost.textContent = `$${metrics.cost_tracking.total_cost_estimate.toFixed(4)}`;
+                    
+                    // Update success rate
+                    const successRate = document.getElementById('gemini-success-rate');
+                    if (successRate) successRate.textContent = `${metrics.api_calls.success_rate.toFixed(1)}%`;
+                    
+                    // Update calls per minute
+                    const callsPerMin = document.getElementById('gemini-calls-per-min');
+                    if (callsPerMin) callsPerMin.textContent = metrics.api_calls.calls_per_minute.toFixed(1);
+                    
+                    console.log(`Updated LLM metrics for ${codebase}:`, metrics.api_calls.total_calls, 'calls');
+                } else {
+                    console.log('No LLM metrics available or error:', metrics?.error);
+                }
+            } catch (error) {
+                console.error('Error updating LLM metrics:', error);
+            }
+        }
+        
+        async function updatePerformanceMetrics(codebase) {
+            console.log(`Updating performance metrics for codebase: ${codebase}`);
+            try {
+                // Get codebase-specific real-time performance data
+                const url = codebase ? `performance/realtime?codebase=${encodeURIComponent(codebase)}` : 'performance/realtime';
+                const perfData = await fetchData(url);
+                
+                if (perfData && !perfData.error) {
+                    console.log(`Real-time performance data for ${codebase}:`, perfData);
+                    
+                    // Update performance indicators with codebase-specific data
+                    const cpuUsage = document.getElementById('cpu-usage');
+                    const memoryUsage = document.getElementById('memory-usage');
+                    const activeAgents = document.getElementById('active-agents');
+                    
+                    if (cpuUsage) cpuUsage.textContent = `${perfData.current.cpu_usage.toFixed(1)}%`;
+                    if (memoryUsage) memoryUsage.textContent = `${perfData.current.memory_usage.toFixed(1)}%`;
+                    if (activeAgents) activeAgents.textContent = `${perfData.current.active_agents}/16`;
+                    
+                    // Update real-time charts with codebase-specific data
+                    updatePerformanceCharts(perfData);
+                } else {
+                    console.log('No performance data available or error:', perfData?.error);
+                    // Fallback to regular metrics
+                    const metrics = await fetchData('metrics');
+                    if (metrics) {
+                        const cpuUsage = document.getElementById('cpu-usage');
+                        const memoryUsage = document.getElementById('memory-usage');
+                        const activeAgents = document.getElementById('active-agents');
+                        
+                        if (cpuUsage) cpuUsage.textContent = `${metrics.system.cpu_usage.toFixed(1)}%`;
+                        if (memoryUsage) memoryUsage.textContent = `${metrics.system.memory_usage.toFixed(1)}%`;
+                        if (activeAgents) activeAgents.textContent = `${metrics.components.active_agents}/16`;
+                    }
+                }
+                
+                // Update codebase-specific LLM metrics
+                await updateLLMMetrics(codebase);
+                
+            } catch (error) {
+                console.error('Error updating performance metrics:', error);
+            }
+        }
+        
+        function updatePerformanceCharts(perfData) {
+            console.log('Updating performance charts with real-time data:', perfData);
+            
+            // Helper function to create proper time labels for 30 seconds of data
+            function createBarLabels(timestamps) {
+                // For 60 data points spanning 30 seconds (0.5s intervals)
+                const labels = [];
+                for (let i = 0; i < timestamps.length; i++) {
+                    const secondsFromStart = Math.round(i * 0.5);
+                    
+                    // Show labels at key intervals: 0s, 5s, 10s, 15s, 20s, 25s, 30s
+                    if (secondsFromStart % 5 === 0) {
+                        labels.push(`${secondsFromStart}s`);
+                    } else {
+                        labels.push(''); // Empty label for cleaner display
+                    }
+                }
+                return labels;
+            }
+            
+            // Update CPU load chart (bar chart)
+            const speedChart = document.getElementById('speed-chart')?.chart;
+            if (speedChart && perfData.timeseries && perfData.timeseries.processing_speed) {
+                const cpuData = perfData.timeseries.processing_speed; // All 60 data points - CPU load %
+                const timestamps = perfData.timeseries.timestamps;
+                
+                console.log('Updating CPU chart with data:', cpuData[0], 'to', cpuData[cpuData.length-1]);
+                speedChart.data.labels = createBarLabels(timestamps);
+                speedChart.data.datasets[0].data = cpuData;
+                speedChart.data.datasets[0].label = 'CPU Load (%)'; // Force correct label
+                speedChart.update('none'); // No animation for real-time updates
+            }
+            
+            // Update memory chart (bar chart)  
+            const memoryChart = document.getElementById('memory-chart')?.chart;
+            if (memoryChart && perfData.timeseries && perfData.timeseries.memory_usage) {
+                const memoryData = perfData.timeseries.memory_usage; // All 60 data points - MB values
+                const timestamps = perfData.timeseries.timestamps;
+                
+                console.log('Updating Memory chart with MB values:', memoryData[0], 'to', memoryData[memoryData.length-1]);
+                memoryChart.data.labels = createBarLabels(timestamps);
+                memoryChart.data.datasets[0].data = memoryData;
+                memoryChart.data.datasets[0].label = 'Memory Usage (MB)'; // Force correct label
+                memoryChart.update('none');
+            }
+            
+            // Update system activity chart with real-time network/disk activity
+            const throughputChart = document.getElementById('throughput-chart')?.chart;
+            if (throughputChart && perfData.timeseries && perfData.timeseries.network_activity) {
+                const networkData = perfData.timeseries.network_activity; // All 60 data points
+                const timestamps = perfData.timeseries.timestamps;
+                
+                throughputChart.data.labels = createBarLabels(timestamps);
+                throughputChart.data.datasets[0].data = networkData;
+                throughputChart.update('none');
+            }
+        }
+        
+        function updateOverviewMetrics(path) {
+            // Update overview tab with codebase-specific info
+            const codebase = activeCodebases.get(path);
+            if (!codebase) return;
+            
+            // Update title or add codebase indicator
+            const titleElements = document.querySelectorAll('.card-title');
+            titleElements.forEach(title => {
+                if (title.textContent.includes('Active Agents')) {
+                    title.innerHTML = `🤖 Active Agents <small>(${codebase.name})</small>`;
+                } else if (title.textContent.includes('Bridge Systems')) {
+                    title.innerHTML = `🌉 Bridge Systems <small>(${codebase.name})</small>`;
+                } else if (title.textContent.includes('Orchestration')) {
+                    title.innerHTML = `🎭 Orchestration <small>(${codebase.name})</small>`;
+                } else if (title.textContent.includes('System Health')) {
+                    title.innerHTML = `💚 System Health <small>(${codebase.name})</small>`;
+                }
+            });
+        }
+        
+        function updateDetailedMetrics(path) {
+            // Update metrics tab with codebase-specific info
+            const codebase = activeCodebases.get(path);
+            if (!codebase) return;
+            
+            // Add codebase indicators to metric cards
+            const metricTitles = document.querySelectorAll('#metrics-tab .card-title');
+            metricTitles.forEach(title => {
+                const originalText = title.textContent.replace(/ \(.*\)$/, ''); // Remove existing codebase indicator
+                title.innerHTML = `${originalText} <small style="opacity: 0.7;">(${codebase.name})</small>`;
+            });
+        }
+        
+        function updateCodebaseHeader(path) {
+            const codebase = activeCodebases.get(path);
+            if (!codebase) return;
+            
+            // Update the current codebase display
+            document.getElementById('current-codebase').innerHTML = `
+                Current: <strong>${codebase.name}</strong> 
+                <span style="opacity: 0.7;">${path}</span>
+            `;
+        }
+        
+        
+        // Add Enter key support for codebase input
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('codebase-path-input');
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        addCodebase();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

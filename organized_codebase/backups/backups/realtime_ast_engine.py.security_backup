@@ -1,0 +1,974 @@
+"""
+Real-time Incremental AST Analysis Engine
+
+This module provides a high-performance, incremental AST analysis engine that can
+process code changes in real-time, maintaining up-to-date analysis results with
+minimal computational overhead through intelligent caching and differential analysis.
+"""
+
+import ast
+import os
+import time
+import hashlib
+import pickle
+import threading
+import asyncio
+import logging
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Set, Callable, Union, Tuple
+from dataclasses import dataclass, field
+from collections import defaultdict, deque
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from queue import Queue, PriorityQueue
+from enum import Enum
+import weakref
+
+from .base import BaseAnalyzer
+
+
+class ChangeType(Enum):
+    """Types of code changes"""
+    ADDED = "added"
+    MODIFIED = "modified"
+    DELETED = "deleted"
+    RENAMED = "renamed"
+    MOVED = "moved"
+
+
+class Priority(Enum):
+    """Analysis priority levels"""
+    CRITICAL = 1
+    HIGH = 2
+    NORMAL = 3
+    LOW = 4
+    BACKGROUND = 5
+
+
+@dataclass
+class FileChange:
+    """Represents a file change event"""
+    file_path: str
+    change_type: ChangeType
+    timestamp: float
+    old_path: Optional[str] = None
+    content_hash: Optional[str] = None
+    priority: Priority = Priority.NORMAL
+
+
+@dataclass
+class AnalysisResult:
+    """Represents analysis result for a file"""
+    file_path: str
+    ast_tree: ast.AST
+    analysis_data: Dict[str, Any]
+    timestamp: float
+    content_hash: str
+    dependencies: Set[str] = field(default_factory=set)
+    dependents: Set[str] = field(default_factory=set)
+
+
+@dataclass
+class AnalysisTask:
+    """Represents an analysis task"""
+    file_path: str
+    priority: Priority
+    timestamp: float
+    change_type: ChangeType
+    analyzer_types: List[str] = field(default_factory=list)
+    
+    def __lt__(self, other):
+        # Priority queue ordering (lower enum value = higher priority)
+        if self.priority.value != other.priority.value:
+            return self.priority.value < other.priority.value
+        return self.timestamp < other.timestamp
+
+
+class CacheManager:
+    """Manages analysis result caching with intelligent invalidation"""
+    
+    def __init__(self, cache_dir: str, max_cache_size: int = 1000):
+        self.cache_dir = Path(cache_dir)
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self.max_cache_size = max_cache_size
+        self.cache_index = {}  # file_path -> cache_entry
+        self.access_times = {}  # file_path -> last_access_time
+        self.lock = threading.RLock()
+        
+    def _get_cache_path(self, file_path: str, content_hash: str) -> Path:
+        """Get cache file path for a given file and content hash"""
+        cache_key = hashlib.md5(f"{file_path}_{content_hash}".encode()).hexdigest()
+        return self.cache_dir / f"{cache_key}.cache"
+    
+    def get(self, file_path: str, content_hash: str) -> Optional[AnalysisResult]:
+        """Get cached analysis result"""
+        with self.lock:
+            cache_path = self._get_cache_path(file_path, content_hash)
+            
+            if cache_path.exists():
+                try:
+                    with open(cache_path, 'rb') as f:
+                        result = pickle.load(f)
+                    
+                    self.access_times[file_path] = time.time()
+                    return result
+                except Exception as e:
+                    logging.warning(f"Failed to load cache for {file_path}: {e}")
+                    cache_path.unlink(missing_ok=True)
+            
+            return None
+    
+    def put(self, file_path: str, result: AnalysisResult) -> None:
+        """Store analysis result in cache"""
+        with self.lock:
+            cache_path = self._get_cache_path(file_path, result.content_hash)
+            
+            try:
+                with open(cache_path, 'wb') as f:
+                    pickle.dump(result, f)
+                
+                self.cache_index[file_path] = cache_path
+                self.access_times[file_path] = time.time()
+                
+                # Cleanup old cache entries if needed
+                self._cleanup_cache()
+                
+            except Exception as e:
+                logging.error(f"Failed to cache result for {file_path}: {e}")
+    
+    def invalidate(self, file_path: str) -> None:
+        """Invalidate cache for a specific file"""
+        with self.lock:
+            if file_path in self.cache_index:
+                cache_path = self.cache_index[file_path]
+                cache_path.unlink(missing_ok=True)
+                del self.cache_index[file_path]
+                self.access_times.pop(file_path, None)
+    
+    def _cleanup_cache(self) -> None:
+        """Cleanup old cache entries based on LRU"""
+        if len(self.cache_index) <= self.max_cache_size:
+            return
+        
+        # Sort by access time and remove oldest entries
+        sorted_files = sorted(self.access_times.items(), key=lambda x: x[1])
+        files_to_remove = sorted_files[:-self.max_cache_size]
+        
+        for file_path, _ in files_to_remove:
+            self.invalidate(file_path)
+
+
+class DependencyTracker:
+    """Tracks dependencies between files for intelligent invalidation"""
+    
+    def __init__(self):
+        self.dependencies = defaultdict(set)  # file -> set of files it depends on
+        self.dependents = defaultdict(set)    # file -> set of files that depend on it
+        self.lock = threading.RLock()
+    
+    def add_dependency(self, dependent: str, dependency: str) -> None:
+        """Add a dependency relationship"""
+        with self.lock:
+            self.dependencies[dependent].add(dependency)
+            self.dependents[dependency].add(dependent)
+    
+    def remove_file(self, file_path: str) -> Set[str]:
+        """Remove a file and return affected dependents"""
+        with self.lock:
+            affected = set()
+            
+            # Remove as dependent
+            for dep in self.dependencies.get(file_path, set()):
+                self.dependents[dep].discard(file_path)
+            
+            # Collect and remove as dependency
+            affected.update(self.dependents.get(file_path, set()))
+            for dependent in self.dependents.get(file_path, set()):
+                self.dependencies[dependent].discard(file_path)
+            
+            # Clean up
+            self.dependencies.pop(file_path, None)
+            self.dependents.pop(file_path, None)
+            
+            return affected
+    
+    def get_dependents(self, file_path: str) -> Set[str]:
+        """Get all files that depend on the given file"""
+        with self.lock:
+            return self.dependents.get(file_path, set()).copy()
+    
+    def get_dependencies(self, file_path: str) -> Set[str]:
+        """Get all files that the given file depends on"""
+        with self.lock:
+            return self.dependencies.get(file_path, set()).copy()
+
+
+class FileWatcher:
+    """Watches for file system changes"""
+    
+    def __init__(self, watch_paths: List[str], callback: Callable[[FileChange], None]):
+        self.watch_paths = [Path(p) for p in watch_paths]
+        self.callback = callback
+        self.file_hashes = {}  # file_path -> content_hash
+        self.running = False
+        self.watch_thread = None
+        self.poll_interval = 1.0  # seconds
+        
+    def start(self) -> None:
+        """Start watching for file changes"""
+        if self.running:
+            return
+        
+        self.running = True
+        self.watch_thread = threading.Thread(target=self._watch_loop, daemon=True)
+        self.watch_thread.start()
+    
+    def stop(self) -> None:
+        """Stop watching for file changes"""
+        self.running = False
+        if self.watch_thread:
+            self.watch_thread.join(timeout=5.0)
+    
+    def _watch_loop(self) -> None:
+        """Main watch loop"""
+        logging.info("File watcher started")
+        
+        while self.running:
+            try:
+                self._scan_for_changes()
+                time.sleep(self.poll_interval)
+            except Exception as e:
+                logging.error(f"Error in file watcher: {e}")
+    
+    def _scan_for_changes(self) -> None:
+        """Scan for file changes"""
+        current_files = set()
+        
+        for watch_path in self.watch_paths:
+            if not watch_path.exists():
+                continue
+            
+            for py_file in watch_path.rglob("*.py"):
+                if py_file.is_file():
+                    current_files.add(str(py_file))
+                    self._check_file_change(py_file)
+        
+        # Check for deleted files
+        for file_path in list(self.file_hashes.keys()):
+            if file_path not in current_files:
+                self._handle_file_deletion(file_path)
+    
+    def _check_file_change(self, file_path: Path) -> None:
+        """Check if a file has changed"""
+        try:
+            content = file_path.read_text(encoding='utf-8')
+            content_hash = hashlib.md5(content.encode()).hexdigest()
+            file_str = str(file_path)
+            
+            if file_str not in self.file_hashes:
+                # New file
+                self.file_hashes[file_str] = content_hash
+                self.callback(FileChange(
+                    file_path=file_str,
+                    change_type=ChangeType.ADDED,
+                    timestamp=time.time(),
+                    content_hash=content_hash
+                ))
+            elif self.file_hashes[file_str] != content_hash:
+                # Modified file
+                self.file_hashes[file_str] = content_hash
+                self.callback(FileChange(
+                    file_path=file_str,
+                    change_type=ChangeType.MODIFIED,
+                    timestamp=time.time(),
+                    content_hash=content_hash
+                ))
+        except Exception as e:
+            logging.error(f"Error checking file {file_path}: {e}")
+    
+    def _handle_file_deletion(self, file_path: str) -> None:
+        """Handle file deletion"""
+        self.file_hashes.pop(file_path, None)
+        self.callback(FileChange(
+            file_path=file_path,
+            change_type=ChangeType.DELETED,
+            timestamp=time.time()
+        ))
+
+
+class AnalysisWorker:
+    """Worker thread for processing analysis tasks"""
+    
+    def __init__(self, worker_id: int, engine_ref: 'RealtimeASTEngine'):
+        self.worker_id = worker_id
+        self.engine_ref = engine_ref
+        self.running = False
+        self.thread = None
+        
+    def start(self) -> None:
+        """Start the worker thread"""
+        if self.running:
+            return
+        
+        self.running = True
+        self.thread = threading.Thread(target=self._work_loop, daemon=True)
+        self.thread.start()
+    
+    def stop(self) -> None:
+        """Stop the worker thread"""
+        self.running = False
+        if self.thread:
+            self.thread.join(timeout=5.0)
+    
+    def _work_loop(self) -> None:
+        """Main work loop"""
+        engine = self.engine_ref()
+        if not engine:
+            return
+        
+        logging.info(f"Analysis worker {self.worker_id} started")
+        
+        while self.running:
+            try:
+                # Get next task (blocks with timeout)
+                try:
+                    task = engine.task_queue.get(timeout=1.0)
+                except:
+                    continue
+                
+                if task is None:  # Shutdown signal
+                    break
+                
+                # Process the task
+                self._process_task(task, engine)
+                engine.task_queue.task_done()
+                
+            except Exception as e:
+                logging.error(f"Error in worker {self.worker_id}: {e}")
+    
+    def _process_task(self, task: AnalysisTask, engine: 'RealtimeASTEngine') -> None:
+        """Process an analysis task"""
+        try:
+            start_time = time.time()
+            
+            if task.change_type == ChangeType.DELETED:
+                engine._handle_file_deletion(task.file_path)
+            else:
+                result = engine._analyze_file_sync(task.file_path)
+                if result:
+                    engine._store_result(result)
+                    engine._notify_result_ready(result)
+            
+            processing_time = time.time() - start_time
+            logging.debug(f"Worker {self.worker_id} processed {task.file_path} in {processing_time:.3f}s")
+            
+        except Exception as e:
+            logging.error(f"Error processing task {task.file_path}: {e}")
+
+
+class RealtimeASTEngine(BaseAnalyzer):
+    """
+    Real-time incremental AST analysis engine
+    
+    Provides high-performance, incremental analysis of Python code with
+    intelligent caching, dependency tracking, and real-time change detection.
+    """
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        super().__init__(config)
+        
+        # Configuration
+        self.config = config or {}
+        self.watch_paths = self.config.get('watch_paths', [])
+        self.cache_dir = self.config.get('cache_dir', '.ast_cache')
+        self.num_workers = self.config.get('num_workers', 4)
+        self.max_cache_size = self.config.get('max_cache_size', 1000)
+        
+        # Core components
+        self.cache_manager = CacheManager(self.cache_dir, self.max_cache_size)
+        self.dependency_tracker = DependencyTracker()
+        self.file_watcher = FileWatcher(self.watch_paths, self._on_file_change)
+        
+        # Task processing
+        self.task_queue = PriorityQueue()
+        self.workers = []
+        self.running = False
+        
+        # Analysis results storage
+        self.results = {}  # file_path -> AnalysisResult
+        self.results_lock = threading.RLock()
+        
+        # Event callbacks
+        self.result_callbacks = []  # List of callbacks for new results
+        self.change_callbacks = []  # List of callbacks for file changes
+        
+        # Statistics
+        self.stats = {
+            'files_analyzed': 0,
+            'cache_hits': 0,
+            'cache_misses': 0,
+            'total_analysis_time': 0.0,
+            'incremental_updates': 0
+        }
+        
+        self.logger = logging.getLogger(__name__)
+    
+    def start(self) -> None:
+        """Start the real-time analysis engine"""
+        if self.running:
+            return
+        
+        self.running = True
+        
+        # Start workers
+        for i in range(self.num_workers):
+            worker = AnalysisWorker(i, weakref.ref(self))
+            worker.start()
+            self.workers.append(worker)
+        
+        # Start file watcher
+        if self.watch_paths:
+            self.file_watcher.start()
+        
+        self.logger.info(f"Real-time AST engine started with {self.num_workers} workers")
+    
+    def stop(self) -> None:
+        """Stop the real-time analysis engine"""
+        if not self.running:
+            return
+        
+        self.running = False
+        
+        # Stop file watcher
+        self.file_watcher.stop()
+        
+        # Stop workers
+        for _ in range(len(self.workers)):
+            self.task_queue.put(None)  # Shutdown signal
+        
+        for worker in self.workers:
+            worker.stop()
+        
+        self.workers.clear()
+        self.logger.info("Real-time AST engine stopped")
+    
+    def analyze(self, file_path: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Perform analysis (synchronous interface)
+        
+        If file_path is provided, analyzes that specific file.
+        Otherwise, returns current analysis state.
+        """
+        if file_path:
+            return self._analyze_file_immediate(file_path)
+        else:
+            return self._get_analysis_summary()
+    
+    def analyze_async(self, file_path: str, priority: Priority = Priority.NORMAL) -> None:
+        """Queue a file for asynchronous analysis"""
+        task = AnalysisTask(
+            file_path=file_path,
+            priority=priority,
+            timestamp=time.time(),
+            change_type=ChangeType.MODIFIED
+        )
+        self.task_queue.put(task)
+    
+    def get_result(self, file_path: str) -> Optional[AnalysisResult]:
+        """Get analysis result for a specific file"""
+        with self.results_lock:
+            return self.results.get(file_path)
+    
+    def get_all_results(self) -> Dict[str, AnalysisResult]:
+        """Get all current analysis results"""
+        with self.results_lock:
+            return self.results.copy()
+    
+    def add_result_callback(self, callback: Callable[[AnalysisResult], None]) -> None:
+        """Add callback for when new analysis results are available"""
+        self.result_callbacks.append(callback)
+    
+    def add_change_callback(self, callback: Callable[[FileChange], None]) -> None:
+        """Add callback for file change events"""
+        self.change_callbacks.append(callback)
+    
+    def invalidate_cache(self, file_path: str) -> None:
+        """Manually invalidate cache for a file"""
+        self.cache_manager.invalidate(file_path)
+        
+        # Invalidate dependents
+        dependents = self.dependency_tracker.get_dependents(file_path)
+        for dependent in dependents:
+            self.cache_manager.invalidate(dependent)
+            self.analyze_async(dependent, Priority.HIGH)
+    
+    def get_statistics(self) -> Dict[str, Any]:
+        """Get engine statistics"""
+        return {
+            **self.stats,
+            'cache_hit_rate': self.stats['cache_hits'] / max(self.stats['files_analyzed'], 1),
+            'queue_size': self.task_queue.qsize(),
+            'active_workers': len([w for w in self.workers if w.running]),
+            'total_results': len(self.results)
+        }
+    
+    def _on_file_change(self, change: FileChange) -> None:
+        """Handle file change event"""
+        # Notify change callbacks
+        for callback in self.change_callbacks:
+            try:
+                callback(change)
+            except Exception as e:
+                self.logger.error(f"Error in change callback: {e}")
+        
+        # Determine priority based on change type
+        if change.change_type == ChangeType.DELETED:
+            priority = Priority.HIGH
+        elif change.change_type == ChangeType.ADDED:
+            priority = Priority.NORMAL
+        else:  # MODIFIED
+            priority = Priority.HIGH
+        
+        # Queue for analysis
+        task = AnalysisTask(
+            file_path=change.file_path,
+            priority=priority,
+            timestamp=change.timestamp,
+            change_type=change.change_type
+        )
+        self.task_queue.put(task)
+        
+        # Invalidate cache and queue dependents
+        if change.change_type in [ChangeType.MODIFIED, ChangeType.DELETED]:
+            dependents = self.dependency_tracker.get_dependents(change.file_path)
+            for dependent in dependents:
+                self.cache_manager.invalidate(dependent)
+                dependent_task = AnalysisTask(
+                    file_path=dependent,
+                    priority=Priority.HIGH,
+                    timestamp=change.timestamp + 0.001,  # Slightly later
+                    change_type=ChangeType.MODIFIED
+                )
+                self.task_queue.put(dependent_task)
+    
+    def _analyze_file_immediate(self, file_path: str) -> Dict[str, Any]:
+        """Analyze a file immediately (synchronous)"""
+        result = self._analyze_file_sync(file_path)
+        if result:
+            self._store_result(result)
+            return {
+                'file_path': result.file_path,
+                'analysis_data': result.analysis_data,
+                'timestamp': result.timestamp,
+                'content_hash': result.content_hash
+            }
+        return {'error': f'Failed to analyze {file_path}'}
+    
+    def _analyze_file_sync(self, file_path: str) -> Optional[AnalysisResult]:
+        """Analyze a file synchronously"""
+        try:
+            start_time = time.time()
+            
+            # Read file content
+            file_path_obj = Path(file_path)
+            if not file_path_obj.exists():
+                return None
+            
+            content = file_path_obj.read_text(encoding='utf-8')
+            content_hash = hashlib.md5(content.encode()).hexdigest()
+            
+            # Check cache first
+            cached_result = self.cache_manager.get(file_path, content_hash)
+            if cached_result:
+                self.stats['cache_hits'] += 1
+                return cached_result
+            
+            self.stats['cache_misses'] += 1
+            
+            # Parse AST
+            try:
+                tree = ast.parse(content)
+            except SyntaxError as e:
+                self.logger.warning(f"Syntax error in {file_path}: {e}")
+                return None
+            
+            # Perform analysis
+            analysis_data = self._perform_ast_analysis(tree, content, file_path)
+            
+            # Extract dependencies
+            dependencies = self._extract_dependencies(tree)
+            
+            # Create result
+            result = AnalysisResult(
+                file_path=file_path,
+                ast_tree=tree,
+                analysis_data=analysis_data,
+                timestamp=time.time(),
+                content_hash=content_hash,
+                dependencies=dependencies
+            )
+            
+            # Update dependency tracking
+            self._update_dependencies(file_path, dependencies)
+            
+            # Cache result
+            self.cache_manager.put(file_path, result)
+            
+            # Update statistics
+            analysis_time = time.time() - start_time
+            self.stats['files_analyzed'] += 1
+            self.stats['total_analysis_time'] += analysis_time
+            self.stats['incremental_updates'] += 1
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error analyzing {file_path}: {e}")
+            return None
+    
+    def _perform_ast_analysis(self, tree: ast.AST, content: str, file_path: str) -> Dict[str, Any]:
+        """Perform comprehensive AST analysis"""
+        analysis = {
+            'basic_metrics': self._analyze_basic_metrics(tree, content),
+            'complexity_metrics': self._analyze_complexity(tree),
+            'structure_analysis': self._analyze_structure(tree),
+            'import_analysis': self._analyze_imports(tree),
+            'function_analysis': self._analyze_functions(tree),
+            'class_analysis': self._analyze_classes(tree),
+            'control_flow': self._analyze_control_flow(tree),
+            'potential_issues': self._detect_potential_issues(tree, content)
+        }
+        
+        return analysis
+    
+    def _analyze_basic_metrics(self, tree: ast.AST, content: str) -> Dict[str, Any]:
+        """Analyze basic code metrics"""
+        lines = content.split('\n')
+        
+        return {
+            'total_lines': len(lines),
+            'non_empty_lines': len([line for line in lines if line.strip()]),
+            'comment_lines': len([line for line in lines if line.strip().startswith('#')]),
+            'total_nodes': len(list(ast.walk(tree))),
+            'file_size_bytes': len(content.encode('utf-8'))
+        }
+    
+    def _analyze_complexity(self, tree: ast.AST) -> Dict[str, Any]:
+        """Analyze code complexity"""
+        complexity = 1  # Base complexity
+        max_depth = 0
+        
+        def calculate_complexity_and_depth(node, depth=0):
+            nonlocal complexity, max_depth
+            max_depth = max(max_depth, depth)
+            
+            if isinstance(node, (ast.If, ast.While, ast.For, ast.AsyncFor)):
+                complexity += 1
+            elif isinstance(node, ast.BoolOp):
+                complexity += len(node.values) - 1
+            elif isinstance(node, (ast.Break, ast.Continue)):
+                complexity += 1
+            elif isinstance(node, ast.ExceptHandler):
+                complexity += 1
+            
+            for child in ast.iter_child_nodes(node):
+                if isinstance(child, (ast.If, ast.For, ast.While, ast.With, ast.Try, ast.FunctionDef, ast.AsyncFunctionDef)):
+                    calculate_complexity_and_depth(child, depth + 1)
+                else:
+                    calculate_complexity_and_depth(child, depth)
+        
+        calculate_complexity_and_depth(tree)
+        
+        return {
+            'cyclomatic_complexity': complexity,
+            'max_nesting_depth': max_depth
+        }
+    
+    def _analyze_structure(self, tree: ast.AST) -> Dict[str, Any]:
+        """Analyze code structure"""
+        node_counts = defaultdict(int)
+        
+        for node in ast.walk(tree):
+            node_counts[type(node).__name__] += 1
+        
+        return {
+            'node_counts': dict(node_counts),
+            'functions': node_counts.get('FunctionDef', 0) + node_counts.get('AsyncFunctionDef', 0),
+            'classes': node_counts.get('ClassDef', 0),
+            'imports': node_counts.get('Import', 0) + node_counts.get('ImportFrom', 0),
+            'control_structures': (
+                node_counts.get('If', 0) +
+                node_counts.get('For', 0) +
+                node_counts.get('While', 0) +
+                node_counts.get('Try', 0)
+            )
+        }
+    
+    def _analyze_imports(self, tree: ast.AST) -> Dict[str, Any]:
+        """Analyze import statements"""
+        imports = []
+        from_imports = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imports.extend([alias.name for alias in node.names])
+            elif isinstance(node, ast.ImportFrom):
+                module = node.module or ""
+                from_imports.extend([f"{module}.{alias.name}" for alias in node.names])
+        
+        return {
+            'direct_imports': imports,
+            'from_imports': from_imports,
+            'total_imports': len(imports) + len(from_imports),
+            'unique_modules': len(set(imports + [imp.split('.')[0] for imp in from_imports]))
+        }
+    
+    def _analyze_functions(self, tree: ast.AST) -> Dict[str, Any]:
+        """Analyze function definitions"""
+        functions = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                func_info = {
+                    'name': node.name,
+                    'line_number': node.lineno,
+                    'is_async': isinstance(node, ast.AsyncFunctionDef),
+                    'arg_count': len(node.args.args),
+                    'has_defaults': bool(node.args.defaults),
+                    'has_varargs': bool(node.args.vararg),
+                    'has_kwargs': bool(node.args.kwarg),
+                    'body_length': len(node.body),
+                    'has_docstring': (
+                        len(node.body) > 0 and
+                        isinstance(node.body[0], ast.Expr) and
+                        isinstance(node.body[0].value, (ast.Str, ast.Constant))
+                    )
+                }
+                functions.append(func_info)
+        
+        return {
+            'functions': functions,
+            'total_functions': len(functions),
+            'async_functions': len([f for f in functions if f['is_async']]),
+            'documented_functions': len([f for f in functions if f['has_docstring']])
+        }
+    
+    def _analyze_classes(self, tree: ast.AST) -> Dict[str, Any]:
+        """Analyze class definitions"""
+        classes = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ClassDef):
+                methods = [n for n in node.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]
+                
+                class_info = {
+                    'name': node.name,
+                    'line_number': node.lineno,
+                    'base_classes': [base.id if isinstance(base, ast.Name) else str(base) for base in node.bases],
+                    'method_count': len(methods),
+                    'has_init': any(m.name == '__init__' for m in methods),
+                    'has_docstring': (
+                        len(node.body) > 0 and
+                        isinstance(node.body[0], ast.Expr) and
+                        isinstance(node.body[0].value, (ast.Str, ast.Constant))
+                    )
+                }
+                classes.append(class_info)
+        
+        return {
+            'classes': classes,
+            'total_classes': len(classes),
+            'documented_classes': len([c for c in classes if c['has_docstring']])
+        }
+    
+    def _analyze_control_flow(self, tree: ast.AST) -> Dict[str, Any]:
+        """Analyze control flow patterns"""
+        control_flow = {
+            'if_statements': 0,
+            'nested_ifs': 0,
+            'for_loops': 0,
+            'while_loops': 0,
+            'try_blocks': 0,
+            'with_statements': 0,
+            'break_statements': 0,
+            'continue_statements': 0,
+            'return_statements': 0
+        }
+        
+        def analyze_node(node, if_depth=0):
+            if isinstance(node, ast.If):
+                control_flow['if_statements'] += 1
+                if if_depth > 0:
+                    control_flow['nested_ifs'] += 1
+                for child in ast.iter_child_nodes(node):
+                    analyze_node(child, if_depth + 1)
+                return
+            elif isinstance(node, (ast.For, ast.AsyncFor)):
+                control_flow['for_loops'] += 1
+            elif isinstance(node, ast.While):
+                control_flow['while_loops'] += 1
+            elif isinstance(node, ast.Try):
+                control_flow['try_blocks'] += 1
+            elif isinstance(node, (ast.With, ast.AsyncWith)):
+                control_flow['with_statements'] += 1
+            elif isinstance(node, ast.Break):
+                control_flow['break_statements'] += 1
+            elif isinstance(node, ast.Continue):
+                control_flow['continue_statements'] += 1
+            elif isinstance(node, ast.Return):
+                control_flow['return_statements'] += 1
+            
+            for child in ast.iter_child_nodes(node):
+                analyze_node(child, if_depth)
+        
+        analyze_node(tree)
+        return control_flow
+    
+    def _detect_potential_issues(self, tree: ast.AST, content: str) -> List[Dict[str, Any]]:
+        """Detect potential code issues"""
+        issues = []
+        
+        # Check for potential issues
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name):
+                    if node.func.id == 'eval':
+                        issues.append({
+                            'type': 'security',
+                            'severity': 'high',
+                            'message': 'Use of eval() detected',
+                            'line': node.lineno
+                        })
+                    elif node.func.id == 'exec':
+                        issues.append({
+                            'type': 'security',
+                            'severity': 'high',
+                            'message': 'Use of exec() detected',
+                            'line': node.lineno
+                        })
+            
+            elif isinstance(node, ast.ImportFrom):
+                if node.module and '*' in [alias.name for alias in node.names]:
+                    issues.append({
+                        'type': 'style',
+                        'severity': 'medium',
+                        'message': 'Wildcard import detected',
+                        'line': node.lineno
+                    })
+            
+            elif isinstance(node, ast.ExceptHandler):
+                if node.type is None:
+                    issues.append({
+                        'type': 'style',
+                        'severity': 'medium',
+                        'message': 'Bare except clause detected',
+                        'line': node.lineno
+                    })
+        
+        return issues
+    
+    def _extract_dependencies(self, tree: ast.AST) -> Set[str]:
+        """Extract file dependencies from imports"""
+        dependencies = set()
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    dependencies.add(alias.name.split('.')[0])
+            elif isinstance(node, ast.ImportFrom):
+                if node.module:
+                    dependencies.add(node.module.split('.')[0])
+        
+        return dependencies
+    
+    def _update_dependencies(self, file_path: str, dependencies: Set[str]) -> None:
+        """Update dependency tracking"""
+        # Remove old dependencies
+        old_dependencies = self.dependency_tracker.get_dependencies(file_path)
+        for dep in old_dependencies:
+            self.dependency_tracker.dependents[dep].discard(file_path)
+        
+        # Clear current dependencies
+        self.dependency_tracker.dependencies[file_path] = set()
+        
+        # Add new dependencies
+        for dep in dependencies:
+            self.dependency_tracker.add_dependency(file_path, dep)
+    
+    def _store_result(self, result: AnalysisResult) -> None:
+        """Store analysis result"""
+        with self.results_lock:
+            self.results[result.file_path] = result
+    
+    def _notify_result_ready(self, result: AnalysisResult) -> None:
+        """Notify callbacks that a new result is ready"""
+        for callback in self.result_callbacks:
+            try:
+                callback(result)
+            except Exception as e:
+                self.logger.error(f"Error in result callback: {e}")
+    
+    def _handle_file_deletion(self, file_path: str) -> None:
+        """Handle file deletion"""
+        # Remove from results
+        with self.results_lock:
+            self.results.pop(file_path, None)
+        
+        # Remove from cache
+        self.cache_manager.invalidate(file_path)
+        
+        # Update dependency tracking and queue dependents for re-analysis
+        dependents = self.dependency_tracker.remove_file(file_path)
+        for dependent in dependents:
+            self.analyze_async(dependent, Priority.HIGH)
+    
+    def _get_analysis_summary(self) -> Dict[str, Any]:
+        """Get summary of all analysis results"""
+        with self.results_lock:
+            total_files = len(self.results)
+            
+            if total_files == 0:
+                return {
+                    'summary': {
+                        'total_files': 0,
+                        'analysis_complete': True
+                    },
+                    'statistics': self.get_statistics()
+                }
+            
+            # Aggregate metrics
+            total_lines = sum(r.analysis_data.get('basic_metrics', {}).get('total_lines', 0) 
+                            for r in self.results.values())
+            total_functions = sum(r.analysis_data.get('structure_analysis', {}).get('functions', 0) 
+                                for r in self.results.values())
+            total_classes = sum(r.analysis_data.get('structure_analysis', {}).get('classes', 0) 
+                              for r in self.results.values())
+            
+            avg_complexity = sum(r.analysis_data.get('complexity_metrics', {}).get('cyclomatic_complexity', 1) 
+                               for r in self.results.values()) / total_files
+            
+            # Count issues
+            total_issues = sum(len(r.analysis_data.get('potential_issues', [])) 
+                             for r in self.results.values())
+            
+            return {
+                'summary': {
+                    'total_files': total_files,
+                    'total_lines': total_lines,
+                    'total_functions': total_functions,
+                    'total_classes': total_classes,
+                    'average_complexity': avg_complexity,
+                    'total_issues': total_issues,
+                    'analysis_complete': self.task_queue.empty()
+                },
+                'statistics': self.get_statistics(),
+                'recent_files': [
+                    {
+                        'file_path': result.file_path,
+                        'timestamp': result.timestamp,
+                        'lines': result.analysis_data.get('basic_metrics', {}).get('total_lines', 0),
+                        'complexity': result.analysis_data.get('complexity_metrics', {}).get('cyclomatic_complexity', 1)
+                    }
+                    for result in sorted(self.results.values(), 
+                                       key=lambda r: r.timestamp, reverse=True)[:10]
+                ]
+            }

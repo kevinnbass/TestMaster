@@ -1,0 +1,98 @@
+{
+  "validation_summary": {
+    "total_tests": 7,
+    "passed": 4,
+    "failed": 3,
+    "success_rate": 57.14285714285714,
+    "total_execution_time": 0.031514,
+    "timestamp": "2025-08-21T16:27:42.445232"
+  },
+  "test_results": [
+    {
+      "test_name": "State Management",
+      "status": "FAIL",
+      "execution_time": 0.011514425277709961,
+      "details": {
+        "error": "cannot import name 'get_state' from 'perfected_state_manager' (C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\operational\\perfected_state_manager.py)"
+      },
+      "error": "cannot import name 'get_state' from 'perfected_state_manager' (C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\operational\\perfected_state_manager.py)"
+    },
+    {
+      "test_name": "Cache System",
+      "status": "PASS",
+      "execution_time": 0.012999773025512695,
+      "details": {
+        "basic_operations": "PASS",
+        "cache_miss_handling": "PASS",
+        "decorator_caching": "PASS",
+        "metrics_collection": "PASS",
+        "cache_hits": 1
+      },
+      "error": null
+    },
+    {
+      "test_name": "Workflow Engine",
+      "status": "PASS",
+      "execution_time": 0.003000020980834961,
+      "details": {
+        "async_execution": "PASS",
+        "dependency_resolution": "PASS",
+        "sync_step_support": "PASS",
+        "workflow_builder": "PASS",
+        "steps_executed": 3
+      },
+      "error": null
+    },
+    {
+      "test_name": "Unified Tools",
+      "status": "FAIL",
+      "execution_time": 0.001001596450805664,
+      "details": {
+        "error": "No module named 'unified_tools'"
+      },
+      "error": "No module named 'unified_tools'"
+    },
+    {
+      "test_name": "Orchestration System",
+      "status": "PASS",
+      "execution_time": 0.0010030269622802734,
+      "details": {
+        "modules_present": 5,
+        "missing_modules": [],
+        "total_lines": 1157,
+        "modularization": "PASS"
+      },
+      "error": null
+    },
+    {
+      "test_name": "Configuration System",
+      "status": "PASS",
+      "execution_time": 0.000995635986328125,
+      "details": {
+        "modular_configs": 9,
+        "main_configs": [
+          "config/testmaster_config.py",
+          "config/enhanced_unified_config.py"
+        ],
+        "configuration_structure": "VALIDATED"
+      },
+      "error": null
+    },
+    {
+      "test_name": "Integration Tests",
+      "status": "FAIL",
+      "execution_time": 0.0,
+      "details": {
+        "error": "cannot import name 'set_state' from 'perfected_state_manager' (C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\operational\\perfected_state_manager.py)"
+      },
+      "error": "cannot import name 'set_state' from 'perfected_state_manager' (C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\operational\\perfected_state_manager.py)"
+    }
+  ],
+  "infrastructure_status": "ISSUES_DETECTED",
+  "recommendations": [
+    "[FAIL] Infrastructure validation detected issues",
+    "[FIX] Fix State Management: cannot import name 'get_state' from 'perfected_state_manager' (C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\operational\\perfected_state_manager.py)",
+    "[FIX] Fix Unified Tools: No module named 'unified_tools'",
+    "[FIX] Fix Integration Tests: cannot import name 'set_state' from 'perfected_state_manager' (C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\operational\\perfected_state_manager.py)"
+  ]
+}

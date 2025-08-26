@@ -1,0 +1,83 @@
+layers:
+  layer1_test_foundation:
+    enabled: true  # Always on - this is the core
+    features:
+      test_generation: true
+      test_verification: true
+      test_mapping: true
+      failure_detection: true
+    enhancements:
+      shared_state:
+        enabled: true
+        backend: 'memory'
+      streaming_generation:
+        enabled: true
+        buffer_size: 1024
+      performance_monitoring:
+        enabled: true
+        include_memory: true
+      advanced_config:
+        enabled: true
+        hot_reload: true
+      context_preservation:
+        enabled: true
+        deep_copy: true
+      agent_qa:
+        enabled: true
+        similarity_threshold: 0.7
+    requires: []
+  
+  layer2_monitoring:
+    enabled: true  # Toggle on when ready
+    features:
+      file_monitoring: true
+      idle_detection: true
+      claude_communication: true
+      dashboard_ui: false  # Can disable UI separately
+    enhancements:
+      async_processing:
+        enabled: true
+        max_workers: 4
+      graph_workflows:
+        enabled: true
+        max_parallel_branches: 4
+      dynamic_handoff:
+        enabled: true
+        preserve_context: true
+      tracking_manager:
+        enabled: true
+        chain_depth: 5
+      handoff_tools:
+        enabled: true
+        validation: true
+    requires:
+      - layer1_test_foundation
+  
+  layer3_orchestration:
+    enabled: true  # Toggle on when ready
+    features:
+      auto_tagging: true
+      work_distribution: true
+      smart_handoffs: true
+      codebase_intelligence: true
+    enhancements:
+      telemetry:
+        enabled: true
+        collectors: ['cpu', 'memory', 'api']
+      performance_reporting:
+        enabled: true
+        schedule: 'daily'
+        formats: ['html', 'json']
+      performance_dashboard:
+        enabled: true
+        port: 8080
+        auto_refresh: 5
+      flow_optimizer:
+        enabled: true
+        learning_rate: 0.1
+      collaboration_matrix:
+        enabled: true
+        update_interval: 3600
+    requires:
+      - layer1_test_foundation
+      - layer2_monitoring

@@ -1,0 +1,743 @@
+{
+  "timestamp": "20250821_192219",
+  "framework_discovery": {
+    "frameworks": {
+      "agency-swarm": {
+        "path": "agency-swarm",
+        "files": 133,
+        "size_bytes": 542274,
+        "main_modules": [
+          "agency_swarm\\agency\\genesis\\AgentCreator\\AgentCreator.py",
+          "agency_swarm\\agency\\genesis\\AgentCreator\\tools\\CreateAgentTemplate.py",
+          "agency_swarm\\agency\\genesis\\AgentCreator\\tools\\ImportAgent.py",
+          "agency_swarm\\agents\\agent.py",
+          "agency_swarm\\agents\\BrowsingAgent\\BrowsingAgent.py",
+          "agency_swarm\\util\\cli\\create_agent_template.py",
+          "agency_swarm\\util\\cli\\import_agent.py",
+          "agency_swarm\\util\\helpers\\get_available_agent_descriptions.py",
+          "agency_swarm\\util\\helpers\\list_available_agents.py",
+          "agency_swarm\\util\\tracking\\tracking_manager.py"
+        ],
+        "dependencies": {
+          "requirements_files": [
+            "setup.py",
+            "pyproject.toml"
+          ],
+          "import_patterns": [
+            "",
+            "sys",
+            "uuid",
+            "re",
+            "asyncio",
+            "importlib",
+            "os",
+            "agency_swarm",
+            "typing",
+            "shutil",
+            "setuptools",
+            "pydantic",
+            "enum",
+            "json",
+            "argparse",
+            "atexit",
+            "pathlib",
+            "logging",
+            "openai",
+            "inspect"
+          ],
+          "external_deps": [
+            "openai"
+          ]
+        },
+        "api_patterns": [
+          "class OpenAPICreator",
+          "class CreateToolsFromOpenAPISpec",
+          "method run",
+          "method run_fastapi",
+          "method handler",
+          "method run_completion"
+        ]
+      },
+      "agentops": {
+        "path": "agentops",
+        "files": 497,
+        "size_bytes": 3502754,
+        "main_modules": [
+          "agentops\\instrumentation\\agentic\\agno\\attributes\\agent.py",
+          "agentops\\instrumentation\\agentic\\smolagents\\attributes\\agent.py",
+          "agentops\\sdk\\core.py",
+          "agentops\\semconv\\agent.py",
+          "agentops\\semconv\\core.py",
+          "app\\deploy\\jockey\\__main__.py",
+          "app\\deploy\\jockey\\api\\main.py",
+          "app\\deploy\\jockey\\tests\\test_api_main.py",
+          "app\\deploy\\jockey\\worker\\__main__.py",
+          "app\\e2e\\sdk-api\\src\\test_basic_agent.py"
+        ],
+        "dependencies": {
+          "requirements_files": [
+            "pyproject.toml"
+          ],
+          "import_patterns": [
+            "sys",
+            "uuid",
+            "asyncio",
+            "os",
+            "datetime",
+            "typing",
+            "dataclasses",
+            "agentops",
+            "urllib3",
+            "functools",
+            "enum",
+            "aiohttp",
+            "json",
+            "requests",
+            "atexit",
+            "logging",
+            "termcolor",
+            "decimal",
+            "opentelemetry",
+            "time"
+          ],
+          "external_deps": [
+            "requests"
+          ]
+        },
+        "api_patterns": [
+          "class Client",
+          "method run_async_auth",
+          "method run_async_auth",
+          "class HttpClient"
+        ]
+      },
+      "agentscope": {
+        "path": "agentscope",
+        "files": 208,
+        "size_bytes": 1229387,
+        "main_modules": [
+          "docs\\tutorial\\en\\src\\quickstart_agent.py",
+          "docs\\tutorial\\en\\src\\task_agent.py",
+          "docs\\tutorial\\en\\src\\workflow_concurrent_agents.py",
+          "docs\\tutorial\\en\\src\\workflow_multiagent_debate.py",
+          "docs\\tutorial\\zh_CN\\src\\quickstart_agent.py",
+          "docs\\tutorial\\zh_CN\\src\\task_agent.py",
+          "docs\\tutorial\\zh_CN\\src\\workflow_concurrent_agents.py",
+          "docs\\tutorial\\zh_CN\\src\\workflow_multiagent_debate.py",
+          "examples\\agent_browser\\browser_agent.py",
+          "examples\\agent_browser\\main.py"
+        ],
+        "dependencies": {
+          "requirements_files": [
+            "setup.py"
+          ],
+          "import_patterns": [
+            "agentscope",
+            "json",
+            "setuptools",
+            "re",
+            "asyncio",
+            "os",
+            "time",
+            "datetime",
+            "pydantic",
+            "tempfile",
+            "os,"
+          ],
+          "external_deps": []
+        },
+        "api_patterns": [
+          "class FoodPlatformApi",
+          "class MessageApi",
+          "class ReminderApi",
+          "class TravelApi",
+          "method process_refund",
+          "class MCPClientBase"
+        ]
+      },
+      "agent-squad": {
+        "path": "agent-squad",
+        "files": 95,
+        "size_bytes": 615965,
+        "main_modules": [
+          "examples\\bedrock-flows\\python\\main.py",
+          "examples\\bedrock-inline-agents\\python\\main.py",
+          "examples\\bedrock-prompt-routing\\main.py",
+          "examples\\chat-chainlit-app\\agents.py",
+          "examples\\chat-chainlit-app\\ollamaAgent.py",
+          "examples\\fast-api-streaming\\main.py",
+          "examples\\langfuse-demo\\main.py",
+          "examples\\python\\main-app.py",
+          "examples\\python-demo\\main-stream.py",
+          "examples\\python-demo\\main.py"
+        ],
+        "dependencies": {
+          "requirements_files": [],
+          "import_patterns": [
+            "sys",
+            "uuid",
+            "ollama",
+            "asyncio",
+            "fastapi",
+            "os",
+            "datetime",
+            "typing",
+            "dataclasses",
+            "agent_squad",
+            "pydantic",
+            "chainlit",
+            "streamlit",
+            "json",
+            "requests",
+            "agents",
+            "langfuse",
+            "search_web",
+            "imports",
+            "duckduckgo_search"
+          ],
+          "external_deps": [
+            "requests"
+          ]
+        },
+        "api_patterns": []
+      },
+      "AgentVerse": {
+        "path": "AgentVerse",
+        "files": 141,
+        "size_bytes": 422671,
+        "main_modules": [
+          "agentverse\\agentverse.py",
+          "agentverse\\agents\\tasksolving_agent\\manager.py",
+          "agentverse_command\\main_simulation_cli.py",
+          "agentverse_command\\main_simulation_gui.py",
+          "agentverse_command\\main_tasksolving_cli.py"
+        ],
+        "dependencies": {
+          "requirements_files": [
+            "requirements.txt",
+            "setup.py"
+          ],
+          "import_patterns": [
+            "",
+            "random",
+            "re",
+            "asyncio",
+            "fastapi",
+            "os",
+            "bmtools",
+            "datetime",
+            "string",
+            "langchain",
+            "typing",
+            "subprocess",
+            "setuptools",
+            "copy",
+            "cv2",
+            "pydantic",
+            "enum",
+            "yaml",
+            "gradio",
+            "agentverse"
+          ],
+          "external_deps": [
+            "langchain"
+          ]
+        },
+        "api_patterns": [
+          "method execute_code",
+          "method execute_unit_tests"
+        ]
+      },
+      "autogen": {
+        "path": "autogen",
+        "files": 538,
+        "size_bytes": 4262695,
+        "main_modules": [
+          "dotnet\\test\\Microsoft.AutoGen.Integration.Tests.AppHosts\\core_xlang_hello_python_agent\\hello_python_agent.py",
+          "dotnet\\test\\Microsoft.AutoGen.Integration.Tests.AppHosts\\core_xlang_hello_python_agent\\protos\\agent_events_pb2.py",
+          "dotnet\\test\\Microsoft.AutoGen.Integration.Tests.AppHosts\\core_xlang_hello_python_agent\\protos\\agent_events_pb2_grpc.py",
+          "python\\packages\\agbench\\src\\agbench\\__main__.py",
+          "python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\agents\\_assistant_agent.py",
+          "python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\agents\\_base_chat_agent.py",
+          "python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\agents\\_code_executor_agent.py",
+          "python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\agents\\_message_filter_agent.py",
+          "python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\agents\\_society_of_mind_agent.py",
+          "python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\agents\\_user_proxy_agent.py"
+        ],
+        "dependencies": {
+          "requirements_files": [],
+          "import_patterns": [
+            "autogen_core",
+            "sys",
+            "re",
+            "asyncio",
+            "glob",
+            "poethepoet",
+            "pandas",
+            "agbench",
+            "os",
+            "datetime",
+            "grpc",
+            "sqlite3",
+            "string",
+            "user_input",
+            "typing",
+            "subprocess",
+            "setuptools",
+            "shutil",
+            "huggingface_hub",
+            "tomli"
+          ],
+          "external_deps": [
+            "pandas",
+            "numpy"
+          ]
+        },
+        "api_patterns": [
+          "class ChatCompletionClient",
+          "class ChatCompletionClientRecorder",
+          "class BaseAnthropicChatCompletionClient",
+          "class AnthropicChatCompletionClient",
+          "class AnthropicBedrockChatCompletionClient"
+        ]
+      },
+      "AWorld": {
+        "path": "AWorld",
+        "files": 562,
+        "size_bytes": 3648044,
+        "main_modules": [
+          "aworld\\__main__.py",
+          "aworld\\agents\\llm_agent.py",
+          "aworld\\agents\\loop_llm_agent.py",
+          "aworld\\agents\\parallel_llm_agent.py",
+          "aworld\\agents\\serial_llm_agent.py",
+          "aworld\\cmd\\utils\\agent_executor.py",
+          "aworld\\cmd\\utils\\agent_loader.py",
+          "aworld\\cmd\\utils\\agent_server.py",
+          "aworld\\cmd\\utils\\agent_ui_parser.py",
+          "aworld\\config\\agent_loader.py"
+        ],
+        "dependencies": {
+          "requirements_files": [
+            "setup.py"
+          ],
+          "import_patterns": [
+            "",
+            "sys",
+            "uuid",
+            "re",
+            "asyncio",
+            "getpass",
+            "typing_extensions",
+            "importlib",
+            "os",
+            "datetime",
+            "typing",
+            "subprocess",
+            "setuptools",
+            "pickle",
+            "dataclasses",
+            "copy",
+            "pydantic",
+            "concurrent",
+            "json",
+            "aworld"
+          ],
+          "external_deps": []
+        },
+        "api_patterns": [
+          "method run_server",
+          "class SandboxApiBase",
+          "class BaseSandboxApi",
+          "class KubernetesSandboxApi",
+          "class LocalSandboxApi"
+        ]
+      },
+      "crewAI": {
+        "path": "crewAI",
+        "files": 383,
+        "size_bytes": 2159218,
+        "main_modules": [
+          "src\\crewai\\agent.py",
+          "src\\crewai\\lite_agent.py",
+          "src\\crewai\\agents\\crew_agent_executor.py",
+          "src\\crewai\\agents\\agent_adapters\\base_agent_adapter.py",
+          "src\\crewai\\agents\\agent_adapters\\openai_agents\\openai_agent_tool_adapter.py",
+          "src\\crewai\\agents\\agent_builder\\base_agent.py",
+          "src\\crewai\\agents\\agent_builder\\base_agent_executor_mixin.py",
+          "src\\crewai\\cli\\authentication\\main.py",
+          "src\\crewai\\cli\\deploy\\main.py",
+          "src\\crewai\\cli\\enterprise\\main.py"
+        ],
+        "dependencies": {
+          "requirements_files": [
+            "pyproject.toml"
+          ],
+          "import_patterns": [
+            "",
+            "sys",
+            "hashlib",
+            "uuid",
+            "urllib",
+            "re",
+            "json_repair",
+            "asyncio",
+            "typing_extensions",
+            "os",
+            "datetime",
+            "langgraph",
+            "typing",
+            "subprocess",
+            "shutil",
+            "litellm",
+            "copy",
+            "langchain_core",
+            "pydantic",
+            "crewai"
+          ],
+          "external_deps": []
+        },
+        "api_patterns": [
+          "class PlusAPI",
+          "method get_tool",
+          "method get_agent",
+          "class TestPlusAPI"
+        ]
+      },
+      "MetaGPT": {
+        "path": "MetaGPT",
+        "files": 890,
+        "size_bytes": 3375225,
+        "main_modules": [
+          "examples\\agent_creator.py",
+          "examples\\build_customized_agent.py",
+          "examples\\build_customized_multi_agents.py",
+          "examples\\dalle_gpt4v_agent.py",
+          "examples\\use_off_the_shelf_agent.py",
+          "examples\\di\\InfiAgent-DABench\\run_InfiAgent-DABench.py",
+          "examples\\di\\InfiAgent-DABench\\run_InfiAgent-DABench_all.py",
+          "examples\\di\\InfiAgent-DABench\\run_InfiAgent-DABench_single.py",
+          "examples\\exp_pool\\manager.py",
+          "examples\\exp_pool\\scorer.py"
+        ],
+        "dependencies": {
+          "requirements_files": [
+            "requirements.txt",
+            "setup.py"
+          ],
+          "import_patterns": [
+            "platform",
+            "metagpt",
+            "contextvars",
+            "typing",
+            "subprocess",
+            "setuptools",
+            "re",
+            "asyncio",
+            "json",
+            "uuid",
+            "socket",
+            "PIL",
+            "typer",
+            "flask",
+            "pydantic",
+            "threading",
+            "fire",
+            "pathlib"
+          ],
+          "external_deps": []
+        },
+        "api_patterns": [
+          "method thread_run",
+          "class CompressExternalInterfaces"
+        ]
+      },
+      "swarm": {
+        "path": "swarm",
+        "files": 62,
+        "size_bytes": 137905,
+        "main_modules": [
+          "examples\\airline\\main.py",
+          "examples\\airline\\configs\\agents.py",
+          "examples\\basic\\agent_handoff.py",
+          "examples\\customer_service_streaming\\main.py",
+          "examples\\personal_shopper\\main.py",
+          "examples\\support_bot\\main.py",
+          "examples\\triage_agent\\agents.py",
+          "examples\\weather_agent\\agents.py",
+          "swarm\\core.py",
+          "tests\\test_core.py"
+        ],
+        "dependencies": {
+          "requirements_files": [
+            "pyproject.toml"
+          ],
+          "import_patterns": [
+            "datetime",
+            "configs",
+            "qdrant_client",
+            "openai",
+            "uuid",
+            "json",
+            "examples",
+            "argparse",
+            "src",
+            "pandas",
+            "os",
+            "swarm",
+            "shlex",
+            "data"
+          ],
+          "external_deps": [
+            "pandas",
+            "openai"
+          ]
+        },
+        "api_patterns": [
+          "class MockOpenAIClient"
+        ]
+      },
+      "swarms": {
+        "path": "swarms",
+        "files": 615,
+        "size_bytes": 4977830,
+        "main_modules": [
+          "simple_agent.py",
+          "examples\\api_examples\\agent_overview.py",
+          "examples\\communication_examples\\duckdb_agent.py",
+          "examples\\demos\\agent_with_fluidapi.py",
+          "examples\\demos\\crypto\\ethchain_agent.py",
+          "examples\\demos\\crypto\\swarms_coin_agent.py",
+          "examples\\demos\\hackathon_feb16\\swarms_of_browser_agents.py",
+          "examples\\demos\\medical\\medical_coder_agent.py",
+          "examples\\demos\\real_estate\\realtor_agent.py",
+          "examples\\demos\\real_estate\\real_estate_agent.py"
+        ],
+        "dependencies": {
+          "requirements_files": [
+            "requirements.txt",
+            "pyproject.toml"
+          ],
+          "import_patterns": [
+            "fluid_api_agent",
+            "random",
+            "re",
+            "asyncio",
+            "os",
+            "datetime",
+            "csv",
+            "typing",
+            "litellm",
+            "dataclasses",
+            "swarms",
+            "loguru",
+            "html",
+            "web3",
+            "json",
+            "requests",
+            "swarms_client",
+            "swarm_models",
+            "dotenv",
+            "httpx"
+          ],
+          "external_deps": [
+            "requests"
+          ]
+        },
+        "api_patterns": []
+      },
+      "OpenAI_Agent_Swarm": {
+        "path": "OpenAI_Agent_Swarm",
+        "files": 37,
+        "size_bytes": 103200,
+        "main_modules": [
+          "agents\\manual_assistants\\agent.py",
+          "agents\\manual_assistants\\agentEnvHandler.py",
+          "agents\\manual_assistants\\agentProcessor.py",
+          "agents\\manual_assistants\\function_manager.py",
+          "agents\\manual_assistants\\template_manager.py",
+          "agents\\tool_maker\\assistant_manager.py",
+          "agents\\tool_maker\\chat_manager.py",
+          "agents\\tool_maker\\tool_manager.py",
+          "agents\\tool_maker\\unit_manager.py"
+        ],
+        "dependencies": {
+          "requirements_files": [
+            "requirements.txt"
+          ],
+          "import_patterns": [
+            "sys",
+            "agentEnvHandler",
+            "re",
+            "importlib",
+            "os",
+            "network",
+            "OAIWrapper",
+            "shared",
+            "langchain",
+            "typing",
+            "copy",
+            "doc_parser",
+            "agentTools",
+            "agentProcessor",
+            "yaml",
+            "json",
+            "argparse",
+            "execution",
+            "requests",
+            "function_manager"
+          ],
+          "external_deps": [
+            "requests",
+            "langchain",
+            "openai"
+          ]
+        },
+        "api_patterns": [
+          "class GithubAPIWrapper"
+        ]
+      }
+    },
+    "statistics": {
+      "total_frameworks": 12,
+      "total_files": 4161,
+      "total_size": 24977168,
+      "frameworks_found": [
+        "agency-swarm",
+        "agentops",
+        "agentscope",
+        "agent-squad",
+        "AgentVerse",
+        "autogen",
+        "AWorld",
+        "crewAI",
+        "MetaGPT",
+        "swarm",
+        "swarms",
+        "OpenAI_Agent_Swarm"
+      ],
+      "frameworks_missing": []
+    }
+  },
+  "pattern_analysis": {
+    "common_dependencies": [
+      "langchain",
+      "openai",
+      "pandas",
+      "requests"
+    ],
+    "similar_apis": [
+      "methodrunasyncauth"
+    ],
+    "shared_concepts": [
+      {
+        "concept": "agent",
+        "frameworks": [
+          "agentops",
+          "agentscope",
+          "agent-squad",
+          "AgentVerse",
+          "OpenAI_Agent_Swarm"
+        ],
+        "count": 5
+      },
+      {
+        "concept": "swarm",
+        "frameworks": [
+          "agency-swarm",
+          "swarm",
+          "swarms",
+          "OpenAI_Agent_Swarm"
+        ],
+        "count": 4
+      }
+    ],
+    "unification_opportunities": []
+  },
+  "unification_strategy": {
+    "unification_approach": "adapter_pattern",
+    "preservation_strategy": "complete_compatibility",
+    "target_architecture": {
+      "core_abstractions": [
+        "BaseAgent",
+        "TaskExecutor",
+        "WorkflowManager",
+        "CommunicationHub"
+      ],
+      "adapter_layer": [
+        "AgencySwarmAdapter",
+        "CrewAIAdapter",
+        "MetaGPTAdapter",
+        "AutoGenAdapter"
+      ],
+      "unified_interface": [
+        "UnifiedAgentManager",
+        "UnifiedTaskScheduler",
+        "UnifiedCommunicationAPI"
+      ]
+    },
+    "implementation_phases": [
+      "Phase 1: Core abstraction development",
+      "Phase 2: Individual framework adapters",
+      "Phase 3: Unified interface creation",
+      "Phase 4: Migration and testing"
+    ]
+  },
+  "safety_assessment": {
+    "risk_level": "LOW",
+    "safety_measures": [
+      "Complete framework archival before modification",
+      "Adapter pattern preserves original interfaces",
+      "Gradual migration with fallback capability",
+      "Comprehensive testing at each phase",
+      "Original frameworks maintained alongside unified system"
+    ],
+    "rollback_strategy": [
+      "Timestamped archive of all original frameworks",
+      "Gradual cutover with rollback checkpoints",
+      "Original interface preservation",
+      "Complete functionality mapping and validation"
+    ],
+    "testing_requirements": [
+      "Unit tests for all adapter components",
+      "Integration tests for unified interfaces",
+      "Compatibility tests with original framework usage",
+      "Performance regression testing",
+      "End-to-end workflow validation"
+    ],
+    "success_criteria": [
+      "100% functionality preservation",
+      "Zero breaking changes to existing code",
+      "Performance maintained or improved",
+      "60% reduction in duplicate code",
+      "Simplified development workflow"
+    ]
+  },
+  "recommendations": {
+    "immediate_actions": [
+      "Complete framework inventory and analysis",
+      "Design core abstraction interfaces",
+      "Create proof-of-concept adapter for one framework",
+      "Establish testing and validation framework"
+    ],
+    "phase_1_targets": [
+      "agency-swarm (most complex)",
+      "crewAI (popular)",
+      "autogen (Microsoft-backed)"
+    ],
+    "expected_benefits": [
+      "60% reduction in framework code duplication",
+      "Unified development interface",
+      "Simplified maintenance and updates",
+      "Enhanced interoperability between frameworks",
+      "Preserved access to all unique capabilities"
+    ],
+    "timeline_estimate": {
+      "analysis_phase": "1-2 weeks",
+      "core_development": "2-3 weeks",
+      "adapter_creation": "3-4 weeks",
+      "testing_validation": "1-2 weeks",
+      "total_estimate": "7-11 weeks"
+    }
+  }
+}

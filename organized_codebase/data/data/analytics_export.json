@@ -1,0 +1,344 @@
+{
+  "export_time": "2025-08-20T00:24:46.390376",
+  "real_time_data": {
+    "status": "active",
+    "current": {
+      "timestamp": "2025-08-20T00:24:46.198578",
+      "cpu": {
+        "percent": 4.5,
+        "frequency": 2000.0,
+        "cores": 16,
+        "per_core": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          57.1,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          16.7,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "memory": {
+        "total": 40631656448,
+        "available": 30068297728,
+        "percent": 26.0,
+        "used": 10563358720,
+        "swap_percent": 9.7
+      },
+      "disk": {
+        "total": 998385905664,
+        "used": 142271467520,
+        "free": 856114438144,
+        "percent": 14.3,
+        "read_bytes": 258962167808,
+        "write_bytes": 549888702976
+      },
+      "network": {
+        "bytes_sent": 6176060262,
+        "bytes_recv": 3421927904,
+        "packets_sent": 5003426,
+        "packets_recv": 5972406,
+        "errors": 0
+      },
+      "process": {
+        "cpu_percent": 0.0,
+        "memory_percent": 0.055716635695058726,
+        "num_threads": 5,
+        "open_files": 2
+      }
+    },
+    "chart_data": [
+      {
+        "timestamp": "2025-08-20T00:24:43.308615",
+        "cpu": 0.0,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:43.470490",
+        "cpu": 3.3,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:43.571579",
+        "cpu": 5.9,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:43.674493",
+        "cpu": 3.7,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:43.773935",
+        "cpu": 14.5,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:43.881036",
+        "cpu": 3.0,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:43.976074",
+        "cpu": 16.7,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:44.076408",
+        "cpu": 2.9,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:44.179445",
+        "cpu": 2.1,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:44.278621",
+        "cpu": 1.8,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:44.380651",
+        "cpu": 3.1,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:44.481691",
+        "cpu": 3.5,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:44.584028",
+        "cpu": 8.1,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:44.683116",
+        "cpu": 6.4,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:44.785972",
+        "cpu": 10.2,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:44.886185",
+        "cpu": 1.0,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:44.987849",
+        "cpu": 3.7,
+        "memory": 25.9,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:45.092611",
+        "cpu": 5.6,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:45.193671",
+        "cpu": 6.9,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:45.290401",
+        "cpu": 5.6,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:45.390259",
+        "cpu": 3.0,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:45.492210",
+        "cpu": 4.8,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:45.595243",
+        "cpu": 3.8,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:45.694398",
+        "cpu": 4.1,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:45.801540",
+        "cpu": 5.4,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:45.894235",
+        "cpu": 5.3,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:46.000703",
+        "cpu": 13.3,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:46.097282",
+        "cpu": 4.3,
+        "memory": 26.0,
+        "disk": 14.3
+      },
+      {
+        "timestamp": "2025-08-20T00:24:46.198578",
+        "cpu": 4.5,
+        "memory": 26.0,
+        "disk": 14.3
+      }
+    ],
+    "trends": {
+      "cpu": {
+        "average": 5.409999999999999,
+        "trend": "stable"
+      },
+      "memory": {
+        "average": 26.0,
+        "trend": "stable"
+      }
+    },
+    "alerts": [],
+    "statistics": {
+      "cpu": {
+        "min": 0.0,
+        "max": 16.7,
+        "avg": 5.396551724137932,
+        "current": 4.5
+      },
+      "memory": {
+        "min": 25.9,
+        "max": 26.0,
+        "avg": 25.95172413793103,
+        "current": 26.0
+      },
+      "uptime_seconds": 2.9000000000000004,
+      "data_points": 29
+    }
+  },
+  "test_analytics": {
+    "total_tests": 3,
+    "passed": 2,
+    "failed": 1,
+    "pass_rate": 66.66666666666666,
+    "average_duration": 1.5,
+    "max_duration": 2.5,
+    "min_duration": 0.8,
+    "recent_tests": [
+      {
+        "test_name": "test_login",
+        "status": "passed",
+        "duration": 1.2,
+        "timestamp": "2025-08-20T00:24:46.390376",
+        "details": {}
+      },
+      {
+        "test_name": "test_api",
+        "status": "passed",
+        "duration": 0.8,
+        "timestamp": "2025-08-20T00:24:46.390376",
+        "details": {}
+      },
+      {
+        "test_name": "test_database",
+        "status": "failed",
+        "duration": 2.5,
+        "timestamp": "2025-08-20T00:24:46.390376",
+        "details": {
+          "error": "connection timeout"
+        }
+      }
+    ],
+    "test_trend": "insufficient_data"
+  },
+  "system_events": [
+    {
+      "type": "test_execution",
+      "data": {
+        "test_name": "test_login",
+        "status": "passed",
+        "duration": 1.2,
+        "timestamp": "2025-08-20T00:24:46.390376",
+        "details": {}
+      },
+      "timestamp": "2025-08-20T00:24:46.390376"
+    },
+    {
+      "type": "test_execution",
+      "data": {
+        "test_name": "test_api",
+        "status": "passed",
+        "duration": 0.8,
+        "timestamp": "2025-08-20T00:24:46.390376",
+        "details": {}
+      },
+      "timestamp": "2025-08-20T00:24:46.390376"
+    },
+    {
+      "type": "test_execution",
+      "data": {
+        "test_name": "test_database",
+        "status": "failed",
+        "duration": 2.5,
+        "timestamp": "2025-08-20T00:24:46.390376",
+        "details": {
+          "error": "connection timeout"
+        }
+      },
+      "timestamp": "2025-08-20T00:24:46.390376"
+    }
+  ],
+  "configuration": {
+    "collection_interval": 0.1,
+    "baselines": {
+      "cpu_threshold": 80.0,
+      "memory_threshold": 85.0,
+      "disk_threshold": 90.0,
+      "response_time_threshold": 1000
+    }
+  }
+}

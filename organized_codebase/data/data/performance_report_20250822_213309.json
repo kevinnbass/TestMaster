@@ -1,0 +1,353 @@
+{
+  "metadata": {
+    "generated_at": "2025-08-23T02:33:09.374318+00:00",
+    "profiling_duration_hours": 0.0016095808333333333,
+    "system_baseline": {
+      "timestamp": "2025-08-23T02:33:03.579827+00:00",
+      "cpu_count": 16,
+      "cpu_count_physical": 8,
+      "total_memory_gb": 37.84117889404297,
+      "available_memory_gb": 19.129074096679688,
+      "disk_usage": {
+        "/": {
+          "total_gb": 929.8193321228027,
+          "used_gb": 146.7441864013672,
+          "free_gb": 783.0751457214355,
+          "percent": 15.8
+        }
+      },
+      "network_interfaces": [
+        "Ethernet",
+        "Local Area Connection* 3",
+        "Local Area Connection* 4",
+        "Wi-Fi 2",
+        "Bluetooth Network Connection 2",
+        "Loopback Pseudo-Interface 1"
+      ],
+      "boot_time": "2025-08-22T16:12:59.597954",
+      "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "platform": "win32"
+    }
+  },
+  "summary": {
+    "total_cpu_profiles": 1,
+    "total_memory_profiles": 1,
+    "total_response_measurements": 3,
+    "total_database_queries": 2,
+    "total_network_measurements": 3,
+    "system_monitoring_points": 11,
+    "bottlenecks_identified": 2
+  },
+  "performance_metrics": {
+    "average_response_time": 0.2569182666654039,
+    "average_database_query_time": 0.42500000000000004,
+    "average_network_latency": 0.25666666666666665,
+    "total_memory_allocated_mb": 2.0546875,
+    "peak_cpu_usage": 14.8,
+    "peak_memory_usage": 49.7
+  },
+  "bottlenecks": [
+    {
+      "type": "response_time",
+      "severity": "high",
+      "description": "1 slow responses (>100ms) out of 3",
+      "recommendation": "Add caching, optimize database queries, implement async processing"
+    },
+    {
+      "type": "database",
+      "severity": "high",
+      "description": "1 slow database queries (>100ms)",
+      "recommendation": "Add database indexes, optimize queries, implement query caching"
+    }
+  ],
+  "recommendations": [
+    "[HIGH PRIORITY] Address high-severity bottlenecks immediately",
+    "  - RESPONSE_TIME: Add caching, optimize database queries, implement async processing",
+    "  - DATABASE: Add database indexes, optimize queries, implement query caching",
+    "GENERAL RECOMMENDATIONS:",
+    "  - Implement multi-layer caching (Redis + application-level)",
+    "  - Add performance monitoring and alerting system",
+    "  - Optimize database with proper indexing and query analysis",
+    "  - Implement async processing for I/O operations",
+    "  - Add load balancing and horizontal scaling capabilities",
+    "  - Use CDN for static assets and content delivery",
+    "  - Implement connection pooling for databases and external services",
+    "  - Add compression for API responses and static content",
+    "  - Optimize data structures and algorithms for critical paths",
+    "  - Implement graceful degradation and circuit breaker patterns"
+  ],
+  "raw_data": {
+    "start_time": "2025-08-23T02:33:03.579827+00:00",
+    "cpu_profiles": [
+      {
+        "operation_name": "cpu_intensive_test",
+        "timestamp": "2025-08-23T02:33:03.685590+00:00",
+        "duration_seconds": 0.08427099999971688,
+        "profile_file": "performance_data\\cpu_profile_cpu_intensive_test_1755916383.prof",
+        "top_functions": "         26 function calls in 0.084 seconds\n\n   Ordered by: cumulative time\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n        1    0.084    0.084    0.084    0.084 C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\performance_baseline_profiler.py:534(test_cpu_intensive_operation)\n        3    0.000    0.000    0.000    0.000 {built-in method builtins.next}\n        2    0.000    0.000    0.000    0.000 C:\\Users\\kbass\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextlib.py:141(__exit__)\n        2    0.000    0.000    0.000    0.000 C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\performance_baseline_profiler.py:216(measure_response_time)\n        1    0.000    0.000    0.000    0.000 {built-in method builtins.print}\n        1    0.000    0.000    0.000    0.000 C:\\Users\\kbass\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextlib.py:132(__enter__)\n        1    0.000    0.000    0.000    0.000 C:\\Users\\kbass\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextlib.py:299(helper)\n        2    0.000    0.000    0.000    0.000 C:\\Users\\kbass\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\encodings\\cp1252.py:18(encode)\n        1    0.000    0.000    0.000    0.000 {method 'isoformat' of 'datetime.datetime' objects}\n        2    0.000    0.000    0.000    0.000 {built-in method time.process_time}\n        1    0.000    0.000    0.000    0.000 C:\\Users\\kbass\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextlib.py:104(__init__)\n        1    0.000    0.000    0.000    0.000 C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\performance_baseline_profiler.py:122(profile_cpu)\n        1    0.000    0.000    0.000    0.000 {built-in method now}\n        2    0.000    0.000    0.000    0.000 {built-in method _codecs.charmap_encode}\n        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}\n        1    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}\n        2    0.000    0.000    0.000    0.000 {built-in method time.perf_counter}\n        1    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}\n\n\n",
+        "total_calls": 26,
+        "primitive_calls": 26
+      }
+    ],
+    "memory_profiles": [
+      {
+        "operation_name": "memory_intensive_test",
+        "timestamp": "2025-08-23T02:33:04.353259+00:00",
+        "start_memory_mb": 26.8125,
+        "end_memory_mb": 28.8671875,
+        "memory_delta_mb": 2.0546875,
+        "peak_memory_mb": 118.91015625,
+        "memory_timeline": [
+          26.96875,
+          27.07421875,
+          58.44921875,
+          78.87890625,
+          96.9375,
+          118.91015625,
+          28.8671875
+        ],
+        "memory_efficient": true
+      }
+    ],
+    "response_times": [
+      {
+        "operation_name": "cpu_intensive_test",
+        "operation_type": "computation",
+        "timestamp": "2025-08-23T02:33:03.684589+00:00",
+        "wall_time_seconds": 0.08399219999773777,
+        "cpu_time_seconds": 0.078125,
+        "efficiency_ratio": 0.9301458945247797
+      },
+      {
+        "operation_name": "memory_intensive_test",
+        "operation_type": "memory_allocation",
+        "timestamp": "2025-08-23T02:33:04.354520+00:00",
+        "wall_time_seconds": 0.6680372999981046,
+        "cpu_time_seconds": 0.1875,
+        "efficiency_ratio": 0.28067295044832374
+      },
+      {
+        "operation_name": "io_test",
+        "operation_type": "file_io",
+        "timestamp": "2025-08-23T02:33:04.373699+00:00",
+        "wall_time_seconds": 0.018725300000369316,
+        "cpu_time_seconds": 0.0,
+        "efficiency_ratio": 0.0
+      }
+    ],
+    "system_metrics": [
+      {
+        "timestamp": "2025-08-23T02:33:04.135176+00:00",
+        "system_cpu_percent": 0.0,
+        "system_memory_percent": 49.7,
+        "system_memory_available_gb": 19.037242889404297,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.075138092041,
+        "network_bytes_sent": 1048933805,
+        "network_bytes_recv": 589654438,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 88.4453125,
+        "process_memory_vms_mb": 81.984375,
+        "thread_count": 5
+      },
+      {
+        "timestamp": "2025-08-23T02:33:04.656399+00:00",
+        "system_cpu_percent": 14.8,
+        "system_memory_percent": 49.5,
+        "system_memory_available_gb": 19.092369079589844,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.0750045776367,
+        "network_bytes_sent": 1049202173,
+        "network_bytes_recv": 589684423,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 29.0234375,
+        "process_memory_vms_mb": 20.8828125,
+        "thread_count": 5
+      },
+      {
+        "timestamp": "2025-08-23T02:33:05.186995+00:00",
+        "system_cpu_percent": 7.9,
+        "system_memory_percent": 49.6,
+        "system_memory_available_gb": 19.08232879638672,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.0747032165527,
+        "network_bytes_sent": 1049205432,
+        "network_bytes_recv": 589688927,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 29.53515625,
+        "process_memory_vms_mb": 21.39453125,
+        "thread_count": 5
+      },
+      {
+        "timestamp": "2025-08-23T02:33:05.709409+00:00",
+        "system_cpu_percent": 11.2,
+        "system_memory_percent": 49.6,
+        "system_memory_available_gb": 19.074264526367188,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.0762786865234,
+        "network_bytes_sent": 1049274107,
+        "network_bytes_recv": 589697631,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 29.53515625,
+        "process_memory_vms_mb": 21.39453125,
+        "thread_count": 5
+      },
+      {
+        "timestamp": "2025-08-23T02:33:06.230766+00:00",
+        "system_cpu_percent": 6.9,
+        "system_memory_percent": 49.6,
+        "system_memory_available_gb": 19.090164184570312,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.0762138366699,
+        "network_bytes_sent": 1049624547,
+        "network_bytes_recv": 589718270,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 29.015625,
+        "process_memory_vms_mb": 20.87109375,
+        "thread_count": 5
+      },
+      {
+        "timestamp": "2025-08-23T02:33:06.747505+00:00",
+        "system_cpu_percent": 4.1,
+        "system_memory_percent": 49.6,
+        "system_memory_available_gb": 19.08336639404297,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.0761375427246,
+        "network_bytes_sent": 1049625345,
+        "network_bytes_recv": 589721572,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 29.015625,
+        "process_memory_vms_mb": 20.87109375,
+        "thread_count": 5
+      },
+      {
+        "timestamp": "2025-08-23T02:33:07.264506+00:00",
+        "system_cpu_percent": 10.6,
+        "system_memory_percent": 49.6,
+        "system_memory_available_gb": 19.061229705810547,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.076057434082,
+        "network_bytes_sent": 1049638081,
+        "network_bytes_recv": 589733105,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 29.0234375,
+        "process_memory_vms_mb": 20.88671875,
+        "thread_count": 5
+      },
+      {
+        "timestamp": "2025-08-23T02:33:07.781241+00:00",
+        "system_cpu_percent": 4.1,
+        "system_memory_percent": 49.6,
+        "system_memory_available_gb": 19.06069564819336,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.0759239196777,
+        "network_bytes_sent": 1050223659,
+        "network_bytes_recv": 589800480,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 29.5234375,
+        "process_memory_vms_mb": 21.39453125,
+        "thread_count": 5
+      },
+      {
+        "timestamp": "2025-08-23T02:33:08.296494+00:00",
+        "system_cpu_percent": 6.0,
+        "system_memory_percent": 49.7,
+        "system_memory_available_gb": 19.05225372314453,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.0759239196777,
+        "network_bytes_sent": 1050228093,
+        "network_bytes_recv": 589805753,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 29.52734375,
+        "process_memory_vms_mb": 21.39453125,
+        "thread_count": 5
+      },
+      {
+        "timestamp": "2025-08-23T02:33:08.814967+00:00",
+        "system_cpu_percent": 7.2,
+        "system_memory_percent": 49.6,
+        "system_memory_available_gb": 19.070056915283203,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.075855255127,
+        "network_bytes_sent": 1050237133,
+        "network_bytes_recv": 589816694,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 29.02734375,
+        "process_memory_vms_mb": 20.87890625,
+        "thread_count": 5
+      },
+      {
+        "timestamp": "2025-08-23T02:33:09.330133+00:00",
+        "system_cpu_percent": 7.6,
+        "system_memory_percent": 49.6,
+        "system_memory_available_gb": 19.078914642333984,
+        "disk_percent": 15.8,
+        "disk_free_gb": 783.0757331848145,
+        "network_bytes_sent": 1050239837,
+        "network_bytes_recv": 589820434,
+        "process_cpu_percent": 0.0,
+        "process_memory_mb": 29.02734375,
+        "process_memory_vms_mb": 20.87890625,
+        "thread_count": 5
+      }
+    ],
+    "database_queries": [
+      {
+        "timestamp": "2025-08-23T02:33:09.374318+00:00",
+        "query": "SELECT * FROM test_table",
+        "execution_time_seconds": 0.05,
+        "result_count": 100,
+        "queries_per_second": 20.0,
+        "performance_tier": "good"
+      },
+      {
+        "timestamp": "2025-08-23T02:33:09.374318+00:00",
+        "query": "SELECT COUNT(*) FROM large_table",
+        "execution_time_seconds": 0.8,
+        "result_count": 1,
+        "queries_per_second": 1.25,
+        "performance_tier": "acceptable"
+      }
+    ],
+    "network_metrics": [
+      {
+        "timestamp": "2025-08-23T02:33:09.374318+00:00",
+        "endpoint": "/api/health",
+        "latency_seconds": 0.02,
+        "status_code": 200,
+        "success": true,
+        "performance_tier": "excellent"
+      },
+      {
+        "timestamp": "2025-08-23T02:33:09.374318+00:00",
+        "endpoint": "/api/data",
+        "latency_seconds": 0.15,
+        "status_code": 200,
+        "success": true,
+        "performance_tier": "acceptable"
+      },
+      {
+        "timestamp": "2025-08-23T02:33:09.374318+00:00",
+        "endpoint": "/api/slow",
+        "latency_seconds": 0.6,
+        "status_code": 200,
+        "success": true,
+        "performance_tier": "poor"
+      }
+    ],
+    "bottlenecks": [
+      {
+        "type": "response_time",
+        "severity": "high",
+        "description": "1 slow responses (>100ms) out of 3",
+        "recommendation": "Add caching, optimize database queries, implement async processing"
+      },
+      {
+        "type": "database",
+        "severity": "high",
+        "description": "1 slow database queries (>100ms)",
+        "recommendation": "Add database indexes, optimize queries, implement query caching"
+      }
+    ]
+  }
+}

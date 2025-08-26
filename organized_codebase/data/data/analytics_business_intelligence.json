@@ -1,0 +1,51 @@
+{
+  "kpis": {
+    "system_uptime": 0.9987,
+    "user_satisfaction": 0.87,
+    "cost_efficiency": 0.78,
+    "performance_score": 0.84,
+    "competitive_position": 0.92,
+    "innovation_index": 0.88,
+    "scalability_rating": 0.85
+  },
+  "insights": {
+    "revenue_impact_analysis": {
+      "current_impact": "$1.2M annual savings",
+      "projected_impact": "$2.1M annual by Q4",
+      "key_drivers": [
+        "Performance optimization",
+        "Automation gains",
+        "Reduced downtime"
+      ]
+    },
+    "competitive_analysis": {
+      "market_position": "Leading",
+      "key_advantages": [
+        "Advanced AI capabilities",
+        "Real-time analytics",
+        "Enterprise security"
+      ],
+      "differentiation_score": 0.94
+    },
+    "growth_opportunities": {
+      "immediate": [
+        "API expansion",
+        "Mobile integration"
+      ],
+      "medium_term": [
+        "International markets",
+        "Industry verticals"
+      ],
+      "long_term": [
+        "Platform ecosystem",
+        "AI services marketplace"
+      ]
+    }
+  },
+  "recommendations": [
+    "Invest in API infrastructure expansion",
+    "Develop mobile-first user experience",
+    "Strengthen security compliance framework",
+    "Build partner ecosystem strategy"
+  ]
+}

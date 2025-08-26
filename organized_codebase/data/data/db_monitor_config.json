@@ -1,0 +1,20 @@
+{
+  "databases": {
+    "cache": {
+      "type": "sqlite",
+      "path": "./cache/cache.db",
+      "enabled": true
+    },
+    "deduplication": {
+      "type": "sqlite",
+      "path": "./data/deduplication.db",
+      "enabled": true
+    }
+  },
+  "monitoring_interval": 30,
+  "alert_thresholds": {
+    "cpu_usage": 80,
+    "memory_usage_mb": 1000,
+    "connection_count": 50
+  }
+}

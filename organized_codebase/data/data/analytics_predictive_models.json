@@ -1,0 +1,70 @@
+{
+  "performance": {
+    "model_type": "time_series_forecast",
+    "predictions": {
+      "cpu_usage_24h": 0.72,
+      "memory_usage_24h": 0.78,
+      "response_time_24h": 0.18,
+      "throughput_24h": 920
+    },
+    "confidence_intervals": {
+      "cpu_usage_24h": [
+        0.65,
+        0.79
+      ],
+      "memory_usage_24h": [
+        0.71,
+        0.85
+      ],
+      "response_time_24h": [
+        0.14,
+        0.22
+      ],
+      "throughput_24h": [
+        850,
+        990
+      ]
+    },
+    "accuracy": 0.87
+  },
+  "usage": {
+    "model_type": "growth_forecast",
+    "predictions": {
+      "active_users_7d": 1420,
+      "api_calls_7d": 52000,
+      "feature_adoption_7d": 0.84,
+      "retention_rate_7d": 0.88
+    },
+    "growth_rates": {
+      "active_users": 0.13,
+      "api_calls": 0.16,
+      "feature_adoption": 0.08,
+      "retention_rate": 0.03
+    },
+    "accuracy": 0.82
+  },
+  "anomaly": {
+    "model_type": "anomaly_detection",
+    "anomaly_probability": 0.15,
+    "risk_factors": [
+      {
+        "factor": "high_cpu_sustained",
+        "probability": 0.08
+      },
+      {
+        "factor": "memory_leak_pattern",
+        "probability": 0.04
+      },
+      {
+        "factor": "unusual_traffic_spike",
+        "probability": 0.03
+      }
+    ],
+    "recommended_actions": [
+      "Monitor CPU usage trends",
+      "Check memory allocation patterns",
+      "Prepare for traffic scaling"
+    ],
+    "accuracy": 0.91
+  }
+}

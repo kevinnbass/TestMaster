@@ -1,0 +1,20 @@
+{
+  "cache": [
+    {
+      "timestamp": "2025-08-22T05:08:10.826401",
+      "size_mb": 0.03515625,
+      "table_count": 1,
+      "record_count": 102,
+      "index_count": 3
+    }
+  ],
+  "deduplication": [
+    {
+      "timestamp": "2025-08-22T05:08:10.829400",
+      "size_mb": 0.03125,
+      "table_count": 2,
+      "record_count": 0,
+      "index_count": 5
+    }
+  ]
+}

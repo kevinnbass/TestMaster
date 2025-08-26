@@ -1,0 +1,58 @@
+{
+  "profiles": {
+    "6a02dd6e819222eeb12c8d7ae2a84de7": {
+      "query_hash": "6a02dd6e819222eeb12c8d7ae2a84de7",
+      "original_query": "SELECT * FROM users WHERE name = 'John'",
+      "execution_count": 1,
+      "avg_execution_time_ms": 75.0,
+      "min_execution_time_ms": 75.0,
+      "max_execution_time_ms": 75.0,
+      "total_execution_time_ms": 75.0,
+      "last_execution": "2025-08-22T05:18:01.742008",
+      "optimization_applied": false,
+      "performance_trend": "stable"
+    },
+    "1517f5abea993ae0c334f60e3668ca1f": {
+      "query_hash": "1517f5abea993ae0c334f60e3668ca1f",
+      "original_query": "SELECT COUNT(*) FROM orders WHERE status = 'pending'",
+      "execution_count": 1,
+      "avg_execution_time_ms": 100.0,
+      "min_execution_time_ms": 100.0,
+      "max_execution_time_ms": 100.0,
+      "total_execution_time_ms": 100.0,
+      "last_execution": "2025-08-22T05:18:01.744041",
+      "optimization_applied": false,
+      "performance_trend": "stable"
+    },
+    "40f38c50bfa0f6bc791071b546be5902": {
+      "query_hash": "40f38c50bfa0f6bc791071b546be5902",
+      "original_query": "SELECT u.name, o.total FROM users u JOIN orders o ON u.id = o.user_id ORDER BY o.total DESC LIMIT 10",
+      "execution_count": 1,
+      "avg_execution_time_ms": 125.0,
+      "min_execution_time_ms": 125.0,
+      "max_execution_time_ms": 125.0,
+      "total_execution_time_ms": 125.0,
+      "last_execution": "2025-08-22T05:18:01.746463",
+      "optimization_applied": false,
+      "performance_trend": "stable"
+    },
+    "39a500f0ea4b3d4f55c4dc656e15dba7": {
+      "query_hash": "39a500f0ea4b3d4f55c4dc656e15dba7",
+      "original_query": "SELECT * FROM products WHERE description LIKE '%expensive%'",
+      "execution_count": 1,
+      "avg_execution_time_ms": 150.0,
+      "min_execution_time_ms": 150.0,
+      "max_execution_time_ms": 150.0,
+      "total_execution_time_ms": 150.0,
+      "last_execution": "2025-08-22T05:18:01.747473",
+      "optimization_applied": false,
+      "performance_trend": "stable"
+    }
+  },
+  "stats": {
+    "total_optimizations": 0,
+    "successful_optimizations": 0,
+    "avg_performance_gain": 0.0,
+    "patterns_learned": 0
+  }
+}

@@ -1,0 +1,1124 @@
+#!/usr/bin/env python3
+"""
+Unified Security Scanner
+========================
+Comprehensive security scanning system that combines all security layers including
+real-time monitoring, classical analysis, quality correlation, and intelligent testing
+into a single unified interface.
+"""
+
+import ast
+import os
+import re
+import json
+import time
+import hashlib
+import asyncio
+import threading
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Set, Tuple, Union
+from dataclasses import dataclass, field, asdict
+from collections import defaultdict, deque
+from enum import Enum
+import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# Import all security components
+from enhanced_realtime_security_monitor import (
+    EnhancedRealtimeSecurityMonitor, SecurityEvent, RiskProfile, SecurityTrend,
+    SecurityMetricsIntegrator, EnhancedSecurityAnalyzer
+)
+from enhanced_security_intelligence_agent import (
+    EnhancedSecurityIntelligenceAgent, EnhancedSecurityFinding, IntelligentTestSuite,
+    ClassicalAnalysisIntegrator, ClassicalAnalysisData
+)
+from live_code_quality_monitor import LiveCodeQualityMonitor, QualitySnapshot
+from performance_profiler import PerformanceProfiler
+from realtime_metrics_collector import RealtimeMetricsCollector
+
+# Import base security components
+from testmaster.security.universal_scanner import UniversalSecurityScanner, VulnerabilityType, SeverityLevel
+from testmaster.security.compliance_framework import ComplianceFramework, ComplianceStandard
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+@dataclass
+class UnifiedScanResult:
+    """Comprehensive security scan result."""
+    scan_id: str
+    timestamp: float
+    target_path: str
+    scan_duration: float
+    
+    # Core findings
+    vulnerabilities: List[Dict[str, Any]]
+    compliance_violations: List[Dict[str, Any]]
+    quality_issues: List[Dict[str, Any]]
+    performance_concerns: List[Dict[str, Any]]
+    
+    # Risk assessment
+    overall_risk_score: float
+    risk_distribution: Dict[str, int]
+    risk_trends: Dict[str, Any]
+    
+    # Correlations
+    security_quality_correlation: Dict[str, Any]
+    security_performance_correlation: Dict[str, Any]
+    complexity_vulnerability_correlation: Dict[str, Any]
+    
+    # Intelligence
+    enhanced_findings: List[EnhancedSecurityFinding]
+    intelligent_test_suite: Optional[IntelligentTestSuite]
+    remediation_plan: Dict[str, Any]
+    
+    # Metrics
+    scan_metrics: Dict[str, Any]
+    coverage_metrics: Dict[str, float]
+    confidence_score: float
+
+@dataclass
+class ScanConfiguration:
+    """Configuration for unified security scan."""
+    # Scan targets
+    target_paths: List[str]
+    file_patterns: List[str] = field(default_factory=lambda: ['*.py'])
+    exclude_patterns: List[str] = field(default_factory=list)
+    
+    # Scan options
+    enable_real_time_monitoring: bool = True
+    enable_classical_analysis: bool = True
+    enable_quality_correlation: bool = True
+    enable_performance_profiling: bool = True
+    enable_compliance_checking: bool = True
+    enable_intelligent_testing: bool = True
+    
+    # Thresholds
+    risk_threshold: float = 70.0
+    quality_threshold: float = 60.0
+    complexity_threshold: float = 15.0
+    
+    # Performance
+    parallel_workers: int = 4
+    scan_timeout: int = 300  # seconds
+    cache_results: bool = True
+    
+    # Output
+    generate_report: bool = True
+    report_format: str = 'json'  # 'json', 'html', 'markdown'
+    output_directory: str = './security_reports'
+
+class SecurityLayerOrchestrator:
+    """Orchestrates all security layers for unified scanning."""
+    
+    def __init__(self):
+        self.layers = {
+            'base_scanner': UniversalSecurityScanner(),
+            'compliance': ComplianceFramework(),
+            'realtime_monitor': EnhancedRealtimeSecurityMonitor(),
+            'intelligence_agent': EnhancedSecurityIntelligenceAgent(),
+            'quality_monitor': LiveCodeQualityMonitor(),
+            'performance_profiler': PerformanceProfiler(),
+            'metrics_collector': RealtimeMetricsCollector(),
+            'classical_integrator': ClassicalAnalysisIntegrator(),
+            'metrics_integrator': SecurityMetricsIntegrator(),
+            'enhanced_analyzer': EnhancedSecurityAnalyzer()
+        }
+        
+        self.scan_cache = {}
+        self.active_scans = {}
+        self.executor = ThreadPoolExecutor(max_workers=4)
+    
+    async def orchestrate_scan(self, target_path: str, config: ScanConfiguration) -> Dict[str, Any]:
+        """Orchestrate security scan across all layers."""
+        scan_id = f"orchestrated_{int(time.time())}_{hash(target_path)}"
+        results = {}
+        
+        try:
+            # Start all layers in parallel
+            tasks = []
+            
+            if config.enable_real_time_monitoring:
+                tasks.append(self._run_realtime_monitoring(target_path))
+            
+            if config.enable_classical_analysis:
+                tasks.append(self._run_classical_analysis(target_path))
+            
+            if config.enable_quality_correlation:
+                tasks.append(self._run_quality_analysis(target_path))
+            
+            if config.enable_performance_profiling:
+                tasks.append(self._run_performance_profiling(target_path))
+            
+            if config.enable_compliance_checking:
+                tasks.append(self._run_compliance_checking(target_path))
+            
+            # Wait for all tasks to complete
+            if tasks:
+                completed_results = await asyncio.gather(*tasks, return_exceptions=True)
+                
+                for i, result in enumerate(completed_results):
+                    if isinstance(result, Exception):
+                        logger.error(f"Layer task {i} failed: {result}")
+                    else:
+                        results.update(result)
+            
+            # Correlate results
+            correlations = self._correlate_layer_results(results)
+            results['correlations'] = correlations
+            
+            # Generate intelligence
+            if config.enable_intelligent_testing:
+                intelligence = await self._generate_security_intelligence(target_path, results)
+                results['intelligence'] = intelligence
+            
+            return results
+            
+        except Exception as e:
+            logger.error(f"Orchestration error for {target_path}: {e}")
+            return {'error': str(e)}
+    
+    async def _run_realtime_monitoring(self, target_path: str) -> Dict[str, Any]:
+        """Run real-time security monitoring."""
+        try:
+            monitor = self.layers['realtime_monitor']
+            analysis = await asyncio.to_thread(
+                monitor.analyze_with_correlation, target_path
+            )
+            
+            # Get security trends
+            trends = monitor.get_security_trends(3600)  # Last hour
+            
+            # Get risk dashboard
+            dashboard = monitor.get_risk_dashboard()
+            
+            return {
+                'realtime_analysis': analysis,
+                'security_trends': trends,
+                'risk_dashboard': dashboard
+            }
+        except Exception as e:
+            logger.error(f"Real-time monitoring error: {e}")
+            return {'realtime_error': str(e)}
+    
+    async def _run_classical_analysis(self, target_path: str) -> Dict[str, Any]:
+        """Run classical code analysis."""
+        try:
+            integrator = self.layers['classical_integrator']
+            classical_data = await asyncio.to_thread(
+                integrator.analyze_file_classical, target_path
+            )
+            
+            return {
+                'classical_analysis': asdict(classical_data) if classical_data else None
+            }
+        except Exception as e:
+            logger.error(f"Classical analysis error: {e}")
+            return {'classical_error': str(e)}
+    
+    async def _run_quality_analysis(self, target_path: str) -> Dict[str, Any]:
+        """Run quality analysis."""
+        try:
+            monitor = self.layers['quality_monitor']
+            quality_snapshot = await asyncio.to_thread(
+                monitor.analyze_file_quality, target_path
+            )
+            
+            if quality_snapshot:
+                # Get quality history
+                history = monitor.get_file_quality_history(target_path, hours=24)
+                
+                return {
+                    'quality_analysis': asdict(quality_snapshot),
+                    'quality_history': [asdict(h) for h in history],
+                    'quality_statistics': monitor.get_quality_statistics()
+                }
+            
+            return {'quality_analysis': None}
+            
+        except Exception as e:
+            logger.error(f"Quality analysis error: {e}")
+            return {'quality_error': str(e)}
+    
+    async def _run_performance_profiling(self, target_path: str) -> Dict[str, Any]:
+        """Run performance profiling."""
+        try:
+            profiler = self.layers['performance_profiler']
+            
+            # Start profiling
+            session_id = f"unified_scan_{int(time.time())}"
+            profiler.start_profiling(session_id)
+            
+            # Simulate some analysis work
+            await asyncio.sleep(0.1)
+            
+            # Stop profiling
+            profile_data = profiler.stop_profiling(session_id)
+            
+            # Get performance summary
+            summary = profiler.get_performance_summary()
+            
+            return {
+                'performance_profile': asdict(profile_data) if profile_data else None,
+                'performance_summary': summary
+            }
+            
+        except Exception as e:
+            logger.error(f"Performance profiling error: {e}")
+            return {'performance_error': str(e)}
+    
+    async def _run_compliance_checking(self, target_path: str) -> Dict[str, Any]:
+        """Run compliance checking."""
+        try:
+            framework = self.layers['compliance']
+            
+            # Check multiple compliance standards
+            standards = [
+                ComplianceStandard.OWASP_ASVS,
+                ComplianceStandard.PCI_DSS,
+                ComplianceStandard.GDPR,
+                ComplianceStandard.SOX
+            ]
+            
+            compliance_results = {}
+            for standard in standards:
+                result = await asyncio.to_thread(
+                    framework.check_compliance, target_path, standard
+                )
+                compliance_results[standard.value] = result
+            
+            return {
+                'compliance_results': compliance_results,
+                'compliance_summary': self._summarize_compliance(compliance_results)
+            }
+            
+        except Exception as e:
+            logger.error(f"Compliance checking error: {e}")
+            return {'compliance_error': str(e)}
+    
+    async def _generate_security_intelligence(self, target_path: str, 
+                                            layer_results: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate security intelligence from layer results."""
+        try:
+            agent = self.layers['intelligence_agent']
+            
+            # Prepare context from layer results
+            context = {
+                'realtime_analysis': layer_results.get('realtime_analysis'),
+                'classical_analysis': layer_results.get('classical_analysis'),
+                'quality_analysis': layer_results.get('quality_analysis'),
+                'performance_profile': layer_results.get('performance_profile')
+            }
+            
+            # Generate intelligence
+            intelligence = await asyncio.to_thread(
+                agent.analyze_security_with_classical_context, target_path, context
+            )
+            
+            return intelligence
+            
+        except Exception as e:
+            logger.error(f"Security intelligence generation error: {e}")
+            return {'intelligence_error': str(e)}
+    
+    def _correlate_layer_results(self, results: Dict[str, Any]) -> Dict[str, Any]:
+        """Correlate results from different security layers."""
+        correlations = {}
+        
+        # Quality-Security correlation
+        if 'quality_analysis' in results and 'realtime_analysis' in results:
+            quality_data = results['quality_analysis']
+            security_data = results['realtime_analysis']
+            
+            if quality_data and security_data:
+                correlations['quality_security'] = self._calculate_quality_security_correlation(
+                    quality_data, security_data
+                )
+        
+        # Performance-Security correlation
+        if 'performance_profile' in results and 'realtime_analysis' in results:
+            performance_data = results['performance_profile']
+            security_data = results['realtime_analysis']
+            
+            if performance_data and security_data:
+                correlations['performance_security'] = self._calculate_performance_security_correlation(
+                    performance_data, security_data
+                )
+        
+        # Complexity-Vulnerability correlation
+        if 'classical_analysis' in results and 'realtime_analysis' in results:
+            classical_data = results['classical_analysis']
+            security_data = results['realtime_analysis']
+            
+            if classical_data and security_data:
+                correlations['complexity_vulnerability'] = self._calculate_complexity_vulnerability_correlation(
+                    classical_data, security_data
+                )
+        
+        return correlations
+    
+    def _calculate_quality_security_correlation(self, quality_data: Dict, 
+                                              security_data: Dict) -> Dict[str, Any]:
+        """Calculate correlation between quality and security."""
+        quality_score = quality_data.get('overall_score', 50.0)
+        security_alerts = len(security_data.get('alerts', []))
+        
+        # Lower quality often correlates with more security issues
+        correlation_strength = max(0, (100 - quality_score) / 100 * min(security_alerts / 5, 1.0))
+        
+        return {
+            'correlation_strength': correlation_strength,
+            'quality_score': quality_score,
+            'security_alert_count': security_alerts,
+            'insight': 'Strong correlation between low quality and security issues' if correlation_strength > 0.6 else 'Moderate correlation'
+        }
+    
+    def _calculate_performance_security_correlation(self, performance_data: Dict,
+                                                  security_data: Dict) -> Dict[str, Any]:
+        """Calculate correlation between performance and security."""
+        execution_time = performance_data.get('duration', 1.0)
+        memory_usage = performance_data.get('memory_usage', {}).get('delta_mb', 0)
+        security_alerts = len(security_data.get('alerts', []))
+        
+        # Performance issues might indicate security problems
+        performance_concern = (execution_time > 2.0) or (memory_usage > 100)
+        correlation_strength = 0.7 if performance_concern and security_alerts > 0 else 0.3
+        
+        return {
+            'correlation_strength': correlation_strength,
+            'execution_time': execution_time,
+            'memory_usage': memory_usage,
+            'security_alert_count': security_alerts,
+            'insight': 'Performance issues correlate with security vulnerabilities' if performance_concern else 'Low correlation'
+        }
+    
+    def _calculate_complexity_vulnerability_correlation(self, classical_data: Dict,
+                                                      security_data: Dict) -> Dict[str, Any]:
+        """Calculate correlation between complexity and vulnerabilities."""
+        complexity = classical_data.get('complexity_metrics', {}).get('cyclomatic_complexity', 1)
+        security_alerts = len(security_data.get('alerts', []))
+        
+        # High complexity often correlates with more vulnerabilities
+        correlation_strength = min(complexity / 20 * security_alerts / 5, 1.0)
+        
+        return {
+            'correlation_strength': correlation_strength,
+            'complexity_score': complexity,
+            'vulnerability_count': security_alerts,
+            'insight': 'High complexity strongly correlates with vulnerabilities' if correlation_strength > 0.6 else 'Moderate correlation'
+        }
+    
+    def _summarize_compliance(self, compliance_results: Dict[str, Any]) -> Dict[str, Any]:
+        """Summarize compliance checking results."""
+        total_standards = len(compliance_results)
+        compliant_standards = sum(1 for result in compliance_results.values() 
+                                 if result.get('compliant', False))
+        
+        return {
+            'total_standards_checked': total_standards,
+            'compliant_standards': compliant_standards,
+            'compliance_percentage': (compliant_standards / total_standards * 100) if total_standards > 0 else 0,
+            'non_compliant_standards': [
+                standard for standard, result in compliance_results.items()
+                if not result.get('compliant', False)
+            ]
+        }
+
+class UnifiedSecurityScanner:
+    """Main unified security scanner combining all security layers."""
+    
+    def __init__(self, config: Optional[ScanConfiguration] = None):
+        self.config = config or ScanConfiguration(target_paths=['.'])
+        self.orchestrator = SecurityLayerOrchestrator()
+        
+        # Scan management
+        self.scan_history = deque(maxlen=100)
+        self.active_scans = {}
+        self.scan_cache = {}
+        
+        # Statistics
+        self.scan_statistics = {
+            'total_scans': 0,
+            'successful_scans': 0,
+            'failed_scans': 0,
+            'total_vulnerabilities': 0,
+            'total_scan_time': 0.0
+        }
+        
+        self.logger = logging.getLogger(__name__)
+    
+    async def scan_async(self, target_path: Optional[str] = None) -> UnifiedScanResult:
+        """Perform asynchronous unified security scan."""
+        scan_start = time.time()
+        scan_id = f"unified_{int(scan_start)}_{hash(target_path or 'all')}"
+        
+        try:
+            # Determine targets
+            if target_path:
+                targets = [target_path]
+            else:
+                targets = self._discover_targets()
+            
+            self.logger.info(f"Starting unified security scan {scan_id}")
+            self.logger.info(f"Scanning {len(targets)} targets")
+            
+            # Initialize result aggregator
+            aggregated_results = {
+                'vulnerabilities': [],
+                'compliance_violations': [],
+                'quality_issues': [],
+                'performance_concerns': [],
+                'enhanced_findings': [],
+                'layer_results': {}
+            }
+            
+            # Scan each target
+            for target in targets:
+                self.logger.info(f"Scanning: {target}")
+                
+                # Check cache if enabled
+                if self.config.cache_results:
+                    cached_result = self._get_cached_result(target)
+                    if cached_result:
+                        self.logger.info(f"Using cached result for {target}")
+                        aggregated_results['layer_results'][target] = cached_result
+                        continue
+                
+                # Orchestrate scan across all layers
+                layer_results = await self.orchestrator.orchestrate_scan(target, self.config)
+                aggregated_results['layer_results'][target] = layer_results
+                
+                # Cache result if enabled
+                if self.config.cache_results:
+                    self._cache_result(target, layer_results)
+                
+                # Extract and aggregate findings
+                self._aggregate_findings(aggregated_results, layer_results)
+            
+            # Generate unified result
+            scan_duration = time.time() - scan_start
+            unified_result = self._create_unified_result(
+                scan_id, scan_start, targets, aggregated_results, scan_duration
+            )
+            
+            # Update statistics
+            self._update_statistics(unified_result)
+            
+            # Generate report if enabled
+            if self.config.generate_report:
+                await self._generate_report(unified_result)
+            
+            # Store in history
+            self.scan_history.append(unified_result)
+            
+            self.logger.info(f"Scan {scan_id} completed in {scan_duration:.2f} seconds")
+            return unified_result
+            
+        except Exception as e:
+            self.logger.error(f"Scan error: {e}")
+            self.scan_statistics['failed_scans'] += 1
+            raise
+    
+    def scan(self, target_path: Optional[str] = None) -> UnifiedScanResult:
+        """Perform synchronous unified security scan."""
+        return asyncio.run(self.scan_async(target_path))
+    
+    def _discover_targets(self) -> List[str]:
+        """Discover scan targets based on configuration."""
+        targets = []
+        
+        for base_path in self.config.target_paths:
+            base_path_obj = Path(base_path)
+            
+            if base_path_obj.is_file():
+                targets.append(str(base_path_obj))
+            elif base_path_obj.is_dir():
+                for pattern in self.config.file_patterns:
+                    for file_path in base_path_obj.rglob(pattern):
+                        # Check exclusions
+                        if not any(re.match(exclude, str(file_path)) 
+                                 for exclude in self.config.exclude_patterns):
+                            targets.append(str(file_path))
+        
+        return targets
+    
+    def _aggregate_findings(self, aggregated: Dict[str, Any], layer_results: Dict[str, Any]):
+        """Aggregate findings from layer results."""
+        # Extract vulnerabilities
+        if 'realtime_analysis' in layer_results:
+            realtime = layer_results['realtime_analysis']
+            if 'alerts' in realtime:
+                aggregated['vulnerabilities'].extend(realtime['alerts'])
+        
+        # Extract compliance violations
+        if 'compliance_results' in layer_results:
+            for standard, result in layer_results['compliance_results'].items():
+                if not result.get('compliant', False):
+                    aggregated['compliance_violations'].append({
+                        'standard': standard,
+                        'violations': result.get('violations', [])
+                    })
+        
+        # Extract quality issues
+        if 'quality_analysis' in layer_results:
+            quality = layer_results['quality_analysis']
+            if quality and 'metrics' in quality:
+                for metric in quality['metrics']:
+                    if metric.get('severity') in ['error', 'critical']:
+                        aggregated['quality_issues'].append(metric)
+        
+        # Extract performance concerns
+        if 'performance_profile' in layer_results:
+            performance = layer_results['performance_profile']
+            if performance:
+                if performance.get('duration', 0) > 2.0:
+                    aggregated['performance_concerns'].append({
+                        'type': 'slow_execution',
+                        'duration': performance['duration']
+                    })
+                
+                memory_delta = performance.get('memory_usage', {}).get('delta_mb', 0)
+                if memory_delta > 100:
+                    aggregated['performance_concerns'].append({
+                        'type': 'high_memory_usage',
+                        'memory_mb': memory_delta
+                    })
+        
+        # Extract enhanced findings
+        if 'intelligence' in layer_results:
+            intelligence = layer_results['intelligence']
+            enhanced = intelligence.get('enhanced_analysis', {})
+            if 'enhanced_findings' in enhanced:
+                aggregated['enhanced_findings'].extend(enhanced['enhanced_findings'])
+    
+    def _create_unified_result(self, scan_id: str, timestamp: float, targets: List[str],
+                              aggregated_results: Dict[str, Any], 
+                              scan_duration: float) -> UnifiedScanResult:
+        """Create unified scan result."""
+        # Calculate overall risk score
+        overall_risk = self._calculate_overall_risk(aggregated_results)
+        
+        # Calculate risk distribution
+        risk_distribution = self._calculate_risk_distribution(aggregated_results)
+        
+        # Extract correlations
+        all_correlations = {}
+        for target, layer_results in aggregated_results['layer_results'].items():
+            if 'correlations' in layer_results:
+                all_correlations[target] = layer_results['correlations']
+        
+        # Get best correlations
+        security_quality_corr = self._get_strongest_correlation(all_correlations, 'quality_security')
+        security_perf_corr = self._get_strongest_correlation(all_correlations, 'performance_security')
+        complexity_vuln_corr = self._get_strongest_correlation(all_correlations, 'complexity_vulnerability')
+        
+        # Extract intelligent test suite
+        test_suite = None
+        for layer_results in aggregated_results['layer_results'].values():
+            if 'intelligence' in layer_results:
+                enhanced = layer_results['intelligence'].get('enhanced_analysis', {})
+                if 'intelligent_test_suite' in enhanced:
+                    test_suite = enhanced['intelligent_test_suite']
+                    break
+        
+        # Generate remediation plan
+        remediation_plan = self._generate_remediation_plan(aggregated_results)
+        
+        # Calculate metrics
+        scan_metrics = {
+            'files_scanned': len(targets),
+            'total_findings': (
+                len(aggregated_results['vulnerabilities']) +
+                len(aggregated_results['compliance_violations']) +
+                len(aggregated_results['quality_issues']) +
+                len(aggregated_results['performance_concerns'])
+            ),
+            'critical_findings': len([v for v in aggregated_results['vulnerabilities'] 
+                                    if v.get('threat_level') == 'critical']),
+            'scan_duration': scan_duration,
+            'avg_scan_time_per_file': scan_duration / max(len(targets), 1)
+        }
+        
+        # Calculate coverage metrics
+        coverage_metrics = {
+            'security_coverage': 1.0 if aggregated_results['vulnerabilities'] else 0.0,
+            'compliance_coverage': 1.0 if aggregated_results['compliance_violations'] else 0.0,
+            'quality_coverage': 1.0 if aggregated_results['quality_issues'] else 0.0,
+            'performance_coverage': 1.0 if aggregated_results['performance_concerns'] else 0.0
+        }
+        
+        # Calculate confidence score
+        confidence_score = self._calculate_confidence_score(aggregated_results)
+        
+        # Extract risk trends (simplified)
+        risk_trends = {}
+        for layer_results in aggregated_results['layer_results'].values():
+            if 'security_trends' in layer_results:
+                risk_trends = layer_results['security_trends']
+                break
+        
+        return UnifiedScanResult(
+            scan_id=scan_id,
+            timestamp=timestamp,
+            target_path=', '.join(targets) if len(targets) <= 3 else f"{len(targets)} files",
+            scan_duration=scan_duration,
+            vulnerabilities=aggregated_results['vulnerabilities'],
+            compliance_violations=aggregated_results['compliance_violations'],
+            quality_issues=aggregated_results['quality_issues'],
+            performance_concerns=aggregated_results['performance_concerns'],
+            overall_risk_score=overall_risk,
+            risk_distribution=risk_distribution,
+            risk_trends=risk_trends,
+            security_quality_correlation=security_quality_corr,
+            security_performance_correlation=security_perf_corr,
+            complexity_vulnerability_correlation=complexity_vuln_corr,
+            enhanced_findings=aggregated_results['enhanced_findings'],
+            intelligent_test_suite=test_suite,
+            remediation_plan=remediation_plan,
+            scan_metrics=scan_metrics,
+            coverage_metrics=coverage_metrics,
+            confidence_score=confidence_score
+        )
+    
+    def _calculate_overall_risk(self, aggregated_results: Dict[str, Any]) -> float:
+        """Calculate overall risk score."""
+        risk_components = []
+        
+        # Vulnerability risk
+        vuln_count = len(aggregated_results['vulnerabilities'])
+        critical_vulns = len([v for v in aggregated_results['vulnerabilities']
+                            if v.get('threat_level') == 'critical'])
+        vuln_risk = min(vuln_count * 10 + critical_vulns * 20, 100)
+        risk_components.append(vuln_risk * 0.4)  # 40% weight
+        
+        # Compliance risk
+        compliance_violations = len(aggregated_results['compliance_violations'])
+        compliance_risk = min(compliance_violations * 15, 100)
+        risk_components.append(compliance_risk * 0.2)  # 20% weight
+        
+        # Quality risk
+        quality_issues = len(aggregated_results['quality_issues'])
+        quality_risk = min(quality_issues * 5, 100)
+        risk_components.append(quality_risk * 0.2)  # 20% weight
+        
+        # Performance risk
+        perf_concerns = len(aggregated_results['performance_concerns'])
+        perf_risk = min(perf_concerns * 10, 100)
+        risk_components.append(perf_risk * 0.2)  # 20% weight
+        
+        return sum(risk_components)
+    
+    def _calculate_risk_distribution(self, aggregated_results: Dict[str, Any]) -> Dict[str, int]:
+        """Calculate risk distribution."""
+        distribution = {'critical': 0, 'high': 0, 'medium': 0, 'low': 0}
+        
+        for vuln in aggregated_results['vulnerabilities']:
+            threat_level = vuln.get('threat_level', 'medium')
+            if threat_level in distribution:
+                distribution[threat_level] += 1
+        
+        return distribution
+    
+    def _get_strongest_correlation(self, all_correlations: Dict[str, Dict], 
+                                  correlation_type: str) -> Dict[str, Any]:
+        """Get strongest correlation of a specific type."""
+        strongest = {'correlation_strength': 0}
+        
+        for target, correlations in all_correlations.items():
+            if correlation_type in correlations:
+                corr = correlations[correlation_type]
+                if corr.get('correlation_strength', 0) > strongest['correlation_strength']:
+                    strongest = corr
+        
+        return strongest
+    
+    def _generate_remediation_plan(self, aggregated_results: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate comprehensive remediation plan."""
+        plan = {
+            'immediate_actions': [],
+            'short_term_actions': [],
+            'long_term_actions': [],
+            'estimated_effort': 0,  # hours
+            'priority_order': []
+        }
+        
+        # Immediate actions for critical vulnerabilities
+        critical_vulns = [v for v in aggregated_results['vulnerabilities']
+                        if v.get('threat_level') == 'critical']
+        
+        for vuln in critical_vulns[:5]:  # Top 5 critical
+            plan['immediate_actions'].append({
+                'action': f"Fix {vuln.get('title', 'vulnerability')}",
+                'description': vuln.get('description', ''),
+                'estimated_hours': 4
+            })
+            plan['estimated_effort'] += 4
+        
+        # Short-term actions for high-risk issues
+        high_vulns = [v for v in aggregated_results['vulnerabilities']
+                     if v.get('threat_level') == 'high']
+        
+        for vuln in high_vulns[:10]:  # Top 10 high
+            plan['short_term_actions'].append({
+                'action': f"Address {vuln.get('title', 'vulnerability')}",
+                'description': vuln.get('description', ''),
+                'estimated_hours': 2
+            })
+            plan['estimated_effort'] += 2
+        
+        # Long-term actions for quality and performance
+        if aggregated_results['quality_issues']:
+            plan['long_term_actions'].append({
+                'action': 'Improve code quality',
+                'description': f"Address {len(aggregated_results['quality_issues'])} quality issues",
+                'estimated_hours': len(aggregated_results['quality_issues']) * 0.5
+            })
+            plan['estimated_effort'] += len(aggregated_results['quality_issues']) * 0.5
+        
+        # Priority order
+        plan['priority_order'] = (
+            [a['action'] for a in plan['immediate_actions']] +
+            [a['action'] for a in plan['short_term_actions'][:5]] +
+            [a['action'] for a in plan['long_term_actions'][:3]]
+        )
+        
+        return plan
+    
+    def _calculate_confidence_score(self, aggregated_results: Dict[str, Any]) -> float:
+        """Calculate confidence score for scan results."""
+        confidence_factors = []
+        
+        # Factor 1: Coverage (how many layers succeeded)
+        total_targets = len(aggregated_results['layer_results'])
+        successful_layers = sum(
+            1 for layer_results in aggregated_results['layer_results'].values()
+            if 'error' not in str(layer_results).lower()
+        )
+        coverage_confidence = (successful_layers / max(total_targets, 1))
+        confidence_factors.append(coverage_confidence * 0.3)
+        
+        # Factor 2: Correlation strength
+        max_correlation = 0
+        for layer_results in aggregated_results['layer_results'].values():
+            if 'correlations' in layer_results:
+                for corr_type, corr_data in layer_results['correlations'].items():
+                    if isinstance(corr_data, dict):
+                        max_correlation = max(max_correlation, 
+                                            corr_data.get('correlation_strength', 0))
+        confidence_factors.append(max_correlation * 0.3)
+        
+        # Factor 3: Enhanced findings quality
+        if aggregated_results['enhanced_findings']:
+            avg_confidence = sum(f.get('confidence', 0.5) for f in aggregated_results['enhanced_findings']) / len(aggregated_results['enhanced_findings'])
+            confidence_factors.append(avg_confidence * 0.4)
+        else:
+            confidence_factors.append(0.2)  # Base confidence
+        
+        return sum(confidence_factors)
+    
+    def _update_statistics(self, result: UnifiedScanResult):
+        """Update scan statistics."""
+        self.scan_statistics['total_scans'] += 1
+        self.scan_statistics['successful_scans'] += 1
+        self.scan_statistics['total_vulnerabilities'] += len(result.vulnerabilities)
+        self.scan_statistics['total_scan_time'] += result.scan_duration
+    
+    def _get_cached_result(self, target: str) -> Optional[Dict[str, Any]]:
+        """Get cached scan result if available and fresh."""
+        cache_key = hashlib.md5(target.encode()).hexdigest()
+        
+        if cache_key in self.scan_cache:
+            cached = self.scan_cache[cache_key]
+            # Check if cache is fresh (5 minutes)
+            if time.time() - cached['timestamp'] < 300:
+                return cached['result']
+        
+        return None
+    
+    def _cache_result(self, target: str, result: Dict[str, Any]):
+        """Cache scan result."""
+        cache_key = hashlib.md5(target.encode()).hexdigest()
+        self.scan_cache[cache_key] = {
+            'result': result,
+            'timestamp': time.time()
+        }
+    
+    async def _generate_report(self, result: UnifiedScanResult):
+        """Generate security scan report."""
+        try:
+            output_dir = Path(self.config.output_directory)
+            output_dir.mkdir(parents=True, exist_ok=True)
+            
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            
+            if self.config.report_format == 'json':
+                report_file = output_dir / f"security_report_{timestamp}.json"
+                with open(report_file, 'w') as f:
+                    json.dump(asdict(result), f, indent=2, default=str)
+                self.logger.info(f"Report saved to: {report_file}")
+            
+            elif self.config.report_format == 'html':
+                report_file = output_dir / f"security_report_{timestamp}.html"
+                html_content = self._generate_html_report(result)
+                with open(report_file, 'w') as f:
+                    f.write(html_content)
+                self.logger.info(f"HTML report saved to: {report_file}")
+            
+            elif self.config.report_format == 'markdown':
+                report_file = output_dir / f"security_report_{timestamp}.md"
+                md_content = self._generate_markdown_report(result)
+                with open(report_file, 'w') as f:
+                    f.write(md_content)
+                self.logger.info(f"Markdown report saved to: {report_file}")
+            
+        except Exception as e:
+            self.logger.error(f"Report generation error: {e}")
+    
+    def _generate_html_report(self, result: UnifiedScanResult) -> str:
+        """Generate HTML report."""
+        html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Unified Security Scan Report</title>
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 20px; }}
+                .header {{ background: #2c3e50; color: white; padding: 20px; }}
+                .section {{ margin: 20px 0; padding: 15px; border: 1px solid #ddd; }}
+                .critical {{ color: #e74c3c; font-weight: bold; }}
+                .high {{ color: #e67e22; font-weight: bold; }}
+                .medium {{ color: #f39c12; }}
+                .low {{ color: #95a5a6; }}
+                .metric {{ display: inline-block; margin: 10px; padding: 10px; background: #ecf0f1; }}
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>Unified Security Scan Report</h1>
+                <p>Scan ID: {result.scan_id}</p>
+                <p>Timestamp: {datetime.fromtimestamp(result.timestamp).strftime('%Y-%m-%d %H:%M:%S')}</p>
+                <p>Duration: {result.scan_duration:.2f} seconds</p>
+            </div>
+            
+            <div class="section">
+                <h2>Risk Assessment</h2>
+                <div class="metric">Overall Risk Score: <span class="{'critical' if result.overall_risk_score >= 80 else 'high' if result.overall_risk_score >= 60 else 'medium'}">{result.overall_risk_score:.1f}</span></div>
+                <div class="metric">Confidence Score: {result.confidence_score:.2%}</div>
+            </div>
+            
+            <div class="section">
+                <h2>Findings Summary</h2>
+                <p>Total Vulnerabilities: {len(result.vulnerabilities)}</p>
+                <p>Compliance Violations: {len(result.compliance_violations)}</p>
+                <p>Quality Issues: {len(result.quality_issues)}</p>
+                <p>Performance Concerns: {len(result.performance_concerns)}</p>
+            </div>
+            
+            <div class="section">
+                <h2>Remediation Plan</h2>
+                <h3>Immediate Actions ({len(result.remediation_plan.get('immediate_actions', []))})</h3>
+                <ul>
+                    {''.join(f"<li>{action['action']}</li>" for action in result.remediation_plan.get('immediate_actions', [])[:5])}
+                </ul>
+                <p>Estimated Total Effort: {result.remediation_plan.get('estimated_effort', 0):.1f} hours</p>
+            </div>
+        </body>
+        </html>
+        """
+        return html
+    
+    def _generate_markdown_report(self, result: UnifiedScanResult) -> str:
+        """Generate Markdown report."""
+        md = f"""# Unified Security Scan Report
+
+## Scan Information
+- **Scan ID**: {result.scan_id}
+- **Timestamp**: {datetime.fromtimestamp(result.timestamp).strftime('%Y-%m-%d %H:%M:%S')}
+- **Duration**: {result.scan_duration:.2f} seconds
+- **Target**: {result.target_path}
+
+## Risk Assessment
+- **Overall Risk Score**: {result.overall_risk_score:.1f}/100
+- **Confidence Score**: {result.confidence_score:.2%}
+
+## Risk Distribution
+- Critical: {result.risk_distribution.get('critical', 0)}
+- High: {result.risk_distribution.get('high', 0)}
+- Medium: {result.risk_distribution.get('medium', 0)}
+- Low: {result.risk_distribution.get('low', 0)}
+
+## Findings Summary
+- **Total Vulnerabilities**: {len(result.vulnerabilities)}
+- **Compliance Violations**: {len(result.compliance_violations)}
+- **Quality Issues**: {len(result.quality_issues)}
+- **Performance Concerns**: {len(result.performance_concerns)}
+
+## Correlations
+### Security-Quality Correlation
+- Strength: {result.security_quality_correlation.get('correlation_strength', 0):.2f}
+- Insight: {result.security_quality_correlation.get('insight', 'N/A')}
+
+### Security-Performance Correlation
+- Strength: {result.security_performance_correlation.get('correlation_strength', 0):.2f}
+- Insight: {result.security_performance_correlation.get('insight', 'N/A')}
+
+### Complexity-Vulnerability Correlation
+- Strength: {result.complexity_vulnerability_correlation.get('correlation_strength', 0):.2f}
+- Insight: {result.complexity_vulnerability_correlation.get('insight', 'N/A')}
+
+## Remediation Plan
+### Immediate Actions
+{chr(10).join(f"1. {action['action']}" for action in result.remediation_plan.get('immediate_actions', [])[:5])}
+
+### Estimated Effort
+Total: {result.remediation_plan.get('estimated_effort', 0):.1f} hours
+
+## Scan Metrics
+- Files Scanned: {result.scan_metrics.get('files_scanned', 0)}
+- Total Findings: {result.scan_metrics.get('total_findings', 0)}
+- Critical Findings: {result.scan_metrics.get('critical_findings', 0)}
+"""
+        return md
+    
+    def get_statistics(self) -> Dict[str, Any]:
+        """Get scanner statistics."""
+        return {
+            **self.scan_statistics,
+            'avg_scan_time': (
+                self.scan_statistics['total_scan_time'] / 
+                max(self.scan_statistics['total_scans'], 1)
+            ),
+            'avg_vulnerabilities_per_scan': (
+                self.scan_statistics['total_vulnerabilities'] / 
+                max(self.scan_statistics['successful_scans'], 1)
+            ),
+            'success_rate': (
+                self.scan_statistics['successful_scans'] / 
+                max(self.scan_statistics['total_scans'], 1) * 100
+            ),
+            'cache_size': len(self.scan_cache),
+            'history_size': len(self.scan_history)
+        }
+
+
+def main():
+    """Demo and testing of unified security scanner."""
+    # Configuration
+    config = ScanConfiguration(
+        target_paths=['.'],
+        file_patterns=['*.py'],
+        enable_real_time_monitoring=True,
+        enable_classical_analysis=True,
+        enable_quality_correlation=True,
+        enable_performance_profiling=True,
+        enable_compliance_checking=True,
+        enable_intelligent_testing=True,
+        parallel_workers=2,
+        generate_report=True,
+        report_format='markdown'
+    )
+    
+    # Create scanner
+    scanner = UnifiedSecurityScanner(config)
+    
+    # Create test file
+    test_file = 'unified_scan_test.py'
+    test_content = '''
+import os
+import subprocess
+import pickle
+
+def vulnerable_function(user_input):
+    """Function with multiple security issues."""
+    # Hardcoded credential
+    password = "admin123"
+    
+    # Command injection
+    os.system(f"echo {user_input}")
+    
+    # SQL injection risk
+    query = f"SELECT * FROM users WHERE id = '{user_input}'"
+    
+    # Insecure deserialization
+    data = pickle.loads(user_input.encode())
+    
+    # Code injection
+    eval(user_input)
+    
+    return data
+
+class ComplexClass:
+    def __init__(self):
+        self.secret = "secret_key_123"
+    
+    def complex_method(self, x, y, z):
+        if x > 0:
+            if y > 0:
+                if z > 0:
+                    return x * y * z
+        return 0
+'''
+    
+    try:
+        # Write test file
+        with open(test_file, 'w') as f:
+            f.write(test_content)
+        
+        # Perform unified scan
+        logger.info("Starting unified security scan...")
+        result = scanner.scan(test_file)
+        
+        # Display results
+        logger.info("\n" + "="*60)
+        logger.info("UNIFIED SECURITY SCAN RESULTS")
+        logger.info("="*60)
+        
+        logger.info(f"Scan ID: {result.scan_id}")
+        logger.info(f"Duration: {result.scan_duration:.2f} seconds")
+        logger.info(f"Overall Risk Score: {result.overall_risk_score:.1f}/100")
+        logger.info(f"Confidence Score: {result.confidence_score:.2%}")
+        
+        logger.info("\nFindings Summary:")
+        logger.info(f"  Vulnerabilities: {len(result.vulnerabilities)}")
+        logger.info(f"  Compliance Violations: {len(result.compliance_violations)}")
+        logger.info(f"  Quality Issues: {len(result.quality_issues)}")
+        logger.info(f"  Performance Concerns: {len(result.performance_concerns)}")
+        
+        logger.info("\nRisk Distribution:")
+        for level, count in result.risk_distribution.items():
+            logger.info(f"  {level.capitalize()}: {count}")
+        
+        logger.info("\nCorrelations:")
+        logger.info(f"  Security-Quality: {result.security_quality_correlation.get('correlation_strength', 0):.2f}")
+        logger.info(f"  Security-Performance: {result.security_performance_correlation.get('correlation_strength', 0):.2f}")
+        logger.info(f"  Complexity-Vulnerability: {result.complexity_vulnerability_correlation.get('correlation_strength', 0):.2f}")
+        
+        logger.info("\nRemediation Plan:")
+        immediate = result.remediation_plan.get('immediate_actions', [])
+        if immediate:
+            logger.info(f"  Immediate Actions ({len(immediate)}):")
+            for action in immediate[:3]:
+                logger.info(f"    - {action['action']}")
+        logger.info(f"  Total Estimated Effort: {result.remediation_plan.get('estimated_effort', 0):.1f} hours")
+        
+        # Get statistics
+        stats = scanner.get_statistics()
+        logger.info("\nScanner Statistics:")
+        logger.info(f"  Total Scans: {stats['total_scans']}")
+        logger.info(f"  Success Rate: {stats['success_rate']:.1f}%")
+        logger.info(f"  Avg Scan Time: {stats['avg_scan_time']:.2f}s")
+        
+        # Clean up
+        os.remove(test_file)
+        
+    except Exception as e:
+        logger.error(f"Demo error: {e}")
+        if os.path.exists(test_file):
+            os.remove(test_file)
+    
+    logger.info("\nUnified security scanner demo completed")
+
+
+if __name__ == "__main__":
+    main()

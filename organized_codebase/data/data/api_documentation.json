@@ -1,0 +1,125 @@
+{
+  "version": "v1",
+  "gateway_metrics": {
+    "total_requests": 24,
+    "successful_requests": 7,
+    "failed_requests": 0,
+    "rate_limited_requests": 0,
+    "average_response_time": 0.0
+  },
+  "endpoints": {
+    "/api/v1/intelligence/analyze": {
+      "method": "POST",
+      "type": "authenticated",
+      "rate_limit": 100,
+      "rate_limit_type": "per_hour",
+      "description": "Analyze codebase with intelligence systems",
+      "required_permissions": [
+        "intelligence.analyze"
+      ]
+    },
+    "/api/v1/intelligence/status": {
+      "method": "GET",
+      "type": "public",
+      "rate_limit": 1000,
+      "rate_limit_type": "per_hour",
+      "description": "Get intelligence system status",
+      "required_permissions": []
+    },
+    "/api/v1/monitoring/metrics": {
+      "method": "GET",
+      "type": "authenticated",
+      "rate_limit": 500,
+      "rate_limit_type": "per_hour",
+      "description": "Get system metrics",
+      "required_permissions": [
+        "monitoring.read"
+      ]
+    },
+    "/api/v1/monitoring/health": {
+      "method": "GET",
+      "type": "public",
+      "rate_limit": 2000,
+      "rate_limit_type": "per_hour",
+      "description": "Get system health status",
+      "required_permissions": []
+    },
+    "/api/v1/learning/insights": {
+      "method": "GET",
+      "type": "authenticated",
+      "rate_limit": 200,
+      "rate_limit_type": "per_hour",
+      "description": "Get learning insights",
+      "required_permissions": [
+        "learning.read"
+      ]
+    },
+    "/api/v1/learning/adaptations": {
+      "method": "POST",
+      "type": "admin",
+      "rate_limit": 50,
+      "rate_limit_type": "per_hour",
+      "description": "Apply learning adaptations",
+      "required_permissions": [
+        "learning.write",
+        "admin.access"
+      ]
+    },
+    "/api/v1/performance/optimize": {
+      "method": "POST",
+      "type": "authenticated",
+      "rate_limit": 10,
+      "rate_limit_type": "per_hour",
+      "description": "Trigger performance optimization",
+      "required_permissions": [
+        "performance.optimize"
+      ]
+    },
+    "/api/v1/performance/report": {
+      "method": "GET",
+      "type": "authenticated",
+      "rate_limit": 100,
+      "rate_limit_type": "per_hour",
+      "description": "Get performance report",
+      "required_permissions": [
+        "performance.read"
+      ]
+    },
+    "/api/v1/admin/system/config": {
+      "method": "GET",
+      "type": "admin",
+      "rate_limit": 50,
+      "rate_limit_type": "per_hour",
+      "description": "Get system configuration",
+      "required_permissions": [
+        "admin.access",
+        "config.read"
+      ]
+    },
+    "/api/v1/admin/system/restart": {
+      "method": "POST",
+      "type": "admin",
+      "rate_limit": 5,
+      "rate_limit_type": "per_day",
+      "description": "Restart system components",
+      "required_permissions": [
+        "admin.access",
+        "system.restart"
+      ]
+    }
+  },
+  "authentication": {
+    "type": "API Key",
+    "header": "X-API-Key",
+    "clients": 3
+  },
+  "features": [
+    "Rate Limiting",
+    "Response Caching",
+    "Authentication",
+    "Authorization",
+    "Request Logging",
+    "Circuit Breaker",
+    "Load Balancing"
+  ]
+}

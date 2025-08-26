@@ -1,0 +1,297 @@
+{
+  "analysis": {
+    "current_files": [
+      {
+        "name": "api_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\api_analysis.py",
+        "size": 36951,
+        "type": "regular_module"
+      },
+      {
+        "name": "base_analyzer.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\base_analyzer.py",
+        "size": 3826,
+        "type": "regular_module"
+      },
+      {
+        "name": "clone_detection.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\clone_detection.py",
+        "size": 17914,
+        "type": "regular_module"
+      },
+      {
+        "name": "complexity_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\complexity_analysis.py",
+        "size": 30228,
+        "type": "regular_module"
+      },
+      {
+        "name": "concurrency_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\concurrency_analysis.py",
+        "size": 58766,
+        "type": "regular_module"
+      },
+      {
+        "name": "coupling_cohesion.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\coupling_cohesion.py",
+        "size": 9490,
+        "type": "regular_module"
+      },
+      {
+        "name": "crypto_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\crypto_analysis.py",
+        "size": 34018,
+        "type": "regular_module"
+      },
+      {
+        "name": "database_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\database_analysis.py",
+        "size": 51895,
+        "type": "regular_module"
+      },
+      {
+        "name": "error_handling_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\error_handling_analysis.py",
+        "size": 53671,
+        "type": "regular_module"
+      },
+      {
+        "name": "evolution_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\evolution_analysis.py",
+        "size": 29337,
+        "type": "regular_module"
+      },
+      {
+        "name": "graph_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\graph_analysis.py",
+        "size": 16177,
+        "type": "regular_module"
+      },
+      {
+        "name": "inheritance_polymorphism.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\inheritance_polymorphism.py",
+        "size": 11195,
+        "type": "regular_module"
+      },
+      {
+        "name": "linguistic_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\linguistic_analysis.py",
+        "size": 39976,
+        "type": "regular_module"
+      },
+      {
+        "name": "main_analyzer.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\main_analyzer.py",
+        "size": 26386,
+        "type": "regular_module"
+      },
+      {
+        "name": "memory_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\memory_analysis.py",
+        "size": 51671,
+        "type": "regular_module"
+      },
+      {
+        "name": "performance_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\performance_analysis.py",
+        "size": 57334,
+        "type": "regular_module"
+      },
+      {
+        "name": "quality_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\quality_analysis.py",
+        "size": 32216,
+        "type": "regular_module"
+      },
+      {
+        "name": "resource_io_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\resource_io_analysis.py",
+        "size": 55938,
+        "type": "regular_module"
+      },
+      {
+        "name": "security_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\security_analysis.py",
+        "size": 43763,
+        "type": "regular_module"
+      },
+      {
+        "name": "software_metrics.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\software_metrics.py",
+        "size": 9205,
+        "type": "regular_module"
+      },
+      {
+        "name": "statistical_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\statistical_analysis.py",
+        "size": 37320,
+        "type": "regular_module"
+      },
+      {
+        "name": "structural_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\structural_analysis.py",
+        "size": 35249,
+        "type": "regular_module"
+      },
+      {
+        "name": "supply_chain_security.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\supply_chain_security.py",
+        "size": 33325,
+        "type": "regular_module"
+      },
+      {
+        "name": "taint_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\taint_analysis.py",
+        "size": 25512,
+        "type": "regular_module"
+      },
+      {
+        "name": "testing_analysis.py",
+        "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\testing_analysis.py",
+        "size": 57888,
+        "type": "regular_module"
+      }
+    ],
+    "modular_directories": [],
+    "original_files": [],
+    "modular_wrapper_files": [],
+    "archive_subdirectory": [],
+    "duplicates": [],
+    "size_analysis": {
+      "total_size_bytes": 859251,
+      "total_size_mb": 0.8194456100463867,
+      "largest_files": [
+        {
+          "name": "concurrency_analysis.py",
+          "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\concurrency_analysis.py",
+          "size": 58766,
+          "type": "regular_module"
+        },
+        {
+          "name": "testing_analysis.py",
+          "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\testing_analysis.py",
+          "size": 57888,
+          "type": "regular_module"
+        },
+        {
+          "name": "performance_analysis.py",
+          "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\performance_analysis.py",
+          "size": 57334,
+          "type": "regular_module"
+        },
+        {
+          "name": "resource_io_analysis.py",
+          "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\resource_io_analysis.py",
+          "size": 55938,
+          "type": "regular_module"
+        },
+        {
+          "name": "error_handling_analysis.py",
+          "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\error_handling_analysis.py",
+          "size": 53671,
+          "type": "regular_module"
+        },
+        {
+          "name": "database_analysis.py",
+          "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\database_analysis.py",
+          "size": 51895,
+          "type": "regular_module"
+        },
+        {
+          "name": "memory_analysis.py",
+          "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\memory_analysis.py",
+          "size": 51671,
+          "type": "regular_module"
+        },
+        {
+          "name": "security_analysis.py",
+          "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\security_analysis.py",
+          "size": 43763,
+          "type": "regular_module"
+        },
+        {
+          "name": "linguistic_analysis.py",
+          "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\linguistic_analysis.py",
+          "size": 39976,
+          "type": "regular_module"
+        },
+        {
+          "name": "statistical_analysis.py",
+          "path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\TestMaster\\testmaster\\analysis\\comprehensive_analysis\\statistical_analysis.py",
+          "size": 37320,
+          "type": "regular_module"
+        }
+      ]
+    }
+  },
+  "cleanup_report": {
+    "start_time": 1755720741.1557188,
+    "files_moved": [],
+    "directories_moved": [],
+    "features_preserved": {},
+    "errors": [],
+    "summary": {},
+    "end_time": 1755720741.1557188,
+    "duration": 0.0
+  },
+  "validation_report": {
+    "start_time": 1755720741.1557188,
+    "modules_checked": [
+      {
+        "original_base": "ml_code_analysis",
+        "modular_dir": "ml_analysis",
+        "features_preserved": true,
+        "missing_features": [],
+        "additional_features": [],
+        "validation_details": {}
+      },
+      {
+        "original_base": "business_rule_analysis",
+        "modular_dir": "business_analysis",
+        "features_preserved": true,
+        "missing_features": [],
+        "additional_features": [],
+        "validation_details": {}
+      },
+      {
+        "original_base": "semantic_analysis",
+        "modular_dir": "semantic_analysis",
+        "features_preserved": true,
+        "missing_features": [],
+        "additional_features": [],
+        "validation_details": {}
+      },
+      {
+        "original_base": "technical_debt_analysis",
+        "modular_dir": "debt_analysis",
+        "features_preserved": true,
+        "missing_features": [],
+        "additional_features": [],
+        "validation_details": {}
+      },
+      {
+        "original_base": "metaprogramming_analysis",
+        "modular_dir": "metaprog_analysis",
+        "features_preserved": true,
+        "missing_features": [],
+        "additional_features": [],
+        "validation_details": {}
+      },
+      {
+        "original_base": "energy_consumption_analysis",
+        "modular_dir": "energy_analysis",
+        "features_preserved": true,
+        "missing_features": [],
+        "additional_features": [],
+        "validation_details": {}
+      }
+    ],
+    "features_comparison": {},
+    "missing_features": [],
+    "validation_passed": true,
+    "summary": {},
+    "end_time": 1755720741.15672,
+    "duration": 0.001001119613647461
+  },
+  "timestamp": 1755720741.1577206
+}

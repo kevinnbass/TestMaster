@@ -1,0 +1,78 @@
+{
+  "dashboard_metrics": {
+    "health": {
+      "overall": 66.66666666666666,
+      "layer_compliance": 100.0,
+      "dependency_health": 100.0,
+      "import_success_rate": 0.0,
+      "status": "good"
+    },
+    "services": {
+      "total_registered": 0,
+      "success_rate": 0.0,
+      "by_layer": {},
+      "by_type": {}
+    },
+    "templates": {
+      "discovered": 0,
+      "migrated": 0,
+      "success_rate": 0.0,
+      "generators_created": 0
+    },
+    "intelligence": {
+      "modules_discovered": 0,
+      "modules_activated": 0,
+      "success_rate": 0.0,
+      "services_registered": 0
+    },
+    "websocket": {
+      "available": true,
+      "running": false,
+      "port": 8765,
+      "clients_connected": 0
+    },
+    "recommendations": [
+      "Architecture compliance is excellent!",
+      "Investigate import failures - success rate below 90%"
+    ],
+    "timestamp": "2025-08-23T00:59:08.428522"
+  },
+  "integration_status": {
+    "framework_status": "operational",
+    "components": {
+      "dependency_container": true,
+      "layer_manager": true,
+      "import_resolver": true
+    },
+    "integration_status": {
+      "dependency_container": "not_started",
+      "layer_manager": "completed",
+      "import_resolver": "completed",
+      "dashboard_connection": "completed",
+      "template_migration": "completed",
+      "production_activation": "completed"
+    },
+    "services_registered": 0,
+    "architecture_health": 0.6666666666666666,
+    "timestamp": "2025-08-23T00:59:08.428522"
+  },
+  "system_info": {
+    "architecture_framework": "operational",
+    "total_services": 10,
+    "total_templates": 0,
+    "total_intelligence_modules": 0,
+    "websocket_streaming": true
+  },
+  "performance_summary": {
+    "architecture_health": 66.66666666666666,
+    "service_success_rate": 0.0,
+    "template_migration_rate": 0.0,
+    "intelligence_activation_rate": 0.0
+  },
+  "export_metadata": {
+    "generated_by": "Agent A Architecture Dashboard",
+    "version": "1.0.0",
+    "export_time": "2025-08-23T00:59:08.428522",
+    "data_freshness": 0.0
+  }
+}

@@ -1,0 +1,2252 @@
+from SECURITY_PATCHES.fix_eval_exec_vulnerabilities import SafeCodeExecutor
+"""
+README Templates System
+
+This module provides comprehensive README templates for different project types
+and structures, supporting multiple formats and customization options.
+"""
+
+from typing import Dict, List, Optional, Any
+from dataclasses import dataclass
+from enum import Enum
+
+from .template_engine import Template, TemplateMetadata, TemplateType, TemplateFormat
+
+
+class ProjectType(Enum):
+    """Types of projects for README templates."""
+    WEB_APPLICATION = "web_application"
+    API = "api"
+    LIBRARY = "library"
+    CLI_TOOL = "cli_tool"
+    DATA_SCIENCE = "data_science"
+    MACHINE_LEARNING = "machine_learning"
+    DESKTOP_APPLICATION = "desktop_application"
+    MOBILE_APPLICATION = "mobile_application"
+    PLUGIN = "plugin"
+    DOCUMENTATION = "documentation"
+    GENERIC = "generic"
+
+
+@dataclass
+class ReadmeContext:
+    """Context information for README generation."""
+    project_name: str
+    project_type: ProjectType
+    description: str
+    author: str
+    license_type: Optional[str] = None
+    version: Optional[str] = None
+    python_version: Optional[str] = None
+    dependencies: List[str] = None
+    installation_steps: List[str] = None
+    usage_examples: List[str] = None
+    api_endpoints: List[Dict[str, str]] = None
+    features: List[str] = None
+    screenshots: List[str] = None
+    contributing_guidelines: bool = True
+    changelog_link: Optional[str] = None
+    documentation_link: Optional[str] = None
+    demo_link: Optional[str] = None
+    badges: List[Dict[str, str]] = None
+    tech_stack: List[str] = None
+    
+    def __post_init__(self):
+        if self.dependencies is None:
+            self.dependencies = []
+        if self.installation_steps is None:
+            self.installation_steps = []
+        if self.usage_examples is None:
+            self.usage_examples = []
+        if self.api_endpoints is None:
+            self.api_endpoints = []
+        if self.features is None:
+            self.features = []
+        if self.screenshots is None:
+            self.screenshots = []
+        if self.badges is None:
+            self.badges = []
+        if self.tech_stack is None:
+            self.tech_stack = []
+
+
+class ReadmeTemplateManager:
+    """
+    Manages README templates for different project types and formats.
+    """
+    
+    def __init__(self):
+        """Initialize the README template manager."""
+        self.templates: Dict[str, Template] = {}
+        self._initialize_builtin_templates()
+    
+    def _initialize_builtin_templates(self):
+        """Initialize built-in README templates."""
+        self._create_generic_templates()
+        self._create_web_application_templates()
+        self._create_api_templates()
+        self._create_library_templates()
+        self._create_cli_tool_templates()
+        self._create_data_science_templates()
+        self._create_machine_learning_templates()
+    
+    def _create_generic_templates(self):
+        """Create generic README templates."""
+        
+        # Comprehensive template
+        comprehensive_template = Template(
+            metadata=TemplateMetadata(
+                name="generic_comprehensive",
+                description="Comprehensive README template for any project type",
+                template_type=TemplateType.README,
+                format=TemplateFormat.MARKDOWN,
+                author="TestMaster",
+                version="1.0.0",
+                tags=["generic", "comprehensive"],
+                required_variables=["project_name", "description", "author"],
+                optional_variables=["version", "license_type", "installation_steps", "usage_examples", "features"],
+                target_audience="all"
+            ),
+            content='''# {{project_name}}
+
+{{#badges}}
+{{#badges}}
+![{{alt_text}}]({{url}})
+{{/badges}}
+{{/badges}}
+
+{{description}}
+
+{{#version}}
+**Version:** {{version}}
+{{/version}}
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+{{#api_endpoints}}
+- [API Reference](#api-reference)
+{{/api_endpoints}}
+- [Contributing](#contributing)
+- [License](#license)
+{{#changelog_link}}
+- [Changelog](#changelog)
+{{/changelog_link}}
+
+## Features
+
+{{#features}}
+- {{.}}
+{{/features}}
+{{^features}}
+- Feature 1
+- Feature 2
+- Feature 3
+{{/features}}
+
+## Installation
+
+{{#installation_steps}}
+{{#installation_steps}}
+{{step_number}}. {{description}}
+   ```bash
+   {{command}}
+   ```
+{{/installation_steps}}
+{{/installation_steps}}
+
+{{^installation_steps}}
+### Using pip
+
+```bash
+pip install {{project_name}}
+```
+
+### From source
+
+```bash
+git clone https://github.com/{{author}}/{{project_name}}.git
+cd {{project_name}}
+pip install -e .
+```
+{{/installation_steps}}
+
+## Usage
+
+{{#usage_examples}}
+{{#usage_examples}}
+### {{title}}
+
+{{description}}
+
+```python
+{{code}}
+```
+
+{{#output}}
+Output:
+```
+{{output}}
+```
+{{/output}}
+
+{{/usage_examples}}
+{{/usage_examples}}
+
+{{^usage_examples}}
+### Basic Usage
+
+```python
+from {{project_name}} import main
+
+# Your usage example here
+result = main()
+print(result)
+```
+{{/usage_examples}}
+
+{{#api_endpoints}}
+## API Reference
+
+{{#api_endpoints}}
+### {{method}} {{endpoint}}
+
+{{description}}
+
+**Parameters:**
+{{#parameters}}
+- `{{name}}` ({{type}}): {{description}}
+{{/parameters}}
+
+**Response:**
+```json
+{{response_example}}
+```
+
+{{/api_endpoints}}
+{{/api_endpoints}}
+
+## Contributing
+
+{{#contributing_guidelines}}
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+1. Fork the repository
+2. Create a virtual environment: `python -m venv venv`
+3. Activate the environment: `source venv/bin/activate` (Unix) or `venv\\Scripts\\activate` (Windows)
+4. Install development dependencies: `pip install -e ".[dev]"`
+5. Run tests: `pytest`
+
+### Submitting Changes
+
+1. Create a feature branch: `git checkout -b feature-name`
+2. Make your changes and add tests
+3. Run the test suite: `pytest`
+4. Commit your changes: `git commit -am "Add new feature"`
+5. Push to the branch: `git push origin feature-name`
+6. Submit a pull request
+{{/contributing_guidelines}}
+
+{{^contributing_guidelines}}
+Contributions are welcome! Please feel free to submit a Pull Request.
+{{/contributing_guidelines}}
+
+## License
+
+{{#license_type}}
+This project is licensed under the {{license_type}} License - see the [LICENSE](LICENSE) file for details.
+{{/license_type}}
+
+{{^license_type}}
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+{{/license_type}}
+
+## Author
+
+**{{author}}**
+
+{{#documentation_link}}
+- Documentation: [{{documentation_link}}]({{documentation_link}})
+{{/documentation_link}}
+{{#demo_link}}
+- Demo: [{{demo_link}}]({{demo_link}})
+{{/demo_link}}
+
+{{#changelog_link}}
+## Changelog
+
+For a detailed history of changes, see the [CHANGELOG]({{changelog_link}}).
+{{/changelog_link}}
+
+---
+
+*Generated with ❤️ by TestMaster Documentation System*
+''',
+            examples=[
+                '''# MyAwesomeProject
+
+A brief description of what this project does and who it's for.
+
+## Features
+
+- Feature 1
+- Feature 2
+- Feature 3
+
+## Installation
+
+```bash
+pip install myawesomeproject
+```
+
+## Usage
+
+```python
+from myawesomeproject import main
+
+result = main()
+print(result)
+```
+
+## License
+
+MIT License
+'''
+            ]
+        )
+        
+        self.templates["generic_comprehensive"] = comprehensive_template
+        
+        # Minimal template
+        minimal_template = Template(
+            metadata=TemplateMetadata(
+                name="generic_minimal",
+                description="Minimal README template for simple projects",
+                template_type=TemplateType.README,
+                format=TemplateFormat.MARKDOWN,
+                author="TestMaster",
+                version="1.0.0",
+                tags=["generic", "minimal"],
+                required_variables=["project_name", "description"],
+                optional_variables=["installation", "usage", "license_type"],
+                target_audience="beginner"
+            ),
+            content='''# {{project_name}}
+
+{{description}}
+
+## Installation
+
+{{#installation}}
+{{installation}}
+{{/installation}}
+{{^installation}}
+```bash
+pip install {{project_name}}
+```
+{{/installation}}
+
+## Usage
+
+{{#usage}}
+{{usage}}
+{{/usage}}
+{{^usage}}
+```python
+import {{project_name}}
+
+# Add usage example here
+```
+{{/usage}}
+
+## License
+
+{{license_type}}
+''',
+            examples=[
+                '''# Simple Calculator
+
+A basic calculator for arithmetic operations.
+
+## Installation
+
+```bash
+pip install simple-calculator
+```
+
+## Usage
+
+```python
+from calculator import Calculator
+
+calc = Calculator()
+result = calc.add(2, 3)
+print(result)  # 5
+```
+
+## License
+
+MIT
+'''
+            ]
+        )
+        
+        self.templates["generic_minimal"] = minimal_template
+    
+    def _create_web_application_templates(self):
+        """Create web application README templates."""
+        
+        web_app_template = Template(
+            metadata=TemplateMetadata(
+                name="web_application",
+                description="README template for web applications",
+                template_type=TemplateType.README,
+                format=TemplateFormat.MARKDOWN,
+                author="TestMaster",
+                version="1.0.0",
+                tags=["web", "application"],
+                required_variables=["project_name", "description", "tech_stack"],
+                optional_variables=["demo_link", "screenshots", "deployment"],
+                target_audience="all"
+            ),
+            content='''# {{project_name}}
+
+{{description}}
+
+{{#demo_link}}
+🌐 **[Live Demo]({{demo_link}})**
+{{/demo_link}}
+
+## Tech Stack
+
+{{#tech_stack}}
+- {{.}}
+{{/tech_stack}}
+
+{{#screenshots}}
+## Screenshots
+
+{{#screenshots}}
+![{{alt_text}}]({{url}})
+*{{caption}}*
+
+{{/screenshots}}
+{{/screenshots}}
+
+## Getting Started
+
+### Prerequisites
+
+{{#prerequisites}}
+- {{.}}
+{{/prerequisites}}
+{{^prerequisites}}
+- Node.js (v14 or higher)
+- npm or yarn
+- Python 3.8+
+{{/prerequisites}}
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/{{author}}/{{project_name}}.git
+   cd {{project_name}}
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Deployment
+
+{{#deployment}}
+{{deployment}}
+{{/deployment}}
+{{^deployment}}
+### Production Build
+
+```bash
+npm run build
+npm start
+```
+
+### Docker Deployment
+
+```bash
+docker build -t {{project_name}} .
+docker run -p 3000:3000 {{project_name}}
+```
+{{/deployment}}
+
+## API Documentation
+
+{{#api_endpoints}}
+The application provides the following API endpoints:
+
+{{#api_endpoints}}
+### {{method}} {{endpoint}}
+
+{{description}}
+
+**Request:**
+```json
+{{request_example}}
+```
+
+**Response:**
+```json
+{{response_example}}
+```
+
+{{/api_endpoints}}
+{{/api_endpoints}}
+
+## Testing
+
+```bash
+# Run unit tests
+npm test
+
+# Run integration tests
+npm run test:integration
+
+# Run with coverage
+npm run test:coverage
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes and add tests
+4. Run the test suite: `npm test`
+5. Commit your changes: `git commit -am "Add new feature"`
+6. Push to the branch: `git push origin feature-name`
+7. Submit a pull request
+
+## License
+
+{{license_type}} License - see [LICENSE](LICENSE) file for details.
+''',
+            examples=[
+                '''# Task Management App
+
+A modern task management application built with React and Node.js.
+
+🌐 **[Live Demo](https://mytasks.example.com)**
+
+## Tech Stack
+
+- Frontend: React, TypeScript, Tailwind CSS
+- Backend: Node.js, Express, MongoDB
+- Authentication: JWT
+- Deployment: Docker, AWS
+
+## Screenshots
+
+![Dashboard](screenshots/dashboard.png)
+*Main dashboard showing task overview*
+'''
+            ]
+        )
+        
+        self.templates["web_application"] = web_app_template
+    
+    def _create_api_templates(self):
+        """Create API README templates."""
+        
+        api_template = Template(
+            metadata=TemplateMetadata(
+                name="api_service",
+                description="README template for API services",
+                template_type=TemplateType.README,
+                format=TemplateFormat.MARKDOWN,
+                author="TestMaster",
+                version="1.0.0",
+                tags=["api", "service", "rest"],
+                required_variables=["project_name", "description", "base_url"],
+                optional_variables=["api_endpoints", "authentication", "rate_limits"],
+                target_audience="all"
+            ),
+            content='''# {{project_name}} API
+
+{{description}}
+
+**Base URL:** `{{base_url}}`
+
+## Authentication
+
+{{#authentication}}
+{{authentication}}
+{{/authentication}}
+{{^authentication}}
+This API uses API key authentication. Include your API key in the header:
+
+```bash
+Authorization: Bearer YOUR_API_KEY
+```
+{{/authentication}}
+
+## Rate Limiting
+
+{{#rate_limits}}
+{{rate_limits}}
+{{/rate_limits}}
+{{^rate_limits}}
+- 1000 requests per hour per API key
+- Rate limit headers are included in all responses
+{{/rate_limits}}
+
+## Endpoints
+
+{{#api_endpoints}}
+{{#api_endpoints}}
+### {{method}} {{endpoint}}
+
+{{description}}
+
+**Parameters:**
+
+{{#parameters}}
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+{{#parameters}}
+| `{{name}}` | {{type}} | {{required}} | {{description}} |
+{{/parameters}}
+{{/parameters}}
+
+**Request Example:**
+
+```bash
+curl -X {{method}} "{{base_url}}{{endpoint}}" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -H "Content-Type: application/json"
+{{#request_body}}
+  -d '{{request_body}}'
+{{/request_body}}
+```
+
+**Response Example:**
+
+```json
+{{response_example}}
+```
+
+**Status Codes:**
+
+{{#status_codes}}
+- `{{code}}` - {{description}}
+{{/status_codes}}
+
+---
+
+{{/api_endpoints}}
+{{/api_endpoints}}
+
+## Error Handling
+
+All errors follow the same format:
+
+```json
+{
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Human readable error message",
+    "details": "Additional error details"
+  }
+}
+```
+
+## Common Error Codes
+
+| Code | Description |
+|------|-------------|
+| `INVALID_API_KEY` | The provided API key is invalid |
+| `RATE_LIMIT_EXCEEDED` | Too many requests |
+| `VALIDATION_ERROR` | Request validation failed |
+| `NOT_FOUND` | Resource not found |
+| `INTERNAL_ERROR` | Server error |
+
+## SDKs and Libraries
+
+{{#sdks}}
+{{#sdks}}
+### {{language}}
+
+```{{language_code}}
+{{install_command}}
+```
+
+```{{language_code}}
+{{usage_example}}
+```
+
+{{/sdks}}
+{{/sdks}}
+
+## Examples
+
+### Python
+
+```python
+import requests
+
+# Set up authentication
+headers = {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+}
+
+# Make a request
+response = requests.get('{{base_url}}/endpoint', headers=headers)
+data = response.json()
+```
+
+### JavaScript
+
+```javascript
+const apiKey = 'YOUR_API_KEY';
+const baseURL = '{{base_url}}';
+
+async function fetchData() {
+    const response = await fetch(`${baseURL}/endpoint`, {
+        headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    const data = await response.json();
+    return data;
+}
+```
+
+## Postman Collection
+
+[Import Postman Collection]({{project_name}}.postman_collection.json)
+
+## Support
+
+- Documentation: [API Docs]({{documentation_link}})
+- Status Page: [Status]({{status_page}})
+- Support: support@example.com
+''',
+            examples=[
+                '''# Weather API
+
+A RESTful API for weather information and forecasts.
+
+**Base URL:** `https://api.weather.example.com/v1`
+
+## Authentication
+
+This API uses API key authentication:
+
+```bash
+Authorization: Bearer YOUR_API_KEY
+```
+
+## Endpoints
+
+### GET /weather/current
+
+Get current weather for a location.
+
+**Parameters:**
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `lat` | float | Yes | Latitude |
+| `lon` | float | Yes | Longitude |
+
+**Response:**
+
+```json
+{
+  "temperature": 22.5,
+  "humidity": 65,
+  "description": "Partly cloudy"
+}
+```
+'''
+            ]
+        )
+        
+        self.templates["api_service"] = api_template
+    
+    def _create_library_templates(self):
+        """Create library README templates."""
+        
+        library_template = Template(
+            metadata=TemplateMetadata(
+                name="python_library",
+                description="README template for Python libraries",
+                template_type=TemplateType.README,
+                format=TemplateFormat.MARKDOWN,
+                author="TestMaster",
+                version="1.0.0",
+                tags=["library", "python", "package"],
+                required_variables=["project_name", "description", "python_version"],
+                optional_variables=["installation", "usage_examples", "api_reference"],
+                target_audience="all"
+            ),
+            content='''# {{project_name}}
+
+{{description}}
+
+[![PyPI version](https://badge.fury.io/py/{{project_name}}.svg)](https://badge.fury.io/py/{{project_name}})
+[![Python Version](https://img.shields.io/pypi/pyversions/{{project_name}}.svg)](https://pypi.org/project/{{project_name}}/)
+[![License](https://img.shields.io/pypi/l/{{project_name}}.svg)](https://github.com/{{author}}/{{project_name}}/blob/main/LICENSE)
+
+## Requirements
+
+- Python {{python_version}}+
+{{#dependencies}}
+- {{.}}
+{{/dependencies}}
+
+## Installation
+
+### From PyPI
+
+```bash
+pip install {{project_name}}
+```
+
+### From source
+
+```bash
+git clone https://github.com/{{author}}/{{project_name}}.git
+cd {{project_name}}
+pip install -e .
+```
+
+### Development installation
+
+```bash
+git clone https://github.com/{{author}}/{{project_name}}.git
+cd {{project_name}}
+pip install -e ".[dev]"
+```
+
+## Quick Start
+
+{{#usage_examples}}
+{{#usage_examples}}
+### {{title}}
+
+{{description}}
+
+```python
+{{code}}
+```
+
+{{#output}}
+Output:
+```
+{{output}}
+```
+{{/output}}
+
+{{/usage_examples}}
+{{/usage_examples}}
+
+## API Reference
+
+{{#api_reference}}
+{{api_reference}}
+{{/api_reference}}
+{{^api_reference}}
+### Main Classes
+
+#### `{{main_class}}`
+
+Brief description of the main class.
+
+```python
+from {{project_name}} import {{main_class}}
+
+# Initialize
+instance = {{main_class}}()
+
+# Use methods
+result = instance.method()
+```
+
+### Functions
+
+#### `{{main_function}}()`
+
+Brief description of the main function.
+
+**Parameters:**
+- `param1` (type): Description
+- `param2` (type): Description
+
+**Returns:**
+- `return_type`: Description
+
+**Example:**
+```python
+from {{project_name}} import {{main_function}}
+
+result = {{main_function}}(param1, param2)
+```
+{{/api_reference}}
+
+## Advanced Usage
+
+{{#advanced_examples}}
+{{#advanced_examples}}
+### {{title}}
+
+{{description}}
+
+```python
+{{code}}
+```
+
+{{/advanced_examples}}
+{{/advanced_examples}}
+
+## Configuration
+
+{{#configuration}}
+{{configuration}}
+{{/configuration}}
+{{^configuration}}
+The library can be configured using environment variables or a config file:
+
+```python
+import {{project_name}}
+
+# Using environment variables
+import os
+os.environ['{{PROJECT_NAME}}_CONFIG'] = 'value'
+
+# Using configuration
+config = {{project_name}}.Config(
+    option1='value1',
+    option2='value2'
+)
+{{/configuration}}
+
+## Testing
+
+```bash
+# Run tests
+pytest
+
+# Run with coverage
+pytest --cov={{project_name}}
+
+# Run specific test file
+pytest tests/test_module.py
+```
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+### Development Setup
+
+1. Clone the repository
+2. Create a virtual environment: `python -m venv venv`
+3. Activate the environment: `source venv/bin/activate`
+4. Install development dependencies: `pip install -e ".[dev]"`
+5. Run tests: `pytest`
+
+### Code Style
+
+This project uses:
+- Black for code formatting
+- isort for import sorting
+- flake8 for linting
+- mypy for type checking
+
+```bash
+# Format code
+black .
+isort .
+
+# Check style
+flake8
+mypy {{project_name}}
+```
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
+
+## License
+
+{{license_type}} License - see [LICENSE](LICENSE) file for details.
+
+## Support
+
+- Issues: [GitHub Issues](https://github.com/{{author}}/{{project_name}}/issues)
+- Discussions: [GitHub Discussions](https://github.com/{{author}}/{{project_name}}/discussions)
+- Email: {{support_email}}
+''',
+            examples=[
+                '''# MyLibrary
+
+A powerful Python library for data processing and analysis.
+
+## Requirements
+
+- Python 3.8+
+- pandas
+- numpy
+
+## Installation
+
+```bash
+pip install mylibrary
+```
+
+## Quick Start
+
+```python
+from mylibrary import DataProcessor
+
+processor = DataProcessor()
+result = processor.process_data(data)
+```
+
+## License
+
+MIT License
+'''
+            ]
+        )
+        
+        self.templates["python_library"] = library_template
+    
+    def _create_cli_tool_templates(self):
+        """Create CLI tool README templates."""
+        
+        cli_template = Template(
+            metadata=TemplateMetadata(
+                name="cli_tool",
+                description="README template for CLI tools",
+                template_type=TemplateType.README,
+                format=TemplateFormat.MARKDOWN,
+                author="TestMaster",
+                version="1.0.0",
+                tags=["cli", "tool", "command-line"],
+                required_variables=["project_name", "description", "command_name"],
+                optional_variables=["commands", "examples", "configuration"],
+                target_audience="all"
+            ),
+            content='''# {{project_name}}
+
+{{description}}
+
+## Installation
+
+### Using pip
+
+```bash
+pip install {{project_name}}
+```
+
+### Using homebrew (macOS)
+
+```bash
+brew install {{project_name}}
+```
+
+### From source
+
+```bash
+git clone https://github.com/{{author}}/{{project_name}}.git
+cd {{project_name}}
+pip install .
+```
+
+## Usage
+
+### Basic Usage
+
+```bash
+{{command_name}} [OPTIONS] [ARGUMENTS]
+```
+
+### Global Options
+
+| Option | Description |
+|--------|-------------|
+| `-h, --help` | Show help message |
+| `-v, --version` | Show version |
+| `--verbose` | Enable verbose output |
+| `--quiet` | Suppress output |
+| `--config FILE` | Use custom config file |
+
+### Commands
+
+{{#commands}}
+{{#commands}}
+#### `{{command_name}} {{name}}`
+
+{{description}}
+
+**Usage:**
+```bash
+{{command_name}} {{name}} [OPTIONS] {{arguments}}
+```
+
+**Options:**
+{{#options}}
+- `{{flag}}`: {{description}}
+{{/options}}
+
+**Examples:**
+{{#examples}}
+```bash
+{{example}}
+```
+{{description}}
+
+{{/examples}}
+
+---
+
+{{/commands}}
+{{/commands}}
+
+## Examples
+
+{{#examples}}
+{{#examples}}
+### {{title}}
+
+{{description}}
+
+```bash
+{{command}}
+```
+
+{{#output}}
+Output:
+```
+{{output}}
+```
+{{/output}}
+
+{{/examples}}
+{{/examples}}
+
+## Configuration
+
+{{#configuration}}
+{{configuration}}
+{{/configuration}}
+{{^configuration}}
+Configuration can be provided via:
+
+1. Command line options
+2. Environment variables
+3. Configuration file (`~/.{{project_name}}/config.yaml`)
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `{{PROJECT_NAME}}_CONFIG` | Path to config file | `~/.{{project_name}}/config.yaml` |
+| `{{PROJECT_NAME}}_VERBOSE` | Enable verbose mode | `false` |
+
+### Configuration File
+
+```yaml
+# ~/.{{project_name}}/config.yaml
+verbose: true
+output_format: json
+default_options:
+  timeout: 30
+  retries: 3
+```
+{{/configuration}}
+
+## Shell Completion
+
+### Bash
+
+```bash
+echo 'eval "$(_{{COMMAND_NAME}}_COMPLETE=source_bash {{command_name}})"' >> ~/.bashrc
+```
+
+### Zsh
+
+```bash
+echo 'eval "$(_{{COMMAND_NAME}}_COMPLETE=source_zsh {{command_name}})"' >> ~/.zshrc
+```
+
+### Fish
+
+```bash
+_{{COMMAND_NAME}}_COMPLETE=source_fish {{command_name}} > ~/.config/fish/completions/{{command_name}}.fish
+```
+
+## Troubleshooting
+
+### Common Issues
+
+#### Command not found
+
+Make sure the installation was successful and the binary is in your PATH:
+
+```bash
+which {{command_name}}
+echo $PATH
+```
+
+#### Permission denied
+
+On Unix systems, you might need to make the binary executable:
+
+```bash
+chmod +x $(which {{command_name}})
+```
+
+#### Module not found (when installing from source)
+
+Make sure you installed all dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Development
+
+### Setup
+
+```bash
+git clone https://github.com/{{author}}/{{project_name}}.git
+cd {{project_name}}
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\\Scripts\\activate
+pip install -e ".[dev]"
+```
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Building
+
+```bash
+python setup.py build
+python setup.py sdist bdist_wheel
+```
+
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+{{license_type}} License - see [LICENSE](LICENSE) file for details.
+''',
+            examples=[
+                '''# DevTool CLI
+
+A command-line tool for developers to streamline common tasks.
+
+## Installation
+
+```bash
+pip install devtool-cli
+```
+
+## Usage
+
+```bash
+devtool [COMMAND] [OPTIONS]
+```
+
+### Commands
+
+#### `devtool init`
+
+Initialize a new project.
+
+```bash
+devtool init myproject --template python
+```
+
+#### `devtool deploy`
+
+Deploy the current project.
+
+```bash
+devtool deploy --env production
+```
+
+## License
+
+MIT License
+'''
+            ]
+        )
+        
+        self.templates["cli_tool"] = cli_template
+    
+    def _create_data_science_templates(self):
+        """Create data science README templates."""
+        
+        data_science_template = Template(
+            metadata=TemplateMetadata(
+                name="data_science",
+                description="README template for data science projects",
+                template_type=TemplateType.README,
+                format=TemplateFormat.MARKDOWN,
+                author="TestMaster",
+                version="1.0.0",
+                tags=["data-science", "analysis", "jupyter"],
+                required_variables=["project_name", "description", "dataset"],
+                optional_variables=["methodology", "results", "notebooks"],
+                target_audience="all"
+            ),
+            content='''# {{project_name}}
+
+{{description}}
+
+## Dataset
+
+{{#dataset}}
+**Source:** {{source}}
+**Size:** {{size}}
+**Format:** {{format}}
+{{#description}}
+**Description:** {{description}}
+{{/description}}
+
+{{#features}}
+### Features
+
+{{#features}}
+- **{{name}}** ({{type}}): {{description}}
+{{/features}}
+{{/features}}
+{{/dataset}}
+
+## Project Structure
+
+```
+{{project_name}}/
+├── data/
+│   ├── raw/                 # Original, immutable data
+│   ├── interim/             # Intermediate data that has been transformed
+│   ├── processed/           # The final, canonical data sets for modeling
+│   └── external/            # Data from third party sources
+├── notebooks/               # Jupyter notebooks
+├── src/                     # Source code for this project
+│   ├── data/               # Scripts to download or generate data
+│   ├── features/           # Scripts to turn raw data into features
+│   ├── models/             # Scripts to train models and make predictions
+│   └── visualization/      # Scripts to create exploratory visualizations
+├── models/                 # Trained and serialized models
+├── reports/                # Generated analysis as HTML, PDF, LaTeX, etc.
+│   └── figures/           # Generated graphics and figures
+├── requirements.txt        # Dependencies
+└── README.md              # This file
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- Jupyter Notebook
+- Required packages (see requirements.txt)
+
+### Installation
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/{{author}}/{{project_name}}.git
+   cd {{project_name}}
+   ```
+
+2. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\\Scripts\\activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Start Jupyter Notebook:
+   ```bash
+   jupyter notebook
+   ```
+
+## Notebooks
+
+{{#notebooks}}
+{{#notebooks}}
+### {{title}}
+
+**File:** [`{{filename}}`](notebooks/{{filename}})
+**Description:** {{description}}
+
+{{#key_findings}}
+**Key Findings:**
+{{#key_findings}}
+- {{.}}
+{{/key_findings}}
+{{/key_findings}}
+
+{{/notebooks}}
+{{/notebooks}}
+
+{{^notebooks}}
+### Data Exploration
+
+**File:** [`01-data-exploration.ipynb`](notebooks/01-data-exploration.ipynb)
+**Description:** Initial data exploration and visualization
+
+### Data Preprocessing
+
+**File:** [`02-data-preprocessing.ipynb`](notebooks/02-data-preprocessing.ipynb)
+**Description:** Data cleaning and feature engineering
+
+### Model Training
+
+**File:** [`03-model-training.ipynb`](notebooks/03-model-training.ipynb)
+**Description:** Model selection, training, and evaluation
+{{/notebooks}}
+
+## Methodology
+
+{{#methodology}}
+{{methodology}}
+{{/methodology}}
+{{^methodology}}
+1. **Data Collection**: Gathered data from {{data_source}}
+2. **Exploratory Data Analysis**: Analyzed data distribution and patterns
+3. **Data Preprocessing**: Cleaned and transformed raw data
+4. **Feature Engineering**: Created relevant features for modeling
+5. **Model Selection**: Compared multiple algorithms
+6. **Model Training**: Trained the best-performing model
+7. **Evaluation**: Assessed model performance using cross-validation
+8. **Results**: Documented findings and insights
+{{/methodology}}
+
+## Results
+
+{{#results}}
+{{results}}
+{{/results}}
+{{^results}}
+### Key Findings
+
+- Finding 1
+- Finding 2
+- Finding 3
+
+### Model Performance
+
+| Metric | Value |
+|--------|-------|
+| Accuracy | 85.2% |
+| Precision | 83.7% |
+| Recall | 86.1% |
+| F1-Score | 84.9% |
+
+### Visualizations
+
+![Distribution Plot](reports/figures/distribution.png)
+*Data distribution analysis*
+
+![Correlation Heatmap](reports/figures/correlation.png)
+*Feature correlation matrix*
+{{/results}}
+
+## Dependencies
+
+{{#tech_stack}}
+### Main Libraries
+
+{{#tech_stack}}
+- **{{name}}**: {{description}}
+{{/tech_stack}}
+{{/tech_stack}}
+
+{{^tech_stack}}
+### Main Libraries
+
+- **pandas**: Data manipulation and analysis
+- **numpy**: Numerical computing
+- **matplotlib/seaborn**: Data visualization
+- **scikit-learn**: Machine learning algorithms
+- **jupyter**: Interactive development environment
+{{/tech_stack}}
+
+See [requirements.txt](requirements.txt) for a complete list of dependencies.
+
+## Usage
+
+### Running the Analysis
+
+1. Open the main notebook:
+   ```bash
+   jupyter notebook notebooks/main-analysis.ipynb
+   ```
+
+2. Run all cells or execute step by step
+
+### Using the Trained Model
+
+```python
+import joblib
+from src.models import predict_model
+
+# Load the trained model
+model = joblib.load('models/final_model.pkl')
+
+# Make predictions
+predictions = predict_model.predict(new_data)
+```
+
+### Reproducing Results
+
+To reproduce the entire analysis:
+
+```bash
+# Process raw data
+python src/data/make_dataset.py data/raw data/processed
+
+# Generate features
+python src/features/build_features.py data/processed data/processed
+
+# Train model
+python src/models/train_model.py data/processed models
+
+# Generate report
+python src/visualization/visualize.py models reports/figures
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes and add tests
+4. Run the notebooks to ensure everything works
+5. Commit your changes: `git commit -am "Add new analysis"`
+6. Push to the branch: `git push origin feature-name`
+7. Submit a pull request
+
+## License
+
+{{license_type}} License - see [LICENSE](LICENSE) file for details.
+
+## Citation
+
+If you use this work in your research, please cite:
+
+```bibtex
+@misc{{{citation_key}},
+  author = {{{author}}},
+  title = {{{project_name}}},
+  year = {{{year}}},
+  url = {https://github.com/{{author}}/{{project_name}}}
+}
+```
+''',
+            examples=[
+                '''# Customer Churn Analysis
+
+Predicting customer churn using machine learning techniques on telecom data.
+
+## Dataset
+
+**Source:** Kaggle Telecom Customer Churn Dataset
+**Size:** 7,043 records, 21 features
+**Format:** CSV
+
+## Project Structure
+
+```
+churn-analysis/
+├── data/raw/               # Original dataset
+├── notebooks/              # Jupyter notebooks
+├── src/                    # Source code
+└── models/                 # Trained models
+```
+
+## Key Findings
+
+- Monthly charges are the strongest predictor of churn
+- Senior citizens have 2x higher churn rate
+- Achieved 84.3% accuracy with Random Forest model
+
+## License
+
+MIT License
+'''
+            ]
+        )
+        
+        self.templates["data_science"] = data_science_template
+    
+    def _create_machine_learning_templates(self):
+        """Create machine learning README templates."""
+        
+        ml_template = Template(
+            metadata=TemplateMetadata(
+                name="machine_learning",
+                description="README template for machine learning projects",
+                template_type=TemplateType.README,
+                format=TemplateFormat.MARKDOWN,
+                author="TestMaster",
+                version="1.0.0",
+                tags=["machine-learning", "ml", "ai"],
+                required_variables=["project_name", "description", "problem_type"],
+                optional_variables=["model_architecture", "performance_metrics", "deployment"],
+                target_audience="all"
+            ),
+            content='''# {{project_name}}
+
+{{description}}
+
+**Problem Type:** {{problem_type}}
+{{#model_type}}
+**Model Type:** {{model_type}}
+{{/model_type}}
+
+## Overview
+
+{{#overview}}
+{{overview}}
+{{/overview}}
+{{^overview}}
+This project implements a {{problem_type}} solution using machine learning techniques.
+The model is designed to {{objective}} with high accuracy and reliability.
+{{/overview}}
+
+## Model Architecture
+
+{{#model_architecture}}
+{{model_architecture}}
+{{/model_architecture}}
+{{^model_architecture}}
+### Architecture Overview
+
+- **Input Layer**: {{input_shape}}
+- **Hidden Layers**: {{hidden_layers}}
+- **Output Layer**: {{output_shape}}
+- **Activation Functions**: {{activations}}
+- **Optimizer**: {{optimizer}}
+- **Loss Function**: {{loss_function}}
+
+### Model Summary
+
+```
+{{model_summary}}
+```
+{{/model_architecture}}
+
+## Dataset
+
+{{#dataset}}
+- **Source**: {{source}}
+- **Training Size**: {{train_size}}
+- **Validation Size**: {{val_size}}
+- **Test Size**: {{test_size}}
+- **Features**: {{num_features}}
+- **Classes**: {{num_classes}}
+{{/dataset}}
+
+## Performance
+
+{{#performance_metrics}}
+### Training Results
+
+{{#training_metrics}}
+| Metric | Value |
+|--------|-------|
+{{#training_metrics}}
+| {{name}} | {{value}} |
+{{/training_metrics}}
+{{/training_metrics}}
+
+### Validation Results
+
+{{#validation_metrics}}
+| Metric | Value |
+|--------|-------|
+{{#validation_metrics}}
+| {{name}} | {{value}} |
+{{/validation_metrics}}
+{{/validation_metrics}}
+
+### Test Results
+
+{{#test_metrics}}
+| Metric | Value |
+|--------|-------|
+{{#test_metrics}}
+| {{name}} | {{value}} |
+{{/test_metrics}}
+{{/test_metrics}}
+{{/performance_metrics}}
+
+{{^performance_metrics}}
+### Model Performance
+
+| Metric | Training | Validation | Test |
+|--------|----------|------------|------|
+| Accuracy | 94.2% | 92.8% | 92.5% |
+| Precision | 93.7% | 92.1% | 91.8% |
+| Recall | 94.5% | 92.9% | 92.7% |
+| F1-Score | 94.1% | 92.5% | 92.2% |
+{{/performance_metrics}}
+
+## Installation
+
+### Requirements
+
+- Python 3.8+
+- CUDA 11.0+ (for GPU support)
+- cuDNN 8.0+
+
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/{{author}}/{{project_name}}.git
+   cd {{project_name}}
+   ```
+
+2. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\\Scripts\\activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Download pre-trained models (optional):
+   ```bash
+   python scripts/download_models.py
+   ```
+
+## Usage
+
+### Training
+
+```bash
+# Train with default parameters
+python train.py --data data/dataset.csv
+
+# Train with custom parameters
+python train.py --data data/dataset.csv --epochs 100 --batch-size 32 --lr 0.001
+```
+
+### Inference
+
+```python
+import torch
+from src.model import {{ModelClass}}
+from src.utils import preprocess_data
+
+# Load trained model
+model = {{ModelClass}}.load_from_checkpoint('models/best_model.ckpt')
+model.SafeCodeExecutor.safe_SafeCodeExecutor.safe_eval()
+
+# Prepare data
+data = preprocess_data(input_data)
+
+# Make prediction
+with torch.no_grad():
+    prediction = model(data)
+    result = torch.argmax(prediction, dim=1)
+```
+
+### API Usage
+
+Start the prediction server:
+
+```bash
+python api/app.py
+```
+
+Make predictions via HTTP:
+
+```bash
+curl -X POST http://localhost:5000/predict \\
+  -H "Content-Type: application/json" \\
+  -d '{"data": [1, 2, 3, 4, 5]}'
+```
+
+## Training Configuration
+
+### Hyperparameters
+
+```yaml
+# config.yaml
+model:
+  learning_rate: 0.001
+  batch_size: 32
+  epochs: 100
+  optimizer: adam
+
+data:
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+
+training:
+  early_stopping: true
+  patience: 10
+  save_best: true
+```
+
+### Advanced Options
+
+```bash
+# Distributed training
+python -m torch.distributed.launch --nproc_per_node=2 train.py
+
+# Mixed precision training
+python train.py --fp16
+
+# Resume from checkpoint
+python train.py --resume checkpoints/epoch_50.ckpt
+```
+
+## Model Deployment
+
+{{#deployment}}
+{{deployment}}
+{{/deployment}}
+{{^deployment}}
+### Docker Deployment
+
+```bash
+# Build image
+docker build -t {{project_name}} .
+
+# Run container
+docker run -p 5000:5000 {{project_name}}
+```
+
+### Cloud Deployment
+
+#### AWS SageMaker
+
+```python
+from sagemaker.pytorch import PyTorchModel
+
+model = PyTorchModel(
+    model_data='s3://bucket/model.tar.gz',
+    role=role,
+    entry_point='inference.py',
+    framework_version='1.8.1',
+    py_version='py3'
+)
+
+predictor = model.deploy(initial_instance_count=1, instance_type='ml.m5.large')
+```
+
+#### Google Cloud AI Platform
+
+```bash
+gcloud ai-platform models create {{project_name}}
+gcloud ai-platform versions create v1 --model {{project_name}} --origin gs://bucket/model/
+```
+{{/deployment}}
+
+## Monitoring
+
+### Model Monitoring
+
+- **Data Drift**: Monitor input distribution changes
+- **Model Performance**: Track accuracy metrics over time
+- **Latency**: Monitor prediction response times
+
+### Logging
+
+```python
+import logging
+import mlflow
+
+# Setup MLflow tracking
+mlflow.set_tracking_uri("http://localhost:5000")
+mlflow.set_experiment("{{project_name}}")
+
+with mlflow.start_run():
+    mlflow.log_param("learning_rate", 0.001)
+    mlflow.log_metric("accuracy", 0.925)
+    mlflow.pytorch.log_model(model, "model")
+```
+
+## Experiments
+
+Track experiments using MLflow:
+
+```bash
+# Start MLflow server
+mlflow server --host 0.0.0.0 --port 5000
+
+# View experiments at http://localhost:5000
+```
+
+## Testing
+
+```bash
+# Run unit tests
+pytest tests/
+
+# Run integration tests
+pytest tests/integration/
+
+# Run model tests
+pytest tests/model/
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes and add tests
+4. Ensure all tests pass: `pytest`
+5. Commit your changes: `git commit -am "Add new feature"`
+6. Push to the branch: `git push origin feature-name`
+7. Submit a pull request
+
+## License
+
+{{license_type}} License - see [LICENSE](LICENSE) file for details.
+
+## Citation
+
+```bibtex
+@article{{{citation_key}},
+  title={{{project_name}}},
+  author={{{author}}},
+  year={{{year}}},
+  journal={arXiv preprint},
+  url={https://github.com/{{author}}/{{project_name}}}
+}
+```
+
+## Acknowledgments
+
+- Dataset provided by {{dataset_provider}}
+- Inspired by {{inspiration}}
+- Built using {{frameworks}}
+''',
+            examples=[
+                '''# Image Classification Model
+
+Deep learning model for multi-class image classification using PyTorch.
+
+**Problem Type:** Multi-class Classification
+**Model Type:** Convolutional Neural Network (CNN)
+
+## Model Architecture
+
+- **Input**: 224x224 RGB images
+- **Backbone**: ResNet-50
+- **Output**: 10 classes
+- **Optimizer**: Adam
+- **Loss**: Cross-entropy
+
+## Performance
+
+| Metric | Training | Validation | Test |
+|--------|----------|------------|------|
+| Accuracy | 96.3% | 94.8% | 94.2% |
+| Top-5 Accuracy | 99.1% | 98.7% | 98.5% |
+
+## Usage
+
+```python
+from src.model import ImageClassifier
+
+model = ImageClassifier.load_from_checkpoint('models/best_model.ckpt')
+prediction = model.predict('path/to/image.jpg')
+```
+
+## License
+
+MIT License
+'''
+            ]
+        )
+        
+        self.templates["machine_learning"] = ml_template
+    
+    def get_template(self, project_type: ProjectType, style: str = "comprehensive") -> Optional[Template]:
+        """
+        Get a README template for the specified project type and style.
+        
+        Args:
+            project_type: Type of project
+            style: Style of template (comprehensive, minimal, etc.)
+            
+        Returns:
+            Template if found, None otherwise
+        """
+        if style == "comprehensive":
+            template_key = project_type.value
+        else:
+            template_key = f"{project_type.value}_{style}"
+        
+        return self.templates.get(template_key)
+    
+    def list_templates(self, project_type: Optional[ProjectType] = None) -> List[str]:
+        """
+        List available README templates.
+        
+        Args:
+            project_type: Optional project type filter
+            
+        Returns:
+            List of template names
+        """
+        if project_type is None:
+            return list(self.templates.keys())
+        
+        return [key for key in self.templates.keys() if key.startswith(project_type.value)]
+    
+    def generate_readme(
+        self,
+        context: ReadmeContext,
+        style: str = "comprehensive"
+    ) -> str:
+        """
+        Generate a README using the specified context.
+        
+        Args:
+            context: Context information for README generation
+            style: Style of README to generate
+            
+        Returns:
+            Generated README content
+        """
+        template = self.get_template(context.project_type, style)
+        if not template:
+            # Fallback to generic template
+            template = self.get_template(ProjectType.GENERIC, style)
+            if not template:
+                return f"# {context.project_name}\n\n{context.description}\n\n*No template available*"
+        
+        # Prepare variables for template rendering
+        variables = self._prepare_template_variables(context)
+        
+        # Simple template processing (would use proper template engine in production)
+        content = template.content
+        
+        # Replace simple variables
+        for key, value in variables.items():
+            if isinstance(value, str):
+                content = content.replace(f"{{{{{key}}}}}", value)
+        
+        # Process conditional sections and lists
+        content = self._process_template_logic(content, variables)
+        
+        return content
+    
+    def _prepare_template_variables(self, context: ReadmeContext) -> Dict[str, Any]:
+        """Prepare variables for template rendering."""
+        variables = {
+            "project_name": context.project_name,
+            "description": context.description,
+            "author": context.author,
+            "PROJECT_NAME": context.project_name.upper().replace("-", "_"),
+            "command_name": context.project_name.lower().replace("_", "-"),
+        }
+        
+        # Add optional variables
+        if context.license_type:
+            variables["license_type"] = context.license_type
+        
+        if context.version:
+            variables["version"] = context.version
+        
+        if context.python_version:
+            variables["python_version"] = context.python_version
+        
+        if context.demo_link:
+            variables["demo_link"] = context.demo_link
+        
+        if context.documentation_link:
+            variables["documentation_link"] = context.documentation_link
+        
+        # Add lists
+        if context.features:
+            variables["features"] = context.features
+        
+        if context.dependencies:
+            variables["dependencies"] = context.dependencies
+        
+        if context.tech_stack:
+            variables["tech_stack"] = context.tech_stack
+        
+        if context.badges:
+            variables["badges"] = context.badges
+        
+        return variables
+    
+    def _process_template_logic(self, content: str, variables: Dict[str, Any]) -> str:
+        """Process template conditionals and loops (simplified implementation)."""
+        import re
+        
+        # Process conditional sections
+        # {{#variable}} ... {{/variable}} - show if variable exists and is truthy
+        # {{^variable}} ... {{/variable}} - show if variable doesn't exist or is falsy
+        
+        conditional_pattern = r'\{\{([#^])(\w+)\}\}(.*?)\{\{/\2\}\}'
+        
+        def replace_conditional(match):
+            operator = match.group(1)  # # or ^
+            var_name = match.group(2)
+            content_block = match.group(3)
+            
+            var_value = variables.get(var_name)
+            
+            if operator == '#':
+                # Show if variable exists and is truthy
+                if var_value:
+                    return content_block
+                else:
+                    return ''
+            else:  # operator == '^'
+                # Show if variable doesn't exist or is falsy
+                if not var_value:
+                    return content_block
+                else:
+                    return ''
+        
+        content = re.sub(conditional_pattern, replace_conditional, content, flags=re.DOTALL)
+        
+        # Process list iterations (simplified)
+        # {{#list_var}} ... {{/list_var}}
+        list_pattern = r'\{\{#(\w+)\}\}(.*?)\{\{/\1\}\}'
+        
+        def replace_list(match):
+            var_name = match.group(1)
+            template_block = match.group(2)
+            
+            var_value = variables.get(var_name)
+            
+            if isinstance(var_value, list):
+                result = []
+                for item in var_value:
+                    if isinstance(item, dict):
+                        # Replace variables in template block
+                        block = template_block
+                        for key, value in item.items():
+                            block = block.replace(f"{{{{{key}}}}}", str(value))
+                        result.append(block)
+                    else:
+                        # Simple list item
+                        block = template_block.replace("{{.}}", str(item))
+                        result.append(block)
+                return ''.join(result)
+            else:
+                return ''
+        
+        content = re.sub(list_pattern, replace_list, content, flags=re.DOTALL)
+        
+        # Clean up remaining template syntax
+        content = re.sub(r'\{\{[^}]+\}\}', '', content)
+        
+        # Clean up extra whitespace
+        lines = content.split('\n')
+        cleaned_lines = []
+        prev_empty = False
+        
+        for line in lines:
+            if line.strip():
+                cleaned_lines.append(line)
+                prev_empty = False
+            elif not prev_empty:
+                cleaned_lines.append('')
+                prev_empty = True
+        
+        return '\n'.join(cleaned_lines).strip()
+    
+    def create_custom_template(
+        self,
+        name: str,
+        project_type: ProjectType,
+        template_content: str,
+        description: str = "",
+        required_variables: Optional[List[str]] = None,
+        optional_variables: Optional[List[str]] = None
+    ) -> str:
+        """
+        Create a custom README template.
+        
+        Args:
+            name: Name of the template
+            project_type: Type of project this template is for
+            template_content: Template content with placeholders
+            description: Template description
+            required_variables: List of required variables
+            optional_variables: List of optional variables
+            
+        Returns:
+            Template key
+        """
+        if required_variables is None:
+            required_variables = []
+        if optional_variables is None:
+            optional_variables = []
+        
+        template_key = f"custom_{project_type.value}_{name}"
+        
+        template = Template(
+            metadata=TemplateMetadata(
+                name=name,
+                description=description or f"Custom {project_type.value} README template",
+                template_type=TemplateType.README,
+                format=TemplateFormat.MARKDOWN,
+                author="User",
+                version="1.0.0",
+                tags=["custom", project_type.value],
+                required_variables=required_variables,
+                optional_variables=optional_variables,
+                target_audience="all"
+            ),
+            content=template_content
+        )
+        
+        self.templates[template_key] = template
+        return template_key

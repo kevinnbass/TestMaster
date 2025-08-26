@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Dashboard - Enhanced Intelligence & Advanced Visualization</title>
+    
+    <!-- STEELCLAD ATOMIZED: External CSS -->
+    <link rel="stylesheet" href="css/dashboard_styles.css">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body>
+    <div id="connectionStatus" class="disconnected">Connecting...</div>
+    
+    <div class="container">
+        <header>
+            <h1>🚀 Epsilon Modular Dashboard</h1>
+            <div class="subtitle">Enhanced Contextual Intelligence System - STEELCLAD Atomized Frontend</div>
+        </header>
+        
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>🧠 Contextual Intelligence</h2>
+                <div id="contextualMetrics" class="loading">
+                    <div class="metric">
+                        <span class="metric-label">Correlations Detected</span>
+                        <span class="metric-value" id="correlationsCount">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Insights Generated</span>
+                        <span class="metric-value" id="insightsCount">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Predictions Made</span>
+                        <span class="metric-value" id="predictionsCount">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Optimization Opportunities</span>
+                        <span class="metric-value" id="optimizationCount">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>📊 Agent Coordination Health</h2>
+                <div id="coordinationHealth" class="loading">
+                    <div class="metric">
+                        <span class="metric-label">Overall Health Score</span>
+                        <span class="metric-value">
+                            <span id="healthScore">--</span>%
+                            <span id="healthStatus" class="status-indicator"></span>
+                        </span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Data Synchronization</span>
+                        <span class="metric-value" id="dataSync">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Response Consistency</span>
+                        <span class="metric-value" id="responseConsistency">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Resource Balance</span>
+                        <span class="metric-value" id="resourceBalance">--</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>💡 Proactive Insights</h2>
+                <div id="proactiveInsights" class="insights-container loading">
+                    <div class="insight">
+                        <div class="insight-type">Loading insights...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>🎯 User Behavior Predictions</h2>
+                <div id="behaviorPredictions" class="loading">
+                    <div class="metric">
+                        <span class="metric-label">Next Likely Action</span>
+                        <span class="metric-value" id="nextAction">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Information Need</span>
+                        <span class="metric-value" id="infoNeed">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Attention Focus</span>
+                        <span class="metric-value" id="attentionFocus">--</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modular API Testing Card -->
+            <div class="card">
+                <h2>🔧 Modular APIs</h2>
+                <div class="api-testing">
+                    <h3>Test Modular Components:</h3>
+                    <button class="api-button" onclick="testUnifiedData()">Test Data Integration</button>
+                    <button class="api-button" onclick="testVisualizationRecs()">Test Viz Recommendations</button>
+                    <button class="api-button" onclick="testChartConfig()">Test Chart Config</button>
+                    <div id="apiResponse" class="api-response" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Data Integration Card -->
+            <div class="card">
+                <h2>📊 Unified Data Integration</h2>
+                <div id="dataIntegration" class="loading">
+                    <div class="metric">
+                        <span class="metric-label">Data Sources</span>
+                        <span class="metric-value" id="dataSources">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Intelligence Score</span>
+                        <span class="metric-value" id="intelligenceScore">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Information Density</span>
+                        <span class="metric-value" id="informationDensity">--</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Performance Monitoring Card -->
+            <div class="card">
+                <h2>⚡ Performance Monitor</h2>
+                <div id="performanceMonitoring" class="loading">
+                    <div class="metric">
+                        <span class="metric-label">Performance Score</span>
+                        <span class="metric-value">
+                            <span id="performanceScore">--</span>
+                            <span id="performanceStatus" class="status-indicator"></span>
+                        </span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">CPU Usage</span>
+                        <span class="metric-value" id="cpuUsage">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Memory Usage</span>
+                        <span class="metric-value" id="memoryUsage">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">System Health</span>
+                        <span class="metric-value" id="systemHealth">--</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Advanced Visualization Intelligence Card -->
+            <div class="card">
+                <h2>📊 Advanced Visualization Intelligence</h2>
+                <div id="visualizationIntelligence" class="loading">
+                    <div class="metric">
+                        <span class="metric-label">AI Recommendations</span>
+                        <span class="metric-value" id="aiRecommendations">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Layout Optimization</span>
+                        <span class="metric-value" id="layoutOptimization">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Interactive Features</span>
+                        <span class="metric-value" id="interactiveFeatures">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Data Quality Score</span>
+                        <span class="metric-value">
+                            <span id="dataQualityScore">--</span>
+                            <span id="dataQualityStatus" class="status-indicator"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="api-testing">
+                    <h3>Advanced Visualization Tests:</h3>
+                    <button class="api-button" onclick="testInteractiveConfig()">Test Interactive Config</button>
+                    <button class="api-button" onclick="testAdaptiveLayout()">Test Adaptive Layout</button>
+                    <button class="api-button" onclick="testVisualizationInsights()">Test AI Insights</button>
+                    <div id="visualizationResponse" class="api-response" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Predictive Analytics Card -->
+            <div class="card">
+                <h2>🔮 Predictive Analytics</h2>
+                <div id="predictiveAnalytics" class="loading">
+                    <div class="metric">
+                        <span class="metric-label">Next Hour Forecast</span>
+                        <span class="metric-value" id="nextHourForecast">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Trend Direction</span>
+                        <span class="metric-value" id="trendDirection">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Confidence Level</span>
+                        <span class="metric-value">
+                            <span id="confidenceLevel">--</span>
+                            <span id="confidenceStatus" class="status-indicator"></span>
+                        </span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Anomaly Risk</span>
+                        <span class="metric-value" id="anomalyRisk">--</span>
+                    </div>
+                </div>
+                <!-- Real-time Chart Controls -->
+                <div class="api-testing">
+                    <h3>Real-time Analytics:</h3>
+                    <select id="chartTimeRange">
+                        <option value="1h">Last Hour</option>
+                        <option value="6h">Last 6 Hours</option>
+                        <option value="24h" selected>Last 24 Hours</option>
+                        <option value="7d">Last 7 Days</option>
+                    </select>
+                    <button class="api-button" onclick="startRealTimeStreaming()">Start Live Stream</button>
+                    <button class="api-button" onclick="stopRealTimeStreaming()">Stop Stream</button>
+                    <button class="api-button" onclick="updateChartRange()">Update Range</button>
+                    <button class="api-button" onclick="requestPredictiveAnalysis()">Generate Forecast</button>
+                    <div style="height: 250px; margin-top: 15px; position: relative;">
+                        <canvas id="realTimeChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                    <div id="chartStatus" style="text-align: center; margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                        Chart ready - Click "Start Live Stream" to begin
+                    </div>
+                </div>
+            </div>
+
+            <!-- D3.js Agent Collaboration Network -->
+            <div class="card" style="grid-column: span 2;">
+                <h2>🕸️ Agent Collaboration Network</h2>
+                <div class="api-testing" style="margin-bottom: 15px;">
+                    <button class="api-button" onclick="updateD3Chart('networkChart')">Refresh Network</button>
+                    <button class="api-button" onclick="exportD3Chart('networkChart', 'svg')">Export SVG</button>
+                </div>
+                <div style="height: 300px; position: relative;">
+                    <div id="networkChart" class="d3-chart" style="width: 100%; height: 300px;"></div>
+                </div>
+                <div id="networkStatus" style="text-align: center; margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                    Network visualization ready
+                </div>
+            </div>
+
+            <!-- D3.js Activity Heatmap -->
+            <div class="card" style="grid-column: span 2;">
+                <h2>🔥 Activity Heatmap</h2>
+                <div class="api-testing" style="margin-bottom: 15px;">
+                    <button class="api-button" onclick="updateD3Chart('heatmapChart')">Refresh Heatmap</button>
+                    <button class="api-button" onclick="exportD3Chart('heatmapChart', 'png')">Export PNG</button>
+                </div>
+                <div style="height: 300px; position: relative;">
+                    <div id="heatmapChart" class="d3-chart" style="width: 100%; height: 300px;"></div>
+                </div>
+                <div id="heatmapStatus" style="text-align: center; margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                    Heatmap visualization ready
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- STEELCLAD ATOMIZED: External JavaScript -->
+    <script src="js/dashboard_scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,1037 @@
+{
+  "compliance_score": 89.2960462873674,
+  "total_files_analyzed": 61,
+  "total_functions_analyzed": 467,
+  "total_lines_analyzed": 18347,
+  "total_issues": 111,
+  "rule_compliance": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false,
+    "5": true,
+    "6": true,
+    "7": false,
+    "8": true,
+    "9": true,
+    "10": true,
+    "11": true,
+    "12": true,
+    "13": true,
+    "14": true,
+    "15": false,
+    "16": false,
+    "17": true
+  },
+  "detailed_analysis": {
+    "files_by_severity": {
+      "high": 41,
+      "medium": 53,
+      "low": 17
+    },
+    "rules_violated": 7,
+    "assertion_ratio": 0.3683083511777302,
+    "average_function_size": 66.0
+  },
+  "issues": [
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_audit_reporting.py",
+      "line_number": 19,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_print_header' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_audit_reporting.py",
+      "line_number": 136,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'generate_summary_report' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_fixes.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (529 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\compliance_fixes.py",
+      "line_number": 508,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 508) (<unknown>, line 508)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_integration_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (1126 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_integration_engine.py",
+      "line_number": 1098,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 1098) (<unknown>, line 1098)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (707 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligence_reorganizer.py",
+      "line_number": 593,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 593) (<unknown>, line 593)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\intelligent_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (578 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 19,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'analyze_code' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 41,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '_mock_security_response' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 59,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '_mock_test_response' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 77,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '_mock_api_response' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 95,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '_mock_general_response' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 117,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 125,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function 'analyze_code' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 141,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 145,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function 'analyze_code' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 178,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 182,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function 'analyze_code' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 195,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_clients.py",
+      "line_number": 199,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function 'analyze_code' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_core.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (611 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_core.py",
+      "line_number": 420,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: f-string expression part cannot include a backslash (<unknown>, line 420)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (718 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_integration_engine.py",
+      "line_number": 419,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 419)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_scanner.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (888 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_scanner.py",
+      "line_number": 869,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 869) (<unknown>, line 869)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\llm_intelligence_system.py",
+      "line_number": 1,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: invalid non-printable character U+FEFF (<unknown>, line 1)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_analysis.py",
+      "line_number": 22,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function '__init__' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_analysis.py",
+      "line_number": 99,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'analyze_testability' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_analysis.py",
+      "line_number": 119,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'get_function_count' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_analysis.py",
+      "line_number": 123,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'get_class_count' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_analysis.py",
+      "line_number": 127,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'get_long_function_count' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_analysis.py",
+      "line_number": 136,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'get_large_class_count' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_analyzer.py",
+      "line_number": 19,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function '__init__' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_descriptions.py",
+      "line_number": 22,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function '__init__' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_recommendations.py",
+      "line_number": 23,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function '__init__' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_recommendations.py",
+      "line_number": 121,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'get_testability_recommendations' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\maintainability_recommendations.py",
+      "line_number": 141,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function 'get_general_recommendations' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (895 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\meta_reorganizer.py",
+      "line_number": 525,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 525)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (504 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 228,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'detect_patterns' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 279,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_detect_design_patterns' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 304,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_detect_architectural_patterns' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 329,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_detect_coding_patterns' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 354,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_calculate_pattern_confidence' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 397,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_collect_pattern_evidence' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 397,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_collect_pattern_evidence' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 413,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_get_pattern_recommendations' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 426,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_categorize_patterns' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 435,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_analyze_confidence_distribution' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 449,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_determine_architectural_style' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 464,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_determine_coding_style' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 479,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_generate_pattern_recommendations' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_core.py",
+      "line_number": 479,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_generate_pattern_recommendations' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_detector.py",
+      "line_number": 163,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 163) (<unknown>, line 163)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_examples.py",
+      "line_number": 79,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'demonstrate_patterns' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_examples.py",
+      "line_number": 19,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_examples.py",
+      "line_number": 28,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function '__init__' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_examples.py",
+      "line_number": 28,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_examples.py",
+      "line_number": 45,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_examples.py",
+      "line_number": 66,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function '__init__' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_examples.py",
+      "line_number": 66,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\pattern_examples.py",
+      "line_number": 72,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'get_instance' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\perfect_compliance_launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (304 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_analysis.py",
+      "line_number": 105,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'suggest_function_name' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_analysis.py",
+      "line_number": 105,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'suggest_function_name' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_functions.py",
+      "line_number": 37,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'main' exceeds 60 line limit (61 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_generation.py",
+      "line_number": 100,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'generate_refactored_function' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\refactor_generation.py",
+      "line_number": 100,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'generate_refactored_function' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_analyzer.py",
+      "line_number": 117,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unterminated string literal (detected at line 117) (<unknown>, line 117)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_core.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (348 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_core.py",
+      "line_number": 34,
+      "rule_number": 4,
+      "rule_description": "Functions limited to 60 lines max (including docstrings/comments)",
+      "severity": "high",
+      "description": "Function 'analyze_relationships' exceeds 60 line limit (71 lines)",
+      "suggestion": "Break function into smaller, focused functions"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_core.py",
+      "line_number": 106,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_import_relationships' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_core.py",
+      "line_number": 133,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_class_relationships' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_core.py",
+      "line_number": 200,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_analyze_data_relationships' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_core.py",
+      "line_number": 225,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_build_relationship_graph' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_core.py",
+      "line_number": 258,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_calculate_coupling_metrics' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_core.py",
+      "line_number": 282,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_identify_relationship_clusters' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_core.py",
+      "line_number": 305,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_generate_relationship_recommendations' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_core.py",
+      "line_number": 305,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_generate_relationship_recommendations' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_ml.py",
+      "line_number": 113,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'main' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_ml.py",
+      "line_number": 20,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'load_data' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_ml.py",
+      "line_number": 25,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'process_relationships' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_ml.py",
+      "line_number": 38,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'train_model' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_ml.py",
+      "line_number": 43,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'evaluate' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_ml.py",
+      "line_number": 70,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'run_pipeline' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_ml.py",
+      "line_number": 81,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'evaluate_model' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\relationship_ml.py",
+      "line_number": 93,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'analyze_relationship_patterns' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_core.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (524 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_core.py",
+      "line_number": 43,
+      "rule_number": 15,
+      "rule_description": "Detailed docstrings and mandatory type hints",
+      "severity": "medium",
+      "description": "Function '__init__' lacks docstring",
+      "suggestion": "Add comprehensive docstring with type hints"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_core.py",
+      "line_number": 94,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function 'create_reorganization_plan' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_core.py",
+      "line_number": 94,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function 'create_reorganization_plan' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_core.py",
+      "line_number": 151,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_create_tasks_from_intelligence' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_core.py",
+      "line_number": 361,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_create_task_batches' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_core.py",
+      "line_number": 361,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_create_task_batches' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_core.py",
+      "line_number": 410,
+      "rule_number": 2,
+      "rule_description": "Fixed upper bound loops: use for with ranges or known iterables",
+      "severity": "high",
+      "description": "Function '_create_batch_from_tasks' contains loops without fixed upper bounds",
+      "suggestion": "Ensure all loops have known iteration limits"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_core.py",
+      "line_number": 410,
+      "rule_number": 3,
+      "rule_description": "No dynamic object resizing after initialization",
+      "severity": "medium",
+      "description": "Function '_create_batch_from_tasks' dynamically resizes objects",
+      "suggestion": "Pre-allocate objects with known sizes"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_core.py",
+      "line_number": 440,
+      "rule_number": 1,
+      "rule_description": "Simple control flow: no recursion, avoid complex comprehensions",
+      "severity": "medium",
+      "description": "Function '_create_plan_summary' contains complex comprehensions",
+      "suggestion": "Replace with explicit loops for clarity"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganization_planner.py",
+      "line_number": 32,
+      "rule_number": 7,
+      "rule_description": "Parameter validation and return value checking",
+      "severity": "low",
+      "description": "Function 'main' lacks parameter validation",
+      "suggestion": "Add type hints and parameter validation checks"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (867 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer.py",
+      "line_number": 634,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: invalid syntax. Maybe you meant '==' or ':=' instead of '='? (<unknown>, line 634)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\reorganizer_engine.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (531 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\run_intelligence_system.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (946 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (777 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\semantic_analyzer.py",
+      "line_number": 252,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: ':' expected after dictionary key (<unknown>, line 252)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_perfect_launcher.py",
+      "line_number": 91,
+      "rule_number": 0,
+      "rule_description": "General compliance",
+      "severity": "high",
+      "description": "Syntax error: unmatched ')' (<unknown>, line 91)",
+      "suggestion": "Fix syntax errors before analysis"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\ultimate_refactor_launcher.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "medium",
+      "description": "Module exceeds recommended size limit (474 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    },
+    {
+      "file_path": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_reorganizer\\validation_module.py",
+      "line_number": 1,
+      "rule_number": 16,
+      "rule_description": "Module size under 300 lines (500 max)",
+      "severity": "high",
+      "description": "Module exceeds recommended size limit (651 lines)",
+      "suggestion": "Consider splitting into smaller modules"
+    }
+  ]
+}
