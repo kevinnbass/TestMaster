@@ -1,0 +1,29 @@
+{
+  "ignore_patterns": [
+    "**/telemetry/*.json",
+    "*.bak",
+    "*.db",
+    "*.egg-info/",
+    "*.gz",
+    "*.log",
+    "*.pyc",
+    "*.swp",
+    "*.tmp",
+    ".DS_Store",
+    ".coverage",
+    ".pytest_cache/",
+    ".venv/",
+    "PRODUCTION_PACKAGES/",
+    "Thumbs.db",
+    "__pycache__/",
+    "build/",
+    "coverage/",
+    "dist/",
+    "logs/",
+    "node_modules/",
+    "organized_codebase/data/",
+    "organized_codebase/monitoring/",
+    "tools/codebase_monitor/reports/"
+  ],
+  "generated_from": "C:\\Users\\kbass\\OneDrive\\Documents\\testmaster\\tools\\codebase_monitor\\reports\\latest\\scan.json"
+}

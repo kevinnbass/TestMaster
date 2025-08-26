@@ -1,0 +1,19 @@
+{
+  "timestamp": "unknown",
+  "total_files": 52893,
+  "total_code_lines": 9727027,
+  "duplicate_groups": 200,
+  "hotspots": {
+    "large_files": 500,
+    "many_todos": 67,
+    "mixed_indentation": 500,
+    "high_branching_python": 500,
+    "long_avg_functions_python": 488,
+    "tests_empty_or_stub": 175,
+    "eslint_ts_ignored_heavy": 41,
+    "ts_any_overuse": 27,
+    "python_untyped_functions": 500,
+    "python_missing_docstrings": 500,
+    "secrets_flags": 500
+  }
+}

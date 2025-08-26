@@ -1,0 +1,12 @@
+{
+  "critical_files": [
+    "tools\\codebase_monitor\\analyzer.py",
+    "backend\\codebase_monitor\\service.py",
+    "frontend_final\\codebase_health_dashboard\\src\\App.tsx"
+  ],
+  "hashes": {
+    "tools\\codebase_monitor\\analyzer.py": "ede015645335e59814f8888f0a5d40493992cb53a87426ad66cc2dfb6a0160fd",
+    "backend\\codebase_monitor\\service.py": "0bb168a207d36a9c513d0367308768b6927469ea80530a9847ae3b202f7c1419",
+    "frontend_final\\codebase_health_dashboard\\src\\App.tsx": "246d5f6e9af2a374abe01e0d5ec84a86564c857073576bf4243478a09772f88d"
+  }
+}
